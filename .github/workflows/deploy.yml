@@ -8,9 +8,9 @@ on:
     - cron: '0 0 * * *'  # Runs daily at midnight UTC
   workflow_dispatch:      # Allows manual triggers from the GitHub Actions UI
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages and pushing commits
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -26,9 +26,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          # Fetch all history so we can push back changes properly
-          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -39,22 +36,6 @@ jobs:
       - name: Compile daily puzzles
         run: |
           python fetch_daily.py --max-back-days 7
-
-      # Commit the daily compiled HTML files back to the repository so the source code is up-to-date
-      - name: Commit compiled HTML files
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add games/*.html
-          # Commit and push only if changes exist
-          if ! git diff-index --quiet HEAD; then
-            git commit -m "auto: Compile daily puzzle pages [skip ci]"
-            git push origin main
-          else
-            echo "No changes in compiled games."
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
