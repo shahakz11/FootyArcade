@@ -1,0 +1,267 @@
+import os
+import pandas as pd
+import random
+import kagglehub
+
+def main():
+    print("Downloading player-scores dataset from Kaggle...")
+    path = kagglehub.dataset_download("davidcariboo/player-scores")
+    print(f"Dataset downloaded to {path}")
+
+    # Load players and transfers
+    players_file = os.path.join(path, 'players.csv')
+    transfers_file = os.path.join(path, 'transfers.csv')
+
+    print("Loading players and transfers data...")
+    df = pd.read_csv(players_file)
+    df_transfers = pd.read_csv(transfers_file)
+
+    # Convert transfer fee to numeric, drop NaNs
+    df_transfers['transfer_fee'] = pd.to_numeric(df_transfers['transfer_fee'], errors='coerce')
+    df_transfers.dropna(subset=['transfer_fee'], inplace=True)
+
+    # Normalize/clean club names (Youth, B teams, different variations)
+    def clean_club_name(val):
+        if not isinstance(val, str):
+            return val
+        import re
+        # Remove U17/U19/U21/U23/B/II/Castilla/Youth/Academy suffixes
+        val = re.sub(r"(?i)\s+(U\d+|Sub-\d+|Sub\s+\d+|II|B|Castilla|Youth|Yth|Academy|Junioren|Under-\d+)\b", "", val)
+        val = val.strip()
+        # Map common aliases
+        aliases = {
+            "Bor. Dortmund": "Borussia Dortmund",
+            "B. Dortmund": "Borussia Dortmund",
+            "Dortmund": "Borussia Dortmund",
+            "FC Bayern": "Bayern Munich",
+            "Bayern München": "Bayern Munich",
+            "FC Bayern München": "Bayern Munich",
+            "Man City": "Manchester City",
+            "Man United": "Manchester United",
+            "Man Utd": "Manchester United",
+            "Spurs": "Tottenham Hotspur",
+            "Tottenham": "Tottenham Hotspur",
+            "Atlético Madrid": "Atletico Madrid",
+            "Atlético": "Atletico Madrid",
+            "Atletico": "Atletico Madrid",
+            "Paris SG": "Paris Saint-Germain",
+            "PSG": "Paris Saint-Germain",
+            "FC Barcelona": "Barcelona",
+            "Barca": "Barcelona",
+            "Inter Milan": "Inter",
+            "Internazionale": "Inter",
+            "Bayer 04 Leverkusen": "Bayer Leverkusen",
+            "B. Leverkusen": "Bayer Leverkusen",
+            "Leverkusen": "Bayer Leverkusen",
+            "M'gladbach": "Borussia Mönchengladbach",
+            "B. M'gladbach": "Borussia Mönchengladbach",
+            "Bor. M'gladbach": "Borussia Mönchengladbach",
+        }
+        return aliases.get(val, val)
+
+    print("Normalizing club names in dataset...")
+    df_transfers['from_club_name'] = df_transfers['from_club_name'].apply(clean_club_name)
+    df_transfers['to_club_name'] = df_transfers['to_club_name'].apply(clean_club_name)
+
+    TRANSFER_FEE_THRESHOLD = 6_000_000
+
+    # --- 1. Generating Club Transfers ---
+    print("Processing Club Transfers...")
+    high_value_transfers = df_transfers[df_transfers['transfer_fee'] > TRANSFER_FEE_THRESHOLD]
+    club_high_value_transfers_count = high_value_transfers['to_club_name'].value_counts()
+    eligible_clubs = club_high_value_transfers_count[club_high_value_transfers_count >= 2].index.tolist()
+
+    print(f"Number of eligible clubs: {len(eligible_clubs)}")
+
+    # We want to generate a deterministic list of daily games for 180 days (or cycling through all eligible clubs)
+    all_game_data = []
+    num_days = 180
+
+    # Seed for deterministic generation
+    random.seed(42)
+    shuffled_clubs = eligible_clubs.copy()
+    random.shuffle(shuffled_clubs)
+
+    for day in range(num_days):
+        selected_club = shuffled_clubs[day % len(shuffled_clubs)]
+        club_transfers = df_transfers[
+            (df_transfers['to_club_name'] == selected_club) &
+            (df_transfers['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
+        ].copy()
+
+        top_transfers = club_transfers.sort_values(by='transfer_fee', ascending=False).head(10)
+        
+        # Add metadata columns
+        top_transfers['game_day'] = day + 1
+        top_transfers['selected_club'] = selected_club
+        
+        all_game_data.append(top_transfers[['player_name', 'from_club_name', 'to_club_name', 'transfer_fee', 'transfer_date', 'game_day', 'selected_club']])
+
+    club_df = pd.concat(all_game_data, ignore_index=True)
+    club_df.to_csv('daily_transfer_games.csv', index=False)
+    print(f"Successfully generated club game data and saved to 'daily_transfer_games.csv'")
+
+
+    # --- 2. Generating Nationality Transfers ---
+    print("Processing Nationality Transfers...")
+    # Merge df_transfers with players to get nationality
+    df_merged_for_nationality = pd.merge(
+        df_transfers,
+        df[['player_id', 'country_of_citizenship']],
+        on='player_id',
+        how='left'
+    )
+    df_merged_for_nationality.rename(columns={'country_of_citizenship': 'nationality_name'}, inplace=True)
+    df_merged_for_nationality.dropna(subset=['nationality_name'], inplace=True)
+
+    high_value_nationality_transfers = df_merged_for_nationality[
+        df_merged_for_nationality['transfer_fee'] > TRANSFER_FEE_THRESHOLD
+    ]
+    nationality_high_value_transfers_count = high_value_nationality_transfers['nationality_name'].value_counts()
+    eligible_nationalities = nationality_high_value_transfers_count[
+        nationality_high_value_transfers_count >= 2
+    ].index.tolist()
+
+    print(f"Number of eligible nationalities: {len(eligible_nationalities)}")
+
+    all_game_data_nationality = []
+    shuffled_nationalities = eligible_nationalities.copy()
+    random.shuffle(shuffled_nationalities)
+
+    for day in range(num_days):
+        selected_nationality = shuffled_nationalities[day % len(shuffled_nationalities)]
+        
+        nationality_transfers = df_merged_for_nationality[
+            (df_merged_for_nationality['nationality_name'] == selected_nationality) &
+            (df_merged_for_nationality['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
+        ].copy()
+
+        # For each player, select only their highest transfer fee (unique player)
+        idx = nationality_transfers.groupby(['player_name'])['transfer_fee'].idxmax()
+        unique_player_transfers = nationality_transfers.loc[idx]
+
+        top_transfers = unique_player_transfers.sort_values(by='transfer_fee', ascending=False).head(10)
+        
+        top_transfers['game_day'] = day + 1
+        top_transfers['selected_nationality'] = selected_nationality
+
+        all_game_data_nationality.append(top_transfers[['player_name', 'nationality_name', 'from_club_name', 'to_club_name', 'transfer_fee', 'transfer_date', 'game_day', 'selected_nationality']])
+
+    nat_df = pd.concat(all_game_data_nationality, ignore_index=True)
+    nat_df.to_csv('daily_nationality_transfer_games.csv', index=False)
+    print(f"Successfully generated nationality game data and saved to 'daily_nationality_transfer_games.csv'")
+
+    # --- 3. Generating Autocomplete Player List ---
+    print("Generating autocomplete player list...")
+    df_players_clean = df.dropna(subset=['name', 'country_of_citizenship', 'position']).copy()
+    transferred_player_names = set(df_transfers['player_name'].dropna().unique())
+    df_autocomplete = df_players_clean[
+        (df_players_clean['market_value_in_eur'] >= 1_000_000) | 
+        (df_players_clean['name'].isin(transferred_player_names))
+    ].copy()
+    df_autocomplete.drop_duplicates(subset=['name'], inplace=True)
+    
+    autocomplete_list = []
+    for _, row in df_autocomplete.iterrows():
+        autocomplete_list.append({
+            "Name": row['name'],
+            "Nationality": row['country_of_citizenship'],
+            "Position": row['position']
+        })
+        
+    import json
+    with open('all_players.json', 'w', encoding='utf-8') as f_out:
+        json.dump(autocomplete_list, f_out, ensure_ascii=False, indent=2)
+    print(f"Successfully generated autocomplete list with {len(autocomplete_list)} players in 'all_players.json'")
+
+    # --- 4. Generating Transfer Destination Games ---
+    print("Processing Transfer Destination Games...")
+    # Merge transfers with player DOB, nationality, and position
+    df_dest_merged = pd.merge(
+        df_transfers,
+        df[['player_id', 'date_of_birth', 'country_of_citizenship', 'position']],
+        on='player_id',
+        how='left'
+    )
+    df_dest_merged['transfer_date'] = pd.to_datetime(df_dest_merged['transfer_date'])
+    df_dest_merged['date_of_birth'] = pd.to_datetime(df_dest_merged['date_of_birth'])
+    df_dest_merged['age_at_transfer'] = (df_dest_merged['transfer_date'] - df_dest_merged['date_of_birth']).dt.days / 365.25
+
+    # Filter youth teams
+    youth_patterns = r"(?i)U\d+|Sub-\d+|Sub\s+\d+|Youth|Yth|Academy|Junioren|Under-|Sub\s+1|Sub\s+2"
+    df_dest_clean = df_dest_merged[
+        (~df_dest_merged['from_club_name'].str.contains(youth_patterns, na=False)) &
+        (~df_dest_merged['to_club_name'].str.contains(youth_patterns, na=False))
+    ].copy()
+    
+    # Filter age >= 17
+    df_dest_clean = df_dest_clean[df_dest_clean['age_at_transfer'] >= 17]
+
+    # Find players with at least one transfer >= 15m
+    players_with_big_tr = df_dest_clean[df_dest_clean['transfer_fee'] >= 15_000_000]['player_id'].unique()
+    df_dest_clean_big = df_dest_clean[df_dest_clean['player_id'].isin(players_with_big_tr)]
+    
+    # Count transfers per player and ensure at least 2 transfers
+    dest_transfer_counts = df_dest_clean_big.groupby('player_id').size()
+    eligible_dest_pids = dest_transfer_counts[dest_transfer_counts >= 2].index.tolist()
+    
+    df_dest_eligible = df_dest_clean_big[df_dest_clean_big['player_id'].isin(eligible_dest_pids)]
+    
+    # Sort eligible players by their maximum transfer fee to pick the most high-profile stars
+    player_max_fees = df_dest_eligible.groupby('player_id')['transfer_fee'].max()
+    top_dest_pids = player_max_fees.sort_values(ascending=False).index.tolist()
+    
+    # Take the top 300 to shuffle and select 180 games
+    # Shuffling with a seed for deterministic daily puzzles
+    random.seed(99)
+    shuffled_pids = top_dest_pids[:300]
+    random.shuffle(shuffled_pids)
+    selected_pids = shuffled_pids[:180]
+    
+    dest_games_list = []
+    clubs_in_careers = set()
+    
+    for day, pid in enumerate(selected_pids):
+        p_transfers = df_dest_eligible[df_dest_eligible['player_id'] == pid].copy()
+        # Sort chronologically
+        p_transfers = p_transfers.sort_values(by='transfer_date')
+        p_transfers['game_day'] = day + 1
+        
+        # Keep track of clubs for autocomplete
+        for _, row in p_transfers.iterrows():
+            if pd.notna(row['from_club_name']):
+                clubs_in_careers.add(row['from_club_name'])
+            if pd.notna(row['to_club_name']):
+                clubs_in_careers.add(row['to_club_name'])
+            
+        dest_games_list.append(p_transfers)
+        
+    dest_games_df = pd.concat(dest_games_list, ignore_index=True)
+    # Format transfer_date back to string for easier frontend parsing
+    dest_games_df['transfer_date_str'] = dest_games_df['transfer_date'].dt.strftime('%Y-%m-%d')
+    
+    # Fill NaN columns with appropriate empty strings/values
+    dest_games_df['from_club_name'] = dest_games_df['from_club_name'].fillna('')
+    dest_games_df['to_club_name'] = dest_games_df['to_club_name'].fillna('')
+    dest_games_df['transfer_fee'] = dest_games_df['transfer_fee'].fillna(0.0)
+    dest_games_df['market_value_in_eur'] = dest_games_df['market_value_in_eur'].fillna(0.0)
+    
+    dest_games_df.to_csv('daily_destination_games.csv', index=False)
+    print(f"Successfully generated destination game data for 180 days in 'daily_destination_games.csv'")
+    
+    # --- 5. Generating Autocomplete Club List ---
+    print("Generating autocomplete club list...")
+    # Add clubs involved in transfers >= 5M
+    big_fee_clubs = pd.concat([
+        df_transfers[df_transfers['transfer_fee'] >= 5_000_000]['from_club_name'],
+        df_transfers[df_transfers['transfer_fee'] >= 5_000_000]['to_club_name']
+    ]).dropna().unique()
+    
+    all_autocomplete_clubs = sorted(list(clubs_in_careers | set(big_fee_clubs)))
+    with open('all_clubs.json', 'w', encoding='utf-8') as f_clubs:
+        json.dump(all_autocomplete_clubs, f_clubs, ensure_ascii=False, indent=2)
+    print(f"Successfully generated autocomplete club list with {len(all_autocomplete_clubs)} clubs in 'all_clubs.json'")
+
+if __name__ == '__main__':
+    main()
+

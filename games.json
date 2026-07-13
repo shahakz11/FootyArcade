@@ -1,0 +1,60 @@
+[
+  {
+    "id": "top_transfers",
+    "name": "Top Transfers",
+    "description": "Guess the top 10 record signings for a specific club and nationality before your lives run out.",
+    "link": "games/top_transfers.html",
+    "icon": "payments",
+    "accentHex": "#00f0ff",
+    "initialLives": 5,
+    "maxBackDays": 7,
+    "templateFile": "top_transfers_template.html",
+    "dataVariable": "DAILY_TRANSFER_GAME",
+    "storageKey": "footy_v2_top_transfers",
+    "note": "Transfer data updated to July 2026. Does not include loan moves."
+  },
+  {
+    "id": "transfer_destination",
+    "name": "Transfer Destination",
+    "description": "Guess the career path of a star player step-by-step. Predict their destination clubs chronologically.",
+    "link": "games/transfer_destination.html",
+    "icon": "alt_route",
+    "accentHex": "#39ff14",
+    "initialLives": 5,
+    "maxBackDays": 7,
+    "templateFile": "transfer_destination_template.html",
+    "dataVariable": "DAILY_DESTINATION_GAME",
+    "storageKey": "footy_v2_transfer_destination",
+    "note": "Transfer data updated to July 2026. Only transfers worth €1M+ are included."
+  },
+  {
+    "id": "top_scorers",
+    "name": "Top Scorers",
+    "description": "Guess the all-time top scorers for a club, league, or national team before your lives run out.",
+    "link": "games/top_scorers.html",
+    "icon": "sports_soccer",
+    "accentHex": "#f59e0b",
+    "initialLives": 6,
+    "maxBackDays": 7,
+    "templateFile": "top_scorers_template.html",
+    "dataVariable": "DAILY_SCORERS_GAME",
+    "storageKey": "footy_v2_top_scorers",
+    "note": "Goals data updated to July 2026.",
+    "status": "coming_soon"
+  },
+  {
+    "id": "this_and_that",
+    "name": "This & That",
+    "description": "Name all players who match BOTH statements — e.g. played for Barcelona AND Argentina, or scored 50+ PL & La Liga goals.",
+    "link": "games/this_and_that.html",
+    "icon": "join_inner",
+    "accentHex": "#a855f7",
+    "initialLives": 5,
+    "maxBackDays": 7,
+    "templateFile": "this_and_that_template.html",
+    "dataVariable": "DAILY_THISANDTHAT_GAME",
+    "storageKey": "footy_v2_this_and_that",
+    "note": "Data updated to July 2026.",
+    "status": "coming_soon"
+  }
+]

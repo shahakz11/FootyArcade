@@ -1,0 +1,1273 @@
+player_name,nationality_name,from_club_name,to_club_name,transfer_fee,transfer_date,game_day,selected_nationality
+Keylor Navas,Costa Rica,Real Madrid,Paris Saint-Germain,15000000.0,2019-09-02,1,Costa Rica
+Manfred Ugalde,Costa Rica,FC Twente,Spartak Moscow,13000000.0,2024-01-29,1,Costa Rica
+Mateo Retegui,Italy,Atalanta,Al-Qadsiah,61750000.0,2025-07-21,2,Italy
+Sandro Tonali,Italy,AC Milan,Newcastle,60800000.0,2023-07-03,2,Italy
+Jorginho,Italy,Napoli,Chelsea,57000000.0,2018-07-14,2,Italy
+Federico Chiesa,Italy,Fiorentina,Juventus,44600000.0,2022-07-01,2,Italy
+Riccardo Calafiori,Italy,Bologna,Arsenal,43700000.0,2024-07-29,2,Italy
+Leonardo Bonucci,Italy,Juventus,AC Milan,42000000.0,2017-07-21,2,Italy
+Alessandro Bastoni,Italy,Atalanta,Inter,40700000.0,2017-08-31,2,Italy
+Federico Bernardeschi,Italy,Fiorentina,Juventus,40000000.0,2017-07-24,2,Italy
+Gianluca Scamacca,Italy,Sassuolo,West Ham,38600000.0,2022-07-26,2,Italy
+Nicolò Barella,Italy,Cagliari,Inter,38500000.0,2020-09-01,2,Italy
+Jamal Lewis,Northern Ireland,Norwich,Newcastle,16500000.0,2020-09-08,3,Northern Ireland
+Shea Charles,Northern Ireland,Manchester City,Southampton,12250000.0,2023-07-12,3,Northern Ireland
+Jonny Evans,Northern Ireland,Manchester United,West Brom,8300000.0,2015-08-29,3,Northern Ireland
+George Saville,Northern Ireland,Millwall,Middlesbrough,7800000.0,2019-01-01,3,Northern Ireland
+Joël Piroe,Suriname,Swansea,Leeds,14000000.0,2023-08-24,4,Suriname
+Gyrano Kerk,Suriname,Utrecht,Loko Moscow,7000000.0,2021-09-01,4,Suriname
+Victor Osimhen,Nigeria,Lille,Napoli,78900000.0,2020-09-01,5,Nigeria
+Ademola Lookman,Nigeria,Atalanta,Atletico Madrid,35000000.0,2026-02-02,5,Nigeria
+George Ilenikhena,Nigeria,Monaco,Al-Ittihad,33000000.0,2026-02-02,5,Nigeria
+Alex Iwobi,Nigeria,Arsenal,Everton,30400000.0,2019-08-08,5,Nigeria
+Zadok Yohanna,Nigeria,AIK,Brighton,28000000.0,2026-07-01,5,Nigeria
+Kelechi Iheanacho,Nigeria,Manchester City,Leicester,27700000.0,2017-08-03,5,Nigeria
+Tolu Arokodare,Nigeria,Genk,Wolves,26000000.0,2025-09-01,5,Nigeria
+Nathan Tella,Nigeria,Southampton,Bayer Leverkusen,23300000.0,2023-08-27,5,Nigeria
+Calvin Bassey,Nigeria,Rangers,Ajax,23000000.0,2022-07-20,5,Nigeria
+Victor Boniface,Nigeria,Union SG,Bayer Leverkusen,22600000.0,2023-07-22,5,Nigeria
+Moteb Al-Harbi,Saudi Arabia,Al-Shabab,Al-Hilal,28950000.0,2024-09-01,6,Saudi Arabia
+Faisal Al-Ghamdi,Saudi Arabia,Al-Ettifaq,Al-Ittihad,11720000.0,2023-09-07,6,Saudi Arabia
+Musab Al-Juwayr,Saudi Arabia,Al-Hilal,Al-Qadsiah,11520000.0,2025-08-03,6,Saudi Arabia
+Hassan Tambakti,Saudi Arabia,Al-Shabab,Al-Hilal,11500000.0,2023-08-21,6,Saudi Arabia
+Ahmed Al-Julaydan,Saudi Arabia,Al-Fateh,Al-Ittihad,10900000.0,2025-08-13,6,Saudi Arabia
+Hassan Kadesh,Saudi Arabia,Al-Taawoun,Al-Ittihad,9880000.0,2023-08-31,6,Saudi Arabia
+Firas Al-Buraikan,Saudi Arabia,Al-Fateh,Al-Ahli,9830000.0,2023-09-03,6,Saudi Arabia
+Yahya Al-Shehri,Saudi Arabia,Al-Ettifaq,Al-Nassr,9800000.0,2013-07-01,6,Saudi Arabia
+Saad Al-Nasser,Saudi Arabia,Al-Taawoun,Al-Nassr,9770000.0,2025-08-31,6,Saudi Arabia
+Hamed Al-Ghamdi,Saudi Arabia,Al-Ettifaq,Al-Ittihad,9160000.0,2025-07-18,6,Saudi Arabia
+Yuning Zhang,China,Vitesse,West Brom,7200000.0,2017-07-03,7,China
+Dianzuo Liu,China,GZ R&F,GZ Evergrande,6700000.0,2016-02-12,7,China
+Romelu Lukaku,Belgium,Inter,Chelsea,113000000.0,2021-08-12,8,Belgium
+Kevin De Bruyne,Belgium,Wolfsburg,Manchester City,76000000.0,2015-08-30,8,Belgium
+Roméo Lavia,Belgium,Southampton,Chelsea,62100000.0,2023-08-18,8,Belgium
+Jérémy Doku,Belgium,Stade Rennais,Manchester City,60000000.0,2023-08-24,8,Belgium
+Amadou Onana,Belgium,Everton,Aston Villa,59350000.0,2024-07-22,8,Belgium
+Youri Tielemans,Belgium,Monaco,Leicester,45000000.0,2019-07-08,8,Belgium
+Loïs Openda,Belgium,Leipzig,Juventus,42750000.0,2026-07-01,8,Belgium
+Axel Witsel,Belgium,Benfica,Zenit S-Pb,40000000.0,2012-09-03,8,Belgium
+Michy Batshuayi,Belgium,Marseille,Chelsea,39000000.0,2016-07-03,8,Belgium
+Charles De Ketelaere,Belgium,Club Brugge,AC Milan,37500000.0,2022-08-02,8,Belgium
+Dominik Szoboszlai,Hungary,Leipzig,Liverpool,70000000.0,2023-07-02,9,Hungary
+Milos Kerkez,Hungary,Bournemouth,Liverpool,46900000.0,2025-07-01,9,Hungary
+Attila Szalai,Hungary,Fenerbahçe,Hoffenheim,12300000.0,2023-07-24,9,Hungary
+Alex Tóth,Hungary,Ferencváros,Bournemouth,12000000.0,2026-01-20,9,Hungary
+Jonathan David,Canada,KAA Gent,Lille,27000000.0,2020-08-11,10,Canada
+Alphonso Davies,Canada,Vancouver,Bayern Munich,14000000.0,2019-01-01,10,Canada
+Ismaël Koné,Canada,Watford,Marseille,12000000.0,2024-07-03,10,Canada
+Tajon Buchanan,Canada,Inter,Villarreal,9000000.0,2025-07-29,10,Canada
+Tani Oluwaseyi,Canada,Minnesota,Villarreal,8000000.0,2025-08-29,10,Canada
+Cyle Larin,Canada,Real Valladolid,RCD Mallorca,7500000.0,2023-08-03,10,Canada
+Moïse Bombito,Canada,Colorado,Nice,7000000.0,2024-08-19,10,Canada
+João Félix,Portugal,Benfica,Atletico Madrid,127200000.0,2019-07-03,11,Portugal
+Cristiano Ronaldo,Portugal,Real Madrid,Juventus,117000000.0,2018-07-10,11,Portugal
+Rúben Dias,Portugal,Benfica,Manchester City,71600000.0,2020-09-29,11,Portugal
+João Neves,Portugal,Benfica,Paris Saint-Germain,65920000.0,2024-08-05,11,Portugal
+João Cancelo,Portugal,Juventus,Manchester City,65000000.0,2019-08-07,11,Portugal
+Bruno Fernandes,Portugal,Sporting,Manchester United,65000000.0,2020-01-29,11,Portugal
+Gonçalo Ramos,Portugal,Benfica,Paris Saint-Germain,65000000.0,2024-01-01,11,Portugal
+Matheus Nunes,Portugal,Wolves,Manchester City,62000000.0,2023-09-01,11,Portugal
+Otávio,Portugal,Porto,Al-Nassr,60000000.0,2023-08-22,11,Portugal
+Pedro Neto,Portugal,Wolves,Chelsea,60000000.0,2024-08-11,11,Portugal
+Marshall Munetsi,Zimbabwe,Stade Reims,Wolves,18000000.0,2025-02-03,12,Zimbabwe
+Marvelous Nakamba,Zimbabwe,Club Brugge,Aston Villa,12000000.0,2019-08-01,12,Zimbabwe
+Tino Kadewere,Zimbabwe,Le Havre AC,Lyon,12000000.0,2020-01-22,12,Zimbabwe
+Eljif Elmas,North Macedonia,Napoli,Leipzig,24000000.0,2024-01-01,13,North Macedonia
+Bojan Miovski,North Macedonia,Aberdeen FC,Girona,6500000.0,2024-08-15,13,North Macedonia
+Christoph Baumgartner,Austria,Hoffenheim,Leipzig,25500000.0,2023-07-01,14,Austria
+Marko Arnautovic,Austria,West Ham,SH SIPG,25000000.0,2019-07-08,14,Austria
+Kevin Danso,Austria,Lens,Tottenham Hotspur,25000000.0,2025-07-01,14,Austria
+Valentino Lazaro,Austria,Hertha BSC,Inter,22400000.0,2019-07-01,14,Austria
+Aleksandar Dragovic,Austria,Dynamo Kyiv,Bayer Leverkusen,21000000.0,2016-08-23,14,Austria
+Nicolas Seiwald,Austria,Salzburg,Leipzig,20000000.0,2023-07-01,14,Austria
+Carney Chukwuemeka,Austria,Chelsea,Borussia Dortmund,20000000.0,2025-08-26,14,Austria
+Marcel Sabitzer,Austria,Bayern Munich,Borussia Dortmund,19000000.0,2023-07-24,14,Austria
+Jannik Schuster,Austria,Salzburg,Brentford,18000000.0,2026-07-01,14,Austria
+Sasa Kalajdzic,Austria,Stuttgart,Wolves,18000000.0,2022-08-31,14,Austria
+Christopher Jullien,Guadeloupe,Toulouse,Celtic,8000000.0,2019-07-01,15,Guadeloupe
+Andreaw Gravillon,Guadeloupe,Pescara,Inter,6100000.0,2019-01-29,15,Guadeloupe
+Achraf Hakimi,Morocco,Inter,Paris Saint-Germain,68000000.0,2021-07-06,16,Morocco
+Hakim Ziyech,Morocco,Ajax,Chelsea,40000000.0,2020-07-01,16,Morocco
+Nayef Aguerd,Morocco,Stade Rennais,West Ham,35000000.0,2022-07-01,16,Morocco
+Eliesse Ben Seghir,Morocco,Monaco,Bayer Leverkusen,32000000.0,2025-08-31,16,Morocco
+Issa Diop,Morocco,Toulouse,West Ham,25000000.0,2018-07-01,16,Morocco
+Neil El Aynaoui,Morocco,Lens,Roma,23500000.0,2025-07-20,16,Morocco
+Bilal El Khannouss,Morocco,Genk,Leicester,22500000.0,2024-08-29,16,Morocco
+Sofiane Diop,Morocco,Monaco,Nice,22000000.0,2022-08-29,16,Morocco
+Yassine Bounou,Morocco,Sevilla FC,Al-Hilal,21000000.0,2023-08-17,16,Morocco
+Amine Adli,Morocco,Bayer Leverkusen,Bournemouth,21000000.0,2025-08-21,16,Morocco
+Jhon Durán,Colombia,Aston Villa,Al-Nassr,77000000.0,2025-01-31,17,Colombia
+James Rodríguez,Colombia,Monaco,Real Madrid,75000000.0,2014-07-22,17,Colombia
+Luis Díaz,Colombia,Liverpool,Bayern Munich,70000000.0,2025-07-30,17,Colombia
+Radamel Falcao,Colombia,Atletico Madrid,Monaco,43000000.0,2013-07-01,17,Colombia
+Davinson Sánchez,Colombia,Ajax,Tottenham Hotspur,42000000.0,2017-08-23,17,Colombia
+Carlos Bacca,Colombia,Sevilla FC,AC Milan,33300000.0,2015-07-03,17,Colombia
+Juan Cuadrado,Colombia,Fiorentina,Chelsea,31000000.0,2015-02-02,17,Colombia
+Jefferson Lerma,Colombia,Levante,Bournemouth,30500000.0,2018-08-07,17,Colombia
+Yerry Mina,Colombia,Barcelona,Everton,30250000.0,2018-08-09,17,Colombia
+Richard Ríos,Colombia,Palmeiras,Benfica,27000000.0,2025-07-22,17,Colombia
+Min-jae Kim,"Korea, South",Napoli,Bayern Munich,50000000.0,2023-07-18,18,"Korea, South"
+Heung-min Son,"Korea, South",Bayer Leverkusen,Tottenham Hotspur,30000000.0,2015-08-28,18,"Korea, South"
+Kang-in Lee,"Korea, South",RCD Mallorca,Paris Saint-Germain,22000000.0,2023-07-08,18,"Korea, South"
+Hee-chan Hwang,"Korea, South",Leipzig,Wolves,16700000.0,2022-07-01,18,"Korea, South"
+Hyeon-gyu Oh,"Korea, South",Genk,Besiktas,14000000.0,2026-02-04,18,"Korea, South"
+Kyung-won Kwon,"Korea, South",Al-Ahli (UAE),TJ Quanjian,10500000.0,2017-01-02,18,"Korea, South"
+In-beom Hwang,"Korea, South",Red Star,Feyenoord,7000000.0,2024-09-02,18,"Korea, South"
+Sung-yueng Ki,"Korea, South",Celtic,Swansea,7000000.0,2012-08-24,18,"Korea, South"
+Ferdi Kadıoğlu,Türkiye,Fenerbahçe,Brighton,30000000.0,2024-08-24,19,Türkiye
+Orkun Kökçü,Türkiye,Benfica,Besiktas,30000000.0,2026-07-01,19,Türkiye
+Arda Güler,Türkiye,Fenerbahçe,Real Madrid,28000000.0,2023-07-06,19,Türkiye
+Uğurcan Çakır,Türkiye,Trabzonspor,Galatasaray,27500000.0,2025-09-01,19,Türkiye
+Hakan Çalhanoğlu,Türkiye,Bayer Leverkusen,AC Milan,23300000.0,2017-07-03,19,Türkiye
+Cenk Tosun,Türkiye,Besiktas,Everton,22500000.0,2018-01-05,19,Türkiye
+Kerem Aktürkoğlu,Türkiye,Benfica,Fenerbahçe,22500000.0,2025-09-01,19,Türkiye
+Yusuf Akçiçek,Türkiye,Fenerbahçe,Al-Hilal,22000000.0,2025-09-01,19,Türkiye
+Çağlar Söyüncü,Türkiye,Freiburg,Leicester,21100000.0,2018-08-09,19,Türkiye
+Merih Demiral,Türkiye,Juventus,Atalanta,21000000.0,2022-07-01,19,Türkiye
+Salomón Rondón,Venezuela,West Brom,DL Pro,18270000.0,2019-07-19,20,Venezuela
+Yangel Herrera,Venezuela,Girona,Real Sociedad,11000000.0,2025-09-01,20,Venezuela
+Alejandro Marqués,Venezuela,Barcelona,Juventus,8200000.0,2020-01-25,20,Venezuela
+Tomás Rincón,Venezuela,Genoa,Juventus,8000000.0,2017-01-03,20,Venezuela
+Jefferson Savarino,Venezuela,Botafogo,Fluminense,6400000.0,2026-01-22,20,Venezuela
+Hirving Lozano,Mexico,PSV,Napoli,50000000.0,2019-08-23,21,Mexico
+Edson Álvarez,Mexico,Ajax,West Ham,38000000.0,2023-08-10,21,Mexico
+Raúl Jiménez,Mexico,Benfica,Wolves,38000000.0,2019-07-01,21,Mexico
+Santiago Gimenez,Mexico,Feyenoord,AC Milan,30200000.0,2025-02-03,21,Mexico
+Rodolfo Pizarro,Mexico,Pachuca,Chivas,14750000.0,2017-01-01,21,Mexico
+César Montes,Mexico,Espanyol,UD Almería,14000000.0,2023-09-01,21,Mexico
+Diego Lainez,Mexico,América,Real Betis,14000000.0,2019-01-10,21,Mexico
+Julián Quiñones,Mexico,América,Al-Qadsiah,13800000.0,2024-07-18,21,Mexico
+Germán Berterame,Mexico,Monterrey,Miami,12600000.0,2026-01-30,21,Mexico
+Héctor Herrera,Mexico,Pachuca,Porto,11000000.0,2013-07-01,21,Mexico
+Riyad Mahrez,Algeria,Leicester,Manchester City,67800000.0,2018-07-10,22,Algeria
+Rayan Aït-Nouri,Algeria,Wolves,Manchester City,36800000.0,2025-06-09,22,Algeria
+Islam Slimani,Algeria,Sporting,Leicester,31000000.0,2016-08-31,22,Algeria
+Amine Gouiri,Algeria,Nice,Stade Rennais,28000000.0,2022-09-01,22,Algeria
+Saïd Benrahma,Algeria,Brentford,West Ham,23100000.0,2021-01-29,22,Algeria
+Nabil Bentaleb,Algeria,Tottenham Hotspur,FC Schalke 04,19000000.0,2017-07-01,22,Algeria
+Ismaël Bennacer,Algeria,FC Empoli,AC Milan,17200000.0,2019-08-04,22,Algeria
+Badredine Bouanani,Algeria,Nice,Stuttgart,15000000.0,2025-08-31,22,Algeria
+Mohamed Amoura,Algeria,Union SG,Wolfsburg,14750000.0,2025-07-01,22,Algeria
+Rachid Ghezzal,Algeria,Monaco,Leicester,14000000.0,2018-08-05,22,Algeria
+Logan Costa,Cape Verde,Toulouse,Villarreal,18000000.0,2024-08-22,23,Cape Verde
+Zé Luís,Cape Verde,Spartak Moscow,Porto,10750000.0,2019-07-05,23,Cape Verde
+Garry Rodrigues,Cape Verde,Galatasaray,Al-Ittihad,9000000.0,2019-01-06,23,Cape Verde
+Bebé,Cape Verde,Vit. Guimarães,Manchester United,8800000.0,2010-08-01,23,Cape Verde
+Sidny Lopes Cabral,Cape Verde,Benfica,Trabzonspor,7000000.0,2026-07-01,23,Cape Verde
+Robert Lewandowski,Poland,Bayern Munich,Barcelona,45000000.0,2022-07-19,24,Poland
+Krzysztof Piatek,Poland,Genoa,AC Milan,35000000.0,2019-01-23,24,Poland
+Arkadiusz Milik,Poland,Ajax,Napoli,32000000.0,2016-08-01,24,Poland
+Jakub Kiwior,Poland,Spezia Calcio,Arsenal,19500000.0,2023-01-23,24,Poland
+Wojciech Szczęsny,Poland,Arsenal,Juventus,18400000.0,2017-07-19,24,Poland
+Nicola Zalewski,Poland,Inter,Atalanta,17500000.0,2025-08-18,24,Poland
+Piotr Zielinski,Poland,Udinese,Napoli,16000000.0,2016-08-04,24,Poland
+Matty Cash,Poland,Nott'm Forest,Aston Villa,15750000.0,2020-09-03,24,Poland
+Marcin Bulka,Poland,Nice,NEOM SC,15000000.0,2025-07-05,24,Poland
+Kamil Grabara,Poland,Copenhagen,Wolfsburg,13500000.0,2024-07-01,24,Poland
+Mariano Díaz,Dominican Republic,Lyon,Real Madrid,21500000.0,2018-08-29,25,Dominican Republic
+Junior Firpo,Dominican Republic,Real Betis,Barcelona,20000000.0,2019-08-04,25,Dominican Republic
+Emil Audero,Indonesia,Juventus,Sampdoria,20000000.0,2019-07-01,26,Indonesia
+Jay Idzes,Indonesia,Venezia,Sassuolo,8100000.0,2025-08-09,26,Indonesia
+Beto,Guinea-Bissau,Udinese,Everton,25000000.0,2023-08-29,27,Guinea-Bissau
+Álvaro Djaló,Guinea-Bissau,Braga,Athletic Club,15000000.0,2024-07-01,27,Guinea-Bissau
+Ronaldo Vieira,Guinea-Bissau,Leeds,Sampdoria,7350000.0,2018-08-01,27,Guinea-Bissau
+Renato Nhaga,Guinea-Bissau,Casa Pia,Galatasaray,6500000.0,2026-02-03,27,Guinea-Bissau
+Rasmus Højlund,Denmark,Atalanta,Manchester United,79800000.0,2023-08-05,28,Denmark
+Patrick Dorgu,Denmark,Lecce,Manchester United,30000000.0,2025-02-02,28,Denmark
+Jesper Lindstrøm,Denmark,Frankfurt,Napoli,30000000.0,2023-08-29,28,Denmark
+Joachim Andersen,Denmark,Crystal Palace,Fulham,29500000.0,2024-08-23,28,Denmark
+Matt O'Riley,Denmark,Celtic,Brighton,29500000.0,2024-08-26,28,Denmark
+Christian Eriksen,Denmark,Tottenham Hotspur,Inter,27000000.0,2020-01-28,28,Denmark
+Jannik Vestergaard,Denmark,Mönchengladbach,Southampton,25000000.0,2018-07-13,28,Denmark
+Filip Jørgensen,Denmark,Villarreal,Chelsea,24500000.0,2024-07-30,28,Denmark
+Conrad Harder,Denmark,Sporting,Leipzig,24000000.0,2025-09-01,28,Denmark
+Mads Hermansen,Denmark,Leicester,West Ham,20800000.0,2025-08-09,28,Denmark
+Aleksandr Golovin,Russia,CSKA Moscow,Monaco,30000000.0,2018-07-27,29,Russia
+Matvey Safonov,Russia,Krasnodar,Paris Saint-Germain,20000000.0,2024-07-01,29,Russia
+Aleksandr Kokorin,Russia,Anzhi,Dinamo Moscow,19000000.0,2013-08-16,29,Russia
+Aleksey Miranchuk,Russia,Loko Moscow,Atalanta,15000000.0,2020-09-04,29,Russia
+Arsen Zakharyan,Russia,Dynamo Moscow,Real Sociedad,13000000.0,2023-08-19,29,Russia
+Mário Fernandes,Russia,Grêmio,CSKA Moscow,10500000.0,2012-07-01,29,Russia
+Aleksandr Sobolev,Russia,Spartak Moscow,Zenit S-Pb,10000000.0,2024-08-30,29,Russia
+Fedor Smolov,Russia,Krasnodar,Loko Moscow,9000000.0,2018-08-09,29,Russia
+Danil Glebov,Russia,Rostov,Dynamo Moscow,8000000.0,2025-02-20,29,Russia
+Denis Glushakov,Russia,Loko Moskau,Spartak Moscow,8000000.0,2013-07-01,29,Russia
+Naby Keïta,Guinea,RB Leipzig,Liverpool,60000000.0,2018-07-01,30,Guinea
+Amadou Diawara,Guinea,SSC Napoli,AS Roma,21000000.0,2019-07-01,30,Guinea
+Serhou Guirassy,Guinea,Stuttgart,Borussia Dortmund,18000000.0,2024-07-18,30,Guinea
+Sidiki Chérif,Guinea,Angers SCO,Fenerbahçe,18000000.0,2026-07-01,30,Guinea
+Ilaix Moriba,Guinea,Barcelona,Leipzig,16600000.0,2021-08-31,30,Guinea
+Mouctar Diakhaby,Guinea,Lyon,Valencia,15000000.0,2018-07-01,30,Guinea
+Mohamed Bayo,Guinea,Clermont Foot,Lille,14000000.0,2022-07-13,30,Guinea
+Leon Bailey,Jamaica,Bayer Leverkusen,Aston Villa,32000000.0,2021-08-04,31,Jamaica
+Andre Gray,Jamaica,Burnley,Watford,20400000.0,2017-08-09,31,Jamaica
+Bobby De Cordova-Reid,Jamaica,Bristol City,Cardiff,11350000.0,2018-07-01,31,Jamaica
+Michail Antonio,Jamaica,Nott'm Forest,West Ham,9500000.0,2015-09-01,31,Jamaica
+Demarai Gray,Jamaica,Everton,Al-Ettifaq,9300000.0,2023-09-07,31,Jamaica
+Shamar Nicholson,Jamaica,R Charleroi SC,Spartak Moscow,8000000.0,2022-01-07,31,Jamaica
+Frenkie de Jong,Netherlands,Ajax,Barcelona,86000000.0,2019-07-01,32,Netherlands
+Matthijs de Ligt,Netherlands,Ajax,Juventus,85500000.0,2019-07-18,32,Netherlands
+Virgil van Dijk,Netherlands,Southampton,Liverpool,84650000.0,2018-01-01,32,Netherlands
+Xavi Simons,Netherlands,Leipzig,Tottenham Hotspur,65000000.0,2025-08-29,32,Netherlands
+Teun Koopmeiners,Netherlands,Atalanta,Juventus,58400000.0,2024-08-28,32,Netherlands
+Tijjani Reijnders,Netherlands,AC Milan,Manchester City,54900000.0,2025-06-10,32,Netherlands
+Nathan Aké,Netherlands,Bournemouth,Manchester City,45300000.0,2020-08-05,32,Netherlands
+Ian Maatsen,Netherlands,Chelsea,Aston Villa,44500000.0,2024-07-01,32,Netherlands
+Jorrel Hato,Netherlands,Ajax,Chelsea,44180000.0,2025-08-03,32,Netherlands
+Joshua Zirkzee,Netherlands,Bologna,Manchester United,42500000.0,2024-07-14,32,Netherlands
+Nicolas Pépé,Cote d'Ivoire,Lille,Arsenal,80000000.0,2019-08-01,33,Cote d'Ivoire
+Sébastien Haller,Cote d'Ivoire,Frankfurt,West Ham,50000000.0,2019-07-17,33,Cote d'Ivoire
+Eric Bailly,Cote d'Ivoire,Villarreal,Manchester United,38000000.0,2016-07-01,33,Cote d'Ivoire
+Ibrahim Sangaré,Cote d'Ivoire,PSV,Nott'm Forest,35000000.0,2023-09-01,33,Cote d'Ivoire
+Franck Kessié,Cote d'Ivoire,Atalanta,AC Milan,32000000.0,2019-07-01,33,Cote d'Ivoire
+Wilfried Singo,Cote d'Ivoire,Monaco,Galatasaray,30770000.0,2025-08-28,33,Cote d'Ivoire
+Kader Meïté,Cote d'Ivoire,Stade Rennais,Al-Hilal,30000000.0,2026-02-01,33,Cote d'Ivoire
+Elye Wahi,Cote d'Ivoire,Montpellier,Lens,30000000.0,2023-08-20,33,Cote d'Ivoire
+Evann Guessand,Cote d'Ivoire,Nice,Aston Villa,30000000.0,2025-08-08,33,Cote d'Ivoire
+Amad Diallo,Cote d'Ivoire,Atalanta,Manchester United,27300000.0,2021-01-02,33,Cote d'Ivoire
+Alexander Isak,Sweden,Newcastle,Liverpool,145000000.0,2025-09-01,34,Sweden
+Viktor Gyökeres,Sweden,Sporting,Arsenal,66900000.0,2025-07-26,34,Sweden
+Anthony Elanga,Sweden,Nott'm Forest,Newcastle,61400000.0,2025-07-11,34,Sweden
+Dejan Kulusevski,Sweden,Atalanta,Juventus,39000000.0,2020-01-02,34,Sweden
+Victor Lindelöf,Sweden,Benfica,Manchester United,35000000.0,2017-07-01,34,Sweden
+Lucas Bergvall,Sweden,Djurgården,Tottenham Hotspur,20000000.0,2024-07-01,34,Sweden
+Adrian Lahdo,Sweden,Hammarby,Como,11940000.0,2026-02-02,34,Sweden
+Gabriel Gudmundsson,Sweden,Lille,Leeds,11600000.0,2025-07-08,34,Sweden
+Jens Cajuste,Sweden,Stade Reims,Napoli,11500000.0,2023-08-10,34,Sweden
+Jesper Karlsson,Sweden,AZ Alkmaar,Bologna,11150000.0,2023-08-23,34,Sweden
+Gylfi Sigurdsson,Iceland,Swansea,Everton,49400000.0,2017-08-16,35,Iceland
+Orri Óskarsson,Iceland,Copenhagen,Real Sociedad,20000000.0,2024-08-30,35,Iceland
+Albert Gudmundsson,Iceland,Genoa,Fiorentina,16800000.0,2025-07-01,35,Iceland
+Hákon Arnar Haraldsson,Iceland,Copenhagen,Lille,15000000.0,2023-07-17,35,Iceland
+Alfred Finnbogason,Iceland,Heerenveen,Real Sociedad,8000000.0,2014-07-02,35,Iceland
+Harry Souttar,Australia,Stoke City,Leicester,17000000.0,2023-01-31,36,Australia
+Cristian Volpato,Australia,Roma,Sassuolo,7500000.0,2023-07-01,36,Australia
+Mathew Ryan,Australia,Club Brugge,Valencia,7000000.0,2015-07-21,36,Australia
+Mykhaylo Mudryk,Ukraine,Shakhtar D.,Chelsea,70000000.0,2023-01-15,37,Ukraine
+Ilya Zabarnyi,Ukraine,Bournemouth,Paris Saint-Germain,63000000.0,2025-08-12,37,Ukraine
+Artem Dovbyk,Ukraine,Girona,Roma,41100000.0,2024-08-02,37,Ukraine
+Oleksandr Zinchenko,Ukraine,Manchester City,Arsenal,35000000.0,2022-07-22,37,Ukraine
+Andriy Yarmolenko,Ukraine,Dynamo Kyiv,Borussia Dortmund,25000000.0,2017-08-28,37,Ukraine
+Dmytro Chygrynskyi,Ukraine,Shakhtar D.,Barcelona,25000000.0,2009-08-31,37,Ukraine
+Vitaliy Mykolenko,Ukraine,Dynamo Kyiv,Everton,23500000.0,2022-01-01,37,Ukraine
+Georgiy Sudakov,Ukraine,Shakhtar D.,Benfica,20250000.0,2026-07-01,37,Ukraine
+Roman Yaremchuk,Ukraine,Benfica,Club Brugge,17000000.0,2022-08-29,37,Ukraine
+Vladyslav Vanat,Ukraine,Dynamo Kyiv,Girona,15000000.0,2025-09-01,37,Ukraine
+Brennan Johnson,Wales,Nott'm Forest,Tottenham Hotspur,55000000.0,2023-09-01,38,Wales
+Daniel James,Wales,Manchester United,Leeds,29100000.0,2021-08-31,38,Wales
+Neco Williams,Wales,Liverpool,Nott'm Forest,20000000.0,2022-07-10,38,Wales
+Joe Allen,Wales,Swansea,Liverpool,19000000.0,2012-08-10,38,Wales
+Danny Ward,Wales,Liverpool,Leicester,14000000.0,2018-07-20,38,Wales
+Harry Wilson,Wales,Liverpool,Fulham,14000000.0,2021-07-24,38,Wales
+Chris Mepham,Wales,Brentford,Bournemouth,13600000.0,2019-01-22,38,Wales
+Ben Davies,Wales,Swansea,Tottenham Hotspur,12650000.0,2014-07-23,38,Wales
+Joe Rodon,Wales,Swansea,Tottenham Hotspur,12100000.0,2020-10-16,38,Wales
+David Brooks,Wales,Sheff Utd,Bournemouth,11300000.0,2018-07-01,38,Wales
+Scott McTominay,Scotland,Manchester United,Napoli,30500000.0,2024-08-30,39,Scotland
+Kieran Tierney,Scotland,Celtic,Arsenal,27000000.0,2019-08-08,39,Scotland
+Ben Gannon-Doak,Scotland,Liverpool,Bournemouth,23200000.0,2025-08-18,39,Scotland
+Oli McBurnie,Scotland,Swansea,Sheff Utd,19100000.0,2019-08-02,39,Scotland
+Ché Adams,Scotland,Birmingham,Southampton,16700000.0,2019-07-01,39,Scotland
+Oliver Burke,Scotland,Leipzig,West Brom,15200000.0,2017-08-25,39,Scotland
+Billy Gilmour,Scotland,Brighton,Napoli,14750000.0,2024-08-30,39,Scotland
+Aaron Hickey,Scotland,Bologna,Brentford,14250000.0,2022-07-09,39,Scotland
+Nathan Patterson,Scotland,Rangers,Everton,14000000.0,2022-01-04,39,Scotland
+Matt Ritchie,Scotland,Bournemouth,Newcastle,12000000.0,2016-07-01,39,Scotland
+Omar Marmoush,Egypt,Frankfurt,Manchester City,75000000.0,2025-01-23,40,Egypt
+Mohamed Salah,Egypt,Roma,Liverpool,42000000.0,2017-07-01,40,Egypt
+Mohamed Elneny,Egypt,Basel,Arsenal,12500000.0,2016-01-14,40,Egypt
+Trezeguet,Egypt,Kasimpasa,Aston Villa,10000000.0,2019-07-24,40,Egypt
+Yoane Wissa,DR Congo,Brentford,Newcastle,57700000.0,2025-09-01,41,DR Congo
+Aaron Wan-Bissaka,DR Congo,Crystal Palace,Manchester United,55000000.0,2019-07-01,41,DR Congo
+Cédric Bakambu,DR Congo,Villarreal,BJ Guoan,40000000.0,2018-01-17,41,DR Congo
+Yannick Bolasie,DR Congo,Crystal Palace,Everton,28900000.0,2016-08-15,41,DR Congo
+Giannelli Imbula,DR Congo,FC Porto,Stoke City,24250000.0,2016-02-01,41,DR Congo
+Britt Assombalonga,DR Congo,Nottm Forest,Middlesbrough,17100000.0,2017-07-17,41,DR Congo
+Noah Sadiki,DR Congo,Union SG,Sunderland,17000000.0,2025-07-04,41,DR Congo
+Grady Diangana,DR Congo,West Ham,West Brom,13500000.0,2020-09-04,41,DR Congo
+Chancel Mbemba,DR Congo,RSC Anderlecht,Newcastle,12000000.0,2015-07-30,41,DR Congo
+Simon Banza,DR Congo,Braga,Al-Jazira,8500000.0,2025-09-22,41,DR Congo
+Kalidou Koulibaly,Senegal,Napoli,Chelsea,41900000.0,2022-07-16,42,Senegal
+Sadio Mané,Senegal,Southampton,Liverpool,41200000.0,2016-07-01,42,Senegal
+Nicolas Jackson,Senegal,Villarreal,Chelsea,37000000.0,2023-07-01,42,Senegal
+Moussa Niakhaté,Senegal,Nott'm Forest,Lyon,31900000.0,2024-07-04,42,Senegal
+Habib Diarra,Senegal,R. Strasbourg,Sunderland,31500000.0,2025-07-01,42,Senegal
+Keita Baldé,Senegal,Lazio,Monaco,30000000.0,2017-08-29,42,Senegal
+Idrissa Gueye,Senegal,Everton,Paris Saint-Germain,30000000.0,2019-07-30,42,Senegal
+Ismaïla Sarr,Senegal,Stade Rennais,Watford,30000000.0,2019-08-08,42,Senegal
+Edouard Mendy,Senegal,Stade Rennais,Chelsea,24000000.0,2020-09-24,42,Senegal
+El Hadji Malick Diouf,Senegal,Slavia Praha,West Ham,22000000.0,2025-07-15,42,Senegal
+Omar Mascarell,Equatorial Guinea,Real Madrid,FC Schalke 04,10000000.0,2018-07-02,43,Equatorial Guinea
+Saúl Coco,Equatorial Guinea,UD Las Palmas,Torino,8230000.0,2024-07-17,43,Equatorial Guinea
+Pedro Obiang,Equatorial Guinea,West Ham,Sassuolo,7750000.0,2019-07-24,43,Equatorial Guinea
+Miguel Almirón,Paraguay,Atlanta,Newcastle,24000000.0,2019-01-31,44,Paraguay
+Diego Gómez,Paraguay,Miami,Brighton,13000000.0,2025-01-01,44,Paraguay
+Ramón Sosa,Paraguay,Nott'm Forest,Palmeiras,12500000.0,2025-07-09,44,Paraguay
+Julio Enciso,Paraguay,Libertad,Brighton,11600000.0,2022-07-01,44,Paraguay
+Omar Alderete,Paraguay,Getafe,Sunderland,11600000.0,2025-08-12,44,Paraguay
+Mauricio,Paraguay,Internacional,Palmeiras,10500000.0,2024-07-10,44,Paraguay
+Gustavo Gómez,Paraguay,Lanús,AC Milan,9560000.0,2016-08-05,44,Paraguay
+Óscar Romero,Paraguay,Racing Club,SH Shenhua,8400000.0,2017-01-17,44,Paraguay
+Júnior Alonso,Paraguay,Atlético-MG,Krasnodar,8000000.0,2022-01-07,44,Paraguay
+Antonio Sanabria,Paraguay,Roma,Real Betis,7500000.0,2016-07-15,44,Paraguay
+Granit Xhaka,Switzerland,Mönchengladbach,Arsenal,45000000.0,2016-07-01,45,Switzerland
+Dan Ndoye,Switzerland,Bologna,Nott'm Forest,42000000.0,2025-07-31,45,Switzerland
+Ardon Jashari,Switzerland,Club Brugge,AC Milan,36000000.0,2025-08-06,45,Switzerland
+Breel Embolo,Switzerland,Basel,FC Schalke 04,26500000.0,2016-07-01,45,Switzerland
+Manuel Akanji,Switzerland,Basel,Borussia Dortmund,21500000.0,2018-01-15,45,Switzerland
+Denis Zakaria,Switzerland,Juventus,Monaco,20000000.0,2023-08-14,45,Switzerland
+Noah Okafor,Switzerland,AC Milan,Leeds,19000000.0,2025-08-21,45,Switzerland
+Zeki Amdouni,Switzerland,Basel,Burnley,18600000.0,2023-07-19,45,Switzerland
+Gökhan Inler,Switzerland,Udinese Calcio,SSC Napoli,18000000.0,2011-07-11,45,Switzerland
+Xherdan Shaqiri,Switzerland,Inter,Stoke City,17000000.0,2015-08-11,45,Switzerland
+Gianluca Lapadula,Peru,AC Milan,Genoa,11000000.0,2018-08-17,46,Peru
+André Carrillo,Peru,Benfica,Al-Hilal,9500000.0,2019-07-23,46,Peru
+Konstantinos Manolas,Greece,AS Roma,SSC Napoli,36000000.0,2019-07-01,47,Greece
+Charalampos Kostoulas,Greece,Olympiacos,Brighton,35000000.0,2025-07-01,47,Greece
+Stefanos Tzimas,Greece,1.FC Nuremberg,Brighton,26500000.0,2025-02-03,47,Greece
+Odysseas Vlachodimos,Greece,Nott'm Forest,Newcastle,23600000.0,2024-07-01,47,Greece
+Fotis Ioannidis,Greece,Panathinaikos,Sporting,22000000.0,2025-09-01,47,Greece
+Konstantinos Mavropanos,Greece,Stuttgart,West Ham,20000000.0,2023-08-22,47,Greece
+Vangelis Pavlidis,Greece,AZ Alkmaar,Benfica,18000000.0,2024-07-01,47,Greece
+Panagiotis Retsos,Greece,Olympiacos,Bayer Leverkusen,17500000.0,2017-08-31,47,Greece
+Sokratis Papastathopoulos,Greece,Borussia Dortmund,Arsenal,16000000.0,2018-07-02,47,Greece
+Anastasios Douvikas,Greece,Celta de Vigo,Como,14000000.0,2025-02-03,47,Greece
+Dango Ouattara,Burkina Faso,Bournemouth,Brentford,42800000.0,2025-08-16,48,Burkina Faso
+Edmond Tapsoba,Burkina Faso,Vit. Guimarães,Bayer Leverkusen,20200000.0,2020-01-31,48,Burkina Faso
+Bertrand Traoré,Burkina Faso,Lyon,Aston Villa,18400000.0,2020-09-19,48,Burkina Faso
+Nasser Djiga,Burkina Faso,Red Star,Wolves,12000000.0,2025-02-03,48,Burkina Faso
+Arthur Zagré,Burkina Faso,Paris Saint-Germain,Monaco,10000000.0,2019-08-29,48,Burkina Faso
+Lassina Traoré,Burkina Faso,Ajax,Shakhtar D.,10000000.0,2021-07-01,48,Burkina Faso
+Cyriaque Irié,Burkina Faso,Troyes,Freiburg,8500000.0,2025-07-01,48,Burkina Faso
+Hassane Bandé,Burkina Faso,KV Mechelen,Ajax,8250000.0,2018-07-01,48,Burkina Faso
+Adamo Nagalo,Burkina Faso,Nordsjaelland,PSV,7000000.0,2024-09-02,48,Burkina Faso
+Kévin Denkey,Togo,Cercle Brugge,Cincinnati,15300000.0,2025-01-31,49,Togo
+Ihlas Bebou,Togo,Hannover 96,Hoffenheim,9000000.0,2019-07-01,49,Togo
+Kepa Arrizabalaga,Spain,Athletic Club,Chelsea,80000000.0,2018-08-08,50,Spain
+Martín Zubimendi,Spain,Real Sociedad,Arsenal,70000000.0,2025-07-06,50,Spain
+Rodri,Spain,Atletico Madrid,Manchester City,70000000.0,2019-07-04,50,Spain
+Álvaro Morata,Spain,Real Madrid,Chelsea,66000000.0,2017-07-21,50,Spain
+Marc Cucurella,Spain,Brighton,Chelsea,65300000.0,2022-08-05,50,Spain
+Aymeric Laporte,Spain,Athletic Club,Manchester City,65000000.0,2018-01-30,50,Spain
+Dean Huijsen,Spain,Bournemouth,Real Madrid,62500000.0,2025-06-01,50,Spain
+Dani Olmo,Spain,Leipzig,Barcelona,61000000.0,2024-08-09,50,Spain
+Nico González,Spain,Porto,Manchester City,60000000.0,2025-02-03,50,Spain
+Ferran Torres,Spain,Manchester City,Barcelona,55000000.0,2022-01-01,50,Spain
+David Carmo,Angola,Braga,Porto,20280000.0,2022-07-05,51,Angola
+Hélder Costa,Angola,Wolves,Leeds,17700000.0,2020-07-01,51,Angola
+Ivan Cavaleiro,Angola,Benfica,Monaco,15000000.0,2015-07-10,51,Angola
+M'Bala Nzola,Angola,Spezia Calcio,Fiorentina,12600000.0,2023-08-10,51,Angola
+Henrikh Mkhitaryan,Armenia,Borussia Dortmund,Manchester United,42000000.0,2016-07-06,52,Armenia
+Lucas Zelarayán,Armenia,Tigres UANL,Columbus Crew,7300000.0,2020-01-01,52,Armenia
+Enzo Fernández,Argentina,Benfica,Chelsea,121000000.0,2023-01-31,53,Argentina
+Julián Alvarez,Argentina,Manchester City,Atletico Madrid,75000000.0,2024-08-12,53,Argentina
+Ángel Di María,Argentina,Real Madrid,Manchester United,75000000.0,2014-08-26,53,Argentina
+Lisandro Martínez,Argentina,Ajax,Manchester United,57370000.0,2022-07-27,53,Argentina
+Cristian Romero,Argentina,Atalanta,Tottenham Hotspur,53800000.0,2022-08-30,53,Argentina
+Mauro Icardi,Argentina,Inter,Paris Saint-Germain,50000000.0,2020-07-01,53,Argentina
+Alejandro Garnacho,Argentina,Manchester United,Chelsea,46200000.0,2025-08-30,53,Argentina
+Franco Mastantuono,Argentina,River Plate,Real Madrid,45000000.0,2025-08-14,53,Argentina
+Nicolás Otamendi,Argentina,Valencia,Manchester City,44500000.0,2015-08-20,53,Argentina
+Alexis Mac Allister,Argentina,Brighton,Liverpool,42000000.0,2023-07-01,53,Argentina
+Radu Drăgușin,Romania,Genoa,Tottenham Hotspur,28000000.0,2024-01-11,54,Romania
+Dennis Man,Romania,FCSB,Parma,12600000.0,2021-01-29,54,Romania
+Răzvan Marin,Romania,Standard Liège,Ajax,12500000.0,2019-07-01,54,Romania
+Nicolae Stanciu,Romania,Steaua Bucharest,RSC Anderlecht,11000000.0,2016-08-29,54,Romania
+Ionuț Radu,Romania,Genoa,Inter,10500000.0,2019-07-12,54,Romania
+Valentin Mihăilă,Romania,Univ. Craiova,Parma,9500000.0,2020-10-05,54,Romania
+Vlad Chiricheș,Romania,Napoli,Sassuolo,9500000.0,2020-09-01,54,Romania
+Alexandru Mitriță,Romania,Univ. Craiova,New York City,8000000.0,2019-02-04,54,Romania
+George Pușcaș,Romania,Inter,Reading,7500000.0,2019-08-07,54,Romania
+Alexandru Cicâldău,Romania,Univ. Craiova,Galatasaray,6500000.0,2021-07-24,54,Romania
+Bryan Mbeumo,Cameroon,Brentford,Manchester United,75000000.0,2025-07-21,55,Cameroon
+André Onana,Cameroon,Inter,Manchester United,50200000.0,2023-07-20,55,Cameroon
+Carlos Baleba,Cameroon,Lille,Brighton,27000000.0,2023-08-29,55,Cameroon
+Frank Anguissa,Cameroon,Marseille,Fulham,24850000.0,2018-08-09,55,Cameroon
+Clinton N'Jie,Cameroon,Olympique Lyon,Tottenham Hotspur,14100000.0,2015-08-15,55,Cameroon
+Jackson Tchatchoua,Cameroon,Hellas Verona,Wolves,12500000.0,2025-08-19,55,Cameroon
+Vincent Aboubakar,Cameroon,FC Lorient,FC Porto,12300000.0,2014-08-24,55,Cameroon
+Christopher Wooh,Cameroon,Lens,Stade Rennais,9000000.0,2022-09-01,55,Cameroon
+Faris Moumbagna,Cameroon,Bodø/Glimt,Marseille,8000000.0,2024-01-20,55,Cameroon
+Nathan Ngoumou,Cameroon,Toulouse,Mönchengladbach,8000000.0,2022-08-30,55,Cameroon
+Jude Bellingham,England,Borussia Dortmund,Real Madrid,127000000.0,2023-07-01,56,England
+Jack Grealish,England,Aston Villa,Manchester City,117500000.0,2021-08-05,56,England
+Declan Rice,England,West Ham,Arsenal,116600000.0,2023-07-15,56,England
+Harry Kane,England,Tottenham Hotspur,Bayern Munich,95000000.0,2023-08-12,56,England
+Harry Maguire,England,Leicester,Manchester United,87000000.0,2019-08-05,56,England
+Jadon Sancho,England,Borussia Dortmund,Manchester United,85000000.0,2021-07-23,56,England
+Anthony Gordon,England,Newcastle,Barcelona,80000000.0,2026-07-01,56,England
+Eberechi Eze,England,Crystal Palace,Arsenal,69300000.0,2025-08-23,56,England
+Mason Mount,England,Chelsea,Manchester United,67700000.0,2023-07-05,56,England
+Dominic Solanke,England,Bournemouth,Tottenham Hotspur,64300000.0,2024-08-10,56,England
+Neymar,Brazil,Barcelona,Paris Saint-Germain,222000000.0,2017-08-03,57,Brazil
+Philippe Coutinho,Brazil,Liverpool,Barcelona,135000000.0,2018-01-08,57,Brazil
+Antony,Brazil,Ajax,Manchester United,95000000.0,2022-08-30,57,Brazil
+Arthur Melo,Brazil,Barcelona,Juventus,80600000.0,2020-09-01,57,Brazil
+Matheus Cunha,Brazil,Wolves,Manchester United,74200000.0,2025-07-01,57,Brazil
+Alisson,Brazil,Roma,Liverpool,72500000.0,2018-07-19,57,Brazil
+Casemiro,Brazil,Real Madrid,Manchester United,70650000.0,2022-08-22,57,Brazil
+João Pedro,Brazil,Brighton,Chelsea,63700000.0,2025-07-02,57,Brazil
+Malcom,Brazil,Zenit S-Pb,Al-Hilal,60000000.0,2023-07-26,57,Brazil
+Fred,Brazil,Shakhtar D.,Manchester United,59000000.0,2018-07-01,57,Brazil
+Pierre-Emerick Aubameyang,Gabon,Borussia Dortmund,Arsenal,63750000.0,2018-01-31,58,Gabon
+Mario Lemina,Gabon,Juventus,Southampton,17250000.0,2017-08-08,58,Gabon
+Marash Kumbulla,Albania,Hellas Verona,Roma,26500000.0,2021-07-01,59,Albania
+Armando Broja,Albania,Chelsea,Burnley,23000000.0,2025-08-08,59,Albania
+Kristjan Asllani,Albania,FC Empoli,Inter,15700000.0,2023-07-01,59,Albania
+Myrto Uzuni,Albania,Granada CF,Austin,12000000.0,2025-01-31,59,Albania
+Ernest Muci,Albania,Legia Warszawa,Besiktas,10000000.0,2024-02-09,59,Albania
+Josko Gvardiol,Croatia,Leipzig,Manchester City,90000000.0,2023-08-05,60,Croatia
+Mateo Kovacic,Croatia,Real Madrid,Chelsea,45000000.0,2019-07-01,60,Croatia
+Luka Modrić,Croatia,Tottenham Hotspur,Real Madrid,35000000.0,2012-08-27,60,Croatia
+Nikola Vlašić,Croatia,CSKA Moscow,West Ham,30000000.0,2021-08-31,60,Croatia
+Marko Pjaca,Croatia,Dinamo Zagreb,Juventus,29400000.0,2016-07-21,60,Croatia
+Dejan Lovren,Croatia,Southampton,Liverpool,25300000.0,2014-07-27,60,Croatia
+Lovro Majer,Croatia,Stade Rennais,Wolfsburg,25000000.0,2023-08-16,60,Croatia
+Franjo Ivanović,Croatia,Union SG,Benfica,22800000.0,2025-07-31,60,Croatia
+Josip Sutalo,Croatia,Dinamo Zagreb,Ajax,20500000.0,2023-08-20,60,Croatia
+Duje Caleta-Car,Croatia,Salzburg,Marseille,19000000.0,2018-07-20,60,Croatia
+Alexis Sánchez,Chile,Barcelona,Arsenal,42500000.0,2014-07-10,61,Chile
+Arturo Vidal,Chile,Juventus,Bayern Munich,39250000.0,2015-07-28,61,Chile
+Claudio Bravo,Chile,Barcelona,Manchester City,18000000.0,2016-08-25,61,Chile
+Guillermo Maripán,Chile,Alavés,Monaco,18000000.0,2019-08-24,61,Chile
+Eduardo Vargas,Chile,U. de Chile,Napoli,13500000.0,2012-01-09,61,Chile
+Charles Aránguiz,Chile,Internacional,Bayer Leverkusen,13000000.0,2015-08-13,61,Chile
+Erick Pulgar,Chile,Bologna,Fiorentina,12300000.0,2019-08-09,61,Chile
+Diego Valdés,Chile,Santos Laguna,América,10600000.0,2022-01-01,61,Chile
+Víctor Dávila,Chile,Necaxa,Pachuca,10600000.0,2019-01-01,61,Chile
+Marcelino Núñez,Chile,Norwich,Ipswich,8650000.0,2025-08-29,61,Chile
+Moisés Caicedo,Ecuador,Brighton,Chelsea,116000000.0,2023-08-14,62,Ecuador
+Piero Hincapié,Ecuador,Bayer Leverkusen,Arsenal,52000000.0,2026-07-01,62,Ecuador
+Willian Pacho,Ecuador,Frankfurt,Paris Saint-Germain,40000000.0,2024-08-09,62,Ecuador
+Pervis Estupiñán,Ecuador,Villarreal,Brighton,17800000.0,2022-08-16,62,Ecuador
+Nilson Angulo,Ecuador,RSC Anderlecht,Sunderland,17340000.0,2026-02-02,62,Ecuador
+Enner Valencia,Ecuador,Pachuca,West Ham,15000000.0,2014-07-17,62,Ecuador
+Gonzalo Plata,Ecuador,Real Valladolid,Al-Sadd,12000000.0,2023-07-23,62,Ecuador
+Kendry Páez,Ecuador,Independiente,Chelsea,10000000.0,2025-07-01,62,Ecuador
+Keny Arroyo,Ecuador,Besiktas,Cruzeiro,8500000.0,2025-09-02,62,Ecuador
+Christian Noboa,Ecuador,Rubin Kazan,Dinamo Moscow,8000000.0,2012-01-19,62,Ecuador
+Kylian Mbappé,France,Monaco,Paris Saint-Germain,180000000.0,2018-07-01,63,France
+Ousmane Dembélé,France,Borussia Dortmund,Barcelona,148000000.0,2017-08-25,63,France
+Antoine Griezmann,France,Atletico Madrid,Barcelona,120000000.0,2019-07-14,63,France
+Paul Pogba,France,Juventus,Manchester United,105000000.0,2016-08-09,63,France
+Randal Kolo Muani,France,Frankfurt,Paris Saint-Germain,95000000.0,2023-09-01,63,France
+Hugo Ekitiké,France,Frankfurt,Liverpool,95000000.0,2025-07-23,63,France
+Wesley Fofana,France,Leicester,Chelsea,80400000.0,2022-08-31,63,France
+Lucas Hernández,France,Atletico Madrid,Bayern Munich,80000000.0,2019-07-01,63,France
+Aurélien Tchouaméni,France,Monaco,Real Madrid,80000000.0,2022-07-01,63,France
+Thomas Lemar,France,Monaco,Atletico Madrid,72000000.0,2018-07-01,63,France
+Miralem Pjanić,Bosnia-Herzegovina,Juventus,Barcelona,60000000.0,2020-09-01,64,Bosnia-Herzegovina
+Edin Dzeko,Bosnia-Herzegovina,Wolfsburg,Manchester City,37000000.0,2011-01-07,64,Bosnia-Herzegovina
+Ermedin Demirovic,Bosnia-Herzegovina,Augsburg,Stuttgart,23000000.0,2024-07-16,64,Bosnia-Herzegovina
+Amar Dedić,Bosnia-Herzegovina,Salzburg,Benfica,12000000.0,2025-07-14,64,Bosnia-Herzegovina
+Asmir Begovic,Bosnia-Herzegovina,Chelsea,Bournemouth,11500000.0,2017-07-01,64,Bosnia-Herzegovina
+Rade Krunic,Bosnia-Herzegovina,FC Empoli,AC Milan,8600000.0,2019-07-08,64,Bosnia-Herzegovina
+Ivan Šunjić,Bosnia-Herzegovina,Dinamo Zagreb,Birmingham,8000000.0,2019-07-26,64,Bosnia-Herzegovina
+Kerim Alajbegovic,Bosnia-Herzegovina,Salzburg,Bayer Leverkusen,8000000.0,2026-07-01,64,Bosnia-Herzegovina
+Benjamin Tahirović,Bosnia-Herzegovina,Roma,Ajax,7500000.0,2023-07-01,64,Bosnia-Herzegovina
+Anel Ahmedhodzic,Bosnia-Herzegovina,Sheff Utd,Feyenoord,6900000.0,2025-08-05,64,Bosnia-Herzegovina
+Florian Wirtz,Germany,Bayer Leverkusen,Liverpool,125000000.0,2025-07-01,65,Germany
+Kai Havertz,Germany,Bayer Leverkusen,Chelsea,100000000.0,2020-09-04,65,Germany
+Nick Woltemade,Germany,Stuttgart,Newcastle,75000000.0,2025-08-30,65,Germany
+Timo Werner,Germany,Leipzig,Chelsea,53000000.0,2020-07-01,65,Germany
+Leroy Sané,Germany,FC Schalke 04,Manchester City,52000000.0,2016-08-02,65,Germany
+Thilo Kehrer,Germany,FC Schalke 04,Paris Saint-Germain,37000000.0,2018-08-16,65,Germany
+Mario Götze,Germany,Borussia Dortmund,Bayern Munich,37000000.0,2013-07-01,65,Germany
+Malick Thiaw,Germany,AC Milan,Newcastle,35000000.0,2025-08-12,65,Germany
+Mats Hummels,Germany,Borussia Dortmund,Bayern Munich,35000000.0,2016-07-01,65,Germany
+Antonio Rüdiger,Germany,Roma,Chelsea,35000000.0,2017-07-09,65,Germany
+Erling Haaland,Norway,Borussia Dortmund,Manchester City,60000000.0,2022-07-01,66,Norway
+Jørgen Strand Larsen,Norway,Wolves,Crystal Palace,49700000.0,2026-02-02,66,Norway
+Martin Ødegaard,Norway,Real Madrid,Arsenal,35000000.0,2021-08-20,66,Norway
+Alexander Sørloth,Norway,Villarreal,Atletico Madrid,32000000.0,2024-08-03,66,Norway
+Oscar Bobb,Norway,Manchester City,Fulham,31200000.0,2026-01-30,66,Norway
+Sander Berge,Norway,Genk,Sheff Utd,25000000.0,2020-01-30,66,Norway
+Antonio Nusa,Norway,Club Brugge,Leipzig,21000000.0,2024-08-13,66,Norway
+Mohamed Elyounoussi,Norway,Basel,Southampton,18000000.0,2018-07-01,66,Norway
+Kristoffer Ajer,Norway,Celtic,Brentford,15700000.0,2021-07-21,66,Norway
+Sverre Nypan,Norway,Rosenborg BK,Manchester City,15000000.0,2025-07-17,66,Norway
+Nathan Collins,Ireland,Wolves,Brentford,26850000.0,2023-07-04,67,Ireland
+Jake O'Brien,Ireland,Lyon,Everton,19500000.0,2024-07-30,67,Ireland
+Matt Doherty,Ireland,Wolves,Tottenham Hotspur,16800000.0,2020-08-30,67,Ireland
+James McCarthy,Ireland,Wigan,Everton,15300000.0,2013-09-02,67,Ireland
+Robbie Brady,Ireland,Norwich,Burnley,15100000.0,2017-01-31,67,Ireland
+Caoimhín Kelleher,Ireland,Liverpool,Brentford,14800000.0,2025-07-01,67,Ireland
+Dara O'Shea,Ireland,Burnley,Ipswich,14200000.0,2024-08-25,67,Ireland
+Gavin Bazunu,Ireland,Manchester City,Southampton,14000000.0,2022-07-01,67,Ireland
+Kasey McAteer,Ireland,Leicester,Ipswich,13900000.0,2025-08-22,67,Ireland
+Finn Azaz,Ireland,Middlesbrough,Southampton,13900000.0,2025-08-29,67,Ireland
+Dušan Vlahović,Serbia,Fiorentina,Juventus,85400000.0,2022-01-28,68,Serbia
+Luka Jović,Serbia,Frankfurt,Real Madrid,63000000.0,2019-07-02,68,Serbia
+Aleksandar Mitrović,Serbia,Fulham,Al-Hilal,52600000.0,2023-08-19,68,Serbia
+Nemanja Matić,Serbia,Chelsea,Manchester United,44700000.0,2017-07-31,68,Serbia
+Sergej Milinković-Savić,Serbia,Lazio,Al-Hilal,40000000.0,2023-07-12,68,Serbia
+Djordje Petrovic,Serbia,Chelsea,Bournemouth,28900000.0,2025-07-16,68,Serbia
+Lazar Markovic,Serbia,Benfica,Liverpool,25000000.0,2014-07-15,68,Serbia
+Aleksandar Stanković,Serbia,Club Brugge,Inter,23000000.0,2026-06-28,68,Serbia
+Nikola Maksimović,Serbia,Torino,SSC Napoli,21000000.0,2017-07-01,68,Serbia
+Strahinja Pavlović,Serbia,Salzburg,AC Milan,18500000.0,2024-07-31,68,Serbia
+Benjamin Sesko,Slovenia,Leipzig,Manchester United,76500000.0,2025-08-09,69,Slovenia
+Kevin Kampl,Slovenia,Bayer Leverkusen,RB Leipzig,20000000.0,2017-08-31,69,Slovenia
+Jaka Bijol,Slovenia,Udinese,Leeds,18000000.0,2025-07-01,69,Slovenia
+Jan Oblak,Slovenia,Benfica,Atletico Madrid,16000000.0,2014-07-16,69,Slovenia
+Wahbi Khazri,Tunisia,G. Bordeaux,Sunderland,11800000.0,2016-01-30,70,Tunisia
+Hannibal,Tunisia,AS Monaco,Manchester United,10000000.0,2019-08-11,70,Tunisia
+Sebastian Tounekti,Tunisia,Hammarby,Celtic,6400000.0,2025-09-01,70,Tunisia
+Milan Škriniar,Slovakia,Sampdoria,Inter,34000000.0,2017-07-07,71,Slovakia
+Dávid Hancko,Slovakia,Feyenoord,Atletico Madrid,26000000.0,2025-07-24,71,Slovakia
+Stanislav Lobotka,Slovakia,Celta de Vigo,Napoli,24000000.0,2020-01-15,71,Slovakia
+Denis Vavro,Slovakia,Copenhagen,Lazio,10500000.0,2019-07-04,71,Slovakia
+David Strelec,Slovakia,Slo. Bratislava,Middlesbrough,7500000.0,2025-09-01,71,Slovakia
+Ondrej Duda,Slovakia,Hertha BSC,1.FC Köln,7000000.0,2020-09-16,71,Slovakia
+Vedat Muriqi,Kosovo,Fenerbahçe,Lazio,21000000.0,2020-09-15,72,Kosovo
+Edon Zhegrova,Kosovo,Lille,Juventus,15500000.0,2025-09-01,72,Kosovo
+Amir Rrahmani,Kosovo,Hellas Verona,Napoli,15300000.0,2020-01-20,72,Kosovo
+Milot Rashica,Kosovo,Werder Bremen,Norwich,11000000.0,2021-07-01,72,Kosovo
+Arijanet Murić,Kosovo,Burnley,Ipswich,9550000.0,2024-07-17,72,Kosovo
+Leon Avdullahu,Kosovo,Basel,Hoffenheim,8000000.0,2025-07-01,72,Kosovo
+Valon Berisha,Kosovo,Salzburg,Lazio,7600000.0,2018-07-03,72,Kosovo
+Stevan Jovetić,Montenegro,Fiorentina,Manchester City,26000000.0,2013-07-19,73,Montenegro
+Nikola Krstović,Montenegro,Lecce,Atalanta,25000000.0,2025-08-20,73,Montenegro
+Stefan Savic,Montenegro,Fiorentina,Atletico Madrid,12000000.0,2015-07-20,73,Montenegro
+Vasilije Adžić,Montenegro,B. Podgorica,Juventus,7200000.0,2024-07-01,73,Montenegro
+Sead Haksabanovic,Montenegro,Norrköping,Rubin Kazan,6500000.0,2021-07-01,73,Montenegro
+El Bilal Touré,Mali,UD Almería,Atalanta,30200000.0,2023-07-29,74,Mali
+Yves Bissouma,Mali,Brighton,Tottenham Hotspur,29200000.0,2022-07-01,74,Mali
+Cheick Doucouré,Mali,Lens,Crystal Palace,22600000.0,2022-07-11,74,Mali
+Abdoulaye Doucouré,Mali,Watford,Everton,22000000.0,2020-09-08,74,Mali
+Amadou Haidara,Mali,Salzburg,Leipzig,19000000.0,2019-01-01,74,Mali
+Dorgeles Nene,Mali,Salzburg,Fenerbahçe,18000000.0,2025-08-19,74,Mali
+Mahamadou Doumbia,Mali,Royal Antwerp,Al-Ittihad,16000000.0,2025-09-08,74,Mali
+Moussa Djenepo,Mali,Standard Liège,Southampton,15700000.0,2019-07-01,74,Mali
+Mohamed Camara,Mali,RB Salzburg,Monaco,15000000.0,2022-08-14,74,Mali
+Diadié Samassékou,Mali,Salzburg,Hoffenheim,12500000.0,2019-08-15,74,Mali
+Antoine Semenyo,Ghana,Bournemouth,Manchester City,72000000.0,2026-01-09,75,Ghana
+Mohammed Kudus,Ghana,West Ham,Tottenham Hotspur,63800000.0,2025-07-10,75,Ghana
+Thomas Partey,Ghana,Atletico Madrid,Arsenal,50000000.0,2020-10-05,75,Ghana
+Ernest Nuamah,Ghana,RWDM,Lyon,28500000.0,2024-07-07,75,Ghana
+Abdul Rahman Baba,Ghana,Augsburg,Chelsea,26000000.0,2015-08-16,75,Ghana
+Kamaldeen Sulemana,Ghana,Stade Rennais,Southampton,25000000.0,2023-01-31,75,Ghana
+André Ayew,Ghana,Swansea,West Ham,24100000.0,2016-08-08,75,Ghana
+Ibrahim Osman,Ghana,Nordsjaelland,Brighton,19500000.0,2024-07-01,75,Ghana
+Christopher Bonsu Baah,Ghana,Genk,Al-Qadsiah,17000000.0,2025-07-07,75,Ghana
+Abdul Fatawu,Ghana,Sporting,Leicester,16250000.0,2024-07-01,75,Ghana
+Abdukodir Khusanov,Uzbekistan,Lens,Manchester City,40000000.0,2025-01-20,76,Uzbekistan
+Eldor Shomurodov,Uzbekistan,Genoa,Roma,19780000.0,2021-08-02,76,Uzbekistan
+Abbosbek Fayzullaev,Uzbekistan,CSKA Moscow,Basaksehir,7500000.0,2025-07-30,76,Uzbekistan
+Shoya Nakajima,Japan,Portimonense,Al-Duhail SC,35000000.0,2019-02-03,77,Japan
+Hiroki Ito,Japan,Stuttgart,Bayern Munich,23500000.0,2024-07-01,77,Japan
+Ritsu Doan,Japan,Freiburg,Frankfurt,21000000.0,2025-08-07,77,Japan
+Wataru Endo,Japan,Stuttgart,Liverpool,20000000.0,2023-08-18,77,Japan
+Takehiro Tomiyasu,Japan,Bologna,Arsenal,18600000.0,2021-08-31,77,Japan
+Shinji Kagawa,Japan,Borussia Dortmund,Manchester United,16000000.0,2012-07-01,77,Japan
+Takumi Minamino,Japan,Liverpool,Monaco,15000000.0,2022-07-01,77,Japan
+Keito Nakamura,Japan,LASK,Stade Reims,12000000.0,2023-08-10,77,Japan
+Kyogo Furuhashi,Japan,Celtic,Stade Rennais,12000000.0,2025-01-27,77,Japan
+Shinji Okazaki,Japan,1.FSV Mainz 05,Leicester,11000000.0,2015-07-01,77,Japan
+Khvicha Kvaratskhelia,Georgia,Napoli,Paris Saint-Germain,80000000.0,2025-01-17,78,Georgia
+Georges Mikautadze,Georgia,Lyon,Villarreal,31000000.0,2025-09-01,78,Georgia
+Giorgi Mamardashvili,Georgia,Valencia,Liverpool,30000000.0,2024-08-27,78,Georgia
+Chris Wood,New Zealand,Burnley,Newcastle,30000000.0,2022-01-13,79,New Zealand
+Geoffrey Kondogbia,Central African Republic,Monaco,Inter,36000000.0,2015-07-01,80,Central African Republic
+Patrik Schick,Czech Republic,Sampdoria,Roma,42000000.0,2018-07-01,81,Czech Republic
+Adam Hlozek,Czech Republic,Bayer Leverkusen,Hoffenheim,18000000.0,2024-08-17,81,Czech Republic
+Antonín Kinský,Czech Republic,Slavia Praha,Tottenham Hotspur,16500000.0,2025-01-05,81,Czech Republic
+Tomáš Souček,Czech Republic,Slavia Praha,West Ham,16200000.0,2020-07-27,81,Czech Republic
+Jakub Jankto,Czech Republic,Udinese,Sampdoria,14500000.0,2019-07-01,81,Czech Republic
+David Jurásek,Czech Republic,Slavia Praha,Benfica,14000000.0,2023-07-10,81,Czech Republic
+Matej Vydra,Czech Republic,Derby,Burnley,12200000.0,2018-08-07,81,Czech Republic
+Alex Král,Czech Republic,Slavia Praha,Spartak Moscow,12000000.0,2019-09-01,81,Czech Republic
+Ladislav Krejčí,Czech Republic,Sparta Prague,Girona,12000000.0,2024-07-01,81,Czech Republic
+Martin Vitík,Czech Republic,Sparta Prague,Bologna,11000000.0,2025-07-06,81,Czech Republic
+Christian Pulisic,United States,Borussia Dortmund,Chelsea,64000000.0,2019-01-02,82,United States
+Malik Tillman,United States,PSV,Bayer Leverkusen,35000000.0,2025-07-12,82,United States
+Brenden Aaronson,United States,Salzburg,Leeds,32840000.0,2022-07-01,82,United States
+Folarin Balogun,United States,Arsenal,Monaco,30000000.0,2023-08-30,82,United States
+Tyler Adams,United States,Leeds,Bournemouth,26900000.0,2023-08-20,82,United States
+Johnny Cardoso,United States,Real Betis,Atletico Madrid,24000000.0,2025-07-16,82,United States
+Weston McKennie,United States,FC Schalke 04,Juventus,21900000.0,2021-07-01,82,United States
+Yunus Musah,United States,Valencia,AC Milan,21200000.0,2023-08-04,82,United States
+Sergiño Dest,United States,Ajax,Barcelona,21000000.0,2020-10-01,82,United States
+Josh Sargent,United States,Norwich,Toronto,18650000.0,2026-02-27,82,United States
+Yankuba Minteh,The Gambia,Newcastle,Brighton,35000000.0,2024-07-01,83,The Gambia
+Musa Barrow,The Gambia,Atalanta,Bologna,14340000.0,2021-07-01,83,The Gambia
+Omar Colley,The Gambia,Genk,Sampdoria,9250000.0,2018-07-01,83,The Gambia
+Oscar Gloukh,Israel,Salzburg,Ajax,14750000.0,2025-08-01,84,Israel
+Daniel Peretz,Israel,Bayern Munich,Southampton,8000000.0,2026-07-01,84,Israel
+Liel Abada,Israel,Celtic,Charlotte,8000000.0,2024-03-07,84,Israel
+Anan Khalaili,Israel,Maccabi Haifa,Union SG,6500000.0,2024-07-01,84,Israel
+Manor Solomon,Israel,M. Petah Tikva,Shakhtar D.,6500000.0,2019-01-11,84,Israel
+Alireza Jahanbakhsh,Iran,AZ Alkmaar,Brighton,22500000.0,2018-07-25,85,Iran
+Sardar Azmoun,Iran,Rubin Kazan,Zenit S-Pb,12000000.0,2019-02-01,85,Iran
+Darwin Núñez,Uruguay,Benfica,Liverpool,85000000.0,2022-07-01,86,Uruguay
+Luis Suárez,Uruguay,Liverpool,Barcelona,81720000.0,2014-07-11,86,Uruguay
+Edinson Cavani,Uruguay,Napoli,Paris Saint-Germain,64500000.0,2013-07-16,86,Uruguay
+Manuel Ugarte,Uruguay,Sporting,Paris Saint-Germain,60000000.0,2023-07-07,86,Uruguay
+Rodrigo Zalazar,Uruguay,Braga,Sporting,30000000.0,2026-07-01,86,Uruguay
+Lucas Torreira,Uruguay,Sampdoria,Arsenal,28650000.0,2018-07-10,86,Uruguay
+Matías Vecino,Uruguay,Fiorentina,Inter,24000000.0,2017-08-02,86,Uruguay
+Rodrigo Bentancur,Uruguay,Boca Juniors,Juventus,23500000.0,2017-07-01,86,Uruguay
+Luciano Rodríguez,Uruguay,EC Bahia,NEOM SC,20000000.0,2025-09-10,86,Uruguay
+Diego Laxalt,Uruguay,Genoa,AC Milan,19000000.0,2018-08-17,86,Uruguay
+Keylor Navas,Costa Rica,Real Madrid,Paris Saint-Germain,15000000.0,2019-09-02,87,Costa Rica
+Manfred Ugalde,Costa Rica,FC Twente,Spartak Moscow,13000000.0,2024-01-29,87,Costa Rica
+Mateo Retegui,Italy,Atalanta,Al-Qadsiah,61750000.0,2025-07-21,88,Italy
+Sandro Tonali,Italy,AC Milan,Newcastle,60800000.0,2023-07-03,88,Italy
+Jorginho,Italy,Napoli,Chelsea,57000000.0,2018-07-14,88,Italy
+Federico Chiesa,Italy,Fiorentina,Juventus,44600000.0,2022-07-01,88,Italy
+Riccardo Calafiori,Italy,Bologna,Arsenal,43700000.0,2024-07-29,88,Italy
+Leonardo Bonucci,Italy,Juventus,AC Milan,42000000.0,2017-07-21,88,Italy
+Alessandro Bastoni,Italy,Atalanta,Inter,40700000.0,2017-08-31,88,Italy
+Federico Bernardeschi,Italy,Fiorentina,Juventus,40000000.0,2017-07-24,88,Italy
+Gianluca Scamacca,Italy,Sassuolo,West Ham,38600000.0,2022-07-26,88,Italy
+Nicolò Barella,Italy,Cagliari,Inter,38500000.0,2020-09-01,88,Italy
+Jamal Lewis,Northern Ireland,Norwich,Newcastle,16500000.0,2020-09-08,89,Northern Ireland
+Shea Charles,Northern Ireland,Manchester City,Southampton,12250000.0,2023-07-12,89,Northern Ireland
+Jonny Evans,Northern Ireland,Manchester United,West Brom,8300000.0,2015-08-29,89,Northern Ireland
+George Saville,Northern Ireland,Millwall,Middlesbrough,7800000.0,2019-01-01,89,Northern Ireland
+Joël Piroe,Suriname,Swansea,Leeds,14000000.0,2023-08-24,90,Suriname
+Gyrano Kerk,Suriname,Utrecht,Loko Moscow,7000000.0,2021-09-01,90,Suriname
+Victor Osimhen,Nigeria,Lille,Napoli,78900000.0,2020-09-01,91,Nigeria
+Ademola Lookman,Nigeria,Atalanta,Atletico Madrid,35000000.0,2026-02-02,91,Nigeria
+George Ilenikhena,Nigeria,Monaco,Al-Ittihad,33000000.0,2026-02-02,91,Nigeria
+Alex Iwobi,Nigeria,Arsenal,Everton,30400000.0,2019-08-08,91,Nigeria
+Zadok Yohanna,Nigeria,AIK,Brighton,28000000.0,2026-07-01,91,Nigeria
+Kelechi Iheanacho,Nigeria,Manchester City,Leicester,27700000.0,2017-08-03,91,Nigeria
+Tolu Arokodare,Nigeria,Genk,Wolves,26000000.0,2025-09-01,91,Nigeria
+Nathan Tella,Nigeria,Southampton,Bayer Leverkusen,23300000.0,2023-08-27,91,Nigeria
+Calvin Bassey,Nigeria,Rangers,Ajax,23000000.0,2022-07-20,91,Nigeria
+Victor Boniface,Nigeria,Union SG,Bayer Leverkusen,22600000.0,2023-07-22,91,Nigeria
+Moteb Al-Harbi,Saudi Arabia,Al-Shabab,Al-Hilal,28950000.0,2024-09-01,92,Saudi Arabia
+Faisal Al-Ghamdi,Saudi Arabia,Al-Ettifaq,Al-Ittihad,11720000.0,2023-09-07,92,Saudi Arabia
+Musab Al-Juwayr,Saudi Arabia,Al-Hilal,Al-Qadsiah,11520000.0,2025-08-03,92,Saudi Arabia
+Hassan Tambakti,Saudi Arabia,Al-Shabab,Al-Hilal,11500000.0,2023-08-21,92,Saudi Arabia
+Ahmed Al-Julaydan,Saudi Arabia,Al-Fateh,Al-Ittihad,10900000.0,2025-08-13,92,Saudi Arabia
+Hassan Kadesh,Saudi Arabia,Al-Taawoun,Al-Ittihad,9880000.0,2023-08-31,92,Saudi Arabia
+Firas Al-Buraikan,Saudi Arabia,Al-Fateh,Al-Ahli,9830000.0,2023-09-03,92,Saudi Arabia
+Yahya Al-Shehri,Saudi Arabia,Al-Ettifaq,Al-Nassr,9800000.0,2013-07-01,92,Saudi Arabia
+Saad Al-Nasser,Saudi Arabia,Al-Taawoun,Al-Nassr,9770000.0,2025-08-31,92,Saudi Arabia
+Hamed Al-Ghamdi,Saudi Arabia,Al-Ettifaq,Al-Ittihad,9160000.0,2025-07-18,92,Saudi Arabia
+Yuning Zhang,China,Vitesse,West Brom,7200000.0,2017-07-03,93,China
+Dianzuo Liu,China,GZ R&F,GZ Evergrande,6700000.0,2016-02-12,93,China
+Romelu Lukaku,Belgium,Inter,Chelsea,113000000.0,2021-08-12,94,Belgium
+Kevin De Bruyne,Belgium,Wolfsburg,Manchester City,76000000.0,2015-08-30,94,Belgium
+Roméo Lavia,Belgium,Southampton,Chelsea,62100000.0,2023-08-18,94,Belgium
+Jérémy Doku,Belgium,Stade Rennais,Manchester City,60000000.0,2023-08-24,94,Belgium
+Amadou Onana,Belgium,Everton,Aston Villa,59350000.0,2024-07-22,94,Belgium
+Youri Tielemans,Belgium,Monaco,Leicester,45000000.0,2019-07-08,94,Belgium
+Loïs Openda,Belgium,Leipzig,Juventus,42750000.0,2026-07-01,94,Belgium
+Axel Witsel,Belgium,Benfica,Zenit S-Pb,40000000.0,2012-09-03,94,Belgium
+Michy Batshuayi,Belgium,Marseille,Chelsea,39000000.0,2016-07-03,94,Belgium
+Charles De Ketelaere,Belgium,Club Brugge,AC Milan,37500000.0,2022-08-02,94,Belgium
+Dominik Szoboszlai,Hungary,Leipzig,Liverpool,70000000.0,2023-07-02,95,Hungary
+Milos Kerkez,Hungary,Bournemouth,Liverpool,46900000.0,2025-07-01,95,Hungary
+Attila Szalai,Hungary,Fenerbahçe,Hoffenheim,12300000.0,2023-07-24,95,Hungary
+Alex Tóth,Hungary,Ferencváros,Bournemouth,12000000.0,2026-01-20,95,Hungary
+Jonathan David,Canada,KAA Gent,Lille,27000000.0,2020-08-11,96,Canada
+Alphonso Davies,Canada,Vancouver,Bayern Munich,14000000.0,2019-01-01,96,Canada
+Ismaël Koné,Canada,Watford,Marseille,12000000.0,2024-07-03,96,Canada
+Tajon Buchanan,Canada,Inter,Villarreal,9000000.0,2025-07-29,96,Canada
+Tani Oluwaseyi,Canada,Minnesota,Villarreal,8000000.0,2025-08-29,96,Canada
+Cyle Larin,Canada,Real Valladolid,RCD Mallorca,7500000.0,2023-08-03,96,Canada
+Moïse Bombito,Canada,Colorado,Nice,7000000.0,2024-08-19,96,Canada
+João Félix,Portugal,Benfica,Atletico Madrid,127200000.0,2019-07-03,97,Portugal
+Cristiano Ronaldo,Portugal,Real Madrid,Juventus,117000000.0,2018-07-10,97,Portugal
+Rúben Dias,Portugal,Benfica,Manchester City,71600000.0,2020-09-29,97,Portugal
+João Neves,Portugal,Benfica,Paris Saint-Germain,65920000.0,2024-08-05,97,Portugal
+João Cancelo,Portugal,Juventus,Manchester City,65000000.0,2019-08-07,97,Portugal
+Bruno Fernandes,Portugal,Sporting,Manchester United,65000000.0,2020-01-29,97,Portugal
+Gonçalo Ramos,Portugal,Benfica,Paris Saint-Germain,65000000.0,2024-01-01,97,Portugal
+Matheus Nunes,Portugal,Wolves,Manchester City,62000000.0,2023-09-01,97,Portugal
+Otávio,Portugal,Porto,Al-Nassr,60000000.0,2023-08-22,97,Portugal
+Pedro Neto,Portugal,Wolves,Chelsea,60000000.0,2024-08-11,97,Portugal
+Marshall Munetsi,Zimbabwe,Stade Reims,Wolves,18000000.0,2025-02-03,98,Zimbabwe
+Marvelous Nakamba,Zimbabwe,Club Brugge,Aston Villa,12000000.0,2019-08-01,98,Zimbabwe
+Tino Kadewere,Zimbabwe,Le Havre AC,Lyon,12000000.0,2020-01-22,98,Zimbabwe
+Eljif Elmas,North Macedonia,Napoli,Leipzig,24000000.0,2024-01-01,99,North Macedonia
+Bojan Miovski,North Macedonia,Aberdeen FC,Girona,6500000.0,2024-08-15,99,North Macedonia
+Christoph Baumgartner,Austria,Hoffenheim,Leipzig,25500000.0,2023-07-01,100,Austria
+Marko Arnautovic,Austria,West Ham,SH SIPG,25000000.0,2019-07-08,100,Austria
+Kevin Danso,Austria,Lens,Tottenham Hotspur,25000000.0,2025-07-01,100,Austria
+Valentino Lazaro,Austria,Hertha BSC,Inter,22400000.0,2019-07-01,100,Austria
+Aleksandar Dragovic,Austria,Dynamo Kyiv,Bayer Leverkusen,21000000.0,2016-08-23,100,Austria
+Nicolas Seiwald,Austria,Salzburg,Leipzig,20000000.0,2023-07-01,100,Austria
+Carney Chukwuemeka,Austria,Chelsea,Borussia Dortmund,20000000.0,2025-08-26,100,Austria
+Marcel Sabitzer,Austria,Bayern Munich,Borussia Dortmund,19000000.0,2023-07-24,100,Austria
+Jannik Schuster,Austria,Salzburg,Brentford,18000000.0,2026-07-01,100,Austria
+Sasa Kalajdzic,Austria,Stuttgart,Wolves,18000000.0,2022-08-31,100,Austria
+Christopher Jullien,Guadeloupe,Toulouse,Celtic,8000000.0,2019-07-01,101,Guadeloupe
+Andreaw Gravillon,Guadeloupe,Pescara,Inter,6100000.0,2019-01-29,101,Guadeloupe
+Achraf Hakimi,Morocco,Inter,Paris Saint-Germain,68000000.0,2021-07-06,102,Morocco
+Hakim Ziyech,Morocco,Ajax,Chelsea,40000000.0,2020-07-01,102,Morocco
+Nayef Aguerd,Morocco,Stade Rennais,West Ham,35000000.0,2022-07-01,102,Morocco
+Eliesse Ben Seghir,Morocco,Monaco,Bayer Leverkusen,32000000.0,2025-08-31,102,Morocco
+Issa Diop,Morocco,Toulouse,West Ham,25000000.0,2018-07-01,102,Morocco
+Neil El Aynaoui,Morocco,Lens,Roma,23500000.0,2025-07-20,102,Morocco
+Bilal El Khannouss,Morocco,Genk,Leicester,22500000.0,2024-08-29,102,Morocco
+Sofiane Diop,Morocco,Monaco,Nice,22000000.0,2022-08-29,102,Morocco
+Yassine Bounou,Morocco,Sevilla FC,Al-Hilal,21000000.0,2023-08-17,102,Morocco
+Amine Adli,Morocco,Bayer Leverkusen,Bournemouth,21000000.0,2025-08-21,102,Morocco
+Jhon Durán,Colombia,Aston Villa,Al-Nassr,77000000.0,2025-01-31,103,Colombia
+James Rodríguez,Colombia,Monaco,Real Madrid,75000000.0,2014-07-22,103,Colombia
+Luis Díaz,Colombia,Liverpool,Bayern Munich,70000000.0,2025-07-30,103,Colombia
+Radamel Falcao,Colombia,Atletico Madrid,Monaco,43000000.0,2013-07-01,103,Colombia
+Davinson Sánchez,Colombia,Ajax,Tottenham Hotspur,42000000.0,2017-08-23,103,Colombia
+Carlos Bacca,Colombia,Sevilla FC,AC Milan,33300000.0,2015-07-03,103,Colombia
+Juan Cuadrado,Colombia,Fiorentina,Chelsea,31000000.0,2015-02-02,103,Colombia
+Jefferson Lerma,Colombia,Levante,Bournemouth,30500000.0,2018-08-07,103,Colombia
+Yerry Mina,Colombia,Barcelona,Everton,30250000.0,2018-08-09,103,Colombia
+Richard Ríos,Colombia,Palmeiras,Benfica,27000000.0,2025-07-22,103,Colombia
+Min-jae Kim,"Korea, South",Napoli,Bayern Munich,50000000.0,2023-07-18,104,"Korea, South"
+Heung-min Son,"Korea, South",Bayer Leverkusen,Tottenham Hotspur,30000000.0,2015-08-28,104,"Korea, South"
+Kang-in Lee,"Korea, South",RCD Mallorca,Paris Saint-Germain,22000000.0,2023-07-08,104,"Korea, South"
+Hee-chan Hwang,"Korea, South",Leipzig,Wolves,16700000.0,2022-07-01,104,"Korea, South"
+Hyeon-gyu Oh,"Korea, South",Genk,Besiktas,14000000.0,2026-02-04,104,"Korea, South"
+Kyung-won Kwon,"Korea, South",Al-Ahli (UAE),TJ Quanjian,10500000.0,2017-01-02,104,"Korea, South"
+In-beom Hwang,"Korea, South",Red Star,Feyenoord,7000000.0,2024-09-02,104,"Korea, South"
+Sung-yueng Ki,"Korea, South",Celtic,Swansea,7000000.0,2012-08-24,104,"Korea, South"
+Ferdi Kadıoğlu,Türkiye,Fenerbahçe,Brighton,30000000.0,2024-08-24,105,Türkiye
+Orkun Kökçü,Türkiye,Benfica,Besiktas,30000000.0,2026-07-01,105,Türkiye
+Arda Güler,Türkiye,Fenerbahçe,Real Madrid,28000000.0,2023-07-06,105,Türkiye
+Uğurcan Çakır,Türkiye,Trabzonspor,Galatasaray,27500000.0,2025-09-01,105,Türkiye
+Hakan Çalhanoğlu,Türkiye,Bayer Leverkusen,AC Milan,23300000.0,2017-07-03,105,Türkiye
+Cenk Tosun,Türkiye,Besiktas,Everton,22500000.0,2018-01-05,105,Türkiye
+Kerem Aktürkoğlu,Türkiye,Benfica,Fenerbahçe,22500000.0,2025-09-01,105,Türkiye
+Yusuf Akçiçek,Türkiye,Fenerbahçe,Al-Hilal,22000000.0,2025-09-01,105,Türkiye
+Çağlar Söyüncü,Türkiye,Freiburg,Leicester,21100000.0,2018-08-09,105,Türkiye
+Merih Demiral,Türkiye,Juventus,Atalanta,21000000.0,2022-07-01,105,Türkiye
+Salomón Rondón,Venezuela,West Brom,DL Pro,18270000.0,2019-07-19,106,Venezuela
+Yangel Herrera,Venezuela,Girona,Real Sociedad,11000000.0,2025-09-01,106,Venezuela
+Alejandro Marqués,Venezuela,Barcelona,Juventus,8200000.0,2020-01-25,106,Venezuela
+Tomás Rincón,Venezuela,Genoa,Juventus,8000000.0,2017-01-03,106,Venezuela
+Jefferson Savarino,Venezuela,Botafogo,Fluminense,6400000.0,2026-01-22,106,Venezuela
+Hirving Lozano,Mexico,PSV,Napoli,50000000.0,2019-08-23,107,Mexico
+Edson Álvarez,Mexico,Ajax,West Ham,38000000.0,2023-08-10,107,Mexico
+Raúl Jiménez,Mexico,Benfica,Wolves,38000000.0,2019-07-01,107,Mexico
+Santiago Gimenez,Mexico,Feyenoord,AC Milan,30200000.0,2025-02-03,107,Mexico
+Rodolfo Pizarro,Mexico,Pachuca,Chivas,14750000.0,2017-01-01,107,Mexico
+César Montes,Mexico,Espanyol,UD Almería,14000000.0,2023-09-01,107,Mexico
+Diego Lainez,Mexico,América,Real Betis,14000000.0,2019-01-10,107,Mexico
+Julián Quiñones,Mexico,América,Al-Qadsiah,13800000.0,2024-07-18,107,Mexico
+Germán Berterame,Mexico,Monterrey,Miami,12600000.0,2026-01-30,107,Mexico
+Héctor Herrera,Mexico,Pachuca,Porto,11000000.0,2013-07-01,107,Mexico
+Riyad Mahrez,Algeria,Leicester,Manchester City,67800000.0,2018-07-10,108,Algeria
+Rayan Aït-Nouri,Algeria,Wolves,Manchester City,36800000.0,2025-06-09,108,Algeria
+Islam Slimani,Algeria,Sporting,Leicester,31000000.0,2016-08-31,108,Algeria
+Amine Gouiri,Algeria,Nice,Stade Rennais,28000000.0,2022-09-01,108,Algeria
+Saïd Benrahma,Algeria,Brentford,West Ham,23100000.0,2021-01-29,108,Algeria
+Nabil Bentaleb,Algeria,Tottenham Hotspur,FC Schalke 04,19000000.0,2017-07-01,108,Algeria
+Ismaël Bennacer,Algeria,FC Empoli,AC Milan,17200000.0,2019-08-04,108,Algeria
+Badredine Bouanani,Algeria,Nice,Stuttgart,15000000.0,2025-08-31,108,Algeria
+Mohamed Amoura,Algeria,Union SG,Wolfsburg,14750000.0,2025-07-01,108,Algeria
+Rachid Ghezzal,Algeria,Monaco,Leicester,14000000.0,2018-08-05,108,Algeria
+Logan Costa,Cape Verde,Toulouse,Villarreal,18000000.0,2024-08-22,109,Cape Verde
+Zé Luís,Cape Verde,Spartak Moscow,Porto,10750000.0,2019-07-05,109,Cape Verde
+Garry Rodrigues,Cape Verde,Galatasaray,Al-Ittihad,9000000.0,2019-01-06,109,Cape Verde
+Bebé,Cape Verde,Vit. Guimarães,Manchester United,8800000.0,2010-08-01,109,Cape Verde
+Sidny Lopes Cabral,Cape Verde,Benfica,Trabzonspor,7000000.0,2026-07-01,109,Cape Verde
+Robert Lewandowski,Poland,Bayern Munich,Barcelona,45000000.0,2022-07-19,110,Poland
+Krzysztof Piatek,Poland,Genoa,AC Milan,35000000.0,2019-01-23,110,Poland
+Arkadiusz Milik,Poland,Ajax,Napoli,32000000.0,2016-08-01,110,Poland
+Jakub Kiwior,Poland,Spezia Calcio,Arsenal,19500000.0,2023-01-23,110,Poland
+Wojciech Szczęsny,Poland,Arsenal,Juventus,18400000.0,2017-07-19,110,Poland
+Nicola Zalewski,Poland,Inter,Atalanta,17500000.0,2025-08-18,110,Poland
+Piotr Zielinski,Poland,Udinese,Napoli,16000000.0,2016-08-04,110,Poland
+Matty Cash,Poland,Nott'm Forest,Aston Villa,15750000.0,2020-09-03,110,Poland
+Marcin Bulka,Poland,Nice,NEOM SC,15000000.0,2025-07-05,110,Poland
+Kamil Grabara,Poland,Copenhagen,Wolfsburg,13500000.0,2024-07-01,110,Poland
+Mariano Díaz,Dominican Republic,Lyon,Real Madrid,21500000.0,2018-08-29,111,Dominican Republic
+Junior Firpo,Dominican Republic,Real Betis,Barcelona,20000000.0,2019-08-04,111,Dominican Republic
+Emil Audero,Indonesia,Juventus,Sampdoria,20000000.0,2019-07-01,112,Indonesia
+Jay Idzes,Indonesia,Venezia,Sassuolo,8100000.0,2025-08-09,112,Indonesia
+Beto,Guinea-Bissau,Udinese,Everton,25000000.0,2023-08-29,113,Guinea-Bissau
+Álvaro Djaló,Guinea-Bissau,Braga,Athletic Club,15000000.0,2024-07-01,113,Guinea-Bissau
+Ronaldo Vieira,Guinea-Bissau,Leeds,Sampdoria,7350000.0,2018-08-01,113,Guinea-Bissau
+Renato Nhaga,Guinea-Bissau,Casa Pia,Galatasaray,6500000.0,2026-02-03,113,Guinea-Bissau
+Rasmus Højlund,Denmark,Atalanta,Manchester United,79800000.0,2023-08-05,114,Denmark
+Patrick Dorgu,Denmark,Lecce,Manchester United,30000000.0,2025-02-02,114,Denmark
+Jesper Lindstrøm,Denmark,Frankfurt,Napoli,30000000.0,2023-08-29,114,Denmark
+Joachim Andersen,Denmark,Crystal Palace,Fulham,29500000.0,2024-08-23,114,Denmark
+Matt O'Riley,Denmark,Celtic,Brighton,29500000.0,2024-08-26,114,Denmark
+Christian Eriksen,Denmark,Tottenham Hotspur,Inter,27000000.0,2020-01-28,114,Denmark
+Jannik Vestergaard,Denmark,Mönchengladbach,Southampton,25000000.0,2018-07-13,114,Denmark
+Filip Jørgensen,Denmark,Villarreal,Chelsea,24500000.0,2024-07-30,114,Denmark
+Conrad Harder,Denmark,Sporting,Leipzig,24000000.0,2025-09-01,114,Denmark
+Mads Hermansen,Denmark,Leicester,West Ham,20800000.0,2025-08-09,114,Denmark
+Aleksandr Golovin,Russia,CSKA Moscow,Monaco,30000000.0,2018-07-27,115,Russia
+Matvey Safonov,Russia,Krasnodar,Paris Saint-Germain,20000000.0,2024-07-01,115,Russia
+Aleksandr Kokorin,Russia,Anzhi,Dinamo Moscow,19000000.0,2013-08-16,115,Russia
+Aleksey Miranchuk,Russia,Loko Moscow,Atalanta,15000000.0,2020-09-04,115,Russia
+Arsen Zakharyan,Russia,Dynamo Moscow,Real Sociedad,13000000.0,2023-08-19,115,Russia
+Mário Fernandes,Russia,Grêmio,CSKA Moscow,10500000.0,2012-07-01,115,Russia
+Aleksandr Sobolev,Russia,Spartak Moscow,Zenit S-Pb,10000000.0,2024-08-30,115,Russia
+Fedor Smolov,Russia,Krasnodar,Loko Moscow,9000000.0,2018-08-09,115,Russia
+Danil Glebov,Russia,Rostov,Dynamo Moscow,8000000.0,2025-02-20,115,Russia
+Denis Glushakov,Russia,Loko Moskau,Spartak Moscow,8000000.0,2013-07-01,115,Russia
+Naby Keïta,Guinea,RB Leipzig,Liverpool,60000000.0,2018-07-01,116,Guinea
+Amadou Diawara,Guinea,SSC Napoli,AS Roma,21000000.0,2019-07-01,116,Guinea
+Serhou Guirassy,Guinea,Stuttgart,Borussia Dortmund,18000000.0,2024-07-18,116,Guinea
+Sidiki Chérif,Guinea,Angers SCO,Fenerbahçe,18000000.0,2026-07-01,116,Guinea
+Ilaix Moriba,Guinea,Barcelona,Leipzig,16600000.0,2021-08-31,116,Guinea
+Mouctar Diakhaby,Guinea,Lyon,Valencia,15000000.0,2018-07-01,116,Guinea
+Mohamed Bayo,Guinea,Clermont Foot,Lille,14000000.0,2022-07-13,116,Guinea
+Leon Bailey,Jamaica,Bayer Leverkusen,Aston Villa,32000000.0,2021-08-04,117,Jamaica
+Andre Gray,Jamaica,Burnley,Watford,20400000.0,2017-08-09,117,Jamaica
+Bobby De Cordova-Reid,Jamaica,Bristol City,Cardiff,11350000.0,2018-07-01,117,Jamaica
+Michail Antonio,Jamaica,Nott'm Forest,West Ham,9500000.0,2015-09-01,117,Jamaica
+Demarai Gray,Jamaica,Everton,Al-Ettifaq,9300000.0,2023-09-07,117,Jamaica
+Shamar Nicholson,Jamaica,R Charleroi SC,Spartak Moscow,8000000.0,2022-01-07,117,Jamaica
+Frenkie de Jong,Netherlands,Ajax,Barcelona,86000000.0,2019-07-01,118,Netherlands
+Matthijs de Ligt,Netherlands,Ajax,Juventus,85500000.0,2019-07-18,118,Netherlands
+Virgil van Dijk,Netherlands,Southampton,Liverpool,84650000.0,2018-01-01,118,Netherlands
+Xavi Simons,Netherlands,Leipzig,Tottenham Hotspur,65000000.0,2025-08-29,118,Netherlands
+Teun Koopmeiners,Netherlands,Atalanta,Juventus,58400000.0,2024-08-28,118,Netherlands
+Tijjani Reijnders,Netherlands,AC Milan,Manchester City,54900000.0,2025-06-10,118,Netherlands
+Nathan Aké,Netherlands,Bournemouth,Manchester City,45300000.0,2020-08-05,118,Netherlands
+Ian Maatsen,Netherlands,Chelsea,Aston Villa,44500000.0,2024-07-01,118,Netherlands
+Jorrel Hato,Netherlands,Ajax,Chelsea,44180000.0,2025-08-03,118,Netherlands
+Joshua Zirkzee,Netherlands,Bologna,Manchester United,42500000.0,2024-07-14,118,Netherlands
+Nicolas Pépé,Cote d'Ivoire,Lille,Arsenal,80000000.0,2019-08-01,119,Cote d'Ivoire
+Sébastien Haller,Cote d'Ivoire,Frankfurt,West Ham,50000000.0,2019-07-17,119,Cote d'Ivoire
+Eric Bailly,Cote d'Ivoire,Villarreal,Manchester United,38000000.0,2016-07-01,119,Cote d'Ivoire
+Ibrahim Sangaré,Cote d'Ivoire,PSV,Nott'm Forest,35000000.0,2023-09-01,119,Cote d'Ivoire
+Franck Kessié,Cote d'Ivoire,Atalanta,AC Milan,32000000.0,2019-07-01,119,Cote d'Ivoire
+Wilfried Singo,Cote d'Ivoire,Monaco,Galatasaray,30770000.0,2025-08-28,119,Cote d'Ivoire
+Kader Meïté,Cote d'Ivoire,Stade Rennais,Al-Hilal,30000000.0,2026-02-01,119,Cote d'Ivoire
+Elye Wahi,Cote d'Ivoire,Montpellier,Lens,30000000.0,2023-08-20,119,Cote d'Ivoire
+Evann Guessand,Cote d'Ivoire,Nice,Aston Villa,30000000.0,2025-08-08,119,Cote d'Ivoire
+Amad Diallo,Cote d'Ivoire,Atalanta,Manchester United,27300000.0,2021-01-02,119,Cote d'Ivoire
+Alexander Isak,Sweden,Newcastle,Liverpool,145000000.0,2025-09-01,120,Sweden
+Viktor Gyökeres,Sweden,Sporting,Arsenal,66900000.0,2025-07-26,120,Sweden
+Anthony Elanga,Sweden,Nott'm Forest,Newcastle,61400000.0,2025-07-11,120,Sweden
+Dejan Kulusevski,Sweden,Atalanta,Juventus,39000000.0,2020-01-02,120,Sweden
+Victor Lindelöf,Sweden,Benfica,Manchester United,35000000.0,2017-07-01,120,Sweden
+Lucas Bergvall,Sweden,Djurgården,Tottenham Hotspur,20000000.0,2024-07-01,120,Sweden
+Adrian Lahdo,Sweden,Hammarby,Como,11940000.0,2026-02-02,120,Sweden
+Gabriel Gudmundsson,Sweden,Lille,Leeds,11600000.0,2025-07-08,120,Sweden
+Jens Cajuste,Sweden,Stade Reims,Napoli,11500000.0,2023-08-10,120,Sweden
+Jesper Karlsson,Sweden,AZ Alkmaar,Bologna,11150000.0,2023-08-23,120,Sweden
+Gylfi Sigurdsson,Iceland,Swansea,Everton,49400000.0,2017-08-16,121,Iceland
+Orri Óskarsson,Iceland,Copenhagen,Real Sociedad,20000000.0,2024-08-30,121,Iceland
+Albert Gudmundsson,Iceland,Genoa,Fiorentina,16800000.0,2025-07-01,121,Iceland
+Hákon Arnar Haraldsson,Iceland,Copenhagen,Lille,15000000.0,2023-07-17,121,Iceland
+Alfred Finnbogason,Iceland,Heerenveen,Real Sociedad,8000000.0,2014-07-02,121,Iceland
+Harry Souttar,Australia,Stoke City,Leicester,17000000.0,2023-01-31,122,Australia
+Cristian Volpato,Australia,Roma,Sassuolo,7500000.0,2023-07-01,122,Australia
+Mathew Ryan,Australia,Club Brugge,Valencia,7000000.0,2015-07-21,122,Australia
+Mykhaylo Mudryk,Ukraine,Shakhtar D.,Chelsea,70000000.0,2023-01-15,123,Ukraine
+Ilya Zabarnyi,Ukraine,Bournemouth,Paris Saint-Germain,63000000.0,2025-08-12,123,Ukraine
+Artem Dovbyk,Ukraine,Girona,Roma,41100000.0,2024-08-02,123,Ukraine
+Oleksandr Zinchenko,Ukraine,Manchester City,Arsenal,35000000.0,2022-07-22,123,Ukraine
+Andriy Yarmolenko,Ukraine,Dynamo Kyiv,Borussia Dortmund,25000000.0,2017-08-28,123,Ukraine
+Dmytro Chygrynskyi,Ukraine,Shakhtar D.,Barcelona,25000000.0,2009-08-31,123,Ukraine
+Vitaliy Mykolenko,Ukraine,Dynamo Kyiv,Everton,23500000.0,2022-01-01,123,Ukraine
+Georgiy Sudakov,Ukraine,Shakhtar D.,Benfica,20250000.0,2026-07-01,123,Ukraine
+Roman Yaremchuk,Ukraine,Benfica,Club Brugge,17000000.0,2022-08-29,123,Ukraine
+Vladyslav Vanat,Ukraine,Dynamo Kyiv,Girona,15000000.0,2025-09-01,123,Ukraine
+Brennan Johnson,Wales,Nott'm Forest,Tottenham Hotspur,55000000.0,2023-09-01,124,Wales
+Daniel James,Wales,Manchester United,Leeds,29100000.0,2021-08-31,124,Wales
+Neco Williams,Wales,Liverpool,Nott'm Forest,20000000.0,2022-07-10,124,Wales
+Joe Allen,Wales,Swansea,Liverpool,19000000.0,2012-08-10,124,Wales
+Danny Ward,Wales,Liverpool,Leicester,14000000.0,2018-07-20,124,Wales
+Harry Wilson,Wales,Liverpool,Fulham,14000000.0,2021-07-24,124,Wales
+Chris Mepham,Wales,Brentford,Bournemouth,13600000.0,2019-01-22,124,Wales
+Ben Davies,Wales,Swansea,Tottenham Hotspur,12650000.0,2014-07-23,124,Wales
+Joe Rodon,Wales,Swansea,Tottenham Hotspur,12100000.0,2020-10-16,124,Wales
+David Brooks,Wales,Sheff Utd,Bournemouth,11300000.0,2018-07-01,124,Wales
+Scott McTominay,Scotland,Manchester United,Napoli,30500000.0,2024-08-30,125,Scotland
+Kieran Tierney,Scotland,Celtic,Arsenal,27000000.0,2019-08-08,125,Scotland
+Ben Gannon-Doak,Scotland,Liverpool,Bournemouth,23200000.0,2025-08-18,125,Scotland
+Oli McBurnie,Scotland,Swansea,Sheff Utd,19100000.0,2019-08-02,125,Scotland
+Ché Adams,Scotland,Birmingham,Southampton,16700000.0,2019-07-01,125,Scotland
+Oliver Burke,Scotland,Leipzig,West Brom,15200000.0,2017-08-25,125,Scotland
+Billy Gilmour,Scotland,Brighton,Napoli,14750000.0,2024-08-30,125,Scotland
+Aaron Hickey,Scotland,Bologna,Brentford,14250000.0,2022-07-09,125,Scotland
+Nathan Patterson,Scotland,Rangers,Everton,14000000.0,2022-01-04,125,Scotland
+Matt Ritchie,Scotland,Bournemouth,Newcastle,12000000.0,2016-07-01,125,Scotland
+Omar Marmoush,Egypt,Frankfurt,Manchester City,75000000.0,2025-01-23,126,Egypt
+Mohamed Salah,Egypt,Roma,Liverpool,42000000.0,2017-07-01,126,Egypt
+Mohamed Elneny,Egypt,Basel,Arsenal,12500000.0,2016-01-14,126,Egypt
+Trezeguet,Egypt,Kasimpasa,Aston Villa,10000000.0,2019-07-24,126,Egypt
+Yoane Wissa,DR Congo,Brentford,Newcastle,57700000.0,2025-09-01,127,DR Congo
+Aaron Wan-Bissaka,DR Congo,Crystal Palace,Manchester United,55000000.0,2019-07-01,127,DR Congo
+Cédric Bakambu,DR Congo,Villarreal,BJ Guoan,40000000.0,2018-01-17,127,DR Congo
+Yannick Bolasie,DR Congo,Crystal Palace,Everton,28900000.0,2016-08-15,127,DR Congo
+Giannelli Imbula,DR Congo,FC Porto,Stoke City,24250000.0,2016-02-01,127,DR Congo
+Britt Assombalonga,DR Congo,Nottm Forest,Middlesbrough,17100000.0,2017-07-17,127,DR Congo
+Noah Sadiki,DR Congo,Union SG,Sunderland,17000000.0,2025-07-04,127,DR Congo
+Grady Diangana,DR Congo,West Ham,West Brom,13500000.0,2020-09-04,127,DR Congo
+Chancel Mbemba,DR Congo,RSC Anderlecht,Newcastle,12000000.0,2015-07-30,127,DR Congo
+Simon Banza,DR Congo,Braga,Al-Jazira,8500000.0,2025-09-22,127,DR Congo
+Kalidou Koulibaly,Senegal,Napoli,Chelsea,41900000.0,2022-07-16,128,Senegal
+Sadio Mané,Senegal,Southampton,Liverpool,41200000.0,2016-07-01,128,Senegal
+Nicolas Jackson,Senegal,Villarreal,Chelsea,37000000.0,2023-07-01,128,Senegal
+Moussa Niakhaté,Senegal,Nott'm Forest,Lyon,31900000.0,2024-07-04,128,Senegal
+Habib Diarra,Senegal,R. Strasbourg,Sunderland,31500000.0,2025-07-01,128,Senegal
+Keita Baldé,Senegal,Lazio,Monaco,30000000.0,2017-08-29,128,Senegal
+Idrissa Gueye,Senegal,Everton,Paris Saint-Germain,30000000.0,2019-07-30,128,Senegal
+Ismaïla Sarr,Senegal,Stade Rennais,Watford,30000000.0,2019-08-08,128,Senegal
+Edouard Mendy,Senegal,Stade Rennais,Chelsea,24000000.0,2020-09-24,128,Senegal
+El Hadji Malick Diouf,Senegal,Slavia Praha,West Ham,22000000.0,2025-07-15,128,Senegal
+Omar Mascarell,Equatorial Guinea,Real Madrid,FC Schalke 04,10000000.0,2018-07-02,129,Equatorial Guinea
+Saúl Coco,Equatorial Guinea,UD Las Palmas,Torino,8230000.0,2024-07-17,129,Equatorial Guinea
+Pedro Obiang,Equatorial Guinea,West Ham,Sassuolo,7750000.0,2019-07-24,129,Equatorial Guinea
+Miguel Almirón,Paraguay,Atlanta,Newcastle,24000000.0,2019-01-31,130,Paraguay
+Diego Gómez,Paraguay,Miami,Brighton,13000000.0,2025-01-01,130,Paraguay
+Ramón Sosa,Paraguay,Nott'm Forest,Palmeiras,12500000.0,2025-07-09,130,Paraguay
+Julio Enciso,Paraguay,Libertad,Brighton,11600000.0,2022-07-01,130,Paraguay
+Omar Alderete,Paraguay,Getafe,Sunderland,11600000.0,2025-08-12,130,Paraguay
+Mauricio,Paraguay,Internacional,Palmeiras,10500000.0,2024-07-10,130,Paraguay
+Gustavo Gómez,Paraguay,Lanús,AC Milan,9560000.0,2016-08-05,130,Paraguay
+Óscar Romero,Paraguay,Racing Club,SH Shenhua,8400000.0,2017-01-17,130,Paraguay
+Júnior Alonso,Paraguay,Atlético-MG,Krasnodar,8000000.0,2022-01-07,130,Paraguay
+Antonio Sanabria,Paraguay,Roma,Real Betis,7500000.0,2016-07-15,130,Paraguay
+Granit Xhaka,Switzerland,Mönchengladbach,Arsenal,45000000.0,2016-07-01,131,Switzerland
+Dan Ndoye,Switzerland,Bologna,Nott'm Forest,42000000.0,2025-07-31,131,Switzerland
+Ardon Jashari,Switzerland,Club Brugge,AC Milan,36000000.0,2025-08-06,131,Switzerland
+Breel Embolo,Switzerland,Basel,FC Schalke 04,26500000.0,2016-07-01,131,Switzerland
+Manuel Akanji,Switzerland,Basel,Borussia Dortmund,21500000.0,2018-01-15,131,Switzerland
+Denis Zakaria,Switzerland,Juventus,Monaco,20000000.0,2023-08-14,131,Switzerland
+Noah Okafor,Switzerland,AC Milan,Leeds,19000000.0,2025-08-21,131,Switzerland
+Zeki Amdouni,Switzerland,Basel,Burnley,18600000.0,2023-07-19,131,Switzerland
+Gökhan Inler,Switzerland,Udinese Calcio,SSC Napoli,18000000.0,2011-07-11,131,Switzerland
+Xherdan Shaqiri,Switzerland,Inter,Stoke City,17000000.0,2015-08-11,131,Switzerland
+Gianluca Lapadula,Peru,AC Milan,Genoa,11000000.0,2018-08-17,132,Peru
+André Carrillo,Peru,Benfica,Al-Hilal,9500000.0,2019-07-23,132,Peru
+Konstantinos Manolas,Greece,AS Roma,SSC Napoli,36000000.0,2019-07-01,133,Greece
+Charalampos Kostoulas,Greece,Olympiacos,Brighton,35000000.0,2025-07-01,133,Greece
+Stefanos Tzimas,Greece,1.FC Nuremberg,Brighton,26500000.0,2025-02-03,133,Greece
+Odysseas Vlachodimos,Greece,Nott'm Forest,Newcastle,23600000.0,2024-07-01,133,Greece
+Fotis Ioannidis,Greece,Panathinaikos,Sporting,22000000.0,2025-09-01,133,Greece
+Konstantinos Mavropanos,Greece,Stuttgart,West Ham,20000000.0,2023-08-22,133,Greece
+Vangelis Pavlidis,Greece,AZ Alkmaar,Benfica,18000000.0,2024-07-01,133,Greece
+Panagiotis Retsos,Greece,Olympiacos,Bayer Leverkusen,17500000.0,2017-08-31,133,Greece
+Sokratis Papastathopoulos,Greece,Borussia Dortmund,Arsenal,16000000.0,2018-07-02,133,Greece
+Anastasios Douvikas,Greece,Celta de Vigo,Como,14000000.0,2025-02-03,133,Greece
+Dango Ouattara,Burkina Faso,Bournemouth,Brentford,42800000.0,2025-08-16,134,Burkina Faso
+Edmond Tapsoba,Burkina Faso,Vit. Guimarães,Bayer Leverkusen,20200000.0,2020-01-31,134,Burkina Faso
+Bertrand Traoré,Burkina Faso,Lyon,Aston Villa,18400000.0,2020-09-19,134,Burkina Faso
+Nasser Djiga,Burkina Faso,Red Star,Wolves,12000000.0,2025-02-03,134,Burkina Faso
+Arthur Zagré,Burkina Faso,Paris Saint-Germain,Monaco,10000000.0,2019-08-29,134,Burkina Faso
+Lassina Traoré,Burkina Faso,Ajax,Shakhtar D.,10000000.0,2021-07-01,134,Burkina Faso
+Cyriaque Irié,Burkina Faso,Troyes,Freiburg,8500000.0,2025-07-01,134,Burkina Faso
+Hassane Bandé,Burkina Faso,KV Mechelen,Ajax,8250000.0,2018-07-01,134,Burkina Faso
+Adamo Nagalo,Burkina Faso,Nordsjaelland,PSV,7000000.0,2024-09-02,134,Burkina Faso
+Kévin Denkey,Togo,Cercle Brugge,Cincinnati,15300000.0,2025-01-31,135,Togo
+Ihlas Bebou,Togo,Hannover 96,Hoffenheim,9000000.0,2019-07-01,135,Togo
+Kepa Arrizabalaga,Spain,Athletic Club,Chelsea,80000000.0,2018-08-08,136,Spain
+Martín Zubimendi,Spain,Real Sociedad,Arsenal,70000000.0,2025-07-06,136,Spain
+Rodri,Spain,Atletico Madrid,Manchester City,70000000.0,2019-07-04,136,Spain
+Álvaro Morata,Spain,Real Madrid,Chelsea,66000000.0,2017-07-21,136,Spain
+Marc Cucurella,Spain,Brighton,Chelsea,65300000.0,2022-08-05,136,Spain
+Aymeric Laporte,Spain,Athletic Club,Manchester City,65000000.0,2018-01-30,136,Spain
+Dean Huijsen,Spain,Bournemouth,Real Madrid,62500000.0,2025-06-01,136,Spain
+Dani Olmo,Spain,Leipzig,Barcelona,61000000.0,2024-08-09,136,Spain
+Nico González,Spain,Porto,Manchester City,60000000.0,2025-02-03,136,Spain
+Ferran Torres,Spain,Manchester City,Barcelona,55000000.0,2022-01-01,136,Spain
+David Carmo,Angola,Braga,Porto,20280000.0,2022-07-05,137,Angola
+Hélder Costa,Angola,Wolves,Leeds,17700000.0,2020-07-01,137,Angola
+Ivan Cavaleiro,Angola,Benfica,Monaco,15000000.0,2015-07-10,137,Angola
+M'Bala Nzola,Angola,Spezia Calcio,Fiorentina,12600000.0,2023-08-10,137,Angola
+Henrikh Mkhitaryan,Armenia,Borussia Dortmund,Manchester United,42000000.0,2016-07-06,138,Armenia
+Lucas Zelarayán,Armenia,Tigres UANL,Columbus Crew,7300000.0,2020-01-01,138,Armenia
+Enzo Fernández,Argentina,Benfica,Chelsea,121000000.0,2023-01-31,139,Argentina
+Julián Alvarez,Argentina,Manchester City,Atletico Madrid,75000000.0,2024-08-12,139,Argentina
+Ángel Di María,Argentina,Real Madrid,Manchester United,75000000.0,2014-08-26,139,Argentina
+Lisandro Martínez,Argentina,Ajax,Manchester United,57370000.0,2022-07-27,139,Argentina
+Cristian Romero,Argentina,Atalanta,Tottenham Hotspur,53800000.0,2022-08-30,139,Argentina
+Mauro Icardi,Argentina,Inter,Paris Saint-Germain,50000000.0,2020-07-01,139,Argentina
+Alejandro Garnacho,Argentina,Manchester United,Chelsea,46200000.0,2025-08-30,139,Argentina
+Franco Mastantuono,Argentina,River Plate,Real Madrid,45000000.0,2025-08-14,139,Argentina
+Nicolás Otamendi,Argentina,Valencia,Manchester City,44500000.0,2015-08-20,139,Argentina
+Alexis Mac Allister,Argentina,Brighton,Liverpool,42000000.0,2023-07-01,139,Argentina
+Radu Drăgușin,Romania,Genoa,Tottenham Hotspur,28000000.0,2024-01-11,140,Romania
+Dennis Man,Romania,FCSB,Parma,12600000.0,2021-01-29,140,Romania
+Răzvan Marin,Romania,Standard Liège,Ajax,12500000.0,2019-07-01,140,Romania
+Nicolae Stanciu,Romania,Steaua Bucharest,RSC Anderlecht,11000000.0,2016-08-29,140,Romania
+Ionuț Radu,Romania,Genoa,Inter,10500000.0,2019-07-12,140,Romania
+Valentin Mihăilă,Romania,Univ. Craiova,Parma,9500000.0,2020-10-05,140,Romania
+Vlad Chiricheș,Romania,Napoli,Sassuolo,9500000.0,2020-09-01,140,Romania
+Alexandru Mitriță,Romania,Univ. Craiova,New York City,8000000.0,2019-02-04,140,Romania
+George Pușcaș,Romania,Inter,Reading,7500000.0,2019-08-07,140,Romania
+Alexandru Cicâldău,Romania,Univ. Craiova,Galatasaray,6500000.0,2021-07-24,140,Romania
+Bryan Mbeumo,Cameroon,Brentford,Manchester United,75000000.0,2025-07-21,141,Cameroon
+André Onana,Cameroon,Inter,Manchester United,50200000.0,2023-07-20,141,Cameroon
+Carlos Baleba,Cameroon,Lille,Brighton,27000000.0,2023-08-29,141,Cameroon
+Frank Anguissa,Cameroon,Marseille,Fulham,24850000.0,2018-08-09,141,Cameroon
+Clinton N'Jie,Cameroon,Olympique Lyon,Tottenham Hotspur,14100000.0,2015-08-15,141,Cameroon
+Jackson Tchatchoua,Cameroon,Hellas Verona,Wolves,12500000.0,2025-08-19,141,Cameroon
+Vincent Aboubakar,Cameroon,FC Lorient,FC Porto,12300000.0,2014-08-24,141,Cameroon
+Christopher Wooh,Cameroon,Lens,Stade Rennais,9000000.0,2022-09-01,141,Cameroon
+Faris Moumbagna,Cameroon,Bodø/Glimt,Marseille,8000000.0,2024-01-20,141,Cameroon
+Nathan Ngoumou,Cameroon,Toulouse,Mönchengladbach,8000000.0,2022-08-30,141,Cameroon
+Jude Bellingham,England,Borussia Dortmund,Real Madrid,127000000.0,2023-07-01,142,England
+Jack Grealish,England,Aston Villa,Manchester City,117500000.0,2021-08-05,142,England
+Declan Rice,England,West Ham,Arsenal,116600000.0,2023-07-15,142,England
+Harry Kane,England,Tottenham Hotspur,Bayern Munich,95000000.0,2023-08-12,142,England
+Harry Maguire,England,Leicester,Manchester United,87000000.0,2019-08-05,142,England
+Jadon Sancho,England,Borussia Dortmund,Manchester United,85000000.0,2021-07-23,142,England
+Anthony Gordon,England,Newcastle,Barcelona,80000000.0,2026-07-01,142,England
+Eberechi Eze,England,Crystal Palace,Arsenal,69300000.0,2025-08-23,142,England
+Mason Mount,England,Chelsea,Manchester United,67700000.0,2023-07-05,142,England
+Dominic Solanke,England,Bournemouth,Tottenham Hotspur,64300000.0,2024-08-10,142,England
+Neymar,Brazil,Barcelona,Paris Saint-Germain,222000000.0,2017-08-03,143,Brazil
+Philippe Coutinho,Brazil,Liverpool,Barcelona,135000000.0,2018-01-08,143,Brazil
+Antony,Brazil,Ajax,Manchester United,95000000.0,2022-08-30,143,Brazil
+Arthur Melo,Brazil,Barcelona,Juventus,80600000.0,2020-09-01,143,Brazil
+Matheus Cunha,Brazil,Wolves,Manchester United,74200000.0,2025-07-01,143,Brazil
+Alisson,Brazil,Roma,Liverpool,72500000.0,2018-07-19,143,Brazil
+Casemiro,Brazil,Real Madrid,Manchester United,70650000.0,2022-08-22,143,Brazil
+João Pedro,Brazil,Brighton,Chelsea,63700000.0,2025-07-02,143,Brazil
+Malcom,Brazil,Zenit S-Pb,Al-Hilal,60000000.0,2023-07-26,143,Brazil
+Fred,Brazil,Shakhtar D.,Manchester United,59000000.0,2018-07-01,143,Brazil
+Pierre-Emerick Aubameyang,Gabon,Borussia Dortmund,Arsenal,63750000.0,2018-01-31,144,Gabon
+Mario Lemina,Gabon,Juventus,Southampton,17250000.0,2017-08-08,144,Gabon
+Marash Kumbulla,Albania,Hellas Verona,Roma,26500000.0,2021-07-01,145,Albania
+Armando Broja,Albania,Chelsea,Burnley,23000000.0,2025-08-08,145,Albania
+Kristjan Asllani,Albania,FC Empoli,Inter,15700000.0,2023-07-01,145,Albania
+Myrto Uzuni,Albania,Granada CF,Austin,12000000.0,2025-01-31,145,Albania
+Ernest Muci,Albania,Legia Warszawa,Besiktas,10000000.0,2024-02-09,145,Albania
+Josko Gvardiol,Croatia,Leipzig,Manchester City,90000000.0,2023-08-05,146,Croatia
+Mateo Kovacic,Croatia,Real Madrid,Chelsea,45000000.0,2019-07-01,146,Croatia
+Luka Modrić,Croatia,Tottenham Hotspur,Real Madrid,35000000.0,2012-08-27,146,Croatia
+Nikola Vlašić,Croatia,CSKA Moscow,West Ham,30000000.0,2021-08-31,146,Croatia
+Marko Pjaca,Croatia,Dinamo Zagreb,Juventus,29400000.0,2016-07-21,146,Croatia
+Dejan Lovren,Croatia,Southampton,Liverpool,25300000.0,2014-07-27,146,Croatia
+Lovro Majer,Croatia,Stade Rennais,Wolfsburg,25000000.0,2023-08-16,146,Croatia
+Franjo Ivanović,Croatia,Union SG,Benfica,22800000.0,2025-07-31,146,Croatia
+Josip Sutalo,Croatia,Dinamo Zagreb,Ajax,20500000.0,2023-08-20,146,Croatia
+Duje Caleta-Car,Croatia,Salzburg,Marseille,19000000.0,2018-07-20,146,Croatia
+Alexis Sánchez,Chile,Barcelona,Arsenal,42500000.0,2014-07-10,147,Chile
+Arturo Vidal,Chile,Juventus,Bayern Munich,39250000.0,2015-07-28,147,Chile
+Claudio Bravo,Chile,Barcelona,Manchester City,18000000.0,2016-08-25,147,Chile
+Guillermo Maripán,Chile,Alavés,Monaco,18000000.0,2019-08-24,147,Chile
+Eduardo Vargas,Chile,U. de Chile,Napoli,13500000.0,2012-01-09,147,Chile
+Charles Aránguiz,Chile,Internacional,Bayer Leverkusen,13000000.0,2015-08-13,147,Chile
+Erick Pulgar,Chile,Bologna,Fiorentina,12300000.0,2019-08-09,147,Chile
+Diego Valdés,Chile,Santos Laguna,América,10600000.0,2022-01-01,147,Chile
+Víctor Dávila,Chile,Necaxa,Pachuca,10600000.0,2019-01-01,147,Chile
+Marcelino Núñez,Chile,Norwich,Ipswich,8650000.0,2025-08-29,147,Chile
+Moisés Caicedo,Ecuador,Brighton,Chelsea,116000000.0,2023-08-14,148,Ecuador
+Piero Hincapié,Ecuador,Bayer Leverkusen,Arsenal,52000000.0,2026-07-01,148,Ecuador
+Willian Pacho,Ecuador,Frankfurt,Paris Saint-Germain,40000000.0,2024-08-09,148,Ecuador
+Pervis Estupiñán,Ecuador,Villarreal,Brighton,17800000.0,2022-08-16,148,Ecuador
+Nilson Angulo,Ecuador,RSC Anderlecht,Sunderland,17340000.0,2026-02-02,148,Ecuador
+Enner Valencia,Ecuador,Pachuca,West Ham,15000000.0,2014-07-17,148,Ecuador
+Gonzalo Plata,Ecuador,Real Valladolid,Al-Sadd,12000000.0,2023-07-23,148,Ecuador
+Kendry Páez,Ecuador,Independiente,Chelsea,10000000.0,2025-07-01,148,Ecuador
+Keny Arroyo,Ecuador,Besiktas,Cruzeiro,8500000.0,2025-09-02,148,Ecuador
+Christian Noboa,Ecuador,Rubin Kazan,Dinamo Moscow,8000000.0,2012-01-19,148,Ecuador
+Kylian Mbappé,France,Monaco,Paris Saint-Germain,180000000.0,2018-07-01,149,France
+Ousmane Dembélé,France,Borussia Dortmund,Barcelona,148000000.0,2017-08-25,149,France
+Antoine Griezmann,France,Atletico Madrid,Barcelona,120000000.0,2019-07-14,149,France
+Paul Pogba,France,Juventus,Manchester United,105000000.0,2016-08-09,149,France
+Randal Kolo Muani,France,Frankfurt,Paris Saint-Germain,95000000.0,2023-09-01,149,France
+Hugo Ekitiké,France,Frankfurt,Liverpool,95000000.0,2025-07-23,149,France
+Wesley Fofana,France,Leicester,Chelsea,80400000.0,2022-08-31,149,France
+Lucas Hernández,France,Atletico Madrid,Bayern Munich,80000000.0,2019-07-01,149,France
+Aurélien Tchouaméni,France,Monaco,Real Madrid,80000000.0,2022-07-01,149,France
+Thomas Lemar,France,Monaco,Atletico Madrid,72000000.0,2018-07-01,149,France
+Miralem Pjanić,Bosnia-Herzegovina,Juventus,Barcelona,60000000.0,2020-09-01,150,Bosnia-Herzegovina
+Edin Dzeko,Bosnia-Herzegovina,Wolfsburg,Manchester City,37000000.0,2011-01-07,150,Bosnia-Herzegovina
+Ermedin Demirovic,Bosnia-Herzegovina,Augsburg,Stuttgart,23000000.0,2024-07-16,150,Bosnia-Herzegovina
+Amar Dedić,Bosnia-Herzegovina,Salzburg,Benfica,12000000.0,2025-07-14,150,Bosnia-Herzegovina
+Asmir Begovic,Bosnia-Herzegovina,Chelsea,Bournemouth,11500000.0,2017-07-01,150,Bosnia-Herzegovina
+Rade Krunic,Bosnia-Herzegovina,FC Empoli,AC Milan,8600000.0,2019-07-08,150,Bosnia-Herzegovina
+Ivan Šunjić,Bosnia-Herzegovina,Dinamo Zagreb,Birmingham,8000000.0,2019-07-26,150,Bosnia-Herzegovina
+Kerim Alajbegovic,Bosnia-Herzegovina,Salzburg,Bayer Leverkusen,8000000.0,2026-07-01,150,Bosnia-Herzegovina
+Benjamin Tahirović,Bosnia-Herzegovina,Roma,Ajax,7500000.0,2023-07-01,150,Bosnia-Herzegovina
+Anel Ahmedhodzic,Bosnia-Herzegovina,Sheff Utd,Feyenoord,6900000.0,2025-08-05,150,Bosnia-Herzegovina
+Florian Wirtz,Germany,Bayer Leverkusen,Liverpool,125000000.0,2025-07-01,151,Germany
+Kai Havertz,Germany,Bayer Leverkusen,Chelsea,100000000.0,2020-09-04,151,Germany
+Nick Woltemade,Germany,Stuttgart,Newcastle,75000000.0,2025-08-30,151,Germany
+Timo Werner,Germany,Leipzig,Chelsea,53000000.0,2020-07-01,151,Germany
+Leroy Sané,Germany,FC Schalke 04,Manchester City,52000000.0,2016-08-02,151,Germany
+Thilo Kehrer,Germany,FC Schalke 04,Paris Saint-Germain,37000000.0,2018-08-16,151,Germany
+Mario Götze,Germany,Borussia Dortmund,Bayern Munich,37000000.0,2013-07-01,151,Germany
+Malick Thiaw,Germany,AC Milan,Newcastle,35000000.0,2025-08-12,151,Germany
+Mats Hummels,Germany,Borussia Dortmund,Bayern Munich,35000000.0,2016-07-01,151,Germany
+Antonio Rüdiger,Germany,Roma,Chelsea,35000000.0,2017-07-09,151,Germany
+Erling Haaland,Norway,Borussia Dortmund,Manchester City,60000000.0,2022-07-01,152,Norway
+Jørgen Strand Larsen,Norway,Wolves,Crystal Palace,49700000.0,2026-02-02,152,Norway
+Martin Ødegaard,Norway,Real Madrid,Arsenal,35000000.0,2021-08-20,152,Norway
+Alexander Sørloth,Norway,Villarreal,Atletico Madrid,32000000.0,2024-08-03,152,Norway
+Oscar Bobb,Norway,Manchester City,Fulham,31200000.0,2026-01-30,152,Norway
+Sander Berge,Norway,Genk,Sheff Utd,25000000.0,2020-01-30,152,Norway
+Antonio Nusa,Norway,Club Brugge,Leipzig,21000000.0,2024-08-13,152,Norway
+Mohamed Elyounoussi,Norway,Basel,Southampton,18000000.0,2018-07-01,152,Norway
+Kristoffer Ajer,Norway,Celtic,Brentford,15700000.0,2021-07-21,152,Norway
+Sverre Nypan,Norway,Rosenborg BK,Manchester City,15000000.0,2025-07-17,152,Norway
+Nathan Collins,Ireland,Wolves,Brentford,26850000.0,2023-07-04,153,Ireland
+Jake O'Brien,Ireland,Lyon,Everton,19500000.0,2024-07-30,153,Ireland
+Matt Doherty,Ireland,Wolves,Tottenham Hotspur,16800000.0,2020-08-30,153,Ireland
+James McCarthy,Ireland,Wigan,Everton,15300000.0,2013-09-02,153,Ireland
+Robbie Brady,Ireland,Norwich,Burnley,15100000.0,2017-01-31,153,Ireland
+Caoimhín Kelleher,Ireland,Liverpool,Brentford,14800000.0,2025-07-01,153,Ireland
+Dara O'Shea,Ireland,Burnley,Ipswich,14200000.0,2024-08-25,153,Ireland
+Gavin Bazunu,Ireland,Manchester City,Southampton,14000000.0,2022-07-01,153,Ireland
+Kasey McAteer,Ireland,Leicester,Ipswich,13900000.0,2025-08-22,153,Ireland
+Finn Azaz,Ireland,Middlesbrough,Southampton,13900000.0,2025-08-29,153,Ireland
+Dušan Vlahović,Serbia,Fiorentina,Juventus,85400000.0,2022-01-28,154,Serbia
+Luka Jović,Serbia,Frankfurt,Real Madrid,63000000.0,2019-07-02,154,Serbia
+Aleksandar Mitrović,Serbia,Fulham,Al-Hilal,52600000.0,2023-08-19,154,Serbia
+Nemanja Matić,Serbia,Chelsea,Manchester United,44700000.0,2017-07-31,154,Serbia
+Sergej Milinković-Savić,Serbia,Lazio,Al-Hilal,40000000.0,2023-07-12,154,Serbia
+Djordje Petrovic,Serbia,Chelsea,Bournemouth,28900000.0,2025-07-16,154,Serbia
+Lazar Markovic,Serbia,Benfica,Liverpool,25000000.0,2014-07-15,154,Serbia
+Aleksandar Stanković,Serbia,Club Brugge,Inter,23000000.0,2026-06-28,154,Serbia
+Nikola Maksimović,Serbia,Torino,SSC Napoli,21000000.0,2017-07-01,154,Serbia
+Strahinja Pavlović,Serbia,Salzburg,AC Milan,18500000.0,2024-07-31,154,Serbia
+Benjamin Sesko,Slovenia,Leipzig,Manchester United,76500000.0,2025-08-09,155,Slovenia
+Kevin Kampl,Slovenia,Bayer Leverkusen,RB Leipzig,20000000.0,2017-08-31,155,Slovenia
+Jaka Bijol,Slovenia,Udinese,Leeds,18000000.0,2025-07-01,155,Slovenia
+Jan Oblak,Slovenia,Benfica,Atletico Madrid,16000000.0,2014-07-16,155,Slovenia
+Wahbi Khazri,Tunisia,G. Bordeaux,Sunderland,11800000.0,2016-01-30,156,Tunisia
+Hannibal,Tunisia,AS Monaco,Manchester United,10000000.0,2019-08-11,156,Tunisia
+Sebastian Tounekti,Tunisia,Hammarby,Celtic,6400000.0,2025-09-01,156,Tunisia
+Milan Škriniar,Slovakia,Sampdoria,Inter,34000000.0,2017-07-07,157,Slovakia
+Dávid Hancko,Slovakia,Feyenoord,Atletico Madrid,26000000.0,2025-07-24,157,Slovakia
+Stanislav Lobotka,Slovakia,Celta de Vigo,Napoli,24000000.0,2020-01-15,157,Slovakia
+Denis Vavro,Slovakia,Copenhagen,Lazio,10500000.0,2019-07-04,157,Slovakia
+David Strelec,Slovakia,Slo. Bratislava,Middlesbrough,7500000.0,2025-09-01,157,Slovakia
+Ondrej Duda,Slovakia,Hertha BSC,1.FC Köln,7000000.0,2020-09-16,157,Slovakia
+Vedat Muriqi,Kosovo,Fenerbahçe,Lazio,21000000.0,2020-09-15,158,Kosovo
+Edon Zhegrova,Kosovo,Lille,Juventus,15500000.0,2025-09-01,158,Kosovo
+Amir Rrahmani,Kosovo,Hellas Verona,Napoli,15300000.0,2020-01-20,158,Kosovo
+Milot Rashica,Kosovo,Werder Bremen,Norwich,11000000.0,2021-07-01,158,Kosovo
+Arijanet Murić,Kosovo,Burnley,Ipswich,9550000.0,2024-07-17,158,Kosovo
+Leon Avdullahu,Kosovo,Basel,Hoffenheim,8000000.0,2025-07-01,158,Kosovo
+Valon Berisha,Kosovo,Salzburg,Lazio,7600000.0,2018-07-03,158,Kosovo
+Stevan Jovetić,Montenegro,Fiorentina,Manchester City,26000000.0,2013-07-19,159,Montenegro
+Nikola Krstović,Montenegro,Lecce,Atalanta,25000000.0,2025-08-20,159,Montenegro
+Stefan Savic,Montenegro,Fiorentina,Atletico Madrid,12000000.0,2015-07-20,159,Montenegro
+Vasilije Adžić,Montenegro,B. Podgorica,Juventus,7200000.0,2024-07-01,159,Montenegro
+Sead Haksabanovic,Montenegro,Norrköping,Rubin Kazan,6500000.0,2021-07-01,159,Montenegro
+El Bilal Touré,Mali,UD Almería,Atalanta,30200000.0,2023-07-29,160,Mali
+Yves Bissouma,Mali,Brighton,Tottenham Hotspur,29200000.0,2022-07-01,160,Mali
+Cheick Doucouré,Mali,Lens,Crystal Palace,22600000.0,2022-07-11,160,Mali
+Abdoulaye Doucouré,Mali,Watford,Everton,22000000.0,2020-09-08,160,Mali
+Amadou Haidara,Mali,Salzburg,Leipzig,19000000.0,2019-01-01,160,Mali
+Dorgeles Nene,Mali,Salzburg,Fenerbahçe,18000000.0,2025-08-19,160,Mali
+Mahamadou Doumbia,Mali,Royal Antwerp,Al-Ittihad,16000000.0,2025-09-08,160,Mali
+Moussa Djenepo,Mali,Standard Liège,Southampton,15700000.0,2019-07-01,160,Mali
+Mohamed Camara,Mali,RB Salzburg,Monaco,15000000.0,2022-08-14,160,Mali
+Diadié Samassékou,Mali,Salzburg,Hoffenheim,12500000.0,2019-08-15,160,Mali
+Antoine Semenyo,Ghana,Bournemouth,Manchester City,72000000.0,2026-01-09,161,Ghana
+Mohammed Kudus,Ghana,West Ham,Tottenham Hotspur,63800000.0,2025-07-10,161,Ghana
+Thomas Partey,Ghana,Atletico Madrid,Arsenal,50000000.0,2020-10-05,161,Ghana
+Ernest Nuamah,Ghana,RWDM,Lyon,28500000.0,2024-07-07,161,Ghana
+Abdul Rahman Baba,Ghana,Augsburg,Chelsea,26000000.0,2015-08-16,161,Ghana
+Kamaldeen Sulemana,Ghana,Stade Rennais,Southampton,25000000.0,2023-01-31,161,Ghana
+André Ayew,Ghana,Swansea,West Ham,24100000.0,2016-08-08,161,Ghana
+Ibrahim Osman,Ghana,Nordsjaelland,Brighton,19500000.0,2024-07-01,161,Ghana
+Christopher Bonsu Baah,Ghana,Genk,Al-Qadsiah,17000000.0,2025-07-07,161,Ghana
+Abdul Fatawu,Ghana,Sporting,Leicester,16250000.0,2024-07-01,161,Ghana
+Abdukodir Khusanov,Uzbekistan,Lens,Manchester City,40000000.0,2025-01-20,162,Uzbekistan
+Eldor Shomurodov,Uzbekistan,Genoa,Roma,19780000.0,2021-08-02,162,Uzbekistan
+Abbosbek Fayzullaev,Uzbekistan,CSKA Moscow,Basaksehir,7500000.0,2025-07-30,162,Uzbekistan
+Shoya Nakajima,Japan,Portimonense,Al-Duhail SC,35000000.0,2019-02-03,163,Japan
+Hiroki Ito,Japan,Stuttgart,Bayern Munich,23500000.0,2024-07-01,163,Japan
+Ritsu Doan,Japan,Freiburg,Frankfurt,21000000.0,2025-08-07,163,Japan
+Wataru Endo,Japan,Stuttgart,Liverpool,20000000.0,2023-08-18,163,Japan
+Takehiro Tomiyasu,Japan,Bologna,Arsenal,18600000.0,2021-08-31,163,Japan
+Shinji Kagawa,Japan,Borussia Dortmund,Manchester United,16000000.0,2012-07-01,163,Japan
+Takumi Minamino,Japan,Liverpool,Monaco,15000000.0,2022-07-01,163,Japan
+Keito Nakamura,Japan,LASK,Stade Reims,12000000.0,2023-08-10,163,Japan
+Kyogo Furuhashi,Japan,Celtic,Stade Rennais,12000000.0,2025-01-27,163,Japan
+Shinji Okazaki,Japan,1.FSV Mainz 05,Leicester,11000000.0,2015-07-01,163,Japan
+Khvicha Kvaratskhelia,Georgia,Napoli,Paris Saint-Germain,80000000.0,2025-01-17,164,Georgia
+Georges Mikautadze,Georgia,Lyon,Villarreal,31000000.0,2025-09-01,164,Georgia
+Giorgi Mamardashvili,Georgia,Valencia,Liverpool,30000000.0,2024-08-27,164,Georgia
+Chris Wood,New Zealand,Burnley,Newcastle,30000000.0,2022-01-13,165,New Zealand
+Geoffrey Kondogbia,Central African Republic,Monaco,Inter,36000000.0,2015-07-01,166,Central African Republic
+Patrik Schick,Czech Republic,Sampdoria,Roma,42000000.0,2018-07-01,167,Czech Republic
+Adam Hlozek,Czech Republic,Bayer Leverkusen,Hoffenheim,18000000.0,2024-08-17,167,Czech Republic
+Antonín Kinský,Czech Republic,Slavia Praha,Tottenham Hotspur,16500000.0,2025-01-05,167,Czech Republic
+Tomáš Souček,Czech Republic,Slavia Praha,West Ham,16200000.0,2020-07-27,167,Czech Republic
+Jakub Jankto,Czech Republic,Udinese,Sampdoria,14500000.0,2019-07-01,167,Czech Republic
+David Jurásek,Czech Republic,Slavia Praha,Benfica,14000000.0,2023-07-10,167,Czech Republic
+Matej Vydra,Czech Republic,Derby,Burnley,12200000.0,2018-08-07,167,Czech Republic
+Alex Král,Czech Republic,Slavia Praha,Spartak Moscow,12000000.0,2019-09-01,167,Czech Republic
+Ladislav Krejčí,Czech Republic,Sparta Prague,Girona,12000000.0,2024-07-01,167,Czech Republic
+Martin Vitík,Czech Republic,Sparta Prague,Bologna,11000000.0,2025-07-06,167,Czech Republic
+Christian Pulisic,United States,Borussia Dortmund,Chelsea,64000000.0,2019-01-02,168,United States
+Malik Tillman,United States,PSV,Bayer Leverkusen,35000000.0,2025-07-12,168,United States
+Brenden Aaronson,United States,Salzburg,Leeds,32840000.0,2022-07-01,168,United States
+Folarin Balogun,United States,Arsenal,Monaco,30000000.0,2023-08-30,168,United States
+Tyler Adams,United States,Leeds,Bournemouth,26900000.0,2023-08-20,168,United States
+Johnny Cardoso,United States,Real Betis,Atletico Madrid,24000000.0,2025-07-16,168,United States
+Weston McKennie,United States,FC Schalke 04,Juventus,21900000.0,2021-07-01,168,United States
+Yunus Musah,United States,Valencia,AC Milan,21200000.0,2023-08-04,168,United States
+Sergiño Dest,United States,Ajax,Barcelona,21000000.0,2020-10-01,168,United States
+Josh Sargent,United States,Norwich,Toronto,18650000.0,2026-02-27,168,United States
+Yankuba Minteh,The Gambia,Newcastle,Brighton,35000000.0,2024-07-01,169,The Gambia
+Musa Barrow,The Gambia,Atalanta,Bologna,14340000.0,2021-07-01,169,The Gambia
+Omar Colley,The Gambia,Genk,Sampdoria,9250000.0,2018-07-01,169,The Gambia
+Oscar Gloukh,Israel,Salzburg,Ajax,14750000.0,2025-08-01,170,Israel
+Daniel Peretz,Israel,Bayern Munich,Southampton,8000000.0,2026-07-01,170,Israel
+Liel Abada,Israel,Celtic,Charlotte,8000000.0,2024-03-07,170,Israel
+Anan Khalaili,Israel,Maccabi Haifa,Union SG,6500000.0,2024-07-01,170,Israel
+Manor Solomon,Israel,M. Petah Tikva,Shakhtar D.,6500000.0,2019-01-11,170,Israel
+Alireza Jahanbakhsh,Iran,AZ Alkmaar,Brighton,22500000.0,2018-07-25,171,Iran
+Sardar Azmoun,Iran,Rubin Kazan,Zenit S-Pb,12000000.0,2019-02-01,171,Iran
+Darwin Núñez,Uruguay,Benfica,Liverpool,85000000.0,2022-07-01,172,Uruguay
+Luis Suárez,Uruguay,Liverpool,Barcelona,81720000.0,2014-07-11,172,Uruguay
+Edinson Cavani,Uruguay,Napoli,Paris Saint-Germain,64500000.0,2013-07-16,172,Uruguay
+Manuel Ugarte,Uruguay,Sporting,Paris Saint-Germain,60000000.0,2023-07-07,172,Uruguay
+Rodrigo Zalazar,Uruguay,Braga,Sporting,30000000.0,2026-07-01,172,Uruguay
+Lucas Torreira,Uruguay,Sampdoria,Arsenal,28650000.0,2018-07-10,172,Uruguay
+Matías Vecino,Uruguay,Fiorentina,Inter,24000000.0,2017-08-02,172,Uruguay
+Rodrigo Bentancur,Uruguay,Boca Juniors,Juventus,23500000.0,2017-07-01,172,Uruguay
+Luciano Rodríguez,Uruguay,EC Bahia,NEOM SC,20000000.0,2025-09-10,172,Uruguay
+Diego Laxalt,Uruguay,Genoa,AC Milan,19000000.0,2018-08-17,172,Uruguay
+Keylor Navas,Costa Rica,Real Madrid,Paris Saint-Germain,15000000.0,2019-09-02,173,Costa Rica
+Manfred Ugalde,Costa Rica,FC Twente,Spartak Moscow,13000000.0,2024-01-29,173,Costa Rica
+Mateo Retegui,Italy,Atalanta,Al-Qadsiah,61750000.0,2025-07-21,174,Italy
+Sandro Tonali,Italy,AC Milan,Newcastle,60800000.0,2023-07-03,174,Italy
+Jorginho,Italy,Napoli,Chelsea,57000000.0,2018-07-14,174,Italy
+Federico Chiesa,Italy,Fiorentina,Juventus,44600000.0,2022-07-01,174,Italy
+Riccardo Calafiori,Italy,Bologna,Arsenal,43700000.0,2024-07-29,174,Italy
+Leonardo Bonucci,Italy,Juventus,AC Milan,42000000.0,2017-07-21,174,Italy
+Alessandro Bastoni,Italy,Atalanta,Inter,40700000.0,2017-08-31,174,Italy
+Federico Bernardeschi,Italy,Fiorentina,Juventus,40000000.0,2017-07-24,174,Italy
+Gianluca Scamacca,Italy,Sassuolo,West Ham,38600000.0,2022-07-26,174,Italy
+Nicolò Barella,Italy,Cagliari,Inter,38500000.0,2020-09-01,174,Italy
+Jamal Lewis,Northern Ireland,Norwich,Newcastle,16500000.0,2020-09-08,175,Northern Ireland
+Shea Charles,Northern Ireland,Manchester City,Southampton,12250000.0,2023-07-12,175,Northern Ireland
+Jonny Evans,Northern Ireland,Manchester United,West Brom,8300000.0,2015-08-29,175,Northern Ireland
+George Saville,Northern Ireland,Millwall,Middlesbrough,7800000.0,2019-01-01,175,Northern Ireland
+Joël Piroe,Suriname,Swansea,Leeds,14000000.0,2023-08-24,176,Suriname
+Gyrano Kerk,Suriname,Utrecht,Loko Moscow,7000000.0,2021-09-01,176,Suriname
+Victor Osimhen,Nigeria,Lille,Napoli,78900000.0,2020-09-01,177,Nigeria
+Ademola Lookman,Nigeria,Atalanta,Atletico Madrid,35000000.0,2026-02-02,177,Nigeria
+George Ilenikhena,Nigeria,Monaco,Al-Ittihad,33000000.0,2026-02-02,177,Nigeria
+Alex Iwobi,Nigeria,Arsenal,Everton,30400000.0,2019-08-08,177,Nigeria
+Zadok Yohanna,Nigeria,AIK,Brighton,28000000.0,2026-07-01,177,Nigeria
+Kelechi Iheanacho,Nigeria,Manchester City,Leicester,27700000.0,2017-08-03,177,Nigeria
+Tolu Arokodare,Nigeria,Genk,Wolves,26000000.0,2025-09-01,177,Nigeria
+Nathan Tella,Nigeria,Southampton,Bayer Leverkusen,23300000.0,2023-08-27,177,Nigeria
+Calvin Bassey,Nigeria,Rangers,Ajax,23000000.0,2022-07-20,177,Nigeria
+Victor Boniface,Nigeria,Union SG,Bayer Leverkusen,22600000.0,2023-07-22,177,Nigeria
+Moteb Al-Harbi,Saudi Arabia,Al-Shabab,Al-Hilal,28950000.0,2024-09-01,178,Saudi Arabia
+Faisal Al-Ghamdi,Saudi Arabia,Al-Ettifaq,Al-Ittihad,11720000.0,2023-09-07,178,Saudi Arabia
+Musab Al-Juwayr,Saudi Arabia,Al-Hilal,Al-Qadsiah,11520000.0,2025-08-03,178,Saudi Arabia
+Hassan Tambakti,Saudi Arabia,Al-Shabab,Al-Hilal,11500000.0,2023-08-21,178,Saudi Arabia
+Ahmed Al-Julaydan,Saudi Arabia,Al-Fateh,Al-Ittihad,10900000.0,2025-08-13,178,Saudi Arabia
+Hassan Kadesh,Saudi Arabia,Al-Taawoun,Al-Ittihad,9880000.0,2023-08-31,178,Saudi Arabia
+Firas Al-Buraikan,Saudi Arabia,Al-Fateh,Al-Ahli,9830000.0,2023-09-03,178,Saudi Arabia
+Yahya Al-Shehri,Saudi Arabia,Al-Ettifaq,Al-Nassr,9800000.0,2013-07-01,178,Saudi Arabia
+Saad Al-Nasser,Saudi Arabia,Al-Taawoun,Al-Nassr,9770000.0,2025-08-31,178,Saudi Arabia
+Hamed Al-Ghamdi,Saudi Arabia,Al-Ettifaq,Al-Ittihad,9160000.0,2025-07-18,178,Saudi Arabia
+Yuning Zhang,China,Vitesse,West Brom,7200000.0,2017-07-03,179,China
+Dianzuo Liu,China,GZ R&F,GZ Evergrande,6700000.0,2016-02-12,179,China
+Romelu Lukaku,Belgium,Inter,Chelsea,113000000.0,2021-08-12,180,Belgium
+Kevin De Bruyne,Belgium,Wolfsburg,Manchester City,76000000.0,2015-08-30,180,Belgium
+Roméo Lavia,Belgium,Southampton,Chelsea,62100000.0,2023-08-18,180,Belgium
+Jérémy Doku,Belgium,Stade Rennais,Manchester City,60000000.0,2023-08-24,180,Belgium
+Amadou Onana,Belgium,Everton,Aston Villa,59350000.0,2024-07-22,180,Belgium
+Youri Tielemans,Belgium,Monaco,Leicester,45000000.0,2019-07-08,180,Belgium
+Loïs Openda,Belgium,Leipzig,Juventus,42750000.0,2026-07-01,180,Belgium
+Axel Witsel,Belgium,Benfica,Zenit S-Pb,40000000.0,2012-09-03,180,Belgium
+Michy Batshuayi,Belgium,Marseille,Chelsea,39000000.0,2016-07-03,180,Belgium
+Charles De Ketelaere,Belgium,Club Brugge,AC Milan,37500000.0,2022-08-02,180,Belgium

@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+venv/
+ENV/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Developer environment / secrets
+.env
+config.json
+
+# Scratch files / templates
+test_sheet.csv
+test_players.csv
+stats_template.html

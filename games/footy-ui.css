@@ -1,0 +1,302 @@
+/* ============================================================
+   footy-ui.css  — FootyArcade Shared Component Styles
+   Loaded by every game. No Tailwind utilities here — only
+   classes that can't easily be expressed as Tailwind utilities
+   or that are animation-heavy and repeated across all games.
+   ============================================================ */
+
+/* ── Background turf dot-grid ─────────────────────────────── */
+.turf-pattern {
+    background-image: radial-gradient(circle, rgba(57, 255, 20, 0.018) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+/* ── Neon glow helpers (accent-color aware via CSS var) ──── */
+.neon-glow {
+    box-shadow: 0 0 15px var(--fa-accent-glow, rgba(57, 255, 20, 0.15));
+}
+.neon-text-glow {
+    text-shadow: 0 0 10px var(--fa-accent-glow, rgba(57, 255, 20, 0.3));
+}
+.correct-glow {
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.25) !important;
+    border-color: #39ff14 !important;
+}
+
+/* ── Shimmer / redacted bar animation ─────────────────────── */
+.shimmer {
+    background: linear-gradient(90deg, #1c1b1b 25%, #2a2a2a 50%, #1c1b1b 75%);
+    background-size: 200% 100%;
+    animation: fa-shimmer 2s infinite;
+}
+@keyframes fa-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ── Hint blur / reveal ───────────────────────────────────── */
+.hint-blur {
+    filter: blur(5px);
+    transition: filter 0.35s ease;
+    user-select: none;
+}
+.hint-revealed {
+    filter: none !important;
+}
+
+/* ── Autocomplete dropdown rows ──────────────────────────── */
+.fa-dropdown-row {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #e5e2e1;
+    transition: background 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+.fa-dropdown-row:last-child {
+    border-bottom: none;
+}
+.fa-dropdown-row:hover,
+.fa-dropdown-row.fa-active {
+    background: rgba(var(--fa-accent-rgb, 57,255,20), 0.1);
+}
+.fa-dropdown-row .fa-row-badge {
+    font-size: 0.625rem;
+    font-family: monospace;
+    color: #a3a3a3;
+    background: rgba(255,255,255,0.05);
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ── Lives heart pulse animation ─────────────────────────── */
+@keyframes fa-heart-pulse {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.25); }
+    100% { transform: scale(1); }
+}
+.fa-heart-pulse {
+    animation: fa-heart-pulse 0.3s ease-out;
+}
+
+/* ── Wrong guess badge ────────────────────────────────────── */
+.fa-wrong-badge {
+    padding: 4px 12px;
+    background: rgba(255, 77, 77, 0.1);
+    border: 1px solid rgba(255, 77, 77, 0.2);
+    color: #ff4d4d;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    animation: fa-wrong-in 0.3s ease-out;
+}
+@keyframes fa-wrong-in {
+    from { opacity: 0; transform: scale(0.8); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Modal backdrop ───────────────────────────────────────── */
+#result-modal {
+    animation: fa-modal-in 0.25s ease-out;
+}
+#result-modal.hidden {
+    display: none !important;
+}
+@keyframes fa-modal-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+.fa-modal-card {
+    animation: fa-modal-card-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes fa-modal-card-in {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Glass card (for lobby) ───────────────────────────────── */
+.glass-card {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-card:hover {
+    border-color: #39ff14;
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.18);
+    transform: translateY(-4px);
+}
+
+/* ── Back-in-time pill links ──────────────────────────────── */
+.fa-bit-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #a3a3a3;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.fa-bit-link:hover {
+    border-color: rgba(var(--fa-accent-rgb, 57,255,20), 0.4);
+    color: rgb(var(--fa-accent-rgb, 57,255,20));
+    background: rgba(var(--fa-accent-rgb, 57,255,20), 0.06);
+}
+
+/* ── "Already played today" banner ───────────────────────── */
+.fa-already-played {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #a3a3a3;
+}
+
+/* ── Puzzle badge in header ───────────────────────────────── */
+#puzzle-badge {
+    font-family: monospace;
+    font-size: 0.625rem;
+    font-weight: 700;
+    background: rgba(var(--fa-accent-rgb, 57,255,20), 0.1);
+    border: 1px solid rgba(var(--fa-accent-rgb, 57,255,20), 0.2);
+    color: rgb(var(--fa-accent-rgb, 57,255,20));
+    padding: 4px 12px;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* ── Responsive give-up / add-life bar ───────────────────── */
+#fa-lives-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+}
+
+/* ── Custom Confirmation Modals ──────────────────────────── */
+.fa-confirm-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: fa-modal-in 0.2s ease-out;
+}
+.fa-confirm-card {
+    background: #131313;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 32px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: fa-modal-card-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Transient Feedback Popups (Correct / Incorrect) ─────── */
+.fa-feedback-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    animation: fa-modal-in 0.15s ease-out;
+}
+.fa-feedback-card {
+    background: #131313;
+    border-radius: 24px;
+    padding: 36px 48px;
+    text-align: center;
+    box-shadow: 0 0 30px var(--feedback-glow, rgba(57, 255, 20, 0.3));
+    border: 2px solid var(--feedback-color, #39ff14);
+    animation: fa-feedback-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes fa-feedback-pop {
+    0% { transform: scale(0.8) translateY(20px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* ── Custom Toasts ────────────────────────────────────────── */
+#fa-toast-container {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+}
+.fa-toast-item {
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e5e2e1;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: monospace;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+    animation: fa-toast-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: center;
+    white-space: nowrap;
+}
+.fa-toast-success {
+    border-color: #39ff14 !important;
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.2) !important;
+    color: #39ff14 !important;
+}
+.fa-toast-error {
+    border-color: #ff4d4d !important;
+    box-shadow: 0 0 15px rgba(255, 77, 77, 0.2) !important;
+    color: #ff4d4d !important;
+}
+@keyframes fa-toast-in {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ── Mobile responsiveness enhancements ─────────────────── */
+@media (max-width: 640px) {
+    .responsive-hide {
+        display: none !important;
+    }
+}
+

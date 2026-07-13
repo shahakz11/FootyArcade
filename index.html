@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>FootyArcade | Daily Football Trivia Games</title>
+    <meta name="description" content="Play daily football transfer trivia games — guess record signings, career paths, and more. New challenges every day."/>
+    
+    <!-- PWA Web Manifest & Favicons -->
+    <link rel="manifest" href="manifest.json"/>
+    <link rel="apple-touch-icon" href="assets/logo.png"/>
+    <link rel="icon" type="image/png" href="assets/logo.png"/>
+    
+    <!-- Social Share Preview (OpenGraph / Twitter) -->
+    <meta property="og:title" content="FootyArcade | Daily Football Trivia Games"/>
+    <meta property="og:description" content="Play daily football transfer trivia games — guess record signings, career paths, and more. New challenges every day."/>
+    <meta property="og:image" content="assets/social_share.png"/>
+    <meta property="og:type" content="website"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="FootyArcade | Daily Football Trivia Games"/>
+    <meta name="twitter:description" content="Play daily football transfer trivia games — guess record signings, career paths, and more. New challenges every day."/>
+    <meta name="twitter:image" content="assets/social_share.png"/>
+
+    <!-- Google Analytics Measurement ID Placeholder -->
+    <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Archivo+Narrow:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="games/footy-ui.css"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background:                  "#0e0e0e",
+                        surface:                     "#131313",
+                        "surface-container-low":     "#1c1b1b",
+                        "surface-container":         "#201f1f",
+                        "surface-container-high":    "#2a2a2a",
+                        "surface-container-highest": "#353534",
+                        "primary-container":         "#39ff14",
+                        "on-background":             "#e5e2e1",
+                        "on-surface-variant":        "#a3a3a3",
+                        primary:                     "#efffe3",
+                        accent:                      "#39ff14",
+                        error:                       "#ff4d4d",
+                    },
+                    fontFamily: {
+                        headline: ["Anton"],
+                        title:    ["Space Grotesk"],
+                        body:     ["Archivo Narrow"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root { --fa-accent-rgb: 57,255,20; }
+        .neon-text-glow { text-shadow: 0 0 10px rgba(57,255,20,0.4); }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body turf-pattern min-h-screen pb-24">
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-16 flex items-center justify-between px-6 shadow-[0_4px_30px_rgba(0,0,0,0.8)]">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary-container text-3xl neon-text-glow" aria-hidden="true">sports_soccer</span>
+            <h1 class="font-headline text-2xl tracking-wider text-accent uppercase italic">FOOTYARCADE</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="font-label-sm text-xs font-mono bg-primary-container/10 border border-primary-container/20 text-primary-container px-3 py-1.5 rounded-full uppercase tracking-widest">DAILY ARCADE</span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="pt-28 px-6 max-w-4xl mx-auto space-y-12">
+
+        <!-- Hero Section -->
+        <section class="text-center space-y-4">
+            <h2 class="font-headline text-5xl md:text-6xl tracking-tight uppercase italic text-on-background">
+                FOOTBALL <span class="text-primary-container neon-text-glow">TRIVIA</span> CENTER
+            </h2>
+            <p class="font-title text-lg text-on-surface-variant max-w-lg mx-auto">
+                Daily football transfer challenges. Fresh puzzle data every day.
+            </p>
+        </section>
+
+        <!-- Games Grid -->
+        <section>
+            <h3 class="font-title text-sm font-bold uppercase tracking-widest text-on-surface-variant border-b border-white/10 pb-2 mb-6">SELECT CHALLENGE</h3>
+            <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="col-span-2 text-center py-12 text-on-surface-variant">Loading challenges...</div>
+            </div>
+        </section>
+
+        <!-- Arcade Standings -->
+        <section class="glass-card rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 border-primary-container/10">
+            <div class="space-y-2 text-center md:text-left">
+                <h4 class="font-headline text-2xl text-accent uppercase italic">ARCADE STANDINGS</h4>
+                <p class="font-body text-on-surface-variant max-w-md">Your streaks and scores are stored locally in your browser. Complete challenges every day to build your streak.</p>
+            </div>
+            <div class="flex gap-4">
+                <div class="bg-black/40 border border-white/5 px-6 py-3 rounded-xl text-center min-w-[90px]">
+                    <span id="global-played" class="block font-headline text-3xl text-accent">0</span>
+                    <span class="text-[10px] uppercase text-on-surface-variant font-mono tracking-wider">Played</span>
+                </div>
+                <div class="bg-black/40 border border-white/5 px-6 py-3 rounded-xl text-center min-w-[90px]">
+                    <span id="global-wins" class="block font-headline text-3xl text-accent">0</span>
+                    <span class="text-[10px] uppercase text-on-surface-variant font-mono tracking-wider">Wins</span>
+                </div>
+                <div class="bg-black/40 border border-white/5 px-6 py-3 rounded-xl text-center min-w-[90px]">
+                    <span id="global-streak" class="block font-headline text-3xl text-accent">0</span>
+                    <span class="text-[10px] uppercase text-on-surface-variant font-mono tracking-wider">Best Streak</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 text-center text-xs text-on-surface-variant/40 pb-12 font-mono">
+        FOOTYARCADE &copy; 2026. ALL RIGHTS RESERVED.
+    </footer>
+
+    <script src="games/footy-ui.js"></script>
+    <script>
+        // ── Accent color for lobby (green) ───────────────────
+        FootyUI.initAccentColor('#39ff14');
+
+        // ── Fallback game list (matches games.json) ──────────
+        const FALLBACK_GAMES = [
+            {
+                id: "top_transfers", name: "Top Transfers",
+                description: "Guess the top 10 record signings for a specific club and nationality before your lives run out.",
+                link: "games/top_transfers.html", icon: "payments", accentHex: "#00f0ff"
+            },
+            {
+                id: "transfer_destination", name: "Transfer Destination",
+                description: "Guess the career path of a star player step-by-step. Predict their destination clubs chronologically.",
+                link: "games/transfer_destination.html", icon: "alt_route", accentHex: "#39ff14"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadGames();
+            calculateGlobalStats();
+        });
+
+        async function loadGames() {
+            const grid = document.getElementById('games-grid');
+            let games  = FALLBACK_GAMES;
+
+            try {
+                const res = await fetch('games.json?t=' + Date.now());
+                if (res.ok) games = await res.json();
+            } catch (e) {
+                console.log('Using fallback game list:', e);
+            }
+
+            // Separate live vs coming-soon for ordering (live first)
+            const liveGames   = games.filter(g => g.status !== 'coming_soon');
+            const futureGames = games.filter(g => g.status === 'coming_soon');
+            const orderedGames = [...liveGames, ...futureGames];
+
+            grid.innerHTML = '';
+            orderedGames.forEach(game => {
+                // Derive Tailwind-like inline styles from accentHex
+                const hex = game.accentHex || '#39ff14';
+                const r   = parseInt(hex.slice(1,3),16);
+                const g   = parseInt(hex.slice(3,5),16);
+                const b   = parseInt(hex.slice(5,7),16);
+                const rgb = `${r},${g},${b}`;
+
+                const isComingSoon = game.status === 'coming_soon';
+
+                // Check if already played today (via FootyUI.FootyStorage)
+                const storage     = new FootyUI.FootyStorage(game.id);
+                const playedToday = !isComingSoon && storage.hasPlayedToday();
+                const stats       = !isComingSoon ? storage.getStats() : { streak: 0 };
+
+                const card = document.createElement(isComingSoon ? 'div' : 'a');
+                if (!isComingSoon) card.href = game.link;
+                card.className = `glass-card rounded-2xl p-6 flex flex-col justify-between min-h-[220px] ${isComingSoon ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer group'} block`;
+                card.style.cssText = `--fa-accent-rgb:${rgb};`;
+                if (isComingSoon) card.title = 'Coming soon — stay tuned!';
+
+                card.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="material-symbols-outlined text-4xl p-2 bg-black/30 rounded-xl" style="color:rgb(${rgb})">${game.icon}</span>
+                            <div class="flex items-center gap-2">
+                                ${isComingSoon
+                                    ? `<span class="font-mono text-[10px] font-bold bg-white/5 border border-white/10 text-on-surface-variant/60 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
+                                        <span class="material-symbols-outlined" style="font-size:11px">schedule</span> Coming Soon
+                                       </span>`
+                                    : playedToday
+                                        ? `<span class="font-mono text-[10px] font-bold bg-white/5 border border-white/10 text-on-surface-variant px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
+                                            <span class="material-symbols-outlined" style="font-size:11px">check_circle</span> Played
+                                           </span>`
+                                        : `<span class="font-mono text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider" style="background:rgba(${rgb},0.15);color:rgb(${rgb});border:1px solid rgba(${rgb},0.3)">Active</span>`
+                                }
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-headline text-2xl uppercase italic tracking-wide ${isComingSoon ? '' : 'group-hover:transition-colors'}" style="color:rgb(${rgb})">${game.name}</h4>
+                            <p class="text-on-surface-variant text-sm line-clamp-3">${game.description}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-white/5 pt-4 mt-4">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-mono uppercase tracking-wider font-bold" style="color:rgb(${rgb})">${isComingSoon ? 'IN DEVELOPMENT' : playedToday ? 'PLAY AGAIN' : 'PLAY CHALLENGE'}</span>
+                            ${stats.streak > 0 ? `<span class="text-[10px] font-mono text-on-surface-variant">🔥 ${stats.streak} streak</span>` : ''}
+                        </div>
+                        <span class="material-symbols-outlined text-on-surface-variant ${isComingSoon ? '' : 'group-hover:translate-x-1 transition-transform'}">${isComingSoon ? 'lock' : 'arrow_forward'}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function calculateGlobalStats() {
+            let totalPlayed = 0, totalWins = 0, bestStreak = 0;
+
+            // Scan all footy_v2_* keys in localStorage
+            try {
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (!key?.startsWith('footy_v2_')) continue;
+                    const data = JSON.parse(localStorage.getItem(key) || '{}');
+                    totalPlayed += data.played    || 0;
+                    totalWins   += data.won       || 0;
+                    bestStreak   = Math.max(bestStreak, data.bestStreak || 0);
+                }
+            } catch (e) {
+                console.error('Stats error:', e);
+            }
+
+            document.getElementById('global-played').textContent = totalPlayed;
+            document.getElementById('global-wins').textContent   = totalWins;
+            document.getElementById('global-streak').textContent = bestStreak;
+        }
+    </script>
+</body>
+</html>
