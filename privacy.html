@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Privacy Policy | FootyArcade</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Archivo+Narrow:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="games/footy-ui.css"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background:                  "#0e0e0e",
+                        surface:                     "#131313",
+                        "surface-container-low":     "#1c1b1b",
+                        "surface-container":         "#201f1f",
+                        "surface-container-high":    "#2a2a2a",
+                        "surface-container-highest": "#353534",
+                        "primary-container":         "#39ff14",
+                        "on-background":             "#e5e2e1",
+                        "on-surface-variant":        "#a3a3a3",
+                        primary:                     "#efffe3",
+                        accent:                      "#39ff14",
+                        error:                       "#ff4d4d",
+                    },
+                    fontFamily: {
+                        headline: ["Anton"],
+                        title:    ["Space Grotesk"],
+                        body:     ["Archivo Narrow"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body turf-pattern min-h-screen pb-24">
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-16 flex items-center px-6 shadow-xl">
+        <a href="index.html" class="text-on-surface-variant hover:text-accent transition-colors flex items-center mr-4" aria-label="Back to game lobby">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </a>
+        <h1 class="font-headline text-2xl tracking-wider text-accent uppercase italic">PRIVACY POLICY</h1>
+    </header>
+
+    <!-- Content -->
+    <main class="pt-24 px-6 max-w-2xl mx-auto space-y-8">
+        <section class="space-y-4">
+            <h2 class="font-headline text-3xl uppercase italic tracking-wide text-accent">Privacy Policy</h2>
+            <p class="text-on-surface-variant text-sm">Last updated: July 2026</p>
+            <p class="text-on-background text-base leading-relaxed">
+                Welcome to FootyArcade. We respect your privacy and are committed to protecting it. This Privacy Policy explains how we handle data on our static game website.
+            </p>
+        </section>
+
+        <section class="space-y-4 border-t border-white/5 pt-6">
+            <h3 class="font-title text-lg font-bold text-white uppercase tracking-wider">1. Data Storage (Local Storage)</h3>
+            <p class="text-on-background text-sm leading-relaxed">
+                All gameplay data, including your win/loss statistics, played counts, current streaks, and best streaks, are saved <strong>locally in your browser's local storage</strong> (namespaced as <code>footy_v2_*</code>). This data stays entirely on your device and is not sent to our servers.
+            </p>
+        </section>
+
+        <section class="space-y-4 border-t border-white/5 pt-6">
+            <h3 class="font-title text-lg font-bold text-white uppercase tracking-wider">2. Web Analytics & Monitoring</h3>
+            <p class="text-on-background text-sm leading-relaxed">
+                We use Google Analytics (GA4) to compile aggregated statistics, such as visitor count, page views, and gameplay completion metrics. This helps us monitor performance and optimize game rules.
+            </p>
+            <p class="text-on-background text-sm leading-relaxed">
+                Furthermore, we track runtime errors and promise exceptions to catch bugs. No personally identifiable information (PII) is captured.
+            </p>
+        </section>
+
+        <section class="space-y-4 border-t border-white/5 pt-6">
+            <h3 class="font-title text-lg font-bold text-white uppercase tracking-wider">3. User Consent & Opt-Out</h3>
+            <p class="text-on-background text-sm leading-relaxed">
+                You have full control over analytics tracking. When you visit FootyArcade for the first time, you are asked to accept or decline cookies. If you decline, Google Analytics scripts will not load, and no tracking information will be transmitted.
+            </p>
+        </section>
+
+        <section class="space-y-4 border-t border-white/5 pt-6">
+            <h3 class="font-title text-lg font-bold text-white uppercase tracking-wider">4. Contact Us</h3>
+            <p class="text-on-background text-sm leading-relaxed">
+                If you have any questions or feedback regarding this policy, feel free to contact us via our GitHub repository issues panel.
+            </p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 text-center text-xs text-on-surface-variant/40 pb-12 font-mono">
+        FOOTYARCADE &copy; 2026. ALL RIGHTS RESERVED.
+    </footer>
+</body>
+</html>

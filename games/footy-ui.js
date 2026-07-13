@@ -594,16 +594,26 @@
 
     // ────────────────────────────────────────────────────────
     // ────────────────────────────────────────────────────────
-    // 10. Auto-initialize Analytics & Error Tracking
+    // 10. Auto-initialize Analytics, Error Tracking & Cookie Consent Banner
     // ────────────────────────────────────────────────────────
-    function initAnalytics() {
+    function initAnalyticsAndConsent() {
         const gaMeta = document.querySelector('meta[name="google-analytics-id"]');
         const gaId = gaMeta ? gaMeta.getAttribute('content') : null;
         if (!gaId || gaId.startsWith('G-XXX')) {
-            console.log('[FootyUI] Google Analytics Measurement ID is placeholder or missing.');
             return;
         }
 
+        const consent = localStorage.getItem('footy_consent');
+        if (consent === 'accepted') {
+            loadGA4(gaId);
+        } else if (consent === 'declined') {
+            console.log('[FootyUI] Analytics cookies declined by user.');
+        } else {
+            showConsentBanner(gaId);
+        }
+    }
+
+    function loadGA4(gaId) {
         // Inject Google Tag Manager script
         const script = document.createElement('script');
         script.async = true;
@@ -635,11 +645,56 @@
         });
     }
 
+    function showConsentBanner(gaId) {
+        const banner = document.createElement('div');
+        banner.className = 'fa-consent-banner';
+
+        // Account for relative path based on location
+        const isGame = window.location.pathname.includes('/games/');
+        const privacyPath = isGame ? '../privacy.html' : 'privacy.html';
+        const termsPath = isGame ? '../terms.html' : 'terms.html';
+
+        banner.innerHTML = `
+            <div class="fa-consent-content">
+                <span class="material-symbols-outlined text-accent text-2xl shrink-0">cookie</span>
+                <div class="space-y-1 text-left flex-grow">
+                    <h5 class="font-title text-sm font-bold text-white uppercase tracking-wider">Cookie Consent</h5>
+                    <p class="text-on-surface-variant text-xs leading-relaxed max-w-lg">
+                        We use cookies to analyze traffic, track errors, and improve your trivia experience. By clicking "ACCEPT ALL", you agree to our 
+                        <a href="${privacyPath}" class="text-accent underline hover:brightness-110">Privacy Policy</a> and 
+                        <a href="${termsPath}" class="text-accent underline hover:brightness-110">Terms & Conditions</a>.
+                    </p>
+                </div>
+                <div class="flex gap-2 shrink-0 w-full sm:w-auto justify-end">
+                    <button id="fa-consent-decline" class="px-4 py-2 bg-surface border border-white/10 text-on-surface-variant hover:text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all">
+                        DECLINE
+                    </button>
+                    <button id="fa-consent-accept" class="px-4 py-2 bg-accent text-black hover:brightness-110 active:scale-95 rounded-xl text-xs font-bold uppercase tracking-wider transition-all">
+                        ACCEPT ALL
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(banner);
+
+        document.getElementById('fa-consent-accept').addEventListener('click', () => {
+            localStorage.setItem('footy_consent', 'accepted');
+            banner.remove();
+            loadGA4(gaId);
+        });
+
+        document.getElementById('fa-consent-decline').addEventListener('click', () => {
+            localStorage.setItem('footy_consent', 'declined');
+            banner.remove();
+        });
+    }
+
     // Run initialization
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initAnalytics);
+        document.addEventListener('DOMContentLoaded', initAnalyticsAndConsent);
     } else {
-        initAnalytics();
+        initAnalyticsAndConsent();
     }
 
 
