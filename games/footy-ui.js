@@ -404,13 +404,17 @@
         card.style.setProperty('--feedback-glow', glow);
         
         card.innerHTML = `
-            <span class="material-symbols-outlined text-5xl mb-2" style="color: ${color}">
+            <span class="material-symbols-outlined text-4xl shrink-0" style="color: ${color}">
                 ${opts.isCorrect ? 'check_circle' : 'cancel'}
             </span>
-            <h4 class="font-headline text-3xl uppercase italic tracking-wide" style="color: ${color}">
-                ${opts.title}
-            </h4>
-            <p class="text-on-background text-sm font-bold mt-1">${opts.message}</p>
+            <div>
+                <h4 class="font-headline text-lg uppercase italic tracking-wide" style="color: ${color}; margin: 0; line-height: 1.2;">
+                    ${opts.title}
+                </h4>
+                <p class="text-on-surface-variant text-xs font-semibold" style="margin: 4px 0 0 0; color: #a3a3a3; line-height: 1.3;">
+                    ${opts.message}
+                </p>
+            </div>
         `;
         
         backdrop.appendChild(card);
@@ -418,9 +422,10 @@
         
         setTimeout(() => {
             backdrop.style.opacity = '0';
-            backdrop.style.transition = 'opacity 0.2s ease';
-            setTimeout(() => backdrop.remove(), 200);
-        }, 1300);
+            backdrop.style.transform = 'translate(-50%, -20px)';
+            backdrop.style.transition = 'opacity 0.25s cubic-bezier(0.4, 0, 1, 1), transform 0.25s cubic-bezier(0.4, 0, 1, 1)';
+            setTimeout(() => backdrop.remove(), 250);
+        }, 1500);
     }
 
 

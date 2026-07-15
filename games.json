@@ -2,7 +2,7 @@
   {
     "id": "top_transfers",
     "name": "Top Transfers",
-    "description": "Guess the top 10 record signings for a specific club and nationality before your lives run out.",
+    "description": "Guess the top record signings for a specific club and nationality before your lives run out.",
     "link": "games/top_transfers.html",
     "icon": "payments",
     "accentHex": "#00f0ff",
