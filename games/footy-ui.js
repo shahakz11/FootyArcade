@@ -696,7 +696,7 @@
     }
 
     // ── Feedback System ──────────────────────────────────────
-    const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbymix8-7TSjoVDFvwtLVVJdY2akXjW-JkrSNbxNvb3x_MCeprdnVG6OEfcY-CEG86T3/exec';
+    const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxEG3jA0QduSlh3ZmMR-98lTK1i4AbO-FgmFpymlJTof_8DZpZdmODSto0Q4NTyX7_7OA/exec';
 
     function initFeedbackSystem() {
         // Create floating button
