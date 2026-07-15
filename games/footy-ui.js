@@ -32,21 +32,21 @@
      */
     function FootyDropdown(cfg) {
         const input = document.getElementById(cfg.inputId);
-        const list  = document.getElementById(cfg.listId);
+        const list = document.getElementById(cfg.listId);
         if (!input || !list) {
             console.warn('[FootyUI] FootyDropdown: element not found', cfg);
             return;
         }
 
         const maxResults = cfg.maxResults || 7;
-        let activeIndex  = -1;
+        let activeIndex = -1;
         let currentItems = [];
         let selectedItem = null;
 
         function renderList(items) {
             list.innerHTML = '';
-            activeIndex    = -1;
-            currentItems   = items;
+            activeIndex = -1;
+            currentItems = items;
 
             if (!items.length) {
                 list.classList.add('hidden');
@@ -54,9 +54,9 @@
             }
 
             items.forEach((item, idx) => {
-                const row  = document.createElement('div');
+                const row = document.createElement('div');
                 row.className = 'fa-dropdown-row';
-                row.id        = `${cfg.listId}-row-${idx}`;
+                row.id = `${cfg.listId}-row-${idx}`;
 
                 const label = document.createElement('span');
                 label.textContent = cfg.labelFn(item);
@@ -64,7 +64,7 @@
 
                 if (cfg.badgeFn) {
                     const badge = document.createElement('span');
-                    badge.className   = 'fa-row-badge';
+                    badge.className = 'fa-row-badge';
                     badge.textContent = cfg.badgeFn(item);
                     row.appendChild(badge);
                 }
@@ -86,8 +86,8 @@
         }
 
         function select(item) {
-            selectedItem    = item;
-            input.value     = cfg.labelFn(item);
+            selectedItem = item;
+            input.value = cfg.labelFn(item);
             list.classList.add('hidden');
             document.getElementById('error-message')?.classList.add('hidden');
             input.focus();
@@ -102,7 +102,7 @@
 
         // Public method — clear the input & selection
         this.reset = () => {
-            input.value  = '';
+            input.value = '';
             selectedItem = null;
             list.classList.add('hidden');
         };
@@ -165,7 +165,7 @@
     function FootyLives(cfg) {
         let lives = cfg.initial;
         const counterEl = document.getElementById(cfg.counterId);
-        const heartEl   = cfg.heartId ? document.getElementById(cfg.heartId) : null;
+        const heartEl = cfg.heartId ? document.getElementById(cfg.heartId) : null;
 
         function update() {
             if (counterEl) counterEl.textContent = lives;
@@ -183,9 +183,9 @@
             if (lives <= 0 && cfg.onDead) cfg.onDead();
         }
 
-        this.get  = () => lives;
-        this.set  = (n) => { lives = n; update(); };
-        this.add  = (n = 1) => { lives += n; update(); };
+        this.get = () => lives;
+        this.set = (n) => { lives = n; update(); };
+        this.add = (n = 1) => { lives += n; update(); };
         this.lose = (n = 1) => { lives = Math.max(0, lives - n); update(); };
         this.isDead = () => lives <= 0;
 
@@ -213,18 +213,18 @@
 
         this.show = (opts) => {
             // opts: { won, score, maxScore, streak, extraText, shareText, backInTimeLinks }
-            const iconEl   = document.getElementById(cfg.iconId   || 'modal-icon');
-            const titleEl  = document.getElementById(cfg.titleId  || 'modal-title');
-            const msgEl    = document.getElementById(cfg.messageId || 'modal-message');
-            const scoreEl  = document.getElementById(cfg.scoreId  || 'modal-score');
+            const iconEl = document.getElementById(cfg.iconId || 'modal-icon');
+            const titleEl = document.getElementById(cfg.titleId || 'modal-title');
+            const msgEl = document.getElementById(cfg.messageId || 'modal-message');
+            const scoreEl = document.getElementById(cfg.scoreId || 'modal-score');
             const streakEl = document.getElementById(cfg.streakId || 'modal-streak');
 
             if (iconEl) {
                 iconEl.textContent = opts.won ? 'emoji_events' : 'dangerous';
-                iconEl.className   = `material-symbols-outlined text-6xl ${opts.won ? 'text-accent' : 'text-error'}`;
+                iconEl.className = `material-symbols-outlined text-6xl ${opts.won ? 'text-accent' : 'text-error'}`;
             }
             if (titleEl) titleEl.textContent = opts.title || (opts.won ? 'COMPLETED!' : 'GAME OVER');
-            if (msgEl)   msgEl.textContent   = opts.message || '';
+            if (msgEl) msgEl.textContent = opts.message || '';
             if (scoreEl) scoreEl.textContent = `${opts.score}/${opts.maxScore}`;
             if (streakEl) streakEl.textContent = opts.streak;
 
@@ -239,8 +239,8 @@
                 if (container) {
                     container.innerHTML = '';
                     opts.backInTimeLinks.forEach(link => {
-                        const a  = document.createElement('a');
-                        a.href      = link.href;
+                        const a = document.createElement('a');
+                        a.href = link.href;
                         a.className = 'fa-bit-link';
                         a.innerHTML = `<span class="material-symbols-outlined" style="font-size:14px">history</span>${link.label}`;
                         container.appendChild(a);
@@ -273,7 +273,7 @@
      */
     function share(opts) {
         const livesUsed = opts.initialLives - opts.lives;
-        const blocks    = buildEmojiGrid(opts.score, opts.maxScore, opts.won);
+        const blocks = buildEmojiGrid(opts.score, opts.maxScore, opts.won);
         const text = [
             `⚽ FootyArcade — ${opts.gameName} #${opts.puzzleNum}`,
             blocks,
@@ -307,7 +307,7 @@
         const ta = document.createElement('textarea');
         ta.value = text;
         ta.style.position = 'fixed';
-        ta.style.opacity  = '0';
+        ta.style.opacity = '0';
         document.body.appendChild(ta);
         ta.select();
         document.execCommand('copy');
@@ -354,10 +354,10 @@
     function confirmModal(opts) {
         const backdrop = document.createElement('div');
         backdrop.className = 'fa-confirm-backdrop';
-        
+
         const card = document.createElement('div');
         card.className = 'fa-confirm-card';
-        
+
         card.innerHTML = `
             <h4 class="font-headline text-2xl text-accent uppercase italic tracking-wide mb-2">${opts.title}</h4>
             <p class="text-on-surface-variant text-sm mb-6">${opts.message}</p>
@@ -370,15 +370,15 @@
                 </button>
             </div>
         `;
-        
+
         backdrop.appendChild(card);
         document.body.appendChild(backdrop);
-        
+
         const close = (cb) => {
             backdrop.remove();
             if (cb) cb();
         };
-        
+
         document.getElementById('fa-confirm-ok').onclick = () => close(opts.onConfirm);
         document.getElementById('fa-confirm-cancel').onclick = () => close(opts.onCancel);
     }
@@ -393,16 +393,16 @@
     function showFeedback(opts) {
         const backdrop = document.createElement('div');
         backdrop.className = 'fa-feedback-backdrop';
-        
+
         const card = document.createElement('div');
         card.className = 'fa-feedback-card';
-        
+
         const color = opts.isCorrect ? '#39ff14' : '#ff4d4d';
         const glow = opts.isCorrect ? 'rgba(57, 255, 20, 0.35)' : 'rgba(255, 77, 77, 0.35)';
-        
+
         card.style.setProperty('--feedback-color', color);
         card.style.setProperty('--feedback-glow', glow);
-        
+
         card.innerHTML = `
             <span class="material-symbols-outlined text-4xl shrink-0" style="color: ${color}">
                 ${opts.isCorrect ? 'check_circle' : 'cancel'}
@@ -416,10 +416,10 @@
                 </p>
             </div>
         `;
-        
+
         backdrop.appendChild(card);
         document.body.appendChild(backdrop);
-        
+
         setTimeout(() => {
             backdrop.style.opacity = '0';
             backdrop.style.transform = 'translate(-50%, -20px)';
@@ -439,25 +439,25 @@
         const KEY = `footy_v2_${gameId}`;
 
         const defaults = {
-            played:         0,
-            won:            0,
-            streak:         0,
-            bestStreak:     0,
+            played: 0,
+            won: 0,
+            streak: 0,
+            bestStreak: 0,
             lastPlayedDate: null,
-            lastPuzzleNum:  null,
-            history:        {}   // puzzleNum → { won, score, maxScore }
+            lastPuzzleNum: null,
+            history: {}   // puzzleNum → { won, score, maxScore }
         };
 
         function load() {
             try {
                 const raw = localStorage.getItem(KEY);
                 if (raw) return Object.assign({}, defaults, JSON.parse(raw));
-            } catch (_) {}
+            } catch (_) { }
             return Object.assign({}, defaults);
         }
 
         function save(data) {
-            try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (_) {}
+            try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (_) { }
         }
 
         /** Returns today's ISO date string "YYYY-MM-DD" */
@@ -483,9 +483,9 @@
             if (!isBackInTime) {
                 d.played++;
                 if (won) { d.won++; d.streak++; } else { d.streak = 0; }
-                d.bestStreak    = Math.max(d.bestStreak, d.streak);
+                d.bestStreak = Math.max(d.bestStreak, d.streak);
                 d.lastPlayedDate = todayStr();
-                d.lastPuzzleNum  = puzzleNum;
+                d.lastPuzzleNum = puzzleNum;
             }
             // Always record in history (even back-in-time, separately keyed)
             const histKey = isBackInTime ? `bit_${puzzleNum}` : String(puzzleNum);
@@ -513,9 +513,9 @@
      * @param {string} containerId — ID of the flex container for badges
      */
     function FootyWrongGuesses(sectionId, containerId) {
-        const section   = document.getElementById(sectionId);
+        const section = document.getElementById(sectionId);
         const container = document.getElementById(containerId);
-        const shown     = new Set();
+        const shown = new Set();
 
         this.add = (text) => {
             if (shown.has(text.toLowerCase())) return;
@@ -523,7 +523,7 @@
 
             section?.classList.remove('hidden');
             const badge = document.createElement('span');
-            badge.className   = 'fa-wrong-badge';
+            badge.className = 'fa-wrong-badge';
             badge.textContent = text;
             container?.appendChild(badge);
         };
@@ -549,8 +549,8 @@
     function buildBackInTimeLinks(gameId, maxDays, storage) {
         maxDays = maxDays || 7;
         const labels = ['Yesterday', '2 days ago', '3 days ago', '4 days ago',
-                        '5 days ago', '6 days ago', '7 days ago',
-                        '8 days ago', '9 days ago', '10 days ago'];
+            '5 days ago', '6 days ago', '7 days ago',
+            '8 days ago', '9 days ago', '10 days ago'];
         const links = [];
         for (let d = 1; d <= maxDays; d++) {
             const label = labels[d - 1] || `${d} days ago`;
@@ -588,7 +588,7 @@
         const fee = parseFloat(val);
         if (isNaN(fee) || fee === 0) return 'Free / Loan';
         if (fee >= 1000000) return `€${(fee / 1000000).toFixed(1)}M`;
-        if (fee >= 1000)    return `€${(fee / 1000).toFixed(0)}K`;
+        if (fee >= 1000) return `€${(fee / 1000).toFixed(0)}K`;
         return 'Free';
     }
 
@@ -626,12 +626,12 @@
         document.head.appendChild(script);
 
         window.dataLayer = window.dataLayer || [];
-        window.gtag = function(){ dataLayer.push(arguments); };
+        window.gtag = function () { dataLayer.push(arguments); };
         window.gtag('js', new Date());
         window.gtag('config', gaId);
 
         // Error tracking catcher
-        window.addEventListener('error', function(event) {
+        window.addEventListener('error', function (event) {
             if (window.gtag) {
                 window.gtag('event', 'exception', {
                     'description': event.message + ' at ' + event.filename + ':' + event.lineno,
@@ -640,7 +640,7 @@
             }
         });
 
-        window.addEventListener('unhandledrejection', function(event) {
+        window.addEventListener('unhandledrejection', function (event) {
             if (window.gtag) {
                 window.gtag('event', 'exception', {
                     'description': 'Unhandled Promise: ' + (event.reason ? event.reason.message || event.reason : 'unknown'),
@@ -695,11 +695,140 @@
         });
     }
 
+    // ── Feedback System ──────────────────────────────────────
+    const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbymix8-7TSjoVDFvwtLVVJdY2akXjW-JkrSNbxNvb3x_MCeprdnVG6OEfcY-CEG86T3/exec';
+
+    function initFeedbackSystem() {
+        // Create floating button
+        const trigger = document.createElement('button');
+        trigger.className = 'fa-feedback-trigger';
+        trigger.id = 'fa-feedback-btn';
+        trigger.innerHTML = `
+            <span class="material-symbols-outlined" style="font-size: 18px">rate_review</span>
+            <span>Feedback</span>
+        `;
+        document.body.appendChild(trigger);
+
+        // Create modal
+        const modal = document.createElement('div');
+        modal.className = 'fa-feedback-modal-backdrop hidden';
+        modal.id = 'fa-feedback-modal';
+        modal.innerHTML = `
+            <div class="fa-feedback-modal-card">
+                <button id="fa-feedback-close" class="absolute top-4 right-4 text-on-surface-variant hover:text-white transition-colors" type="button">
+                    <span class="material-symbols-outlined text-2xl">close</span>
+                </button>
+                <h4 class="font-headline text-2xl text-accent uppercase italic tracking-wide mb-2">SEND FEEDBACK</h4>
+                <p class="text-on-surface-variant text-xs mb-4">Have a bug report or a suggestion? Let us know!</p>
+                
+                <form id="fa-feedback-form" class="space-y-4 text-left">
+                    <div>
+                        <label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-1.5">Category</label>
+                        <select id="fa-feedback-category" class="fa-feedback-input" style="color-scheme: dark;" required>
+                            <option value="Suggestion">Suggestion</option>
+                            <option value="Bug Report">Bug Report</option>
+                            <option value="Question">Question</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-1.5">Your Message</label>
+                        <textarea id="fa-feedback-message" rows="4" class="fa-feedback-input" placeholder="What's on your mind?..." required></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-1.5">Email (Optional)</label>
+                        <input type="email" id="fa-feedback-email" class="fa-feedback-input" placeholder="your@email.com">
+                    </div>
+                    
+                    <div class="pt-2">
+                        <button type="submit" id="fa-feedback-submit" class="w-full py-3 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
+                            SUBMIT FEEDBACK
+                        </button>
+                    </div>
+                </form>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        // Open modal
+        trigger.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+        });
+
+        // Close modal
+        const closeBtn = modal.querySelector('#fa-feedback-close');
+        const closeModal = () => {
+            modal.classList.add('hidden');
+        };
+        closeBtn.addEventListener('click', closeModal);
+
+        // Close on background click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Submit form
+        const form = modal.querySelector('#fa-feedback-form');
+        const submitBtn = modal.querySelector('#fa-feedback-submit');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const category = modal.querySelector('#fa-feedback-category').value;
+            const message = modal.querySelector('#fa-feedback-message').value;
+            const email = modal.querySelector('#fa-feedback-email').value;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'SUBMITTING...';
+
+            const payload = {
+                type: 'feedback',
+                category,
+                message,
+                email,
+                url: window.location.href,
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                if (!FEEDBACK_WEBHOOK_URL || FEEDBACK_WEBHOOK_URL.includes('XXXX')) {
+                    throw new Error('Webhook URL not configured');
+                }
+
+                await fetch(FEEDBACK_WEBHOOK_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                toast('Feedback submitted! Thank you.', 'success');
+                modal.querySelector('#fa-feedback-message').value = '';
+                modal.querySelector('#fa-feedback-email').value = '';
+                closeModal();
+            } catch (err) {
+                console.error('[FootyUI] Feedback submission error:', err);
+                toast('Error submitting feedback. Please try again.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'SUBMIT FEEDBACK';
+            }
+        });
+    }
+
     // Run initialization
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initAnalyticsAndConsent);
+        document.addEventListener('DOMContentLoaded', () => {
+            initAnalyticsAndConsent();
+            initFeedbackSystem();
+        });
     } else {
         initAnalyticsAndConsent();
+        initFeedbackSystem();
     }
 
 
@@ -723,3 +852,4 @@
     };
 
 })(window);
+
