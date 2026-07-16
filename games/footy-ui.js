@@ -212,6 +212,14 @@
         const modal = document.getElementById(cfg.modalId || 'result-modal');
 
         this.show = (opts) => {
+            // Track game completion
+            trackEvent('game_end', {
+                won: opts.won,
+                score: opts.score,
+                maxScore: opts.maxScore,
+                extraDetails: opts.title
+            });
+
             // opts: { won, score, maxScore, streak, extraText, shareText, backInTimeLinks }
             const iconEl = document.getElementById(cfg.iconId || 'modal-icon');
             const titleEl = document.getElementById(cfg.titleId || 'modal-title');
@@ -272,6 +280,14 @@
      * @param {string} opts.url
      */
     function share(opts) {
+        // Track share event
+        trackEvent('share', {
+            won: opts.won,
+            score: opts.score,
+            maxScore: opts.maxScore,
+            lives: opts.lives
+        });
+
         const livesUsed = opts.initialLives - opts.lives;
         const blocks = buildEmojiGrid(opts.score, opts.maxScore, opts.won);
         const text = [
@@ -698,6 +714,38 @@
     // ── Feedback System ──────────────────────────────────────
     const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxEG3jA0QduSlh3ZmMR-98lTK1i4AbO-FgmFpymlJTof_8DZpZdmODSto0Q4NTyX7_7OA/exec';
 
+    function trackEvent(eventName, params = {}) {
+        if (!FEEDBACK_WEBHOOK_URL || FEEDBACK_WEBHOOK_URL.includes('XXXX')) {
+            return;
+        }
+
+        const payload = {
+            type: 'event',
+            eventName: eventName,
+            gameId: params.gameId || global.GAME_ID || '',
+            puzzleNum: params.puzzleNum !== undefined ? params.puzzleNum : (global.puzzleNum !== undefined ? global.puzzleNum : 0),
+            score: params.score,
+            maxScore: params.maxScore,
+            lives: params.lives,
+            won: params.won,
+            isBackInTime: params.isBackInTime !== undefined ? params.isBackInTime : (global.isBackInTime !== undefined ? global.isBackInTime : false),
+            extraDetails: params.extraDetails || '',
+            url: window.location.href,
+            timestamp: new Date().toISOString()
+        };
+
+        fetch(FEEDBACK_WEBHOOK_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        }).catch(err => {
+            console.error('[FootyUI] Event tracking error:', err);
+        });
+    }
+
     function initFeedbackSystem() {
         // Create floating button
         const trigger = document.createElement('button');
@@ -755,6 +803,7 @@
         // Open modal
         trigger.addEventListener('click', () => {
             modal.classList.remove('hidden');
+            trackEvent('feedback_open');
         });
 
         // Close modal
@@ -807,6 +856,7 @@
                 });
 
                 toast('Feedback submitted! Thank you.', 'success');
+                trackEvent('feedback_submit', { extraDetails: category });
                 modal.querySelector('#fa-feedback-message').value = '';
                 modal.querySelector('#fa-feedback-email').value = '';
                 closeModal();
@@ -820,15 +870,33 @@
         });
     }
 
+    // Auto game start detection
+    let gameStarted = false;
+    function detectGameStart(e) {
+        if (gameStarted) return;
+        if (e.target.closest('#fa-guess-panel') || 
+            e.target.closest('button[onclick*="reveal"]') || 
+            (e.type === 'keydown' && e.target.closest('#guess-input'))) {
+            gameStarted = true;
+            trackEvent('game_start');
+            document.removeEventListener('click', detectGameStart, true);
+            document.removeEventListener('keydown', detectGameStart, true);
+        }
+    }
+    document.addEventListener('click', detectGameStart, true);
+    document.addEventListener('keydown', detectGameStart, true);
+
     // Run initialization
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             initAnalyticsAndConsent();
             initFeedbackSystem();
+            trackEvent('page_view');
         });
     } else {
         initAnalyticsAndConsent();
         initFeedbackSystem();
+        trackEvent('page_view');
     }
 
 
@@ -849,6 +917,7 @@
         toast,
         confirm: confirmModal,
         showFeedback,
+        trackEvent,
     };
 
 })(window);
