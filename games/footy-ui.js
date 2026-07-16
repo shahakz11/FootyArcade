@@ -714,21 +714,41 @@
     // ── Feedback System ──────────────────────────────────────
     const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxEG3jA0QduSlh3ZmMR-98lTK1i4AbO-FgmFpymlJTof_8DZpZdmODSto0Q4NTyX7_7OA/exec';
 
+    function getActiveGameMetadata() {
+        const path = window.location.pathname;
+        const gameIdMatch = path.match(/\/games\/([a-zA-Z0-9_-]+?)(?:_d\d+)?\.html/);
+        const gameId = gameIdMatch ? gameIdMatch[1] : 'lobby';
+        const isBackInTime = /_d\d+\.html$/.test(path);
+        
+        let puzzleNum = 0;
+        const badgeEl = document.getElementById('puzzle-badge');
+        if (badgeEl) {
+            const badgeText = badgeEl.textContent || '';
+            const numMatch = badgeText.match(/#(\d+)/);
+            if (numMatch) {
+                puzzleNum = parseInt(numMatch[1], 10);
+            }
+        }
+        return { gameId, isBackInTime, puzzleNum };
+    }
+
     function trackEvent(eventName, params = {}) {
         if (!FEEDBACK_WEBHOOK_URL || FEEDBACK_WEBHOOK_URL.includes('XXXX')) {
             return;
         }
 
+        const meta = getActiveGameMetadata();
+
         const payload = {
             type: 'event',
             eventName: eventName,
-            gameId: params.gameId || global.GAME_ID || '',
-            puzzleNum: params.puzzleNum !== undefined ? params.puzzleNum : (global.puzzleNum !== undefined ? global.puzzleNum : 0),
+            gameId: params.gameId || meta.gameId,
+            puzzleNum: params.puzzleNum !== undefined ? params.puzzleNum : meta.puzzleNum,
             score: params.score,
             maxScore: params.maxScore,
             lives: params.lives,
             won: params.won,
-            isBackInTime: params.isBackInTime !== undefined ? params.isBackInTime : (global.isBackInTime !== undefined ? global.isBackInTime : false),
+            isBackInTime: params.isBackInTime !== undefined ? params.isBackInTime : meta.isBackInTime,
             extraDetails: params.extraDetails || '',
             url: window.location.href,
             timestamp: new Date().toISOString()
