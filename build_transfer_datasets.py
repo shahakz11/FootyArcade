@@ -4,9 +4,12 @@ import random
 import kagglehub
 
 def main():
-    print("Downloading player-scores dataset from Kaggle...")
-    path = kagglehub.dataset_download("davidcariboo/player-scores")
-    print(f"Dataset downloaded to {path}")
+    print("Loading player-scores dataset...")
+    try:
+        path = kagglehub.dataset_download("davidcariboo/player-scores")
+    except Exception:
+        path = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions/671')
+    print(f"Dataset path: {path}")
 
     # Load players and transfers
     players_file = os.path.join(path, 'players.csv')
@@ -153,21 +156,30 @@ def main():
 
     # --- 3. Generating Autocomplete Player List ---
     print("Generating autocomplete player list...")
-    df_players_clean = df.dropna(subset=['name', 'country_of_citizenship', 'position']).copy()
-    transferred_player_names = set(df_transfers['player_name'].dropna().unique())
-    df_autocomplete = df_players_clean[
-        (df_players_clean['market_value_in_eur'] >= 1_000_000) | 
-        (df_players_clean['name'].isin(transferred_player_names))
-    ].copy()
-    df_autocomplete.drop_duplicates(subset=['name'], inplace=True)
+    df_players_clean = df.dropna(subset=['name']).copy()
+    df_players_clean['country_of_citizenship'] = df_players_clean['country_of_citizenship'].fillna('')
+    df_players_clean['position'] = df_players_clean['position'].fillna('')
+    df_players_clean.drop_duplicates(subset=['name'], inplace=True)
     
     autocomplete_list = []
-    for _, row in df_autocomplete.iterrows():
+    seen_players = set()
+    for _, row in df_players_clean.iterrows():
+        p_name = row['name']
+        seen_players.add(p_name.lower())
         autocomplete_list.append({
-            "Name": row['name'],
+            "Name": p_name,
             "Nationality": row['country_of_citizenship'],
             "Position": row['position']
         })
+        
+    for t_name in df_transfers['player_name'].dropna().unique():
+        if t_name.lower() not in seen_players:
+            seen_players.add(t_name.lower())
+            autocomplete_list.append({
+                "Name": t_name,
+                "Nationality": "",
+                "Position": "Player"
+            })
         
     import json
     with open('all_players.json', 'w', encoding='utf-8') as f_out:
@@ -251,13 +263,16 @@ def main():
     
     # --- 5. Generating Autocomplete Club List ---
     print("Generating autocomplete club list...")
-    # Add clubs involved in transfers >= 5M
-    big_fee_clubs = pd.concat([
-        df_transfers[df_transfers['transfer_fee'] >= 5_000_000]['from_club_name'],
-        df_transfers[df_transfers['transfer_fee'] >= 5_000_000]['to_club_name']
-    ]).dropna().unique()
-    
-    all_autocomplete_clubs = sorted(list(clubs_in_careers | set(big_fee_clubs)))
+    clubs_file = os.path.join(path, 'clubs.csv')
+    df_clubs_csv = pd.read_csv(clubs_file) if os.path.exists(clubs_file) else pd.DataFrame()
+
+    from_clubs = set(df_transfers['from_club_name'].dropna().unique())
+    to_clubs = set(df_transfers['to_club_name'].dropna().unique())
+    csv_clubs = set(df_clubs_csv['name'].dropna().apply(clean_club_name).unique()) if not df_clubs_csv.empty else set()
+
+    all_autocomplete_clubs = sorted(list(clubs_in_careers | from_clubs | to_clubs | csv_clubs))
+    all_autocomplete_clubs = [c for c in all_autocomplete_clubs if c]
+
     with open('all_clubs.json', 'w', encoding='utf-8') as f_clubs:
         json.dump(all_autocomplete_clubs, f_clubs, ensure_ascii=False, indent=2)
     print(f"Successfully generated autocomplete club list with {len(all_autocomplete_clubs)} clubs in 'all_clubs.json'")

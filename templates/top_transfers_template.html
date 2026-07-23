@@ -311,9 +311,7 @@
             listId:   'autocomplete-list',
             data:     allPlayersPool,
             labelFn:  p => p.Name,
-            badgeFn:  p => p.Nationality || '',
-            filterFn: (p, q) => p.Name.toLowerCase().includes(q.toLowerCase()),
-            maxResults: 7
+            badgeFn:  p => p.Nationality || ''
         });
 
         // Modal
@@ -486,7 +484,9 @@
         const raw   = input.value.trim();
         if (!raw) return;
 
-        const matched = allPlayersPool.find(p => p.Name.toLowerCase() === raw.toLowerCase());
+        const normRaw = FootyUI.normalizeStr(raw);
+        const selected = dropdown.getSelected();
+        const matched = selected || allPlayersPool.find(p => FootyUI.normalizeStr(p.Name) === normRaw);
         if (!matched) { errEl.classList.remove('hidden'); return; }
         errEl.classList.add('hidden');
 
@@ -495,8 +495,9 @@
         dropdown.clearSelection();
 
         let found = false;
+        const normMatchedName = FootyUI.normalizeStr(matched.Name);
         activeGameData.transfers.forEach((tr, idx) => {
-            if (tr.player_name.toLowerCase() === matched.Name.toLowerCase() && !guessedPlayers.has(tr.player_name)) {
+            if (FootyUI.normalizeStr(tr.player_name) === normMatchedName && !guessedPlayers.has(tr.player_name)) {
                 guessedPlayers.add(tr.player_name);
                 revealRow(idx, tr.player_name, false);
                 score++;

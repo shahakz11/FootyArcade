@@ -16,6 +16,19 @@
 (function (global) {
     'use strict';
 
+    /**
+     * Accent-insensitive normalization helper
+     * e.g. "Ángel Di María" -> "angel di maria"
+     */
+    function normalizeStr(str) {
+        if (!str) return '';
+        return str
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .trim();
+    }
+
     // ────────────────────────────────────────────────────────
     // 1. FootyDropdown — Unified autocomplete component
     // ────────────────────────────────────────────────────────
@@ -26,9 +39,9 @@
      * @param {Array}    cfg.data          — Array of items to search
      * @param {Function} cfg.labelFn       — (item) => string displayed in list
      * @param {Function} [cfg.badgeFn]     — (item) => string for right badge (optional)
-     * @param {Function} cfg.filterFn      — (item, query) => boolean
+     * @param {Function} [cfg.filterFn]    — (item, query) => boolean (optional)
      * @param {Function} cfg.onSelect      — (item) => void called on selection
-     * @param {number}   [cfg.maxResults]  — Max dropdown rows (default 7)
+     * @param {number}   [cfg.maxResults]  — Max dropdown rows (default 200)
      */
     function FootyDropdown(cfg) {
         const input = document.getElementById(cfg.inputId);
@@ -38,10 +51,58 @@
             return;
         }
 
-        const maxResults = cfg.maxResults || 7;
+        const maxResults = cfg.maxResults || 200;
         let activeIndex = -1;
         let currentItems = [];
         let selectedItem = null;
+
+        function searchAndRank(data, query) {
+            const normQ = normalizeStr(query);
+            if (!normQ) return [];
+
+            const results = [];
+            for (let i = 0; i < data.length; i++) {
+                const item = data[i];
+                const rawLabel = cfg.labelFn(item);
+                const normLabel = normalizeStr(rawLabel);
+
+                let matches = normLabel.includes(normQ);
+                if (!matches && cfg.filterFn) {
+                    matches = cfg.filterFn(item, query);
+                }
+
+                if (!matches) continue;
+
+                let tier = 4;
+                if (normLabel === normQ) {
+                    tier = 1;
+                } else if (normLabel.startsWith(normQ)) {
+                    tier = 2;
+                } else {
+                    const words = normLabel.split(/\s+/);
+                    if (words.some(w => w === normQ)) {
+                        tier = 2;
+                    } else if (words.some(w => w.startsWith(normQ))) {
+                        tier = 3;
+                    }
+                }
+
+                results.push({
+                    item,
+                    tier,
+                    len: normLabel.length,
+                    label: rawLabel
+                });
+            }
+
+            results.sort((a, b) => {
+                if (a.tier !== b.tier) return a.tier - b.tier;
+                if (a.len !== b.len) return a.len - b.len;
+                return a.label.localeCompare(b.label);
+            });
+
+            return results.map(r => r.item);
+        }
 
         function renderList(items) {
             list.innerHTML = '';
@@ -115,7 +176,7 @@
             debounceTimer = setTimeout(() => {
                 const q = input.value.trim();
                 if (!q) { list.classList.add('hidden'); currentItems = []; return; }
-                const matches = cfg.data.filter(item => cfg.filterFn(item, q)).slice(0, maxResults);
+                const matches = searchAndRank(cfg.data, q).slice(0, maxResults);
                 renderList(matches);
             }, 60);
         });
@@ -938,6 +999,7 @@
         confirm: confirmModal,
         showFeedback,
         trackEvent,
+        normalizeStr,
     };
 
 })(window);

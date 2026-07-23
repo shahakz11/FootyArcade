@@ -307,9 +307,7 @@
             inputId:  'guess-input',
             listId:   'autocomplete-list',
             data:     allClubs,
-            labelFn:  c => c,
-            filterFn: (c, q) => c.toLowerCase().includes(q.toLowerCase()),
-            maxResults: 7
+            labelFn:  c => c
         });
 
         modal = new FootyUI.FootyModal({
@@ -508,8 +506,9 @@
         const rawGuess = input.value.trim();
         if (!rawGuess) return;
 
-        // Must match a club exactly from the list
-        const matched = allClubs.find(c => c.toLowerCase() === rawGuess.toLowerCase());
+        const normRaw = FootyUI.normalizeStr(rawGuess);
+        const selected = dropdown.getSelected();
+        const matched = selected || allClubs.find(c => FootyUI.normalizeStr(c) === normRaw);
         if (!matched) { errEl.classList.remove('hidden'); return; }
         errEl.classList.add('hidden');
 
@@ -517,9 +516,9 @@
         document.getElementById('autocomplete-list').classList.add('hidden');
         dropdown.clearSelection();
 
-        const correct = activeGameData.transfers[activeStep].to_club_name.toLowerCase();
+        const correct = FootyUI.normalizeStr(activeGameData.transfers[activeStep].to_club_name);
 
-        if (matched.toLowerCase() === correct) {
+        if (FootyUI.normalizeStr(matched) === correct) {
             score++;
             activeStep++;
             document.getElementById('progress-counter').textContent = score;
