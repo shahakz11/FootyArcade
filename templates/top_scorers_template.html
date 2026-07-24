@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>Top Scorers | FootyArcade</title>
+    <meta name="description" content="Guess the all-time top scorers for a club in FootyArcade's daily scoring challenge."/>
+    
+    <!-- PWA Web Manifest & Favicons -->
+    <link rel="manifest" href="../manifest.json"/>
+    <link rel="apple-touch-icon" href="../assets/logo.png"/>
+    <link rel="icon" type="image/png" href="../assets/logo.png"/>
+    
+    <!-- Social Share Preview (OpenGraph / Twitter) -->
+    <meta property="og:title" content="Top Scorers | FootyArcade"/>
+    <meta property="og:description" content="Guess the all-time top scorers for a club in FootyArcade's daily scoring challenge."/>
+    <meta property="og:image" content="../assets/social_share.png"/>
+    <meta property="og:type" content="website"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Top Scorers | FootyArcade"/>
+    <meta name="twitter:description" content="Guess the all-time top scorers for a club in FootyArcade's daily scoring challenge."/>
+    <meta name="twitter:image" content="../assets/social_share.png"/>
+
+    <!-- Google Analytics Measurement ID Placeholder -->
+    <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Archivo+Narrow:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <!-- Shared FootyArcade styles -->
+    <link rel="stylesheet" href="../games/footy-ui.css?v=2"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        /* ── Shared tokens — DO NOT change ── */
+                        background:                  "#0e0e0e",
+                        surface:                     "#131313",
+                        "surface-container-low":     "#1c1b1b",
+                        "surface-container":         "#201f1f",
+                        "surface-container-high":    "#2a2a2a",
+                        "surface-container-highest": "#353534",
+                        "on-background":             "#e5e2e1",
+                        "on-surface-variant":        "#a3a3a3",
+                        error:                       "#ff4d4d",
+                        /* ── Game-specific accent ── */
+                        accent:              "#f59e0b",
+                        "primary-container": "#f59e0b",
+                        /* secondary accent for correct answers */
+                        correct:             "#39ff14",
+                    },
+                    fontFamily: {
+                        headline: ["Anton"],
+                        title:    ["Space Grotesk"],
+                        body:     ["Archivo Narrow"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Wire accent color for footy-ui.css shared components */
+        :root { --fa-accent-rgb: 245,158,11; --fa-accent-glow: rgba(245,158,11,0.25); }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body turf-pattern min-h-screen pb-24">
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-16 flex items-center justify-between px-6 shadow-xl">
+        <div class="flex items-center gap-3">
+            <a href="../index.html" class="text-on-surface-variant hover:text-accent transition-colors flex items-center" aria-label="Back to game lobby">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <h1 class="font-headline text-2xl tracking-wider text-accent uppercase italic neon-text-glow">TOP SCORERS</h1>
+        </div>
+        <div class="flex items-center gap-2">
+            <a id="nav-back-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1" title="Play previous puzzle (back in time)">
+                <span class="material-symbols-outlined">chevron_left</span>
+                <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden md:inline">Previous</span>
+            </a>
+            <span id="puzzle-badge" class="font-mono text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 px-2.5 py-1 rounded cursor-help" title="Daily puzzle number. Use arrows to play past puzzles!">PUZZLE #0</span>
+            <a id="nav-front-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1" title="Play newer/today's puzzle">
+                <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden md:inline">Next</span>
+                <span class="material-symbols-outlined">chevron_right</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 px-4 max-w-4xl mx-auto space-y-6">
+
+        <!-- Game Intro -->
+        <section class="text-center space-y-2">
+            <h2 id="game-title" class="font-title text-xl font-bold uppercase tracking-widest text-on-background">Top Scorers per League & Season</h2>
+            <p class="text-on-surface-variant text-sm max-w-xl mx-auto">
+                Fill the scorers table below for the given league and season. Use the search bar to guess players. Only players from the search dropdown can be guessed. Use the hints (<span class="material-symbols-outlined text-xs inline-block align-middle text-accent">lightbulb</span>) or reveal individual players if you are stuck!
+            </p>
+        </section>
+
+        <!-- Game Note / Disclaimer (injected by compiler via GAME_NOTE) -->
+        <div id="game-note-bar" class="hidden max-w-2xl mx-auto">
+            <div class="flex items-center gap-2 px-4 py-2.5 bg-white/[0.03] border border-white/8 rounded-xl text-[11px] font-mono text-on-surface-variant/70">
+                <span class="material-symbols-outlined shrink-0" style="font-size:14px">info</span>
+                <span id="game-note-text"></span>
+            </div>
+        </div>
+
+        <!-- Target Info Panel -->
+        <div class="text-center">
+            <div class="space-y-1">
+                <span id="target-label" class="text-xs uppercase font-mono tracking-widest text-on-surface-variant">TOP 10 SCORERS IN</span>
+                <h3 id="target-name" class="font-headline text-4xl text-correct uppercase italic tracking-wide neon-text-glow">...</h3>
+            </div>
+        </div>
+
+        <!-- Lives Bar + Guess Input -->
+        <section class="max-w-md mx-auto space-y-4 relative z-20">
+            <!-- Lives / Controls -->
+            <div id="fa-lives-bar">
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-1.5 text-error" data-fa-heart>
+                        <span class="material-symbols-outlined fill-current" id="fa-heart-icon">favorite</span>
+                        <span class="font-mono text-sm font-bold uppercase tracking-wider">Lives:&nbsp;<span id="lives-counter">6</span></span>
+                    </div>
+                    <button id="add-life-btn" class="hidden flex items-center gap-1 px-2.5 py-1 bg-error/15 border border-error/30 text-error hover:bg-error/25 hover:border-error/50 rounded-lg text-xs font-bold uppercase tracking-wider transition-all">
+                        <span class="material-symbols-outlined text-xs">add_circle</span> +1 Life
+                    </button>
+                    <button id="give-up-btn" class="flex items-center gap-1 px-2.5 py-1 bg-white/5 border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-all">
+                        <span class="material-symbols-outlined text-xs">flag</span> Give Up
+                    </button>
+                </div>
+                <div class="text-correct font-mono text-sm font-bold uppercase tracking-wider">
+                    Guessed: <span id="score-counter">0</span>/<span id="total-rows-counter">10</span>
+                </div>
+            </div>
+
+            <!-- Input -->
+            <div class="flex gap-2" id="fa-guess-panel">
+                <div class="flex-grow relative">
+                    <input
+                        id="guess-input"
+                        class="w-full bg-surface-container-low border border-white/10 rounded-xl h-12 px-4 text-base font-bold text-on-background focus:outline-none focus:border-accent focus:ring-0 transition-all placeholder:text-white/20"
+                        placeholder="Type and select player name..."
+                        type="text"
+                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text"
+                    />
+                    <div id="autocomplete-list" class="absolute left-0 right-0 mt-2 bg-surface border border-white/10 rounded-xl shadow-2xl overflow-y-auto max-h-60 z-50 hidden"></div>
+                </div>
+                <button id="submit-btn" class="h-12 px-5 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all">GUESS</button>
+            </div>
+            <div id="error-message" class="text-error font-bold text-xs text-center hidden">Please select a player name from the dropdown.</div>
+        </section>
+
+        <!-- Table -->
+        <section class="relative z-10">
+            <div class="bg-surface border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-white/5 bg-white/[0.02] text-xs font-mono uppercase tracking-wider text-on-surface-variant">
+                            <th class="py-3 px-2 w-10 text-center">#</th>
+                            <th class="py-3 px-3">Player</th>
+                            <th class="py-3 px-3 text-right">Goals</th>
+                            <th class="py-3 px-3 hidden sm:table-cell">Club</th>
+                            <th class="py-3 px-3 text-center hidden md:table-cell">Apps</th>
+                            <th class="py-3 px-3 hidden lg:table-cell">Nationality</th>
+                            <th class="py-3 px-3 w-24 text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body" class="divide-y divide-white/5">
+                        <!-- Filled by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Wrong Guesses Feed -->
+        <section id="wrong-guesses-section" class="max-w-md mx-auto space-y-2 hidden">
+            <h4 class="text-xs uppercase font-mono tracking-widest text-on-surface-variant text-center">INCORRECT GUESSES</h4>
+            <div id="wrong-guesses-container" class="flex flex-wrap gap-2 justify-center"></div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 text-center text-xs text-on-surface-variant/40 pb-12 font-mono space-y-2">
+        <div>FOOTYARCADE &copy; 2026. ALL RIGHTS RESERVED.</div>
+        <div class="space-x-4">
+            <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Privacy Policy</a>
+            <span>·</span>
+            <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Terms & Conditions</a>
+        </div>
+    </footer>
+
+    <!-- End Game Modal -->
+    <div id="result-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-6 z-50 hidden">
+        <div class="fa-modal-card bg-surface border border-accent/20 w-full max-w-md rounded-3xl p-8 text-center space-y-6 shadow-2xl relative overflow-hidden">
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-correct/5 rounded-full blur-3xl pointer-events-none"></div>
+
+            <button id="modal-close-btn" class="absolute top-4 right-4 text-on-surface-variant hover:text-white transition-colors">
+                <span class="material-symbols-outlined text-2xl">close</span>
+            </button>
+
+            <span id="modal-icon" class="material-symbols-outlined text-6xl text-accent">emoji_events</span>
+
+            <div class="space-y-2">
+                <h3 id="modal-title" class="font-headline text-4xl text-accent uppercase italic tracking-wide">COMPLETED</h3>
+                <p id="modal-message" class="text-on-surface-variant text-sm"></p>
+            </div>
+
+            <!-- Stats -->
+            <div class="bg-black/30 border border-white/5 rounded-2xl p-4 flex justify-around">
+                <div>
+                    <span class="block text-xs font-mono uppercase tracking-widest text-on-surface-variant">Guessed</span>
+                    <span id="modal-score" class="font-headline text-3xl text-correct">0/10</span>
+                </div>
+                <div>
+                    <span class="block text-xs font-mono uppercase tracking-widest text-on-surface-variant">Streak</span>
+                    <span id="modal-streak" class="font-headline text-3xl text-accent">0</span>
+                </div>
+                <div>
+                    <span class="block text-xs font-mono uppercase tracking-widest text-on-surface-variant">Best</span>
+                    <span id="modal-best" class="font-headline text-3xl text-on-surface-variant">0</span>
+                </div>
+            </div>
+
+            <!-- Back in Time -->
+            <div id="bit-wrapper" class="hidden space-y-2">
+                <p class="text-xs uppercase font-mono tracking-widest text-on-surface-variant">Play Past Puzzles</p>
+                <div id="back-in-time-container" class="flex flex-wrap gap-2 justify-center"></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-3">
+                <button id="modal-share-btn" class="flex-1 py-3.5 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-md">share</span> SHARE
+                </button>
+                <button id="modal-close-btn2" class="flex-1 py-3.5 bg-surface-container-high border border-white/10 text-white font-headline text-lg uppercase italic rounded-xl hover:bg-surface-container-highest transition-all">
+                    CLOSE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shared FootyArcade JS library -->
+    <script src="../games/footy-ui.js?v=2"></script>
+
+<!-- Micro-interaction Script -->
+<script>
+    // ── Game constants ────────────────────────────────────────
+    const GAME_ID      = 'top_scorers';
+    const ACCENT_HEX   = '#f59e0b';
+    const INITIAL_LIVES = 6;
+
+    // ── Injected data (replaced by fetch_daily.py) ────────────
+    const activeGameData  = typeof DAILY_SCORERS_GAME !== 'undefined'
+        ? DAILY_SCORERS_GAME
+        : { name: "Real Madrid", scorers: [] };
+    const activeAllPlayers = typeof ALL_PLAYERS !== 'undefined' ? ALL_PLAYERS : [];
+    const puzzleNum        = typeof PUZZLE_NUMBER !== 'undefined' ? PUZZLE_NUMBER : 0;
+    const isBackInTime     = typeof IS_BACK_IN_TIME !== 'undefined' ? IS_BACK_IN_TIME : false;
+    const maxBackDays      = typeof MAX_BACK_DAYS !== 'undefined' ? MAX_BACK_DAYS : 7;
+    const gameNote         = typeof GAME_NOTE !== 'undefined' ? GAME_NOTE : '';
+
+    // ── Game State ────────────────────────────────────────────
+    let score         = 0;
+    let gameOver      = false;
+    let guessedPlayers = new Set();
+    let allPlayersPool = [];
+
+    // ── FootyUI components ────────────────────────────────────
+    FootyUI.initAccentColor(ACCENT_HEX);
+    const storage      = new FootyUI.FootyStorage(GAME_ID);
+    const wrongGuesses = new FootyUI.FootyWrongGuesses('wrong-guesses-section', 'wrong-guesses-container');
+    let livesCtrl, dropdown, modal;
+
+    // ── Init ──────────────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+        // Build guaranteed player pool
+        allPlayersPool = [...activeAllPlayers];
+        const addedNames = new Set(allPlayersPool.map(p => p.Name.toLowerCase()));
+        activeGameData.scorers.forEach(tr => {
+            const nl = tr.player_name.toLowerCase();
+            if (!addedNames.has(nl)) {
+                addedNames.add(nl);
+                allPlayersPool.push({ Name: tr.player_name, Nationality: tr.nationality || '', Position: 'Player', Age: 0 });
+            }
+        });
+
+        // Lives
+        livesCtrl = new FootyUI.FootyLives({
+            counterId: 'lives-counter',
+            heartId:   'fa-heart-icon',
+            initial:   INITIAL_LIVES,
+            onDead:    () => endGame(false),
+            onChange:  (val) => {
+                const addLifeBtn = document.getElementById('add-life-btn');
+                if (addLifeBtn) {
+                    if (val < INITIAL_LIVES) {
+                        addLifeBtn.classList.remove('hidden');
+                    } else {
+                        addLifeBtn.classList.add('hidden');
+                    }
+                }
+            }
+        });
+
+        // Dropdown
+        dropdown = new FootyUI.FootyDropdown({
+            inputId:  'guess-input',
+            listId:   'autocomplete-list',
+            data:     allPlayersPool,
+            labelFn:  p => p.Name,
+            badgeFn:  p => p.Nationality || ''
+        });
+
+        // Modal
+        modal = new FootyUI.FootyModal({
+            modalId:               'result-modal',
+            iconId:                'modal-icon',
+            titleId:               'modal-title',
+            messageId:             'modal-message',
+            scoreId:               'modal-score',
+            streakId:              'modal-streak',
+            backInTimeContainerId: 'back-in-time-container'
+        });
+
+        initUI();
+        renderTable();
+
+        document.getElementById('submit-btn').addEventListener('click', submitGuess);
+        document.getElementById('guess-input').addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                // Only submit if dropdown is hidden or no item is keyboard-highlighted
+                const list = document.getElementById('autocomplete-list');
+                if (list.classList.contains('hidden')) submitGuess();
+            }
+        });
+        document.getElementById('give-up-btn').addEventListener('click', () => {
+            FootyUI.confirm({
+                title: 'GIVE UP?',
+                message: 'Are you sure you want to give up and reveal all answers?',
+                confirmText: 'GIVE UP',
+                cancelText: 'KEEP PLAYING',
+                onConfirm: () => endGame(false)
+            });
+        });
+        document.getElementById('add-life-btn').addEventListener('click', () => {
+            if (!gameOver) livesCtrl.add();
+        });
+        document.getElementById('modal-close-btn').addEventListener('click', () => modal.hide());
+        document.getElementById('modal-close-btn2').addEventListener('click', () => modal.hide());
+        document.getElementById('modal-share-btn').addEventListener('click', doShare);
+    });
+
+    function initUI() {
+        document.getElementById('puzzle-badge').textContent = isBackInTime
+            ? `PUZZLE #${puzzleNum} — PAST`
+            : `PUZZLE #${puzzleNum}`;
+        document.getElementById('target-name').textContent     = activeGameData.name;
+        document.getElementById('total-rows-counter').textContent = activeGameData.scorers.length;
+
+        // Show game note if available
+        if (gameNote) {
+            document.getElementById('game-note-text').textContent = gameNote;
+            document.getElementById('game-note-bar').classList.remove('hidden');
+        }
+
+        // Initialize header navigation
+        let currentOffset = 0;
+        const match = window.location.pathname.match(/_d(\d+)\.html$/);
+        if (match) {
+            currentOffset = parseInt(match[1], 10);
+        }
+
+        const backBtn = document.getElementById('nav-back-btn');
+        const frontBtn = document.getElementById('nav-front-btn');
+
+        if (currentOffset + 1 <= maxBackDays) {
+            backBtn.href = `${GAME_ID}_d${currentOffset + 1}.html`;
+        } else {
+            backBtn.classList.add('opacity-30', 'pointer-events-none');
+            backBtn.removeAttribute('href');
+        }
+
+        if (currentOffset > 1) {
+            frontBtn.href = `${GAME_ID}_d${currentOffset - 1}.html`;
+        } else if (currentOffset === 1) {
+            frontBtn.href = `${GAME_ID}.html`;
+        } else {
+            frontBtn.classList.add('opacity-30', 'pointer-events-none');
+            frontBtn.removeAttribute('href');
+        }
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById('table-body');
+        tbody.innerHTML = '';
+
+        activeGameData.scorers.forEach((scorer, i) => {
+            const row = document.createElement('tr');
+            row.id = `row-${i}`;
+            row.className = 'hover:bg-white/[0.01] transition-colors h-14';
+            row.innerHTML = `
+                <td class="py-3 px-2 font-mono text-xs font-bold text-center text-on-surface-variant">${i + 1}</td>
+                <td class="py-3 px-3 font-bold text-white relative">
+                    <span class="player-name hidden">${scorer.player_name}</span>
+                    <div class="redacted-box w-28 sm:w-32 h-5 rounded-md shimmer"></div>
+                    <div class="sm:hidden text-[10px] font-normal text-on-surface-variant mt-1 space-x-2">
+                        <span class="hint-cell hint-blur" id="hint-club-mob-${i}">${scorer.club_name || ''}</span>
+                        <span class="hint-cell hint-blur" id="hint-goals-mob-${i}">(${scorer.goals} goals)</span>
+                    </div>
+                </td>
+                <td class="py-3 px-3 text-right font-mono font-bold text-accent">
+                    <span class="hint-cell hint-blur" id="hint-goals-${i}">${scorer.goals}</span>
+                </td>
+                <td class="py-3 px-3 text-sm text-on-surface-variant hidden sm:table-cell">
+                    <span class="hint-cell hint-blur" id="hint-club-${i}">${scorer.club_name || ''}</span>
+                </td>
+                <td class="py-3 px-3 text-center font-mono text-xs text-on-surface-variant hidden md:table-cell">
+                    <span class="hint-cell hint-blur" id="hint-apps-${i}">${scorer.appearances}</span>
+                </td>
+                <td class="py-3 px-3 text-sm text-on-surface-variant hidden lg:table-cell">
+                    <span class="hint-cell hint-blur" id="hint-nat-${i}">${scorer.nationality}</span>
+                </td>
+                <td class="py-3 px-3 text-center">
+                    <div class="flex items-center justify-center gap-2">
+                        <button onclick="revealHint(${i})" id="hint-btn-${i}" class="text-accent hover:text-correct transition-colors" title="Reveal all hints for this row">
+                            <span class="material-symbols-outlined text-lg">lightbulb</span>
+                        </button>
+                        <button onclick="revealPlayerRow(${i})" id="reveal-btn-${i}" class="text-accent hover:text-correct transition-colors" title="Reveal this player">
+                            <span class="material-symbols-outlined text-lg">visibility</span>
+                        </button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    function revealHint(index) {
+        document.getElementById(`hint-goals-${index}`)?.classList.add('hint-revealed');
+        document.getElementById(`hint-goals-mob-${index}`)?.classList.add('hint-revealed');
+        document.getElementById(`hint-club-${index}`)?.classList.add('hint-revealed');
+        document.getElementById(`hint-club-mob-${index}`)?.classList.add('hint-revealed');
+        document.getElementById(`hint-apps-${index}`)?.classList.add('hint-revealed');
+        document.getElementById(`hint-nat-${index}`)?.classList.add('hint-revealed');
+        const btn = document.getElementById(`hint-btn-${index}`);
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-symbols-outlined text-lg text-correct/40">check_circle</span>';
+        }
+    }
+
+    function revealPlayerRow(index) {
+        if (gameOver) return;
+        const scorer = activeGameData.scorers[index];
+        if (guessedPlayers.has(scorer.player_name)) return;
+        
+        FootyUI.confirm({
+            title: 'REVEAL PLAYER?',
+            message: 'Are you sure you want to reveal this player?',
+            confirmText: 'REVEAL',
+            cancelText: 'CANCEL',
+            onConfirm: () => {
+                guessedPlayers.add(scorer.player_name);
+                revealRow(index, scorer.player_name, true);
+                checkWinLoss();
+            }
+        });
+    }
+
+    function submitGuess() {
+        if (gameOver) return;
+        const input = document.getElementById('guess-input');
+        const errEl = document.getElementById('error-message');
+        const raw   = input.value.trim();
+        if (!raw) return;
+
+        const normRaw = FootyUI.normalizeStr(raw);
+        const selected = dropdown.getSelected();
+        const matched = selected || allPlayersPool.find(p => FootyUI.normalizeStr(p.Name) === normRaw);
+        if (!matched) { errEl.classList.remove('hidden'); return; }
+        errEl.classList.add('hidden');
+
+        input.value = '';
+        document.getElementById('autocomplete-list').classList.add('hidden');
+        dropdown.clearSelection();
+
+        let found = false;
+        const normMatchedName = FootyUI.normalizeStr(matched.Name);
+        activeGameData.scorers.forEach((scorer, idx) => {
+            if (FootyUI.normalizeStr(scorer.player_name) === normMatchedName && !guessedPlayers.has(scorer.player_name)) {
+                guessedPlayers.add(scorer.player_name);
+                revealRow(idx, scorer.player_name, false);
+                score++;
+                found = true;
+            }
+        });
+
+        if (found) {
+            document.getElementById('score-counter').textContent = score;
+            FootyUI.showFeedback({
+                isCorrect: true,
+                title: 'CORRECT!',
+                message: `${matched.Name} is on the list!`
+            });
+            checkWinLoss();
+        } else {
+            wrongGuesses.add(matched.Name);
+            livesCtrl.lose();
+            FootyUI.showFeedback({
+                isCorrect: false,
+                title: 'INCORRECT!',
+                message: `${matched.Name} is not on the list. Lost 1 life.`
+            });
+        }
+    }
+
+    function revealRow(index, name, isManual) {
+        const row       = document.getElementById(`row-${index}`);
+        if (!row) return;
+        const textEl    = row.querySelector('.player-name');
+        const redactEl  = row.querySelector('.redacted-box');
+
+        textEl.textContent = name;
+        textEl.classList.remove('hidden');
+        if (redactEl) redactEl.classList.add('hidden');
+
+        revealHint(index);
+        document.getElementById(`hint-btn-${index}`)?.style.setProperty('display','none');
+        document.getElementById(`reveal-btn-${index}`)?.style.setProperty('display','none');
+
+        if (isManual) {
+            textEl.classList.add('text-error/80');
+            row.classList.add('bg-error/5');
+        } else {
+            row.classList.add('correct-glow', 'bg-correct/10');
+            setTimeout(() => row.classList.remove('correct-glow'), 2000);
+        }
+    }
+
+    function checkWinLoss() {
+        const total = activeGameData.scorers.length;
+        if (livesCtrl.isDead()) { endGame(false); return; }
+        if (guessedPlayers.size >= total) endGame(score >= total);
+    }
+
+    function endGame(won) {
+        gameOver = true;
+
+        // Reveal all remaining
+        activeGameData.scorers.forEach((scorer, i) => {
+            revealHint(i);
+            if (!guessedPlayers.has(scorer.player_name)) {
+                const row    = document.getElementById(`row-${i}`);
+                const textEl = row?.querySelector('.player-name');
+                const rEl    = row?.querySelector('.redacted-box');
+                if (textEl) { textEl.textContent = scorer.player_name; textEl.classList.remove('hidden'); textEl.classList.add('text-error/80'); }
+                if (rEl)    rEl.classList.add('hidden');
+                row?.classList.add('bg-error/5');
+            }
+            document.getElementById(`hint-btn-${i}`)?.style.setProperty('display','none');
+            document.getElementById(`reveal-btn-${i}`)?.style.setProperty('display','none');
+        });
+
+        document.getElementById('fa-guess-panel').style.display = 'none';
+
+        const stats = storage.recordResult(puzzleNum, won, score, activeGameData.scorers.length, isBackInTime);
+
+        document.getElementById('modal-best').textContent = stats.bestStreak;
+
+        const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage);
+
+        modal.show({
+            won,
+            title:   won ? 'MASTERMIND' : 'GAME OVER',
+            message: won
+                ? 'Incredible! You solved the scorers grid flawlessly.'
+                : `You found ${score} out of ${activeGameData.scorers.length} top scorers.`,
+            score,
+            maxScore: activeGameData.scorers.length,
+            streak:   stats.streak,
+            backInTimeLinks: bitLinks
+        });
+
+        if (bitLinks.length) document.getElementById('bit-wrapper').classList.remove('hidden');
+    }
+
+    function doShare() {
+        FootyUI.share({
+            gameName:     'Top Scorers',
+            puzzleNum,
+            score,
+            maxScore:     activeGameData.scorers.length,
+            lives:        livesCtrl.get(),
+            initialLives: INITIAL_LIVES,
+            won:          score >= activeGameData.scorers.length,
+            url:          window.location.href
+        });
+    }
+</script>
+</body>
+</html>

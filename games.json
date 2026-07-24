@@ -39,8 +39,7 @@
     "templateFile": "top_scorers_template.html",
     "dataVariable": "DAILY_SCORERS_GAME",
     "storageKey": "footy_v2_top_scorers",
-    "note": "Goals data updated to July 2026.",
-    "status": "coming_soon"
+    "note": "Goals data updated to July 2026."
   },
   {
     "id": "this_and_that",

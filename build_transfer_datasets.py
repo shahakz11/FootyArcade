@@ -261,6 +261,100 @@ def main():
     dest_games_df.to_csv('daily_destination_games.csv', index=False)
     print(f"Successfully generated destination game data for 180 days in 'daily_destination_games.csv'")
     
+    # --- 6. Generating Top Scorers Games (League & Season Focus) ---
+    print("Processing Top Scorers Games (Top 5 Leagues per Season)...")
+    appearances_file = os.path.join(path, 'appearances.csv')
+    clubs_file_path = os.path.join(path, 'clubs.csv')
+
+    if os.path.exists(appearances_file) and os.path.exists(clubs_file_path):
+        df_apps = pd.read_csv(appearances_file)
+        df_clubs_raw = pd.read_csv(clubs_file_path)
+
+        # Map top 5 competition IDs to display names
+        top5_map = {
+            'GB1': 'Premier League',
+            'ES1': 'La Liga',
+            'IT1': 'Serie A',
+            'L1': 'Bundesliga',
+            'FR1': 'Ligue 1'
+        }
+
+        df_apps_top5 = df_apps[df_apps['competition_id'].isin(top5_map.keys())].copy()
+        df_apps_top5['goals'] = pd.to_numeric(df_apps_top5['goals'], errors='coerce').fillna(0).astype(int)
+
+        # Derive season from date (Jul-Dec = YYYY/YY+1, Jan-Jun = YYYY-1/YY)
+        df_apps_top5['date_dt'] = pd.to_datetime(df_apps_top5['date'])
+        def get_season(dt):
+            if dt.month >= 7:
+                return f"{dt.year}/{str(dt.year+1)[-2:]}"
+            else:
+                return f"{dt.year-1}/{str(dt.year)[-2:]}"
+        df_apps_top5['season'] = df_apps_top5['date_dt'].apply(get_season)
+
+        # Filter complete seasons (2012/13 to 2024/25)
+        valid_seasons = [f"{y}/{str(y+1)[-2:]}" for y in range(2012, 2025)]
+        df_apps_top5 = df_apps_top5[df_apps_top5['season'].isin(valid_seasons)]
+
+        # Merge with club names
+        df_apps_top5 = pd.merge(
+            df_apps_top5,
+            df_clubs_raw[['club_id', 'name']],
+            left_on='player_club_id',
+            right_on='club_id',
+            how='left'
+        )
+        df_apps_top5.rename(columns={'name': 'club_name'}, inplace=True)
+        df_apps_top5['club_name'] = df_apps_top5['club_name'].apply(clean_club_name)
+
+        # Merge with players for nationality
+        df_apps_top5 = pd.merge(
+            df_apps_top5,
+            df[['player_id', 'country_of_citizenship']],
+            on='player_id',
+            how='left'
+        )
+        df_apps_top5['country_of_citizenship'] = df_apps_top5['country_of_citizenship'].fillna('')
+
+        # Aggregate goals, appearances, and primary club per player per league per season
+        player_season_stats = df_apps_top5.groupby(['competition_id', 'season', 'player_id', 'player_name', 'country_of_citizenship']).agg(
+            goals=('goals', 'sum'),
+            appearances=('appearance_id', 'count'),
+            club_name=('club_name', lambda x: x.mode()[0] if not x.empty and pd.notna(x.mode()[0]) else (x.iloc[0] if not x.empty else ''))
+        ).reset_index()
+
+        # Build list of all combinations (League x Season)
+        combinations = []
+        for comp_id, league_name in top5_map.items():
+            for season in valid_seasons:
+                combinations.append((comp_id, league_name, season))
+
+        # Deterministically shuffle combinations across 180 days
+        random.seed(88)
+        shuffled_combos = combinations.copy()
+        random.shuffle(shuffled_combos)
+
+        all_scorer_game_data = []
+        for day in range(num_days):
+            comp_id, league_name, season = shuffled_combos[day % len(shuffled_combos)]
+            
+            league_season_scorers = player_season_stats[
+                (player_season_stats['competition_id'] == comp_id) &
+                (player_season_stats['season'] == season)
+            ].copy()
+
+            top_scorers = league_season_scorers.sort_values(by='goals', ascending=False).head(10)
+            top_scorers['game_day'] = day + 1
+            top_scorers['selected_target'] = f"{league_name} {season}"
+
+            all_scorer_game_data.append(top_scorers[['game_day', 'selected_target', 'player_name', 'club_name', 'goals', 'appearances', 'country_of_citizenship']])
+
+        scorers_df = pd.concat(all_scorer_game_data, ignore_index=True)
+        scorers_df.rename(columns={'country_of_citizenship': 'nationality'}, inplace=True)
+        scorers_df.to_csv('daily_scorers_games.csv', index=False)
+        print(f"Successfully generated top scorers game data (league & season) and saved to 'daily_scorers_games.csv'")
+    else:
+        print("  WARNING: appearances.csv or clubs.csv not found. Skipping top scorers generation.")
+
     # --- 5. Generating Autocomplete Club List ---
     print("Generating autocomplete club list...")
     clubs_file = os.path.join(path, 'clubs.csv')

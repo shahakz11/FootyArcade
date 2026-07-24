@@ -139,16 +139,58 @@ def load_transfer_destination(puzzle_num):
     return game_data, extra
 
 
+def load_top_scorers(puzzle_num):
+    """Returns (game_data_dict, extra_data_dict) for the top_scorers game."""
+    game_data = {"name": "", "scorers": []}
+
+    csv_path = "daily_scorers_games.csv"
+    if not os.path.exists(csv_path):
+        print(f"  ERROR: {csv_path} not found.")
+        return None, None
+
+    with open(csv_path, "r", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            if int(r.get("game_day", 1)) == puzzle_num:
+                if not game_data["name"]:
+                    game_data["name"] = r.get("selected_target", "")
+                game_data["scorers"].append({
+                    "player_name":  r.get("player_name", ""),
+                    "club_name":    r.get("club_name", ""),
+                    "goals":        int(float(r.get("goals", "0"))),
+                    "appearances":  int(float(r.get("appearances", "0"))),
+                    "nationality":  r.get("nationality", ""),
+                })
+
+    if not game_data["name"]:
+        print(f"  WARNING: No top_scorers data for puzzle #{puzzle_num}")
+        return None, None
+
+    # extra data: all players list
+    all_players_json = "[]"
+    if os.path.exists("all_players.json"):
+        with open("all_players.json", "r", encoding="utf-8") as f:
+            all_players_json = f.read()
+    else:
+        print("  WARNING: all_players.json not found.")
+
+    extra = {
+        "ALL_PLAYERS": all_players_json,
+    }
+    return game_data, extra
+
+
 # Map game id → loader function
 GAME_LOADERS = {
     "top_transfers":       load_top_transfers,
     "transfer_destination": load_transfer_destination,
+    "top_scorers":         load_top_scorers,
 }
 
 # Map game id → the JS variable name for the main data object
 GAME_DATA_VAR = {
     "top_transfers":       "DAILY_TRANSFER_GAME",
     "transfer_destination": "DAILY_DESTINATION_GAME",
+    "top_scorers":         "DAILY_SCORERS_GAME",
 }
 
 # Patterns to strip from a template before injecting fresh data
@@ -164,6 +206,14 @@ STRIP_PATTERNS = {
     "transfer_destination": [
         r'const\s+DAILY_DESTINATION_GAME\s*=\s*\{[\s\S]*?\};',
         r'const\s+ALL_CLUBS\s*=\s*\[[\s\S]*?\];',
+        r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
+        r'const\s+IS_BACK_IN_TIME\s*=\s*(true|false);',
+        r'const\s+MAX_BACK_DAYS\s*=\s*\d+;',
+        r'const\s+GAME_NOTE\s*=\s*"[^"]*";',
+    ],
+    "top_scorers": [
+        r'const\s+DAILY_SCORERS_GAME\s*=\s*\{[\s\S]*?\};',
+        r'const\s+ALL_PLAYERS\s*=\s*\[[\s\S]*?\];',
         r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
         r'const\s+IS_BACK_IN_TIME\s*=\s*(true|false);',
         r'const\s+MAX_BACK_DAYS\s*=\s*\d+;',
