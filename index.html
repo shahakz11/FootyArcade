@@ -3,23 +3,25 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>FootyArcade | Daily Football Trivia Games</title>
-    <meta name="description" content="Play daily football transfer trivia games — guess record signings, career paths, and more. New challenges every day."/>
+    <title>Playmaker | Free Daily Football Trivia & Transfer Quiz Games</title>
+    <meta name="description" content="Play free daily football trivia games — guess record transfers, player career paths, and all-time top scorers. New challenges every day with streak tracking. The football fan's daily arcade."/>
+    <link rel="canonical" href="https://ggbushi.github.io/Football/" />
     
     <!-- PWA Web Manifest & Favicons -->
     <link rel="manifest" href="manifest.json"/>
-    <link rel="apple-touch-icon" href="assets/logo.png"/>
-    <link rel="icon" type="image/png" href="assets/logo.png"/>
+    <link rel="apple-touch-icon" href="assets/favicon.png"/>
+    <link rel="icon" type="image/png" href="assets/favicon.png"/>
     
     <!-- Social Share Preview (OpenGraph / Twitter) -->
-    <meta property="og:title" content="FootyArcade | Daily Football Trivia Games"/>
-    <meta property="og:description" content="Play daily football transfer trivia games — guess record signings, career paths, and more. New challenges every day."/>
-    <meta property="og:image" content="assets/social_share.png"/>
+    <meta property="og:title" content="Playmaker | Free Daily Football Trivia & Transfer Quiz Games"/>
+    <meta property="og:description" content="Play free daily football trivia games — guess record transfers, player career paths, and all-time top scorers. New challenges every day with streak tracking. The football fan's daily arcade."/>
+    <meta property="og:url" content="https://ggbushi.github.io/Football/" />
+    <meta property="og:image" content="https://ggbushi.github.io/Football/assets/social_share.png"/>
     <meta property="og:type" content="website"/>
     <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="FootyArcade | Daily Football Trivia Games"/>
-    <meta name="twitter:description" content="Play daily football transfer trivia games — guess record signings, career paths, and more. New challenges every day."/>
-    <meta name="twitter:image" content="assets/social_share.png"/>
+    <meta name="twitter:title" content="Playmaker | Free Daily Football Trivia & Transfer Quiz Games"/>
+    <meta name="twitter:description" content="Play free daily football trivia games — guess record transfers, player career paths, and all-time top scorers. New challenges every day with streak tracking. The football fan's daily arcade."/>
+    <meta name="twitter:image" content="https://ggbushi.github.io/Football/assets/social_share.png"/>
 
     <!-- Google Analytics Measurement ID Placeholder -->
     <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
@@ -59,15 +61,98 @@
         :root { --fa-accent-rgb: 57,255,20; }
         .neon-text-glow { text-shadow: 0 0 10px rgba(57,255,20,0.4); }
     </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "Playmaker",
+          "url": "https://ggbushi.github.io/Football/",
+          "description": "Daily football trivia games — guess transfers, career paths, and top scorers.",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://ggbushi.github.io/Football/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "WebApplication",
+          "name": "Playmaker",
+          "url": "https://ggbushi.github.io/Football/",
+          "applicationCategory": "GameApplication",
+          "operatingSystem": "Web",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is Playmaker?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Playmaker is a free daily football trivia arcade. Every day, new challenges test your knowledge of transfers, career paths, and top scorers from leagues worldwide."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do you play Playmaker?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Choose a daily challenge, type player or club names into the search box, and guess correctly before your lives run out. Track your streak and share your results."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is Playmaker free to play?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, Playmaker is completely free. No sign-up required. Your progress is saved locally in your browser."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How often are new puzzles added?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Every day at midnight UTC, all games receive a fresh puzzle with new data. You can also play the last 7 days of past puzzles."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What data does Playmaker use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Playmaker uses verified transfer and goalscoring data sourced from Transfermarkt, updated to July 2026."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the football version of Wordle?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Playmaker offers Wordle-style daily football challenges with shareable emoji results, streak tracking, and multiple game modes including transfer quizzes, career path games, and goalscorer trivia."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body class="bg-background text-on-background font-body turf-pattern min-h-screen pb-24">
 
     <!-- Header Navigation -->
     <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-16 flex items-center justify-between px-6 shadow-[0_4px_30px_rgba(0,0,0,0.8)]">
-        <div class="flex items-center gap-3">
-            <span class="material-symbols-outlined text-primary-container text-3xl neon-text-glow" aria-hidden="true">sports_soccer</span>
-            <h1 class="font-headline text-2xl tracking-wider text-accent uppercase italic">FOOTYARCADE</h1>
-        </div>
+        <a href="index.html" class="flex items-center group">
+            <img src="assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-8 md:h-9 w-auto object-contain transition-transform group-hover:scale-105" />
+            <h1 class="sr-only">PLAYMAKER — Daily Football Trivia Games</h1>
+        </a>
         <div class="flex items-center gap-4">
             <span class="font-label-sm text-xs font-mono bg-primary-container/10 border border-primary-container/20 text-primary-container px-3 py-1.5 rounded-full uppercase tracking-widest">DAILY ARCADE</span>
         </div>
@@ -79,10 +164,17 @@
         <!-- Hero Section -->
         <section class="text-center space-y-4">
             <h2 class="font-headline text-5xl md:text-6xl tracking-tight uppercase italic text-on-background">
-                FOOTBALL <span class="text-primary-container neon-text-glow">TRIVIA</span> CENTER
+                DAILY FOOTBALL <span class="text-primary-container neon-text-glow">TRIVIA</span> GAMES
             </h2>
             <p class="font-title text-lg text-on-surface-variant max-w-lg mx-auto">
                 Daily football transfer challenges. Fresh puzzle data every day.
+            </p>
+        </section>
+
+        <!-- SEO Body Text (crawlable by search engines) -->
+        <section class="max-w-2xl mx-auto text-center">
+            <p class="font-body text-on-surface-variant text-sm leading-relaxed">
+                Playmaker is your daily football trivia destination. Every day, we serve fresh challenges that test your knowledge of football transfers, player career paths, and all-time goalscoring records across the Premier League, La Liga, Serie A, Bundesliga, and beyond. Choose from multiple daily games, track your streaks, and share Wordle-style results with friends. All data sourced from Transfermarkt and updated to July 2026.
             </p>
         </section>
 
@@ -90,7 +182,23 @@
         <section>
             <h3 class="font-title text-sm font-bold uppercase tracking-widest text-on-surface-variant border-b border-white/10 pb-2 mb-6">SELECT CHALLENGE</h3>
             <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="col-span-2 text-center py-12 text-on-surface-variant">Loading challenges...</div>
+                <div class="col-span-2 text-center py-12 text-on-surface-variant" id="games-loading">Loading challenges...</div>
+                <noscript>
+                    <div class="col-span-2 space-y-4">
+                        <a href="games/top_transfers.html" class="glass-card rounded-2xl p-6 block hover:border-[#00f0ff]/30 transition-colors">
+                            <h4 class="font-headline text-2xl uppercase italic" style="color:#00f0ff">TOP TRANSFERS</h4>
+                            <p class="text-on-surface-variant text-sm mt-2">Guess the top record signings for a specific club and nationality before your lives run out.</p>
+                        </a>
+                        <a href="games/transfer_destination.html" class="glass-card rounded-2xl p-6 block hover:border-[#39ff14]/30 transition-colors">
+                            <h4 class="font-headline text-2xl uppercase italic" style="color:#39ff14">TRANSFER DESTINATION</h4>
+                            <p class="text-on-surface-variant text-sm mt-2">Guess the career path of a star player step-by-step. Predict their destination clubs chronologically.</p>
+                        </a>
+                        <a href="games/top_scorers.html" class="glass-card rounded-2xl p-6 block hover:border-[#f59e0b]/30 transition-colors">
+                            <h4 class="font-headline text-2xl uppercase italic" style="color:#f59e0b">TOP SCORERS</h4>
+                            <p class="text-on-surface-variant text-sm mt-2">Guess the all-time top scorers for a club, league, or national team before your lives run out.</p>
+                        </a>
+                    </div>
+                </noscript>
             </div>
         </section>
 
@@ -115,15 +223,65 @@
                 </div>
             </div>
         </section>
+
+        <!-- FAQ Section (SEO — targets PAA and featured snippets) -->
+        <section class="space-y-6" itemscope itemtype="https://schema.org/FAQPage">
+            <h2 class="font-title text-sm font-bold uppercase tracking-widest text-on-surface-variant border-b border-white/10 pb-2">FREQUENTLY ASKED QUESTIONS</h2>
+            <div class="space-y-4">
+                <details class="glass-card rounded-xl p-4 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary class="font-title text-sm font-bold text-on-background cursor-pointer group-open:text-accent transition-colors" itemprop="name">What is Playmaker?</summary>
+                    <div class="mt-3 text-on-surface-variant text-sm leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Playmaker is a free daily football trivia arcade. Every day, new challenges test your knowledge of transfers, career paths, and top scorers from leagues worldwide. No sign-up required.</p>
+                    </div>
+                </details>
+                <details class="glass-card rounded-xl p-4 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary class="font-title text-sm font-bold text-on-background cursor-pointer group-open:text-accent transition-colors" itemprop="name">How do you play Playmaker?</summary>
+                    <div class="mt-3 text-on-surface-variant text-sm leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Choose a daily challenge, type player or club names into the search box, and guess correctly before your lives run out. Track your streak and share Wordle-style results with friends.</p>
+                    </div>
+                </details>
+                <details class="glass-card rounded-xl p-4 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary class="font-title text-sm font-bold text-on-background cursor-pointer group-open:text-accent transition-colors" itemprop="name">Is Playmaker free to play?</summary>
+                    <div class="mt-3 text-on-surface-variant text-sm leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Yes, Playmaker is completely free. No sign-up required. Your progress is saved locally in your browser.</p>
+                    </div>
+                </details>
+                <details class="glass-card rounded-xl p-4 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary class="font-title text-sm font-bold text-on-background cursor-pointer group-open:text-accent transition-colors" itemprop="name">How often are new puzzles added?</summary>
+                    <div class="mt-3 text-on-surface-variant text-sm leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Every day at midnight UTC, all games receive a fresh puzzle with new data. You can also play the last 7 days of past puzzles via the back-in-time feature.</p>
+                    </div>
+                </details>
+                <details class="glass-card rounded-xl p-4 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary class="font-title text-sm font-bold text-on-background cursor-pointer group-open:text-accent transition-colors" itemprop="name">What data does Playmaker use?</summary>
+                    <div class="mt-3 text-on-surface-variant text-sm leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Playmaker uses verified transfer and goalscoring data sourced from Transfermarkt, covering the Premier League, La Liga, Serie A, Bundesliga, Ligue 1, and more. Updated to July 2026.</p>
+                    </div>
+                </details>
+                <details class="glass-card rounded-xl p-4 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary class="font-title text-sm font-bold text-on-background cursor-pointer group-open:text-accent transition-colors" itemprop="name">What is the football version of Wordle?</summary>
+                    <div class="mt-3 text-on-surface-variant text-sm leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Playmaker offers Wordle-style daily football challenges with shareable emoji results, streak tracking, and multiple game modes including transfer quizzes, career path games, and goalscorer trivia.</p>
+                    </div>
+                </details>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
     <footer class="mt-20 text-center text-xs text-on-surface-variant/40 pb-12 font-mono space-y-2">
-        <div>FOOTYARCADE &copy; 2026. ALL RIGHTS RESERVED.</div>
+        <div>PLAYMAKER &copy; 2026. ALL RIGHTS RESERVED.</div>
         <div class="space-x-4">
             <a href="privacy.html" class="hover:underline hover:text-accent transition-colors">Privacy Policy</a>
             <span>·</span>
             <a href="terms.html" class="hover:underline hover:text-accent transition-colors">Terms & Conditions</a>
+        </div>
+        <div class="space-x-4 mt-2">
+            <a href="games/top_transfers.html" class="hover:underline hover:text-accent transition-colors">Top Transfers</a>
+            <span>·</span>
+            <a href="games/transfer_destination.html" class="hover:underline hover:text-accent transition-colors">Transfer Destination</a>
+            <span>·</span>
+            <a href="games/top_scorers.html" class="hover:underline hover:text-accent transition-colors">Top Scorers</a>
         </div>
     </footer>
 
@@ -148,6 +306,16 @@
                 id: "top_scorers", name: "Top Scorers",
                 description: "Guess the all-time top scorers for a club, league, or national team before your lives run out.",
                 link: "games/top_scorers.html", icon: "sports_soccer", accentHex: "#f59e0b"
+            },
+            {
+                id: "this_and_that", name: "This & That",
+                description: "Name all players who match BOTH statements — e.g. played for Barcelona AND Argentina, or scored 50+ PL & La Liga goals.",
+                link: "games/this_and_that.html", icon: "join_inner", accentHex: "#a855f7", status: "coming_soon"
+            },
+            {
+                id: "anyone_but", name: "Anyone But",
+                description: "Guess all players who fit 3 specific criteria EXCEPT for the key player. Solve 3 tables of criteria simultaneously.",
+                link: "games/anyone_but.html", icon: "person_off", accentHex: "#ff0055", status: "coming_soon"
             }
         ];
 

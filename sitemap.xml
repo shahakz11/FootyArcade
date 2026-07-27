@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ggbushi.github.io/Football/</loc>
-    <lastmod>2026-07-13</lastmod>
+    <loc>https://playmaker.best/</loc>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ggbushi.github.io/Football/games/top_transfers.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <loc>https://playmaker.best/games/top_transfers.html</loc>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://ggbushi.github.io/Football/games/transfer_destination.html</loc>
-    <lastmod>2026-07-13</lastmod>
+    <loc>https://playmaker.best/games/transfer_destination.html</loc>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://playmaker.best/games/top_scorers.html</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://playmaker.best/privacy.html</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://playmaker.best/terms.html</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

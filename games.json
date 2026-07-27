@@ -55,5 +55,20 @@
     "storageKey": "footy_v2_this_and_that",
     "note": "Data updated to July 2026.",
     "status": "coming_soon"
+  },
+  {
+    "id": "anyone_but",
+    "name": "Anyone But",
+    "description": "Guess all players who fit 3 specific criteria EXCEPT for the key player. Solve 3 tables of criteria simultaneously.",
+    "link": "games/anyone_but.html",
+    "icon": "person_off",
+    "accentHex": "#ff0055",
+    "initialLives": 5,
+    "maxBackDays": 7,
+    "templateFile": "anyone_but_template.html",
+    "dataVariable": "DAILY_ANYONEBUT_GAME",
+    "storageKey": "footy_v2_anyone_but",
+    "note": "Data updated to July 2026.",
+    "status": "coming_soon"
   }
 ]

@@ -261,8 +261,8 @@ def main():
     dest_games_df.to_csv('daily_destination_games.csv', index=False)
     print(f"Successfully generated destination game data for 180 days in 'daily_destination_games.csv'")
     
-    # --- 6. Generating Top Scorers Games (League & Season Focus) ---
-    print("Processing Top Scorers Games (Top 5 Leagues per Season)...")
+    # --- 6. Generating Top Scorers Games (Leagues & International/European Cups) ---
+    print("Processing Top Scorers Games (Top 5 Leagues + Champions League, Europa League, World Cup)...")
     appearances_file = os.path.join(path, 'appearances.csv')
     clubs_file_path = os.path.join(path, 'clubs.csv')
 
@@ -270,63 +270,82 @@ def main():
         df_apps = pd.read_csv(appearances_file)
         df_clubs_raw = pd.read_csv(clubs_file_path)
 
-        # Map top 5 competition IDs to display names
-        top5_map = {
+        # Map competition IDs to display names
+        target_comps_map = {
             'GB1': 'Premier League',
             'ES1': 'La Liga',
             'IT1': 'Serie A',
             'L1': 'Bundesliga',
-            'FR1': 'Ligue 1'
+            'FR1': 'Ligue 1',
+            'CL': 'UEFA Champions League',
+            'EL': 'UEFA Europa League',
+            'FIWC': 'FIFA World Cup'
         }
 
-        df_apps_top5 = df_apps[df_apps['competition_id'].isin(top5_map.keys())].copy()
-        df_apps_top5['goals'] = pd.to_numeric(df_apps_top5['goals'], errors='coerce').fillna(0).astype(int)
+        df_apps_target = df_apps[df_apps['competition_id'].isin(target_comps_map.keys())].copy()
+        df_apps_target['goals'] = pd.to_numeric(df_apps_target['goals'], errors='coerce').fillna(0).astype(int)
 
-        # Derive season from date (Jul-Dec = YYYY/YY+1, Jan-Jun = YYYY-1/YY)
-        df_apps_top5['date_dt'] = pd.to_datetime(df_apps_top5['date'])
-        def get_season(dt):
-            if dt.month >= 7:
-                return f"{dt.year}/{str(dt.year+1)[-2:]}"
+        # Derive edition (Season format YYYY/YY+1 for club competitions, Year format YYYY for World Cup)
+        df_apps_target['date_dt'] = pd.to_datetime(df_apps_target['date'])
+        def get_edition(row):
+            comp = row['competition_id']
+            dt = row['date_dt']
+            if comp == 'FIWC':
+                return str(dt.year)
             else:
-                return f"{dt.year-1}/{str(dt.year)[-2:]}"
-        df_apps_top5['season'] = df_apps_top5['date_dt'].apply(get_season)
+                if dt.month >= 7:
+                    return f"{dt.year}/{str(dt.year+1)[-2:]}"
+                else:
+                    return f"{dt.year-1}/{str(dt.year)[-2:]}"
 
-        # Filter complete seasons (2012/13 to 2024/25)
+        df_apps_target['edition'] = df_apps_target.apply(get_edition, axis=1)
+
+        # Filter valid complete editions (2012/13 to 2024/25 for club competitions, 2026 for World Cup)
         valid_seasons = [f"{y}/{str(y+1)[-2:]}" for y in range(2012, 2025)]
-        df_apps_top5 = df_apps_top5[df_apps_top5['season'].isin(valid_seasons)]
+        valid_tournament_years = ['2026']
+
+        df_apps_target = df_apps_target[
+            ((df_apps_target['competition_id'] != 'FIWC') & (df_apps_target['edition'].isin(valid_seasons))) |
+            ((df_apps_target['competition_id'] == 'FIWC') & (df_apps_target['edition'].isin(valid_tournament_years)))
+        ].copy()
 
         # Merge with club names
-        df_apps_top5 = pd.merge(
-            df_apps_top5,
+        df_apps_target = pd.merge(
+            df_apps_target,
             df_clubs_raw[['club_id', 'name']],
             left_on='player_club_id',
             right_on='club_id',
             how='left'
         )
-        df_apps_top5.rename(columns={'name': 'club_name'}, inplace=True)
-        df_apps_top5['club_name'] = df_apps_top5['club_name'].apply(clean_club_name)
+        df_apps_target.rename(columns={'name': 'club_name'}, inplace=True)
+        df_apps_target['club_name'] = df_apps_target['club_name'].apply(clean_club_name)
 
         # Merge with players for nationality
-        df_apps_top5 = pd.merge(
-            df_apps_top5,
+        df_apps_target = pd.merge(
+            df_apps_target,
             df[['player_id', 'country_of_citizenship']],
             on='player_id',
             how='left'
         )
-        df_apps_top5['country_of_citizenship'] = df_apps_top5['country_of_citizenship'].fillna('')
+        df_apps_target['country_of_citizenship'] = df_apps_target['country_of_citizenship'].fillna('')
 
-        # Aggregate goals, appearances, and primary club per player per league per season
-        player_season_stats = df_apps_top5.groupby(['competition_id', 'season', 'player_id', 'player_name', 'country_of_citizenship']).agg(
+        def get_primary_club(x):
+            valid = [item for item in x if pd.notna(item) and item != '']
+            return valid[0] if valid else ''
+
+        # Aggregate goals, appearances, and primary club per player per competition edition
+        player_edition_stats = df_apps_target.groupby(['competition_id', 'edition', 'player_id', 'player_name', 'country_of_citizenship']).agg(
             goals=('goals', 'sum'),
             appearances=('appearance_id', 'count'),
-            club_name=('club_name', lambda x: x.mode()[0] if not x.empty and pd.notna(x.mode()[0]) else (x.iloc[0] if not x.empty else ''))
+            club_name=('club_name', get_primary_club)
         ).reset_index()
 
-        # Build list of all combinations (League x Season)
+        # Build list of all available competition x edition combinations
         combinations = []
-        for comp_id, league_name in top5_map.items():
-            for season in valid_seasons:
-                combinations.append((comp_id, league_name, season))
+        comp_edition_groups = player_edition_stats.groupby(['competition_id', 'edition']).groups.keys()
+        for comp_id, edition in comp_edition_groups:
+            league_name = target_comps_map[comp_id]
+            combinations.append((comp_id, league_name, edition))
 
         # Deterministically shuffle combinations across 180 days
         random.seed(88)
@@ -335,23 +354,23 @@ def main():
 
         all_scorer_game_data = []
         for day in range(num_days):
-            comp_id, league_name, season = shuffled_combos[day % len(shuffled_combos)]
+            comp_id, league_name, edition = shuffled_combos[day % len(shuffled_combos)]
             
-            league_season_scorers = player_season_stats[
-                (player_season_stats['competition_id'] == comp_id) &
-                (player_season_stats['season'] == season)
+            edition_scorers = player_edition_stats[
+                (player_edition_stats['competition_id'] == comp_id) &
+                (player_edition_stats['edition'] == edition)
             ].copy()
 
-            top_scorers = league_season_scorers.sort_values(by='goals', ascending=False).head(10)
+            top_scorers = edition_scorers.sort_values(by='goals', ascending=False).head(10)
             top_scorers['game_day'] = day + 1
-            top_scorers['selected_target'] = f"{league_name} {season}"
+            top_scorers['selected_target'] = f"{league_name} {edition}"
 
             all_scorer_game_data.append(top_scorers[['game_day', 'selected_target', 'player_name', 'club_name', 'goals', 'appearances', 'country_of_citizenship']])
 
         scorers_df = pd.concat(all_scorer_game_data, ignore_index=True)
         scorers_df.rename(columns={'country_of_citizenship': 'nationality'}, inplace=True)
         scorers_df.to_csv('daily_scorers_games.csv', index=False)
-        print(f"Successfully generated top scorers game data (league & season) and saved to 'daily_scorers_games.csv'")
+        print(f"Successfully generated top scorers game data ({len(combinations)} competition editions) and saved to 'daily_scorers_games.csv'")
     else:
         print("  WARNING: appearances.csv or clubs.csv not found. Skipping top scorers generation.")
 

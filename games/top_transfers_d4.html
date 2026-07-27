@@ -3,29 +3,31 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-    <title>Top Transfers | FootyArcade</title>
-    <meta name="description" content="Guess the record signings for a club or nationality in FootyArcade's daily transfer challenge."/>
+    <title>Top Transfers — Daily Football Transfer Quiz | Playmaker</title>
+    <meta name="description" content="Guess the top 10 record signings for a club or nationality. A new daily football transfer trivia challenge with streak tracking and shareable results. Play free at Playmaker!"/>
+    <link rel="canonical" href="https://ggbushi.github.io/Football/games/top_transfers.html" />
     
     <!-- PWA Web Manifest & Favicons -->
     <link rel="manifest" href="../manifest.json"/>
-    <link rel="apple-touch-icon" href="../assets/logo.png"/>
-    <link rel="icon" type="image/png" href="../assets/logo.png"/>
+    <link rel="apple-touch-icon" href="../assets/favicon.png"/>
+    <link rel="icon" type="image/png" href="../assets/favicon.png"/>
     
     <!-- Social Share Preview (OpenGraph / Twitter) -->
-    <meta property="og:title" content="Top Transfers | FootyArcade"/>
-    <meta property="og:description" content="Guess the top 10 record signings for a specific club or nationality. New challenge every day."/>
-    <meta property="og:image" content="../assets/social_share.png"/>
+    <meta property="og:title" content="Top Transfers — Daily Football Transfer Quiz | Playmaker"/>
+    <meta property="og:description" content="Guess the top 10 record signings for a club or nationality. A new daily football transfer trivia challenge with streak tracking and shareable results. Play free at Playmaker!"/>
+    <meta property="og:image" content="https://ggbushi.github.io/Football/assets/social_share.png"/>
     <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://ggbushi.github.io/Football/games/top_transfers.html"/>
     <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Top Transfers | FootyArcade"/>
-    <meta name="twitter:description" content="Guess the top 10 record signings. Daily football trivia."/>
-    <meta name="twitter:image" content="../assets/social_share.png"/>
+    <meta name="twitter:title" content="Top Transfers — Daily Football Transfer Quiz | Playmaker"/>
+    <meta name="twitter:description" content="Guess the top 10 record signings for a club or nationality. A new daily football transfer trivia challenge with streak tracking and shareable results. Play free at Playmaker!"/>
+    <meta name="twitter:image" content="https://ggbushi.github.io/Football/assets/social_share.png"/>
 
     <!-- Google Analytics Measurement ID Placeholder -->
     <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Archivo+Narrow:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <!-- Shared FootyArcade styles -->
+    <!-- Shared Playmaker styles -->
     <link rel="stylesheet" href="../games/footy-ui.css?v=2"/>
     <script id="tailwind-config">
         tailwind.config = {
@@ -62,16 +64,40 @@
         /* Wire accent color for footy-ui.css shared components */
         :root { --fa-accent-rgb: 0,240,255; --fa-accent-glow: rgba(0,240,255,0.2); }
     </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Top Transfers — Daily Football Transfer Quiz",
+      "description": "Guess the top 10 record signings for a club or nationality. A new daily football transfer trivia challenge with streak tracking and shareable results. Play free at Playmaker!",
+      "url": "https://ggbushi.github.io/Football/games/top_transfers.html",
+      "genre": ["Trivia", "Sports"],
+      "gamePlatform": "Web",
+      "applicationCategory": "Game",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Organization",
+        "name": "Playmaker"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
 </head>
 <body class="bg-background text-on-background font-body turf-pattern min-h-screen pb-24">
 
     <!-- Header -->
     <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-16 flex items-center justify-between px-6 shadow-xl">
         <div class="flex items-center gap-3">
-            <a href="../index.html" class="text-on-surface-variant hover:text-accent transition-colors flex items-center" aria-label="Back to game lobby">
+            <a href="../index.html" class="text-on-surface-variant hover:text-accent transition-colors flex items-center gap-3" aria-label="Back to game lobby">
                 <span class="material-symbols-outlined">arrow_back</span>
+                <img src="../assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-7 md:h-8 w-auto object-contain" />
             </a>
-            <h1 class="font-headline text-2xl tracking-wider text-accent uppercase italic neon-text-glow">TOP TRANSFERS</h1>
+            <span class="text-white/20 font-thin text-xl">|</span>
+            <h1 class="font-headline text-xl md:text-2xl tracking-wider text-accent uppercase italic neon-text-glow">TOP TRANSFERS</h1>
         </div>
         <div class="flex items-center gap-2">
             <a id="nav-back-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1" title="Play previous puzzle (back in time)">
@@ -183,7 +209,7 @@
 
     <!-- Footer -->
     <footer class="mt-20 text-center text-xs text-on-surface-variant/40 pb-12 font-mono space-y-2">
-        <div>FOOTYARCADE &copy; 2026. ALL RIGHTS RESERVED.</div>
+        <div>PLAYMAKER &copy; 2026. ALL RIGHTS RESERVED.</div>
         <div class="space-x-4">
             <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Privacy Policy</a>
             <span>·</span>
@@ -242,12 +268,12 @@
         </div>
     </div>
 
-    <!-- Shared FootyArcade JS library -->
+    <!-- Shared Playmaker JS library -->
     <script src="../games/footy-ui.js?v=2"></script>
 
 
     <script id="daily-game-data">
-        const DAILY_TRANSFER_GAME = {"mode": "nationality", "name": "Venezuela", "transfers": [{"player_name": "Salomón Rondón", "to_club_name": "DL Pro", "transfer_fee": "18270000.0", "transfer_date": "2019-07-19"}, {"player_name": "Yangel Herrera", "to_club_name": "Real Sociedad", "transfer_fee": "11000000.0", "transfer_date": "2025-09-01"}, {"player_name": "Alejandro Marqués", "to_club_name": "Juventus", "transfer_fee": "8200000.0", "transfer_date": "2020-01-25"}, {"player_name": "Tomás Rincón", "to_club_name": "Juventus", "transfer_fee": "8000000.0", "transfer_date": "2017-01-03"}, {"player_name": "Jefferson Savarino", "to_club_name": "Fluminense", "transfer_fee": "6400000.0", "transfer_date": "2026-01-22"}]};
+        const DAILY_TRANSFER_GAME = {"mode": "club", "name": "Union SG", "transfers": [{"player_name": "Anan Khalaili", "from_club_name": "Maccabi Haifa", "transfer_fee": "6500000.0", "transfer_date": "2024-07-01"}, {"player_name": "Victor Boniface", "from_club_name": "Bodø/Glimt", "transfer_fee": "6100000.0", "transfer_date": "2022-08-02"}]};
         const ALL_PLAYERS = [
   {
     "Name": "Miroslav Klose",
@@ -235801,7 +235827,7 @@
   }
 ];
         const GAME_NOTE = "Transfer data updated to July 2026. Does not include loan moves.";
-        const PUZZLE_NUMBER    = 20;
+        const PUZZLE_NUMBER    = 1;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>
@@ -236168,5 +236194,35 @@
         });
     }
 </script>
+<!-- SEO: How to Play + Cross-Game Links (static, crawlable) -->
+<section class="max-w-4xl mx-auto px-6 mt-12 space-y-8 pb-8">
+    <div class="glass-card rounded-2xl p-6 space-y-3">
+        <h2 class="font-headline text-xl uppercase italic text-accent">HOW TO PLAY</h2>
+        <p class="font-body text-on-surface-variant text-sm leading-relaxed">Guess the top 10 record signings for a specific club and nationality before your 5 lives run out. Each correct guess reveals the player's name and transfer fee. Use free hints to reveal partial information. Play daily to build your streak and share Wordle-style results.</p>
+        <p class="font-body text-on-surface-variant/60 text-xs">Transfer data sourced from Transfermarkt. Updated to July 2026.</p>
+    </div>
+    <div class="space-y-3">
+        <h3 class="font-title text-xs font-bold uppercase tracking-widest text-on-surface-variant">MORE DAILY CHALLENGES</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <a href="transfer_destination.html" class="glass-card rounded-xl p-4 flex items-center gap-3 group">
+                <span class="material-symbols-outlined text-2xl" style="color:#39ff14">alt_route</span>
+                <div>
+                    <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#39ff14">Transfer Destination</span>
+                    <p class="text-on-surface-variant text-xs">Guess a player's career path</p>
+                </div>
+            </a>
+            <a href="top_scorers.html" class="glass-card rounded-xl p-4 flex items-center gap-3 group">
+                <span class="material-symbols-outlined text-2xl" style="color:#f59e0b">sports_soccer</span>
+                <div>
+                    <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#f59e0b">Top Scorers</span>
+                    <p class="text-on-surface-variant text-xs">Name the top goalscorers</p>
+                </div>
+            </a>
+        </div>
+        <div class="text-center mt-4">
+            <a href="../index.html" class="font-mono text-xs uppercase tracking-wider text-on-surface-variant hover:text-accent transition-colors">← Back to Playmaker</a>
+        </div>
+    </div>
+</section>
 </body>
 </html>

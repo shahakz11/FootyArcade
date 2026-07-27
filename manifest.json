@@ -1,6 +1,6 @@
 {
-  "name": "FootyArcade",
-  "short_name": "FootyArcade",
+  "name": "Playmaker",
+  "short_name": "Playmaker",
   "description": "Daily football transfer challenges and trivia.",
   "start_url": "./index.html",
   "display": "standalone",

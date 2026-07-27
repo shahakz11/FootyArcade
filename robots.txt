@@ -1,4 +1,20 @@
 User-agent: *
 Allow: /
 
+# Block data files and build artifacts from crawling
+Disallow: /templates/
+Disallow: /*.json$
+Disallow: /*.csv$
+Disallow: /*.py$
+Disallow: /*.ipynb$
+
+# Block back-in-time variant pages (canonicalized to main game pages)
+Disallow: /games/*_d1.html
+Disallow: /games/*_d2.html
+Disallow: /games/*_d3.html
+Disallow: /games/*_d4.html
+Disallow: /games/*_d5.html
+Disallow: /games/*_d6.html
+Disallow: /games/*_d7.html
+
 Sitemap: https://ggbushi.github.io/Football/sitemap.xml

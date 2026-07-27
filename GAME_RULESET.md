@@ -1,4 +1,4 @@
-# FootyArcade — Game Ruleset & Development Workflow
+# Playmaker — Game Ruleset & Development Workflow
 
 > **This is the source of truth** for building new games and maintaining existing ones.
 > Any UX/UI deviation from this document must be discussed and approved before shipping.
@@ -275,7 +275,7 @@ Each game writes to key `footy_v2_{gameId}`.
 
 ## 7. Checklist — Adding a New Game
 
-Follow these steps **in order** to add a new game to FootyArcade.
+Follow these steps **in order** to add a new game to Playmaker.
 
 ### Step 1 — Plan
 - [ ] Define the game mechanic in one sentence
@@ -362,7 +362,7 @@ Follow these steps **in order** to add a new game to FootyArcade.
 
 ### Share Format
 ```
-⚽ FootyArcade — Game Name #42
+⚽ Playmaker — Game Name #42
 🟩🟩🟩⬛⬛
 🟩🟩🟩🟩🟩
 ✅ 8/10 correct · ❤️ 3 lives used
@@ -449,7 +449,7 @@ lobby as greyed-out teaser cards. They are skipped by `fetch_daily.py`.
 
 | Tag | Required value |
 |---|---|
-| `<title>` | `{Game Name} \| FootyArcade` |
+| `<title>` | `{Game Name} \| Playmaker` |
 | `<meta name="description">` | 120–160 char summary of the game |
 | `<meta property="og:title">` | Same as `<title>` |
 | `<meta property="og:description">` | Same as description |

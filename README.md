@@ -1,4 +1,4 @@
-# ⚽ FootyArcade - Top Transfers Guessing Game
+# ⚽ Playmaker - Top Transfers Guessing Game
 
 An entirely free, serverless, and autonomous football player transfer guessing game based on the Kaggle `davidcariboo/player-scores` dataset.
 

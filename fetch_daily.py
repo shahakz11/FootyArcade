@@ -1,5 +1,5 @@
 """
-fetch_daily.py — FootyArcade Game Compiler
+fetch_daily.py — Playmaker Game Compiler
 ==========================================
 Reads games.json to discover all registered games and compiles
 each game's HTML for today and past N days (back-in-time).
@@ -306,7 +306,7 @@ def compile_game(game_cfg, puzzle_num, day_offset=0, max_back_days=7):
 # Entry point
 # ─────────────────────────────────────────────────────────────
 def main():
-    parser = argparse.ArgumentParser(description="FootyArcade Game Compiler")
+    parser = argparse.ArgumentParser(description="Playmaker Game Compiler")
     parser.add_argument("--offset",        type=int,   default=0,  help="Offset today's date by N days.")
     parser.add_argument("--puzzle",        type=int,   default=0,  help="Force a specific puzzle index (1-indexed).")
     parser.add_argument("--random",        action="store_true",    help="Compile a random puzzle.")
@@ -339,7 +339,7 @@ def main():
 
     max_back = args.max_back_days
 
-    print(f"\n=== FootyArcade Compiler — {datetime.today().strftime('%Y-%m-%d')} ===")
+    print(f"\n=== Playmaker Compiler — {datetime.today().strftime('%Y-%m-%d')} ===")
     print(f"Compiling {len(games)} game(s), today + {max_back} back-in-time days\n")
 
     for game_cfg in games:

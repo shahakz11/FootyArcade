@@ -1,5 +1,5 @@
 /* ============================================================
-   footy-ui.css  — FootyArcade Shared Component Styles
+   footy-ui.css  — Playmaker Shared Component Styles
    Loaded by every game. No Tailwind utilities here — only
    classes that can't easily be expressed as Tailwind utilities
    or that are animation-heavy and repeated across all games.

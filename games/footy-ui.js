@@ -1,5 +1,5 @@
 /**
- * footy-ui.js — FootyArcade Shared Component Library
+ * footy-ui.js — Playmaker Shared Component Library
  *
  * Loaded by every game BEFORE the game-specific script.
  * Exposes a global `FootyUI` object with factory methods for all
@@ -352,7 +352,7 @@
         const livesUsed = opts.initialLives - opts.lives;
         const blocks = buildEmojiGrid(opts.score, opts.maxScore, opts.won);
         const text = [
-            `⚽ FootyArcade — ${opts.gameName} #${opts.puzzleNum}`,
+            `⚽ Playmaker — ${opts.gameName} #${opts.puzzleNum}`,
             blocks,
             `${opts.won ? '✅' : '❌'} ${opts.score}/${opts.maxScore} correct · ❤️ ${livesUsed} lives used`,
             `🔗 ${opts.url}`
