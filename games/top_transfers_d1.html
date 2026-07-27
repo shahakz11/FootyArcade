@@ -90,37 +90,35 @@
 <body class="bg-background text-on-background font-body turf-pattern min-h-screen pb-24">
 
     <!-- Header -->
-    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-16 flex items-center justify-between px-6 shadow-xl">
-        <div class="flex items-center gap-3">
-            <a href="../index.html" class="text-on-surface-variant hover:text-accent transition-colors flex items-center gap-3" aria-label="Back to game lobby">
-                <span class="material-symbols-outlined">arrow_back</span>
-                <img src="../assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-7 md:h-8 w-auto object-contain" />
-            </a>
-            <span class="text-white/20 font-thin text-xl">|</span>
-            <h1 class="font-headline text-xl md:text-2xl tracking-wider text-accent uppercase italic neon-text-glow">TOP TRANSFERS</h1>
-        </div>
-        <div class="flex items-center gap-2">
-            <a id="nav-back-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1" title="Play previous puzzle (back in time)">
-                <span class="material-symbols-outlined">chevron_left</span>
-                <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden md:inline">Previous</span>
-            </a>
-            <span id="puzzle-badge" class="font-mono text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 px-2.5 py-1 rounded cursor-help" title="Daily puzzle number. Use arrows to play past puzzles!">PUZZLE #0</span>
-            <a id="nav-front-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1" title="Play newer/today's puzzle">
-                <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden md:inline">Next</span>
-                <span class="material-symbols-outlined">chevron_right</span>
-            </a>
-        </div>
+    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-16 flex items-center justify-between px-4 sm:px-6 shadow-xl">
+        <a href="../index.html" class="text-on-surface-variant hover:text-accent transition-colors flex items-center gap-3" aria-label="Back to game lobby">
+            <span class="material-symbols-outlined text-xl sm:text-2xl">arrow_back</span>
+            <img src="../assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-7 md:h-8 w-auto object-contain" />
+        </a>
     </header>
 
     <!-- Main Content -->
     <main class="pt-24 px-4 max-w-4xl mx-auto space-y-6">
 
         <!-- Game Intro -->
-        <section class="text-center space-y-2">
-            <h2 id="game-title" class="font-title text-xl font-bold uppercase tracking-widest text-on-background">Guess the Record Signings</h2>
+        <section class="text-center space-y-3">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                <h1 class="font-headline text-2xl sm:text-3xl tracking-wider text-accent uppercase italic neon-text-glow">TOP TRANSFERS</h1>
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                    <a id="nav-back-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1 px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10" title="Play previous puzzle (back in time)">
+                        <span class="material-symbols-outlined text-base">chevron_left</span>
+                        <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden sm:inline">Prev</span>
+                    </a>
+                    <span id="puzzle-badge" class="font-mono text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 px-3 py-1 rounded-lg cursor-help text-on-background" title="Daily puzzle number. Use arrows to play past puzzles!">PUZZLE #0</span>
+                    <a id="nav-front-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1 px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10" title="Play newer/today's puzzle">
+                        <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden sm:inline">Next</span>
+                        <span class="material-symbols-outlined text-base">chevron_right</span>
+                    </a>
+                </div>
+            </div>
+            <h2 id="game-title" class="font-title text-base sm:text-lg font-bold uppercase tracking-widest text-on-surface-variant">Top Record Signings per Club & Nationality</h2>
             <p class="text-on-surface-variant text-sm max-w-xl mx-auto">
-                Fill the transfer list below. Use the search bar to guess players. Only players from the search dropdown can be guessed.
-                Use the hints (<span class="material-symbols-outlined text-xs inline-block align-middle text-accent">lightbulb</span>) or reveal individual players if you are stuck!
+                Fill the transfers table below for the given club or nationality. Use the search bar to guess players. Only players from the search dropdown can be guessed. Use the hints (<span class="material-symbols-outlined text-xs inline-block align-middle text-accent">lightbulb</span>) or reveal individual players if you are stuck!
             </p>
         </section>
 
@@ -273,7 +271,7 @@
 
 
     <script id="daily-game-data">
-        const DAILY_TRANSFER_GAME = {"mode": "nationality", "name": "Belgium", "transfers": [{"player_name": "Romelu Lukaku", "to_club_name": "Chelsea", "transfer_fee": "113000000.0", "transfer_date": "2021-08-12"}, {"player_name": "Kevin De Bruyne", "to_club_name": "Manchester City", "transfer_fee": "76000000.0", "transfer_date": "2015-08-30"}, {"player_name": "Roméo Lavia", "to_club_name": "Chelsea", "transfer_fee": "62100000.0", "transfer_date": "2023-08-18"}, {"player_name": "Jérémy Doku", "to_club_name": "Manchester City", "transfer_fee": "60000000.0", "transfer_date": "2023-08-24"}, {"player_name": "Amadou Onana", "to_club_name": "Aston Villa", "transfer_fee": "59350000.0", "transfer_date": "2024-07-22"}, {"player_name": "Youri Tielemans", "to_club_name": "Leicester", "transfer_fee": "45000000.0", "transfer_date": "2019-07-08"}, {"player_name": "Loïs Openda", "to_club_name": "Juventus", "transfer_fee": "42750000.0", "transfer_date": "2026-07-01"}, {"player_name": "Axel Witsel", "to_club_name": "Zenit S-Pb", "transfer_fee": "40000000.0", "transfer_date": "2012-09-03"}, {"player_name": "Michy Batshuayi", "to_club_name": "Chelsea", "transfer_fee": "39000000.0", "transfer_date": "2016-07-03"}, {"player_name": "Charles De Ketelaere", "to_club_name": "AC Milan", "transfer_fee": "37500000.0", "transfer_date": "2022-08-02"}]};
+        const DAILY_TRANSFER_GAME = {"mode": "club", "name": "Parma", "transfers": [{"player_name": "Dennis Man", "from_club_name": "FCSB", "transfer_fee": "12600000.0", "transfer_date": "2021-01-29"}, {"player_name": "Mandela Keita", "from_club_name": "Royal Antwerp", "transfer_fee": "11900000.0", "transfer_date": "2024-08-30"}, {"player_name": "Lautaro Valenti", "from_club_name": "Lanús", "transfer_fee": "10500000.0", "transfer_date": "2021-07-01"}, {"player_name": "Christian Ordóñez", "from_club_name": "Vélez Sarsfield", "transfer_fee": "9750000.0", "transfer_date": "2025-07-01"}, {"player_name": "Valentin Mihăilă", "from_club_name": "Univ. Craiova", "transfer_fee": "9500000.0", "transfer_date": "2020-10-05"}, {"player_name": "Matija Frigan", "from_club_name": "KVC Westerlo", "transfer_fee": "9000000.0", "transfer_date": "2025-08-15"}, {"player_name": "Alberto Grassi", "from_club_name": "Napoli", "transfer_fee": "8450000.0", "transfer_date": "2020-09-01"}, {"player_name": "Andreas Cornelius", "from_club_name": "Atalanta", "transfer_fee": "8400000.0", "transfer_date": "2021-07-01"}, {"player_name": "Zion Suzuki", "from_club_name": "Sint-Truiden", "transfer_fee": "8200000.0", "transfer_date": "2024-07-15"}, {"player_name": "Oliver Sørensen", "from_club_name": "Midtjylland", "transfer_fee": "8100000.0", "transfer_date": "2025-08-13"}]};
         const ALL_PLAYERS = [
   {
     "Name": "Miroslav Klose",
@@ -235827,7 +235825,7 @@
   }
 ];
         const GAME_NOTE = "Transfer data updated to July 2026. Does not include loan moves.";
-        const PUZZLE_NUMBER    = 180;
+        const PUZZLE_NUMBER    = 1;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>
@@ -235914,6 +235912,7 @@
 
         initUI();
         renderTable();
+        checkAlreadyPlayed();
 
         document.getElementById('submit-btn').addEventListener('click', submitGuess);
         document.getElementById('guess-input').addEventListener('keydown', e => {
@@ -235924,6 +235923,7 @@
             }
         });
         document.getElementById('give-up-btn').addEventListener('click', () => {
+            if (gameOver) return;
             FootyUI.confirm({
                 title: 'GIVE UP?',
                 message: 'Are you sure you want to give up and reveal all answers?',
@@ -235939,6 +235939,52 @@
         document.getElementById('modal-close-btn2').addEventListener('click', () => modal.hide());
         document.getElementById('modal-share-btn').addEventListener('click', doShare);
     });
+
+    function checkAlreadyPlayed() {
+        const result = storage.getPuzzleResult(puzzleNum, isBackInTime);
+        if (!result) return;
+
+        gameOver = true;
+        score = result.score;
+        document.getElementById('score-counter').textContent = score;
+
+        // Reveal all rows
+        activeGameData.transfers.forEach((tr, i) => {
+            revealHint(i);
+            const row    = document.getElementById(`row-${i}`);
+            const textEl = row?.querySelector('.player-name');
+            const rEl    = row?.querySelector('.redacted-box');
+            if (textEl) {
+                textEl.textContent = tr.player_name;
+                textEl.classList.remove('hidden');
+            }
+            if (rEl) rEl.classList.add('hidden');
+            document.getElementById(`hint-btn-${i}`)?.style.setProperty('display', 'none');
+            document.getElementById(`reveal-btn-${i}`)?.style.setProperty('display', 'none');
+        });
+
+        // Hide guess panel
+        const guessPanel = document.getElementById('fa-guess-panel');
+        if (guessPanel) guessPanel.style.display = 'none';
+
+        // Show result modal
+        const stats = storage.getStats();
+        const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage, puzzleNum);
+
+        modal.show({
+            won: result.won,
+            title: result.won ? 'COMPLETED' : 'GAME OVER',
+            message: result.won
+                ? 'You have already completed this puzzle.'
+                : `You already played this puzzle. Final score: ${result.score} / ${activeGameData.transfers.length}.`,
+            score: result.score,
+            maxScore: activeGameData.transfers.length,
+            streak: stats.streak,
+            backInTimeLinks: bitLinks
+        });
+
+        if (bitLinks.length) document.getElementById('bit-wrapper')?.classList.remove('hidden');
+    }
 
     function initUI() {
         document.getElementById('puzzle-badge').textContent = isBackInTime
@@ -235973,10 +236019,13 @@
         const backBtn = document.getElementById('nav-back-btn');
         const frontBtn = document.getElementById('nav-front-btn');
 
-        if (currentOffset + 1 <= maxBackDays) {
+        if (currentOffset + 1 <= maxBackDays && puzzleNum > 1) {
             backBtn.href = `${GAME_ID}_d${currentOffset + 1}.html`;
+            backBtn.classList.remove('hidden');
+            backBtn.style.display = '';
         } else {
-            backBtn.classList.add('opacity-30', 'pointer-events-none');
+            backBtn.classList.add('hidden');
+            backBtn.style.display = 'none';
             backBtn.removeAttribute('href');
         }
 

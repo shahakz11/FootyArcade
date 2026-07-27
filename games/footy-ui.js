@@ -20,12 +20,19 @@
      * Accent-insensitive normalization helper
      * e.g. "Ángel Di María" -> "angel di maria"
      */
+    /**
+     * Accent-insensitive & punctuation-normalized helper
+     * e.g. "Ángel Di María" -> "angel di maria"
+     * e.g. "Al-Nassr" -> "al nassr"
+     */
     function normalizeStr(str) {
         if (!str) return '';
         return str
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
             .toLowerCase()
+            .replace(/[-._']/g, ' ')
+            .replace(/\s+/g, ' ')
             .trim();
     }
 
@@ -549,14 +556,26 @@
         };
 
         /** Returns true if this specific puzzleNum is already in history */
-        this.hasPlayedPuzzle = (puzzleNum) => {
+        this.hasPlayedPuzzle = (puzzleNum, isBackInTime = false) => {
             const d = load();
-            return !!d.history[puzzleNum];
+            const histKey = isBackInTime ? `bit_${puzzleNum}` : String(puzzleNum);
+            return !!d.history[histKey];
+        };
+
+        /** Get stored puzzle result or null */
+        this.getPuzzleResult = (puzzleNum, isBackInTime = false) => {
+            const d = load();
+            const histKey = isBackInTime ? `bit_${puzzleNum}` : String(puzzleNum);
+            return d.history[histKey] || null;
         };
 
         /** Record a completed game result */
         this.recordResult = (puzzleNum, won, score, maxScore, isBackInTime = false) => {
             const d = load();
+            const histKey = isBackInTime ? `bit_${puzzleNum}` : String(puzzleNum);
+            if (d.history[histKey]) {
+                return d;
+            }
             if (!isBackInTime) {
                 d.played++;
                 if (won) { d.won++; d.streak++; } else { d.streak = 0; }
@@ -565,7 +584,6 @@
                 d.lastPuzzleNum = puzzleNum;
             }
             // Always record in history (even back-in-time, separately keyed)
-            const histKey = isBackInTime ? `bit_${puzzleNum}` : String(puzzleNum);
             d.history[histKey] = { won, score, maxScore, date: todayStr() };
             save(d);
             return d;
@@ -621,15 +639,19 @@
      * @param {string} gameId    — e.g. "top_transfers"
      * @param {number} maxDays   — how many past days to offer (default 7)
      * @param {FootyStorage} storage
+     * @param {number} [currentPuzzleNum] — current puzzle number
      * @returns {Array<{label, href}>}
      */
-    function buildBackInTimeLinks(gameId, maxDays, storage) {
+    function buildBackInTimeLinks(gameId, maxDays, storage, currentPuzzleNum) {
         maxDays = maxDays || 7;
         const labels = ['Yesterday', '2 days ago', '3 days ago', '4 days ago',
             '5 days ago', '6 days ago', '7 days ago',
             '8 days ago', '9 days ago', '10 days ago'];
         const links = [];
         for (let d = 1; d <= maxDays; d++) {
+            if (typeof currentPuzzleNum === 'number' && (currentPuzzleNum - d) < 1) {
+                break;
+            }
             const label = labels[d - 1] || `${d} days ago`;
             links.push({
                 label,

@@ -386,7 +386,7 @@
                     </div>
                     <div class="flex items-center justify-between border-t border-white/5 pt-4 mt-4">
                         <div class="flex items-center gap-3">
-                            <span class="text-xs font-mono uppercase tracking-wider font-bold" style="color:rgb(${rgb})">${isComingSoon ? 'IN DEVELOPMENT' : playedToday ? 'PLAY AGAIN' : 'PLAY CHALLENGE'}</span>
+                            <span class="text-xs font-mono uppercase tracking-wider font-bold" style="color:rgb(${rgb})">${isComingSoon ? 'IN DEVELOPMENT' : playedToday ? 'VIEW RESULT' : 'PLAY CHALLENGE'}</span>
                             ${stats.streak > 0 ? `<span class="text-[10px] font-mono text-on-surface-variant">🔥 ${stats.streak} streak</span>` : ''}
                         </div>
                         <span class="material-symbols-outlined text-on-surface-variant ${isComingSoon ? '' : 'group-hover:translate-x-1 transition-transform'}">${isComingSoon ? 'lock' : 'arrow_forward'}</span>

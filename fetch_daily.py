@@ -336,10 +336,14 @@ def main():
         if args.random:
             return rand_mod.randint(1, TOTAL_DAYS)
         if args.puzzle > 0:
-            p = (args.puzzle - off - 1) % TOTAL_DAYS + 1
+            p = args.puzzle - off
+            if p < 1:
+                return None
             return p
         target_date = datetime.today() + timedelta(days=args.offset - off)
         days_diff = (target_date.date() - LAUNCH_DATE.date()).days
+        if days_diff < 0:
+            return None
         return (days_diff % TOTAL_DAYS) + 1
 
     max_back = args.max_back_days
@@ -359,11 +363,18 @@ def main():
 
         # Today (offset 0)
         pnum_today = puzzle_for_offset(0)
-        compile_game(game_cfg, pnum_today, day_offset=0, max_back_days=max_back)
+        if pnum_today is not None:
+            compile_game(game_cfg, pnum_today, day_offset=0, max_back_days=max_back)
 
         # Back-in-time files
         for d in range(1, max_back + 1):
             pnum_past = puzzle_for_offset(d)
+            if pnum_past is None:
+                out_name = f"{gid}_d{d}.html"
+                out_path = os.path.join(OUTPUT_DIR, out_name)
+                if os.path.exists(out_path):
+                    os.remove(out_path)
+                continue
             compile_game(game_cfg, pnum_past, day_offset=d, max_back_days=max_back)
 
         print()

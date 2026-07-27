@@ -1,4 +1,5 @@
 import os
+import re
 import pandas as pd
 import random
 import kagglehub
@@ -23,44 +24,148 @@ def main():
     df_transfers['transfer_fee'] = pd.to_numeric(df_transfers['transfer_fee'], errors='coerce')
     df_transfers.dropna(subset=['transfer_fee'], inplace=True)
 
-    # Normalize/clean club names (Youth, B teams, different variations)
+    # Manual additions for famous missing historical transfers
+    manual_transfers = pd.DataFrame([
+        {
+            'player_id': 39153,
+            'player_name': 'Gonzalo Higuaín',
+            'from_club_name': 'Napoli',
+            'to_club_name': 'Juventus',
+            'transfer_fee': 90000000.0,
+            'transfer_date': '2016-07-26',
+            'market_value_in_eur': 65000000.0
+        }
+    ])
+    df_transfers = pd.concat([df_transfers, manual_transfers], ignore_index=True)
+
+    # Normalize/clean club names (Youth, B teams, different variations, corporate suffixes, trailing dots)
+    prefix_pattern = re.compile(r'^(1\.\s*FC|1\.\s*FSV|1\.\s*|FC|CF|AC|AS|SS|SV|SC|SD|CD|UD|RC|RCD|FK|SK|BK|IF|IFK|OGC|US|USM|GC|AFC|SAD|CA|CE|CS|CP|VfB|VfL|TSG|BSC|FSV|SSV|SpVgg|Club)\s+', re.I)
+    suffix_pattern = re.compile(r'\s+(Football Club|Association Football Club|Club de Fútbol|Club de Futbol|Fútbol Club|Futbol Club|Soccer Club|Sports Club|Sport Club|Athletic Club|Club|FC|CF|SC|CSC|S\.A\.D\.|R\.C\.D\.|C\.D\.|F\.C\.|C\.F\.|AF|FK|SK|BK|SV|EV|e\.V\.|eV|AC|SD|UD|RC|SAD|Res|Reserves|Youth|Yth|Academy|Junioren|Castilla|II|B|U-?\d+|Sub-?\d+|Sub\s*\d+|Under-?\d+|Under\s*\d+)\b', re.I)
+
+    aliases = {
+        # Germany
+        'Leipzig': 'RB Leipzig', 'RB Leipzig': 'RB Leipzig', 'RB Leipzig.': 'RB Leipzig', 'S. Leipzig': 'RB Leipzig', 'RasenBallsport Leipzig': 'RB Leipzig', 'Rasenballsport Leipzig': 'RB Leipzig',
+        'Bor. Dortmund': 'Borussia Dortmund', 'B. Dortmund': 'Borussia Dortmund', 'Dortmund': 'Borussia Dortmund',
+        'FC Bayern': 'Bayern Munich', 'Bayern München': 'Bayern Munich', 'FC Bayern München': 'Bayern Munich', 'Bayern Munich': 'Bayern Munich',
+        'Bayer 04 Leverkusen': 'Bayer Leverkusen', 'B. Leverkusen': 'Bayer Leverkusen', 'Leverkusen': 'Bayer Leverkusen', 'Bayer Leverkusen': 'Bayer Leverkusen',
+        'M\'gladbach': 'Borussia Mönchengladbach', 'B. M\'gladbach': 'Borussia Mönchengladbach', 'Bor. M\'gladbach': 'Borussia Mönchengladbach', 'Borussia M\'gladbach': 'Borussia Mönchengladbach', 'Borussia Mönchengladbach': 'Borussia Mönchengladbach',
+        '1.FC Kaiserslautern': 'Kaiserslautern', '1. FC Kaiserslautern': 'Kaiserslautern', 'K\'lautern': 'Kaiserslautern',
+        '1.FC Nürnberg': 'Nuremberg', '1. FC Nürnberg': 'Nuremberg', '1.FC Nuremberg': 'Nuremberg', 'Nürnberg': 'Nuremberg', 'Nuremberg': 'Nuremberg',
+        '1.FC Köln': 'Köln', '1. FC Köln': 'Köln', 'FC Köln': 'Köln', 'Koln': 'Köln',
+        '1.FC Magdeburg': 'Magdeburg', '1. FC Magdeburg': 'Magdeburg',
+        '1.FC Union Berlin': 'Union Berlin', '1. FC Union Berlin': 'Union Berlin', 'Union Berlin': 'Union Berlin',
+        '1.FSV Mainz 05': 'Mainz 05', '1. FSV Mainz 05': 'Mainz 05', 'FSV Mainz 05': 'Mainz 05', 'Mainz 05': 'Mainz 05', 'Mainz': 'Mainz 05',
+        'VfB Stuttgart': 'Stuttgart', 'Stuttgart': 'Stuttgart',
+        'VfL Wolfsburg': 'Wolfsburg', 'Wolfsburg': 'Wolfsburg',
+        'VfL Bochum': 'Bochum', 'Bochum': 'Bochum',
+        'TSG 1899 Hoffenheim': 'Hoffenheim', 'TSG Hoffenheim': 'Hoffenheim', 'Hoffenheim': 'Hoffenheim',
+        'Hertha BSC': 'Hertha Berlin', 'Hertha Berlin': 'Hertha Berlin',
+        'Schalke 04': 'Schalke', 'FC Schalke 04': 'Schalke', 'Schalke': 'Schalke',
+
+        # England
+        'Man City': 'Manchester City', 'Manchester City': 'Manchester City',
+        'Man United': 'Manchester United', 'Man Utd': 'Manchester United', 'Manchester United': 'Manchester United',
+        'Spurs': 'Tottenham Hotspur', 'Tottenham': 'Tottenham Hotspur', 'Tottenham Hotspur': 'Tottenham Hotspur',
+        'Arsenal': 'Arsenal', 'Chelsea': 'Chelsea', 'Liverpool': 'Liverpool', 'Everton': 'Everton',
+        'Newcastle': 'Newcastle United', 'Newcastle United': 'Newcastle United',
+        'West Ham': 'West Ham United', 'West Ham United': 'West Ham United',
+        'Wolves': 'Wolverhampton Wanderers', 'Wolverhampton Wanderers': 'Wolverhampton Wanderers', 'Wolverhampton': 'Wolverhampton Wanderers',
+        'Leicester': 'Leicester City', 'Leicester City': 'Leicester City',
+        'Leeds': 'Leeds United', 'Leeds United': 'Leeds United',
+        'Brighton': 'Brighton & Hove Albion', 'Brighton & Hove Albion': 'Brighton & Hove Albion', 'Brighton and Hove Albion': 'Brighton & Hove Albion',
+
+        # Spain
+        'Real Madrid': 'Real Madrid', 'FC Barcelona': 'Barcelona', 'Barca': 'Barcelona', 'Barcelona': 'Barcelona',
+        'Atlético Madrid': 'Atletico Madrid', 'Atlético': 'Atletico Madrid', 'Atletico': 'Atletico Madrid', 'Atletico Madrid': 'Atletico Madrid',
+        'Athletic Bilbao': 'Athletic Bilbao', 'Athletic Club': 'Athletic Bilbao',
+        'Sevilla FC': 'Sevilla', 'Sevilla': 'Sevilla',
+        'Real Betis': 'Real Betis', 'Betis': 'Real Betis',
+        'Real Sociedad': 'Real Sociedad',
+        'Villarreal CF': 'Villarreal', 'Villarreal': 'Villarreal',
+        'Valencia CF': 'Valencia', 'Valencia': 'Valencia',
+        'UD Almería': 'Almería', 'Almería': 'Almería', 'Almeria': 'Almería',
+        'CD Alcoyano': 'Alcoyano', 'Alcoyano': 'Alcoyano',
+        'RCD Espanyol': 'Espanyol', 'Espanyol': 'Espanyol',
+        'RCD Mallorca': 'Mallorca', 'Mallorca': 'Mallorca',
+        'Celta de Vigo': 'Celta Vigo', 'Celta Vigo': 'Celta Vigo',
+        'Osasuna': 'Osasuna', 'CA Osasuna': 'Osasuna',
+
+        # Italy
+        'Inter Milan': 'Inter', 'FC Internazionale Milano': 'Inter', 'Internazionale': 'Inter', 'Inter': 'Inter',
+        'AC Milan': 'AC Milan', 'Milan': 'AC Milan',
+        'Juventus': 'Juventus', 'SSC Napoli': 'Napoli', 'Napoli': 'Napoli',
+        'AS Roma': 'Roma', 'Roma': 'Roma',
+        'SS Lazio': 'Lazio', 'Lazio': 'Lazio',
+        'ACF Fiorentina': 'Fiorentina', 'Fiorentina': 'Fiorentina',
+        'Atalanta BC': 'Atalanta', 'Atalanta': 'Atalanta',
+        'Torino FC': 'Torino', 'Torino': 'Torino',
+        'AC Monaco': 'Monaco', 'AS Monaco': 'Monaco', 'Monaco': 'Monaco',
+        'AC Ajaccio': 'Ajaccio', 'AS Ajaccio': 'Ajaccio', 'Ajaccio': 'Ajaccio',
+
+        # France
+        'Paris SG': 'Paris Saint-Germain', 'PSG': 'Paris Saint-Germain', 'Paris Saint-Germain': 'Paris Saint-Germain',
+        'Paris FC': 'Paris FC', 'Paris FC.': 'Paris FC', 'Paris FC B': 'Paris FC', 'Paris FC U19': 'Paris FC', 'Paris FC U17': 'Paris FC', 'Paris FC Yth.': 'Paris FC',
+        'Olympique Marseille': 'Marseille', 'Olympique de Marseille': 'Marseille', 'OM': 'Marseille', 'Marseille': 'Marseille',
+        'Olympique Lyon': 'Lyon', 'Olympique Lyonnais': 'Lyon', 'OL': 'Lyon', 'Lyon': 'Lyon',
+        'AS Saint-Étienne': 'Saint-Étienne', 'Saint-Étienne': 'Saint-Étienne', 'Saint-Etienne': 'Saint-Étienne',
+        'LOSC Lille': 'Lille', 'Lille OSC': 'Lille', 'Lille': 'Lille',
+        'OGC Nice': 'Nice', 'Nice': 'Nice',
+        'FC Nantes': 'Nantes', 'Nantes': 'Nantes',
+        'Stade Rennais': 'Rennes', 'Rennes': 'Rennes',
+
+        # Portugal / Netherlands / Turkey / Others
+        'Sporting CP': 'Sporting CP', 'Sporting Lisbon': 'Sporting CP', 'Sporting': 'Sporting CP',
+        'SL Benfica': 'Benfica', 'Benfica': 'Benfica',
+        'FC Porto': 'Porto', 'Porto': 'Porto',
+        'AFC Ajax': 'Ajax', 'Ajax': 'Ajax',
+        'PSV Eindhoven': 'PSV Eindhoven', 'PSV': 'PSV Eindhoven',
+        'Feyenoord Rotterdam': 'Feyenoord', 'Feyenoord': 'Feyenoord',
+        'Galatasaray SK': 'Galatasaray', 'Galatasaray': 'Galatasaray',
+        'Fenerbahçe SK': 'Fenerbahce', 'Fenerbahce SK': 'Fenerbahce', 'Fenerbahce': 'Fenerbahce',
+        'Beşiktaş JK': 'Besiktas', 'Besiktas JK': 'Besiktas', 'Besiktas': 'Besiktas',
+
+        # Saudi / Gulf
+        'Al-Nassr': 'Al-Nassr', 'Al Nassr': 'Al-Nassr', 'Al-Nassr FC': 'Al-Nassr',
+        'Al-Hilal': 'Al-Hilal', 'Al Hilal': 'Al-Hilal',
+        'Al-Ittihad': 'Al-Ittihad', 'Al Ittihad': 'Al-Ittihad',
+        'Al-Ahli': 'Al-Ahli', 'Al Ahli': 'Al-Ahli', 'Al-Ahly': 'Al-Ahli',
+        'Al-Ettifaq': 'Al-Ettifaq', 'Al Ettifaq': 'Al-Ettifaq',
+        'Al-Fateh': 'Al-Fateh', 'Al Fateh': 'Al-Fateh',
+        'Al-Fayha': 'Al-Fayha', 'Al Fayha': 'Al-Fayha',
+        'Al-Gharafa': 'Al-Gharafa',
+        'Al-Hazem': 'Al-Hazem',
+        'Al-Shabab': 'Al-Shabab', 'Al Shabab': 'Al-Shabab',
+        'Al-Taawoun': 'Al-Taawoun',
+        'Al-Kholood': 'Al-Kholood', 'Al Kholood': 'Al-Kholood',
+        'Al-Najma': 'Al-Najma',
+        'Al-Okhdood': 'Al-Okhdood', 'Al Okhdood': 'Al-Okhdood',
+        'Al-Qadsiah': 'Al-Qadsiah', 'Al Qadsiah': 'Al-Qadsiah',
+    }
+
     def clean_club_name(val):
         if not isinstance(val, str):
             return val
-        import re
-        # Remove U17/U19/U21/U23/B/II/Castilla/Youth/Academy suffixes
-        val = re.sub(r"(?i)\s+(U\d+|Sub-\d+|Sub\s+\d+|II|B|Castilla|Youth|Yth|Academy|Junioren|Under-\d+)\b", "", val)
-        val = val.strip()
-        # Map common aliases
-        aliases = {
-            "Bor. Dortmund": "Borussia Dortmund",
-            "B. Dortmund": "Borussia Dortmund",
-            "Dortmund": "Borussia Dortmund",
-            "FC Bayern": "Bayern Munich",
-            "Bayern München": "Bayern Munich",
-            "FC Bayern München": "Bayern Munich",
-            "Man City": "Manchester City",
-            "Man United": "Manchester United",
-            "Man Utd": "Manchester United",
-            "Spurs": "Tottenham Hotspur",
-            "Tottenham": "Tottenham Hotspur",
-            "Atlético Madrid": "Atletico Madrid",
-            "Atlético": "Atletico Madrid",
-            "Atletico": "Atletico Madrid",
-            "Paris SG": "Paris Saint-Germain",
-            "PSG": "Paris Saint-Germain",
-            "FC Barcelona": "Barcelona",
-            "Barca": "Barcelona",
-            "Inter Milan": "Inter",
-            "Internazionale": "Inter",
-            "Bayer 04 Leverkusen": "Bayer Leverkusen",
-            "B. Leverkusen": "Bayer Leverkusen",
-            "Leverkusen": "Bayer Leverkusen",
-            "M'gladbach": "Borussia Mönchengladbach",
-            "B. M'gladbach": "Borussia Mönchengladbach",
-            "Bor. M'gladbach": "Borussia Mönchengladbach",
-        }
-        return aliases.get(val, val)
+        val = val.strip().strip('.').strip('"').strip("'")
+        if not val:
+            return ''
+
+        if val in aliases:
+            return aliases[val]
+
+        cleaned = val
+        cleaned = prefix_pattern.sub('', cleaned)
+        cleaned = suffix_pattern.sub('', cleaned)
+        cleaned = prefix_pattern.sub('', cleaned)
+        cleaned = suffix_pattern.sub('', cleaned)
+        cleaned = cleaned.strip().strip('.')
+
+        if cleaned in aliases:
+            return aliases[cleaned]
+
+        if cleaned.startswith('Al ') and not cleaned.startswith('Al-'):
+            cleaned = 'Al-' + cleaned[3:]
+
+        return cleaned if cleaned else val
 
     print("Normalizing club names in dataset...")
     df_transfers['from_club_name'] = df_transfers['from_club_name'].apply(clean_club_name)
@@ -72,7 +177,7 @@ def main():
     print("Processing Club Transfers...")
     high_value_transfers = df_transfers[df_transfers['transfer_fee'] > TRANSFER_FEE_THRESHOLD]
     club_high_value_transfers_count = high_value_transfers['to_club_name'].value_counts()
-    eligible_clubs = club_high_value_transfers_count[club_high_value_transfers_count >= 2].index.tolist()
+    eligible_clubs = club_high_value_transfers_count[club_high_value_transfers_count >= 10].index.tolist()
 
     print(f"Number of eligible clubs: {len(eligible_clubs)}")
 
@@ -120,10 +225,9 @@ def main():
     high_value_nationality_transfers = df_merged_for_nationality[
         df_merged_for_nationality['transfer_fee'] > TRANSFER_FEE_THRESHOLD
     ]
-    nationality_high_value_transfers_count = high_value_nationality_transfers['nationality_name'].value_counts()
-    eligible_nationalities = nationality_high_value_transfers_count[
-        nationality_high_value_transfers_count >= 2
-    ].index.tolist()
+    # For nationalities, count unique players with transfer fee > threshold
+    nat_unique_players = high_value_nationality_transfers.groupby('nationality_name')['player_name'].nunique()
+    eligible_nationalities = nat_unique_players[nat_unique_players >= 10].index.tolist()
 
     print(f"Number of eligible nationalities: {len(eligible_nationalities)}")
 
@@ -265,10 +369,14 @@ def main():
     print("Processing Top Scorers Games (Top 5 Leagues + Champions League, Europa League, World Cup)...")
     appearances_file = os.path.join(path, 'appearances.csv')
     clubs_file_path = os.path.join(path, 'clubs.csv')
+    games_file_path = os.path.join(path, 'games.csv')
 
-    if os.path.exists(appearances_file) and os.path.exists(clubs_file_path):
+    if os.path.exists(appearances_file) and os.path.exists(clubs_file_path) and os.path.exists(games_file_path):
+        from collections import Counter
+
         df_apps = pd.read_csv(appearances_file)
         df_clubs_raw = pd.read_csv(clubs_file_path)
+        df_games_raw = pd.read_csv(games_file_path)
 
         # Map competition IDs to display names
         target_comps_map = {
@@ -282,27 +390,36 @@ def main():
             'FIWC': 'FIFA World Cup'
         }
 
-        df_apps_target = df_apps[df_apps['competition_id'].isin(target_comps_map.keys())].copy()
+        # Merge appearances with games.csv to get true competition_id, season, and round
+        df_apps_merged = pd.merge(
+            df_apps,
+            df_games_raw[['game_id', 'season', 'round', 'competition_id']],
+            on='game_id',
+            how='inner',
+            suffixes=('', '_game')
+        )
+
+        df_apps_target = df_apps_merged[df_apps_merged['competition_id'].isin(target_comps_map.keys())].copy()
         df_apps_target['goals'] = pd.to_numeric(df_apps_target['goals'], errors='coerce').fillna(0).astype(int)
 
+        # Exclude UCL/UEL qualifying rounds to match official main tournament top scorer tallies
+        qualifying_rounds = ['1st Qualifying Round', '2nd Qualifying Round', '3rd Qualifying Round', 'Play-Offs', 'Qualifying Round']
+        df_apps_target = df_apps_target[~((df_apps_target['competition_id'].isin(['CL', 'EL'])) & (df_apps_target['round'].isin(qualifying_rounds)))]
+
         # Derive edition (Season format YYYY/YY+1 for club competitions, Year format YYYY for World Cup)
-        df_apps_target['date_dt'] = pd.to_datetime(df_apps_target['date'])
         def get_edition(row):
             comp = row['competition_id']
-            dt = row['date_dt']
+            season = int(row['season'])
             if comp == 'FIWC':
-                return str(dt.year)
+                return str(season + 1)
             else:
-                if dt.month >= 7:
-                    return f"{dt.year}/{str(dt.year+1)[-2:]}"
-                else:
-                    return f"{dt.year-1}/{str(dt.year)[-2:]}"
+                return f"{season}/{str(season+1)[-2:]}"
 
         df_apps_target['edition'] = df_apps_target.apply(get_edition, axis=1)
 
-        # Filter valid complete editions (2012/13 to 2024/25 for club competitions, 2026 for World Cup)
+        # Filter valid complete editions (2012/13 to 2024/25 for club competitions, 2010 to 2022 for World Cup)
         valid_seasons = [f"{y}/{str(y+1)[-2:]}" for y in range(2012, 2025)]
-        valid_tournament_years = ['2026']
+        valid_tournament_years = ['2010', '2014', '2018', '2022']
 
         df_apps_target = df_apps_target[
             ((df_apps_target['competition_id'] != 'FIWC') & (df_apps_target['edition'].isin(valid_seasons))) |
@@ -331,7 +448,9 @@ def main():
 
         def get_primary_club(x):
             valid = [item for item in x if pd.notna(item) and item != '']
-            return valid[0] if valid else ''
+            if not valid:
+                return ''
+            return Counter(valid).most_common(1)[0][0]
 
         # Aggregate goals, appearances, and primary club per player per competition edition
         player_edition_stats = df_apps_target.groupby(['competition_id', 'edition', 'player_id', 'player_name', 'country_of_citizenship']).agg(
@@ -372,19 +491,20 @@ def main():
         scorers_df.to_csv('daily_scorers_games.csv', index=False)
         print(f"Successfully generated top scorers game data ({len(combinations)} competition editions) and saved to 'daily_scorers_games.csv'")
     else:
-        print("  WARNING: appearances.csv or clubs.csv not found. Skipping top scorers generation.")
+        print("  WARNING: appearances.csv, clubs.csv, or games.csv not found. Skipping top scorers generation.")
 
     # --- 5. Generating Autocomplete Club List ---
     print("Generating autocomplete club list...")
     clubs_file = os.path.join(path, 'clubs.csv')
     df_clubs_csv = pd.read_csv(clubs_file) if os.path.exists(clubs_file) else pd.DataFrame()
 
-    from_clubs = set(df_transfers['from_club_name'].dropna().unique())
-    to_clubs = set(df_transfers['to_club_name'].dropna().unique())
+    from_clubs = set(df_transfers['from_club_name'].dropna().apply(clean_club_name).unique())
+    to_clubs = set(df_transfers['to_club_name'].dropna().apply(clean_club_name).unique())
     csv_clubs = set(df_clubs_csv['name'].dropna().apply(clean_club_name).unique()) if not df_clubs_csv.empty else set()
+    cleaned_careers = set([clean_club_name(c) for c in clubs_in_careers if c])
 
-    all_autocomplete_clubs = sorted(list(clubs_in_careers | from_clubs | to_clubs | csv_clubs))
-    all_autocomplete_clubs = [c for c in all_autocomplete_clubs if c]
+    raw_clubs = cleaned_careers | from_clubs | to_clubs | csv_clubs
+    all_autocomplete_clubs = sorted(list(set(clean_club_name(c) for c in raw_clubs if c)))
 
     with open('all_clubs.json', 'w', encoding='utf-8') as f_clubs:
         json.dump(all_autocomplete_clubs, f_clubs, ensure_ascii=False, indent=2)

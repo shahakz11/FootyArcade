@@ -90,34 +90,33 @@
 <body class="bg-background text-on-background font-body turf-pattern min-h-screen pb-24">
 
     <!-- Header -->
-    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-16 flex items-center justify-between px-6 shadow-xl">
-        <div class="flex items-center gap-3">
-            <a href="../index.html" class="text-on-surface-variant hover:text-accent transition-colors flex items-center gap-3" aria-label="Back to game lobby">
-                <span class="material-symbols-outlined">arrow_back</span>
-                <img src="../assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-7 md:h-8 w-auto object-contain" />
-            </a>
-            <span class="text-white/20 font-thin text-xl">|</span>
-            <h1 class="font-headline text-xl md:text-2xl tracking-wider text-accent uppercase italic neon-text-glow">TOP SCORERS</h1>
-        </div>
-        <div class="flex items-center gap-2">
-            <a id="nav-back-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1" title="Play previous puzzle (back in time)">
-                <span class="material-symbols-outlined">chevron_left</span>
-                <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden md:inline">Previous</span>
-            </a>
-            <span id="puzzle-badge" class="font-mono text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 px-2.5 py-1 rounded cursor-help" title="Daily puzzle number. Use arrows to play past puzzles!">PUZZLE #0</span>
-            <a id="nav-front-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1" title="Play newer/today's puzzle">
-                <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden md:inline">Next</span>
-                <span class="material-symbols-outlined">chevron_right</span>
-            </a>
-        </div>
+    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-16 flex items-center justify-between px-4 sm:px-6 shadow-xl">
+        <a href="../index.html" class="text-on-surface-variant hover:text-accent transition-colors flex items-center gap-3" aria-label="Back to game lobby">
+            <span class="material-symbols-outlined text-xl sm:text-2xl">arrow_back</span>
+            <img src="../assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-7 md:h-8 w-auto object-contain" />
+        </a>
     </header>
 
     <!-- Main Content -->
     <main class="pt-24 px-4 max-w-4xl mx-auto space-y-6">
 
         <!-- Game Intro -->
-        <section class="text-center space-y-2">
-            <h2 id="game-title" class="font-title text-xl font-bold uppercase tracking-widest text-on-background">Top Scorers per League & Season</h2>
+        <section class="text-center space-y-3">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                <h1 class="font-headline text-2xl sm:text-3xl tracking-wider text-accent uppercase italic neon-text-glow">TOP SCORERS</h1>
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                    <a id="nav-back-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1 px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10" title="Play previous puzzle (back in time)">
+                        <span class="material-symbols-outlined text-base">chevron_left</span>
+                        <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden sm:inline">Prev</span>
+                    </a>
+                    <span id="puzzle-badge" class="font-mono text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 px-3 py-1 rounded-lg cursor-help text-on-background" title="Daily puzzle number. Use arrows to play past puzzles!">PUZZLE #0</span>
+                    <a id="nav-front-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1 px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10" title="Play newer/today's puzzle">
+                        <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden sm:inline">Next</span>
+                        <span class="material-symbols-outlined text-base">chevron_right</span>
+                    </a>
+                </div>
+            </div>
+            <h2 id="game-title" class="font-title text-base sm:text-lg font-bold uppercase tracking-widest text-on-surface-variant">Top Scorers per League & Season</h2>
             <p class="text-on-surface-variant text-sm max-w-xl mx-auto">
                 Fill the scorers table below for the given league and season. Use the search bar to guess players. Only players from the search dropdown can be guessed. Use the hints (<span class="material-symbols-outlined text-xs inline-block align-middle text-accent">lightbulb</span>) or reveal individual players if you are stuck!
             </p>
@@ -353,6 +352,7 @@
 
         initUI();
         renderTable();
+        checkAlreadyPlayed();
 
         document.getElementById('submit-btn').addEventListener('click', submitGuess);
         document.getElementById('guess-input').addEventListener('keydown', e => {
@@ -363,6 +363,7 @@
             }
         });
         document.getElementById('give-up-btn').addEventListener('click', () => {
+            if (gameOver) return;
             FootyUI.confirm({
                 title: 'GIVE UP?',
                 message: 'Are you sure you want to give up and reveal all answers?',
@@ -378,6 +379,52 @@
         document.getElementById('modal-close-btn2').addEventListener('click', () => modal.hide());
         document.getElementById('modal-share-btn').addEventListener('click', doShare);
     });
+
+    function checkAlreadyPlayed() {
+        const result = storage.getPuzzleResult(puzzleNum, isBackInTime);
+        if (!result) return;
+
+        gameOver = true;
+        score = result.score;
+        document.getElementById('score-counter').textContent = score;
+
+        // Reveal all rows
+        activeGameData.scorers.forEach((scorer, i) => {
+            revealHint(i);
+            const row    = document.getElementById(`row-${i}`);
+            const textEl = row?.querySelector('.player-name');
+            const rEl    = row?.querySelector('.redacted-box');
+            if (textEl) {
+                textEl.textContent = scorer.player_name;
+                textEl.classList.remove('hidden');
+            }
+            if (rEl) rEl.classList.add('hidden');
+            document.getElementById(`hint-btn-${i}`)?.style.setProperty('display', 'none');
+            document.getElementById(`reveal-btn-${i}`)?.style.setProperty('display', 'none');
+        });
+
+        // Hide guess panel
+        const guessPanel = document.getElementById('fa-guess-panel');
+        if (guessPanel) guessPanel.style.display = 'none';
+
+        // Show result modal
+        const stats = storage.getStats();
+        const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage, puzzleNum);
+
+        modal.show({
+            won: result.won,
+            title: result.won ? 'COMPLETED' : 'GAME OVER',
+            message: result.won
+                ? 'You have already completed this puzzle.'
+                : `You already played this puzzle. Final score: ${result.score} / ${activeGameData.scorers.length}.`,
+            score: result.score,
+            maxScore: activeGameData.scorers.length,
+            streak: stats.streak,
+            backInTimeLinks: bitLinks
+        });
+
+        if (bitLinks.length) document.getElementById('bit-wrapper')?.classList.remove('hidden');
+    }
 
     function initUI() {
         document.getElementById('puzzle-badge').textContent = isBackInTime
@@ -402,10 +449,13 @@
         const backBtn = document.getElementById('nav-back-btn');
         const frontBtn = document.getElementById('nav-front-btn');
 
-        if (currentOffset + 1 <= maxBackDays) {
+        if (currentOffset + 1 <= maxBackDays && puzzleNum > 1) {
             backBtn.href = `${GAME_ID}_d${currentOffset + 1}.html`;
+            backBtn.classList.remove('hidden');
+            backBtn.style.display = '';
         } else {
-            backBtn.classList.add('opacity-30', 'pointer-events-none');
+            backBtn.classList.add('hidden');
+            backBtn.style.display = 'none';
             backBtn.removeAttribute('href');
         }
 
