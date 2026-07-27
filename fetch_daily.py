@@ -328,6 +328,9 @@ def main():
             print(f"ERROR: Game id '{args.game}' not found in {GAMES_JSON}.")
             return
 
+    # Base launch date: 2026-07-27 is Day 1 (Puzzle #1)
+    LAUNCH_DATE = datetime(2026, 7, 27)
+
     # Determine base puzzle number for today (offset=0)
     def puzzle_for_offset(off):
         if args.random:
@@ -336,7 +339,8 @@ def main():
             p = (args.puzzle - off - 1) % TOTAL_DAYS + 1
             return p
         target_date = datetime.today() + timedelta(days=args.offset - off)
-        return (target_date.timetuple().tm_yday - 1) % TOTAL_DAYS + 1
+        days_diff = (target_date.date() - LAUNCH_DATE.date()).days
+        return (days_diff % TOTAL_DAYS) + 1
 
     max_back = args.max_back_days
 
