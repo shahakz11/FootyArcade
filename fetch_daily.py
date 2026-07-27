@@ -333,8 +333,9 @@ def main():
         if args.random:
             return rand_mod.randint(1, TOTAL_DAYS)
         if args.puzzle > 0:
-            return min(args.puzzle, TOTAL_DAYS)
-        target_date = datetime.today() + timedelta(days=args.offset + off * -1)
+            p = (args.puzzle - off - 1) % TOTAL_DAYS + 1
+            return p
+        target_date = datetime.today() + timedelta(days=args.offset - off)
         return (target_date.timetuple().tm_yday - 1) % TOTAL_DAYS + 1
 
     max_back = args.max_back_days
