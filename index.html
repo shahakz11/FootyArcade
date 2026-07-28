@@ -5,23 +5,27 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Playmaker | Free Daily Football Trivia & Transfer Quiz Games</title>
     <meta name="description" content="Play free daily football trivia games — guess record transfers, player career paths, and all-time top scorers. New challenges every day with streak tracking. The football fan's daily arcade."/>
-    <link rel="canonical" href="https://ggbushi.github.io/Football/" />
+    <link rel="canonical" href="https://playmaker.best/" />
     
-    <!-- PWA Web Manifest & Favicons -->
+    <!-- PWA Web Manifest & Favicons for Browsers & Google Search -->
     <link rel="manifest" href="manifest.json"/>
-    <link rel="apple-touch-icon" href="assets/favicon.png"/>
-    <link rel="icon" type="image/png" href="assets/favicon.png"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png"/>
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon.png"/>
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon.png"/>
     
     <!-- Social Share Preview (OpenGraph / Twitter) -->
     <meta property="og:title" content="Playmaker | Free Daily Football Trivia & Transfer Quiz Games"/>
     <meta property="og:description" content="Play free daily football trivia games — guess record transfers, player career paths, and all-time top scorers. New challenges every day with streak tracking. The football fan's daily arcade."/>
-    <meta property="og:url" content="https://ggbushi.github.io/Football/" />
-    <meta property="og:image" content="https://ggbushi.github.io/Football/assets/social_share.png"/>
+    <meta property="og:url" content="https://playmaker.best/" />
+    <meta property="og:image" content="https://playmaker.best/assets/social_share.png"/>
     <meta property="og:type" content="website"/>
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="twitter:title" content="Playmaker | Free Daily Football Trivia & Transfer Quiz Games"/>
     <meta name="twitter:description" content="Play free daily football trivia games — guess record transfers, player career paths, and all-time top scorers. New challenges every day with streak tracking. The football fan's daily arcade."/>
-    <meta name="twitter:image" content="https://ggbushi.github.io/Football/assets/social_share.png"/>
+    <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
     <!-- Google Analytics Measurement ID Placeholder -->
     <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
@@ -66,22 +70,39 @@
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "Organization",
+          "name": "Playmaker",
+          "url": "https://playmaker.best/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://playmaker.best/assets/logo.png",
+            "width": 512,
+            "height": 512
+          }
+        },
+        {
           "@type": "WebSite",
           "name": "Playmaker",
-          "url": "https://ggbushi.github.io/Football/",
+          "url": "https://playmaker.best/",
           "description": "Daily football trivia games — guess transfers, career paths, and top scorers.",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Playmaker",
+            "logo": "https://playmaker.best/assets/logo.png"
+          },
           "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://ggbushi.github.io/Football/?q={search_term_string}",
+            "target": "https://playmaker.best/?q={search_term_string}",
             "query-input": "required name=search_term_string"
           }
         },
         {
           "@type": "WebApplication",
           "name": "Playmaker",
-          "url": "https://ggbushi.github.io/Football/",
+          "url": "https://playmaker.best/",
           "applicationCategory": "GameApplication",
           "operatingSystem": "Web",
+          "image": "https://playmaker.best/assets/logo.png",
           "offers": {
             "@type": "Offer",
             "price": "0",

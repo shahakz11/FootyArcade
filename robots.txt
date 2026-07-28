@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
 
+# Allow PWA manifest for search engines and browsers
+Allow: /manifest.json
+
 # Block data files and build artifacts from crawling
 Disallow: /templates/
 Disallow: /*.json$
@@ -17,4 +20,4 @@ Disallow: /games/*_d5.html
 Disallow: /games/*_d6.html
 Disallow: /games/*_d7.html
 
-Sitemap: https://ggbushi.github.io/Football/sitemap.xml
+Sitemap: https://playmaker.best/sitemap.xml
