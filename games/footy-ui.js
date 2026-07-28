@@ -279,6 +279,68 @@
     function FootyModal(cfg) {
         const modal = document.getElementById(cfg.modalId || 'result-modal');
 
+        function buildGiphyQuery(opts) {
+            if (!opts.won) {
+                return 'soccer fail';
+            }
+
+            if (opts.query) return opts.query;
+
+            const targetName = (opts.targetName || '').trim();
+            const playerName = (opts.playerName || opts.extraText || '').trim();
+            const type = opts.targetType || opts.mode || '';
+
+            // Common national teams list for automatic national team query detection
+            const NATIONAL_TEAMS = [
+                'Italy', 'Brazil', 'France', 'Spain', 'Argentina', 'Germany', 'England', 
+                'Portugal', 'Netherlands', 'Belgium', 'Croatia', 'Uruguay', 'Colombia', 
+                'Senegal', 'Japan', 'Morocco', 'Nigeria', 'Cameroon', 'Ivory Coast',
+                'Mexico', 'USA', 'United States', 'Wales', 'Scotland', 'Poland', 'Denmark',
+                'Sweden', 'Switzerland', 'Austria', 'Norway', 'Algeria', 'Egypt', 'Ghana'
+            ];
+
+            const isNationalTeam = type === 'nationality' || type === 'national_team' || 
+                (targetName && NATIONAL_TEAMS.some(team => team.toLowerCase() === targetName.toLowerCase()));
+
+            if (isNationalTeam) {
+                return `${targetName} football team`;
+            }
+
+            // If a player name (like the #1 player in a league or grid) is provided, use it
+            if (playerName) {
+                return playerName;
+            }
+
+            if (targetName) {
+                return targetName;
+            }
+
+            return 'soccer celebration';
+        }
+
+        function fetchGiphyGif(query, callback) {
+            if (!query) return callback(null);
+            const apiKey = window.GIPHY_API_KEY || 'hAjBkiCSPhfKZhcg0knhPOGhVVEA6EUD';
+            const url = `https://api.giphy.com/v1/gifs/search?api_key=${encodeURIComponent(apiKey)}&q=${encodeURIComponent(query)}&limit=10&rating=g`;
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.data && data.data.length > 0) {
+                        const randomIndex = Math.floor(Math.random() * Math.min(data.data.length, 5));
+                        const gifObj = data.data[randomIndex];
+                        const gifUrl = gifObj.images?.downsized_medium?.url || gifObj.images?.fixed_height?.url || gifObj.images?.original?.url;
+                        callback(gifUrl);
+                    } else {
+                        callback(null);
+                    }
+                })
+                .catch(err => {
+                    console.warn('Giphy API fetch failed:', err);
+                    callback(null);
+                });
+        }
+
         this.show = (opts) => {
             // Track game completion
             trackEvent('game_end', {
@@ -288,7 +350,7 @@
                 extraDetails: opts.title
             });
 
-            // opts: { won, score, maxScore, streak, extraText, shareText, backInTimeLinks }
+            // opts: { won, score, maxScore, streak, extraText, shareText, backInTimeLinks, playerName, targetName, targetType }
             const iconEl = document.getElementById(cfg.iconId || 'modal-icon');
             const titleEl = document.getElementById(cfg.titleId || 'modal-title');
             const msgEl = document.getElementById(cfg.messageId || 'modal-message');
@@ -307,6 +369,52 @@
             if (cfg.extraInfoId && opts.extraText) {
                 const el = document.getElementById(cfg.extraInfoId);
                 if (el) el.textContent = opts.extraText;
+            }
+
+            // Giphy GIF integration
+            let gifContainer = document.getElementById(cfg.gifContainerId || 'modal-gif-container');
+            let gifEl = document.getElementById(cfg.gifId || 'modal-gif');
+
+            if (!gifContainer && modal) {
+                const modalCard = modal.querySelector('.fa-modal-card') || modal.firstElementChild;
+                if (modalCard) {
+                    gifContainer = document.createElement('div');
+                    gifContainer.id = cfg.gifContainerId || 'modal-gif-container';
+                    gifContainer.className = 'w-full max-h-48 rounded-2xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center relative my-3 hidden';
+                    gifEl = document.createElement('img');
+                    gifEl.id = cfg.gifId || 'modal-gif';
+                    gifEl.className = 'w-full h-48 object-cover rounded-2xl';
+                    gifContainer.appendChild(gifEl);
+
+                    const msgElParent = msgEl?.parentElement || titleEl?.parentElement;
+                    if (msgElParent && msgElParent.nextSibling) {
+                        modalCard.insertBefore(gifContainer, msgElParent.nextSibling);
+                    } else {
+                        modalCard.appendChild(gifContainer);
+                    }
+                }
+            }
+
+            if (gifContainer && gifEl) {
+                gifContainer.classList.add('hidden');
+                gifEl.src = '';
+
+                const query = buildGiphyQuery(opts);
+
+                fetchGiphyGif(query, (gifUrl) => {
+                    if (gifUrl) {
+                        gifEl.src = gifUrl;
+                        gifContainer.classList.remove('hidden');
+                    } else if (opts.won && query !== 'soccer celebration') {
+                        // Fallback search if specific GIF not found
+                        fetchGiphyGif('soccer celebration', (fallbackUrl) => {
+                            if (fallbackUrl) {
+                                gifEl.src = fallbackUrl;
+                                gifContainer.classList.remove('hidden');
+                            }
+                        });
+                    }
+                });
             }
 
             // Back-in-time links

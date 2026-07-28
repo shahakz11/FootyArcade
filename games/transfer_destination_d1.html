@@ -243,6 +243,11 @@
                 <span id="modal-player-name" class="font-headline text-2xl text-accent uppercase italic tracking-wider block mt-1 neon-text-glow">...</span>
             </div>
 
+            <!-- Giphy GIF Element -->
+            <div id="modal-gif-container" class="w-full max-h-48 rounded-2xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center relative my-3 hidden">
+                <img id="modal-gif" class="w-full h-48 object-cover rounded-2xl" src="" alt="Giphy GIF" />
+            </div>
+
             <!-- Stats -->
             <div class="bg-black/30 border border-white/5 rounded-2xl p-4 flex justify-around">
                 <div>
@@ -11791,7 +11796,7 @@
         const GAME_NOTE = "Transfer data updated to July 2026. Only transfers worth €1M+ are included.";
         const PUZZLE_NUMBER    = 1;
         const IS_BACK_IN_TIME  = true;
-        const MAX_BACK_DAYS    = 7;
+        const MAX_BACK_DAYS    = 1;
     </script>
     
 <!-- Micro-interaction Script -->
@@ -11945,6 +11950,8 @@
             score: result.score,
             maxScore: activeGameData.transfers.length,
             streak: stats.streak,
+            targetName: activeGameData.player_name,
+            targetType: 'player',
             extraText: activeGameData.player_name,
             backInTimeLinks: bitLinks
         });
@@ -12194,6 +12201,8 @@
             score,
             maxScore:    activeGameData.transfers.length,
             streak:      stats.streak,
+            targetName:  activeGameData.player_name,
+            targetType:  'player',
             extraText:   activeGameData.player_name,
             backInTimeLinks: bitLinks
         });
