@@ -107,6 +107,8 @@
 /* ── Modal backdrop ───────────────────────────────────────── */
 #result-modal {
     animation: fa-modal-in 0.25s ease-out;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 #result-modal.hidden {
     display: none !important;
@@ -117,6 +119,20 @@
 }
 .fa-modal-card {
     animation: fa-modal-card-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-height: calc(100vh - 2.5rem);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+.fa-modal-card::-webkit-scrollbar {
+    width: 5px;
+}
+.fa-modal-card::-webkit-scrollbar-track {
+    background: transparent;
+}
+.fa-modal-card::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
 }
 @keyframes fa-modal-card-in {
     from { opacity: 0; transform: scale(0.9) translateY(20px); }

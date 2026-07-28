@@ -380,10 +380,10 @@
                 if (modalCard) {
                     gifContainer = document.createElement('div');
                     gifContainer.id = cfg.gifContainerId || 'modal-gif-container';
-                    gifContainer.className = 'w-full max-h-48 rounded-2xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center relative my-3 hidden';
+                    gifContainer.className = 'w-full max-h-36 sm:max-h-44 rounded-2xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center relative my-2 sm:my-3 hidden';
                     gifEl = document.createElement('img');
                     gifEl.id = cfg.gifId || 'modal-gif';
-                    gifEl.className = 'w-full h-48 object-cover rounded-2xl';
+                    gifEl.className = 'w-full h-36 sm:h-44 object-cover rounded-2xl';
                     gifContainer.appendChild(gifEl);
 
                     const msgElParent = msgEl?.parentElement || titleEl?.parentElement;
