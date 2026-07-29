@@ -197,7 +197,11 @@ def main():
             (df_transfers['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
         ].copy()
 
-        top_transfers = club_transfers.sort_values(by='transfer_fee', ascending=False).head(10)
+        # For each player, select only their highest transfer fee (unique player)
+        idx = club_transfers.groupby(['player_name'])['transfer_fee'].idxmax()
+        unique_player_transfers = club_transfers.loc[idx]
+
+        top_transfers = unique_player_transfers.sort_values(by='transfer_fee', ascending=False).head(10)
         
         # Add metadata columns
         top_transfers['game_day'] = day + 1

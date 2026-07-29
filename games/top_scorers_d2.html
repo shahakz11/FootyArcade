@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-    <title>Top Transfers — Daily Football Transfer Quiz | Playmaker</title>
-    <meta name="description" content="Guess the top 10 record signings for a club or nationality. A new daily football transfer trivia challenge with streak tracking and shareable results. Play free at Playmaker!"/>
-    <link rel="canonical" href="https://playmaker.best/games/top_transfers.html" />
+    <title>Top Scorers — Daily Goalscorer Trivia Quiz | Playmaker</title>
+    <meta name="description" content="Name the all-time top scorers for a club, league, or national team. A daily football scoring trivia challenge with 6 lives. Play free at Playmaker!"/>
+    <link rel="canonical" href="https://playmaker.best/games/top_scorers.html" />
     
     <!-- PWA Web Manifest & Favicons for Browsers & Google Search -->
     <link rel="manifest" href="../manifest.json"/>
@@ -17,13 +17,13 @@
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon.png"/>
     
     <!-- Social Share Preview (OpenGraph / Twitter) -->
-    <meta property="og:title" content="Top Transfers — Daily Football Transfer Quiz | Playmaker"/>
+    <meta property="og:title" content="Top Scorers — Daily Football Transfer Quiz | Playmaker"/>
     <meta property="og:description" content="Guess the top 10 record signings for a club or nationality. A new daily football transfer trivia challenge with streak tracking and shareable results. Play free at Playmaker!"/>
     <meta property="og:image" content="https://playmaker.best/assets/social_share.png"/>
     <meta property="og:type" content="website"/>
-    <meta property="og:url" content="https://playmaker.best/games/top_transfers.html"/>
+    <meta property="og:url" content="https://playmaker.best/games/top_scorers.html"/>
     <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Top Transfers — Daily Football Transfer Quiz | Playmaker"/>
+    <meta name="twitter:title" content="Top Scorers — Daily Football Transfer Quiz | Playmaker"/>
     <meta name="twitter:description" content="Guess the top 10 record signings for a club or nationality. A new daily football transfer trivia challenge with streak tracking and shareable results. Play free at Playmaker!"/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
@@ -50,8 +50,8 @@
                         "on-surface-variant":        "#a3a3a3",
                         error:                       "#ff4d4d",
                         /* ── Game-specific accent ── */
-                        accent:              "#00f0ff",
-                        "primary-container": "#00f0ff",
+                        accent:              "#f59e0b",
+                        "primary-container": "#f59e0b",
                         /* secondary accent for correct answers */
                         correct:             "#39ff14",
                     },
@@ -66,15 +66,15 @@
     </script>
     <style>
         /* Wire accent color for footy-ui.css shared components */
-        :root { --fa-accent-rgb: 0,240,255; --fa-accent-glow: rgba(0,240,255,0.2); }
+        :root { --fa-accent-rgb: 245,158,11; --fa-accent-glow: rgba(245,158,11,0.25); }
     </style>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "VideoGame",
-      "name": "Top Transfers — Daily Football Transfer Quiz",
+      "name": "Top Scorers — Daily Football Transfer Quiz",
       "description": "Guess the top 10 record signings for a club or nationality. A new daily football transfer trivia challenge with streak tracking and shareable results. Play free at Playmaker!",
-      "url": "https://playmaker.best/games/top_transfers.html",
+      "url": "https://playmaker.best/games/top_scorers.html",
       "image": "https://playmaker.best/assets/logo.png",
       "genre": ["Trivia", "Sports"],
       "gamePlatform": "Web",
@@ -110,7 +110,7 @@
         <!-- Game Intro -->
         <section class="text-center space-y-3">
             <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
-                <h1 class="font-headline text-2xl sm:text-3xl tracking-wider text-accent uppercase italic neon-text-glow">TOP TRANSFERS</h1>
+                <h1 class="font-headline text-2xl sm:text-3xl tracking-wider text-accent uppercase italic neon-text-glow">TOP SCORERS</h1>
                 <div class="flex items-center gap-1.5 sm:gap-2">
                     <a id="nav-back-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1 px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10" title="Play previous puzzle (back in time)">
                         <span class="material-symbols-outlined text-base">chevron_left</span>
@@ -123,9 +123,9 @@
                     </a>
                 </div>
             </div>
-            <h2 id="game-title" class="font-title text-base sm:text-lg font-bold uppercase tracking-widest text-on-surface-variant">Top Record Signings per Club & Nationality</h2>
+            <h2 id="game-title" class="font-title text-base sm:text-lg font-bold uppercase tracking-widest text-on-surface-variant">Top Scorers per League & Season</h2>
             <p class="text-on-surface-variant text-sm max-w-xl mx-auto">
-                Fill the transfers table below for the given club or nationality. Use the search bar to guess players. Only players from the search dropdown can be guessed. Use the hints (<span class="material-symbols-outlined text-xs inline-block align-middle text-accent">lightbulb</span>) or reveal individual players if you are stuck!
+                Fill the scorers table below for the given league and season. Use the search bar to guess players. Only players from the search dropdown can be guessed. Use the hints (<span class="material-symbols-outlined text-xs inline-block align-middle text-accent">lightbulb</span>) or reveal individual players if you are stuck!
             </p>
         </section>
 
@@ -140,7 +140,7 @@
         <!-- Target Info Panel -->
         <div class="text-center">
             <div class="space-y-1">
-                <span id="target-label" class="text-xs uppercase font-mono tracking-widest text-on-surface-variant">RECORD SIGNINGS FOR</span>
+                <span id="target-label" class="text-xs uppercase font-mono tracking-widest text-on-surface-variant">TOP 10 SCORERS IN</span>
                 <h3 id="target-name" class="font-headline text-4xl text-correct uppercase italic tracking-wide neon-text-glow">...</h3>
             </div>
         </div>
@@ -191,9 +191,10 @@
                         <tr class="border-b border-white/5 bg-white/[0.02] text-xs font-mono uppercase tracking-wider text-on-surface-variant">
                             <th class="py-3 px-2 w-10 text-center">#</th>
                             <th class="py-3 px-3">Player</th>
-                            <th id="th-club-header" class="py-3 px-3 hidden sm:table-cell">From Club</th>
-                            <th class="py-3 px-3 text-right">Fee</th>
-                            <th class="py-3 px-3 text-center hidden md:table-cell">Year</th>
+                            <th class="py-3 px-3 text-right">Goals</th>
+                            <th class="py-3 px-3 hidden sm:table-cell">Club</th>
+                            <th class="py-3 px-3 text-center hidden md:table-cell">Apps</th>
+                            <th class="py-3 px-3 hidden lg:table-cell">Nationality</th>
                             <th class="py-3 px-3 w-24 text-center">Actions</th>
                         </tr>
                     </thead>
@@ -283,7 +284,7 @@
 
 
     <script id="daily-game-data">
-        const DAILY_TRANSFER_GAME = {"mode": "club", "name": "Flamengo", "transfers": [{"player_name": "Lucas Paquetá", "from_club_name": "West Ham United", "transfer_fee": "42000000.0", "transfer_date": "2026-01-28"}, {"player_name": "Samuel Lino", "from_club_name": "Atletico Madrid", "transfer_fee": "22000000.0", "transfer_date": "2025-07-29"}, {"player_name": "Carlos Alcaraz", "from_club_name": "Southampton", "transfer_fee": "18000000.0", "transfer_date": "2024-08-28"}, {"player_name": "Gabriel Barbosa", "from_club_name": "Inter", "transfer_fee": "17500000.0", "transfer_date": "2020-01-31"}, {"player_name": "Everton", "from_club_name": "Benfica", "transfer_fee": "16500000.0", "transfer_date": "2022-07-18"}, {"player_name": "Gerson", "from_club_name": "Marseille", "transfer_fee": "15000000.0", "transfer_date": "2023-01-01"}, {"player_name": "Giorgian de Arrascaeta", "from_club_name": "Cruzeiro", "transfer_fee": "15000000.0", "transfer_date": "2019-01-12"}, {"player_name": "Nicolás de la Cruz", "from_club_name": "River Plate", "transfer_fee": "14500000.0", "transfer_date": "2024-01-01"}, {"player_name": "Pedro", "from_club_name": "Fiorentina", "transfer_fee": "14000000.0", "transfer_date": "2021-01-01"}, {"player_name": "Jorge Carrascal", "from_club_name": "Dynamo Moscow", "transfer_fee": "12500000.0", "transfer_date": "2025-08-02"}]};
+        const DAILY_SCORERS_GAME = {"name": "Premier League 2021/22", "scorers": [{"player_name": "Heung-min Son", "club_name": "Tottenham Hotspur", "goals": 23, "appearances": 35, "nationality": "Korea, South"}, {"player_name": "Mohamed Salah", "club_name": "Liverpool", "goals": 23, "appearances": 35, "nationality": "Egypt"}, {"player_name": "Cristiano Ronaldo", "club_name": "Manchester United", "goals": 18, "appearances": 30, "nationality": "Portugal"}, {"player_name": "Harry Kane", "club_name": "Tottenham Hotspur", "goals": 17, "appearances": 37, "nationality": "England"}, {"player_name": "Sadio Mané", "club_name": "Liverpool", "goals": 16, "appearances": 34, "nationality": "Senegal"}, {"player_name": "Diogo Jota", "club_name": "Liverpool", "goals": 15, "appearances": 35, "nationality": "Portugal"}, {"player_name": "Kevin De Bruyne", "club_name": "Manchester City", "goals": 15, "appearances": 30, "nationality": "Belgium"}, {"player_name": "Jamie Vardy", "club_name": "Leicester City", "goals": 15, "appearances": 25, "nationality": "England"}, {"player_name": "Wilfried Zaha", "club_name": "Crystal Palace", "goals": 14, "appearances": 33, "nationality": "Cote d'Ivoire"}, {"player_name": "Raheem Sterling", "club_name": "Manchester City", "goals": 13, "appearances": 30, "nationality": "England"}]};
         const ALL_PLAYERS = [
   {
     "Name": "Miroslav Klose",
@@ -235836,23 +235837,23 @@
     "Position": "Midfield"
   }
 ];
-        const GAME_NOTE = "Transfer data updated to July 2026. Does not include loan moves.";
-        const PUZZLE_NUMBER    = 3;
-        const IS_BACK_IN_TIME  = false;
+        const GAME_NOTE = "Goals data updated to July 2026.";
+        const PUZZLE_NUMBER    = 1;
+        const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>
     
 <!-- Micro-interaction Script -->
 <script>
     // ── Game constants ────────────────────────────────────────
-    const GAME_ID      = 'top_transfers';
-    const ACCENT_HEX   = '#00f0ff';
-    const INITIAL_LIVES = 5;
+    const GAME_ID      = 'top_scorers';
+    const ACCENT_HEX   = '#f59e0b';
+    const INITIAL_LIVES = 6;
 
     // ── Injected data (replaced by fetch_daily.py) ────────────
-    const activeGameData  = typeof DAILY_TRANSFER_GAME !== 'undefined'
-        ? DAILY_TRANSFER_GAME
-        : { mode: "club", name: "Juventus", transfers: [] };
+    const activeGameData  = typeof DAILY_SCORERS_GAME !== 'undefined'
+        ? DAILY_SCORERS_GAME
+        : { name: "Real Madrid", scorers: [] };
     const activeAllPlayers = typeof ALL_PLAYERS !== 'undefined' ? ALL_PLAYERS : [];
     const puzzleNum        = typeof PUZZLE_NUMBER !== 'undefined' ? PUZZLE_NUMBER : 0;
     const isBackInTime     = typeof IS_BACK_IN_TIME !== 'undefined' ? IS_BACK_IN_TIME : false;
@@ -235876,11 +235877,11 @@
         // Build guaranteed player pool
         allPlayersPool = [...activeAllPlayers];
         const addedNames = new Set(allPlayersPool.map(p => p.Name.toLowerCase()));
-        activeGameData.transfers.forEach(tr => {
+        activeGameData.scorers.forEach(tr => {
             const nl = tr.player_name.toLowerCase();
             if (!addedNames.has(nl)) {
                 addedNames.add(nl);
-                allPlayersPool.push({ Name: tr.player_name, Nationality: '', Position: 'Player', Age: 0 });
+                allPlayersPool.push({ Name: tr.player_name, Nationality: tr.nationality || '', Position: 'Player', Age: 0 });
             }
         });
 
@@ -235961,13 +235962,13 @@
         document.getElementById('score-counter').textContent = score;
 
         // Reveal all rows
-        activeGameData.transfers.forEach((tr, i) => {
+        activeGameData.scorers.forEach((scorer, i) => {
             revealHint(i);
             const row    = document.getElementById(`row-${i}`);
             const textEl = row?.querySelector('.player-name');
             const rEl    = row?.querySelector('.redacted-box');
             if (textEl) {
-                textEl.textContent = tr.player_name;
+                textEl.textContent = scorer.player_name;
                 textEl.classList.remove('hidden');
             }
             if (rEl) rEl.classList.add('hidden');
@@ -235988,12 +235989,13 @@
             title: result.won ? 'COMPLETED' : 'GAME OVER',
             message: result.won
                 ? 'You have already completed this puzzle.'
-                : `You already played this puzzle. Final score: ${result.score} / ${activeGameData.transfers.length}.`,
+                : `You already played this puzzle. Final score: ${result.score} / ${activeGameData.scorers.length}.`,
             score: result.score,
-            maxScore: activeGameData.transfers.length,
+            maxScore: activeGameData.scorers.length,
             streak: stats.streak,
             targetName: activeGameData.name,
-            targetType: activeGameData.mode,
+            targetType: activeGameData.mode || 'auto',
+            playerName: activeGameData.scorers && activeGameData.scorers[0] ? activeGameData.scorers[0].player_name : '',
             backInTimeLinks: bitLinks
         });
 
@@ -236005,17 +236007,7 @@
             ? `PUZZLE #${puzzleNum} — PAST`
             : `PUZZLE #${puzzleNum}`;
         document.getElementById('target-name').textContent     = activeGameData.name;
-        document.getElementById('total-rows-counter').textContent = activeGameData.transfers.length;
-
-        if (activeGameData.mode === 'club') {
-            document.getElementById('game-title').textContent    = 'Club Record Signings';
-            document.getElementById('target-label').textContent  = 'RECORD SIGNINGS FOR';
-            document.getElementById('th-club-header').textContent = 'From Club';
-        } else {
-            document.getElementById('game-title').textContent    = 'Nationality Transfer Records';
-            document.getElementById('target-label').textContent  = 'MOST EXPENSIVE TRANSFERS FOR';
-            document.getElementById('th-club-header').textContent = 'To Club';
-        }
+        document.getElementById('total-rows-counter').textContent = activeGameData.scorers.length;
 
         // Show game note if available
         if (gameNote) {
@@ -236057,29 +236049,31 @@
         const tbody = document.getElementById('table-body');
         tbody.innerHTML = '';
 
-        activeGameData.transfers.forEach((tr, i) => {
-            const hintValue = activeGameData.mode === 'club' ? tr.from_club_name : tr.to_club_name;
+        activeGameData.scorers.forEach((scorer, i) => {
             const row = document.createElement('tr');
             row.id = `row-${i}`;
             row.className = 'hover:bg-white/[0.01] transition-colors h-14';
             row.innerHTML = `
                 <td class="py-3 px-2 font-mono text-xs font-bold text-center text-on-surface-variant">${i + 1}</td>
                 <td class="py-3 px-3 font-bold text-white relative">
-                    <span class="player-name hidden">${tr.player_name}</span>
+                    <span class="player-name hidden">${scorer.player_name}</span>
                     <div class="redacted-box w-28 sm:w-32 h-5 rounded-md shimmer"></div>
                     <div class="sm:hidden text-[10px] font-normal text-on-surface-variant mt-1 space-x-2">
-                        <span class="hint-cell hint-blur" id="hint-club-mob-${i}">${hintValue}</span>
-                        <span class="hint-cell hint-blur" id="hint-date-mob-${i}">(${tr.transfer_date.split('-')[0]})</span>
+                        <span class="hint-cell hint-blur" id="hint-club-mob-${i}">${scorer.club_name || ''}</span>
+                        <span class="hint-cell hint-blur" id="hint-goals-mob-${i}">(${scorer.goals} goals)</span>
                     </div>
                 </td>
-                <td class="py-3 px-3 text-sm text-on-surface-variant hidden sm:table-cell">
-                    <span class="hint-cell hint-blur" id="hint-club-${i}">${hintValue}</span>
-                </td>
                 <td class="py-3 px-3 text-right font-mono font-bold text-accent">
-                    <span class="hint-cell hint-blur" id="hint-fee-${i}">${FootyUI.formatFee(tr.transfer_fee)}</span>
+                    <span class="hint-cell hint-blur" id="hint-goals-${i}">${scorer.goals}</span>
+                </td>
+                <td class="py-3 px-3 text-sm text-on-surface-variant hidden sm:table-cell">
+                    <span class="hint-cell hint-blur" id="hint-club-${i}">${scorer.club_name || ''}</span>
                 </td>
                 <td class="py-3 px-3 text-center font-mono text-xs text-on-surface-variant hidden md:table-cell">
-                    <span class="hint-cell hint-blur" id="hint-date-${i}">${tr.transfer_date.split('-')[0]}</span>
+                    <span class="hint-cell hint-blur" id="hint-apps-${i}">${scorer.appearances}</span>
+                </td>
+                <td class="py-3 px-3 text-sm text-on-surface-variant hidden lg:table-cell">
+                    <span class="hint-cell hint-blur" id="hint-nat-${i}">${scorer.nationality}</span>
                 </td>
                 <td class="py-3 px-3 text-center">
                     <div class="flex items-center justify-center gap-2">
@@ -236097,11 +236091,12 @@
     }
 
     function revealHint(index) {
+        document.getElementById(`hint-goals-${index}`)?.classList.add('hint-revealed');
+        document.getElementById(`hint-goals-mob-${index}`)?.classList.add('hint-revealed');
         document.getElementById(`hint-club-${index}`)?.classList.add('hint-revealed');
         document.getElementById(`hint-club-mob-${index}`)?.classList.add('hint-revealed');
-        document.getElementById(`hint-fee-${index}`)?.classList.add('hint-revealed');
-        document.getElementById(`hint-date-${index}`)?.classList.add('hint-revealed');
-        document.getElementById(`hint-date-mob-${index}`)?.classList.add('hint-revealed');
+        document.getElementById(`hint-apps-${index}`)?.classList.add('hint-revealed');
+        document.getElementById(`hint-nat-${index}`)?.classList.add('hint-revealed');
         const btn = document.getElementById(`hint-btn-${index}`);
         if (btn) {
             btn.disabled = true;
@@ -236111,8 +236106,8 @@
 
     function revealPlayerRow(index) {
         if (gameOver) return;
-        const tr = activeGameData.transfers[index];
-        if (guessedPlayers.has(tr.player_name)) return;
+        const scorer = activeGameData.scorers[index];
+        if (guessedPlayers.has(scorer.player_name)) return;
         
         FootyUI.confirm({
             title: 'REVEAL PLAYER?',
@@ -236120,8 +236115,8 @@
             confirmText: 'REVEAL',
             cancelText: 'CANCEL',
             onConfirm: () => {
-                guessedPlayers.add(tr.player_name);
-                revealRow(index, tr.player_name, true);
+                guessedPlayers.add(scorer.player_name);
+                revealRow(index, scorer.player_name, true);
                 checkWinLoss();
             }
         });
@@ -236146,10 +236141,10 @@
 
         let found = false;
         const normMatchedName = FootyUI.normalizeStr(matched.Name);
-        activeGameData.transfers.forEach((tr, idx) => {
-            if (FootyUI.normalizeStr(tr.player_name) === normMatchedName && !guessedPlayers.has(tr.player_name)) {
-                guessedPlayers.add(tr.player_name);
-                revealRow(idx, tr.player_name, false);
+        activeGameData.scorers.forEach((scorer, idx) => {
+            if (FootyUI.normalizeStr(scorer.player_name) === normMatchedName && !guessedPlayers.has(scorer.player_name)) {
+                guessedPlayers.add(scorer.player_name);
+                revealRow(idx, scorer.player_name, false);
                 score++;
                 found = true;
             }
@@ -236198,7 +236193,7 @@
     }
 
     function checkWinLoss() {
-        const total = activeGameData.transfers.length;
+        const total = activeGameData.scorers.length;
         if (livesCtrl.isDead()) { endGame(false); return; }
         if (guessedPlayers.size >= total) endGame(score >= total);
     }
@@ -236207,13 +236202,13 @@
         gameOver = true;
 
         // Reveal all remaining
-        activeGameData.transfers.forEach((tr, i) => {
+        activeGameData.scorers.forEach((scorer, i) => {
             revealHint(i);
-            if (!guessedPlayers.has(tr.player_name)) {
+            if (!guessedPlayers.has(scorer.player_name)) {
                 const row    = document.getElementById(`row-${i}`);
                 const textEl = row?.querySelector('.player-name');
                 const rEl    = row?.querySelector('.redacted-box');
-                if (textEl) { textEl.textContent = tr.player_name; textEl.classList.remove('hidden'); textEl.classList.add('text-error/80'); }
+                if (textEl) { textEl.textContent = scorer.player_name; textEl.classList.remove('hidden'); textEl.classList.add('text-error/80'); }
                 if (rEl)    rEl.classList.add('hidden');
                 row?.classList.add('bg-error/5');
             }
@@ -236223,7 +236218,7 @@
 
         document.getElementById('fa-guess-panel').style.display = 'none';
 
-        const stats = storage.recordResult(puzzleNum, won, score, activeGameData.transfers.length, isBackInTime);
+        const stats = storage.recordResult(puzzleNum, won, score, activeGameData.scorers.length, isBackInTime);
 
         document.getElementById('modal-best').textContent = stats.bestStreak;
 
@@ -236233,13 +236228,14 @@
             won,
             title:   won ? 'MASTERMIND' : 'GAME OVER',
             message: won
-                ? 'Incredible! You solved the transfer grid flawlessly.'
-                : `You found ${score} out of ${activeGameData.transfers.length} record transfers.`,
+                ? 'Incredible! You solved the scorers grid flawlessly.'
+                : `You found ${score} out of ${activeGameData.scorers.length} top scorers.`,
             score,
-            maxScore: activeGameData.transfers.length,
+            maxScore: activeGameData.scorers.length,
             streak:   stats.streak,
             targetName: activeGameData.name,
-            targetType: activeGameData.mode,
+            targetType: activeGameData.mode || 'auto',
+            playerName: activeGameData.scorers && activeGameData.scorers[0] ? activeGameData.scorers[0].player_name : '',
             backInTimeLinks: bitLinks
         });
 
@@ -236248,13 +236244,13 @@
 
     function doShare() {
         FootyUI.share({
-            gameName:     'Top Transfers',
+            gameName:     'Top Scorers',
             puzzleNum,
             score,
-            maxScore:     activeGameData.transfers.length,
+            maxScore:     activeGameData.scorers.length,
             lives:        livesCtrl.get(),
             initialLives: INITIAL_LIVES,
-            won:          score >= activeGameData.transfers.length,
+            won:          score >= activeGameData.scorers.length,
             url:          window.location.href
         });
     }
@@ -236263,24 +236259,24 @@
 <section class="max-w-4xl mx-auto px-6 mt-12 space-y-8 pb-8">
     <div class="glass-card rounded-2xl p-6 space-y-3">
         <h2 class="font-headline text-xl uppercase italic text-accent">HOW TO PLAY</h2>
-        <p class="font-body text-on-surface-variant text-sm leading-relaxed">Guess the top 10 record signings for a specific club and nationality before your 5 lives run out. Each correct guess reveals the player's name and transfer fee. Use free hints to reveal partial information. Play daily to build your streak and share Wordle-style results.</p>
+        <p class="font-body text-on-surface-variant text-sm leading-relaxed">Guess the all-time top scorers for a club, league, or national team before your 6 lives run out. Each correct guess reveals the player and their goal tally. Complete the full list to win. Play daily to build your streak.</p>
         <p class="font-body text-on-surface-variant/60 text-xs">Transfer data sourced from Transfermarkt. Updated to July 2026.</p>
     </div>
     <div class="space-y-3">
         <h3 class="font-title text-xs font-bold uppercase tracking-widest text-on-surface-variant">MORE DAILY CHALLENGES</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <a href="top_transfers.html" class="glass-card rounded-xl p-4 flex items-center gap-3 group">
+                <span class="material-symbols-outlined text-2xl" style="color:#00f0ff">payments</span>
+                <div>
+                    <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#00f0ff">Top Transfers</span>
+                    <p class="text-on-surface-variant text-xs">Guess the record signings</p>
+                </div>
+            </a>
             <a href="transfer_destination.html" class="glass-card rounded-xl p-4 flex items-center gap-3 group">
                 <span class="material-symbols-outlined text-2xl" style="color:#39ff14">alt_route</span>
                 <div>
                     <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#39ff14">Transfer Destination</span>
                     <p class="text-on-surface-variant text-xs">Guess a player's career path</p>
-                </div>
-            </a>
-            <a href="top_scorers.html" class="glass-card rounded-xl p-4 flex items-center gap-3 group">
-                <span class="material-symbols-outlined text-2xl" style="color:#f59e0b">sports_soccer</span>
-                <div>
-                    <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#f59e0b">Top Scorers</span>
-                    <p class="text-on-surface-variant text-xs">Name the top goalscorers</p>
                 </div>
             </a>
         </div>
