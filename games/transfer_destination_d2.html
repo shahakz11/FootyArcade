@@ -147,20 +147,21 @@
             </div>
         </div>
 
-        <!-- Player Identity Card (always revealed) -->
-        <section class="bg-surface border border-white/5 rounded-2xl p-5 relative overflow-hidden shadow-2xl flex items-center justify-between gap-4">
-            <div class="absolute -top-10 -left-10 w-32 h-32 bg-accent/5 rounded-full blur-2xl pointer-events-none"></div>
-            <div class="space-y-2 z-10 flex-grow">
-                <div class="flex items-center gap-2">
-                    <span id="player-position-badge" class="font-mono text-[10px] bg-white/5 border border-white/10 text-on-surface-variant px-2.5 py-1 rounded">...</span>
-                    <span id="player-nat-badge"      class="font-mono text-[10px] bg-white/5 border border-white/10 text-on-surface-variant px-2.5 py-1 rounded">...</span>
+        <!-- Player Identity Panel (Centered & Prominent) -->
+        <div class="text-center space-y-2 bg-surface/60 border border-accent/25 rounded-2xl p-6 relative overflow-hidden shadow-2xl">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="relative z-10 flex flex-col items-center gap-2">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent font-mono text-xs uppercase font-bold tracking-widest shadow-lg">
+                    <span class="material-symbols-outlined text-sm">star</span>
+                    <span>Player of the Day</span>
                 </div>
-                <div>
-                    <span class="text-[9px] uppercase font-mono tracking-widest text-on-surface-variant block">PLAYER OF THE DAY</span>
-                    <h3 id="player-name-display" class="font-headline text-2xl md:text-3xl text-accent uppercase italic tracking-wide neon-text-glow">Loading...</h3>
+                <h3 id="player-name-display" class="font-headline text-4xl sm:text-5xl text-accent uppercase italic tracking-wide neon-text-glow py-1">Loading...</h3>
+                <div class="flex items-center justify-center gap-2 pt-1">
+                    <span id="player-position-badge" class="font-mono text-xs bg-white/5 border border-white/10 text-on-surface-variant px-3 py-1 rounded-lg">...</span>
+                    <span id="player-nat-badge"      class="font-mono text-xs bg-white/5 border border-white/10 text-on-surface-variant px-3 py-1 rounded-lg">...</span>
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- Lives Bar -->
         <section id="fa-lives-bar">
@@ -294,7 +295,7 @@
 
 
     <script id="daily-game-data">
-        const DAILY_DESTINATION_GAME = {"player_name": "Mohamed Simakan", "nationality": "France", "position": "Defender", "transfers": [{"transfer_date": "2017-07-01", "from_club_name": "Air Bel", "to_club_name": "Strasbourg", "transfer_fee": 0.0, "market_value_in_eur": 0.0}, {"transfer_date": "2021-07-01", "from_club_name": "R. Strasbourg", "to_club_name": "RB Leipzig", "transfer_fee": 15000000.0, "market_value_in_eur": 18000000.0}, {"transfer_date": "2024-09-02", "from_club_name": "RB Leipzig", "to_club_name": "Al-Nassr", "transfer_fee": 0.0, "market_value_in_eur": 35000000.0}, {"transfer_date": "2025-06-30", "from_club_name": "Al-Nassr", "to_club_name": "RB Leipzig", "transfer_fee": 0.0, "market_value_in_eur": 23000000.0}, {"transfer_date": "2025-07-01", "from_club_name": "RB Leipzig", "to_club_name": "Al-Nassr", "transfer_fee": 35000000.0, "market_value_in_eur": 23000000.0}]};
+        const DAILY_DESTINATION_GAME = {"player_name": "Christian Pulisic", "nationality": "United States", "position": "Attack", "transfers": [{"transfer_date": "2019-01-02", "from_club_name": "Borussia Dortmund", "to_club_name": "Chelsea", "transfer_fee": 64000000.0, "market_value_in_eur": 50000000.0}, {"transfer_date": "2019-01-03", "from_club_name": "Chelsea", "to_club_name": "Borussia Dortmund", "transfer_fee": 0.0, "market_value_in_eur": 50000000.0}, {"transfer_date": "2019-06-30", "from_club_name": "Borussia Dortmund", "to_club_name": "Chelsea", "transfer_fee": 0.0, "market_value_in_eur": 60000000.0}, {"transfer_date": "2023-07-13", "from_club_name": "Chelsea", "to_club_name": "AC Milan", "transfer_fee": 20800000.0, "market_value_in_eur": 25000000.0}]};
         const ALL_CLUBS = [
   "011",
   "07 Vestur",
@@ -11801,7 +11802,7 @@
   "Футбольный клуб \"Локомотив\" Москва"
 ];
         const GAME_NOTE = "Transfer data updated to July 2026. Only transfers worth €1M+ are included.";
-        const PUZZLE_NUMBER    = 1;
+        const PUZZLE_NUMBER    = 2;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>

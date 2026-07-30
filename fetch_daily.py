@@ -60,6 +60,7 @@ def load_top_transfers(puzzle_num):
                     game_data["transfers"].append({
                         "player_name":    r.get("player_name", ""),
                         "from_club_name": r.get("from_club_name", ""),
+                        "to_club_name":   r.get("to_club_name", ""),
                         "transfer_fee":   r.get("transfer_fee", "0"),
                         "transfer_date":  r.get("transfer_date", ""),
                     })
@@ -74,10 +75,11 @@ def load_top_transfers(puzzle_num):
                     if not game_data["name"]:
                         game_data["name"] = r.get("selected_nationality", "")
                     game_data["transfers"].append({
-                        "player_name":  r.get("player_name", ""),
-                        "to_club_name": r.get("to_club_name", ""),
-                        "transfer_fee": r.get("transfer_fee", "0"),
-                        "transfer_date": r.get("transfer_date", ""),
+                        "player_name":    r.get("player_name", ""),
+                        "from_club_name": r.get("from_club_name", ""),
+                        "to_club_name":   r.get("to_club_name", ""),
+                        "transfer_fee":   r.get("transfer_fee", "0"),
+                        "transfer_date":  r.get("transfer_date", ""),
                     })
 
     if not game_data["name"]:

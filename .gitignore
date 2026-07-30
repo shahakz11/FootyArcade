@@ -16,7 +16,13 @@ Thumbs.db
 .env
 config.json
 
-# Scratch files / templates
-test_sheet.csv
-test_players.csv
-stats_template.html
+# Media generator outputs & frame captures
+*.mp4
+*.png
+output_*
+corrected_ui_frame_*
+real_guesses_frame_*
+unblurred_frame_*
+wrong_guess_frame_*
+correct_guesses_frame_*
+
