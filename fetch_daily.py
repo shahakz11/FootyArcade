@@ -181,18 +181,61 @@ def load_top_scorers(puzzle_num):
     return game_data, extra
 
 
+def load_club_connect(puzzle_num):
+    """Returns (game_data_dict, extra_data_dict) for the club_connect game."""
+    csv_path = "daily_transfer_games.csv"
+    if not os.path.exists(csv_path):
+        print(f"  ERROR: {csv_path} not found.")
+        return None, None
+
+    all_rows = []
+    answer_clubs = set()
+    with open(csv_path, "r", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            answer_clubs.add(r.get("selected_club", ""))
+            if int(r.get("game_day", 1)) == puzzle_num:
+                all_rows.append(r)
+
+    if not all_rows:
+        print(f"  WARNING: No club_connect data for puzzle #{puzzle_num}")
+        return None, None
+
+    # Sort ascending by fee → cheapest (most obscure) signing revealed first
+    all_rows.sort(key=lambda r: float(r.get("transfer_fee", 0) or 0))
+
+    club = all_rows[0].get("selected_club", "")
+    players = [{
+        "player_name":    r.get("player_name", ""),
+        "from_club_name": r.get("from_club_name", ""),
+        "transfer_fee":   float(r.get("transfer_fee", 0) or 0),
+        "transfer_date":  r.get("transfer_date", ""),
+    } for r in all_rows[:5]]
+
+    game_data = {"club": club, "players": players}
+
+    # Scope autocomplete to only clubs that appear as answers (≈180 clubs)
+    sorted_clubs = sorted(answer_clubs - {""})
+    import json as _json
+    extra = {
+        "ANSWER_CLUBS": _json.dumps(sorted_clubs, ensure_ascii=False),
+    }
+    return game_data, extra
+
+
 # Map game id → loader function
 GAME_LOADERS = {
-    "top_transfers":       load_top_transfers,
+    "top_transfers":        load_top_transfers,
     "transfer_destination": load_transfer_destination,
-    "top_scorers":         load_top_scorers,
+    "top_scorers":          load_top_scorers,
+    "club_connect":         load_club_connect,
 }
 
 # Map game id → the JS variable name for the main data object
 GAME_DATA_VAR = {
-    "top_transfers":       "DAILY_TRANSFER_GAME",
+    "top_transfers":        "DAILY_TRANSFER_GAME",
     "transfer_destination": "DAILY_DESTINATION_GAME",
-    "top_scorers":         "DAILY_SCORERS_GAME",
+    "top_scorers":          "DAILY_SCORERS_GAME",
+    "club_connect":         "DAILY_CLUBCONNECT_GAME",
 }
 
 # Patterns to strip from a template before injecting fresh data
@@ -216,6 +259,14 @@ STRIP_PATTERNS = {
     "top_scorers": [
         r'const\s+DAILY_SCORERS_GAME\s*=\s*\{[\s\S]*?\};',
         r'const\s+ALL_PLAYERS\s*=\s*\[[\s\S]*?\];',
+        r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
+        r'const\s+IS_BACK_IN_TIME\s*=\s*(true|false);',
+        r'const\s+MAX_BACK_DAYS\s*=\s*\d+;',
+        r'const\s+GAME_NOTE\s*=\s*"[^"]*";',
+    ],
+    "club_connect": [
+        r'const\s+DAILY_CLUBCONNECT_GAME\s*=\s*\{[\s\S]*?\};',
+        r'const\s+ANSWER_CLUBS\s*=\s*\[[\s\S]*?\];',
         r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
         r'const\s+IS_BACK_IN_TIME\s*=\s*(true|false);',
         r'const\s+MAX_BACK_DAYS\s*=\s*\d+;',
@@ -330,11 +381,11 @@ def main():
             print(f"ERROR: Game id '{args.game}' not found in {GAMES_JSON}.")
             return
 
-    # Base launch date: 2026-07-27 is Day 1 (Puzzle #1)
-    LAUNCH_DATE = datetime(2026, 7, 27)
+    # Base default launch date: 2026-07-27 is Day 1 (Puzzle #1)
+    DEFAULT_LAUNCH_DATE = datetime(2026, 7, 27)
 
     # Determine base puzzle number for today (offset=0)
-    def puzzle_for_offset(off):
+    def puzzle_for_offset(off, launch_date_str=""):
         if args.random:
             return rand_mod.randint(1, TOTAL_DAYS)
         if args.puzzle > 0:
@@ -342,8 +393,10 @@ def main():
             if p < 1:
                 return None
             return p
+        
+        launch_dt = datetime.strptime(launch_date_str, "%Y-%m-%d") if launch_date_str else DEFAULT_LAUNCH_DATE
         target_date = datetime.today() + timedelta(days=args.offset - off)
-        days_diff = (target_date.date() - LAUNCH_DATE.date()).days
+        days_diff = (target_date.date() - launch_dt.date()).days
         if days_diff < 0:
             return None
         return (days_diff % TOTAL_DAYS) + 1
@@ -364,13 +417,14 @@ def main():
         print(f"── {game_cfg['name']} ({gid}) ──")
 
         # Today (offset 0)
-        pnum_today = puzzle_for_offset(0)
+        g_launch = game_cfg.get("launchDate", "")
+        pnum_today = puzzle_for_offset(0, g_launch)
         if pnum_today is not None:
             compile_game(game_cfg, pnum_today, day_offset=0, max_back_days=max_back)
 
         # Back-in-time files
         for d in range(1, max_back + 1):
-            pnum_past = puzzle_for_offset(d)
+            pnum_past = puzzle_for_offset(d, g_launch)
             if pnum_past is None:
                 out_name = f"{gid}_d{d}.html"
                 out_path = os.path.join(OUTPUT_DIR, out_name)

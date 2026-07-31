@@ -42,6 +42,21 @@
     "note": "Goals data updated to July 2026."
   },
   {
+    "id": "club_connect",
+    "name": "Club Connect",
+    "description": "5 players. 1 club signed them all. Guess the club before all players are revealed.",
+    "link": "games/club_connect.html",
+    "icon": "hub",
+    "accentHex": "#e879f9",
+    "initialLives": 3,
+    "maxBackDays": 7,
+    "launchDate": "2026-07-31",
+    "templateFile": "club_connect_template.html",
+    "dataVariable": "DAILY_CLUBCONNECT_GAME",
+    "storageKey": "footy_v2_club_connect",
+    "note": "Transfer data updated to July 2026. Players ordered from least to most expensive signing."
+  },
+  {
     "id": "this_and_that",
     "name": "This & That",
     "description": "Name all players who match BOTH statements — e.g. played for Barcelona AND Argentina, or scored 50+ PL & La Liga goals.",
