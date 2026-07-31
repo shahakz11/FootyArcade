@@ -1,16 +1,14 @@
 /**
- * Google Apps Script Web App Template for Playmaker
+ * Google Apps Script Web App for FootyArcade / Playmaker
  * 
  * Instructions:
- * 1. Open Google Sheets (create a new or open an existing spreadsheet).
+ * 1. Open your Google Sheet.
  * 2. Click "Extensions" -> "Apps Script".
- * 3. Delete any code in the editor and paste this code.
- * 4. Click "Deploy" -> "New deployment".
- * 5. Under "Select type", choose "Web app".
- * 6. Set "Execute as" to "Me".
- * 7. Set "Who has access" to "Anyone" (crucial for public POST requests).
- * 8. Click "Deploy", authorize the permissions, and copy the "Web app URL".
- * 9. Paste the URL into footy-ui.js under FEEDBACK_WEBHOOK_URL.
+ * 3. Replace all code in the Apps Script editor with this code.
+ * 4. Click "Deploy" -> "New deployment" (or "Manage deployments" -> edit -> new version).
+ * 5. Set "Execute as" to "Me".
+ * 6. Set "Who has access" to "Anyone".
+ * 7. Click "Deploy".
  */
 
 function doPost(e) {
@@ -27,10 +25,20 @@ function doPost(e) {
     if (!sheet) {
       sheet = doc.insertSheet(sheetName);
       if (type === 'feedback') {
-        sheet.appendRow(['Timestamp', 'Category', 'Message', 'Email', 'URL']);
+        sheet.appendRow([
+          'Timestamp', 
+          'Visitor ID', 
+          'Session ID', 
+          'Category', 
+          'Message', 
+          'Email', 
+          'URL'
+        ]);
       } else {
         sheet.appendRow([
           'Timestamp', 
+          'Visitor ID',
+          'Session ID',
           'Event Name', 
           'Game ID', 
           'Puzzle Number', 
@@ -55,56 +63,40 @@ function doPost(e) {
     if (type === 'feedback') {
       sheet.appendRow([
         timestamp,
+        payload.visitorId || '',
+        payload.sessionId || '',
         payload.category || '',
         payload.message || '',
-    const data = JSON.parse(e.postData.contents);
-    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-    
-    // Route by action/type
-    if (data.type === "analytics") {
-      logAnalytics(ss, data);
-    } else if (data.type === "feedback") {
-      logFeedback(ss, data);
+        payload.email || '',
+        payload.url || ''
+      ]);
+    } else {
+      sheet.appendRow([
+        timestamp,
+        payload.visitorId || '',
+        payload.sessionId || '',
+        payload.eventName || '',
+        payload.gameId || '',
+        payload.puzzleNum || 0,
+        payload.score !== undefined ? payload.score : '',
+        payload.maxScore !== undefined ? payload.maxScore : '',
+        payload.lives !== undefined ? payload.lives : '',
+        payload.won !== undefined ? payload.won : '',
+        payload.isBackInTime !== undefined ? payload.isBackInTime : '',
+        payload.extraDetails || '',
+        payload.url || ''
+      ]);
     }
     
-    return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
+    return ContentService.createTextOutput(JSON.stringify({ status: 'success' }))
       .setMimeType(ContentService.MimeType.JSON);
+      
   } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
+    return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
       .setMimeType(ContentService.MimeType.JSON);
   }
-}
-
-function logAnalytics(ss, data) {
-  let sheet = ss.getSheetByName("Analytics");
-  if (!sheet) {
-    sheet = ss.insertSheet("Analytics");
-    sheet.appendRow(["Timestamp", "Game ID", "Game Name", "Result", "Guesses Used", "User Agent"]);
-  }
-  sheet.appendRow([
-    new Date(),
-    data.gameId || "",
-    data.gameName || "",
-    data.result || "",
-    data.guessesUsed || "",
-    data.userAgent || ""
-  ]);
-}
-
-function logFeedback(ss, data) {
-  let sheet = ss.getSheetByName("Feedback");
-  if (!sheet) {
-    sheet = ss.insertSheet("Feedback");
-    sheet.appendRow(["Timestamp", "Category", "Message", "User Agent"]);
-  }
-  sheet.appendRow([
-    new Date(),
-    data.category || "General",
-    data.message || "",
-    data.userAgent || ""
-  ]);
 }
 
 function doGet(e) {
-  return HtmlService.createHtmlOutput("<h3>Playmaker Analytics Webhook is active!</h3><p>Send a POST request with event or feedback data.</p>");
+  return HtmlService.createHtmlOutput("<h3>FootyArcade Analytics Webhook is active!</h3><p>Send a POST request with event or feedback data.</p>");
 }

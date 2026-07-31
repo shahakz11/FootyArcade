@@ -902,6 +902,25 @@
         });
     }
 
+    // ── Visitor & Session Identification ─────────────────────
+    function getVisitorId() {
+        let vid = localStorage.getItem('footy_visitor_id');
+        if (!vid) {
+            vid = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'v_' + Math.random().toString(36).substring(2, 11) + Date.now().toString(36);
+            try { localStorage.setItem('footy_visitor_id', vid); } catch (_) {}
+        }
+        return vid;
+    }
+
+    function getSessionId() {
+        let sid = sessionStorage.getItem('footy_session_id');
+        if (!sid) {
+            sid = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 's_' + Math.random().toString(36).substring(2, 11) + Date.now().toString(36);
+            try { sessionStorage.setItem('footy_session_id', sid); } catch (_) {}
+        }
+        return sid;
+    }
+
     // ── Feedback System ──────────────────────────────────────
     const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxEG3jA0QduSlh3ZmMR-98lTK1i4AbO-FgmFpymlJTof_8DZpZdmODSto0Q4NTyX7_7OA/exec';
 
@@ -933,6 +952,8 @@
         const payload = {
             type: 'event',
             eventName: eventName,
+            visitorId: getVisitorId(),
+            sessionId: getSessionId(),
             gameId: params.gameId || meta.gameId,
             puzzleNum: params.puzzleNum !== undefined ? params.puzzleNum : meta.puzzleNum,
             score: params.score,
@@ -1048,6 +1069,8 @@
                 category,
                 message,
                 email,
+                visitorId: getVisitorId(),
+                sessionId: getSessionId(),
                 url: window.location.href,
                 timestamp: new Date().toISOString()
             };
@@ -1129,6 +1152,8 @@
         confirm: confirmModal,
         showFeedback,
         trackEvent,
+        getVisitorId,
+        getSessionId,
         normalizeStr,
     };
 
