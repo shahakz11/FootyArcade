@@ -82,7 +82,7 @@ game_day,selected_target,player_name,club_name,goals,appearances,nationality
 9,Serie A 2017/18,Ciro Immobile,Società Sportiva Lazio S.p.A,29,33,Italy
 9,Serie A 2017/18,Mauro Icardi,Football Internazionale Milano S.p.A,29,34,Argentina
 9,Serie A 2017/18,Paulo Dybala,Juventus,22,33,Argentina
-9,Serie A 2017/18,Fabio Quagliarella,UC Sampdoria,19,35,
+9,Serie A 2017/18,Fabio Quagliarella,UC Sampdoria,19,35,Italy
 9,Serie A 2017/18,Dries Mertens,Società Sportiva Calcio Napoli,18,38,Belgium
 9,Serie A 2017/18,Gonzalo Higuaín,Juventus,16,35,Argentina
 9,Serie A 2017/18,Edin Dzeko,Associazione Sportiva Roma,16,36,Bosnia-Herzegovina
@@ -299,7 +299,7 @@ game_day,selected_target,player_name,club_name,goals,appearances,nationality
 30,UEFA Europa League 2015/16,Marco Reus,Borussia Dortmund,5,10,Germany
 30,UEFA Europa League 2015/16,Aleksandr Samedov,"Футбольный клуб ""Локомотив"" Москва",5,8,Russia
 30,UEFA Europa League 2015/16,Franco Di Santo,Schalke,5,7,Argentina
-31,Serie A 2018/19,Fabio Quagliarella,UC Sampdoria,26,37,
+31,Serie A 2018/19,Fabio Quagliarella,UC Sampdoria,26,37,Italy
 31,Serie A 2018/19,Duván Zapata,Atalanta Bergamasca Calcio S.p.a,23,37,Colombia
 31,Serie A 2018/19,Krzysztof Piatek,Genoa Cricket and,22,37,Poland
 31,Serie A 2018/19,Cristiano Ronaldo,Juventus,21,31,Portugal
@@ -454,7 +454,7 @@ game_day,selected_target,player_name,club_name,goals,appearances,nationality
 46,Ligue 1 2020/21,Wissam Ben Yedder,Association sportive de Monaco,20,37,France
 46,Ligue 1 2020/21,Kevin Volland,Association sportive de Monaco,16,35,Germany
 46,Ligue 1 2020/21,Ludovic Ajorque,Racing de Strasbourg Alsace,16,35,France
-46,Ligue 1 2020/21,Burak Yilmaz,Lille Olympique Sporting,16,28,
+46,Ligue 1 2020/21,Burak Yilmaz,Lille Olympique Sporting,16,28,Türkiye
 46,Ligue 1 2020/21,Gaëtan Laborde,Montpellier HSC,16,38,France
 46,Ligue 1 2020/21,Andy Delort,Montpellier HSC,15,30,Algeria
 46,Ligue 1 2020/21,Karl Toko Ekambi,Lyon,14,35,Cameroon
@@ -573,7 +573,7 @@ game_day,selected_target,player_name,club_name,goals,appearances,nationality
 58,UEFA Champions League 2012/13,Robert Lewandowski,Borussia Dortmund,10,13,Poland
 58,UEFA Champions League 2012/13,Lionel Messi,Futbol Barcelona,8,11,Argentina
 58,UEFA Champions League 2012/13,Thomas Müller,Bayern Munich,8,13,Germany
-58,UEFA Champions League 2012/13,Burak Yilmaz,Galatasaray Spor Kulübü,8,9,
+58,UEFA Champions League 2012/13,Burak Yilmaz,Galatasaray Spor Kulübü,8,9,Türkiye
 58,UEFA Champions League 2012/13,Alan,Sporting Clube de Braga,5,6,Brazil
 58,UEFA Champions League 2012/13,Jonas,Valencia S. A. D,5,8,Brazil
 58,UEFA Champions League 2012/13,Karim Benzema,Real Madrid,5,10,France
@@ -847,7 +847,7 @@ game_day,selected_target,player_name,club_name,goals,appearances,nationality
 85,Serie A 2014/15,Domenico Berardi,Unione Sportiva Sassuolo Calcio,15,32,Italy
 85,Serie A 2014/15,Manolo Gabbiadini,Società Sportiva Calcio Napoli,15,33,Italy
 85,Serie A 2014/15,Antonio Di Natale,Udinese Calcio,14,33,Italy
-85,Serie A 2014/15,Fabio Quagliarella,Torino Calcio,13,34,
+85,Serie A 2014/15,Fabio Quagliarella,Torino Calcio,13,34,Italy
 85,Serie A 2014/15,Iago Falque,Genoa Cricket and,13,32,Spain
 86,UEFA Champions League 2013/14,Cristiano Ronaldo,Real Madrid,17,11,Portugal
 86,UEFA Champions League 2013/14,Zlatan Ibrahimović,Paris Saint-Germain,10,8,Sweden
@@ -992,7 +992,7 @@ game_day,selected_target,player_name,club_name,goals,appearances,nationality
 100,Serie A 2017/18,Ciro Immobile,Società Sportiva Lazio S.p.A,29,33,Italy
 100,Serie A 2017/18,Mauro Icardi,Football Internazionale Milano S.p.A,29,34,Argentina
 100,Serie A 2017/18,Paulo Dybala,Juventus,22,33,Argentina
-100,Serie A 2017/18,Fabio Quagliarella,UC Sampdoria,19,35,
+100,Serie A 2017/18,Fabio Quagliarella,UC Sampdoria,19,35,Italy
 100,Serie A 2017/18,Dries Mertens,Società Sportiva Calcio Napoli,18,38,Belgium
 100,Serie A 2017/18,Gonzalo Higuaín,Juventus,16,35,Argentina
 100,Serie A 2017/18,Edin Dzeko,Associazione Sportiva Roma,16,36,Bosnia-Herzegovina
@@ -1209,7 +1209,7 @@ game_day,selected_target,player_name,club_name,goals,appearances,nationality
 121,UEFA Europa League 2015/16,Marco Reus,Borussia Dortmund,5,10,Germany
 121,UEFA Europa League 2015/16,Aleksandr Samedov,"Футбольный клуб ""Локомотив"" Москва",5,8,Russia
 121,UEFA Europa League 2015/16,Franco Di Santo,Schalke,5,7,Argentina
-122,Serie A 2018/19,Fabio Quagliarella,UC Sampdoria,26,37,
+122,Serie A 2018/19,Fabio Quagliarella,UC Sampdoria,26,37,Italy
 122,Serie A 2018/19,Duván Zapata,Atalanta Bergamasca Calcio S.p.a,23,37,Colombia
 122,Serie A 2018/19,Krzysztof Piatek,Genoa Cricket and,22,37,Poland
 122,Serie A 2018/19,Cristiano Ronaldo,Juventus,21,31,Portugal
@@ -1364,7 +1364,7 @@ game_day,selected_target,player_name,club_name,goals,appearances,nationality
 137,Ligue 1 2020/21,Wissam Ben Yedder,Association sportive de Monaco,20,37,France
 137,Ligue 1 2020/21,Kevin Volland,Association sportive de Monaco,16,35,Germany
 137,Ligue 1 2020/21,Ludovic Ajorque,Racing de Strasbourg Alsace,16,35,France
-137,Ligue 1 2020/21,Burak Yilmaz,Lille Olympique Sporting,16,28,
+137,Ligue 1 2020/21,Burak Yilmaz,Lille Olympique Sporting,16,28,Türkiye
 137,Ligue 1 2020/21,Gaëtan Laborde,Montpellier HSC,16,38,France
 137,Ligue 1 2020/21,Andy Delort,Montpellier HSC,15,30,Algeria
 137,Ligue 1 2020/21,Karl Toko Ekambi,Lyon,14,35,Cameroon
@@ -1483,7 +1483,7 @@ game_day,selected_target,player_name,club_name,goals,appearances,nationality
 149,UEFA Champions League 2012/13,Robert Lewandowski,Borussia Dortmund,10,13,Poland
 149,UEFA Champions League 2012/13,Lionel Messi,Futbol Barcelona,8,11,Argentina
 149,UEFA Champions League 2012/13,Thomas Müller,Bayern Munich,8,13,Germany
-149,UEFA Champions League 2012/13,Burak Yilmaz,Galatasaray Spor Kulübü,8,9,
+149,UEFA Champions League 2012/13,Burak Yilmaz,Galatasaray Spor Kulübü,8,9,Türkiye
 149,UEFA Champions League 2012/13,Alan,Sporting Clube de Braga,5,6,Brazil
 149,UEFA Champions League 2012/13,Jonas,Valencia S. A. D,5,8,Brazil
 149,UEFA Champions League 2012/13,Karim Benzema,Real Madrid,5,10,France
@@ -1757,7 +1757,7 @@ game_day,selected_target,player_name,club_name,goals,appearances,nationality
 176,Serie A 2014/15,Domenico Berardi,Unione Sportiva Sassuolo Calcio,15,32,Italy
 176,Serie A 2014/15,Manolo Gabbiadini,Società Sportiva Calcio Napoli,15,33,Italy
 176,Serie A 2014/15,Antonio Di Natale,Udinese Calcio,14,33,Italy
-176,Serie A 2014/15,Fabio Quagliarella,Torino Calcio,13,34,
+176,Serie A 2014/15,Fabio Quagliarella,Torino Calcio,13,34,Italy
 176,Serie A 2014/15,Iago Falque,Genoa Cricket and,13,32,Spain
 177,UEFA Champions League 2013/14,Cristiano Ronaldo,Real Madrid,17,11,Portugal
 177,UEFA Champions League 2013/14,Zlatan Ibrahimović,Paris Saint-Germain,10,8,Sweden

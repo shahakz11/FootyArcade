@@ -213,10 +213,18 @@ def load_club_connect(puzzle_num):
 
     game_data = {"club": club, "players": players}
 
-    # Scope autocomplete to only clubs that appear as answers (≈180 clubs)
+    # Load all clubs from all_clubs.json for complete autocomplete options
+    all_clubs_json = "[]"
+    if os.path.exists("all_clubs.json"):
+        with open("all_clubs.json", "r", encoding="utf-8") as f:
+            all_clubs_json = f.read()
+    else:
+        print("  WARNING: all_clubs.json not found.")
+
     sorted_clubs = sorted(answer_clubs - {""})
     import json as _json
     extra = {
+        "ALL_CLUBS": all_clubs_json,
         "ANSWER_CLUBS": _json.dumps(sorted_clubs, ensure_ascii=False),
     }
     return game_data, extra
@@ -266,6 +274,7 @@ STRIP_PATTERNS = {
     ],
     "club_connect": [
         r'const\s+DAILY_CLUBCONNECT_GAME\s*=\s*\{[\s\S]*?\};',
+        r'const\s+ALL_CLUBS\s*=\s*\[[\s\S]*?\];',
         r'const\s+ANSWER_CLUBS\s*=\s*\[[\s\S]*?\];',
         r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
         r'const\s+IS_BACK_IN_TIME\s*=\s*(true|false);',

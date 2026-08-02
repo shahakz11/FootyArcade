@@ -5,24 +5,79 @@ import random
 import kagglehub
 
 def main():
-    print("Loading player-scores dataset...")
+    print("Loading davidcariboo/player-scores dataset...")
     try:
         path = kagglehub.dataset_download("davidcariboo/player-scores")
     except Exception:
         path = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions/671')
-    print(f"Dataset path: {path}")
+    print(f"davidcariboo Dataset path: {path}")
 
-    # Load players and transfers
+    # Load davidcariboo players and transfers
     players_file = os.path.join(path, 'players.csv')
     transfers_file = os.path.join(path, 'transfers.csv')
 
-    print("Loading players and transfers data...")
-    df = pd.read_csv(players_file)
-    df_transfers = pd.read_csv(transfers_file)
+    df_dc_players = pd.read_csv(players_file, low_memory=False)
+    df_dc_transfers = pd.read_csv(transfers_file, low_memory=False)
+
+    # Load salimt/football-datasets
+    print("Loading salimt/football-datasets...")
+    try:
+        salimt_path = kagglehub.dataset_download("xfkzujqjvx97n/football-datasets")
+    except Exception:
+        salimt_path = os.path.expanduser('~/.cache/kagglehub/datasets/xfkzujqjvx97n/football-datasets/versions/2')
+    print(f"salimt Dataset path: {salimt_path}")
+
+    salimt_profiles_file = os.path.join(salimt_path, 'player_profiles', 'player_profiles.csv')
+    salimt_transfers_file = os.path.join(salimt_path, 'transfer_history', 'transfer_history.csv')
+
+    df_salimt_profiles = pd.read_csv(salimt_profiles_file, low_memory=False)
+    df_salimt_transfers = pd.read_csv(salimt_transfers_file, low_memory=False)
+
+    # Clean player name ID suffixes like ' (12345)' from salimt profiles & transfers
+    df_salimt_profiles['player_name'] = df_salimt_profiles['player_name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True)
+    df_salimt_transfers['from_team_name'] = df_salimt_transfers['from_team_name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True)
+    df_salimt_transfers['to_team_name'] = df_salimt_transfers['to_team_name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True)
+
+    # Standardize & combine player profiles
+    print("Uniting player profiles...")
+    salimt_p_mapped = df_salimt_profiles[['player_id', 'player_name', 'citizenship', 'position', 'date_of_birth']].copy()
+    salimt_p_mapped.rename(columns={
+        'player_name': 'name',
+        'citizenship': 'country_of_citizenship'
+    }, inplace=True)
+
+    combined_players = pd.concat([df_dc_players, salimt_p_mapped], ignore_index=True)
+    df = combined_players.groupby('player_id', as_index=False).first()
+
+    # Clean player names and extract primary country from dual citizenships
+    df['name'] = df['name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True)
+    df['country_of_citizenship'] = df['country_of_citizenship'].fillna('').astype(str).str.split(r'\s{2,}').str[0].str.strip()
+
+    print(f"Total united players: {len(df)}")
+
+    # Standardize & combine transfers
+    print("Uniting and deduplicating transfer histories...")
+    salimt_t_mapped = df_salimt_transfers.copy()
+    salimt_t_mapped.rename(columns={
+        'season_name': 'transfer_season',
+        'from_team_id': 'from_club_id',
+        'from_team_name': 'from_club_name',
+        'to_team_id': 'to_club_id',
+        'to_team_name': 'to_club_name',
+        'value_at_transfer': 'market_value_in_eur'
+    }, inplace=True)
+
+    # Map player_name if missing
+    p_name_map = df.set_index('player_id')['name'].to_dict()
+    salimt_t_mapped['player_name'] = salimt_t_mapped['player_id'].map(p_name_map)
 
     # Convert transfer fee to numeric, drop NaNs
-    df_transfers['transfer_fee'] = pd.to_numeric(df_transfers['transfer_fee'], errors='coerce')
+    df_dc_transfers['transfer_fee'] = pd.to_numeric(df_dc_transfers['transfer_fee'], errors='coerce')
+    salimt_t_mapped['transfer_fee'] = pd.to_numeric(salimt_t_mapped['transfer_fee'], errors='coerce')
+
+    df_transfers = pd.concat([df_dc_transfers, salimt_t_mapped], ignore_index=True)
     df_transfers.dropna(subset=['transfer_fee'], inplace=True)
+    df_transfers['player_name'] = df_transfers['player_name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True)
 
     # Manual additions for famous missing historical transfers
     manual_transfers = pd.DataFrame([
@@ -37,6 +92,7 @@ def main():
         }
     ])
     df_transfers = pd.concat([df_transfers, manual_transfers], ignore_index=True)
+
 
     # Normalize/clean club names (Youth, B teams, different variations, corporate suffixes, trailing dots)
     prefix_pattern = re.compile(r'^(1\.\s*FC|1\.\s*FSV|1\.\s*|FC|CF|AC|AS|SS|SV|SC|SD|CD|UD|RC|RCD|FK|SK|BK|IF|IFK|OGC|US|USM|GC|AFC|SAD|CA|CE|CS|CP|VfB|VfL|TSG|BSC|FSV|SSV|SpVgg|Club)\s+', re.I)
@@ -171,6 +227,15 @@ def main():
     df_transfers['from_club_name'] = df_transfers['from_club_name'].apply(clean_club_name)
     df_transfers['to_club_name'] = df_transfers['to_club_name'].apply(clean_club_name)
 
+    print("Deduplicating transfer records...")
+    df_transfers.sort_values(by='transfer_fee', ascending=False, inplace=True)
+    df_transfers.drop_duplicates(
+        subset=['player_id', 'transfer_date', 'from_club_name', 'to_club_name'],
+        keep='first',
+        inplace=True
+    )
+    print(f"Total deduplicated transfers: {len(df_transfers)}")
+
     TRANSFER_FEE_THRESHOLD = 6_000_000
 
     # --- 1. Generating Club Transfers ---
@@ -181,14 +246,26 @@ def main():
 
     print(f"Number of eligible clubs: {len(eligible_clubs)}")
 
-    # We want to generate a deterministic list of daily games for 180 days (or cycling through all eligible clubs)
+    # Compute original eligible clubs to preserve exact daily puzzle sequence
+    df_dc_transfers_clean = df_dc_transfers.dropna(subset=['transfer_fee']).copy()
+    df_dc_transfers_clean['to_club_name'] = df_dc_transfers_clean['to_club_name'].apply(clean_club_name)
+    dc_high_val = df_dc_transfers_clean[df_dc_transfers_clean['transfer_fee'] > TRANSFER_FEE_THRESHOLD]
+    dc_counts = dc_high_val['to_club_name'].value_counts()
+    orig_eligible_clubs = dc_counts[dc_counts >= 10].index.tolist()
+
+    random.seed(42)
+    orig_shuffled_clubs = orig_eligible_clubs.copy()
+    random.shuffle(orig_shuffled_clubs)
+
+    new_eligible_clubs = [c for c in eligible_clubs if c not in set(orig_eligible_clubs)]
+    random.seed(42)
+    new_shuffled_clubs = new_eligible_clubs.copy()
+    random.shuffle(new_shuffled_clubs)
+
+    shuffled_clubs = orig_shuffled_clubs + new_shuffled_clubs
+
     all_game_data = []
     num_days = 180
-
-    # Seed for deterministic generation
-    random.seed(42)
-    shuffled_clubs = eligible_clubs.copy()
-    random.shuffle(shuffled_clubs)
 
     for day in range(num_days):
         selected_club = shuffled_clubs[day % len(shuffled_clubs)]
@@ -232,12 +309,31 @@ def main():
     # For nationalities, count unique players with transfer fee > threshold
     nat_unique_players = high_value_nationality_transfers.groupby('nationality_name')['player_name'].nunique()
     eligible_nationalities = nat_unique_players[nat_unique_players >= 10].index.tolist()
-
     print(f"Number of eligible nationalities: {len(eligible_nationalities)}")
 
+    # Compute original eligible nationalities to preserve exact daily puzzle sequence
+    df_dc_merged_nat = pd.merge(
+        df_dc_transfers_clean,
+        df_dc_players[['player_id', 'country_of_citizenship']],
+        on='player_id',
+        how='left'
+    ).rename(columns={'country_of_citizenship': 'nationality_name'}).dropna(subset=['nationality_name'])
+    dc_nat_high_val = df_dc_merged_nat[df_dc_merged_nat['transfer_fee'] > TRANSFER_FEE_THRESHOLD]
+    dc_nat_unique = dc_nat_high_val.groupby('nationality_name')['player_name'].nunique()
+    orig_eligible_nationalities = dc_nat_unique[dc_nat_unique >= 10].index.tolist()
+
+    random.seed(42)
+    orig_shuffled_nats = orig_eligible_nationalities.copy()
+    random.shuffle(orig_shuffled_nats)
+
+    new_eligible_nats = [n for n in eligible_nationalities if n not in set(orig_eligible_nationalities)]
+    random.seed(42)
+    new_shuffled_nats = new_eligible_nats.copy()
+    random.shuffle(new_shuffled_nats)
+
+    shuffled_nationalities = orig_shuffled_nats + new_shuffled_nats
+
     all_game_data_nationality = []
-    shuffled_nationalities = eligible_nationalities.copy()
-    random.shuffle(shuffled_nationalities)
 
     for day in range(num_days):
         selected_nationality = shuffled_nationalities[day % len(shuffled_nationalities)]
@@ -303,8 +399,8 @@ def main():
         on='player_id',
         how='left'
     )
-    df_dest_merged['transfer_date'] = pd.to_datetime(df_dest_merged['transfer_date'])
-    df_dest_merged['date_of_birth'] = pd.to_datetime(df_dest_merged['date_of_birth'])
+    df_dest_merged['transfer_date'] = pd.to_datetime(df_dest_merged['transfer_date'], format='mixed', errors='coerce')
+    df_dest_merged['date_of_birth'] = pd.to_datetime(df_dest_merged['date_of_birth'], format='mixed', errors='coerce')
     df_dest_merged['age_at_transfer'] = (df_dest_merged['transfer_date'] - df_dest_merged['date_of_birth']).dt.days / 365.25
 
     # Filter youth teams
@@ -330,13 +426,45 @@ def main():
     # Sort eligible players by their maximum transfer fee to pick the most high-profile stars
     player_max_fees = df_dest_eligible.groupby('player_id')['transfer_fee'].max()
     top_dest_pids = player_max_fees.sort_values(ascending=False).index.tolist()
-    
-    # Take the top 300 to shuffle and select 180 games
-    # Shuffling with a seed for deterministic daily puzzles
+
+    # Compute original Transfer Destination sequence to preserve exact daily puzzle order
+    df_dc_dest_merged = pd.merge(
+        df_dc_transfers_clean,
+        df_dc_players[['player_id', 'date_of_birth', 'country_of_citizenship', 'position']],
+        on='player_id',
+        how='left'
+    )
+    df_dc_dest_merged['transfer_date'] = pd.to_datetime(df_dc_dest_merged['transfer_date'], format='mixed', errors='coerce')
+    df_dc_dest_merged['date_of_birth'] = pd.to_datetime(df_dc_dest_merged['date_of_birth'], format='mixed', errors='coerce')
+    df_dc_dest_merged['age_at_transfer'] = (df_dc_dest_merged['transfer_date'] - df_dc_dest_merged['date_of_birth']).dt.days / 365.25
+
+    df_dc_dest_clean = df_dc_dest_merged[
+        (~df_dc_dest_merged['from_club_name'].str.contains(youth_patterns, na=False)) &
+        (~df_dc_dest_merged['to_club_name'].str.contains(youth_patterns, na=False)) &
+        (df_dc_dest_merged['age_at_transfer'] >= 17)
+    ].copy()
+
+    df_dc_dest_clean['transfer_fee'] = pd.to_numeric(df_dc_dest_clean['transfer_fee'], errors='coerce')
+    dc_players_with_big_tr = df_dc_dest_clean[df_dc_dest_clean['transfer_fee'] >= 15_000_000]['player_id'].unique()
+    df_dc_dest_clean_big = df_dc_dest_clean[df_dc_dest_clean['player_id'].isin(dc_players_with_big_tr)]
+
+    dc_dest_transfer_counts = df_dc_dest_clean_big.groupby('player_id').size()
+    dc_eligible_dest_pids = dc_dest_transfer_counts[dc_dest_transfer_counts >= 2].index.tolist()
+    df_dc_dest_eligible = df_dc_dest_clean_big[df_dc_dest_clean_big['player_id'].isin(dc_eligible_dest_pids)]
+
+    dc_player_max_fees = df_dc_dest_eligible.groupby('player_id')['transfer_fee'].max()
+    dc_top_dest_pids = dc_player_max_fees.sort_values(ascending=False).index.tolist()
+
     random.seed(99)
-    shuffled_pids = top_dest_pids[:300]
-    random.shuffle(shuffled_pids)
-    selected_pids = shuffled_pids[:180]
+    dc_shuffled_pids = dc_top_dest_pids[:300]
+    random.shuffle(dc_shuffled_pids)
+    orig_dest_pids = dc_shuffled_pids[:180]
+
+    new_dest_pids = [p for p in top_dest_pids if p not in set(orig_dest_pids)]
+    random.seed(99)
+    random.shuffle(new_dest_pids)
+
+    selected_pids = (orig_dest_pids + new_dest_pids)[:180]
     
     dest_games_list = []
     clubs_in_careers = set()

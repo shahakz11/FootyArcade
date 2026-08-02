@@ -1,24 +1,24 @@
 player_name,from_club_name,to_club_name,transfer_fee,transfer_date,game_day,selected_club
+Roberto Inglese,Napoli,Parma,21800000.0,2020-09-01,1,Parma
+Juan Sebastián Verón,Sampdoria,Parma,17500000.0,1998-07-01,1,Parma
+Sérgio Conceição,Lazio,Parma,17000000.0,2000-07-01,1,Parma
+Vratislav Gresko,Inter,Parma,16000000.0,2002-07-01,1,Parma
+Ousmane Dabo,Inter,Parma,15490000.0,1999-07-01,1,Parma
+,Borussia Dortmund,Parma,15000000.0,2001-07-01,1,Parma
+Daniele Bonera,Brescia,Parma,15000000.0,2002-07-01,1,Parma
+Adriano,Inter,Parma,14500000.0,2002-07-01,1,Parma
 Dennis Man,FCSB,Parma,12600000.0,2021-01-29,1,Parma
 Mandela Keita,Royal Antwerp,Parma,11900000.0,2024-08-30,1,Parma
-Lautaro Valenti,Lanús,Parma,10500000.0,2021-07-01,1,Parma
-Christian Ordóñez,Vélez Sarsfield,Parma,9750000.0,2025-07-01,1,Parma
-Valentin Mihăilă,Univ. Craiova,Parma,9500000.0,2020-10-05,1,Parma
-Matija Frigan,KVC Westerlo,Parma,9000000.0,2025-08-15,1,Parma
-Alberto Grassi,Napoli,Parma,8450000.0,2020-09-01,1,Parma
-Andreas Cornelius,Atalanta,Parma,8400000.0,2021-07-01,1,Parma
-Zion Suzuki,Sint-Truiden,Parma,8200000.0,2024-07-15,1,Parma
-Oliver Sørensen,Midtjylland,Parma,8100000.0,2025-08-13,1,Parma
 Bernard,Atlético-MG,Shakhtar D,25000000.0,2013-08-08,2,Shakhtar D
 Pedrinho,Benfica,Shakhtar D,18000000.0,2021-07-01,2,Shakhtar D
 Kauã Elias,Fluminense,Shakhtar D,17000000.0,2025-02-08,2,Shakhtar D
 Taison,Metalist Kharkiv,Shakhtar D,15240000.0,2013-01-11,2,Shakhtar D
+Fred,Internacional,Shakhtar D,15000000.0,2013-07-01,2,Shakhtar D
 Tetê,Grêmio,Shakhtar D,15000000.0,2019-02-28,2,Shakhtar D
 Dmytro Chygrynskyi,Barcelona,Shakhtar D,15000000.0,2010-07-06,2,Shakhtar D
-Fred,Internacional,Shakhtar D,15000000.0,2013-07-01,2,Shakhtar D
 Kevin,Palmeiras,Shakhtar D,14800000.0,2024-01-19,2,Shakhtar D
+Matuzalém,Brescia,Shakhtar D,14000000.0,2004-07-01,2,Shakhtar D
 Alisson,Atlético-MG,Shakhtar D,14000000.0,2025-03-10,2,Shakhtar D
-Willian,Corinthians,Shakhtar D,14000000.0,2007-08-24,2,Shakhtar D
 Lucas Paquetá,West Ham United,Flamengo,42000000.0,2026-01-28,3,Flamengo
 Samuel Lino,Atletico Madrid,Flamengo,22000000.0,2025-07-29,3,Flamengo
 Carlos Alcaraz,Southampton,Flamengo,18000000.0,2024-08-28,3,Flamengo
@@ -37,8 +37,8 @@ Emmanuel Emegha,Sturm Graz,R. Strasbourg,13000000.0,2023-07-22,4,R. Strasbourg
 Sékou Mara,Southampton,R. Strasbourg,12000000.0,2024-08-21,4,R. Strasbourg
 Sebastian Nanasi,Malmö,R. Strasbourg,11000000.0,2024-08-23,4,R. Strasbourg
 Andrew Omobamidele,Nott'm Forest,R. Strasbourg,10500000.0,2025-07-01,4,R. Strasbourg
-Dilane Bakwa,G. Bordeaux,R. Strasbourg,10000000.0,2023-08-08,4,R. Strasbourg
 Mamadou Sarr,Lyon,R. Strasbourg,10000000.0,2024-08-22,4,R. Strasbourg
+Junior Mwanga,G. Bordeaux,R. Strasbourg,10000000.0,2023-08-08,4,R. Strasbourg
 Harry Kane,Tottenham Hotspur,Bayern Munich,95000000.0,2023-08-12,5,Bayern Munich
 Lucas Hernández,Atletico Madrid,Bayern Munich,80000000.0,2019-07-01,5,Bayern Munich
 Luis Díaz,Liverpool,Bayern Munich,70000000.0,2025-07-30,5,Bayern Munich
@@ -71,19 +71,19 @@ João Cancelo,Juventus,Manchester City,65000000.0,2019-08-07,7,Manchester City
 Aymeric Laporte,Athletic Bilbao,Manchester City,65000000.0,2018-01-30,7,Manchester City
 Umar Sadiq,Almería,Real Sociedad,20000000.0,2022-09-01,8,Real Sociedad
 Orri Óskarsson,Copenhagen,Real Sociedad,20000000.0,2024-08-30,8,Real Sociedad
+Asier Illarramendi,Real Madrid,Real Sociedad,16000000.0,2015-08-26,8,Real Sociedad
 Alexander Isak,Borussia Dortmund,Real Sociedad,15000000.0,2019-07-01,8,Real Sociedad
 Brais Méndez,Celta Vigo,Real Sociedad,14000000.0,2022-07-06,8,Real Sociedad
+Carlos Vela,Arsenal,Real Sociedad,14000000.0,2012-08-10,8,Real Sociedad
 Arsen Zakharyan,Dynamo Moscow,Real Sociedad,13000000.0,2023-08-19,8,Real Sociedad
 Mohamed-Ali Cho,Angers SCO,Real Sociedad,13000000.0,2022-07-01,8,Real Sociedad
 Mikel Merino,Newcastle United,Real Sociedad,12000000.0,2018-07-12,8,Real Sociedad
 Yangel Herrera,Girona,Real Sociedad,11000000.0,2025-09-01,8,Real Sociedad
-Diego Llorente,Real Madrid,Real Sociedad,11000000.0,2017-07-01,8,Real Sociedad
-Portu,Girona,Real Sociedad,10000000.0,2019-07-01,8,Real Sociedad
 Samu Aghehowa,Atletico Madrid,Porto,32000000.0,2024-08-23,9,Porto
 Nico González,Barcelona,Porto,21200000.0,2023-07-29,9,Porto
 David Carmo,Braga,Porto,20280000.0,2022-07-05,9,Porto
-Óliver Torres,Atletico Madrid,Porto,20000000.0,2017-07-01,9,Porto
 Victor Froholdt,Copenhagen,Porto,20000000.0,2025-07-23,9,Porto
+Óliver Torres,Atletico Madrid,Porto,20000000.0,2017-07-01,9,Porto
 Giannelli Imbula,Marseille,Porto,20000000.0,2015-07-01,9,Porto
 Hulk,Tokyo Verdy,Porto,19000000.0,2008-07-25,9,Porto
 Jakub Kiwior,Arsenal,Porto,17000000.0,2026-07-01,9,Porto
@@ -91,16 +91,17 @@ Pepê,Grêmio,Porto,15400000.0,2021-07-01,9,Porto
 Alberto Costa,Juventus,Porto,15000000.0,2025-07-24,9,Porto
 Adam Hlozek,Bayer Leverkusen,Hoffenheim,18000000.0,2024-08-17,10,Hoffenheim
 Mergim Berisha,Augsburg,Hoffenheim,14000000.0,2023-08-30,10,Hoffenheim
-Diadié Samassékou,Salzburg,Hoffenheim,12500000.0,2019-08-15,10,Hoffenheim
+Diadié Samassékou,RB Salzburg,Hoffenheim,12500000.0,2019-08-15,10,Hoffenheim
 Attila Szalai,Fenerbahçe,Hoffenheim,12300000.0,2023-07-24,10,Hoffenheim
 Mats Rots,Twente,Hoffenheim,12000000.0,2026-07-01,10,Hoffenheim
 Anton Stach,Mainz 05,Hoffenheim,12000000.0,2023-09-01,10,Hoffenheim
 Stanley Nsoki,Brugge,Hoffenheim,12000000.0,2022-08-03,10,Hoffenheim
+Munas Dabbur,Sevilla,Hoffenheim,12000000.0,2020-01-07,10,Hoffenheim
 Alexander Prass,Sturm Graz,Hoffenheim,12000000.0,2024-08-05,10,Hoffenheim
 Andrej Kramaric,Leicester City,Hoffenheim,11000000.0,2016-07-01,10,Hoffenheim
-Bazoumana Touré,Hammarby,Hoffenheim,10000000.0,2025-02-01,10,Hoffenheim
 Vitinha,Braga,Marseille,32000000.0,2023-01-31,11,Marseille
 Igor Paixão,Feyenoord,Marseille,30000000.0,2025-08-01,11,Marseille
+Dimitri Payet,West Ham United,Marseille,29300000.0,2017-01-30,11,Marseille
 Elye Wahi,Lens,Marseille,27000000.0,2024-08-13,11,Marseille
 Mason Greenwood,Manchester United,Marseille,26000000.0,2024-07-18,11,Marseille
 Kevin Strootman,Roma,Marseille,25000000.0,2018-08-28,11,Marseille
@@ -108,17 +109,16 @@ Nayef Aguerd,West Ham United,Marseille,23000000.0,2025-09-01,11,Marseille
 Renan Lodi,Atletico Madrid,Marseille,20600000.0,2023-07-14,11,Marseille
 Gerson,Flamengo,Marseille,20500000.0,2021-07-01,11,Marseille
 Amine Gouiri,Rennes,Marseille,19000000.0,2025-01-31,11,Marseille
-Duje Caleta-Car,Salzburg,Marseille,19000000.0,2018-07-20,11,Marseille
 Ousmane Dembélé,Rennes,Borussia Dortmund,35000000.0,2016-07-01,12,Borussia Dortmund
 Sébastien Haller,Ajax,Borussia Dortmund,31000000.0,2022-07-06,12,Borussia Dortmund
 Jobe Bellingham,Sunderland,Borussia Dortmund,30500000.0,2025-06-10,12,Borussia Dortmund
 Mats Hummels,Bayern Munich,Borussia Dortmund,30500000.0,2019-07-01,12,Borussia Dortmund
 Jude Bellingham,Birmingham,Borussia Dortmund,30150000.0,2020-07-23,12,Borussia Dortmund
-Felix Nmecha,Wolfsburg,Borussia Dortmund,30000000.0,2023-07-03,12,Borussia Dortmund
-Karim Adeyemi,Salzburg,Borussia Dortmund,30000000.0,2022-07-01,12,Borussia Dortmund
 Donyell Malen,PSV Eindhoven,Borussia Dortmund,30000000.0,2021-07-27,12,Borussia Dortmund
+André Schürrle,Wolfsburg,Borussia Dortmund,30000000.0,2016-07-22,12,Borussia Dortmund
+Karim Adeyemi,RB Salzburg,Borussia Dortmund,30000000.0,2022-07-01,12,Borussia Dortmund
+Felix Nmecha,Wolfsburg,Borussia Dortmund,30000000.0,2023-07-03,12,Borussia Dortmund
 Maximilian Beier,Hoffenheim,Borussia Dortmund,28500000.0,2024-08-12,12,Borussia Dortmund
-Henrikh Mkhitaryan,Shakhtar D,Borussia Dortmund,27500000.0,2013-07-09,12,Borussia Dortmund
 Alassane Pléa,Nice,Mönchengladbach,23000000.0,2018-07-13,13,Mönchengladbach
 Matthias Ginter,Borussia Dortmund,Mönchengladbach,17000000.0,2017-07-04,13,Mönchengladbach
 Stefan Lainer,Salzburg,Mönchengladbach,12500000.0,2019-07-01,13,Mönchengladbach
@@ -134,11 +134,11 @@ Levi García,AEK Athens,Spartak Moscow,18700000.0,2025-02-07,14,Spartak Moscow
 Guus Til,AZ Alkmaar,Spartak Moscow,18000000.0,2019-08-05,14,Spartak Moscow
 Esequiel Barco,River Plate,Spartak Moscow,14000000.0,2024-07-25,14,Spartak Moscow
 Manfred Ugalde,Twente,Spartak Moscow,13000000.0,2024-01-29,14,Spartak Moscow
-Alex Král,Slavia Praha,Spartak Moscow,12000000.0,2019-09-01,14,Spartak Moscow
+Fernando,Sampdoria,Spartak Moscow,12500000.0,2016-07-17,14,Spartak Moscow
 Pedro Rocha,Grêmio,Spartak Moscow,12000000.0,2017-08-31,14,Spartak Moscow
+Alex Král,Slavia Prague,Spartak Moscow,12000000.0,2019-09-01,14,Spartak Moscow
+Aiden McGeady,Celtic,Spartak Moscow,12000000.0,2010-08-01,14,Spartak Moscow
 Quincy Promes,Twente,Spartak Moscow,11500000.0,2014-08-08,14,Spartak Moscow
-Pablo Solari,River Plate,Spartak Moscow,10000000.0,2025-02-11,14,Spartak Moscow
-Denis Glushakov,Loko Moskau,Spartak Moscow,8000000.0,2013-07-01,14,Spartak Moscow
 Jonathan David,KAA Gent,Lille,27000000.0,2020-08-11,15,Lille
 Victor Osimhen,R Charleroi,Lille,22400000.0,2019-08-01,15,Lille
 Rafael Leão,Sporting CP,Lille,20200000.0,2018-08-08,15,Lille
@@ -148,7 +148,7 @@ Nicolas Pépé,Angers SCO,Lille,18000000.0,2017-07-01,15,Lille
 Hákon Arnar Haraldsson,Copenhagen,Lille,15000000.0,2023-07-17,15,Lille
 Thiago Maia,Santos,Lille,14000000.0,2017-07-31,15,Lille
 Mohamed Bayo,Clermont Foot,Lille,14000000.0,2022-07-13,15,Lille
-Amadou Onana,Hamburg,Lille,13570000.0,2021-08-05,15,Lille
+Amadou Onana,Hamburger,Lille,13570000.0,2021-08-05,15,Lille
 Diego Valdés,Santos Laguna,América,10600000.0,2022-01-01,16,América
 Allan Saint-Maximin,Al-Ahli,América,10300000.0,2025-08-12,16,América
 Kevin Álvarez,Pachuca,América,10250000.0,2023-07-01,16,América
@@ -157,8 +157,8 @@ Darwin Quintero,Santos Laguna,América,9000000.0,2015-01-01,16,América
 Érick Sánchez,Pachuca,América,9000000.0,2024-07-01,16,América
 Roger Martínez,Villarreal,América,8500000.0,2018-07-02,16,América
 Víctor Dávila,CSKA Moscow,América,7500000.0,2024-09-15,16,América
-Isaías Violante,Toluca,América,7000000.0,2025-07-08,16,América
-Guido Rodríguez,Tijuana,América,6280000.0,2017-07-01,16,América
+Rubens Sambueza,Tecos,América,7430000.0,2012-07-01,16,América
+Oribe Peralta,Santos Laguna,América,7290000.0,2014-07-01,16,América
 Neymar,Paris Saint-Germain,Al-Hilal,90000000.0,2023-08-15,17,Al-Hilal
 Malcom,Zenit S-Pb,Al-Hilal,60000000.0,2023-07-26,17,Al-Hilal
 Rúben Neves,Wolverhampton Wanderers,Al-Hilal,55000000.0,2023-07-01,17,Al-Hilal
@@ -176,19 +176,19 @@ Manuel Locatelli,AC Milan,Sassuolo,14000000.0,2019-07-01,18,Sassuolo
 Agustín Álvarez,Peñarol,Sassuolo,12000000.0,2022-07-01,18,Sassuolo
 Marlon,Barcelona,Sassuolo,12000000.0,2018-08-16,18,Sassuolo
 Grégoire Defrel,Roma,Sassuolo,11000000.0,2020-09-01,18,Sassuolo
-Kristian Thorstvedt,Genk,Sassuolo,10150000.0,2022-07-12,18,Sassuolo
+Kristian Thorstvedt,KRC Genk,Sassuolo,10150000.0,2022-07-12,18,Sassuolo
 Armand Laurienté,Lorient,Sassuolo,10100000.0,2022-08-31,18,Sassuolo
-Ismaël Koné,Marseille,Sassuolo,10000000.0,2026-02-02,18,Sassuolo
+Simone Zaza,Juventus,Sassuolo,10000000.0,2013-07-09,18,Sassuolo
 Habib Diarra,R. Strasbourg,Sunderland,31500000.0,2025-07-01,19,Sunderland
 Simon Adingra,Brighton & Hove Albion,Sunderland,24400000.0,2025-07-10,19,Sunderland
 Enzo Le Fée,Roma,Sunderland,23750000.0,2025-07-01,19,Sunderland
 Brian Brobbey,Ajax,Sunderland,20000000.0,2025-09-01,19,Sunderland
 Chemsdine Talbi,Brugge,Sunderland,20000000.0,2025-07-09,19,Sunderland
+Didier Ndong,Lorient,Sunderland,20000000.0,2016-08-31,19,Sunderland
 Nilson Angulo,RSC Anderlecht,Sunderland,17340000.0,2026-02-02,19,Sunderland
 Noah Sadiki,Union SG,Sunderland,17000000.0,2025-07-04,19,Sunderland
-Granit Xhaka,Bayer Leverkusen,Sunderland,15000000.0,2025-07-30,19,Sunderland
-Nordi Mukiele,Paris Saint-Germain,Sunderland,12000000.0,2025-08-17,19,Sunderland
-Wahbi Khazri,G. Bordeaux,Sunderland,11800000.0,2016-01-30,19,Sunderland
+Asamoah Gyan,Rennes,Sunderland,16000000.0,2010-08-31,19,Sunderland
+Steven Fletcher,Wolverhampton Wanderers,Sunderland,15200000.0,2012-08-24,19,Sunderland
 El Bilal Touré,Almería,Atalanta,30200000.0,2023-07-29,20,Atalanta
 Gianluca Scamacca,West Ham United,Atalanta,28000000.0,2023-08-07,20,Atalanta
 Nikola Krstović,Lecce,Atalanta,25000000.0,2025-08-20,20,Atalanta
@@ -201,34 +201,34 @@ Jérémie Boga,Sassuolo,Atalanta,22000000.0,2022-07-01,20,Atalanta
 Luis Muriel,Sevilla,Atalanta,21200000.0,2019-07-01,20,Atalanta
 Simone Verdi,Napoli,Torino,22000000.0,2020-09-01,21,Torino
 Ivan Ilić,Hellas Verona,Torino,16500000.0,2023-07-01,21,Torino
+Ciro Immobile,Juventus,Torino,13500000.0,2013-07-12,21,Torino
 Cesare Casadei,Chelsea,Torino,13000000.0,2025-02-02,21,Torino
 M'Baye Niang,AC Milan,Torino,12000000.0,2018-07-01,21,Torino
+Simone Zaza,Valencia,Torino,12000000.0,2019-07-01,21,Torino
 Soualiho Meïté,Monaco,Torino,11500000.0,2018-07-10,21,Torino
 Samuele Ricci,Empoli,Torino,10800000.0,2022-07-01,21,Torino
 Armando Izzo,Genoa,Torino,10700000.0,2018-07-04,21,Torino
 Nikola Vlašić,West Ham United,Torino,10600000.0,2023-08-08,21,Torino
-Ola Aina,Chelsea,Torino,9800000.0,2019-07-01,21,Torino
-Perr Schuurs,Ajax,Torino,9400000.0,2022-08-18,21,Torino
 Andrea Pinamonti,Inter,Genoa,19500000.0,2020-09-01,22,Genoa
 Stefano Sturaro,Juventus,Genoa,16500000.0,2019-07-01,22,Genoa
 Mateo Retegui,Tigre,Genoa,15250000.0,2023-07-26,22,Genoa
-Gianluca Lapadula,AC Milan,Genoa,11000000.0,2018-08-17,22,Genoa
+Manolo Portanova,Juventus,Genoa,12250000.0,2021-01-28,22,Genoa
+Andrea Favilli,Juventus,Genoa,12000000.0,2019-07-01,22,Genoa
+Domenico Criscito,Juventus,Genoa,11500000.0,2008-07-01,22,Genoa
 Koni De Winter,Juventus,Genoa,11000000.0,2024-07-01,22,Genoa
+Gianluca Lapadula,AC Milan,Genoa,11000000.0,2018-08-17,22,Genoa
+Sergio Floccari,Atalanta,Genoa,10500000.0,2009-07-01,22,Genoa
 Radu Drăgușin,Juventus,Genoa,9700000.0,2023-07-01,22,Genoa
-Eldor Shomurodov,Rostov,Genoa,9500000.0,2020-10-01,22,Genoa
-Vitinha,Marseille,Genoa,8300000.0,2024-07-01,22,Genoa
-Ionuț Radu,Inter,Genoa,8000000.0,2019-07-01,22,Genoa
-Ruslan Malinovskyi,Marseille,Genoa,7700000.0,2024-01-31,22,Genoa
 Lesley Ugochukwu,Chelsea,Burnley,28700000.0,2025-08-06,23,Burnley
 Armando Broja,Chelsea,Burnley,23000000.0,2025-08-08,23,Burnley
 Zeki Amdouni,Basel,Burnley,18600000.0,2023-07-19,23,Burnley
 Mike Tresor,Genk,Burnley,18000000.0,2024-07-01,23,Burnley
 Wout Weghorst,Wolfsburg,Burnley,17500000.0,2022-01-31,23,Burnley
 James Trafford,Manchester City,Burnley,17300000.0,2023-07-20,23,Burnley
+Ben Gibson,Middlesbrough,Burnley,16900000.0,2018-08-05,23,Burnley
 Aaron Ramsey,Aston Villa,Burnley,16450000.0,2023-08-22,23,Burnley
 Chris Wood,Leeds United,Burnley,16400000.0,2017-08-21,23,Burnley
-Robbie Brady,Norwich,Burnley,15100000.0,2017-01-31,23,Burnley
-Jordan Beyer,Mönchengladbach,Burnley,15000000.0,2023-07-01,23,Burnley
+Loum Tchaouna,Lazio,Burnley,15150000.0,2025-07-02,23,Burnley
 Georginio Rutter,Leeds United,Brighton & Hove Albion,46700000.0,2024-08-19,24,Brighton & Hove Albion
 Charalampos Kostoulas,Olympiacos,Brighton & Hove Albion,35000000.0,2025-07-01,24,Brighton & Hove Albion
 Yankuba Minteh,Newcastle United,Brighton & Hove Albion,35000000.0,2024-07-01,24,Brighton & Hove Albion
@@ -261,18 +261,18 @@ Ederson,Manchester City,Fenerbahçe,11000000.0,2025-09-02,26,Fenerbahçe
 Sebastian Szymanski,Dynamo Moscow,Fenerbahçe,10700000.0,2023-07-12,26,Fenerbahçe
 Rolando Mandragora,Juventus,Udinese,20000000.0,2018-07-26,27,Udinese
 Hassane Kamara,Watford,Udinese,19000000.0,2022-08-22,27,Udinese
+Gerard Deulofeu,Watford,Udinese,17000000.0,2021-01-30,27,Udinese
 Beto,Portimonense,Udinese,15000000.0,2022-07-01,27,Udinese
+David Di Michele,Salernitana,Udinese,12000000.0,2001-07-01,27,Udinese
 Brenner,Cincinnati,Udinese,10000000.0,2023-07-01,27,Udinese
+Roberto Muzzi,Cagliari,Udinese,10000000.0,1999-07-10,27,Udinese
 Rodrigo De Paul,Valencia,Udinese,10000000.0,2016-07-20,27,Udinese
-Arthur Atta,Metz,Udinese,8000000.0,2025-07-01,27,Udinese
-Ignacio Pussetto,Huracán,Udinese,8000000.0,2018-07-17,27,Udinese
-Lorenzo Lucca,Pisa,Udinese,8000000.0,2024-07-01,27,Udinese
-Nehuén Pérez,Atletico Madrid,Udinese,8000000.0,2022-07-29,27,Udinese
-Christian Kabasele,Watford,Udinese,6500000.0,2023-07-25,27,Udinese
+Mirko Pieri,Perugia,Udinese,9800000.0,2001-07-01,27,Udinese
+Davide Faraoni,Inter,Udinese,8000000.0,2012-07-09,27,Udinese
 Tino Livramento,Chelsea,Southampton,26200000.0,2021-08-02,28,Southampton
 Danny Ings,Liverpool,Southampton,25100000.0,2019-07-01,28,Southampton
 Kamaldeen Sulemana,Rennes,Southampton,25000000.0,2023-01-31,28,Southampton
-Jannik Vestergaard,Mönchengladbach,Southampton,25000000.0,2018-07-13,28,Southampton
+Jannik Vestergaard,Borussia Mönchengladbach,Southampton,25000000.0,2018-07-13,28,Southampton
 Taylor Harwood-Bellis,Manchester City,Southampton,23000000.0,2024-07-01,28,Southampton
 Sadio Mané,Salzburg,Southampton,23000000.0,2014-09-01,28,Southampton
 Roméo Lavia,Manchester City,Southampton,22260000.0,2022-07-06,28,Southampton
@@ -289,9 +289,9 @@ Morgan Gibbs-White,Wolverhampton Wanderers,Nott'm Forest,29500000.0,2022-08-19,2
 James McAtee,Manchester City,Nott'm Forest,25500000.0,2025-08-16,29,Nott'm Forest
 Anthony Elanga,Manchester United,Nott'm Forest,22930000.0,2023-07-25,29,Nott'm Forest
 Taiwo Awoniyi,Union Berlin,Nott'm Forest,20500000.0,2022-07-01,29,Nott'm Forest
-Mateo Retegui,Atalanta,Al-Qadsiah,61750000.0,2025-07-21,30,Al-Qadsiah
+Mateo Retegui,Atalanta,Al-Qadsiah,68250000.0,2025-07-21,30,Al-Qadsiah
 Equi Fernández,Boca Juniors,Al-Qadsiah,18700000.0,2024-08-05,30,Al-Qadsiah
-Christopher Bonsu Baah,Genk,Al-Qadsiah,17000000.0,2025-07-07,30,Al-Qadsiah
+Christopher Bonsu Baah,KRC Genk,Al-Qadsiah,17000000.0,2025-07-07,30,Al-Qadsiah
 Gabriel Carvalho,Internacional,Al-Qadsiah,15600000.0,2025-08-17,30,Al-Qadsiah
 Cameron Puertas,Union SG,Al-Qadsiah,15300000.0,2024-08-26,30,Al-Qadsiah
 Julián Quiñones,América,Al-Qadsiah,13800000.0,2024-07-18,30,Al-Qadsiah
@@ -310,7 +310,7 @@ Ramiz Zerrouki,Twente,Feyenoord,7200000.0,2023-07-01,31,Feyenoord
 In-beom Hwang,Red Star,Feyenoord,7000000.0,2024-09-02,31,Feyenoord
 Marcos Senesi,San Lorenzo,Feyenoord,7000000.0,2019-09-02,31,Feyenoord
 Joshua Zirkzee,Bayern Munich,Bologna,27500000.0,2022-08-30,32,Bologna
-Riccardo Calafiori,Basel,Bologna,23850000.0,2023-08-31,32,Bologna
+Riccardo Calafiori,Basel,Bologna,24500000.0,2023-08-31,32,Bologna
 Jonathan Rowe,Marseille,Bologna,17000000.0,2025-08-24,32,Bologna
 Dan Ndoye,Basel,Bologna,16450000.0,2023-08-14,32,Bologna
 Thijs Dallinga,Toulouse,Bologna,16200000.0,2024-07-23,32,Bologna
@@ -318,37 +318,37 @@ Riccardo Orsolini,Juventus,Bologna,15000000.0,2019-07-01,32,Bologna
 Musa Barrow,Atalanta,Bologna,14340000.0,2021-07-01,32,Bologna
 Santiago Castro,Vélez Sarsfield,Bologna,13200000.0,2024-01-30,32,Bologna
 Jesper Karlsson,AZ Alkmaar,Bologna,11150000.0,2023-08-23,32,Bologna
-Nicolò Cambiaghi,Atalanta,Bologna,11000000.0,2024-07-12,32,Bologna
+Martin Vitík,Sparta Prague,Bologna,11000000.0,2025-07-06,32,Bologna
 Georges Mikautadze,Lyon,Villarreal,31000000.0,2025-09-01,33,Villarreal
+Paco Alcácer,Borussia Dortmund,Villarreal,25000000.0,2020-01-30,33,Villarreal
 Renato Veiga,Chelsea,Villarreal,24500000.0,2025-08-22,33,Villarreal
 Arnaut Danjuma,Bournemouth,Villarreal,23500000.0,2021-08-19,33,Villarreal
 Thierno Barry,Basel,Villarreal,20000000.0,2024-08-21,33,Villarreal
 Gerard Moreno,Espanyol,Villarreal,20000000.0,2018-07-01,33,Villarreal
 Logan Costa,Toulouse,Villarreal,18000000.0,2024-08-22,33,Villarreal
+Karl Toko Ekambi,Angers SCO,Villarreal,18000000.0,2018-07-01,33,Villarreal
+Nilmar,Internacional,Villarreal,16500000.0,2009-07-25,33,Villarreal
 Pervis Estupiñán,Watford,Villarreal,16400000.0,2020-09-16,33,Villarreal
-Alberto Moleiro,Las Palmas,Villarreal,16000000.0,2025-07-01,33,Villarreal
-Juan Foyth,Tottenham Hotspur,Villarreal,15000000.0,2021-07-01,33,Villarreal
-Roger Martínez,JS Suning,Villarreal,14900000.0,2018-07-01,33,Villarreal
-Vedat Muriqi,Fenerbahçe,Lazio,21000000.0,2020-09-15,34,Lazio
+Hernán Crespo,Parma,Lazio,56810000.0,2000-07-11,34,Lazio
+Juan Sebastián Verón,Parma,Lazio,30000000.0,1999-07-01,34,Lazio
+Christian Vieri,Atletico Madrid,Lazio,28410000.0,1998-08-28,34,Lazio
+Jaap Stam,Manchester United,Lazio,25750000.0,2001-08-26,34,Lazio
+Claudio López,Valencia,Lazio,23000000.0,2000-07-01,34,Lazio
+Vedat Muriqi,Fenerbahce,Lazio,21000000.0,2020-09-15,34,Lazio
+Mauro Zárate,Al-Sadd,Lazio,20200000.0,2009-07-01,34,Lazio
 Taty Castellanos,New York City,Lazio,18600000.0,2023-07-21,34,Lazio
 Joaquín Correa,Sevilla,Lazio,17850000.0,2018-08-01,34,Lazio
-Nicolò Rovella,Juventus,Lazio,17000000.0,2025-07-01,34,Lazio
-Kenneth Taylor,Ajax,Lazio,16850000.0,2026-01-09,34,Lazio
-Tijjani Noslin,Hellas Verona,Lazio,16800000.0,2024-07-01,34,Lazio
-Manuel Lazzari,SPAL,Lazio,15000000.0,2019-07-12,34,Lazio
-Mattéo Guendouzi,Marseille,Lazio,14800000.0,2024-07-01,34,Lazio
-Gustav Isaksen,Midtjylland,Lazio,14400000.0,2023-08-08,34,Lazio
-Petar Ratkov,Salzburg,Lazio,13000000.0,2026-01-08,34,Lazio
+Marcelo Salas,River Plate,Lazio,17500000.0,1998-07-01,34,Lazio
 Emil Audero,Juventus,Sampdoria,20000000.0,2019-07-01,35,Sampdoria
 Duván Zapata,Napoli,Sampdoria,18500000.0,2018-07-01,35,Sampdoria
 Gianluca Caprari,Inter,Sampdoria,15000000.0,2017-07-01,35,Sampdoria
 Jakub Jankto,Udinese,Sampdoria,14500000.0,2019-07-01,35,Sampdoria
+Jeison Murillo,Valencia,Sampdoria,13300000.0,2020-01-14,35,Sampdoria
 Luis Muriel,Udinese,Sampdoria,12000000.0,2015-07-01,35,Sampdoria
+Manolo Gabbiadini,Southampton,Sampdoria,11900000.0,2019-01-11,35,Sampdoria
+,Valencia,Sampdoria,10800000.0,1998-07-28,35,Sampdoria
 Omar Colley,Genk,Sampdoria,9250000.0,2018-07-01,35,Sampdoria
-Joaquín Correa,Estudiantes LP,Sampdoria,8400000.0,2015-01-09,35,Sampdoria
-Dennis Praet,RSC Anderlecht,Sampdoria,8000000.0,2016-08-24,35,Sampdoria
-Ronaldo Vieira,Leeds United,Sampdoria,7350000.0,2018-08-01,35,Sampdoria
-Mikkel Damsgaard,Nordsjaelland,Sampdoria,6750000.0,2020-09-01,35,Sampdoria
+Giampaolo Pazzini,Fiorentina,Sampdoria,9000000.0,2009-01-15,35,Sampdoria
 Hugo Ekitiké,Paris Saint-Germain,Frankfurt,31500000.0,2024-07-01,36,Frankfurt
 Elye Wahi,Marseille,Frankfurt,26000000.0,2025-01-24,36,Frankfurt
 Luka Jović,Benfica,Frankfurt,22340000.0,2019-07-01,36,Frankfurt
@@ -361,56 +361,57 @@ Sébastien Haller,Utrecht,Frankfurt,12000000.0,2017-07-01,36,Frankfurt
 Can Uzun,Nuremberg,Frankfurt,11000000.0,2024-07-02,36,Frankfurt
 Breel Embolo,Basel,Schalke,26500000.0,2016-07-01,37,Schalke
 Nabil Bentaleb,Tottenham Hotspur,Schalke,19000000.0,2017-07-01,37,Schalke
+Sebastian Rudy,Bayern Munich,Schalke,16000000.0,2018-08-27,37,Schalke
 Ozan Kabak,Stuttgart,Schalke,15000000.0,2019-07-01,37,Schalke
+Klaas-Jan Huntelaar,AC Milan,Schalke,14000000.0,2010-08-30,37,Schalke
+Yevgen Konoplyanka,Sevilla,Schalke,12500000.0,2017-07-01,37,Schalke
 Suat Serdar,Mainz 05,Schalke,11000000.0,2018-07-01,37,Schalke
-Benito Raman,F. Düsseldorf,Schalke,10000000.0,2019-07-05,37,Schalke
-Omar Mascarell,Real Madrid,Schalke,10000000.0,2018-07-02,37,Schalke
-Matija Nastasić,Manchester City,Schalke,9500000.0,2015-07-01,37,Schalke
-Rabbi Matondo,Manchester City,Schalke,9000000.0,2019-01-30,37,Schalke
-Amine Harit,Nantes,Schalke,8000000.0,2017-07-10,37,Schalke
-Benjamin Stambouli,Paris Saint-Germain,Schalke,8000000.0,2016-08-26,37,Schalke
+José Manuel Jurado,Atletico Madrid,Schalke,11000000.0,2010-08-31,37,Schalke
+Johannes Geis,Mainz 05,Schalke,10500000.0,2015-07-01,37,Schalke
+Kevin-Prince Boateng,AC Milan,Schalke,10000000.0,2013-08-30,37,Schalke
 João Félix,Benfica,Atletico Madrid,127200000.0,2019-07-03,38,Atletico Madrid
 Julián Alvarez,Manchester City,Atletico Madrid,75000000.0,2024-08-12,38,Atletico Madrid
 Thomas Lemar,Monaco,Atletico Madrid,72000000.0,2018-07-01,38,Atletico Madrid
+Diego Costa,Chelsea,Atletico Madrid,60000000.0,2018-01-01,38,Atletico Madrid
 Antoine Griezmann,Real Sociedad,Atletico Madrid,54000000.0,2014-07-28,38,Atletico Madrid
 Conor Gallagher,Chelsea,Atletico Madrid,42000000.0,2024-08-21,38,Atletico Madrid
 Álex Baena,Villarreal,Atletico Madrid,42000000.0,2025-07-02,38,Atletico Madrid
 Radamel Falcao,Porto,Atletico Madrid,40000000.0,2011-08-18,38,Atletico Madrid
 Vitolo,Sevilla,Atletico Madrid,35600000.0,2017-07-12,38,Atletico Madrid
-Ademola Lookman,Atalanta,Atletico Madrid,35000000.0,2026-02-02,38,Atletico Madrid
-Álvaro Morata,Chelsea,Atletico Madrid,35000000.0,2020-07-01,38,Atletico Madrid
+Matheus Cunha,Hertha Berlin,Atletico Madrid,35000000.0,2021-08-25,38,Atletico Madrid
 Steven Bergwijn,Tottenham Hotspur,Ajax,31250000.0,2022-07-08,39,Ajax
 Calvin Bassey,Rangers,Ajax,23000000.0,2022-07-20,39,Ajax
 Sébastien Haller,West Ham United,Ajax,22500000.0,2021-01-08,39,Ajax
 Josip Sutalo,Dinamo Zagreb,Ajax,20500000.0,2023-08-20,39,Ajax
 David Neres,São Paulo,Ajax,17400000.0,2017-01-31,39,Ajax
 Brian Brobbey,RB Leipzig,Ajax,16350000.0,2022-07-22,39,Ajax
-Daley Blind,Manchester United,Ajax,16000000.0,2018-07-17,39,Ajax
+Miralem Sulejmani,Heerenveen,Ajax,16250000.0,2008-07-06,39,Ajax
 Georges Mikautadze,Metz,Ajax,16000000.0,2023-08-30,39,Ajax
+Daley Blind,Manchester United,Ajax,16000000.0,2018-07-17,39,Ajax
 Antony,São Paulo,Ajax,15750000.0,2020-07-01,39,Ajax
-Quincy Promes,Sevilla,Ajax,15700000.0,2019-07-01,39,Ajax
 Amine Gouiri,Nice,Rennes,28000000.0,2022-09-01,40,Rennes
 Jérémy Doku,RSC Anderlecht,Rennes,26000000.0,2020-10-05,40,Rennes
+Lucas Severino,Atlético-PR,Rennes,21300000.0,2000-07-01,40,Rennes
 Raphinha,Sporting CP,Rennes,21000000.0,2019-09-02,40,Rennes
-Seko Fofana,Al-Nassr,Rennes,20000000.0,2025-01-01,40,Rennes
-Arnaud Kalimuendo,Paris Saint-Germain,Rennes,20000000.0,2022-08-11,40,Rennes
 Enzo Le Fée,Lorient,Rennes,20000000.0,2023-07-07,40,Rennes
+Arnaud Kalimuendo,Paris Saint-Germain,Rennes,20000000.0,2022-08-11,40,Rennes
+Seko Fofana,Al-Nassr,Rennes,20000000.0,2025-01-01,40,Rennes
 Arthur Theate,Bologna,Rennes,19000000.0,2022-07-29,40,Rennes
-Ismaïla Sarr,Metz,Rennes,17000000.0,2017-07-26,40,Rennes
-Loïc Badé,Lens,Rennes,17000000.0,2021-07-05,40,Rennes
 Kamaldeen Sulemana,Nordsjaelland,Rennes,17000000.0,2021-07-16,40,Rennes
-Moussa Niakhaté,Nott'm Forest,Lyon,31900000.0,2024-07-04,41,Lyon
+Loïc Badé,Lens,Rennes,17000000.0,2021-07-05,40,Rennes
+Moussa Niakhaté,Forest,Lyon,31900000.0,2024-07-04,41,Lyon
 Ernest Nuamah,RWDM,Lyon,28500000.0,2024-07-07,41,Lyon
 Jeff Reine-Adélaïde,Angers SCO,Lyon,25000000.0,2019-08-14,41,Lyon
+Lisandro López,Porto,Lyon,24000000.0,2009-07-07,41,Lyon
 Joachim Andersen,Sampdoria,Lyon,24000000.0,2019-07-12,41,Lyon
-Orel Mangala,Nott'm Forest,Lyon,23400000.0,2024-07-02,41,Lyon
+Orel Mangala,Forest,Lyon,23400000.0,2024-07-02,41,Lyon
 Lucas Paquetá,AC Milan,Lyon,23000000.0,2020-09-30,41,Lyon
-Moussa Dembélé,Celtic,Lyon,22000000.0,2018-08-31,41,Lyon
 Thiago Mendes,Lille,Lyon,22000000.0,2019-07-03,41,Lyon
-Bruno Guimarães,Athletico-PR,Lyon,20000000.0,2020-01-30,41,Lyon
-Malick Fofana,KAA Gent,Lyon,19500000.0,2024-01-10,41,Lyon
+Moussa Dembélé,Celtic,Lyon,22000000.0,2018-08-31,41,Lyon
+Yoann Gourcuff,G. Bordeaux,Lyon,22000000.0,2010-08-25,41,Lyon
 Jørgen Strand Larsen,Wolverhampton Wanderers,Crystal Palace,49700000.0,2026-02-02,42,Crystal Palace
 Brennan Johnson,Tottenham Hotspur,Crystal Palace,40000000.0,2026-01-02,42,Crystal Palace
+Christian Benteke,Liverpool,Crystal Palace,31200000.0,2016-08-20,42,Crystal Palace
 Yéremy Pino,Villarreal,Crystal Palace,30000000.0,2025-08-29,42,Crystal Palace
 Eddie Nketiah,Arsenal,Crystal Palace,29700000.0,2024-08-30,42,Crystal Palace
 Mamadou Sakho,Liverpool,Crystal Palace,28200000.0,2017-08-31,42,Crystal Palace
@@ -418,7 +419,6 @@ Marc Guéhi,Chelsea,Crystal Palace,23340000.0,2021-07-18,42,Crystal Palace
 Jaydee Canvot,Toulouse,Crystal Palace,23000000.0,2025-09-01,42,Crystal Palace
 Cheick Doucouré,Lens,Crystal Palace,22600000.0,2022-07-11,42,Crystal Palace
 Adam Wharton,Blackburn,Crystal Palace,21100000.0,2024-02-01,42,Crystal Palace
-Matheus França,Flamengo,Crystal Palace,20000000.0,2023-08-05,42,Crystal Palace
 Neymar,Barcelona,Paris Saint-Germain,222000000.0,2017-08-03,43,Paris Saint-Germain
 Kylian Mbappé,Monaco,Paris Saint-Germain,180000000.0,2018-07-01,43,Paris Saint-Germain
 Randal Kolo Muani,Frankfurt,Paris Saint-Germain,95000000.0,2023-09-01,43,Paris Saint-Germain
@@ -429,6 +429,7 @@ Gonçalo Ramos,Benfica,Paris Saint-Germain,65000000.0,2024-01-01,43,Paris Saint-
 Edinson Cavani,Napoli,Paris Saint-Germain,64500000.0,2013-07-16,43,Paris Saint-Germain
 Ilya Zabarnyi,Bournemouth,Paris Saint-Germain,63000000.0,2025-08-12,43,Paris Saint-Germain
 Ángel Di María,Manchester United,Paris Saint-Germain,63000000.0,2015-08-06,43,Paris Saint-Germain
+,São Paulo,Real Betis,30000000.0,1998-07-30,44,Real Betis
 Borja Iglesias,Espanyol,Real Betis,28000000.0,2019-08-14,44,Real Betis
 Antony,Manchester United,Real Betis,22000000.0,2025-09-01,44,Real Betis
 Giovani Lo Celso,Paris Saint-Germain,Real Betis,22000000.0,2019-07-01,44,Real Betis
@@ -438,7 +439,6 @@ Diego Lainez,América,Real Betis,14000000.0,2019-01-10,44,Real Betis
 Cucho Hernández,Columbus,Real Betis,13000000.0,2025-02-03,44,Real Betis
 Nelson Deossa,Monterrey,Real Betis,11700000.0,2025-08-04,44,Real Betis
 Marc Bartra,Borussia Dortmund,Real Betis,10500000.0,2018-01-30,44,Real Betis
-Luiz Henrique,Fluminense,Real Betis,10400000.0,2022-07-01,44,Real Betis
 Roman Yaremchuk,Benfica,Brugge,17000000.0,2022-08-29,45,Brugge
 Igor Thiago,Ludogorets,Brugge,11000000.0,2023-07-01,45,Brugge
 Raphael Onyedika,Midtjylland,Brugge,9500000.0,2022-08-28,45,Brugge
@@ -461,34 +461,34 @@ Jannik Schuster,Salzburg,Brentford,18000000.0,2026-07-01,46,Brentford
 Michael Kayode,Fiorentina,Brentford,17500000.0,2025-07-01,46,Brentford
 Rafael Leão,Lille,AC Milan,49500000.0,2019-08-01,47,AC Milan
 Leonardo Bonucci,Juventus,AC Milan,42000000.0,2017-07-21,47,AC Milan
+Rui Costa,Fiorentina,AC Milan,41320000.0,2001-07-03,47,AC Milan
 Lucas Paquetá,Flamengo,AC Milan,38400000.0,2019-01-03,47,AC Milan
 André Silva,Porto,AC Milan,38000000.0,2017-07-01,47,AC Milan
 Mattia Caldara,Juventus,AC Milan,37740000.0,2018-08-02,47,AC Milan
 Charles De Ketelaere,Brugge,AC Milan,37500000.0,2022-08-02,47,AC Milan
 Christopher Nkunku,Chelsea,AC Milan,37000000.0,2025-08-30,47,AC Milan
+Filippo Inzaghi,Juventus,AC Milan,36150000.0,2001-07-02,47,AC Milan
 Ardon Jashari,Brugge,AC Milan,36000000.0,2025-08-06,47,AC Milan
-Fikayo Tomori,Chelsea,AC Milan,35300000.0,2021-07-01,47,AC Milan
-Krzysztof Piatek,Genoa,AC Milan,35000000.0,2019-01-23,47,AC Milan
 Youri Tielemans,Monaco,Leicester City,45000000.0,2019-07-08,48,Leicester City
 Wesley Fofana,Saint-Étienne,Leicester City,35000000.0,2020-10-02,48,Leicester City
 Ayoze Pérez,Newcastle United,Leicester City,33400000.0,2019-07-04,48,Leicester City
 Islam Slimani,Sporting CP,Leicester City,31000000.0,2016-08-31,48,Leicester City
+Patson Daka,RB Salzburg,Leicester City,30000000.0,2021-07-01,48,Leicester City
 Kelechi Iheanacho,Manchester City,Leicester City,27700000.0,2017-08-03,48,Leicester City
 James Maddison,Norwich,Leicester City,25000000.0,2018-07-01,48,Leicester City
 Oliver Skipp,Tottenham Hotspur,Leicester City,23500000.0,2024-08-19,48,Leicester City
 Bilal El Khannouss,Genk,Leicester City,22500000.0,2024-08-29,48,Leicester City
 Ricardo Pereira,Porto,Leicester City,22000000.0,2018-07-01,48,Leicester City
-Çağlar Söyüncü,Freiburg,Leicester City,21100000.0,2018-08-09,48,Leicester City
 Vitor Roque,Barcelona,Palmeiras,25500000.0,2025-02-28,49,Palmeiras
 Jhon Arias,Wolverhampton Wanderers,Palmeiras,25000000.0,2026-02-07,49,Palmeiras
 Paulinho,Atlético-MG,Palmeiras,18000000.0,2025-01-01,49,Palmeiras
 Facundo Torres,Orlando,Palmeiras,13100000.0,2025-01-03,49,Palmeiras
-Ramón Sosa,Nott'm Forest,Palmeiras,12500000.0,2025-07-09,49,Palmeiras
+Ramón Sosa,Forest,Palmeiras,12500000.0,2025-07-09,49,Palmeiras
+Miguel Borja,Atl. Nacional,Palmeiras,12000000.0,2017-02-10,49,Palmeiras
 Mauricio,Internacional,Palmeiras,10500000.0,2024-07-10,49,Palmeiras
 Andreas Pereira,Fulham,Palmeiras,10000000.0,2025-08-29,49,Palmeiras
 José Manuel López,Lanús,Palmeiras,9500000.0,2022-07-18,49,Palmeiras
 Matías Viña,Nacional,Palmeiras,8360000.0,2020-01-31,49,Palmeiras
-Artur,RB Bragantino,Palmeiras,8000000.0,2023-03-31,49,Palmeiras
 Rodrigo Zalazar,Braga,Sporting CP,30000000.0,2026-07-01,50,Sporting CP
 Manuel Ugarte,Famalicão,Sporting CP,24500000.0,2021-08-09,50,Sporting CP
 Viktor Gyökeres,Coventry,Sporting CP,24000000.0,2023-07-13,50,Sporting CP
@@ -505,10 +505,10 @@ Matthijs de Ligt,Ajax,Juventus,85500000.0,2019-07-18,51,Juventus
 Dušan Vlahović,Fiorentina,Juventus,85400000.0,2022-01-28,51,Juventus
 Arthur Melo,Barcelona,Juventus,80600000.0,2020-09-01,51,Juventus
 Teun Koopmeiners,Atalanta,Juventus,58400000.0,2024-08-28,51,Juventus
+Gianluigi Buffon,Parma,Juventus,52880000.0,2001-07-03,51,Juventus
 Douglas Luiz,Aston Villa,Juventus,51500000.0,2024-07-01,51,Juventus
 Bremer,Torino,Juventus,51300000.0,2022-07-20,51,Juventus
-Federico Chiesa,Fiorentina,Juventus,44600000.0,2022-07-01,51,Juventus
-Loïs Openda,RB Leipzig,Juventus,42750000.0,2026-07-01,51,Juventus
+Pavel Nedved,Lazio,Juventus,45000000.0,2001-07-01,51,Juventus
 Declan Rice,West Ham United,Arsenal,116600000.0,2023-07-15,52,Arsenal
 Nicolas Pépé,Lille,Arsenal,80000000.0,2019-08-01,52,Arsenal
 Kai Havertz,Chelsea,Arsenal,75000000.0,2023-07-01,52,Arsenal
@@ -526,9 +526,9 @@ Suso,AC Milan,Sevilla,21700000.0,2020-07-21,53,Sevilla
 Quincy Promes,Spartak Moscow,Sevilla,21000000.0,2018-08-31,53,Sevilla
 Youssef En-Nesyri,Leganés,Sevilla,20000000.0,2020-01-16,53,Sevilla
 Joaquín Correa,Sampdoria,Sevilla,18200000.0,2016-07-10,53,Sevilla
+Munas Dabbur,RB Salzburg,Sevilla,17000000.0,2019-07-01,53,Sevilla
 Franco Vázquez,Palermo,Sevilla,16800000.0,2016-07-16,53,Sevilla
 Tanguy Nianzou,Bayern Munich,Sevilla,16000000.0,2022-08-17,53,Sevilla
-Rafa Mir,Wolverhampton Wanderers,Sevilla,16000000.0,2021-08-20,53,Sevilla
 Moussa Diaby,Aston Villa,Al-Ittihad,60000000.0,2024-07-24,54,Al-Ittihad
 Fabinho,Liverpool,Al-Ittihad,46700000.0,2023-07-31,54,Al-Ittihad
 George Ilenikhena,Monaco,Al-Ittihad,33000000.0,2026-02-02,54,Al-Ittihad
@@ -537,28 +537,28 @@ Jota,Celtic,Al-Ittihad,29100000.0,2023-07-03,54,Al-Ittihad
 Luiz Felipe,Real Betis,Al-Ittihad,22000000.0,2023-09-07,54,Al-Ittihad
 Steven Bergwijn,Ajax,Al-Ittihad,21000000.0,2024-09-02,54,Al-Ittihad
 Mahamadou Doumbia,Royal Antwerp,Al-Ittihad,16000000.0,2025-09-08,54,Al-Ittihad
-Jan-Carlo Simić,RSC Anderlecht,Al-Ittihad,15000000.0,2026-07-01,54,Al-Ittihad
 Youssef En-Nesyri,Fenerbahçe,Al-Ittihad,15000000.0,2026-02-02,54,Al-Ittihad
-Malik Tillman,PSV Eindhoven,Bayer Leverkusen,35000000.0,2025-07-12,55,Bayer Leverkusen
+Jan-Carlo Simić,RSC Anderlecht,Al-Ittihad,15000000.0,2026-07-01,54,Al-Ittihad
 Jarell Quansah,Liverpool,Bayer Leverkusen,35000000.0,2025-07-02,55,Bayer Leverkusen
-Eliesse Ben Seghir,Monaco,Bayer Leverkusen,32000000.0,2025-08-31,55,Bayer Leverkusen
+Malik Tillman,PSV Eindhoven,Bayer Leverkusen,35000000.0,2025-07-12,55,Bayer Leverkusen
 Kerem Demirbay,Hoffenheim,Bayer Leverkusen,32000000.0,2019-07-01,55,Bayer Leverkusen
+Eliesse Ben Seghir,Monaco,Bayer Leverkusen,32000000.0,2025-08-31,55,Bayer Leverkusen
 Patrik Schick,Roma,Bayer Leverkusen,26500000.0,2020-09-08,55,Bayer Leverkusen
-Equi Fernández,Al-Qadsiah,Bayer Leverkusen,25000000.0,2025-09-01,55,Bayer Leverkusen
 Loïc Badé,Sevilla,Bayer Leverkusen,25000000.0,2025-08-21,55,Bayer Leverkusen
+Equi Fernández,Al-Qadsiah,Bayer Leverkusen,25000000.0,2025-09-01,55,Bayer Leverkusen
 Nathan Tella,Southampton,Bayer Leverkusen,23300000.0,2023-08-27,55,Bayer Leverkusen
 Odilon Kossounou,Brugge,Bayer Leverkusen,23000000.0,2021-07-22,55,Bayer Leverkusen
 Victor Boniface,Union SG,Bayer Leverkusen,22600000.0,2023-07-22,55,Bayer Leverkusen
 Kevin,Shakhtar D,Fulham,40000000.0,2025-09-01,56,Fulham
 Emile Smith Rowe,Arsenal,Fulham,31800000.0,2024-08-02,56,Fulham
 Oscar Bobb,Manchester City,Fulham,31200000.0,2026-01-30,56,Fulham
+Jean Michaël Seri,Nice,Fulham,30000000.0,2018-07-12,56,Fulham
 Joachim Andersen,Crystal Palace,Fulham,29500000.0,2024-08-23,56,Fulham
 Alex Iwobi,Everton,Fulham,25700000.0,2023-09-01,56,Fulham
 João Palhinha,Sporting CP,Fulham,24900000.0,2022-07-04,56,Fulham
 Frank Anguissa,Marseille,Fulham,24850000.0,2018-08-09,56,Fulham
 Aleksandar Mitrović,Newcastle United,Fulham,24700000.0,2018-07-30,56,Fulham
 Sander Berge,Burnley,Fulham,23550000.0,2024-08-22,56,Fulham
-Calvin Bassey,Ajax,Fulham,22500000.0,2023-07-28,56,Fulham
 Matheus Cunha,Atletico Madrid,Wolverhampton Wanderers,50000000.0,2023-07-01,57,Wolverhampton Wanderers
 Matheus Nunes,Sporting CP,Wolverhampton Wanderers,47400000.0,2022-08-18,57,Wolverhampton Wanderers
 Fábio Silva,Porto,Wolverhampton Wanderers,40000000.0,2020-09-05,57,Wolverhampton Wanderers
@@ -566,7 +566,7 @@ Raúl Jiménez,Benfica,Wolverhampton Wanderers,38000000.0,2019-07-01,57,Wolverha
 Gonçalo Guedes,Valencia,Wolverhampton Wanderers,32600000.0,2022-08-08,57,Wolverhampton Wanderers
 Nélson Semedo,Barcelona,Wolverhampton Wanderers,32000000.0,2020-09-23,57,Wolverhampton Wanderers
 Jørgen Strand Larsen,Celta Vigo,Wolverhampton Wanderers,27000000.0,2025-07-01,57,Wolverhampton Wanderers
-Tolu Arokodare,Genk,Wolverhampton Wanderers,26000000.0,2025-09-01,57,Wolverhampton Wanderers
+Tolu Arokodare,KRC Genk,Wolverhampton Wanderers,26000000.0,2025-09-01,57,Wolverhampton Wanderers
 Nathan Collins,Burnley,Wolverhampton Wanderers,24300000.0,2022-07-12,57,Wolverhampton Wanderers
 Fer López,Celta Vigo,Wolverhampton Wanderers,23000000.0,2025-07-01,57,Wolverhampton Wanderers
 Paul Pogba,Juventus,Manchester United,105000000.0,2016-08-09,58,Manchester United
@@ -576,19 +576,19 @@ Jadon Sancho,Borussia Dortmund,Manchester United,85000000.0,2021-07-23,58,Manche
 Romelu Lukaku,Everton,Manchester United,84700000.0,2017-07-10,58,Manchester United
 Rasmus Højlund,Atalanta,Manchester United,79800000.0,2023-08-05,58,Manchester United
 Benjamin Sesko,RB Leipzig,Manchester United,76500000.0,2025-08-09,58,Manchester United
-Bryan Mbeumo,Brentford,Manchester United,75000000.0,2025-07-21,58,Manchester United
 Ángel Di María,Real Madrid,Manchester United,75000000.0,2014-08-26,58,Manchester United
+Bryan Mbeumo,Brentford,Manchester United,75000000.0,2025-07-21,58,Manchester United
 Matheus Cunha,Wolverhampton Wanderers,Manchester United,74200000.0,2025-07-01,58,Manchester United
 Victor Osimhen,Lille,Napoli,78900000.0,2020-09-01,59,Napoli
 Hirving Lozano,PSV Eindhoven,Napoli,50000000.0,2019-08-23,59,Napoli
 Rasmus Højlund,Manchester United,Napoli,44000000.0,2026-07-01,59,Napoli
+Gonzalo Higuaín,Real Madrid,Napoli,39000000.0,2013-07-27,59,Napoli
 Alessandro Buongiorno,Torino,Napoli,36500000.0,2024-07-13,59,Napoli
 Konstantinos Manolas,Roma,Napoli,36000000.0,2019-07-01,59,Napoli
 Arkadiusz Milik,Ajax,Napoli,32000000.0,2016-08-01,59,Napoli
 Sam Beukema,Bologna,Napoli,31000000.0,2025-07-20,59,Napoli
 Romelu Lukaku,Chelsea,Napoli,30700000.0,2024-08-29,59,Napoli
 Scott McTominay,Manchester United,Napoli,30500000.0,2024-08-30,59,Napoli
-Fabián Ruiz,Real Betis,Napoli,30000000.0,2018-07-05,59,Napoli
 Sébastien Haller,Frankfurt,West Ham United,50000000.0,2019-07-17,60,West Ham United
 Maximilian Kilman,Wolverhampton Wanderers,West Ham United,47500000.0,2024-07-06,60,West Ham United
 Mateus Fernandes,Southampton,West Ham United,44000000.0,2025-08-29,60,West Ham United
@@ -601,14 +601,14 @@ Felipe Anderson,Lazio,West Ham United,38000000.0,2018-07-15,60,West Ham United
 Nayef Aguerd,Rennes,West Ham United,35000000.0,2022-07-01,60,West Ham United
 Georginio Rutter,Hoffenheim,Leeds United,40500000.0,2023-01-14,61,Leeds United
 Brenden Aaronson,Salzburg,Leeds United,32840000.0,2022-07-01,61,Leeds United
+Rodrigo,Valencia,Leeds United,30000000.0,2020-08-29,61,Leeds United
 Daniel James,Manchester United,Leeds United,29100000.0,2021-08-31,61,Leeds United
+Rio Ferdinand,West Ham United,Leeds United,26000000.0,2000-11-26,61,Leeds United
 Luis Sinisterra,Feyenoord,Leeds United,25000000.0,2022-07-07,61,Leeds United
+Jean-Kévin Augustin,RB Leipzig,Leeds United,21000000.0,2020-07-01,61,Leeds United
 Anton Stach,Hoffenheim,Leeds United,20000000.0,2025-07-22,61,Leeds United
 Diego Llorente,Real Sociedad,Leeds United,20000000.0,2020-09-24,61,Leeds United
 Noah Okafor,AC Milan,Leeds United,19000000.0,2025-08-21,61,Leeds United
-Raphinha,Rennes,Leeds United,18600000.0,2020-10-05,61,Leeds United
-Jaka Bijol,Udinese,Leeds United,18000000.0,2025-07-01,61,Leeds United
-Hélder Costa,Wolverhampton Wanderers,Leeds United,17700000.0,2020-07-01,61,Leeds United
 Raúl de Tomás,Benfica,Espanyol,22500000.0,2020-01-09,62,Espanyol
 Mario Hermoso,RM,Espanyol,12500000.0,2017-07-12,62,Espanyol
 Matías Vargas,Vélez Sarsfield,Espanyol,10500000.0,2019-07-14,62,Espanyol
@@ -646,9 +646,9 @@ Luiz Henrique,Botafogo,Zenit S-Pb,33000000.0,2025-01-20,65,Zenit S-Pb
 Gerson,Flamengo,Zenit S-Pb,25000000.0,2025-07-04,65,Zenit S-Pb
 Yuri Alberto,Internacional,Zenit S-Pb,25000000.0,2022-01-31,65,Zenit S-Pb
 Leandro Paredes,Roma,Zenit S-Pb,23000000.0,2017-07-01,65,Zenit S-Pb
+Bruno Alves,Porto,Zenit S-Pb,22000000.0,2010-08-03,65,Zenit S-Pb
 Wendel,Sporting CP,Zenit S-Pb,20300000.0,2020-10-06,65,Zenit S-Pb
 Salomón Rondón,Rubin Kazan,Zenit S-Pb,18000000.0,2014-01-31,65,Zenit S-Pb
-Jhon Jhon,RB Bragantino,Zenit S-Pb,18000000.0,2026-01-28,65,Zenit S-Pb
 Mio Backhaus,Werder Bremen,Freiburg,12000000.0,2026-07-01,66,Freiburg
 Ritsu Doan,PSV Eindhoven,Freiburg,10400000.0,2022-07-05,66,Freiburg
 Baptiste Santamaria,Angers SCO,Freiburg,10000000.0,2020-09-17,66,Freiburg
@@ -664,11 +664,11 @@ Darwin Núñez,Almería,Benfica,34000000.0,2020-09-04,67,Benfica
 Orkun Kökçü,Feyenoord,Benfica,29700000.0,2023-07-01,67,Benfica
 Richard Ríos,Palmeiras,Benfica,27000000.0,2025-07-22,67,Benfica
 Franjo Ivanović,Union SG,Benfica,22800000.0,2025-07-31,67,Benfica
-Marcos Leonardo,Santos,Benfica,22000000.0,2024-01-04,67,Benfica
 Raúl Jiménez,Atletico Madrid,Benfica,22000000.0,2015-08-13,67,Benfica
+Marcos Leonardo,Santos,Benfica,22000000.0,2024-01-04,67,Benfica
 Arthur Cabral,Fiorentina,Benfica,21000000.0,2023-08-10,67,Benfica
 Georgiy Sudakov,Shakhtar D,Benfica,20250000.0,2026-07-01,67,Benfica
-Dodi Lukébakio,Sevilla,Benfica,20000000.0,2025-09-01,67,Benfica
+Raúl de Tomás,Real Madrid,Benfica,20000000.0,2019-07-03,67,Benfica
 Enzo Fernández,Benfica,Chelsea,121000000.0,2023-01-31,68,Chelsea
 Moisés Caicedo,Brighton & Hove Albion,Chelsea,116000000.0,2023-08-14,68,Chelsea
 Romelu Lukaku,Inter,Chelsea,113000000.0,2021-08-12,68,Chelsea
@@ -680,7 +680,7 @@ Mykhaylo Mudryk,Shakhtar D,Chelsea,70000000.0,2023-01-15,68,Chelsea
 Marc Cucurella,Brighton & Hove Albion,Chelsea,65300000.0,2022-08-05,68,Chelsea
 Christian Pulisic,Borussia Dortmund,Chelsea,64000000.0,2019-01-02,68,Chelsea
 Rhian Brewster,Liverpool,Sheff Utd,26000000.0,2020-10-02,69,Sheff Utd
-Sander Berge,Genk,Sheff Utd,25000000.0,2020-01-30,69,Sheff Utd
+Sander Berge,KRC Genk,Sheff Utd,25000000.0,2020-01-30,69,Sheff Utd
 Cameron Archer,Aston Villa,Sheff Utd,21550000.0,2023-08-27,69,Sheff Utd
 Aaron Ramsdale,Bournemouth,Sheff Utd,20500000.0,2020-08-19,69,Sheff Utd
 Oli McBurnie,Swansea,Sheff Utd,19100000.0,2019-08-02,69,Sheff Utd
@@ -688,17 +688,17 @@ Gustavo Hamer,Coventry,Sheff Utd,17300000.0,2023-08-12,69,Sheff Utd
 Vini Souza,Lommel,Sheff Utd,12500000.0,2023-08-09,69,Sheff Utd
 Tom Cannon,Leicester City,Sheff Utd,11850000.0,2025-01-23,69,Sheff Utd
 Lys Mousset,Bournemouth,Sheff Utd,11100000.0,2019-07-21,69,Sheff Utd
-Oliver Burke,West Brom,Sheff Utd,6500000.0,2020-09-09,69,Sheff Utd
+Callum Robinson,Preston,Sheff Utd,7800000.0,2019-07-12,69,Sheff Utd
 Victor Osimhen,Napoli,Galatasaray,75000000.0,2025-07-31,70,Galatasaray
 Wilfried Singo,Monaco,Galatasaray,30770000.0,2025-08-28,70,Galatasaray
 Uğurcan Çakır,Trabzonspor,Galatasaray,27500000.0,2025-09-01,70,Galatasaray
 Gabriel Sara,Norwich,Galatasaray,18000000.0,2024-08-04,70,Galatasaray
+,Porto,Galatasaray,17050000.0,2000-07-27,70,Galatasaray
 Nicolò Zaniolo,Roma,Galatasaray,15000000.0,2023-02-08,70,Galatasaray
 Bruma,Sporting CP,Galatasaray,13000000.0,2013-09-03,70,Galatasaray
-Younès Belhanda,Dynamo Kyiv,Galatasaray,10000000.0,2017-07-03,70,Galatasaray
+Mbaye Diagne,Kasimpasa,Galatasaray,13000000.0,2019-01-31,70,Galatasaray
 Mauro Icardi,Paris Saint-Germain,Galatasaray,10000000.0,2023-07-26,70,Galatasaray
-Davinson Sánchez,Tottenham Hotspur,Galatasaray,9500000.0,2023-09-04,70,Galatasaray
-Elias Jelert,Copenhagen,Galatasaray,9000000.0,2024-07-25,70,Galatasaray
+Younès Belhanda,Dynamo Kyiv,Galatasaray,10000000.0,2017-07-03,70,Galatasaray
 Nahitan Nández,Boca Juniors,Cagliari,16200000.0,2019-08-09,71,Cagliari
 Marko Rog,Napoli,Cagliari,15000000.0,2020-09-01,71,Cagliari
 Giovanni Simeone,Fiorentina,Cagliari,13000000.0,2020-09-01,71,Cagliari
@@ -708,7 +708,7 @@ Alberto Cerri,Juventus,Cagliari,9000000.0,2019-07-01,71,Cagliari
 Elia Caprile,Napoli,Cagliari,8200000.0,2025-07-01,71,Cagliari
 Filippo Romagna,Juventus,Cagliari,7400000.0,2017-07-28,71,Cagliari
 Răzvan Marin,Ajax,Cagliari,6900000.0,2021-07-01,71,Cagliari
-Gianluca Gaetano,Napoli,Cagliari,6200000.0,2025-07-01,71,Cagliari
+Federico Marchetti,UC AlbinoLeffe,Cagliari,6700000.0,2008-07-01,71,Cagliari
 Terem Moffi,Lorient,Nice,22500000.0,2023-07-01,72,Nice
 Sofiane Diop,Monaco,Nice,22000000.0,2022-08-29,72,Nice
 Kasper Dolberg,Ajax,Nice,20500000.0,2019-08-29,72,Nice
@@ -716,19 +716,19 @@ Jérémie Boga,Atalanta,Nice,17500000.0,2023-07-25,72,Nice
 Jean-Clair Todibo,Barcelona,Nice,16500000.0,2021-07-01,72,Nice
 Calvin Stengs,AZ Alkmaar,Nice,15000000.0,2021-07-14,72,Nice
 Gaëtan Laborde,Rennes,Nice,15000000.0,2022-09-01,72,Nice
-Alexis Claude-Maurice,Lorient,Nice,13000000.0,2019-08-29,72,Nice
 Mattia Viti,Empoli,Nice,13000000.0,2022-08-03,72,Nice
+Alexis Claude-Maurice,Lorient,Nice,13000000.0,2019-08-29,72,Nice
 Stanley Nsoki,Paris Saint-Germain,Nice,12500000.0,2019-08-31,72,Nice
 Thiago Almada,Atlanta,Botafogo,24150000.0,2024-07-10,73,Botafogo
-Danilo,Nott'm Forest,Botafogo,23000000.0,2025-07-18,73,Botafogo
+Danilo,Forest,Botafogo,23000000.0,2025-07-18,73,Botafogo
 Luiz Henrique,Real Betis,Botafogo,16000000.0,2024-02-01,73,Botafogo
 Santiago Rodríguez,New York City,Botafogo,14300000.0,2025-02-22,73,Botafogo
 Arthur Cabral,Benfica,Botafogo,12000000.0,2025-06-08,73,Botafogo
 Jair Cunha,Santos,Botafogo,12000000.0,2025-02-10,73,Botafogo
 Artur,Zenit S-Pb,Botafogo,10000000.0,2025-01-20,73,Botafogo
 Matheus Martins,Udinese,Botafogo,10000000.0,2024-07-30,73,Botafogo
+Rwan Cruz,Ludogorets,Botafogo,10000000.0,2025-02-07,73,Botafogo
 Vitinho,Burnley,Botafogo,8000000.0,2024-08-30,73,Botafogo
-Álvaro Montoro,Vélez Sarsfield,Botafogo,7900000.0,2025-06-03,73,Botafogo
 Alexander Isak,Real Sociedad,Newcastle United,77500000.0,2022-08-26,74,Newcastle United
 Nick Woltemade,Stuttgart,Newcastle United,75000000.0,2025-08-30,74,Newcastle United
 Anthony Elanga,Nott'm Forest,Newcastle United,61400000.0,2025-07-11,74,Newcastle United
@@ -746,29 +746,29 @@ Roberto Pereyra,Juventus,Watford,13500000.0,2016-08-19,75,Watford
 Gerard Deulofeu,Barcelona,Watford,13000000.0,2018-07-01,75,Watford
 Richarlison,Fluminense,Watford,12400000.0,2017-08-08,75,Watford
 João Pedro,Fluminense,Watford,11500000.0,2020-01-01,75,Watford
+Adalberto Peñaranda,Udinese,Watford,10600000.0,2016-02-01,75,Watford
 Abdoulaye Doucouré,Rennes,Watford,10600000.0,2016-02-01,75,Watford
 Imrân Louza,Nantes,Watford,10000000.0,2021-07-01,75,Watford
-Will Hughes,Derby,Watford,9100000.0,2017-07-01,75,Watford
 Jaden Philogene,Aston Villa,Ipswich,23700000.0,2025-01-15,76,Ipswich
 Omari Hutchinson,Chelsea,Ipswich,23500000.0,2024-07-01,76,Ipswich
 Jacob Greaves,Hull City,Ipswich,21500000.0,2024-07-12,76,Ipswich
+Sindre Walle Egeli,Nordsjaelland,Ipswich,20000000.0,2025-08-29,76,Ipswich
 Liam Delap,Manchester City,Ipswich,17850000.0,2024-07-13,76,Ipswich
 Jack Clarke,Sunderland,Ipswich,17700000.0,2024-08-24,76,Ipswich
 Dara O'Shea,Burnley,Ipswich,14200000.0,2024-08-25,76,Ipswich
 Kasey McAteer,Leicester City,Ipswich,13900000.0,2025-08-22,76,Ipswich
 Azor Matusiwa,Rennes,Ipswich,11500000.0,2025-07-13,76,Ipswich
 Sammie Szmodics,Blackburn,Ipswich,10600000.0,2024-08-16,76,Ipswich
-Arijanet Murić,Burnley,Ipswich,9550000.0,2024-07-17,76,Ipswich
 Ruben van Bommel,AZ Alkmaar,PSV Eindhoven,15800000.0,2025-07-11,77,PSV Eindhoven
 Hirving Lozano,Napoli,PSV Eindhoven,15000000.0,2023-09-01,77,PSV Eindhoven
 Paul Wanner,Bayern Munich,PSV Eindhoven,15000000.0,2025-08-22,77,PSV Eindhoven
+,Partizan,PSV Eindhoven,14000000.0,2000-07-01,77,PSV Eindhoven
 Noa Lang,Brugge,PSV Eindhoven,12500000.0,2023-07-08,77,PSV Eindhoven
 Jerdy Schouten,Bologna,PSV Eindhoven,12350000.0,2023-08-16,77,PSV Eindhoven
+Bruma,RB Leipzig,PSV Eindhoven,12000000.0,2019-07-01,77,PSV Eindhoven
 Malik Tillman,Bayern Munich,PSV Eindhoven,12000000.0,2024-07-01,77,PSV Eindhoven
 Timo Baumgartl,Stuttgart,PSV Eindhoven,12000000.0,2019-07-26,77,PSV Eindhoven
-Bruma,RB Leipzig,PSV Eindhoven,12000000.0,2019-07-01,77,PSV Eindhoven
 Ricardo Pepi,Augsburg,PSV Eindhoven,11000000.0,2023-07-07,77,PSV Eindhoven
-Philipp Max,Augsburg,PSV Eindhoven,10000000.0,2020-09-02,77,PSV Eindhoven
 Gylfi Sigurdsson,Swansea,Everton,49400000.0,2017-08-16,78,Everton
 Tyler Dibling,Southampton,Everton,40500000.0,2025-08-25,78,Everton
 Amadou Onana,Lille,Everton,39870000.0,2022-08-09,78,Everton
@@ -779,16 +779,16 @@ Yerry Mina,Barcelona,Everton,30250000.0,2018-08-09,78,Everton
 Thierno Barry,Villarreal,Everton,30000000.0,2025-07-09,78,Everton
 Yannick Bolasie,Crystal Palace,Everton,28900000.0,2016-08-15,78,Everton
 Kiernan Dewsbury-Hall,Chelsea,Everton,28650000.0,2025-08-06,78,Everton
+Julian Draxler,Schalke,Wolfsburg,43000000.0,2015-08-31,79,Wolfsburg
+André Schürrle,Chelsea,Wolfsburg,32000000.0,2015-02-02,79,Wolfsburg
 Lovro Majer,Rennes,Wolfsburg,25000000.0,2023-08-16,79,Wolfsburg
 Kevin De Bruyne,Chelsea,Wolfsburg,22000000.0,2014-01-18,79,Wolfsburg
 John Brooks,Hertha Berlin,Wolfsburg,17000000.0,2017-07-01,79,Wolfsburg
 Luiz Gustavo,Bayern Munich,Wolfsburg,16000000.0,2013-08-16,79,Wolfsburg
+Diego,Juventus,Wolfsburg,15500000.0,2010-08-27,79,Wolfsburg
 Vini Souza,Sheff Utd,Wolfsburg,15000000.0,2025-07-05,79,Wolfsburg
 Mohamed Amoura,Union SG,Wolfsburg,14750000.0,2025-07-01,79,Wolfsburg
 Sebastiaan Bornauw,Köln,Wolfsburg,14100000.0,2021-07-16,79,Wolfsburg
-Andreas Skov Olsen,Brugge,Wolfsburg,14000000.0,2025-01-17,79,Wolfsburg
-Kamil Grabara,Copenhagen,Wolfsburg,13500000.0,2024-07-01,79,Wolfsburg
-Yannick Gerhardt,Köln,Wolfsburg,13000000.0,2016-07-01,79,Wolfsburg
 Jesús Rodríguez,Real Betis,Como,22500000.0,2025-07-02,80,Como
 Nicolas Kühn,Celtic,Como,19000000.0,2025-07-11,80,Como
 Martin Baturina,Dinamo Zagreb,Como,18000000.0,2025-07-01,80,Como
@@ -812,27 +812,27 @@ Petar Ratkov,TSC,Salzburg,6950000.0,2023-07-01,81,Salzburg
 James Rodríguez,Porto,Monaco,45000000.0,2013-07-01,82,Monaco
 Radamel Falcao,Atletico Madrid,Monaco,43000000.0,2013-07-01,82,Monaco
 Wissam Ben Yedder,Sevilla,Monaco,40000000.0,2019-08-14,82,Monaco
-Aleksandr Golovin,CSKA Moscow,Monaco,30000000.0,2018-07-27,82,Monaco
+Keita Baldé,Lazio,Monaco,30000000.0,2017-08-29,82,Monaco
 Gelson Martins,Atletico Madrid,Monaco,30000000.0,2019-07-01,82,Monaco
 Folarin Balogun,Arsenal,Monaco,30000000.0,2023-08-30,82,Monaco
-Keita Baldé,Lazio,Monaco,30000000.0,2017-08-29,82,Monaco
-João Moutinho,Porto,Monaco,25000000.0,2013-07-01,82,Monaco
+Aleksandr Golovin,CSKA Moscow,Monaco,30000000.0,2018-07-27,82,Monaco
 Youri Tielemans,RSC Anderlecht,Monaco,25000000.0,2017-07-01,82,Monaco
+João Moutinho,Porto,Monaco,25000000.0,2013-07-01,82,Monaco
 Pietro Pellegri,Genoa,Monaco,20900000.0,2018-01-27,82,Monaco
 Gonçalo Guedes,Paris Saint-Germain,Valencia,40000000.0,2018-08-27,83,Valencia
 Jasper Cillessen,Barcelona,Valencia,35000000.0,2019-07-01,83,Valencia
+Rodrigo,Benfica,Valencia,30000000.0,2015-07-01,83,Valencia
 Álvaro Negredo,Manchester City,Valencia,28000000.0,2015-07-01,83,Valencia
+Joaquín,Real Betis,Valencia,25000000.0,2006-08-24,83,Valencia
 Enzo Pérez,Benfica,Valencia,25000000.0,2015-01-02,83,Valencia
+Ezequiel Garay,Zenit S-Pb,Valencia,24000000.0,2016-08-31,83,Valencia
+Aymen Abdennour,Monaco,Valencia,22000000.0,2015-08-29,83,Valencia
 Geoffrey Kondogbia,Inter,Valencia,22000000.0,2018-07-01,83,Valencia
-André Gomes,Benfica,Valencia,20000000.0,2015-07-01,83,Valencia
-Éver Banega,Boca Juniors,Valencia,18000000.0,2008-01-05,83,Valencia
-Kévin Gameiro,Atletico Madrid,Valencia,16000000.0,2018-08-12,83,Valencia
-João Cancelo,Benfica,Valencia,15000000.0,2015-07-01,83,Valencia
-Mouctar Diakhaby,Lyon,Valencia,15000000.0,2018-07-01,83,Valencia
+Pablo Aimar,River Plate,Valencia,21250000.0,2001-01-31,83,Valencia
 Deniz Undav,Brighton & Hove Albion,Stuttgart,26700000.0,2024-08-09,84,Stuttgart
 Ermedin Demirovic,Augsburg,Stuttgart,23000000.0,2024-07-16,84,Stuttgart
-Badredine Bouanani,Nice,Stuttgart,15000000.0,2025-08-31,84,Stuttgart
 Bilal El Khannouss,Leicester City,Stuttgart,15000000.0,2026-07-01,84,Stuttgart
+Badredine Bouanani,Nice,Stuttgart,15000000.0,2025-08-31,84,Stuttgart
 Tiago Tomás,Wolfsburg,Stuttgart,13000000.0,2025-08-16,84,Stuttgart
 Lorenz Assignon,Rennes,Stuttgart,12000000.0,2025-07-01,84,Stuttgart
 Nico González,Argentinos Jrs,Stuttgart,11260000.0,2018-07-10,84,Stuttgart
@@ -847,38 +847,38 @@ Leonardo Spinazzola,Juventus,Roma,29500000.0,2019-07-01,85,Roma
 Matías Soulé,Juventus,Roma,28600000.0,2024-07-30,85,Roma
 Steven Nzonzi,Sevilla,Roma,26650000.0,2018-08-14,85,Roma
 Marash Kumbulla,Hellas Verona,Roma,26500000.0,2021-07-01,85,Roma
-Wesley,Flamengo,Roma,25000000.0,2025-07-28,85,Roma
+Vincenzo Montella,Sampdoria,Roma,25820000.0,1999-07-01,85,Roma
 Donyell Malen,Aston Villa,Roma,25000000.0,2026-07-01,85,Roma
 Jhon Durán,Aston Villa,Al-Nassr,77000000.0,2025-01-31,86,Al-Nassr
 Otávio,Porto,Al-Nassr,60000000.0,2023-08-22,86,Al-Nassr
-João Félix,Chelsea,Al-Nassr,35000000.0,2025-07-29,86,Al-Nassr
 Mohamed Simakan,RB Leipzig,Al-Nassr,35000000.0,2025-07-01,86,Al-Nassr
+João Félix,Chelsea,Al-Nassr,35000000.0,2025-07-29,86,Al-Nassr
 Sadio Mané,Bayern Munich,Al-Nassr,30000000.0,2023-08-01,86,Al-Nassr
 Aymeric Laporte,Manchester City,Al-Nassr,27500000.0,2023-08-24,86,Al-Nassr
-Kingsley Coman,Bayern Munich,Al-Nassr,25000000.0,2025-08-15,86,Al-Nassr
 Seko Fofana,Lens,Al-Nassr,25000000.0,2023-07-18,86,Al-Nassr
+Kingsley Coman,Bayern Munich,Al-Nassr,25000000.0,2025-08-15,86,Al-Nassr
 Ângelo,Chelsea,Al-Nassr,23000000.0,2024-09-02,86,Al-Nassr
 Bento,Athletico-PR,Al-Nassr,18000000.0,2024-07-18,86,Al-Nassr
 Fernando Gorriarán,Santos Laguna,Tigres UANL,12200000.0,2023-01-01,87,Tigres UANL
 Nicolás Ibáñez,Pachuca,Tigres UANL,10100000.0,2023-01-18,87,Tigres UANL
+Nicolás López,Internacional,Tigres UANL,9140000.0,2020-01-01,87,Tigres UANL
+Jürgen Damm,Pachuca,Tigres UANL,8850000.0,2015-07-01,87,Tigres UANL
 Carlos Salcedo,Frankfurt,Tigres UANL,8800000.0,2019-01-22,87,Tigres UANL
+Guido Pizarro,Sevilla,Tigres UANL,8700000.0,2018-07-01,87,Tigres UANL
 Andy Delort,SM Caen,Tigres UANL,8000000.0,2016-09-02,87,Tigres UANL
 Ángel Correa,Atletico Madrid,Tigres UANL,8000000.0,2025-07-09,87,Tigres UANL
+Ismael Sosa,UNAM Pumas,Tigres UANL,7800000.0,2016-07-01,87,Tigres UANL
 Joaquim,Santos,Tigres UANL,7350000.0,2024-07-27,87,Tigres UANL
-Uriel Antuna,Cruz Azul,Tigres UANL,7210000.0,2024-08-27,87,Tigres UANL
-Lucas Zelarayán,Belgrano,Tigres UANL,7200000.0,2016-01-01,87,Tigres UANL
-Jesús Angulo,Atlas,Tigres UANL,7000000.0,2022-01-01,87,Tigres UANL
-Ozziel Herrera,Atlas,Tigres UANL,7000000.0,2023-07-24,87,Tigres UANL
 Romelu Lukaku,Manchester United,Inter,74000000.0,2019-08-08,88,Inter
+Christian Vieri,Lazio,Inter,46480000.0,1999-07-01,88,Inter
 João Mário,Sporting CP,Inter,44780000.0,2016-08-28,88,Inter
 Achraf Hakimi,Real Madrid,Inter,43000000.0,2020-09-01,88,Inter
 Alessandro Bastoni,Atalanta,Inter,40700000.0,2017-08-31,88,Inter
+Hernán Crespo,Lazio,Inter,40000000.0,2002-08-31,88,Inter
 Nicolò Barella,Cagliari,Inter,38500000.0,2020-09-01,88,Inter
+Radja Nainggolan,Roma,Inter,38000000.0,2018-07-01,88,Inter
 Geoffrey Kondogbia,Monaco,Inter,36000000.0,2015-07-01,88,Inter
 Milan Škriniar,Sampdoria,Inter,34000000.0,2017-07-07,88,Inter
-Benjamin Pavard,Bayern Munich,Inter,32400000.0,2023-08-30,88,Inter
-Davide Frattesi,Sassuolo,Inter,31400000.0,2024-07-01,88,Inter
-Gabriel Barbosa,Santos,Inter,29500000.0,2016-08-31,88,Inter
 Amadou Onana,Everton,Aston Villa,59350000.0,2024-07-22,89,Aston Villa
 Moussa Diaby,Bayer Leverkusen,Aston Villa,55000000.0,2023-07-22,89,Aston Villa
 Ian Maatsen,Chelsea,Aston Villa,44500000.0,2024-07-01,89,Aston Villa
@@ -887,8 +887,8 @@ Ollie Watkins,Brentford,Aston Villa,34000000.0,2020-09-09,89,Aston Villa
 Pau Torres,Villarreal,Aston Villa,33000000.0,2023-07-12,89,Aston Villa
 Leon Bailey,Bayer Leverkusen,Aston Villa,32000000.0,2021-08-04,89,Aston Villa
 Diego Carlos,Sevilla,Aston Villa,31000000.0,2022-07-01,89,Aston Villa
-Lucas Digne,Everton,Aston Villa,30000000.0,2022-01-13,89,Aston Villa
 Evann Guessand,Nice,Aston Villa,30000000.0,2025-08-08,89,Aston Villa
+Lucas Digne,Everton,Aston Villa,30000000.0,2022-01-13,89,Aston Villa
 Ousmane Dembélé,Borussia Dortmund,Barcelona,148000000.0,2017-08-25,90,Barcelona
 Philippe Coutinho,Liverpool,Barcelona,135000000.0,2018-01-08,90,Barcelona
 Antoine Griezmann,Atletico Madrid,Barcelona,120000000.0,2019-07-14,90,Barcelona
@@ -896,35 +896,35 @@ Neymar,Santos,Barcelona,88000000.0,2013-07-01,90,Barcelona
 Frenkie de Jong,Ajax,Barcelona,86000000.0,2019-07-01,90,Barcelona
 Luis Suárez,Liverpool,Barcelona,81720000.0,2014-07-11,90,Barcelona
 Anthony Gordon,Newcastle United,Barcelona,80000000.0,2026-07-01,90,Barcelona
+Zlatan Ibrahimović,Inter,Barcelona,69500000.0,2009-07-27,90,Barcelona
 Dani Olmo,RB Leipzig,Barcelona,61000000.0,2024-08-09,90,Barcelona
 Miralem Pjanić,Juventus,Barcelona,60000000.0,2020-09-01,90,Barcelona
-Raphinha,Leeds United,Barcelona,58000000.0,2022-07-13,90,Barcelona
 Jude Bellingham,Borussia Dortmund,Real Madrid,127000000.0,2023-07-01,91,Real Madrid
+Eden Hazard,Chelsea,Real Madrid,120800000.0,2019-07-01,91,Real Madrid
+Gareth Bale,Tottenham Hotspur,Real Madrid,101000000.0,2013-09-01,91,Real Madrid
 Cristiano Ronaldo,Manchester United,Real Madrid,94000000.0,2009-07-06,91,Real Madrid
 Aurélien Tchouaméni,Monaco,Real Madrid,80000000.0,2022-07-01,91,Real Madrid
+Zinédine Zidane,Juventus,Real Madrid,77500000.0,2001-07-09,91,Real Madrid
 James Rodríguez,Monaco,Real Madrid,75000000.0,2014-07-22,91,Real Madrid
-Luka Jović,Frankfurt,Real Madrid,63000000.0,2019-07-02,91,Real Madrid
+Kaká,AC Milan,Real Madrid,67000000.0,2009-07-01,91,Real Madrid
+Luka Jović,E. Frankfurt,Real Madrid,63000000.0,2019-07-02,91,Real Madrid
 Dean Huijsen,Bournemouth,Real Madrid,62500000.0,2025-06-01,91,Real Madrid
-Álvaro Carreras,Benfica,Real Madrid,50000000.0,2025-07-14,91,Real Madrid
-Éder Militão,Porto,Real Madrid,50000000.0,2019-07-01,91,Real Madrid
-Ferland Mendy,Lyon,Real Madrid,48000000.0,2019-07-01,91,Real Madrid
-Endrick,Palmeiras,Real Madrid,47500000.0,2024-07-21,91,Real Madrid
 Nico González,Stuttgart,Fiorentina,27370000.0,2021-07-01,92,Fiorentina
 Roberto Piccoli,Cagliari,Fiorentina,25000000.0,2025-08-25,92,Fiorentina
 Juan Cuadrado,Udinese,Fiorentina,20000000.0,2013-07-01,92,Fiorentina
 Lucas Beltrán,River Plate,Fiorentina,19700000.0,2023-08-14,92,Fiorentina
 Sofyan Amrabat,Hellas Verona,Fiorentina,19500000.0,2020-01-31,92,Fiorentina
 Giovanni Simeone,Genoa,Fiorentina,17000000.0,2017-08-16,92,Fiorentina
+Nuno Gomes,Benfica,Fiorentina,17000000.0,2000-07-01,92,Fiorentina
 Albert Gudmundsson,Genoa,Fiorentina,16800000.0,2025-07-01,92,Fiorentina
-Arthur Cabral,Basel,Fiorentina,15500000.0,2022-01-29,92,Fiorentina
 Christian Kouamé,Genoa,Fiorentina,15500000.0,2020-09-01,92,Fiorentina
-Dodô,Shakhtar D,Fiorentina,15400000.0,2022-07-22,92,Fiorentina
+Mario Gómez,Bayern Munich,Fiorentina,15500000.0,2013-07-16,92,Fiorentina
 Xavi Simons,RB Leipzig,Tottenham Hotspur,65000000.0,2025-08-29,93,Tottenham Hotspur
 Dominic Solanke,Bournemouth,Tottenham Hotspur,64300000.0,2024-08-10,93,Tottenham Hotspur
 Mohammed Kudus,West Ham United,Tottenham Hotspur,63800000.0,2025-07-10,93,Tottenham Hotspur
 Tanguy Ndombélé,Lyon,Tottenham Hotspur,62000000.0,2019-07-02,93,Tottenham Hotspur
 Richarlison,Everton,Tottenham Hotspur,58000000.0,2022-07-01,93,Tottenham Hotspur
-Brennan Johnson,Nott'm Forest,Tottenham Hotspur,55000000.0,2023-09-01,93,Tottenham Hotspur
+Brennan Johnson,Forest,Tottenham Hotspur,55000000.0,2023-09-01,93,Tottenham Hotspur
 Cristian Romero,Atalanta,Tottenham Hotspur,53800000.0,2022-08-30,93,Tottenham Hotspur
 James Maddison,Leicester City,Tottenham Hotspur,46300000.0,2023-07-01,93,Tottenham Hotspur
 Davinson Sánchez,Ajax,Tottenham Hotspur,42000000.0,2017-08-23,93,Tottenham Hotspur
@@ -934,7 +934,7 @@ Loïs Openda,Lens,RB Leipzig,40000000.0,2023-07-14,94,RB Leipzig
 Josko Gvardiol,Dinamo Zagreb,RB Leipzig,36800000.0,2021-07-01,94,RB Leipzig
 Dominik Szoboszlai,Salzburg,RB Leipzig,36000000.0,2021-01-01,94,RB Leipzig
 Dani Olmo,Dinamo Zagreb,RB Leipzig,34200000.0,2020-01-25,94,RB Leipzig
-Benjamin Sesko,Salzburg,RB Leipzig,31650000.0,2023-07-01,94,RB Leipzig
+Benjamin Sesko,RB Salzburg,RB Leipzig,31650000.0,2023-07-01,94,RB Leipzig
 Castello Lukeba,Lyon,RB Leipzig,30000000.0,2023-08-11,94,RB Leipzig
 Naby Keïta,RB Salzburg,RB Leipzig,29750000.0,2016-07-01,94,RB Leipzig
 David Raum,Hoffenheim,RB Leipzig,26000000.0,2022-07-31,94,RB Leipzig
@@ -944,858 +944,852 @@ Krzysztof Piatek,AC Milan,Hertha Berlin,24000000.0,2020-01-30,95,Hertha Berlin
 Dodi Lukébakio,Watford,Hertha Berlin,20000000.0,2019-08-01,95,Hertha Berlin
 Matheus Cunha,RB Leipzig,Hertha Berlin,18000000.0,2020-01-31,95,Hertha Berlin
 Jhon Córdoba,Köln,Hertha Berlin,15000000.0,2020-09-15,95,Hertha Berlin
-Valentino Lazaro,Salzburg,Hertha Berlin,10500000.0,2018-07-01,95,Hertha Berlin
+Valentino Lazaro,RB Salzburg,Hertha Berlin,10500000.0,2018-07-01,95,Hertha Berlin
 Santiago Ascacíbar,Stuttgart,Hertha Berlin,10000000.0,2020-01-01,95,Hertha Berlin
 Davie Selke,RB Leipzig,Hertha Berlin,8000000.0,2017-07-01,95,Hertha Berlin
 Suat Serdar,Schalke,Hertha Berlin,8000000.0,2021-07-01,95,Hertha Berlin
 Marco Richter,Augsburg,Hertha Berlin,7100000.0,2021-08-09,95,Hertha Berlin
-Dennis Man,FCSB,Parma,12600000.0,2021-01-29,96,Parma
-Mandela Keita,Royal Antwerp,Parma,11900000.0,2024-08-30,96,Parma
-Lautaro Valenti,Lanús,Parma,10500000.0,2021-07-01,96,Parma
-Christian Ordóñez,Vélez Sarsfield,Parma,9750000.0,2025-07-01,96,Parma
-Valentin Mihăilă,Univ. Craiova,Parma,9500000.0,2020-10-05,96,Parma
-Matija Frigan,KVC Westerlo,Parma,9000000.0,2025-08-15,96,Parma
-Alberto Grassi,Napoli,Parma,8450000.0,2020-09-01,96,Parma
-Andreas Cornelius,Atalanta,Parma,8400000.0,2021-07-01,96,Parma
-Zion Suzuki,Sint-Truiden,Parma,8200000.0,2024-07-15,96,Parma
-Oliver Sørensen,Midtjylland,Parma,8100000.0,2025-08-13,96,Parma
-Bernard,Atlético-MG,Shakhtar D,25000000.0,2013-08-08,97,Shakhtar D
-Pedrinho,Benfica,Shakhtar D,18000000.0,2021-07-01,97,Shakhtar D
-Kauã Elias,Fluminense,Shakhtar D,17000000.0,2025-02-08,97,Shakhtar D
-Taison,Metalist Kharkiv,Shakhtar D,15240000.0,2013-01-11,97,Shakhtar D
-Tetê,Grêmio,Shakhtar D,15000000.0,2019-02-28,97,Shakhtar D
-Dmytro Chygrynskyi,Barcelona,Shakhtar D,15000000.0,2010-07-06,97,Shakhtar D
-Fred,Internacional,Shakhtar D,15000000.0,2013-07-01,97,Shakhtar D
-Kevin,Palmeiras,Shakhtar D,14800000.0,2024-01-19,97,Shakhtar D
-Alisson,Atlético-MG,Shakhtar D,14000000.0,2025-03-10,97,Shakhtar D
-Willian,Corinthians,Shakhtar D,14000000.0,2007-08-24,97,Shakhtar D
-Lucas Paquetá,West Ham United,Flamengo,42000000.0,2026-01-28,98,Flamengo
-Samuel Lino,Atletico Madrid,Flamengo,22000000.0,2025-07-29,98,Flamengo
-Carlos Alcaraz,Southampton,Flamengo,18000000.0,2024-08-28,98,Flamengo
-Gabriel Barbosa,Inter,Flamengo,17500000.0,2020-01-31,98,Flamengo
-Everton,Benfica,Flamengo,16500000.0,2022-07-18,98,Flamengo
-Gerson,Marseille,Flamengo,15000000.0,2023-01-01,98,Flamengo
-Giorgian de Arrascaeta,Cruzeiro,Flamengo,15000000.0,2019-01-12,98,Flamengo
-Nicolás de la Cruz,River Plate,Flamengo,14500000.0,2024-01-01,98,Flamengo
-Pedro,Fiorentina,Flamengo,14000000.0,2021-01-01,98,Flamengo
-Jorge Carrascal,Dynamo Moscow,Flamengo,12500000.0,2025-08-02,98,Flamengo
-Abakar Sylla,Brugge,R. Strasbourg,20000000.0,2023-07-15,99,R. Strasbourg
-Joaquín Panichelli,Alavés,R. Strasbourg,17000000.0,2025-07-27,99,R. Strasbourg
-Lucas Høgsberg,Nordsjaelland,R. Strasbourg,15000000.0,2025-08-09,99,R. Strasbourg
-Mathis Amougou,Chelsea,R. Strasbourg,14500000.0,2025-07-12,99,R. Strasbourg
-Emmanuel Emegha,Sturm Graz,R. Strasbourg,13000000.0,2023-07-22,99,R. Strasbourg
-Sékou Mara,Southampton,R. Strasbourg,12000000.0,2024-08-21,99,R. Strasbourg
-Sebastian Nanasi,Malmö,R. Strasbourg,11000000.0,2024-08-23,99,R. Strasbourg
-Andrew Omobamidele,Nott'm Forest,R. Strasbourg,10500000.0,2025-07-01,99,R. Strasbourg
-Dilane Bakwa,G. Bordeaux,R. Strasbourg,10000000.0,2023-08-08,99,R. Strasbourg
-Mamadou Sarr,Lyon,R. Strasbourg,10000000.0,2024-08-22,99,R. Strasbourg
-Harry Kane,Tottenham Hotspur,Bayern Munich,95000000.0,2023-08-12,100,Bayern Munich
-Lucas Hernández,Atletico Madrid,Bayern Munich,80000000.0,2019-07-01,100,Bayern Munich
-Luis Díaz,Liverpool,Bayern Munich,70000000.0,2025-07-30,100,Bayern Munich
-Matthijs de Ligt,Juventus,Bayern Munich,67000000.0,2022-07-19,100,Bayern Munich
-Michael Olise,Crystal Palace,Bayern Munich,53000000.0,2024-07-07,100,Bayern Munich
-João Palhinha,Fulham,Bayern Munich,51000000.0,2024-07-11,100,Bayern Munich
-Min-jae Kim,Napoli,Bayern Munich,50000000.0,2023-07-18,100,Bayern Munich
-Leroy Sané,Manchester City,Bayern Munich,49000000.0,2020-07-15,100,Bayern Munich
-Dayot Upamecano,RB Leipzig,Bayern Munich,42500000.0,2021-07-05,100,Bayern Munich
-Corentin Tolisso,Lyon,Bayern Munich,41500000.0,2017-07-01,100,Bayern Munich
-Evanilson,Porto,Bournemouth,37000000.0,2024-08-16,101,Bournemouth
-Bafodé Diakité,Lille,Bournemouth,35000000.0,2025-08-13,101,Bournemouth
-Ilya Zabarnyi,Dynamo Kyiv,Bournemouth,33000000.0,2023-01-31,101,Bournemouth
-Jefferson Lerma,Levante,Bournemouth,30500000.0,2018-08-07,101,Bournemouth
-Djordje Petrovic,Chelsea,Bournemouth,28900000.0,2025-07-16,101,Bournemouth
-Rayan,Vasco da Gama,Bournemouth,28500000.0,2026-01-27,101,Bournemouth
-Tyler Adams,Leeds United,Bournemouth,26900000.0,2023-08-20,101,Bournemouth
-Hamed Traoré,Sassuolo,Bournemouth,25620000.0,2023-07-01,101,Bournemouth
-Luis Sinisterra,Leeds United,Bournemouth,23400000.0,2024-07-01,101,Bournemouth
-Ben Gannon-Doak,Liverpool,Bournemouth,23200000.0,2025-08-18,101,Bournemouth
-Jack Grealish,Aston Villa,Manchester City,117500000.0,2021-08-05,102,Manchester City
-Josko Gvardiol,RB Leipzig,Manchester City,90000000.0,2023-08-05,102,Manchester City
-Kevin De Bruyne,Wolfsburg,Manchester City,76000000.0,2015-08-30,102,Manchester City
-Omar Marmoush,Frankfurt,Manchester City,75000000.0,2025-01-23,102,Manchester City
-Antoine Semenyo,Bournemouth,Manchester City,72000000.0,2026-01-09,102,Manchester City
-Rúben Dias,Benfica,Manchester City,71600000.0,2020-09-29,102,Manchester City
-Rodri,Atletico Madrid,Manchester City,70000000.0,2019-07-04,102,Manchester City
-Riyad Mahrez,Leicester City,Manchester City,67800000.0,2018-07-10,102,Manchester City
-João Cancelo,Juventus,Manchester City,65000000.0,2019-08-07,102,Manchester City
-Aymeric Laporte,Athletic Bilbao,Manchester City,65000000.0,2018-01-30,102,Manchester City
-Umar Sadiq,Almería,Real Sociedad,20000000.0,2022-09-01,103,Real Sociedad
-Orri Óskarsson,Copenhagen,Real Sociedad,20000000.0,2024-08-30,103,Real Sociedad
-Alexander Isak,Borussia Dortmund,Real Sociedad,15000000.0,2019-07-01,103,Real Sociedad
-Brais Méndez,Celta Vigo,Real Sociedad,14000000.0,2022-07-06,103,Real Sociedad
-Arsen Zakharyan,Dynamo Moscow,Real Sociedad,13000000.0,2023-08-19,103,Real Sociedad
-Mohamed-Ali Cho,Angers SCO,Real Sociedad,13000000.0,2022-07-01,103,Real Sociedad
-Mikel Merino,Newcastle United,Real Sociedad,12000000.0,2018-07-12,103,Real Sociedad
-Yangel Herrera,Girona,Real Sociedad,11000000.0,2025-09-01,103,Real Sociedad
-Diego Llorente,Real Madrid,Real Sociedad,11000000.0,2017-07-01,103,Real Sociedad
-Portu,Girona,Real Sociedad,10000000.0,2019-07-01,103,Real Sociedad
-Samu Aghehowa,Atletico Madrid,Porto,32000000.0,2024-08-23,104,Porto
-Nico González,Barcelona,Porto,21200000.0,2023-07-29,104,Porto
-David Carmo,Braga,Porto,20280000.0,2022-07-05,104,Porto
-Óliver Torres,Atletico Madrid,Porto,20000000.0,2017-07-01,104,Porto
-Victor Froholdt,Copenhagen,Porto,20000000.0,2025-07-23,104,Porto
-Giannelli Imbula,Marseille,Porto,20000000.0,2015-07-01,104,Porto
-Hulk,Tokyo Verdy,Porto,19000000.0,2008-07-25,104,Porto
-Jakub Kiwior,Arsenal,Porto,17000000.0,2026-07-01,104,Porto
-Pepê,Grêmio,Porto,15400000.0,2021-07-01,104,Porto
-Alberto Costa,Juventus,Porto,15000000.0,2025-07-24,104,Porto
-Adam Hlozek,Bayer Leverkusen,Hoffenheim,18000000.0,2024-08-17,105,Hoffenheim
-Mergim Berisha,Augsburg,Hoffenheim,14000000.0,2023-08-30,105,Hoffenheim
-Diadié Samassékou,Salzburg,Hoffenheim,12500000.0,2019-08-15,105,Hoffenheim
-Attila Szalai,Fenerbahçe,Hoffenheim,12300000.0,2023-07-24,105,Hoffenheim
-Mats Rots,Twente,Hoffenheim,12000000.0,2026-07-01,105,Hoffenheim
-Anton Stach,Mainz 05,Hoffenheim,12000000.0,2023-09-01,105,Hoffenheim
-Stanley Nsoki,Brugge,Hoffenheim,12000000.0,2022-08-03,105,Hoffenheim
-Alexander Prass,Sturm Graz,Hoffenheim,12000000.0,2024-08-05,105,Hoffenheim
-Andrej Kramaric,Leicester City,Hoffenheim,11000000.0,2016-07-01,105,Hoffenheim
-Bazoumana Touré,Hammarby,Hoffenheim,10000000.0,2025-02-01,105,Hoffenheim
-Vitinha,Braga,Marseille,32000000.0,2023-01-31,106,Marseille
-Igor Paixão,Feyenoord,Marseille,30000000.0,2025-08-01,106,Marseille
-Elye Wahi,Lens,Marseille,27000000.0,2024-08-13,106,Marseille
-Mason Greenwood,Manchester United,Marseille,26000000.0,2024-07-18,106,Marseille
-Kevin Strootman,Roma,Marseille,25000000.0,2018-08-28,106,Marseille
-Nayef Aguerd,West Ham United,Marseille,23000000.0,2025-09-01,106,Marseille
-Renan Lodi,Atletico Madrid,Marseille,20600000.0,2023-07-14,106,Marseille
-Gerson,Flamengo,Marseille,20500000.0,2021-07-01,106,Marseille
-Amine Gouiri,Rennes,Marseille,19000000.0,2025-01-31,106,Marseille
-Duje Caleta-Car,Salzburg,Marseille,19000000.0,2018-07-20,106,Marseille
-Ousmane Dembélé,Rennes,Borussia Dortmund,35000000.0,2016-07-01,107,Borussia Dortmund
-Sébastien Haller,Ajax,Borussia Dortmund,31000000.0,2022-07-06,107,Borussia Dortmund
-Jobe Bellingham,Sunderland,Borussia Dortmund,30500000.0,2025-06-10,107,Borussia Dortmund
-Mats Hummels,Bayern Munich,Borussia Dortmund,30500000.0,2019-07-01,107,Borussia Dortmund
-Jude Bellingham,Birmingham,Borussia Dortmund,30150000.0,2020-07-23,107,Borussia Dortmund
-Felix Nmecha,Wolfsburg,Borussia Dortmund,30000000.0,2023-07-03,107,Borussia Dortmund
-Karim Adeyemi,Salzburg,Borussia Dortmund,30000000.0,2022-07-01,107,Borussia Dortmund
-Donyell Malen,PSV Eindhoven,Borussia Dortmund,30000000.0,2021-07-27,107,Borussia Dortmund
-Maximilian Beier,Hoffenheim,Borussia Dortmund,28500000.0,2024-08-12,107,Borussia Dortmund
-Henrikh Mkhitaryan,Shakhtar D,Borussia Dortmund,27500000.0,2013-07-09,107,Borussia Dortmund
-Alassane Pléa,Nice,Mönchengladbach,23000000.0,2018-07-13,108,Mönchengladbach
-Matthias Ginter,Borussia Dortmund,Mönchengladbach,17000000.0,2017-07-04,108,Mönchengladbach
-Stefan Lainer,Salzburg,Mönchengladbach,12500000.0,2019-07-01,108,Mönchengladbach
-Jannik Vestergaard,Werder Bremen,Mönchengladbach,12500000.0,2016-07-01,108,Mönchengladbach
-Luuk de Jong,Twente,Mönchengladbach,12000000.0,2012-07-18,108,Mönchengladbach
-Denis Zakaria,Young Boys,Mönchengladbach,12000000.0,2017-07-01,108,Mönchengladbach
-Breel Embolo,Schalke,Mönchengladbach,11000000.0,2019-07-01,108,Mönchengladbach
-Tomas Cvancara,Sparta Prague,Mönchengladbach,10500000.0,2023-07-14,108,Mönchengladbach
-Hannes Wolf,RB Leipzig,Mönchengladbach,9500000.0,2021-07-01,108,Mönchengladbach
-Marcus Thuram,Guingamp,Mönchengladbach,9000000.0,2019-07-22,108,Mönchengladbach
-Gedson Fernandes,Besiktas,Spartak Moscow,20780000.0,2025-07-31,109,Spartak Moscow
-Levi García,AEK Athens,Spartak Moscow,18700000.0,2025-02-07,109,Spartak Moscow
-Guus Til,AZ Alkmaar,Spartak Moscow,18000000.0,2019-08-05,109,Spartak Moscow
-Esequiel Barco,River Plate,Spartak Moscow,14000000.0,2024-07-25,109,Spartak Moscow
-Manfred Ugalde,Twente,Spartak Moscow,13000000.0,2024-01-29,109,Spartak Moscow
-Alex Král,Slavia Praha,Spartak Moscow,12000000.0,2019-09-01,109,Spartak Moscow
-Pedro Rocha,Grêmio,Spartak Moscow,12000000.0,2017-08-31,109,Spartak Moscow
-Quincy Promes,Twente,Spartak Moscow,11500000.0,2014-08-08,109,Spartak Moscow
-Pablo Solari,River Plate,Spartak Moscow,10000000.0,2025-02-11,109,Spartak Moscow
-Denis Glushakov,Loko Moskau,Spartak Moscow,8000000.0,2013-07-01,109,Spartak Moscow
-Jonathan David,KAA Gent,Lille,27000000.0,2020-08-11,110,Lille
-Victor Osimhen,R Charleroi,Lille,22400000.0,2019-08-01,110,Lille
-Rafael Leão,Sporting CP,Lille,20200000.0,2018-08-08,110,Lille
-Renato Sanches,Bayern Munich,Lille,20000000.0,2019-08-23,110,Lille
-Yusuf Yazıcı,Trabzonspor,Lille,18500000.0,2019-08-06,110,Lille
-Nicolas Pépé,Angers SCO,Lille,18000000.0,2017-07-01,110,Lille
-Hákon Arnar Haraldsson,Copenhagen,Lille,15000000.0,2023-07-17,110,Lille
-Thiago Maia,Santos,Lille,14000000.0,2017-07-31,110,Lille
-Mohamed Bayo,Clermont Foot,Lille,14000000.0,2022-07-13,110,Lille
-Amadou Onana,Hamburg,Lille,13570000.0,2021-08-05,110,Lille
-Diego Valdés,Santos Laguna,América,10600000.0,2022-01-01,111,América
-Allan Saint-Maximin,Al-Ahli,América,10300000.0,2025-08-12,111,América
-Kevin Álvarez,Pachuca,América,10250000.0,2023-07-01,111,América
-Julián Quiñones,Atlas,América,9170000.0,2023-07-03,111,América
-Darwin Quintero,Santos Laguna,América,9000000.0,2015-01-01,111,América
-Érick Sánchez,Pachuca,América,9000000.0,2024-07-01,111,América
-Roger Martínez,Villarreal,América,8500000.0,2018-07-02,111,América
-Víctor Dávila,CSKA Moscow,América,7500000.0,2024-09-15,111,América
-Isaías Violante,Toluca,América,7000000.0,2025-07-08,111,América
-Guido Rodríguez,Tijuana,América,6280000.0,2017-07-01,111,América
-Neymar,Paris Saint-Germain,Al-Hilal,90000000.0,2023-08-15,112,Al-Hilal
-Malcom,Zenit S-Pb,Al-Hilal,60000000.0,2023-07-26,112,Al-Hilal
-Rúben Neves,Wolverhampton Wanderers,Al-Hilal,55000000.0,2023-07-01,112,Al-Hilal
-Darwin Núñez,Liverpool,Al-Hilal,53000000.0,2025-08-09,112,Al-Hilal
-Aleksandar Mitrović,Fulham,Al-Hilal,52600000.0,2023-08-19,112,Al-Hilal
-Sergej Milinković-Savić,Lazio,Al-Hilal,40000000.0,2023-07-12,112,Al-Hilal
-Marcos Leonardo,Benfica,Al-Hilal,40000000.0,2024-09-02,112,Al-Hilal
-Kader Meïté,Rennes,Al-Hilal,30000000.0,2026-02-01,112,Al-Hilal
-Moteb Al-Harbi,Al-Shabab,Al-Hilal,28950000.0,2024-09-01,112,Al-Hilal
-Theo Hernández,AC Milan,Al-Hilal,25000000.0,2025-07-10,112,Al-Hilal
-Andrea Pinamonti,Inter,Sassuolo,20000000.0,2023-07-01,113,Sassuolo
-Hamed Traoré,Empoli,Sassuolo,16000000.0,2021-07-01,113,Sassuolo
-Davide Frattesi,Roma,Sassuolo,14600000.0,2017-07-13,113,Sassuolo
-Manuel Locatelli,AC Milan,Sassuolo,14000000.0,2019-07-01,113,Sassuolo
-Agustín Álvarez,Peñarol,Sassuolo,12000000.0,2022-07-01,113,Sassuolo
-Marlon,Barcelona,Sassuolo,12000000.0,2018-08-16,113,Sassuolo
-Grégoire Defrel,Roma,Sassuolo,11000000.0,2020-09-01,113,Sassuolo
-Kristian Thorstvedt,Genk,Sassuolo,10150000.0,2022-07-12,113,Sassuolo
-Armand Laurienté,Lorient,Sassuolo,10100000.0,2022-08-31,113,Sassuolo
-Ismaël Koné,Marseille,Sassuolo,10000000.0,2026-02-02,113,Sassuolo
-Habib Diarra,R. Strasbourg,Sunderland,31500000.0,2025-07-01,114,Sunderland
-Simon Adingra,Brighton & Hove Albion,Sunderland,24400000.0,2025-07-10,114,Sunderland
-Enzo Le Fée,Roma,Sunderland,23750000.0,2025-07-01,114,Sunderland
-Brian Brobbey,Ajax,Sunderland,20000000.0,2025-09-01,114,Sunderland
-Chemsdine Talbi,Brugge,Sunderland,20000000.0,2025-07-09,114,Sunderland
-Nilson Angulo,RSC Anderlecht,Sunderland,17340000.0,2026-02-02,114,Sunderland
-Noah Sadiki,Union SG,Sunderland,17000000.0,2025-07-04,114,Sunderland
-Granit Xhaka,Bayer Leverkusen,Sunderland,15000000.0,2025-07-30,114,Sunderland
-Nordi Mukiele,Paris Saint-Germain,Sunderland,12000000.0,2025-08-17,114,Sunderland
-Wahbi Khazri,G. Bordeaux,Sunderland,11800000.0,2016-01-30,114,Sunderland
-El Bilal Touré,Almería,Atalanta,30200000.0,2023-07-29,115,Atalanta
-Gianluca Scamacca,West Ham United,Atalanta,28000000.0,2023-08-07,115,Atalanta
-Nikola Krstović,Lecce,Atalanta,25000000.0,2025-08-20,115,Atalanta
-Mateo Retegui,Genoa,Atalanta,24500000.0,2024-08-08,115,Atalanta
-Raoul Bellanova,Torino,Atalanta,24300000.0,2024-08-22,115,Atalanta
-Charles De Ketelaere,AC Milan,Atalanta,23700000.0,2024-07-01,115,Atalanta
-Éderson,Salernitana,Atalanta,22900000.0,2022-07-06,115,Atalanta
-Giacomo Raspadori,Atletico Madrid,Atalanta,22000000.0,2026-01-15,115,Atalanta
-Jérémie Boga,Sassuolo,Atalanta,22000000.0,2022-07-01,115,Atalanta
-Luis Muriel,Sevilla,Atalanta,21200000.0,2019-07-01,115,Atalanta
-Simone Verdi,Napoli,Torino,22000000.0,2020-09-01,116,Torino
-Ivan Ilić,Hellas Verona,Torino,16500000.0,2023-07-01,116,Torino
-Cesare Casadei,Chelsea,Torino,13000000.0,2025-02-02,116,Torino
-M'Baye Niang,AC Milan,Torino,12000000.0,2018-07-01,116,Torino
-Soualiho Meïté,Monaco,Torino,11500000.0,2018-07-10,116,Torino
-Samuele Ricci,Empoli,Torino,10800000.0,2022-07-01,116,Torino
-Armando Izzo,Genoa,Torino,10700000.0,2018-07-04,116,Torino
-Nikola Vlašić,West Ham United,Torino,10600000.0,2023-08-08,116,Torino
-Ola Aina,Chelsea,Torino,9800000.0,2019-07-01,116,Torino
-Perr Schuurs,Ajax,Torino,9400000.0,2022-08-18,116,Torino
-Andrea Pinamonti,Inter,Genoa,19500000.0,2020-09-01,117,Genoa
-Stefano Sturaro,Juventus,Genoa,16500000.0,2019-07-01,117,Genoa
-Mateo Retegui,Tigre,Genoa,15250000.0,2023-07-26,117,Genoa
-Gianluca Lapadula,AC Milan,Genoa,11000000.0,2018-08-17,117,Genoa
-Koni De Winter,Juventus,Genoa,11000000.0,2024-07-01,117,Genoa
-Radu Drăgușin,Juventus,Genoa,9700000.0,2023-07-01,117,Genoa
-Eldor Shomurodov,Rostov,Genoa,9500000.0,2020-10-01,117,Genoa
-Vitinha,Marseille,Genoa,8300000.0,2024-07-01,117,Genoa
-Ionuț Radu,Inter,Genoa,8000000.0,2019-07-01,117,Genoa
-Ruslan Malinovskyi,Marseille,Genoa,7700000.0,2024-01-31,117,Genoa
-Lesley Ugochukwu,Chelsea,Burnley,28700000.0,2025-08-06,118,Burnley
-Armando Broja,Chelsea,Burnley,23000000.0,2025-08-08,118,Burnley
-Zeki Amdouni,Basel,Burnley,18600000.0,2023-07-19,118,Burnley
-Mike Tresor,Genk,Burnley,18000000.0,2024-07-01,118,Burnley
-Wout Weghorst,Wolfsburg,Burnley,17500000.0,2022-01-31,118,Burnley
-James Trafford,Manchester City,Burnley,17300000.0,2023-07-20,118,Burnley
-Aaron Ramsey,Aston Villa,Burnley,16450000.0,2023-08-22,118,Burnley
-Chris Wood,Leeds United,Burnley,16400000.0,2017-08-21,118,Burnley
-Robbie Brady,Norwich,Burnley,15100000.0,2017-01-31,118,Burnley
-Jordan Beyer,Mönchengladbach,Burnley,15000000.0,2023-07-01,118,Burnley
-Georginio Rutter,Leeds United,Brighton & Hove Albion,46700000.0,2024-08-19,119,Brighton & Hove Albion
-Charalampos Kostoulas,Olympiacos,Brighton & Hove Albion,35000000.0,2025-07-01,119,Brighton & Hove Albion
-Yankuba Minteh,Newcastle United,Brighton & Hove Albion,35000000.0,2024-07-01,119,Brighton & Hove Albion
-João Pedro,Watford,Brighton & Hove Albion,34200000.0,2023-07-01,119,Brighton & Hove Albion
-Mats Wieffer,Feyenoord,Brighton & Hove Albion,32000000.0,2024-07-05,119,Brighton & Hove Albion
-Brajan Gruda,Mainz 05,Brighton & Hove Albion,31500000.0,2024-08-14,119,Brighton & Hove Albion
-Ferdi Kadıoğlu,Fenerbahçe,Brighton & Hove Albion,30000000.0,2024-08-24,119,Brighton & Hove Albion
-Matt O'Riley,Celtic,Brighton & Hove Albion,29500000.0,2024-08-26,119,Brighton & Hove Albion
-Moisés Caicedo,Independiente,Brighton & Hove Albion,28200000.0,2021-02-01,119,Brighton & Hove Albion
-Zadok Yohanna,AIK,Brighton & Hove Albion,28000000.0,2026-07-01,119,Brighton & Hove Albion
-César Montes,Espanyol,Almería,14000000.0,2023-09-01,120,Almería
-Darwin Núñez,Peñarol,Almería,12000000.0,2019-08-29,120,Almería
-Umar Sadiq,Partizan,Almería,9000000.0,2020-10-05,120,Almería
-Arvin Appiah,Nott'm Forest,Almería,8850000.0,2019-09-02,120,Almería
-Luís Maximiano,Lazio,Almería,8100000.0,2024-07-01,120,Almería
-El Bilal Touré,Stade Reims,Almería,8000000.0,2022-09-01,120,Almería
-Luis Suárez,Marseille,Almería,8000000.0,2023-07-01,120,Almería
-Marc Pubill,Levante,Almería,7750000.0,2023-08-09,120,Almería
-Ibrahima Koné,Lorient,Almería,7500000.0,2023-08-16,120,Almería
-Kaiky,Santos,Almería,7000000.0,2022-07-19,120,Almería
-Mattéo Guendouzi,Lazio,Fenerbahçe,28000000.0,2026-01-08,121,Fenerbahçe
-Kerem Aktürkoğlu,Benfica,Fenerbahçe,22500000.0,2025-09-01,121,Fenerbahçe
-Youssef En-Nesyri,Sevilla,Fenerbahçe,19500000.0,2024-07-24,121,Fenerbahçe
-Dorgeles Nene,Salzburg,Fenerbahçe,18000000.0,2025-08-19,121,Fenerbahçe
-Sidiki Chérif,Angers SCO,Fenerbahçe,18000000.0,2026-07-01,121,Fenerbahçe
-Cengiz Ünder,Marseille,Fenerbahçe,15000000.0,2023-08-13,121,Fenerbahçe
-Sofyan Amrabat,Fiorentina,Fenerbahçe,12000000.0,2025-07-01,121,Fenerbahçe
-Diego Carlos,Aston Villa,Fenerbahçe,11470000.0,2025-01-23,121,Fenerbahçe
-Ederson,Manchester City,Fenerbahçe,11000000.0,2025-09-02,121,Fenerbahçe
-Sebastian Szymanski,Dynamo Moscow,Fenerbahçe,10700000.0,2023-07-12,121,Fenerbahçe
-Rolando Mandragora,Juventus,Udinese,20000000.0,2018-07-26,122,Udinese
-Hassane Kamara,Watford,Udinese,19000000.0,2022-08-22,122,Udinese
-Beto,Portimonense,Udinese,15000000.0,2022-07-01,122,Udinese
-Brenner,Cincinnati,Udinese,10000000.0,2023-07-01,122,Udinese
-Rodrigo De Paul,Valencia,Udinese,10000000.0,2016-07-20,122,Udinese
-Arthur Atta,Metz,Udinese,8000000.0,2025-07-01,122,Udinese
-Ignacio Pussetto,Huracán,Udinese,8000000.0,2018-07-17,122,Udinese
-Lorenzo Lucca,Pisa,Udinese,8000000.0,2024-07-01,122,Udinese
-Nehuén Pérez,Atletico Madrid,Udinese,8000000.0,2022-07-29,122,Udinese
-Christian Kabasele,Watford,Udinese,6500000.0,2023-07-25,122,Udinese
-Tino Livramento,Chelsea,Southampton,26200000.0,2021-08-02,123,Southampton
-Danny Ings,Liverpool,Southampton,25100000.0,2019-07-01,123,Southampton
-Kamaldeen Sulemana,Rennes,Southampton,25000000.0,2023-01-31,123,Southampton
-Jannik Vestergaard,Mönchengladbach,Southampton,25000000.0,2018-07-13,123,Southampton
-Taylor Harwood-Bellis,Manchester City,Southampton,23000000.0,2024-07-01,123,Southampton
-Sadio Mané,Salzburg,Southampton,23000000.0,2014-09-01,123,Southampton
-Roméo Lavia,Manchester City,Southampton,22260000.0,2022-07-06,123,Southampton
-Guido Carrillo,Monaco,Southampton,22000000.0,2018-01-25,123,Southampton
-Aaron Ramsdale,Arsenal,Southampton,21400000.0,2024-08-30,123,Southampton
-Sofiane Boufal,Lille,Southampton,18700000.0,2016-08-29,123,Southampton
-Omari Hutchinson,Ipswich,Nott'm Forest,43400000.0,2025-08-16,124,Nott'm Forest
-Dan Ndoye,Bologna,Nott'm Forest,42000000.0,2025-07-31,124,Nott'm Forest
-Elliot Anderson,Newcastle United,Nott'm Forest,41200000.0,2024-07-01,124,Nott'm Forest
-Dilane Bakwa,R. Strasbourg,Nott'm Forest,35000000.0,2025-09-01,124,Nott'm Forest
-Ibrahim Sangaré,PSV Eindhoven,Nott'm Forest,35000000.0,2023-09-01,124,Nott'm Forest
-Arnaud Kalimuendo,Rennes,Nott'm Forest,30000000.0,2025-08-18,124,Nott'm Forest
-Morgan Gibbs-White,Wolverhampton Wanderers,Nott'm Forest,29500000.0,2022-08-19,124,Nott'm Forest
-James McAtee,Manchester City,Nott'm Forest,25500000.0,2025-08-16,124,Nott'm Forest
-Anthony Elanga,Manchester United,Nott'm Forest,22930000.0,2023-07-25,124,Nott'm Forest
-Taiwo Awoniyi,Union Berlin,Nott'm Forest,20500000.0,2022-07-01,124,Nott'm Forest
-Mateo Retegui,Atalanta,Al-Qadsiah,61750000.0,2025-07-21,125,Al-Qadsiah
-Equi Fernández,Boca Juniors,Al-Qadsiah,18700000.0,2024-08-05,125,Al-Qadsiah
-Christopher Bonsu Baah,Genk,Al-Qadsiah,17000000.0,2025-07-07,125,Al-Qadsiah
-Gabriel Carvalho,Internacional,Al-Qadsiah,15600000.0,2025-08-17,125,Al-Qadsiah
-Cameron Puertas,Union SG,Al-Qadsiah,15300000.0,2024-08-26,125,Al-Qadsiah
-Julián Quiñones,América,Al-Qadsiah,13800000.0,2024-07-18,125,Al-Qadsiah
-Gastón Álvarez,Getafe,Al-Qadsiah,12000000.0,2024-08-19,125,Al-Qadsiah
-Musab Al-Juwayr,Al-Hilal,Al-Qadsiah,11520000.0,2025-08-03,125,Al-Qadsiah
-Waleed Al-Ahmad,Al-Taawoun,Al-Qadsiah,9050000.0,2026-02-02,125,Al-Qadsiah
-Pierre-Emerick Aubameyang,Marseille,Al-Qadsiah,9000000.0,2024-07-18,125,Al-Qadsiah
-Gonçalo Borges,Porto,Feyenoord,10000000.0,2025-07-20,126,Feyenoord
-Sem Steijn,Twente,Feyenoord,10000000.0,2025-07-01,126,Feyenoord
-Dávid Hancko,Sparta Prague,Feyenoord,8300000.0,2022-08-22,126,Feyenoord
-Ayase Ueda,Cercle Brugge,Feyenoord,8000000.0,2023-08-03,126,Feyenoord
-Tsuyoshi Watanabe,KAA Gent,Feyenoord,8000000.0,2025-07-23,126,Feyenoord
-Luka Ivanušec,Dinamo Zagreb,Feyenoord,7800000.0,2023-08-25,126,Feyenoord
-Quinten Timber,Utrecht,Feyenoord,7400000.0,2022-07-28,126,Feyenoord
-Ramiz Zerrouki,Twente,Feyenoord,7200000.0,2023-07-01,126,Feyenoord
-In-beom Hwang,Red Star,Feyenoord,7000000.0,2024-09-02,126,Feyenoord
-Marcos Senesi,San Lorenzo,Feyenoord,7000000.0,2019-09-02,126,Feyenoord
-Joshua Zirkzee,Bayern Munich,Bologna,27500000.0,2022-08-30,127,Bologna
-Riccardo Calafiori,Basel,Bologna,23850000.0,2023-08-31,127,Bologna
-Jonathan Rowe,Marseille,Bologna,17000000.0,2025-08-24,127,Bologna
-Dan Ndoye,Basel,Bologna,16450000.0,2023-08-14,127,Bologna
-Thijs Dallinga,Toulouse,Bologna,16200000.0,2024-07-23,127,Bologna
-Riccardo Orsolini,Juventus,Bologna,15000000.0,2019-07-01,127,Bologna
-Musa Barrow,Atalanta,Bologna,14340000.0,2021-07-01,127,Bologna
-Santiago Castro,Vélez Sarsfield,Bologna,13200000.0,2024-01-30,127,Bologna
-Jesper Karlsson,AZ Alkmaar,Bologna,11150000.0,2023-08-23,127,Bologna
-Nicolò Cambiaghi,Atalanta,Bologna,11000000.0,2024-07-12,127,Bologna
-Georges Mikautadze,Lyon,Villarreal,31000000.0,2025-09-01,128,Villarreal
-Renato Veiga,Chelsea,Villarreal,24500000.0,2025-08-22,128,Villarreal
-Arnaut Danjuma,Bournemouth,Villarreal,23500000.0,2021-08-19,128,Villarreal
-Thierno Barry,Basel,Villarreal,20000000.0,2024-08-21,128,Villarreal
-Gerard Moreno,Espanyol,Villarreal,20000000.0,2018-07-01,128,Villarreal
-Logan Costa,Toulouse,Villarreal,18000000.0,2024-08-22,128,Villarreal
-Pervis Estupiñán,Watford,Villarreal,16400000.0,2020-09-16,128,Villarreal
-Alberto Moleiro,Las Palmas,Villarreal,16000000.0,2025-07-01,128,Villarreal
-Juan Foyth,Tottenham Hotspur,Villarreal,15000000.0,2021-07-01,128,Villarreal
-Roger Martínez,JS Suning,Villarreal,14900000.0,2018-07-01,128,Villarreal
-Vedat Muriqi,Fenerbahçe,Lazio,21000000.0,2020-09-15,129,Lazio
-Taty Castellanos,New York City,Lazio,18600000.0,2023-07-21,129,Lazio
-Joaquín Correa,Sevilla,Lazio,17850000.0,2018-08-01,129,Lazio
-Nicolò Rovella,Juventus,Lazio,17000000.0,2025-07-01,129,Lazio
-Kenneth Taylor,Ajax,Lazio,16850000.0,2026-01-09,129,Lazio
-Tijjani Noslin,Hellas Verona,Lazio,16800000.0,2024-07-01,129,Lazio
-Manuel Lazzari,SPAL,Lazio,15000000.0,2019-07-12,129,Lazio
-Mattéo Guendouzi,Marseille,Lazio,14800000.0,2024-07-01,129,Lazio
-Gustav Isaksen,Midtjylland,Lazio,14400000.0,2023-08-08,129,Lazio
-Petar Ratkov,Salzburg,Lazio,13000000.0,2026-01-08,129,Lazio
-Emil Audero,Juventus,Sampdoria,20000000.0,2019-07-01,130,Sampdoria
-Duván Zapata,Napoli,Sampdoria,18500000.0,2018-07-01,130,Sampdoria
-Gianluca Caprari,Inter,Sampdoria,15000000.0,2017-07-01,130,Sampdoria
-Jakub Jankto,Udinese,Sampdoria,14500000.0,2019-07-01,130,Sampdoria
-Luis Muriel,Udinese,Sampdoria,12000000.0,2015-07-01,130,Sampdoria
-Omar Colley,Genk,Sampdoria,9250000.0,2018-07-01,130,Sampdoria
-Joaquín Correa,Estudiantes LP,Sampdoria,8400000.0,2015-01-09,130,Sampdoria
-Dennis Praet,RSC Anderlecht,Sampdoria,8000000.0,2016-08-24,130,Sampdoria
-Ronaldo Vieira,Leeds United,Sampdoria,7350000.0,2018-08-01,130,Sampdoria
-Mikkel Damsgaard,Nordsjaelland,Sampdoria,6750000.0,2020-09-01,130,Sampdoria
-Hugo Ekitiké,Paris Saint-Germain,Frankfurt,31500000.0,2024-07-01,131,Frankfurt
-Elye Wahi,Marseille,Frankfurt,26000000.0,2025-01-24,131,Frankfurt
-Luka Jović,Benfica,Frankfurt,22340000.0,2019-07-01,131,Frankfurt
-Ritsu Doan,Freiburg,Frankfurt,21000000.0,2025-08-07,131,Frankfurt
-Jonathan Burkardt,Mainz 05,Frankfurt,21000000.0,2025-07-04,131,Frankfurt
-Djibril Sow,Young Boys,Frankfurt,14000000.0,2019-07-01,131,Frankfurt
-Willian Pacho,Royal Antwerp,Frankfurt,13650000.0,2023-07-01,131,Frankfurt
-Arthur Theate,Rennes,Frankfurt,13000000.0,2025-02-02,131,Frankfurt
-Sébastien Haller,Utrecht,Frankfurt,12000000.0,2017-07-01,131,Frankfurt
-Can Uzun,Nuremberg,Frankfurt,11000000.0,2024-07-02,131,Frankfurt
-Breel Embolo,Basel,Schalke,26500000.0,2016-07-01,132,Schalke
-Nabil Bentaleb,Tottenham Hotspur,Schalke,19000000.0,2017-07-01,132,Schalke
-Ozan Kabak,Stuttgart,Schalke,15000000.0,2019-07-01,132,Schalke
-Suat Serdar,Mainz 05,Schalke,11000000.0,2018-07-01,132,Schalke
-Benito Raman,F. Düsseldorf,Schalke,10000000.0,2019-07-05,132,Schalke
-Omar Mascarell,Real Madrid,Schalke,10000000.0,2018-07-02,132,Schalke
-Matija Nastasić,Manchester City,Schalke,9500000.0,2015-07-01,132,Schalke
-Rabbi Matondo,Manchester City,Schalke,9000000.0,2019-01-30,132,Schalke
-Amine Harit,Nantes,Schalke,8000000.0,2017-07-10,132,Schalke
-Benjamin Stambouli,Paris Saint-Germain,Schalke,8000000.0,2016-08-26,132,Schalke
-João Félix,Benfica,Atletico Madrid,127200000.0,2019-07-03,133,Atletico Madrid
-Julián Alvarez,Manchester City,Atletico Madrid,75000000.0,2024-08-12,133,Atletico Madrid
-Thomas Lemar,Monaco,Atletico Madrid,72000000.0,2018-07-01,133,Atletico Madrid
-Antoine Griezmann,Real Sociedad,Atletico Madrid,54000000.0,2014-07-28,133,Atletico Madrid
-Conor Gallagher,Chelsea,Atletico Madrid,42000000.0,2024-08-21,133,Atletico Madrid
-Álex Baena,Villarreal,Atletico Madrid,42000000.0,2025-07-02,133,Atletico Madrid
-Radamel Falcao,Porto,Atletico Madrid,40000000.0,2011-08-18,133,Atletico Madrid
-Vitolo,Sevilla,Atletico Madrid,35600000.0,2017-07-12,133,Atletico Madrid
-Ademola Lookman,Atalanta,Atletico Madrid,35000000.0,2026-02-02,133,Atletico Madrid
-Álvaro Morata,Chelsea,Atletico Madrid,35000000.0,2020-07-01,133,Atletico Madrid
-Steven Bergwijn,Tottenham Hotspur,Ajax,31250000.0,2022-07-08,134,Ajax
-Calvin Bassey,Rangers,Ajax,23000000.0,2022-07-20,134,Ajax
-Sébastien Haller,West Ham United,Ajax,22500000.0,2021-01-08,134,Ajax
-Josip Sutalo,Dinamo Zagreb,Ajax,20500000.0,2023-08-20,134,Ajax
-David Neres,São Paulo,Ajax,17400000.0,2017-01-31,134,Ajax
-Brian Brobbey,RB Leipzig,Ajax,16350000.0,2022-07-22,134,Ajax
-Daley Blind,Manchester United,Ajax,16000000.0,2018-07-17,134,Ajax
-Georges Mikautadze,Metz,Ajax,16000000.0,2023-08-30,134,Ajax
-Antony,São Paulo,Ajax,15750000.0,2020-07-01,134,Ajax
-Quincy Promes,Sevilla,Ajax,15700000.0,2019-07-01,134,Ajax
-Amine Gouiri,Nice,Rennes,28000000.0,2022-09-01,135,Rennes
-Jérémy Doku,RSC Anderlecht,Rennes,26000000.0,2020-10-05,135,Rennes
-Raphinha,Sporting CP,Rennes,21000000.0,2019-09-02,135,Rennes
-Seko Fofana,Al-Nassr,Rennes,20000000.0,2025-01-01,135,Rennes
-Arnaud Kalimuendo,Paris Saint-Germain,Rennes,20000000.0,2022-08-11,135,Rennes
-Enzo Le Fée,Lorient,Rennes,20000000.0,2023-07-07,135,Rennes
-Arthur Theate,Bologna,Rennes,19000000.0,2022-07-29,135,Rennes
-Ismaïla Sarr,Metz,Rennes,17000000.0,2017-07-26,135,Rennes
-Loïc Badé,Lens,Rennes,17000000.0,2021-07-05,135,Rennes
-Kamaldeen Sulemana,Nordsjaelland,Rennes,17000000.0,2021-07-16,135,Rennes
-Moussa Niakhaté,Nott'm Forest,Lyon,31900000.0,2024-07-04,136,Lyon
-Ernest Nuamah,RWDM,Lyon,28500000.0,2024-07-07,136,Lyon
-Jeff Reine-Adélaïde,Angers SCO,Lyon,25000000.0,2019-08-14,136,Lyon
-Joachim Andersen,Sampdoria,Lyon,24000000.0,2019-07-12,136,Lyon
-Orel Mangala,Nott'm Forest,Lyon,23400000.0,2024-07-02,136,Lyon
-Lucas Paquetá,AC Milan,Lyon,23000000.0,2020-09-30,136,Lyon
-Moussa Dembélé,Celtic,Lyon,22000000.0,2018-08-31,136,Lyon
-Thiago Mendes,Lille,Lyon,22000000.0,2019-07-03,136,Lyon
-Bruno Guimarães,Athletico-PR,Lyon,20000000.0,2020-01-30,136,Lyon
-Malick Fofana,KAA Gent,Lyon,19500000.0,2024-01-10,136,Lyon
-Jørgen Strand Larsen,Wolverhampton Wanderers,Crystal Palace,49700000.0,2026-02-02,137,Crystal Palace
-Brennan Johnson,Tottenham Hotspur,Crystal Palace,40000000.0,2026-01-02,137,Crystal Palace
-Yéremy Pino,Villarreal,Crystal Palace,30000000.0,2025-08-29,137,Crystal Palace
-Eddie Nketiah,Arsenal,Crystal Palace,29700000.0,2024-08-30,137,Crystal Palace
-Mamadou Sakho,Liverpool,Crystal Palace,28200000.0,2017-08-31,137,Crystal Palace
-Marc Guéhi,Chelsea,Crystal Palace,23340000.0,2021-07-18,137,Crystal Palace
-Jaydee Canvot,Toulouse,Crystal Palace,23000000.0,2025-09-01,137,Crystal Palace
-Cheick Doucouré,Lens,Crystal Palace,22600000.0,2022-07-11,137,Crystal Palace
-Adam Wharton,Blackburn,Crystal Palace,21100000.0,2024-02-01,137,Crystal Palace
-Matheus França,Flamengo,Crystal Palace,20000000.0,2023-08-05,137,Crystal Palace
-Neymar,Barcelona,Paris Saint-Germain,222000000.0,2017-08-03,138,Paris Saint-Germain
-Kylian Mbappé,Monaco,Paris Saint-Germain,180000000.0,2018-07-01,138,Paris Saint-Germain
-Randal Kolo Muani,Frankfurt,Paris Saint-Germain,95000000.0,2023-09-01,138,Paris Saint-Germain
-Khvicha Kvaratskhelia,Napoli,Paris Saint-Germain,80000000.0,2025-01-17,138,Paris Saint-Germain
-Achraf Hakimi,Inter,Paris Saint-Germain,68000000.0,2021-07-06,138,Paris Saint-Germain
-João Neves,Benfica,Paris Saint-Germain,65920000.0,2024-08-05,138,Paris Saint-Germain
-Gonçalo Ramos,Benfica,Paris Saint-Germain,65000000.0,2024-01-01,138,Paris Saint-Germain
-Edinson Cavani,Napoli,Paris Saint-Germain,64500000.0,2013-07-16,138,Paris Saint-Germain
-Ilya Zabarnyi,Bournemouth,Paris Saint-Germain,63000000.0,2025-08-12,138,Paris Saint-Germain
-Ángel Di María,Manchester United,Paris Saint-Germain,63000000.0,2015-08-06,138,Paris Saint-Germain
-Borja Iglesias,Espanyol,Real Betis,28000000.0,2019-08-14,139,Real Betis
-Antony,Manchester United,Real Betis,22000000.0,2025-09-01,139,Real Betis
-Giovani Lo Celso,Paris Saint-Germain,Real Betis,22000000.0,2019-07-01,139,Real Betis
-Nabil Fekir,Lyon,Real Betis,19750000.0,2019-07-23,139,Real Betis
-William Carvalho,Sporting CP,Real Betis,18500000.0,2018-07-13,139,Real Betis
-Diego Lainez,América,Real Betis,14000000.0,2019-01-10,139,Real Betis
-Cucho Hernández,Columbus,Real Betis,13000000.0,2025-02-03,139,Real Betis
-Nelson Deossa,Monterrey,Real Betis,11700000.0,2025-08-04,139,Real Betis
-Marc Bartra,Borussia Dortmund,Real Betis,10500000.0,2018-01-30,139,Real Betis
-Luiz Henrique,Fluminense,Real Betis,10400000.0,2022-07-01,139,Real Betis
-Roman Yaremchuk,Benfica,Brugge,17000000.0,2022-08-29,140,Brugge
-Igor Thiago,Ludogorets,Brugge,11000000.0,2023-07-01,140,Brugge
-Raphael Onyedika,Midtjylland,Brugge,9500000.0,2022-08-28,140,Brugge
-Aleksandar Stanković,Inter,Brugge,9500000.0,2025-07-24,140,Brugge
-Kamal Sowah,Leicester City,Brugge,9000000.0,2021-08-27,140,Brugge
-Mamadou Diakhon,Stade Reims,Brugge,9000000.0,2025-08-18,140,Brugge
-David Okereke,Spezia Calcio,Brugge,8160000.0,2019-07-09,140,Brugge
-Hugo Vetlesen,Bodø/Glimt,Brugge,7750000.0,2023-07-03,140,Brugge
-Casper Nielsen,Union SG,Brugge,7750000.0,2022-07-18,140,Brugge
-Nicolò Tresoldi,Hannover 96,Brugge,7500000.0,2025-07-01,140,Brugge
-Dango Ouattara,Bournemouth,Brentford,42800000.0,2025-08-16,141,Brentford
-Igor Thiago,Brugge,Brentford,33000000.0,2024-07-01,141,Brentford
-Nathan Collins,Wolverhampton Wanderers,Brentford,26850000.0,2023-07-04,141,Brentford
-Kevin Schade,Freiburg,Brentford,25000000.0,2023-07-01,141,Brentford
-Sepp van den Berg,Liverpool,Brentford,23600000.0,2024-08-22,141,Brentford
-Fábio Carvalho,Liverpool,Brentford,23400000.0,2024-08-12,141,Brentford
-Antoni Milambo,Feyenoord,Brentford,20000000.0,2025-07-03,141,Brentford
-Keane Lewis-Potter,Hull City,Brentford,19000000.0,2022-07-12,141,Brentford
-Jannik Schuster,Salzburg,Brentford,18000000.0,2026-07-01,141,Brentford
-Michael Kayode,Fiorentina,Brentford,17500000.0,2025-07-01,141,Brentford
-Rafael Leão,Lille,AC Milan,49500000.0,2019-08-01,142,AC Milan
-Leonardo Bonucci,Juventus,AC Milan,42000000.0,2017-07-21,142,AC Milan
-Lucas Paquetá,Flamengo,AC Milan,38400000.0,2019-01-03,142,AC Milan
-André Silva,Porto,AC Milan,38000000.0,2017-07-01,142,AC Milan
-Mattia Caldara,Juventus,AC Milan,37740000.0,2018-08-02,142,AC Milan
-Charles De Ketelaere,Brugge,AC Milan,37500000.0,2022-08-02,142,AC Milan
-Christopher Nkunku,Chelsea,AC Milan,37000000.0,2025-08-30,142,AC Milan
-Ardon Jashari,Brugge,AC Milan,36000000.0,2025-08-06,142,AC Milan
-Fikayo Tomori,Chelsea,AC Milan,35300000.0,2021-07-01,142,AC Milan
-Krzysztof Piatek,Genoa,AC Milan,35000000.0,2019-01-23,142,AC Milan
-Youri Tielemans,Monaco,Leicester City,45000000.0,2019-07-08,143,Leicester City
-Wesley Fofana,Saint-Étienne,Leicester City,35000000.0,2020-10-02,143,Leicester City
-Ayoze Pérez,Newcastle United,Leicester City,33400000.0,2019-07-04,143,Leicester City
-Islam Slimani,Sporting CP,Leicester City,31000000.0,2016-08-31,143,Leicester City
-Kelechi Iheanacho,Manchester City,Leicester City,27700000.0,2017-08-03,143,Leicester City
-James Maddison,Norwich,Leicester City,25000000.0,2018-07-01,143,Leicester City
-Oliver Skipp,Tottenham Hotspur,Leicester City,23500000.0,2024-08-19,143,Leicester City
-Bilal El Khannouss,Genk,Leicester City,22500000.0,2024-08-29,143,Leicester City
-Ricardo Pereira,Porto,Leicester City,22000000.0,2018-07-01,143,Leicester City
-Çağlar Söyüncü,Freiburg,Leicester City,21100000.0,2018-08-09,143,Leicester City
-Vitor Roque,Barcelona,Palmeiras,25500000.0,2025-02-28,144,Palmeiras
-Jhon Arias,Wolverhampton Wanderers,Palmeiras,25000000.0,2026-02-07,144,Palmeiras
-Paulinho,Atlético-MG,Palmeiras,18000000.0,2025-01-01,144,Palmeiras
-Facundo Torres,Orlando,Palmeiras,13100000.0,2025-01-03,144,Palmeiras
-Ramón Sosa,Nott'm Forest,Palmeiras,12500000.0,2025-07-09,144,Palmeiras
-Mauricio,Internacional,Palmeiras,10500000.0,2024-07-10,144,Palmeiras
-Andreas Pereira,Fulham,Palmeiras,10000000.0,2025-08-29,144,Palmeiras
-José Manuel López,Lanús,Palmeiras,9500000.0,2022-07-18,144,Palmeiras
-Matías Viña,Nacional,Palmeiras,8360000.0,2020-01-31,144,Palmeiras
-Artur,RB Bragantino,Palmeiras,8000000.0,2023-03-31,144,Palmeiras
-Rodrigo Zalazar,Braga,Sporting CP,30000000.0,2026-07-01,145,Sporting CP
-Manuel Ugarte,Famalicão,Sporting CP,24500000.0,2021-08-09,145,Sporting CP
-Viktor Gyökeres,Coventry,Sporting CP,24000000.0,2023-07-13,145,Sporting CP
-Luis Suárez,Almería,Sporting CP,22950000.0,2025-07-28,145,Sporting CP
-Fotis Ioannidis,Panathinaikos,Sporting CP,22000000.0,2025-09-01,145,Sporting CP
-Morten Hjulmand,Lecce,Sporting CP,19500000.0,2023-08-13,145,Sporting CP
-Conrad Harder,Nordsjaelland,Sporting CP,19000000.0,2024-09-02,145,Sporting CP
-Zeno Debast,RSC Anderlecht,Sporting CP,18050000.0,2024-07-04,145,Sporting CP
-Francisco Trincão,Barcelona,Sporting CP,18000000.0,2023-07-01,145,Sporting CP
-Paulinho,Braga,Sporting CP,16000000.0,2021-01-31,145,Sporting CP
-Cristiano Ronaldo,Real Madrid,Juventus,117000000.0,2018-07-10,146,Juventus
-Gonzalo Higuaín,Napoli,Juventus,90000000.0,2016-07-26,146,Juventus
-Matthijs de Ligt,Ajax,Juventus,85500000.0,2019-07-18,146,Juventus
-Dušan Vlahović,Fiorentina,Juventus,85400000.0,2022-01-28,146,Juventus
-Arthur Melo,Barcelona,Juventus,80600000.0,2020-09-01,146,Juventus
-Teun Koopmeiners,Atalanta,Juventus,58400000.0,2024-08-28,146,Juventus
-Douglas Luiz,Aston Villa,Juventus,51500000.0,2024-07-01,146,Juventus
-Bremer,Torino,Juventus,51300000.0,2022-07-20,146,Juventus
-Federico Chiesa,Fiorentina,Juventus,44600000.0,2022-07-01,146,Juventus
-Loïs Openda,RB Leipzig,Juventus,42750000.0,2026-07-01,146,Juventus
-Declan Rice,West Ham United,Arsenal,116600000.0,2023-07-15,147,Arsenal
-Nicolas Pépé,Lille,Arsenal,80000000.0,2019-08-01,147,Arsenal
-Kai Havertz,Chelsea,Arsenal,75000000.0,2023-07-01,147,Arsenal
-Martín Zubimendi,Real Sociedad,Arsenal,70000000.0,2025-07-06,147,Arsenal
-Eberechi Eze,Crystal Palace,Arsenal,69300000.0,2025-08-23,147,Arsenal
-Viktor Gyökeres,Sporting CP,Arsenal,66900000.0,2025-07-26,147,Arsenal
-Pierre-Emerick Aubameyang,Borussia Dortmund,Arsenal,63750000.0,2018-01-31,147,Arsenal
-Ben White,Brighton & Hove Albion,Arsenal,58500000.0,2021-07-30,147,Arsenal
-Noni Madueke,Chelsea,Arsenal,56000000.0,2025-07-18,147,Arsenal
-Alexandre Lacazette,Lyon,Arsenal,53000000.0,2017-07-05,147,Arsenal
-Jules Koundé,G. Bordeaux,Sevilla,35000000.0,2019-07-03,148,Sevilla
-Rony Lopes,Monaco,Sevilla,25000000.0,2019-08-14,148,Sevilla
-Luis Muriel,Sampdoria,Sevilla,24500000.0,2017-07-11,148,Sevilla
-Suso,AC Milan,Sevilla,21700000.0,2020-07-21,148,Sevilla
-Quincy Promes,Spartak Moscow,Sevilla,21000000.0,2018-08-31,148,Sevilla
-Youssef En-Nesyri,Leganés,Sevilla,20000000.0,2020-01-16,148,Sevilla
-Joaquín Correa,Sampdoria,Sevilla,18200000.0,2016-07-10,148,Sevilla
-Franco Vázquez,Palermo,Sevilla,16800000.0,2016-07-16,148,Sevilla
-Tanguy Nianzou,Bayern Munich,Sevilla,16000000.0,2022-08-17,148,Sevilla
-Rafa Mir,Wolverhampton Wanderers,Sevilla,16000000.0,2021-08-20,148,Sevilla
-Moussa Diaby,Aston Villa,Al-Ittihad,60000000.0,2024-07-24,149,Al-Ittihad
-Fabinho,Liverpool,Al-Ittihad,46700000.0,2023-07-31,149,Al-Ittihad
-George Ilenikhena,Monaco,Al-Ittihad,33000000.0,2026-02-02,149,Al-Ittihad
-Roger Fernandes,Braga,Al-Ittihad,32000000.0,2025-09-05,149,Al-Ittihad
-Jota,Celtic,Al-Ittihad,29100000.0,2023-07-03,149,Al-Ittihad
-Luiz Felipe,Real Betis,Al-Ittihad,22000000.0,2023-09-07,149,Al-Ittihad
-Steven Bergwijn,Ajax,Al-Ittihad,21000000.0,2024-09-02,149,Al-Ittihad
-Mahamadou Doumbia,Royal Antwerp,Al-Ittihad,16000000.0,2025-09-08,149,Al-Ittihad
-Jan-Carlo Simić,RSC Anderlecht,Al-Ittihad,15000000.0,2026-07-01,149,Al-Ittihad
-Youssef En-Nesyri,Fenerbahçe,Al-Ittihad,15000000.0,2026-02-02,149,Al-Ittihad
-Malik Tillman,PSV Eindhoven,Bayer Leverkusen,35000000.0,2025-07-12,150,Bayer Leverkusen
-Jarell Quansah,Liverpool,Bayer Leverkusen,35000000.0,2025-07-02,150,Bayer Leverkusen
-Eliesse Ben Seghir,Monaco,Bayer Leverkusen,32000000.0,2025-08-31,150,Bayer Leverkusen
-Kerem Demirbay,Hoffenheim,Bayer Leverkusen,32000000.0,2019-07-01,150,Bayer Leverkusen
-Patrik Schick,Roma,Bayer Leverkusen,26500000.0,2020-09-08,150,Bayer Leverkusen
-Equi Fernández,Al-Qadsiah,Bayer Leverkusen,25000000.0,2025-09-01,150,Bayer Leverkusen
-Loïc Badé,Sevilla,Bayer Leverkusen,25000000.0,2025-08-21,150,Bayer Leverkusen
-Nathan Tella,Southampton,Bayer Leverkusen,23300000.0,2023-08-27,150,Bayer Leverkusen
-Odilon Kossounou,Brugge,Bayer Leverkusen,23000000.0,2021-07-22,150,Bayer Leverkusen
-Victor Boniface,Union SG,Bayer Leverkusen,22600000.0,2023-07-22,150,Bayer Leverkusen
-Kevin,Shakhtar D,Fulham,40000000.0,2025-09-01,151,Fulham
-Emile Smith Rowe,Arsenal,Fulham,31800000.0,2024-08-02,151,Fulham
-Oscar Bobb,Manchester City,Fulham,31200000.0,2026-01-30,151,Fulham
-Joachim Andersen,Crystal Palace,Fulham,29500000.0,2024-08-23,151,Fulham
-Alex Iwobi,Everton,Fulham,25700000.0,2023-09-01,151,Fulham
-João Palhinha,Sporting CP,Fulham,24900000.0,2022-07-04,151,Fulham
-Frank Anguissa,Marseille,Fulham,24850000.0,2018-08-09,151,Fulham
-Aleksandar Mitrović,Newcastle United,Fulham,24700000.0,2018-07-30,151,Fulham
-Sander Berge,Burnley,Fulham,23550000.0,2024-08-22,151,Fulham
-Calvin Bassey,Ajax,Fulham,22500000.0,2023-07-28,151,Fulham
-Matheus Cunha,Atletico Madrid,Wolverhampton Wanderers,50000000.0,2023-07-01,152,Wolverhampton Wanderers
-Matheus Nunes,Sporting CP,Wolverhampton Wanderers,47400000.0,2022-08-18,152,Wolverhampton Wanderers
-Fábio Silva,Porto,Wolverhampton Wanderers,40000000.0,2020-09-05,152,Wolverhampton Wanderers
-Raúl Jiménez,Benfica,Wolverhampton Wanderers,38000000.0,2019-07-01,152,Wolverhampton Wanderers
-Gonçalo Guedes,Valencia,Wolverhampton Wanderers,32600000.0,2022-08-08,152,Wolverhampton Wanderers
-Nélson Semedo,Barcelona,Wolverhampton Wanderers,32000000.0,2020-09-23,152,Wolverhampton Wanderers
-Jørgen Strand Larsen,Celta Vigo,Wolverhampton Wanderers,27000000.0,2025-07-01,152,Wolverhampton Wanderers
-Tolu Arokodare,Genk,Wolverhampton Wanderers,26000000.0,2025-09-01,152,Wolverhampton Wanderers
-Nathan Collins,Burnley,Wolverhampton Wanderers,24300000.0,2022-07-12,152,Wolverhampton Wanderers
-Fer López,Celta Vigo,Wolverhampton Wanderers,23000000.0,2025-07-01,152,Wolverhampton Wanderers
-Paul Pogba,Juventus,Manchester United,105000000.0,2016-08-09,153,Manchester United
-Antony,Ajax,Manchester United,95000000.0,2022-08-30,153,Manchester United
-Harry Maguire,Leicester City,Manchester United,87000000.0,2019-08-05,153,Manchester United
-Jadon Sancho,Borussia Dortmund,Manchester United,85000000.0,2021-07-23,153,Manchester United
-Romelu Lukaku,Everton,Manchester United,84700000.0,2017-07-10,153,Manchester United
-Rasmus Højlund,Atalanta,Manchester United,79800000.0,2023-08-05,153,Manchester United
-Benjamin Sesko,RB Leipzig,Manchester United,76500000.0,2025-08-09,153,Manchester United
-Bryan Mbeumo,Brentford,Manchester United,75000000.0,2025-07-21,153,Manchester United
-Ángel Di María,Real Madrid,Manchester United,75000000.0,2014-08-26,153,Manchester United
-Matheus Cunha,Wolverhampton Wanderers,Manchester United,74200000.0,2025-07-01,153,Manchester United
-Victor Osimhen,Lille,Napoli,78900000.0,2020-09-01,154,Napoli
-Hirving Lozano,PSV Eindhoven,Napoli,50000000.0,2019-08-23,154,Napoli
-Rasmus Højlund,Manchester United,Napoli,44000000.0,2026-07-01,154,Napoli
-Alessandro Buongiorno,Torino,Napoli,36500000.0,2024-07-13,154,Napoli
-Konstantinos Manolas,Roma,Napoli,36000000.0,2019-07-01,154,Napoli
-Arkadiusz Milik,Ajax,Napoli,32000000.0,2016-08-01,154,Napoli
-Sam Beukema,Bologna,Napoli,31000000.0,2025-07-20,154,Napoli
-Romelu Lukaku,Chelsea,Napoli,30700000.0,2024-08-29,154,Napoli
-Scott McTominay,Manchester United,Napoli,30500000.0,2024-08-30,154,Napoli
-Fabián Ruiz,Real Betis,Napoli,30000000.0,2018-07-05,154,Napoli
-Sébastien Haller,Frankfurt,West Ham United,50000000.0,2019-07-17,155,West Ham United
-Maximilian Kilman,Wolverhampton Wanderers,West Ham United,47500000.0,2024-07-06,155,West Ham United
-Mateus Fernandes,Southampton,West Ham United,44000000.0,2025-08-29,155,West Ham United
-Mohammed Kudus,Ajax,West Ham United,43000000.0,2023-08-27,155,West Ham United
-Lucas Paquetá,Lyon,West Ham United,42950000.0,2022-08-29,155,West Ham United
-Jean-Clair Todibo,Nice,West Ham United,40000000.0,2025-07-01,155,West Ham United
-Gianluca Scamacca,Sassuolo,West Ham United,38600000.0,2022-07-26,155,West Ham United
-Edson Álvarez,Ajax,West Ham United,38000000.0,2023-08-10,155,West Ham United
-Felipe Anderson,Lazio,West Ham United,38000000.0,2018-07-15,155,West Ham United
-Nayef Aguerd,Rennes,West Ham United,35000000.0,2022-07-01,155,West Ham United
-Georginio Rutter,Hoffenheim,Leeds United,40500000.0,2023-01-14,156,Leeds United
-Brenden Aaronson,Salzburg,Leeds United,32840000.0,2022-07-01,156,Leeds United
-Daniel James,Manchester United,Leeds United,29100000.0,2021-08-31,156,Leeds United
-Luis Sinisterra,Feyenoord,Leeds United,25000000.0,2022-07-07,156,Leeds United
-Anton Stach,Hoffenheim,Leeds United,20000000.0,2025-07-22,156,Leeds United
-Diego Llorente,Real Sociedad,Leeds United,20000000.0,2020-09-24,156,Leeds United
-Noah Okafor,AC Milan,Leeds United,19000000.0,2025-08-21,156,Leeds United
-Raphinha,Rennes,Leeds United,18600000.0,2020-10-05,156,Leeds United
-Jaka Bijol,Udinese,Leeds United,18000000.0,2025-07-01,156,Leeds United
-Hélder Costa,Wolverhampton Wanderers,Leeds United,17700000.0,2020-07-01,156,Leeds United
-Raúl de Tomás,Benfica,Espanyol,22500000.0,2020-01-09,157,Espanyol
-Mario Hermoso,RM,Espanyol,12500000.0,2017-07-12,157,Espanyol
-Matías Vargas,Vélez Sarsfield,Espanyol,10500000.0,2019-07-14,157,Espanyol
-Adrián Embarba,Rayo Vallecano,Espanyol,10000000.0,2020-01-23,157,Espanyol
-Borja Iglesias,Celta Vigo,Espanyol,10000000.0,2018-07-09,157,Espanyol
-Leandro Cabrera,Getafe,Espanyol,9000000.0,2020-01-20,157,Espanyol
-César Montes,Monterrey,Espanyol,8000000.0,2023-01-01,157,Espanyol
-Fernando Calero,Real Valladolid,Espanyol,8000000.0,2019-08-09,157,Espanyol
-Sergi Darder,Lyon,Espanyol,8000000.0,2018-07-01,157,Espanyol
-Léo Baptistão,Atletico Madrid,Espanyol,7000000.0,2016-07-09,157,Espanyol
-Alexander Isak,Newcastle United,Liverpool,145000000.0,2025-09-01,158,Liverpool
-Florian Wirtz,Bayer Leverkusen,Liverpool,125000000.0,2025-07-01,158,Liverpool
-Hugo Ekitiké,Frankfurt,Liverpool,95000000.0,2025-07-23,158,Liverpool
-Darwin Núñez,Benfica,Liverpool,85000000.0,2022-07-01,158,Liverpool
-Virgil van Dijk,Southampton,Liverpool,84650000.0,2018-01-01,158,Liverpool
-Alisson,Roma,Liverpool,72500000.0,2018-07-19,158,Liverpool
-Dominik Szoboszlai,RB Leipzig,Liverpool,70000000.0,2023-07-02,158,Liverpool
-Jérémy Jacquet,Rennes,Liverpool,63600000.0,2026-07-01,158,Liverpool
-Naby Keïta,RB Leipzig,Liverpool,60000000.0,2018-07-01,158,Liverpool
-Luis Díaz,Porto,Liverpool,49000000.0,2022-01-30,158,Liverpool
-Galeno,Porto,Al-Ahli,50000000.0,2025-01-31,159,Al-Ahli
-Ivan Toney,Brentford,Al-Ahli,42000000.0,2024-08-31,159,Al-Ahli
-Riyad Mahrez,Manchester City,Al-Ahli,35000000.0,2023-07-28,159,Al-Ahli
-Enzo Millot,Stuttgart,Al-Ahli,30000000.0,2025-08-09,159,Al-Ahli
-Gabri Veiga,Celta Vigo,Al-Ahli,30000000.0,2023-08-26,159,Al-Ahli
-Roger Ibañez,Roma,Al-Ahli,28500000.0,2023-08-10,159,Al-Ahli
-Allan Saint-Maximin,Newcastle United,Al-Ahli,27200000.0,2023-07-30,159,Al-Ahli
-Valentin Atangana,Stade Reims,Al-Ahli,25000000.0,2025-09-06,159,Al-Ahli
-Edouard Mendy,Chelsea,Al-Ahli,18500000.0,2023-07-01,159,Al-Ahli
-Merih Demiral,Atalanta,Al-Ahli,17000000.0,2023-08-19,159,Al-Ahli
-Malcom,Barcelona,Zenit S-Pb,41500000.0,2019-08-02,160,Zenit S-Pb
-Hulk,Porto,Zenit S-Pb,40000000.0,2012-09-03,160,Zenit S-Pb
-Axel Witsel,Benfica,Zenit S-Pb,40000000.0,2012-09-03,160,Zenit S-Pb
-Luiz Henrique,Botafogo,Zenit S-Pb,33000000.0,2025-01-20,160,Zenit S-Pb
-Gerson,Flamengo,Zenit S-Pb,25000000.0,2025-07-04,160,Zenit S-Pb
-Yuri Alberto,Internacional,Zenit S-Pb,25000000.0,2022-01-31,160,Zenit S-Pb
-Leandro Paredes,Roma,Zenit S-Pb,23000000.0,2017-07-01,160,Zenit S-Pb
-Wendel,Sporting CP,Zenit S-Pb,20300000.0,2020-10-06,160,Zenit S-Pb
-Salomón Rondón,Rubin Kazan,Zenit S-Pb,18000000.0,2014-01-31,160,Zenit S-Pb
-Jhon Jhon,RB Bragantino,Zenit S-Pb,18000000.0,2026-01-28,160,Zenit S-Pb
-Mio Backhaus,Werder Bremen,Freiburg,12000000.0,2026-07-01,161,Freiburg
-Ritsu Doan,PSV Eindhoven,Freiburg,10400000.0,2022-07-05,161,Freiburg
-Baptiste Santamaria,Angers SCO,Freiburg,10000000.0,2020-09-17,161,Freiburg
-Keisuke Goto,RSC Anderlecht,Freiburg,10000000.0,2026-07-01,161,Freiburg
-Yuito Suzuki,Bröndby IF,Freiburg,10000000.0,2025-07-01,161,Freiburg
-Cyriaque Irié,Troyes,Freiburg,8500000.0,2025-07-01,161,Freiburg
-Niklas Beste,Benfica,Freiburg,8000000.0,2025-01-31,161,Freiburg
-Çağlar Söyüncü,Altinordu,Freiburg,7930000.0,2016-07-01,161,Freiburg
-Rihito Yamamoto,Sint-Truiden,Freiburg,7000000.0,2026-07-01,161,Freiburg
-Vincenzo Grifo,Hoffenheim,Freiburg,7000000.0,2019-09-02,161,Freiburg
-Enzo Fernández,River Plate,Benfica,44250000.0,2022-07-14,162,Benfica
-Darwin Núñez,Almería,Benfica,34000000.0,2020-09-04,162,Benfica
-Orkun Kökçü,Feyenoord,Benfica,29700000.0,2023-07-01,162,Benfica
-Richard Ríos,Palmeiras,Benfica,27000000.0,2025-07-22,162,Benfica
-Franjo Ivanović,Union SG,Benfica,22800000.0,2025-07-31,162,Benfica
-Marcos Leonardo,Santos,Benfica,22000000.0,2024-01-04,162,Benfica
-Raúl Jiménez,Atletico Madrid,Benfica,22000000.0,2015-08-13,162,Benfica
-Arthur Cabral,Fiorentina,Benfica,21000000.0,2023-08-10,162,Benfica
-Georgiy Sudakov,Shakhtar D,Benfica,20250000.0,2026-07-01,162,Benfica
-Dodi Lukébakio,Sevilla,Benfica,20000000.0,2025-09-01,162,Benfica
-Enzo Fernández,Benfica,Chelsea,121000000.0,2023-01-31,163,Chelsea
-Moisés Caicedo,Brighton & Hove Albion,Chelsea,116000000.0,2023-08-14,163,Chelsea
-Romelu Lukaku,Inter,Chelsea,113000000.0,2021-08-12,163,Chelsea
-Kai Havertz,Bayer Leverkusen,Chelsea,100000000.0,2020-09-04,163,Chelsea
-Wesley Fofana,Leicester City,Chelsea,80400000.0,2022-08-31,163,Chelsea
-Kepa Arrizabalaga,Athletic Bilbao,Chelsea,80000000.0,2018-08-08,163,Chelsea
-Mykhaylo Mudryk,Shakhtar D,Chelsea,70000000.0,2023-01-15,163,Chelsea
-Álvaro Morata,Real Madrid,Chelsea,66000000.0,2017-07-21,163,Chelsea
-Marc Cucurella,Brighton & Hove Albion,Chelsea,65300000.0,2022-08-05,163,Chelsea
-Christian Pulisic,Borussia Dortmund,Chelsea,64000000.0,2019-01-02,163,Chelsea
-Rhian Brewster,Liverpool,Sheff Utd,26000000.0,2020-10-02,164,Sheff Utd
-Sander Berge,Genk,Sheff Utd,25000000.0,2020-01-30,164,Sheff Utd
-Cameron Archer,Aston Villa,Sheff Utd,21550000.0,2023-08-27,164,Sheff Utd
-Aaron Ramsdale,Bournemouth,Sheff Utd,20500000.0,2020-08-19,164,Sheff Utd
-Oli McBurnie,Swansea,Sheff Utd,19100000.0,2019-08-02,164,Sheff Utd
-Gustavo Hamer,Coventry,Sheff Utd,17300000.0,2023-08-12,164,Sheff Utd
-Vini Souza,Lommel,Sheff Utd,12500000.0,2023-08-09,164,Sheff Utd
-Tom Cannon,Leicester City,Sheff Utd,11850000.0,2025-01-23,164,Sheff Utd
-Lys Mousset,Bournemouth,Sheff Utd,11100000.0,2019-07-21,164,Sheff Utd
-Oliver Burke,West Brom,Sheff Utd,6500000.0,2020-09-09,164,Sheff Utd
-Victor Osimhen,Napoli,Galatasaray,75000000.0,2025-07-31,165,Galatasaray
-Wilfried Singo,Monaco,Galatasaray,30770000.0,2025-08-28,165,Galatasaray
-Uğurcan Çakır,Trabzonspor,Galatasaray,27500000.0,2025-09-01,165,Galatasaray
-Gabriel Sara,Norwich,Galatasaray,18000000.0,2024-08-04,165,Galatasaray
-Nicolò Zaniolo,Roma,Galatasaray,15000000.0,2023-02-08,165,Galatasaray
-Bruma,Sporting CP,Galatasaray,13000000.0,2013-09-03,165,Galatasaray
-Younès Belhanda,Dynamo Kyiv,Galatasaray,10000000.0,2017-07-03,165,Galatasaray
-Mauro Icardi,Paris Saint-Germain,Galatasaray,10000000.0,2023-07-26,165,Galatasaray
-Davinson Sánchez,Tottenham Hotspur,Galatasaray,9500000.0,2023-09-04,165,Galatasaray
-Elias Jelert,Copenhagen,Galatasaray,9000000.0,2024-07-25,165,Galatasaray
-Nahitan Nández,Boca Juniors,Cagliari,16200000.0,2019-08-09,166,Cagliari
-Marko Rog,Napoli,Cagliari,15000000.0,2020-09-01,166,Cagliari
-Giovanni Simeone,Fiorentina,Cagliari,13000000.0,2020-09-01,166,Cagliari
-Roberto Piccoli,Atalanta,Cagliari,12500000.0,2025-07-01,166,Cagliari
-Leonardo Pavoletti,Napoli,Cagliari,9800000.0,2017-08-30,166,Cagliari
-Alberto Cerri,Juventus,Cagliari,9000000.0,2019-07-01,166,Cagliari
-Elia Caprile,Napoli,Cagliari,8200000.0,2025-07-01,166,Cagliari
-Filippo Romagna,Juventus,Cagliari,7400000.0,2017-07-28,166,Cagliari
-Răzvan Marin,Ajax,Cagliari,6900000.0,2021-07-01,166,Cagliari
-Gianluca Gaetano,Napoli,Cagliari,6200000.0,2025-07-01,166,Cagliari
-Terem Moffi,Lorient,Nice,22500000.0,2023-07-01,167,Nice
-Sofiane Diop,Monaco,Nice,22000000.0,2022-08-29,167,Nice
-Kasper Dolberg,Ajax,Nice,20500000.0,2019-08-29,167,Nice
-Jérémie Boga,Atalanta,Nice,17500000.0,2023-07-25,167,Nice
-Jean-Clair Todibo,Barcelona,Nice,16500000.0,2021-07-01,167,Nice
-Calvin Stengs,AZ Alkmaar,Nice,15000000.0,2021-07-14,167,Nice
-Gaëtan Laborde,Rennes,Nice,15000000.0,2022-09-01,167,Nice
-Alexis Claude-Maurice,Lorient,Nice,13000000.0,2019-08-29,167,Nice
-Mattia Viti,Empoli,Nice,13000000.0,2022-08-03,167,Nice
-Stanley Nsoki,Paris Saint-Germain,Nice,12500000.0,2019-08-31,167,Nice
-Thiago Almada,Atlanta,Botafogo,24150000.0,2024-07-10,168,Botafogo
-Danilo,Nott'm Forest,Botafogo,23000000.0,2025-07-18,168,Botafogo
-Luiz Henrique,Real Betis,Botafogo,16000000.0,2024-02-01,168,Botafogo
-Santiago Rodríguez,New York City,Botafogo,14300000.0,2025-02-22,168,Botafogo
-Arthur Cabral,Benfica,Botafogo,12000000.0,2025-06-08,168,Botafogo
-Jair Cunha,Santos,Botafogo,12000000.0,2025-02-10,168,Botafogo
-Artur,Zenit S-Pb,Botafogo,10000000.0,2025-01-20,168,Botafogo
-Matheus Martins,Udinese,Botafogo,10000000.0,2024-07-30,168,Botafogo
-Vitinho,Burnley,Botafogo,8000000.0,2024-08-30,168,Botafogo
-Álvaro Montoro,Vélez Sarsfield,Botafogo,7900000.0,2025-06-03,168,Botafogo
-Alexander Isak,Real Sociedad,Newcastle United,77500000.0,2022-08-26,169,Newcastle United
-Nick Woltemade,Stuttgart,Newcastle United,75000000.0,2025-08-30,169,Newcastle United
-Anthony Elanga,Nott'm Forest,Newcastle United,61400000.0,2025-07-11,169,Newcastle United
-Sandro Tonali,AC Milan,Newcastle United,60800000.0,2023-07-03,169,Newcastle United
-Yoane Wissa,Brentford,Newcastle United,57700000.0,2025-09-01,169,Newcastle United
-Anthony Gordon,Everton,Newcastle United,45600000.0,2023-01-29,169,Newcastle United
-Jacob Ramsey,Aston Villa,Newcastle United,45150000.0,2025-08-17,169,Newcastle United
-Harvey Barnes,Leicester City,Newcastle United,44000000.0,2023-07-23,169,Newcastle United
-Joelinton,Hoffenheim,Newcastle United,43500000.0,2019-07-23,169,Newcastle United
-Bruno Guimarães,Lyon,Newcastle United,42100000.0,2022-01-30,169,Newcastle United
-Ismaïla Sarr,Rennes,Watford,30000000.0,2019-08-08,170,Watford
-Andre Gray,Burnley,Watford,20400000.0,2017-08-09,170,Watford
-Isaac Success,Granada,Watford,15000000.0,2016-07-01,170,Watford
-Roberto Pereyra,Juventus,Watford,13500000.0,2016-08-19,170,Watford
-Gerard Deulofeu,Barcelona,Watford,13000000.0,2018-07-01,170,Watford
-Richarlison,Fluminense,Watford,12400000.0,2017-08-08,170,Watford
-João Pedro,Fluminense,Watford,11500000.0,2020-01-01,170,Watford
-Abdoulaye Doucouré,Rennes,Watford,10600000.0,2016-02-01,170,Watford
-Imrân Louza,Nantes,Watford,10000000.0,2021-07-01,170,Watford
-Will Hughes,Derby,Watford,9100000.0,2017-07-01,170,Watford
-Jaden Philogene,Aston Villa,Ipswich,23700000.0,2025-01-15,171,Ipswich
-Omari Hutchinson,Chelsea,Ipswich,23500000.0,2024-07-01,171,Ipswich
-Jacob Greaves,Hull City,Ipswich,21500000.0,2024-07-12,171,Ipswich
-Liam Delap,Manchester City,Ipswich,17850000.0,2024-07-13,171,Ipswich
-Jack Clarke,Sunderland,Ipswich,17700000.0,2024-08-24,171,Ipswich
-Dara O'Shea,Burnley,Ipswich,14200000.0,2024-08-25,171,Ipswich
-Kasey McAteer,Leicester City,Ipswich,13900000.0,2025-08-22,171,Ipswich
-Azor Matusiwa,Rennes,Ipswich,11500000.0,2025-07-13,171,Ipswich
-Sammie Szmodics,Blackburn,Ipswich,10600000.0,2024-08-16,171,Ipswich
-Arijanet Murić,Burnley,Ipswich,9550000.0,2024-07-17,171,Ipswich
-Ruben van Bommel,AZ Alkmaar,PSV Eindhoven,15800000.0,2025-07-11,172,PSV Eindhoven
-Hirving Lozano,Napoli,PSV Eindhoven,15000000.0,2023-09-01,172,PSV Eindhoven
-Paul Wanner,Bayern Munich,PSV Eindhoven,15000000.0,2025-08-22,172,PSV Eindhoven
-Noa Lang,Brugge,PSV Eindhoven,12500000.0,2023-07-08,172,PSV Eindhoven
-Jerdy Schouten,Bologna,PSV Eindhoven,12350000.0,2023-08-16,172,PSV Eindhoven
-Malik Tillman,Bayern Munich,PSV Eindhoven,12000000.0,2024-07-01,172,PSV Eindhoven
-Timo Baumgartl,Stuttgart,PSV Eindhoven,12000000.0,2019-07-26,172,PSV Eindhoven
-Bruma,RB Leipzig,PSV Eindhoven,12000000.0,2019-07-01,172,PSV Eindhoven
-Ricardo Pepi,Augsburg,PSV Eindhoven,11000000.0,2023-07-07,172,PSV Eindhoven
-Philipp Max,Augsburg,PSV Eindhoven,10000000.0,2020-09-02,172,PSV Eindhoven
-Gylfi Sigurdsson,Swansea,Everton,49400000.0,2017-08-16,173,Everton
-Tyler Dibling,Southampton,Everton,40500000.0,2025-08-25,173,Everton
-Amadou Onana,Lille,Everton,39870000.0,2022-08-09,173,Everton
-Richarlison,Watford,Everton,39200000.0,2018-07-24,173,Everton
-Romelu Lukaku,Chelsea,Everton,35360000.0,2014-07-30,173,Everton
-Alex Iwobi,Arsenal,Everton,30400000.0,2019-08-08,173,Everton
-Yerry Mina,Barcelona,Everton,30250000.0,2018-08-09,173,Everton
-Thierno Barry,Villarreal,Everton,30000000.0,2025-07-09,173,Everton
-Yannick Bolasie,Crystal Palace,Everton,28900000.0,2016-08-15,173,Everton
-Kiernan Dewsbury-Hall,Chelsea,Everton,28650000.0,2025-08-06,173,Everton
-Lovro Majer,Rennes,Wolfsburg,25000000.0,2023-08-16,174,Wolfsburg
-Kevin De Bruyne,Chelsea,Wolfsburg,22000000.0,2014-01-18,174,Wolfsburg
-John Brooks,Hertha Berlin,Wolfsburg,17000000.0,2017-07-01,174,Wolfsburg
-Luiz Gustavo,Bayern Munich,Wolfsburg,16000000.0,2013-08-16,174,Wolfsburg
-Vini Souza,Sheff Utd,Wolfsburg,15000000.0,2025-07-05,174,Wolfsburg
-Mohamed Amoura,Union SG,Wolfsburg,14750000.0,2025-07-01,174,Wolfsburg
-Sebastiaan Bornauw,Köln,Wolfsburg,14100000.0,2021-07-16,174,Wolfsburg
-Andreas Skov Olsen,Brugge,Wolfsburg,14000000.0,2025-01-17,174,Wolfsburg
-Kamil Grabara,Copenhagen,Wolfsburg,13500000.0,2024-07-01,174,Wolfsburg
-Yannick Gerhardt,Köln,Wolfsburg,13000000.0,2016-07-01,174,Wolfsburg
-Jesús Rodríguez,Real Betis,Como,22500000.0,2025-07-02,175,Como
-Nicolas Kühn,Celtic,Como,19000000.0,2025-07-11,175,Como
-Martin Baturina,Dinamo Zagreb,Como,18000000.0,2025-07-01,175,Como
-Maxence Caqueret,Lyon,Como,15000000.0,2025-01-12,175,Como
-Anastasios Douvikas,Celta Vigo,Como,14000000.0,2025-02-03,175,Como
-Jayden Addai,AZ Alkmaar,Como,14000000.0,2025-07-04,175,Como
-Máximo Perrone,Manchester City,Como,13000000.0,2025-07-18,175,Como
-Assane Diao,Real Betis,Como,12000000.0,2025-01-07,175,Como
-Adrian Lahdo,Hammarby,Como,11940000.0,2026-02-02,175,Como
-Alberto Dossena,Cagliari,Como,9340000.0,2024-07-01,175,Como
-Lucas Gourna-Douath,Saint-Étienne,Salzburg,13000000.0,2022-07-13,176,Salzburg
-Brenden Aaronson,Philadelphia,Salzburg,12700000.0,2021-01-01,176,Salzburg
-Noah Okafor,Basel,Salzburg,11200000.0,2020-01-31,176,Salzburg
-Maximilian Wöber,Sevilla,Salzburg,10500000.0,2019-08-13,176,Salzburg
-Karim Adeyemi,U'haching,Salzburg,10100000.0,2018-07-01,176,Salzburg
-Joane Gadou,Paris Saint-Germain,Salzburg,10000000.0,2024-09-03,176,Salzburg
-Erling Haaland,Molde,Salzburg,8000000.0,2019-01-01,176,Salzburg
-Oscar Gloukh,M. Tel Aviv,Salzburg,7000000.0,2023-01-27,176,Salzburg
-Strahinja Pavlović,Monaco,Salzburg,7000000.0,2022-07-01,176,Salzburg
-Petar Ratkov,TSC,Salzburg,6950000.0,2023-07-01,176,Salzburg
-James Rodríguez,Porto,Monaco,45000000.0,2013-07-01,177,Monaco
-Radamel Falcao,Atletico Madrid,Monaco,43000000.0,2013-07-01,177,Monaco
-Wissam Ben Yedder,Sevilla,Monaco,40000000.0,2019-08-14,177,Monaco
-Aleksandr Golovin,CSKA Moscow,Monaco,30000000.0,2018-07-27,177,Monaco
-Gelson Martins,Atletico Madrid,Monaco,30000000.0,2019-07-01,177,Monaco
-Folarin Balogun,Arsenal,Monaco,30000000.0,2023-08-30,177,Monaco
-Keita Baldé,Lazio,Monaco,30000000.0,2017-08-29,177,Monaco
-João Moutinho,Porto,Monaco,25000000.0,2013-07-01,177,Monaco
-Youri Tielemans,RSC Anderlecht,Monaco,25000000.0,2017-07-01,177,Monaco
-Pietro Pellegri,Genoa,Monaco,20900000.0,2018-01-27,177,Monaco
-Gonçalo Guedes,Paris Saint-Germain,Valencia,40000000.0,2018-08-27,178,Valencia
-Jasper Cillessen,Barcelona,Valencia,35000000.0,2019-07-01,178,Valencia
-Álvaro Negredo,Manchester City,Valencia,28000000.0,2015-07-01,178,Valencia
-Enzo Pérez,Benfica,Valencia,25000000.0,2015-01-02,178,Valencia
-Geoffrey Kondogbia,Inter,Valencia,22000000.0,2018-07-01,178,Valencia
-André Gomes,Benfica,Valencia,20000000.0,2015-07-01,178,Valencia
-Éver Banega,Boca Juniors,Valencia,18000000.0,2008-01-05,178,Valencia
-Kévin Gameiro,Atletico Madrid,Valencia,16000000.0,2018-08-12,178,Valencia
-João Cancelo,Benfica,Valencia,15000000.0,2015-07-01,178,Valencia
-Mouctar Diakhaby,Lyon,Valencia,15000000.0,2018-07-01,178,Valencia
-Deniz Undav,Brighton & Hove Albion,Stuttgart,26700000.0,2024-08-09,179,Stuttgart
-Ermedin Demirovic,Augsburg,Stuttgart,23000000.0,2024-07-16,179,Stuttgart
-Badredine Bouanani,Nice,Stuttgart,15000000.0,2025-08-31,179,Stuttgart
-Bilal El Khannouss,Leicester City,Stuttgart,15000000.0,2026-07-01,179,Stuttgart
-Tiago Tomás,Wolfsburg,Stuttgart,13000000.0,2025-08-16,179,Stuttgart
-Lorenz Assignon,Rennes,Stuttgart,12000000.0,2025-07-01,179,Stuttgart
-Nico González,Argentinos Jrs,Stuttgart,11260000.0,2018-07-10,179,Stuttgart
-Ozan Kabak,Galatasaray,Stuttgart,11000000.0,2019-01-17,179,Stuttgart
-Finn Jeltsch,Nuremberg,Stuttgart,9500000.0,2025-02-03,179,Stuttgart
-Ameen Al-Dakhil,Burnley,Stuttgart,9000000.0,2024-08-27,179,Stuttgart
-Patrik Schick,Sampdoria,Roma,42000000.0,2018-07-01,180,Roma
-Artem Dovbyk,Girona,Roma,41100000.0,2024-08-02,180,Roma
-Tammy Abraham,Chelsea,Roma,41000000.0,2021-08-17,180,Roma
-Bryan Cristante,Atalanta,Roma,30600000.0,2019-07-01,180,Roma
-Leonardo Spinazzola,Juventus,Roma,29500000.0,2019-07-01,180,Roma
-Matías Soulé,Juventus,Roma,28600000.0,2024-07-30,180,Roma
-Steven Nzonzi,Sevilla,Roma,26650000.0,2018-08-14,180,Roma
-Marash Kumbulla,Hellas Verona,Roma,26500000.0,2021-07-01,180,Roma
-Wesley,Flamengo,Roma,25000000.0,2025-07-28,180,Roma
-Donyell Malen,Aston Villa,Roma,25000000.0,2026-07-01,180,Roma
+Chengdong Zhang,BJ Guoan,HB CFFC,20440000.0,2017-01-12,96,HB CFFC
+Gervinho,Roma,HB CFFC,18000000.0,2016-01-26,96,HB CFFC
+Yuhao Zhao,HZ Greentown,HB CFFC,17800000.0,2017-01-12,96,HB CFFC
+Mingjian Zhao,Luneng,HB CFFC,10950000.0,2017-02-20,96,HB CFFC
+Yangyang Jin,GZ R&F,HB CFFC,10830000.0,2016-02-19,96,HB CFFC
+Hang Ren,JS Suning,HB CFFC,10750000.0,2017-01-01,96,HB CFFC
+Hernanes,Juventus,HB CFFC,8000000.0,2017-02-09,96,HB CFFC
+Haifeng Ding,Liaoning,HB CFFC,7100000.0,2016-01-06,96,HB CFFC
+Ersan Gülüm,Besiktas,HB CFFC,7000000.0,2016-02-05,96,HB CFFC
+Xuesheng Dong,GZ Evergrande,HB CFFC,6500000.0,2016-02-25,96,HB CFFC
+Giannelli Imbula,Porto,Stoke City,24250000.0,2016-02-01,97,Stoke City
+Kevin Wimmer,Tottenham Hotspur,Stoke City,19400000.0,2017-08-29,97,Stoke City
+Xherdan Shaqiri,Inter,Stoke City,17000000.0,2015-08-11,97,Stoke City
+Badou Ndiaye,Galatasaray,Stoke City,16000000.0,2018-01-31,97,Stoke City
+Joe Allen,Liverpool,Stoke City,15500000.0,2016-07-25,97,Stoke City
+Saido Berahino,West Brom,Stoke City,13900000.0,2017-01-20,97,Stoke City
+Benik Afobe,Wolverhampton Wanderers,Stoke City,13500000.0,2019-01-04,97,Stoke City
+Peter Crouch,Tottenham Hotspur,Stoke City,11300000.0,2011-08-31,97,Stoke City
+Tom Ince,Huddersfield,Stoke City,11200000.0,2018-07-24,97,Stoke City
+Kenwyne Jones,Sunderland,Stoke City,9700000.0,2010-08-11,97,Stoke City
+Dieumerci Mbokani,RSC Anderlecht,Dynamo Kyiv,11000000.0,2013-07-01,98,Dynamo Kyiv
+Aleksandar Dragovic,Basel,Dynamo Kyiv,10000000.0,2013-07-26,98,Dynamo Kyiv
+Younès Belhanda,Montpellier,Dynamo Kyiv,10000000.0,2013-07-01,98,Dynamo Kyiv
+Derlis González,Basel,Dynamo Kyiv,9400000.0,2015-07-30,98,Dynamo Kyiv
+Brown Ideye,Sochaux,Dynamo Kyiv,9000000.0,2011-07-07,98,Dynamo Kyiv
+Jeremain Lens,PSV Eindhoven,Dynamo Kyiv,9000000.0,2013-07-01,98,Dynamo Kyiv
+Raffael,Hertha Berlin,Dynamo Kyiv,9000000.0,2012-07-27,98,Dynamo Kyiv
+André Felipe,Santos,Dynamo Kyiv,8100000.0,2010-08-05,98,Dynamo Kyiv
+Marco Ruben,Villarreal,Dynamo Kyiv,8000000.0,2012-07-13,98,Dynamo Kyiv
+Oleksandr Aliyev,Loko Moskau,Dynamo Kyiv,8000000.0,2011-03-02,98,Dynamo Kyiv
+Claudinho,Zenit S-Pb,Al-Sadd,20000000.0,2025-01-22,99,Al-Sadd
+Mohamed Camara,Monaco,Al-Sadd,16500000.0,2024-07-30,99,Al-Sadd
+Mauro Zárate,Vélez Sarsfield,Al-Sadd,15000000.0,2007-07-01,99,Al-Sadd
+,Middlesbrough,Al-Sadd,12000000.0,2009-09-01,99,Al-Sadd
+Gonzalo Plata,Real Valladolid,Al-Sadd,12000000.0,2023-07-23,99,Al-Sadd
+Rafa Mujica,Arouca,Al-Sadd,10000000.0,2024-07-01,99,Al-Sadd
+Giovani,Palmeiras,Al-Sadd,9000000.0,2023-07-01,99,Al-Sadd
+Leandro,Gamba Osaka,Al-Sadd,7500000.0,2009-08-27,99,Al-Sadd
+Mamadou Niang,Fenerbahce,Al-Sadd,7500000.0,2011-07-06,99,Al-Sadd
+Emerson,Rennes,Al-Sadd,7000000.0,2008-01-01,99,Al-Sadd
+Elye Wahi,Montpellier,Lens,30000000.0,2023-08-20,100,Lens
+Loïs Openda,Brugge,Lens,15390000.0,2022-07-06,100,Lens
+Andy Diouf,Basel,Lens,14000000.0,2023-07-02,100,Lens
+Seko Fofana,Udinese,Lens,8500000.0,2020-08-18,100,Lens
+Kevin Danso,Augsburg,Lens,8000000.0,2021-08-06,100,Lens
+Mamadou Sangaré,Rapid Vienna,Lens,8000000.0,2025-08-20,100,Lens
+Samson Baidoo,RB Salzburg,Lens,8000000.0,2025-07-17,100,Lens
+Angelo Fulgini,Mainz 05,Lens,7200000.0,2023-07-01,100,Lens
+Jeremy Agbonifo,Häcken,Lens,6500000.0,2025-07-01,100,Lens
+Maximilian Philipp,Borussia Dortmund,Dinamo Moscow,20000000.0,2019-08-09,101,Dinamo Moscow
+Aleksandr Kokorin,Anzhi,Dinamo Moscow,19000000.0,2013-08-16,101,Dinamo Moscow
+Balázs Dzsudzsák,Anzhi,Dinamo Moscow,19000000.0,2012-01-01,101,Dinamo Moscow
+Igor Denisov,Anzhi,Dinamo Moscow,15000000.0,2013-08-15,101,Dinamo Moscow
+Yuriy Zhirkov,Anzhi,Dinamo Moscow,11000000.0,2013-08-16,101,Dinamo Moscow
+Christopher Samba,Anzhi,Dinamo Moscow,10000000.0,2013-08-29,101,Dinamo Moscow
+Georgios Seitaridis,Porto,Dinamo Moscow,10000000.0,2005-07-01,101,Dinamo Moscow
+Aleksandr Kerzhakov,Sevilla,Dinamo Moscow,8000000.0,2008-02-26,101,Dinamo Moscow
+Christian Noboa,Rubin Kazan,Dinamo Moscow,8000000.0,2012-01-19,101,Dinamo Moscow
+Tomas Hubocan,Zenit S-Pb,Dinamo Moscow,8000000.0,2014-08-29,101,Dinamo Moscow
+Shoya Nakajima,Portimonense,Al-Duhail,35000000.0,2019-02-03,102,Al-Duhail
+Tuta,E. Frankfurt,Al-Duhail,15000000.0,2025-08-04,102,Al-Duhail
+Toby Alderweireld,Tottenham Hotspur,Al-Duhail,13000000.0,2021-07-27,102,Al-Duhail
+Luis Alberto,Lazio,Al-Duhail,10500000.0,2024-07-01,102,Al-Duhail
+Benjamin Bourigeaud,Rennes,Al-Duhail,10000000.0,2024-08-30,102,Al-Duhail
+Krzysztof Piatek,Basaksehir,Al-Duhail,10000000.0,2025-07-01,102,Al-Duhail
+Ibrahima Bamba,Vit. Guimarães,Al-Duhail,8000000.0,2023-07-13,102,Al-Duhail
+Lucas Veríssimo,Benfica,Al-Duhail,8000000.0,2024-01-25,102,Al-Duhail
+Medhi Benatia,Juventus,Al-Duhail,8000000.0,2019-01-28,102,Al-Duhail
+Kwang-song Han,Juventus,Al-Duhail,7000000.0,2020-01-08,102,Al-Duhail
+Orkun Kökçü,Benfica,Besiktas,30000000.0,2026-07-01,103,Besiktas
+Emmanuel Agbadou,Wolverhampton Wanderers,Besiktas,18000000.0,2026-02-06,103,Besiktas
+Gedson Fernandes,Benfica,Besiktas,16000000.0,2022-07-01,103,Besiktas
+Tammy Abraham,Roma,Besiktas,15000000.0,2026-01-26,103,Besiktas
+Hyeon-gyu Oh,Genk,Besiktas,14000000.0,2026-02-04,103,Besiktas
+Moatasem Al-Musrati,Braga,Besiktas,11000000.0,2024-07-01,103,Besiktas
+Ernest Muci,Legia Warszawa,Besiktas,10000000.0,2024-02-09,103,Besiktas
+Rodrigo Tabata,Gaziantepspor,Besiktas,8000000.0,2009-08-29,103,Besiktas
+Wilfred Ndidi,Leicester City,Besiktas,8000000.0,2025-08-07,103,Besiktas
+Ricardo Quaresma,Inter,Besiktas,7300000.0,2010-07-01,103,Besiktas
+Yoann Gourcuff,AC Milan,G. Bordeaux,13500000.0,2009-07-01,104,G. Bordeaux
+,Paris Saint-Germain,G. Bordeaux,12000000.0,2001-07-04,104,G. Bordeaux
+Rémi Oudin,Stade Reims,G. Bordeaux,10000000.0,2020-01-09,104,G. Bordeaux
+Fernando Cavenaghi,Spartak Moscow,G. Bordeaux,9000000.0,2007-01-20,104,G. Bordeaux
+Jean-Claude Darcheville,Lorient,G. Bordeaux,9000000.0,2002-07-01,104,G. Bordeaux
+Samuel Kalu,KAA Gent,G. Bordeaux,8500000.0,2018-08-06,104,G. Bordeaux
+Cédric Carrasso,Toulouse,G. Bordeaux,8000000.0,2009-07-01,104,G. Bordeaux
+Nicolas de Préville,Lille,G. Bordeaux,8000000.0,2017-08-31,104,G. Bordeaux
+Jonathan Cafu,Ludogorets,G. Bordeaux,7500000.0,2017-08-06,104,G. Bordeaux
+Alou Diarra,Lyon,G. Bordeaux,7400000.0,2007-07-01,104,G. Bordeaux
+Jackson Martínez,Atletico Madrid,GZ Evergrande,42000000.0,2016-02-03,105,GZ Evergrande
+Paulinho,Barcelona,GZ Evergrande,42000000.0,2019-01-01,105,GZ Evergrande
+Talisca,Benfica,GZ Evergrande,19200000.0,2019-01-01,105,GZ Evergrande
+Ricardo Goulart,Cruzeiro,GZ Evergrande,15000000.0,2015-01-13,105,GZ Evergrande
+Alan,RB Salzburg,GZ Evergrande,11100000.0,2015-01-16,105,GZ Evergrande
+Wenzhao Zhang,Luneng,GZ Evergrande,10400000.0,2016-07-07,105,GZ Evergrande
+,BJ Renhe,GZ Evergrande,9650000.0,2017-01-01,105,GZ Evergrande
+Lucas Barrios,Borussia Dortmund,GZ Evergrande,8500000.0,2012-07-01,105,GZ Evergrande
+Darío Conca,Fluminense,GZ Evergrande,8200000.0,2011-07-01,105,GZ Evergrande
+Alessandro Diamanti,Bologna,GZ Evergrande,7500000.0,2014-02-07,105,GZ Evergrande
+Willian,Shakhtar D,Anzhi,35000000.0,2013-01-31,106,Anzhi
+Samuel Eto'o,Inter,Anzhi,27000000.0,2011-08-24,106,Anzhi
+Aleksandr Kokorin,Dinamo Moscow,Anzhi,19000000.0,2013-07-10,106,Anzhi
+Lacina Traore,Kuban Krasnodar,Anzhi,18000000.0,2012-07-01,106,Anzhi
+Igor Denisov,Zenit S-Pb,Anzhi,15000000.0,2013-07-01,106,Anzhi
+Yuriy Zhirkov,Chelsea,Anzhi,15000000.0,2011-08-06,106,Anzhi
+Balázs Dzsudzsák,PSV Eindhoven,Anzhi,14000000.0,2011-07-01,106,Anzhi
+Christopher Samba,Blackburn,Anzhi,14000000.0,2012-02-24,106,Anzhi
+Jucilei,Corinthians,Anzhi,10000000.0,2011-02-22,106,Anzhi
+Vladimir Gabulov,Dinamo Moscow,Anzhi,7000000.0,2011-08-30,106,Anzhi
+André Ayew,West Ham United,Swansea,22800000.0,2018-01-31,107,Swansea
+Borja Bastón,Atletico Madrid,Swansea,18000000.0,2016-08-11,107,Swansea
+Sam Clucas,Hull City,Swansea,16300000.0,2017-08-23,107,Swansea
+Roque Mesa,Las Palmas,Swansea,12500000.0,2017-07-06,107,Swansea
+Gylfi Sigurdsson,Tottenham Hotspur,Swansea,10100000.0,2014-07-23,107,Swansea
+Federico Fernández,Napoli,Swansea,10000000.0,2014-08-20,107,Swansea
+Alberto Paloschi,Chievo Verona,Swansea,8800000.0,2016-01-29,107,Swansea
+Pablo Hernández,Valencia,Swansea,7000000.0,2012-08-31,107,Swansea
+Sung-yueng Ki,Celtic,Swansea,7000000.0,2012-08-24,107,Swansea
+Adam Idah,Celtic,Swansea,6900000.0,2025-09-01,107,Swansea
+Carlos Eduardo,Hoffenheim,Rubin Kazan,20000000.0,2010-08-24,108,Rubin Kazan
+Roman Eremenko,Dynamo Kyiv,Rubin Kazan,12900000.0,2011-08-31,108,Rubin Kazan
+Yann M'Vila,Rennes,Rubin Kazan,12000000.0,2013-01-23,108,Rubin Kazan
+Maxime Lestienne,Al-Arabi,Rubin Kazan,10000000.0,2016-07-05,108,Rubin Kazan
+Rubén Rochina,Granada,Rubin Kazan,10000000.0,2016-07-20,108,Rubin Kazan
+Salvatore Bocchetti,Genoa,Rubin Kazan,9500000.0,2010-08-27,108,Rubin Kazan
+Obafemi Martins,Wolfsburg,Rubin Kazan,9000000.0,2010-07-09,108,Rubin Kazan
+Salomón Rondón,Málaga,Rubin Kazan,9000000.0,2012-08-05,108,Rubin Kazan
+Gökdeniz Karadeniz,Trabzonspor,Rubin Kazan,8700000.0,2008-03-12,108,Rubin Kazan
+Anders Dreyer,Midtjylland,Rubin Kazan,7000000.0,2021-08-28,108,Rubin Kazan
+Lucas Gourna-Douath,Saint-Étienne,RB Salzburg,13000000.0,2022-07-13,109,RB Salzburg
+Brenden Aaronson,Philadelphia,RB Salzburg,12700000.0,2021-01-01,109,RB Salzburg
+Bobby Clark,Liverpool,RB Salzburg,11800000.0,2024-08-22,109,RB Salzburg
+Noah Okafor,Basel,RB Salzburg,11200000.0,2020-01-31,109,RB Salzburg
+Maximilian Wöber,Sevilla,RB Salzburg,10500000.0,2019-08-13,109,RB Salzburg
+Karim Adeyemi,U'haching,RB Salzburg,10100000.0,2018-07-01,109,RB Salzburg
+Joane Gadou,Paris Saint-Germain,RB Salzburg,10000000.0,2024-09-03,109,RB Salzburg
+Erling Haaland,Molde,RB Salzburg,8000000.0,2019-01-01,109,RB Salzburg
+Strahinja Pavlović,Monaco,RB Salzburg,7000000.0,2022-07-01,109,RB Salzburg
+Joaquín Boghossian,Cerro,RB Salzburg,6900000.0,2010-07-22,109,RB Salzburg
+Sergio,Espanyol,Dep. La Coruña,17900000.0,2001-07-01,110,Dep. La Coruña
+Diego Tristán,Mallorca,Dep. La Coruña,17750000.0,2000-07-01,110,Dep. La Coruña
+Albert Luque,Mallorca,Dep. La Coruña,15000000.0,2002-08-30,110,Dep. La Coruña
+Aldo Duscher,Sporting CP,Dep. La Coruña,13000000.0,2000-07-01,110,Dep. La Coruña
+Juan Carlos Valerón,Atletico Madrid,Dep. La Coruña,11000000.0,2000-07-01,110,Dep. La Coruña
+,San Lorenzo,Dep. La Coruña,10500000.0,1998-01-01,110,Dep. La Coruña
+Roy Makaay,Tenerife,Dep. La Coruña,8600000.0,1999-07-01,110,Dep. La Coruña
+César Martín,Real Oviedo,Dep. La Coruña,7400000.0,1999-07-01,110,Dep. La Coruña
+Andrés Guardado,Atlas,Dep. La Coruña,7000000.0,2007-07-01,110,Dep. La Coruña
+Luizão,Palmeiras,Dep. La Coruña,6500000.0,1997-05-10,110,Dep. La Coruña
+Salomón Rondón,Zenit S-Pb,West Brom,17000000.0,2015-08-10,111,West Brom
+Karlan Grant,Huddersfield,West Brom,16500000.0,2020-10-15,111,West Brom
+Nacer Chadli,Tottenham Hotspur,West Brom,15200000.0,2016-08-29,111,West Brom
+Oliver Burke,RB Leipzig,West Brom,15200000.0,2017-08-25,111,West Brom
+Jay Rodríguez,Southampton,West Brom,13700000.0,2017-07-02,111,West Brom
+Grady Diangana,West Ham United,West Brom,13500000.0,2020-09-04,111,West Brom
+Brown Ideye,Dynamo Kyiv,West Brom,12630000.0,2014-07-18,111,West Brom
+Jake Livermore,Hull City,West Brom,11500000.0,2017-01-20,111,West Brom
+James Chester,Hull City,West Brom,11300000.0,2015-07-29,111,West Brom
+Lee Hughes,Coventry,West Brom,9000000.0,2002-08-29,111,West Brom
+Cédric Bakambu,Villarreal,BJ Guoan,40000000.0,2018-01-17,112,BJ Guoan
+Jonathan Soriano,RB Salzburg,BJ Guoan,15000000.0,2017-02-26,112,BJ Guoan
+Jonathan Viera,Las Palmas,BJ Guoan,11000000.0,2018-02-19,112,BJ Guoan
+Fernando,Spartak Moscow,BJ Guoan,9600000.0,2020-02-28,112,BJ Guoan
+,CQ Dangdai Lif,BJ Guoan,8900000.0,2018-01-01,112,BJ Guoan
+Burak Yilmaz,Galatasaray,BJ Guoan,8000000.0,2016-02-22,112,BJ Guoan
+Renato Augusto,Corinthians,BJ Guoan,8000000.0,2016-01-08,112,BJ Guoan
+Omari Hutchinson,Ipswich,Forest,43400000.0,2025-08-16,113,Forest
+Dan Ndoye,Bologna,Forest,42000000.0,2025-07-31,113,Forest
+Elliot Anderson,Newcastle United,Forest,41200000.0,2024-07-01,113,Forest
+Dilane Bakwa,R. Strasbourg,Forest,35000000.0,2025-09-01,113,Forest
+Ibrahim Sangaré,PSV Eindhoven,Forest,35000000.0,2023-09-01,113,Forest
+Arnaud Kalimuendo,Rennes,Forest,30000000.0,2025-08-18,113,Forest
+Morgan Gibbs-White,Wolverhampton Wanderers,Forest,29500000.0,2022-08-19,113,Forest
+James McAtee,Manchester City,Forest,25500000.0,2025-08-16,113,Forest
+Anthony Elanga,Manchester United,Forest,22930000.0,2023-07-25,113,Forest
+Taiwo Awoniyi,Union Berlin,Forest,20500000.0,2022-07-01,113,Forest
+Jonathan Rodríguez,Santos Laguna,Cruz Azul,11400000.0,2019-01-01,114,Cruz Azul
+Jesús Orozco Chiquete,Chivas,Cruz Azul,10740000.0,2025-01-07,114,Cruz Azul
+Orbelín Pineda,Chivas,Cruz Azul,10560000.0,2019-01-01,114,Cruz Azul
+José Paradela,Necaxa,Cruz Azul,10270000.0,2025-07-11,114,Cruz Azul
+Georgios Giakoumakis,Atlanta,Cruz Azul,9330000.0,2024-07-01,114,Cruz Azul
+Gabriel Fernández,UNAM Pumas,Cruz Azul,8900000.0,2024-01-01,114,Cruz Azul
+Mateusz Bogusz,LAFC,Cruz Azul,8500000.0,2025-01-25,114,Cruz Azul
+Elías Hernández,León,Cruz Azul,6700000.0,2018-07-01,114,Cruz Azul
+Luis Romo,Monterrey,Cruz Azul,6500000.0,2024-07-08,114,Cruz Azul
+Jørgen Strand Larsen,Groningen,Celta Vigo,15040000.0,2022-09-01,115,Celta Vigo
+Catanha,Málaga,Celta Vigo,14420000.0,2000-07-01,115,Celta Vigo
+Emre Mor,Borussia Dortmund,Celta Vigo,13000000.0,2017-08-29,115,Celta Vigo
+Denis Suárez,Barcelona,Celta Vigo,12900000.0,2019-07-01,115,Celta Vigo
+Anastasios Douvikas,Utrecht,Celta Vigo,12000000.0,2023-08-28,115,Celta Vigo
+Peter Luccin,Paris Saint-Germain,Celta Vigo,9000000.0,2002-07-01,115,Celta Vigo
+Fran Beltrán,Rayo Vallecano,Celta Vigo,8000000.0,2018-08-01,115,Celta Vigo
+Joseph Aidoo,KRC Genk,Celta Vigo,8000000.0,2019-07-11,115,Celta Vigo
+Néstor Araújo,Santos Laguna,Celta Vigo,7000000.0,2018-07-01,115,Celta Vigo
+Unai Núñez,Athletic Bilbao,Celta Vigo,7000000.0,2024-07-01,115,Celta Vigo
+Andy Cole,Manchester United,Blackburn,12200000.0,2002-01-01,116,Blackburn
+Corrado Grabbi,Ternana,Blackburn,11360000.0,2001-07-01,116,Blackburn
+Jordan Rhodes,Huddersfield,Blackburn,10100000.0,2012-08-31,116,Blackburn
+Barry Ferguson,Rangers,Blackburn,9750000.0,2003-08-29,116,Blackburn
+Ben Brereton Díaz,Nott'm Forest,Blackburn,8300000.0,2019-01-04,116,Blackburn
+Christian Dailly,Derby,Blackburn,7950000.0,1998-08-21,116,Blackburn
+Chris Sutton,Norwich,Blackburn,7500000.0,1994-07-13,116,Blackburn
+Craig Bellamy,Newcastle United,Blackburn,7500000.0,2005-07-08,116,Blackburn
+Nikola Kalinic,Hajduk Split,Blackburn,7000000.0,2009-08-03,116,Blackburn
+Scott Dann,Birmingham,Blackburn,6800000.0,2011-08-31,116,Blackburn
+Britt Assombalonga,Nottm Forest,Middlesbrough,17100000.0,2017-07-17,117,Middlesbrough
+,Heerenveen,Middlesbrough,17000000.0,2008-01-01,117,Middlesbrough
+Ugo Ehiogu,Aston Villa,Middlesbrough,12200000.0,2000-10-20,117,Middlesbrough
+Jordan Rhodes,Blackburn,Middlesbrough,11900000.0,2016-02-01,117,Middlesbrough
+Martin Braithwaite,Toulouse,Middlesbrough,11300000.0,2017-07-13,117,Middlesbrough
+Marten de Roon,Atalanta,Middlesbrough,10500000.0,2016-07-04,117,Middlesbrough
+Gareth Southgate,Aston Villa,Middlesbrough,9750000.0,2001-07-11,117,Middlesbrough
+Yakubu Aiyegbeni,Portsmouth,Middlesbrough,9750000.0,2005-07-01,117,Middlesbrough
+Jonathan Woodgate,Real Madrid,Middlesbrough,9600000.0,2007-07-01,117,Middlesbrough
+Massimo Maccarone,Empoli,Middlesbrough,9050000.0,2002-07-01,117,Middlesbrough
+Filip Kostić,Stuttgart,Hamburger,14000000.0,2016-07-25,118,Hamburger
+Rafael van der Vaart,Tottenham Hotspur,Hamburger,13000000.0,2012-08-31,118,Hamburger
+Vincent Kompany,RSC Anderlecht,Hamburger,10500000.0,2006-07-01,118,Hamburger
+Marcus Berg,Groningen,Hamburger,10000000.0,2009-07-17,118,Hamburger
+Walace,Grêmio,Hamburger,9200000.0,2017-01-30,118,Hamburger
+Eljero Elia,Twente,Hamburger,9000000.0,2009-07-05,118,Hamburger
+Thiago Neves,Fluminense,Hamburger,9000000.0,2008-08-31,118,Hamburger
+Pierre-Michel Lasogga,Hertha Berlin,Hamburger,8500000.0,2014-07-04,118,Hamburger
+Mladen Petric,Borussia Dortmund,Hamburger,7300000.0,2008-08-16,118,Hamburger
+Douglas Santos,Atlético-MG,Hamburger,6500000.0,2016-08-31,118,Hamburger
+Nikola Vlašić,Everton,CSKA Moscow,23000000.0,2019-07-01,119,CSKA Moscow
+Chidera Ejuke,Heerenveen,CSKA Moscow,11500000.0,2020-08-28,119,CSKA Moscow
+Seydou Doumbia,Young Boys,CSKA Moscow,11000000.0,2010-07-01,119,CSKA Moscow
+Mário Fernandes,Grêmio,CSKA Moscow,10500000.0,2012-07-01,119,CSKA Moscow
+Vitinho,Botafogo,CSKA Moscow,9500000.0,2013-09-01,119,CSKA Moscow
+Zoran Tosic,Manchester United,CSKA Moscow,9500000.0,2010-07-01,119,CSKA Moscow
+Adolfo Gaich,San Lorenzo,CSKA Moscow,8500000.0,2020-08-05,119,CSKA Moscow
+Bruno Fuchs,Internacional,CSKA Moscow,8000000.0,2020-08-24,119,CSKA Moscow
+Mark González,Real Betis,CSKA Moscow,6500000.0,2009-08-11,119,CSKA Moscow
+Keisuke Honda,VVV-Venlo,CSKA Moscow,6250000.0,2010-01-01,119,CSKA Moscow
+Alassane Pléa,Nice,Borussia Mönchengladbach,23000000.0,2018-07-13,120,Borussia Mönchengladbach
+Matthias Ginter,Borussia Dortmund,Borussia Mönchengladbach,17000000.0,2017-07-04,120,Borussia Mönchengladbach
+Christoph Kramer,Bayer Leverkusen,Borussia Mönchengladbach,15000000.0,2016-07-01,120,Borussia Mönchengladbach
+Jannik Vestergaard,Werder Bremen,Borussia Mönchengladbach,12500000.0,2016-07-01,120,Borussia Mönchengladbach
+Stefan Lainer,RB Salzburg,Borussia Mönchengladbach,12500000.0,2019-07-01,120,Borussia Mönchengladbach
+Luuk de Jong,Twente,Borussia Mönchengladbach,12000000.0,2012-07-18,120,Borussia Mönchengladbach
+Denis Zakaria,Young Boys,Borussia Mönchengladbach,12000000.0,2017-07-01,120,Borussia Mönchengladbach
+Breel Embolo,Schalke,Borussia Mönchengladbach,11000000.0,2019-07-01,120,Borussia Mönchengladbach
+Tomas Cvancara,Sparta Prague,Borussia Mönchengladbach,10500000.0,2023-07-14,120,Borussia Mönchengladbach
+Josip Drmic,Bayer Leverkusen,Borussia Mönchengladbach,10000000.0,2015-07-01,120,Borussia Mönchengladbach
+Kevin Castaño,Krasnodar,River Plate,12600000.0,2025-03-12,121,River Plate
+Nicolás de la Cruz,Liverpool,River Plate,12500000.0,2017-08-15,121,River Plate
+Lucas Pratto,São Paulo,River Plate,11500000.0,2018-01-08,121,River Plate
+Rodrigo Villagra,Talleres,River Plate,11000000.0,2024-02-03,121,River Plate
+Esequiel Barco,Atlanta,River Plate,10000000.0,2024-01-01,121,River Plate
+Sebastián Driussi,Austin,River Plate,9750000.0,2025-01-17,121,River Plate
+Maximiliano Salas,Racing,River Plate,8000000.0,2025-07-11,121,River Plate
+Aníbal Moreno,Palmeiras,River Plate,7000000.0,2026-01-14,121,River Plate
+Lucas Martínez Quarta,Fiorentina,River Plate,7000000.0,2025-01-15,121,River Plate
+Miguel Borja,Junior,River Plate,6700000.0,2022-07-12,121,River Plate
+Hugo Ekitiké,Paris Saint-Germain,E. Frankfurt,31500000.0,2024-07-01,122,E. Frankfurt
+Elye Wahi,Marseille,E. Frankfurt,26000000.0,2025-01-24,122,E. Frankfurt
+Luka Jović,Benfica,E. Frankfurt,22340000.0,2019-07-01,122,E. Frankfurt
+Ritsu Doan,Freiburg,E. Frankfurt,21000000.0,2025-08-07,122,E. Frankfurt
+Jonathan Burkardt,Mainz 05,E. Frankfurt,21000000.0,2025-07-04,122,E. Frankfurt
+Djibril Sow,Young Boys,E. Frankfurt,14000000.0,2019-07-01,122,E. Frankfurt
+Willian Pacho,Royal Antwerp,E. Frankfurt,13650000.0,2023-07-01,122,E. Frankfurt
+Arthur Theate,Rennes,E. Frankfurt,13000000.0,2025-02-02,122,E. Frankfurt
+Sébastien Haller,Utrecht,E. Frankfurt,12000000.0,2017-07-01,122,E. Frankfurt
+Can Uzun,Nuremberg,E. Frankfurt,11000000.0,2024-07-02,122,E. Frankfurt
+Jhon Córdoba,Hertha Berlin,Krasnodar,20000000.0,2021-07-23,123,Krasnodar
+Rémy Cabella,Saint-Étienne,Krasnodar,12000000.0,2019-07-26,123,Krasnodar
+Kevin Castaño,Cruz Azul,Krasnodar,11300000.0,2024-01-05,123,Krasnodar
+Tonny Vilhena,Feyenoord,Krasnodar,9000000.0,2019-07-01,123,Krasnodar
+Christian Cueva,São Paulo,Krasnodar,8000000.0,2018-07-15,123,Krasnodar
+Júnior Alonso,Atlético-MG,Krasnodar,8000000.0,2022-01-07,123,Krasnodar
+Wanderson,RB Salzburg,Krasnodar,8000000.0,2017-07-01,123,Krasnodar
+Diego Costa,São Paulo,Krasnodar,7500000.0,2024-07-17,123,Krasnodar
+Douglas Augusto,Nantes,Krasnodar,6500000.0,2025-07-12,123,Krasnodar
+Gabriel Pereira,New York City,Al-Rayyan,10000000.0,2023-07-22,124,Al-Rayyan
+Nilmar,Villarreal,Al-Rayyan,10000000.0,2012-07-16,124,Al-Rayyan
+Róger Guedes,Corinthians,Al-Rayyan,9100000.0,2023-08-09,124,Al-Rayyan
+David García,Osasuna,Al-Rayyan,8750000.0,2024-08-01,124,Al-Rayyan
+Wesley,Internacional,Al-Rayyan,8500000.0,2025-09-03,124,Al-Rayyan
+Amara Diané,Paris Saint-Germain,Al-Rayyan,8000000.0,2008-07-01,124,Al-Rayyan
+James Rodríguez,Everton,Al-Rayyan,8000000.0,2021-09-22,124,Al-Rayyan
+André Amaro,Vit. Guimarães,Al-Rayyan,7750000.0,2023-08-09,124,Al-Rayyan
+Julien De Sart,KAA Gent,Al-Rayyan,7000000.0,2024-07-30,124,Al-Rayyan
+Gregore,Botafogo,Al-Rayyan,6020000.0,2025-07-19,124,Al-Rayyan
+Jota,Benfica,Celtic,16200000.0,2022-07-01,125,Celtic
+Arne Engels,Augsburg,Celtic,13000000.0,2024-08-30,125,Celtic
+Odsonne Édouard,Paris Saint-Germain,Celtic,10300000.0,2018-07-01,125,Celtic
+Adam Idah,Norwich,Celtic,9900000.0,2024-08-14,125,Celtic
+Chris Sutton,Chelsea,Celtic,9500000.0,2000-07-11,125,Celtic
+John Hartson,Coventry,Celtic,9000000.0,2001-08-02,125,Celtic
+Eyal Berkovic,West Ham United,Celtic,8800000.0,1999-07-01,125,Celtic
+Neil Lennon,Leicester City,Celtic,8630000.0,2000-12-08,125,Celtic
+Christopher Jullien,Toulouse,Celtic,8000000.0,2019-07-01,125,Celtic
+Jozo Simunovic,Dinamo Zagreb,Celtic,7500000.0,2015-09-01,125,Celtic
+Tore André Flo,Chelsea,Rangers,18000000.0,2000-11-23,126,Rangers
+Youssef Chermiti,Everton,Rangers,8600000.0,2025-09-01,126,Rangers
+Mikel Arteta,Barcelona,Rangers,7900000.0,2002-07-01,126,Rangers
+Arthur Numan,PSV Eindhoven,Rangers,7700000.0,1998-07-01,126,Rangers
+Giovanni van Bronckhorst,Feyenoord,Rangers,7500000.0,1998-07-06,126,Rangers
+Barry Ferguson,Blackburn,Rangers,7250000.0,2005-01-31,126,Rangers
+Bert Konterman,Feyenoord,Rangers,7250000.0,2000-07-01,126,Rangers
+Ryan Kent,Liverpool,Rangers,7200000.0,2019-09-02,126,Rangers
+Gaby Amato,Mallorca,Rangers,6400000.0,1998-07-01,126,Rangers
+Michael Mols,Utrecht,Rangers,6400000.0,1999-07-01,126,Rangers
+Kerem Aktürkoğlu,Benfica,Fenerbahce,22500000.0,2025-09-01,127,Fenerbahce
+Youssef En-Nesyri,Sevilla,Fenerbahce,19500000.0,2024-07-24,127,Fenerbahce
+Dorgeles Nene,RB Salzburg,Fenerbahce,18000000.0,2025-08-19,127,Fenerbahce
+Cengiz Ünder,Marseille,Fenerbahce,15000000.0,2023-08-13,127,Fenerbahce
+Dani Güiza,Mallorca,Fenerbahce,14000000.0,2008-07-08,127,Fenerbahce
+Emmanuel Emenike,Spartak Moscow,Fenerbahce,13000000.0,2013-08-07,127,Fenerbahce
+Sofyan Amrabat,Fiorentina,Fenerbahce,12000000.0,2025-07-01,127,Fenerbahce
+Diego Carlos,Aston Villa,Fenerbahce,11470000.0,2025-01-23,127,Fenerbahce
+Ederson,Manchester City,Fenerbahce,11000000.0,2025-09-02,127,Fenerbahce
+Raúl Meireles,Chelsea,Fenerbahce,10000000.0,2012-09-03,127,Fenerbahce
+Ante Crnac,Raków,Norwich,11000000.0,2024-08-22,128,Norwich
+Christos Tzolis,PAOK Salonika,Norwich,11000000.0,2021-08-12,128,Norwich
+Milot Rashica,Werder Bremen,Norwich,11000000.0,2021-07-01,128,Norwich
+Steven Naismith,Everton,Norwich,11000000.0,2016-01-19,128,Norwich
+Timm Klose,Wolfsburg,Norwich,11000000.0,2016-01-18,128,Norwich
+Gabriel Sara,São Paulo,Norwich,10500000.0,2022-07-15,128,Norwich
+Ricky van Wolfswinkel,Sporting CP,Norwich,10000000.0,2013-07-01,128,Norwich
+Robbie Brady,Hull City,Norwich,9900000.0,2015-07-29,128,Norwich
+Josh Sargent,Werder Bremen,Norwich,9500000.0,2021-08-09,128,Norwich
+Alex Pritchard,Tottenham Hotspur,Norwich,9400000.0,2016-08-04,128,Norwich
+Roberto Inglese,Napoli,Parma,21800000.0,2020-09-01,129,Parma
+Juan Sebastián Verón,Sampdoria,Parma,17500000.0,1998-07-01,129,Parma
+Sérgio Conceição,Lazio,Parma,17000000.0,2000-07-01,129,Parma
+Vratislav Gresko,Inter,Parma,16000000.0,2002-07-01,129,Parma
+Ousmane Dabo,Inter,Parma,15490000.0,1999-07-01,129,Parma
+,Borussia Dortmund,Parma,15000000.0,2001-07-01,129,Parma
+Daniele Bonera,Brescia,Parma,15000000.0,2002-07-01,129,Parma
+Adriano,Inter,Parma,14500000.0,2002-07-01,129,Parma
+Dennis Man,FCSB,Parma,12600000.0,2021-01-29,129,Parma
+Mandela Keita,Royal Antwerp,Parma,11900000.0,2024-08-30,129,Parma
+Bernard,Atlético-MG,Shakhtar D,25000000.0,2013-08-08,130,Shakhtar D
+Pedrinho,Benfica,Shakhtar D,18000000.0,2021-07-01,130,Shakhtar D
+Kauã Elias,Fluminense,Shakhtar D,17000000.0,2025-02-08,130,Shakhtar D
+Taison,Metalist Kharkiv,Shakhtar D,15240000.0,2013-01-11,130,Shakhtar D
+Fred,Internacional,Shakhtar D,15000000.0,2013-07-01,130,Shakhtar D
+Tetê,Grêmio,Shakhtar D,15000000.0,2019-02-28,130,Shakhtar D
+Dmytro Chygrynskyi,Barcelona,Shakhtar D,15000000.0,2010-07-06,130,Shakhtar D
+Kevin,Palmeiras,Shakhtar D,14800000.0,2024-01-19,130,Shakhtar D
+Matuzalém,Brescia,Shakhtar D,14000000.0,2004-07-01,130,Shakhtar D
+Alisson,Atlético-MG,Shakhtar D,14000000.0,2025-03-10,130,Shakhtar D
+Lucas Paquetá,West Ham United,Flamengo,42000000.0,2026-01-28,131,Flamengo
+Samuel Lino,Atletico Madrid,Flamengo,22000000.0,2025-07-29,131,Flamengo
+Carlos Alcaraz,Southampton,Flamengo,18000000.0,2024-08-28,131,Flamengo
+Gabriel Barbosa,Inter,Flamengo,17500000.0,2020-01-31,131,Flamengo
+Everton,Benfica,Flamengo,16500000.0,2022-07-18,131,Flamengo
+Gerson,Marseille,Flamengo,15000000.0,2023-01-01,131,Flamengo
+Giorgian de Arrascaeta,Cruzeiro,Flamengo,15000000.0,2019-01-12,131,Flamengo
+Nicolás de la Cruz,River Plate,Flamengo,14500000.0,2024-01-01,131,Flamengo
+Pedro,Fiorentina,Flamengo,14000000.0,2021-01-01,131,Flamengo
+Jorge Carrascal,Dynamo Moscow,Flamengo,12500000.0,2025-08-02,131,Flamengo
+Abakar Sylla,Brugge,R. Strasbourg,20000000.0,2023-07-15,132,R. Strasbourg
+Joaquín Panichelli,Alavés,R. Strasbourg,17000000.0,2025-07-27,132,R. Strasbourg
+Lucas Høgsberg,Nordsjaelland,R. Strasbourg,15000000.0,2025-08-09,132,R. Strasbourg
+Mathis Amougou,Chelsea,R. Strasbourg,14500000.0,2025-07-12,132,R. Strasbourg
+Emmanuel Emegha,Sturm Graz,R. Strasbourg,13000000.0,2023-07-22,132,R. Strasbourg
+Sékou Mara,Southampton,R. Strasbourg,12000000.0,2024-08-21,132,R. Strasbourg
+Sebastian Nanasi,Malmö,R. Strasbourg,11000000.0,2024-08-23,132,R. Strasbourg
+Andrew Omobamidele,Nott'm Forest,R. Strasbourg,10500000.0,2025-07-01,132,R. Strasbourg
+Mamadou Sarr,Lyon,R. Strasbourg,10000000.0,2024-08-22,132,R. Strasbourg
+Junior Mwanga,G. Bordeaux,R. Strasbourg,10000000.0,2023-08-08,132,R. Strasbourg
+Harry Kane,Tottenham Hotspur,Bayern Munich,95000000.0,2023-08-12,133,Bayern Munich
+Lucas Hernández,Atletico Madrid,Bayern Munich,80000000.0,2019-07-01,133,Bayern Munich
+Luis Díaz,Liverpool,Bayern Munich,70000000.0,2025-07-30,133,Bayern Munich
+Matthijs de Ligt,Juventus,Bayern Munich,67000000.0,2022-07-19,133,Bayern Munich
+Michael Olise,Crystal Palace,Bayern Munich,53000000.0,2024-07-07,133,Bayern Munich
+João Palhinha,Fulham,Bayern Munich,51000000.0,2024-07-11,133,Bayern Munich
+Min-jae Kim,Napoli,Bayern Munich,50000000.0,2023-07-18,133,Bayern Munich
+Leroy Sané,Manchester City,Bayern Munich,49000000.0,2020-07-15,133,Bayern Munich
+Dayot Upamecano,RB Leipzig,Bayern Munich,42500000.0,2021-07-05,133,Bayern Munich
+Corentin Tolisso,Lyon,Bayern Munich,41500000.0,2017-07-01,133,Bayern Munich
+Evanilson,Porto,Bournemouth,37000000.0,2024-08-16,134,Bournemouth
+Bafodé Diakité,Lille,Bournemouth,35000000.0,2025-08-13,134,Bournemouth
+Ilya Zabarnyi,Dynamo Kyiv,Bournemouth,33000000.0,2023-01-31,134,Bournemouth
+Jefferson Lerma,Levante,Bournemouth,30500000.0,2018-08-07,134,Bournemouth
+Djordje Petrovic,Chelsea,Bournemouth,28900000.0,2025-07-16,134,Bournemouth
+Rayan,Vasco da Gama,Bournemouth,28500000.0,2026-01-27,134,Bournemouth
+Tyler Adams,Leeds United,Bournemouth,26900000.0,2023-08-20,134,Bournemouth
+Hamed Traoré,Sassuolo,Bournemouth,25620000.0,2023-07-01,134,Bournemouth
+Luis Sinisterra,Leeds United,Bournemouth,23400000.0,2024-07-01,134,Bournemouth
+Ben Gannon-Doak,Liverpool,Bournemouth,23200000.0,2025-08-18,134,Bournemouth
+Jack Grealish,Aston Villa,Manchester City,117500000.0,2021-08-05,135,Manchester City
+Josko Gvardiol,RB Leipzig,Manchester City,90000000.0,2023-08-05,135,Manchester City
+Kevin De Bruyne,Wolfsburg,Manchester City,76000000.0,2015-08-30,135,Manchester City
+Omar Marmoush,Frankfurt,Manchester City,75000000.0,2025-01-23,135,Manchester City
+Antoine Semenyo,Bournemouth,Manchester City,72000000.0,2026-01-09,135,Manchester City
+Rúben Dias,Benfica,Manchester City,71600000.0,2020-09-29,135,Manchester City
+Rodri,Atletico Madrid,Manchester City,70000000.0,2019-07-04,135,Manchester City
+Riyad Mahrez,Leicester City,Manchester City,67800000.0,2018-07-10,135,Manchester City
+João Cancelo,Juventus,Manchester City,65000000.0,2019-08-07,135,Manchester City
+Aymeric Laporte,Athletic Bilbao,Manchester City,65000000.0,2018-01-30,135,Manchester City
+Umar Sadiq,Almería,Real Sociedad,20000000.0,2022-09-01,136,Real Sociedad
+Orri Óskarsson,Copenhagen,Real Sociedad,20000000.0,2024-08-30,136,Real Sociedad
+Asier Illarramendi,Real Madrid,Real Sociedad,16000000.0,2015-08-26,136,Real Sociedad
+Alexander Isak,Borussia Dortmund,Real Sociedad,15000000.0,2019-07-01,136,Real Sociedad
+Brais Méndez,Celta Vigo,Real Sociedad,14000000.0,2022-07-06,136,Real Sociedad
+Carlos Vela,Arsenal,Real Sociedad,14000000.0,2012-08-10,136,Real Sociedad
+Arsen Zakharyan,Dynamo Moscow,Real Sociedad,13000000.0,2023-08-19,136,Real Sociedad
+Mohamed-Ali Cho,Angers SCO,Real Sociedad,13000000.0,2022-07-01,136,Real Sociedad
+Mikel Merino,Newcastle United,Real Sociedad,12000000.0,2018-07-12,136,Real Sociedad
+Yangel Herrera,Girona,Real Sociedad,11000000.0,2025-09-01,136,Real Sociedad
+Samu Aghehowa,Atletico Madrid,Porto,32000000.0,2024-08-23,137,Porto
+Nico González,Barcelona,Porto,21200000.0,2023-07-29,137,Porto
+David Carmo,Braga,Porto,20280000.0,2022-07-05,137,Porto
+Victor Froholdt,Copenhagen,Porto,20000000.0,2025-07-23,137,Porto
+Óliver Torres,Atletico Madrid,Porto,20000000.0,2017-07-01,137,Porto
+Giannelli Imbula,Marseille,Porto,20000000.0,2015-07-01,137,Porto
+Hulk,Tokyo Verdy,Porto,19000000.0,2008-07-25,137,Porto
+Jakub Kiwior,Arsenal,Porto,17000000.0,2026-07-01,137,Porto
+Pepê,Grêmio,Porto,15400000.0,2021-07-01,137,Porto
+Alberto Costa,Juventus,Porto,15000000.0,2025-07-24,137,Porto
+Adam Hlozek,Bayer Leverkusen,Hoffenheim,18000000.0,2024-08-17,138,Hoffenheim
+Mergim Berisha,Augsburg,Hoffenheim,14000000.0,2023-08-30,138,Hoffenheim
+Diadié Samassékou,RB Salzburg,Hoffenheim,12500000.0,2019-08-15,138,Hoffenheim
+Attila Szalai,Fenerbahçe,Hoffenheim,12300000.0,2023-07-24,138,Hoffenheim
+Mats Rots,Twente,Hoffenheim,12000000.0,2026-07-01,138,Hoffenheim
+Anton Stach,Mainz 05,Hoffenheim,12000000.0,2023-09-01,138,Hoffenheim
+Stanley Nsoki,Brugge,Hoffenheim,12000000.0,2022-08-03,138,Hoffenheim
+Munas Dabbur,Sevilla,Hoffenheim,12000000.0,2020-01-07,138,Hoffenheim
+Alexander Prass,Sturm Graz,Hoffenheim,12000000.0,2024-08-05,138,Hoffenheim
+Andrej Kramaric,Leicester City,Hoffenheim,11000000.0,2016-07-01,138,Hoffenheim
+Vitinha,Braga,Marseille,32000000.0,2023-01-31,139,Marseille
+Igor Paixão,Feyenoord,Marseille,30000000.0,2025-08-01,139,Marseille
+Dimitri Payet,West Ham United,Marseille,29300000.0,2017-01-30,139,Marseille
+Elye Wahi,Lens,Marseille,27000000.0,2024-08-13,139,Marseille
+Mason Greenwood,Manchester United,Marseille,26000000.0,2024-07-18,139,Marseille
+Kevin Strootman,Roma,Marseille,25000000.0,2018-08-28,139,Marseille
+Nayef Aguerd,West Ham United,Marseille,23000000.0,2025-09-01,139,Marseille
+Renan Lodi,Atletico Madrid,Marseille,20600000.0,2023-07-14,139,Marseille
+Gerson,Flamengo,Marseille,20500000.0,2021-07-01,139,Marseille
+Amine Gouiri,Rennes,Marseille,19000000.0,2025-01-31,139,Marseille
+Ousmane Dembélé,Rennes,Borussia Dortmund,35000000.0,2016-07-01,140,Borussia Dortmund
+Sébastien Haller,Ajax,Borussia Dortmund,31000000.0,2022-07-06,140,Borussia Dortmund
+Jobe Bellingham,Sunderland,Borussia Dortmund,30500000.0,2025-06-10,140,Borussia Dortmund
+Mats Hummels,Bayern Munich,Borussia Dortmund,30500000.0,2019-07-01,140,Borussia Dortmund
+Jude Bellingham,Birmingham,Borussia Dortmund,30150000.0,2020-07-23,140,Borussia Dortmund
+Donyell Malen,PSV Eindhoven,Borussia Dortmund,30000000.0,2021-07-27,140,Borussia Dortmund
+André Schürrle,Wolfsburg,Borussia Dortmund,30000000.0,2016-07-22,140,Borussia Dortmund
+Karim Adeyemi,RB Salzburg,Borussia Dortmund,30000000.0,2022-07-01,140,Borussia Dortmund
+Felix Nmecha,Wolfsburg,Borussia Dortmund,30000000.0,2023-07-03,140,Borussia Dortmund
+Maximilian Beier,Hoffenheim,Borussia Dortmund,28500000.0,2024-08-12,140,Borussia Dortmund
+Alassane Pléa,Nice,Mönchengladbach,23000000.0,2018-07-13,141,Mönchengladbach
+Matthias Ginter,Borussia Dortmund,Mönchengladbach,17000000.0,2017-07-04,141,Mönchengladbach
+Stefan Lainer,Salzburg,Mönchengladbach,12500000.0,2019-07-01,141,Mönchengladbach
+Jannik Vestergaard,Werder Bremen,Mönchengladbach,12500000.0,2016-07-01,141,Mönchengladbach
+Luuk de Jong,Twente,Mönchengladbach,12000000.0,2012-07-18,141,Mönchengladbach
+Denis Zakaria,Young Boys,Mönchengladbach,12000000.0,2017-07-01,141,Mönchengladbach
+Breel Embolo,Schalke,Mönchengladbach,11000000.0,2019-07-01,141,Mönchengladbach
+Tomas Cvancara,Sparta Prague,Mönchengladbach,10500000.0,2023-07-14,141,Mönchengladbach
+Hannes Wolf,RB Leipzig,Mönchengladbach,9500000.0,2021-07-01,141,Mönchengladbach
+Marcus Thuram,Guingamp,Mönchengladbach,9000000.0,2019-07-22,141,Mönchengladbach
+Gedson Fernandes,Besiktas,Spartak Moscow,20780000.0,2025-07-31,142,Spartak Moscow
+Levi García,AEK Athens,Spartak Moscow,18700000.0,2025-02-07,142,Spartak Moscow
+Guus Til,AZ Alkmaar,Spartak Moscow,18000000.0,2019-08-05,142,Spartak Moscow
+Esequiel Barco,River Plate,Spartak Moscow,14000000.0,2024-07-25,142,Spartak Moscow
+Manfred Ugalde,Twente,Spartak Moscow,13000000.0,2024-01-29,142,Spartak Moscow
+Fernando,Sampdoria,Spartak Moscow,12500000.0,2016-07-17,142,Spartak Moscow
+Pedro Rocha,Grêmio,Spartak Moscow,12000000.0,2017-08-31,142,Spartak Moscow
+Alex Král,Slavia Prague,Spartak Moscow,12000000.0,2019-09-01,142,Spartak Moscow
+Aiden McGeady,Celtic,Spartak Moscow,12000000.0,2010-08-01,142,Spartak Moscow
+Quincy Promes,Twente,Spartak Moscow,11500000.0,2014-08-08,142,Spartak Moscow
+Jonathan David,KAA Gent,Lille,27000000.0,2020-08-11,143,Lille
+Victor Osimhen,R Charleroi,Lille,22400000.0,2019-08-01,143,Lille
+Rafael Leão,Sporting CP,Lille,20200000.0,2018-08-08,143,Lille
+Renato Sanches,Bayern Munich,Lille,20000000.0,2019-08-23,143,Lille
+Yusuf Yazıcı,Trabzonspor,Lille,18500000.0,2019-08-06,143,Lille
+Nicolas Pépé,Angers SCO,Lille,18000000.0,2017-07-01,143,Lille
+Hákon Arnar Haraldsson,Copenhagen,Lille,15000000.0,2023-07-17,143,Lille
+Thiago Maia,Santos,Lille,14000000.0,2017-07-31,143,Lille
+Mohamed Bayo,Clermont Foot,Lille,14000000.0,2022-07-13,143,Lille
+Amadou Onana,Hamburger,Lille,13570000.0,2021-08-05,143,Lille
+Diego Valdés,Santos Laguna,América,10600000.0,2022-01-01,144,América
+Allan Saint-Maximin,Al-Ahli,América,10300000.0,2025-08-12,144,América
+Kevin Álvarez,Pachuca,América,10250000.0,2023-07-01,144,América
+Julián Quiñones,Atlas,América,9170000.0,2023-07-03,144,América
+Darwin Quintero,Santos Laguna,América,9000000.0,2015-01-01,144,América
+Érick Sánchez,Pachuca,América,9000000.0,2024-07-01,144,América
+Roger Martínez,Villarreal,América,8500000.0,2018-07-02,144,América
+Víctor Dávila,CSKA Moscow,América,7500000.0,2024-09-15,144,América
+Rubens Sambueza,Tecos,América,7430000.0,2012-07-01,144,América
+Oribe Peralta,Santos Laguna,América,7290000.0,2014-07-01,144,América
+Neymar,Paris Saint-Germain,Al-Hilal,90000000.0,2023-08-15,145,Al-Hilal
+Malcom,Zenit S-Pb,Al-Hilal,60000000.0,2023-07-26,145,Al-Hilal
+Rúben Neves,Wolverhampton Wanderers,Al-Hilal,55000000.0,2023-07-01,145,Al-Hilal
+Darwin Núñez,Liverpool,Al-Hilal,53000000.0,2025-08-09,145,Al-Hilal
+Aleksandar Mitrović,Fulham,Al-Hilal,52600000.0,2023-08-19,145,Al-Hilal
+Sergej Milinković-Savić,Lazio,Al-Hilal,40000000.0,2023-07-12,145,Al-Hilal
+Marcos Leonardo,Benfica,Al-Hilal,40000000.0,2024-09-02,145,Al-Hilal
+Kader Meïté,Rennes,Al-Hilal,30000000.0,2026-02-01,145,Al-Hilal
+Moteb Al-Harbi,Al-Shabab,Al-Hilal,28950000.0,2024-09-01,145,Al-Hilal
+Theo Hernández,AC Milan,Al-Hilal,25000000.0,2025-07-10,145,Al-Hilal
+Andrea Pinamonti,Inter,Sassuolo,20000000.0,2023-07-01,146,Sassuolo
+Hamed Traoré,Empoli,Sassuolo,16000000.0,2021-07-01,146,Sassuolo
+Davide Frattesi,Roma,Sassuolo,14600000.0,2017-07-13,146,Sassuolo
+Manuel Locatelli,AC Milan,Sassuolo,14000000.0,2019-07-01,146,Sassuolo
+Agustín Álvarez,Peñarol,Sassuolo,12000000.0,2022-07-01,146,Sassuolo
+Marlon,Barcelona,Sassuolo,12000000.0,2018-08-16,146,Sassuolo
+Grégoire Defrel,Roma,Sassuolo,11000000.0,2020-09-01,146,Sassuolo
+Kristian Thorstvedt,KRC Genk,Sassuolo,10150000.0,2022-07-12,146,Sassuolo
+Armand Laurienté,Lorient,Sassuolo,10100000.0,2022-08-31,146,Sassuolo
+Simone Zaza,Juventus,Sassuolo,10000000.0,2013-07-09,146,Sassuolo
+Habib Diarra,R. Strasbourg,Sunderland,31500000.0,2025-07-01,147,Sunderland
+Simon Adingra,Brighton & Hove Albion,Sunderland,24400000.0,2025-07-10,147,Sunderland
+Enzo Le Fée,Roma,Sunderland,23750000.0,2025-07-01,147,Sunderland
+Brian Brobbey,Ajax,Sunderland,20000000.0,2025-09-01,147,Sunderland
+Chemsdine Talbi,Brugge,Sunderland,20000000.0,2025-07-09,147,Sunderland
+Didier Ndong,Lorient,Sunderland,20000000.0,2016-08-31,147,Sunderland
+Nilson Angulo,RSC Anderlecht,Sunderland,17340000.0,2026-02-02,147,Sunderland
+Noah Sadiki,Union SG,Sunderland,17000000.0,2025-07-04,147,Sunderland
+Asamoah Gyan,Rennes,Sunderland,16000000.0,2010-08-31,147,Sunderland
+Steven Fletcher,Wolverhampton Wanderers,Sunderland,15200000.0,2012-08-24,147,Sunderland
+El Bilal Touré,Almería,Atalanta,30200000.0,2023-07-29,148,Atalanta
+Gianluca Scamacca,West Ham United,Atalanta,28000000.0,2023-08-07,148,Atalanta
+Nikola Krstović,Lecce,Atalanta,25000000.0,2025-08-20,148,Atalanta
+Mateo Retegui,Genoa,Atalanta,24500000.0,2024-08-08,148,Atalanta
+Raoul Bellanova,Torino,Atalanta,24300000.0,2024-08-22,148,Atalanta
+Charles De Ketelaere,AC Milan,Atalanta,23700000.0,2024-07-01,148,Atalanta
+Éderson,Salernitana,Atalanta,22900000.0,2022-07-06,148,Atalanta
+Giacomo Raspadori,Atletico Madrid,Atalanta,22000000.0,2026-01-15,148,Atalanta
+Jérémie Boga,Sassuolo,Atalanta,22000000.0,2022-07-01,148,Atalanta
+Luis Muriel,Sevilla,Atalanta,21200000.0,2019-07-01,148,Atalanta
+Simone Verdi,Napoli,Torino,22000000.0,2020-09-01,149,Torino
+Ivan Ilić,Hellas Verona,Torino,16500000.0,2023-07-01,149,Torino
+Ciro Immobile,Juventus,Torino,13500000.0,2013-07-12,149,Torino
+Cesare Casadei,Chelsea,Torino,13000000.0,2025-02-02,149,Torino
+M'Baye Niang,AC Milan,Torino,12000000.0,2018-07-01,149,Torino
+Simone Zaza,Valencia,Torino,12000000.0,2019-07-01,149,Torino
+Soualiho Meïté,Monaco,Torino,11500000.0,2018-07-10,149,Torino
+Samuele Ricci,Empoli,Torino,10800000.0,2022-07-01,149,Torino
+Armando Izzo,Genoa,Torino,10700000.0,2018-07-04,149,Torino
+Nikola Vlašić,West Ham United,Torino,10600000.0,2023-08-08,149,Torino
+Andrea Pinamonti,Inter,Genoa,19500000.0,2020-09-01,150,Genoa
+Stefano Sturaro,Juventus,Genoa,16500000.0,2019-07-01,150,Genoa
+Mateo Retegui,Tigre,Genoa,15250000.0,2023-07-26,150,Genoa
+Manolo Portanova,Juventus,Genoa,12250000.0,2021-01-28,150,Genoa
+Andrea Favilli,Juventus,Genoa,12000000.0,2019-07-01,150,Genoa
+Domenico Criscito,Juventus,Genoa,11500000.0,2008-07-01,150,Genoa
+Koni De Winter,Juventus,Genoa,11000000.0,2024-07-01,150,Genoa
+Gianluca Lapadula,AC Milan,Genoa,11000000.0,2018-08-17,150,Genoa
+Sergio Floccari,Atalanta,Genoa,10500000.0,2009-07-01,150,Genoa
+Radu Drăgușin,Juventus,Genoa,9700000.0,2023-07-01,150,Genoa
+Lesley Ugochukwu,Chelsea,Burnley,28700000.0,2025-08-06,151,Burnley
+Armando Broja,Chelsea,Burnley,23000000.0,2025-08-08,151,Burnley
+Zeki Amdouni,Basel,Burnley,18600000.0,2023-07-19,151,Burnley
+Mike Tresor,Genk,Burnley,18000000.0,2024-07-01,151,Burnley
+Wout Weghorst,Wolfsburg,Burnley,17500000.0,2022-01-31,151,Burnley
+James Trafford,Manchester City,Burnley,17300000.0,2023-07-20,151,Burnley
+Ben Gibson,Middlesbrough,Burnley,16900000.0,2018-08-05,151,Burnley
+Aaron Ramsey,Aston Villa,Burnley,16450000.0,2023-08-22,151,Burnley
+Chris Wood,Leeds United,Burnley,16400000.0,2017-08-21,151,Burnley
+Loum Tchaouna,Lazio,Burnley,15150000.0,2025-07-02,151,Burnley
+Georginio Rutter,Leeds United,Brighton & Hove Albion,46700000.0,2024-08-19,152,Brighton & Hove Albion
+Charalampos Kostoulas,Olympiacos,Brighton & Hove Albion,35000000.0,2025-07-01,152,Brighton & Hove Albion
+Yankuba Minteh,Newcastle United,Brighton & Hove Albion,35000000.0,2024-07-01,152,Brighton & Hove Albion
+João Pedro,Watford,Brighton & Hove Albion,34200000.0,2023-07-01,152,Brighton & Hove Albion
+Mats Wieffer,Feyenoord,Brighton & Hove Albion,32000000.0,2024-07-05,152,Brighton & Hove Albion
+Brajan Gruda,Mainz 05,Brighton & Hove Albion,31500000.0,2024-08-14,152,Brighton & Hove Albion
+Ferdi Kadıoğlu,Fenerbahçe,Brighton & Hove Albion,30000000.0,2024-08-24,152,Brighton & Hove Albion
+Matt O'Riley,Celtic,Brighton & Hove Albion,29500000.0,2024-08-26,152,Brighton & Hove Albion
+Moisés Caicedo,Independiente,Brighton & Hove Albion,28200000.0,2021-02-01,152,Brighton & Hove Albion
+Zadok Yohanna,AIK,Brighton & Hove Albion,28000000.0,2026-07-01,152,Brighton & Hove Albion
+César Montes,Espanyol,Almería,14000000.0,2023-09-01,153,Almería
+Darwin Núñez,Peñarol,Almería,12000000.0,2019-08-29,153,Almería
+Umar Sadiq,Partizan,Almería,9000000.0,2020-10-05,153,Almería
+Arvin Appiah,Nott'm Forest,Almería,8850000.0,2019-09-02,153,Almería
+Luís Maximiano,Lazio,Almería,8100000.0,2024-07-01,153,Almería
+El Bilal Touré,Stade Reims,Almería,8000000.0,2022-09-01,153,Almería
+Luis Suárez,Marseille,Almería,8000000.0,2023-07-01,153,Almería
+Marc Pubill,Levante,Almería,7750000.0,2023-08-09,153,Almería
+Ibrahima Koné,Lorient,Almería,7500000.0,2023-08-16,153,Almería
+Kaiky,Santos,Almería,7000000.0,2022-07-19,153,Almería
+Mattéo Guendouzi,Lazio,Fenerbahçe,28000000.0,2026-01-08,154,Fenerbahçe
+Kerem Aktürkoğlu,Benfica,Fenerbahçe,22500000.0,2025-09-01,154,Fenerbahçe
+Youssef En-Nesyri,Sevilla,Fenerbahçe,19500000.0,2024-07-24,154,Fenerbahçe
+Dorgeles Nene,Salzburg,Fenerbahçe,18000000.0,2025-08-19,154,Fenerbahçe
+Sidiki Chérif,Angers SCO,Fenerbahçe,18000000.0,2026-07-01,154,Fenerbahçe
+Cengiz Ünder,Marseille,Fenerbahçe,15000000.0,2023-08-13,154,Fenerbahçe
+Sofyan Amrabat,Fiorentina,Fenerbahçe,12000000.0,2025-07-01,154,Fenerbahçe
+Diego Carlos,Aston Villa,Fenerbahçe,11470000.0,2025-01-23,154,Fenerbahçe
+Ederson,Manchester City,Fenerbahçe,11000000.0,2025-09-02,154,Fenerbahçe
+Sebastian Szymanski,Dynamo Moscow,Fenerbahçe,10700000.0,2023-07-12,154,Fenerbahçe
+Rolando Mandragora,Juventus,Udinese,20000000.0,2018-07-26,155,Udinese
+Hassane Kamara,Watford,Udinese,19000000.0,2022-08-22,155,Udinese
+Gerard Deulofeu,Watford,Udinese,17000000.0,2021-01-30,155,Udinese
+Beto,Portimonense,Udinese,15000000.0,2022-07-01,155,Udinese
+David Di Michele,Salernitana,Udinese,12000000.0,2001-07-01,155,Udinese
+Brenner,Cincinnati,Udinese,10000000.0,2023-07-01,155,Udinese
+Roberto Muzzi,Cagliari,Udinese,10000000.0,1999-07-10,155,Udinese
+Rodrigo De Paul,Valencia,Udinese,10000000.0,2016-07-20,155,Udinese
+Mirko Pieri,Perugia,Udinese,9800000.0,2001-07-01,155,Udinese
+Davide Faraoni,Inter,Udinese,8000000.0,2012-07-09,155,Udinese
+Tino Livramento,Chelsea,Southampton,26200000.0,2021-08-02,156,Southampton
+Danny Ings,Liverpool,Southampton,25100000.0,2019-07-01,156,Southampton
+Kamaldeen Sulemana,Rennes,Southampton,25000000.0,2023-01-31,156,Southampton
+Jannik Vestergaard,Borussia Mönchengladbach,Southampton,25000000.0,2018-07-13,156,Southampton
+Taylor Harwood-Bellis,Manchester City,Southampton,23000000.0,2024-07-01,156,Southampton
+Sadio Mané,Salzburg,Southampton,23000000.0,2014-09-01,156,Southampton
+Roméo Lavia,Manchester City,Southampton,22260000.0,2022-07-06,156,Southampton
+Guido Carrillo,Monaco,Southampton,22000000.0,2018-01-25,156,Southampton
+Aaron Ramsdale,Arsenal,Southampton,21400000.0,2024-08-30,156,Southampton
+Sofiane Boufal,Lille,Southampton,18700000.0,2016-08-29,156,Southampton
+Omari Hutchinson,Ipswich,Nott'm Forest,43400000.0,2025-08-16,157,Nott'm Forest
+Dan Ndoye,Bologna,Nott'm Forest,42000000.0,2025-07-31,157,Nott'm Forest
+Elliot Anderson,Newcastle United,Nott'm Forest,41200000.0,2024-07-01,157,Nott'm Forest
+Dilane Bakwa,R. Strasbourg,Nott'm Forest,35000000.0,2025-09-01,157,Nott'm Forest
+Ibrahim Sangaré,PSV Eindhoven,Nott'm Forest,35000000.0,2023-09-01,157,Nott'm Forest
+Arnaud Kalimuendo,Rennes,Nott'm Forest,30000000.0,2025-08-18,157,Nott'm Forest
+Morgan Gibbs-White,Wolverhampton Wanderers,Nott'm Forest,29500000.0,2022-08-19,157,Nott'm Forest
+James McAtee,Manchester City,Nott'm Forest,25500000.0,2025-08-16,157,Nott'm Forest
+Anthony Elanga,Manchester United,Nott'm Forest,22930000.0,2023-07-25,157,Nott'm Forest
+Taiwo Awoniyi,Union Berlin,Nott'm Forest,20500000.0,2022-07-01,157,Nott'm Forest
+Mateo Retegui,Atalanta,Al-Qadsiah,68250000.0,2025-07-21,158,Al-Qadsiah
+Equi Fernández,Boca Juniors,Al-Qadsiah,18700000.0,2024-08-05,158,Al-Qadsiah
+Christopher Bonsu Baah,KRC Genk,Al-Qadsiah,17000000.0,2025-07-07,158,Al-Qadsiah
+Gabriel Carvalho,Internacional,Al-Qadsiah,15600000.0,2025-08-17,158,Al-Qadsiah
+Cameron Puertas,Union SG,Al-Qadsiah,15300000.0,2024-08-26,158,Al-Qadsiah
+Julián Quiñones,América,Al-Qadsiah,13800000.0,2024-07-18,158,Al-Qadsiah
+Gastón Álvarez,Getafe,Al-Qadsiah,12000000.0,2024-08-19,158,Al-Qadsiah
+Musab Al-Juwayr,Al-Hilal,Al-Qadsiah,11520000.0,2025-08-03,158,Al-Qadsiah
+Waleed Al-Ahmad,Al-Taawoun,Al-Qadsiah,9050000.0,2026-02-02,158,Al-Qadsiah
+Pierre-Emerick Aubameyang,Marseille,Al-Qadsiah,9000000.0,2024-07-18,158,Al-Qadsiah
+Gonçalo Borges,Porto,Feyenoord,10000000.0,2025-07-20,159,Feyenoord
+Sem Steijn,Twente,Feyenoord,10000000.0,2025-07-01,159,Feyenoord
+Dávid Hancko,Sparta Prague,Feyenoord,8300000.0,2022-08-22,159,Feyenoord
+Ayase Ueda,Cercle Brugge,Feyenoord,8000000.0,2023-08-03,159,Feyenoord
+Tsuyoshi Watanabe,KAA Gent,Feyenoord,8000000.0,2025-07-23,159,Feyenoord
+Luka Ivanušec,Dinamo Zagreb,Feyenoord,7800000.0,2023-08-25,159,Feyenoord
+Quinten Timber,Utrecht,Feyenoord,7400000.0,2022-07-28,159,Feyenoord
+Ramiz Zerrouki,Twente,Feyenoord,7200000.0,2023-07-01,159,Feyenoord
+In-beom Hwang,Red Star,Feyenoord,7000000.0,2024-09-02,159,Feyenoord
+Marcos Senesi,San Lorenzo,Feyenoord,7000000.0,2019-09-02,159,Feyenoord
+Joshua Zirkzee,Bayern Munich,Bologna,27500000.0,2022-08-30,160,Bologna
+Riccardo Calafiori,Basel,Bologna,24500000.0,2023-08-31,160,Bologna
+Jonathan Rowe,Marseille,Bologna,17000000.0,2025-08-24,160,Bologna
+Dan Ndoye,Basel,Bologna,16450000.0,2023-08-14,160,Bologna
+Thijs Dallinga,Toulouse,Bologna,16200000.0,2024-07-23,160,Bologna
+Riccardo Orsolini,Juventus,Bologna,15000000.0,2019-07-01,160,Bologna
+Musa Barrow,Atalanta,Bologna,14340000.0,2021-07-01,160,Bologna
+Santiago Castro,Vélez Sarsfield,Bologna,13200000.0,2024-01-30,160,Bologna
+Jesper Karlsson,AZ Alkmaar,Bologna,11150000.0,2023-08-23,160,Bologna
+Martin Vitík,Sparta Prague,Bologna,11000000.0,2025-07-06,160,Bologna
+Georges Mikautadze,Lyon,Villarreal,31000000.0,2025-09-01,161,Villarreal
+Paco Alcácer,Borussia Dortmund,Villarreal,25000000.0,2020-01-30,161,Villarreal
+Renato Veiga,Chelsea,Villarreal,24500000.0,2025-08-22,161,Villarreal
+Arnaut Danjuma,Bournemouth,Villarreal,23500000.0,2021-08-19,161,Villarreal
+Thierno Barry,Basel,Villarreal,20000000.0,2024-08-21,161,Villarreal
+Gerard Moreno,Espanyol,Villarreal,20000000.0,2018-07-01,161,Villarreal
+Logan Costa,Toulouse,Villarreal,18000000.0,2024-08-22,161,Villarreal
+Karl Toko Ekambi,Angers SCO,Villarreal,18000000.0,2018-07-01,161,Villarreal
+Nilmar,Internacional,Villarreal,16500000.0,2009-07-25,161,Villarreal
+Pervis Estupiñán,Watford,Villarreal,16400000.0,2020-09-16,161,Villarreal
+Hernán Crespo,Parma,Lazio,56810000.0,2000-07-11,162,Lazio
+Juan Sebastián Verón,Parma,Lazio,30000000.0,1999-07-01,162,Lazio
+Christian Vieri,Atletico Madrid,Lazio,28410000.0,1998-08-28,162,Lazio
+Jaap Stam,Manchester United,Lazio,25750000.0,2001-08-26,162,Lazio
+Claudio López,Valencia,Lazio,23000000.0,2000-07-01,162,Lazio
+Vedat Muriqi,Fenerbahce,Lazio,21000000.0,2020-09-15,162,Lazio
+Mauro Zárate,Al-Sadd,Lazio,20200000.0,2009-07-01,162,Lazio
+Taty Castellanos,New York City,Lazio,18600000.0,2023-07-21,162,Lazio
+Joaquín Correa,Sevilla,Lazio,17850000.0,2018-08-01,162,Lazio
+Marcelo Salas,River Plate,Lazio,17500000.0,1998-07-01,162,Lazio
+Emil Audero,Juventus,Sampdoria,20000000.0,2019-07-01,163,Sampdoria
+Duván Zapata,Napoli,Sampdoria,18500000.0,2018-07-01,163,Sampdoria
+Gianluca Caprari,Inter,Sampdoria,15000000.0,2017-07-01,163,Sampdoria
+Jakub Jankto,Udinese,Sampdoria,14500000.0,2019-07-01,163,Sampdoria
+Jeison Murillo,Valencia,Sampdoria,13300000.0,2020-01-14,163,Sampdoria
+Luis Muriel,Udinese,Sampdoria,12000000.0,2015-07-01,163,Sampdoria
+Manolo Gabbiadini,Southampton,Sampdoria,11900000.0,2019-01-11,163,Sampdoria
+,Valencia,Sampdoria,10800000.0,1998-07-28,163,Sampdoria
+Omar Colley,Genk,Sampdoria,9250000.0,2018-07-01,163,Sampdoria
+Giampaolo Pazzini,Fiorentina,Sampdoria,9000000.0,2009-01-15,163,Sampdoria
+Hugo Ekitiké,Paris Saint-Germain,Frankfurt,31500000.0,2024-07-01,164,Frankfurt
+Elye Wahi,Marseille,Frankfurt,26000000.0,2025-01-24,164,Frankfurt
+Luka Jović,Benfica,Frankfurt,22340000.0,2019-07-01,164,Frankfurt
+Ritsu Doan,Freiburg,Frankfurt,21000000.0,2025-08-07,164,Frankfurt
+Jonathan Burkardt,Mainz 05,Frankfurt,21000000.0,2025-07-04,164,Frankfurt
+Djibril Sow,Young Boys,Frankfurt,14000000.0,2019-07-01,164,Frankfurt
+Willian Pacho,Royal Antwerp,Frankfurt,13650000.0,2023-07-01,164,Frankfurt
+Arthur Theate,Rennes,Frankfurt,13000000.0,2025-02-02,164,Frankfurt
+Sébastien Haller,Utrecht,Frankfurt,12000000.0,2017-07-01,164,Frankfurt
+Can Uzun,Nuremberg,Frankfurt,11000000.0,2024-07-02,164,Frankfurt
+Breel Embolo,Basel,Schalke,26500000.0,2016-07-01,165,Schalke
+Nabil Bentaleb,Tottenham Hotspur,Schalke,19000000.0,2017-07-01,165,Schalke
+Sebastian Rudy,Bayern Munich,Schalke,16000000.0,2018-08-27,165,Schalke
+Ozan Kabak,Stuttgart,Schalke,15000000.0,2019-07-01,165,Schalke
+Klaas-Jan Huntelaar,AC Milan,Schalke,14000000.0,2010-08-30,165,Schalke
+Yevgen Konoplyanka,Sevilla,Schalke,12500000.0,2017-07-01,165,Schalke
+Suat Serdar,Mainz 05,Schalke,11000000.0,2018-07-01,165,Schalke
+José Manuel Jurado,Atletico Madrid,Schalke,11000000.0,2010-08-31,165,Schalke
+Johannes Geis,Mainz 05,Schalke,10500000.0,2015-07-01,165,Schalke
+Kevin-Prince Boateng,AC Milan,Schalke,10000000.0,2013-08-30,165,Schalke
+João Félix,Benfica,Atletico Madrid,127200000.0,2019-07-03,166,Atletico Madrid
+Julián Alvarez,Manchester City,Atletico Madrid,75000000.0,2024-08-12,166,Atletico Madrid
+Thomas Lemar,Monaco,Atletico Madrid,72000000.0,2018-07-01,166,Atletico Madrid
+Diego Costa,Chelsea,Atletico Madrid,60000000.0,2018-01-01,166,Atletico Madrid
+Antoine Griezmann,Real Sociedad,Atletico Madrid,54000000.0,2014-07-28,166,Atletico Madrid
+Conor Gallagher,Chelsea,Atletico Madrid,42000000.0,2024-08-21,166,Atletico Madrid
+Álex Baena,Villarreal,Atletico Madrid,42000000.0,2025-07-02,166,Atletico Madrid
+Radamel Falcao,Porto,Atletico Madrid,40000000.0,2011-08-18,166,Atletico Madrid
+Vitolo,Sevilla,Atletico Madrid,35600000.0,2017-07-12,166,Atletico Madrid
+Matheus Cunha,Hertha Berlin,Atletico Madrid,35000000.0,2021-08-25,166,Atletico Madrid
+Steven Bergwijn,Tottenham Hotspur,Ajax,31250000.0,2022-07-08,167,Ajax
+Calvin Bassey,Rangers,Ajax,23000000.0,2022-07-20,167,Ajax
+Sébastien Haller,West Ham United,Ajax,22500000.0,2021-01-08,167,Ajax
+Josip Sutalo,Dinamo Zagreb,Ajax,20500000.0,2023-08-20,167,Ajax
+David Neres,São Paulo,Ajax,17400000.0,2017-01-31,167,Ajax
+Brian Brobbey,RB Leipzig,Ajax,16350000.0,2022-07-22,167,Ajax
+Miralem Sulejmani,Heerenveen,Ajax,16250000.0,2008-07-06,167,Ajax
+Georges Mikautadze,Metz,Ajax,16000000.0,2023-08-30,167,Ajax
+Daley Blind,Manchester United,Ajax,16000000.0,2018-07-17,167,Ajax
+Antony,São Paulo,Ajax,15750000.0,2020-07-01,167,Ajax
+Amine Gouiri,Nice,Rennes,28000000.0,2022-09-01,168,Rennes
+Jérémy Doku,RSC Anderlecht,Rennes,26000000.0,2020-10-05,168,Rennes
+Lucas Severino,Atlético-PR,Rennes,21300000.0,2000-07-01,168,Rennes
+Raphinha,Sporting CP,Rennes,21000000.0,2019-09-02,168,Rennes
+Enzo Le Fée,Lorient,Rennes,20000000.0,2023-07-07,168,Rennes
+Arnaud Kalimuendo,Paris Saint-Germain,Rennes,20000000.0,2022-08-11,168,Rennes
+Seko Fofana,Al-Nassr,Rennes,20000000.0,2025-01-01,168,Rennes
+Arthur Theate,Bologna,Rennes,19000000.0,2022-07-29,168,Rennes
+Kamaldeen Sulemana,Nordsjaelland,Rennes,17000000.0,2021-07-16,168,Rennes
+Loïc Badé,Lens,Rennes,17000000.0,2021-07-05,168,Rennes
+Moussa Niakhaté,Forest,Lyon,31900000.0,2024-07-04,169,Lyon
+Ernest Nuamah,RWDM,Lyon,28500000.0,2024-07-07,169,Lyon
+Jeff Reine-Adélaïde,Angers SCO,Lyon,25000000.0,2019-08-14,169,Lyon
+Lisandro López,Porto,Lyon,24000000.0,2009-07-07,169,Lyon
+Joachim Andersen,Sampdoria,Lyon,24000000.0,2019-07-12,169,Lyon
+Orel Mangala,Forest,Lyon,23400000.0,2024-07-02,169,Lyon
+Lucas Paquetá,AC Milan,Lyon,23000000.0,2020-09-30,169,Lyon
+Thiago Mendes,Lille,Lyon,22000000.0,2019-07-03,169,Lyon
+Moussa Dembélé,Celtic,Lyon,22000000.0,2018-08-31,169,Lyon
+Yoann Gourcuff,G. Bordeaux,Lyon,22000000.0,2010-08-25,169,Lyon
+Jørgen Strand Larsen,Wolverhampton Wanderers,Crystal Palace,49700000.0,2026-02-02,170,Crystal Palace
+Brennan Johnson,Tottenham Hotspur,Crystal Palace,40000000.0,2026-01-02,170,Crystal Palace
+Christian Benteke,Liverpool,Crystal Palace,31200000.0,2016-08-20,170,Crystal Palace
+Yéremy Pino,Villarreal,Crystal Palace,30000000.0,2025-08-29,170,Crystal Palace
+Eddie Nketiah,Arsenal,Crystal Palace,29700000.0,2024-08-30,170,Crystal Palace
+Mamadou Sakho,Liverpool,Crystal Palace,28200000.0,2017-08-31,170,Crystal Palace
+Marc Guéhi,Chelsea,Crystal Palace,23340000.0,2021-07-18,170,Crystal Palace
+Jaydee Canvot,Toulouse,Crystal Palace,23000000.0,2025-09-01,170,Crystal Palace
+Cheick Doucouré,Lens,Crystal Palace,22600000.0,2022-07-11,170,Crystal Palace
+Adam Wharton,Blackburn,Crystal Palace,21100000.0,2024-02-01,170,Crystal Palace
+Neymar,Barcelona,Paris Saint-Germain,222000000.0,2017-08-03,171,Paris Saint-Germain
+Kylian Mbappé,Monaco,Paris Saint-Germain,180000000.0,2018-07-01,171,Paris Saint-Germain
+Randal Kolo Muani,Frankfurt,Paris Saint-Germain,95000000.0,2023-09-01,171,Paris Saint-Germain
+Khvicha Kvaratskhelia,Napoli,Paris Saint-Germain,80000000.0,2025-01-17,171,Paris Saint-Germain
+Achraf Hakimi,Inter,Paris Saint-Germain,68000000.0,2021-07-06,171,Paris Saint-Germain
+João Neves,Benfica,Paris Saint-Germain,65920000.0,2024-08-05,171,Paris Saint-Germain
+Gonçalo Ramos,Benfica,Paris Saint-Germain,65000000.0,2024-01-01,171,Paris Saint-Germain
+Edinson Cavani,Napoli,Paris Saint-Germain,64500000.0,2013-07-16,171,Paris Saint-Germain
+Ilya Zabarnyi,Bournemouth,Paris Saint-Germain,63000000.0,2025-08-12,171,Paris Saint-Germain
+Ángel Di María,Manchester United,Paris Saint-Germain,63000000.0,2015-08-06,171,Paris Saint-Germain
+,São Paulo,Real Betis,30000000.0,1998-07-30,172,Real Betis
+Borja Iglesias,Espanyol,Real Betis,28000000.0,2019-08-14,172,Real Betis
+Antony,Manchester United,Real Betis,22000000.0,2025-09-01,172,Real Betis
+Giovani Lo Celso,Paris Saint-Germain,Real Betis,22000000.0,2019-07-01,172,Real Betis
+Nabil Fekir,Lyon,Real Betis,19750000.0,2019-07-23,172,Real Betis
+William Carvalho,Sporting CP,Real Betis,18500000.0,2018-07-13,172,Real Betis
+Diego Lainez,América,Real Betis,14000000.0,2019-01-10,172,Real Betis
+Cucho Hernández,Columbus,Real Betis,13000000.0,2025-02-03,172,Real Betis
+Nelson Deossa,Monterrey,Real Betis,11700000.0,2025-08-04,172,Real Betis
+Marc Bartra,Borussia Dortmund,Real Betis,10500000.0,2018-01-30,172,Real Betis
+Roman Yaremchuk,Benfica,Brugge,17000000.0,2022-08-29,173,Brugge
+Igor Thiago,Ludogorets,Brugge,11000000.0,2023-07-01,173,Brugge
+Raphael Onyedika,Midtjylland,Brugge,9500000.0,2022-08-28,173,Brugge
+Aleksandar Stanković,Inter,Brugge,9500000.0,2025-07-24,173,Brugge
+Kamal Sowah,Leicester City,Brugge,9000000.0,2021-08-27,173,Brugge
+Mamadou Diakhon,Stade Reims,Brugge,9000000.0,2025-08-18,173,Brugge
+David Okereke,Spezia Calcio,Brugge,8160000.0,2019-07-09,173,Brugge
+Hugo Vetlesen,Bodø/Glimt,Brugge,7750000.0,2023-07-03,173,Brugge
+Casper Nielsen,Union SG,Brugge,7750000.0,2022-07-18,173,Brugge
+Nicolò Tresoldi,Hannover 96,Brugge,7500000.0,2025-07-01,173,Brugge
+Dango Ouattara,Bournemouth,Brentford,42800000.0,2025-08-16,174,Brentford
+Igor Thiago,Brugge,Brentford,33000000.0,2024-07-01,174,Brentford
+Nathan Collins,Wolverhampton Wanderers,Brentford,26850000.0,2023-07-04,174,Brentford
+Kevin Schade,Freiburg,Brentford,25000000.0,2023-07-01,174,Brentford
+Sepp van den Berg,Liverpool,Brentford,23600000.0,2024-08-22,174,Brentford
+Fábio Carvalho,Liverpool,Brentford,23400000.0,2024-08-12,174,Brentford
+Antoni Milambo,Feyenoord,Brentford,20000000.0,2025-07-03,174,Brentford
+Keane Lewis-Potter,Hull City,Brentford,19000000.0,2022-07-12,174,Brentford
+Jannik Schuster,Salzburg,Brentford,18000000.0,2026-07-01,174,Brentford
+Michael Kayode,Fiorentina,Brentford,17500000.0,2025-07-01,174,Brentford
+Rafael Leão,Lille,AC Milan,49500000.0,2019-08-01,175,AC Milan
+Leonardo Bonucci,Juventus,AC Milan,42000000.0,2017-07-21,175,AC Milan
+Rui Costa,Fiorentina,AC Milan,41320000.0,2001-07-03,175,AC Milan
+Lucas Paquetá,Flamengo,AC Milan,38400000.0,2019-01-03,175,AC Milan
+André Silva,Porto,AC Milan,38000000.0,2017-07-01,175,AC Milan
+Mattia Caldara,Juventus,AC Milan,37740000.0,2018-08-02,175,AC Milan
+Charles De Ketelaere,Brugge,AC Milan,37500000.0,2022-08-02,175,AC Milan
+Christopher Nkunku,Chelsea,AC Milan,37000000.0,2025-08-30,175,AC Milan
+Filippo Inzaghi,Juventus,AC Milan,36150000.0,2001-07-02,175,AC Milan
+Ardon Jashari,Brugge,AC Milan,36000000.0,2025-08-06,175,AC Milan
+Youri Tielemans,Monaco,Leicester City,45000000.0,2019-07-08,176,Leicester City
+Wesley Fofana,Saint-Étienne,Leicester City,35000000.0,2020-10-02,176,Leicester City
+Ayoze Pérez,Newcastle United,Leicester City,33400000.0,2019-07-04,176,Leicester City
+Islam Slimani,Sporting CP,Leicester City,31000000.0,2016-08-31,176,Leicester City
+Patson Daka,RB Salzburg,Leicester City,30000000.0,2021-07-01,176,Leicester City
+Kelechi Iheanacho,Manchester City,Leicester City,27700000.0,2017-08-03,176,Leicester City
+James Maddison,Norwich,Leicester City,25000000.0,2018-07-01,176,Leicester City
+Oliver Skipp,Tottenham Hotspur,Leicester City,23500000.0,2024-08-19,176,Leicester City
+Bilal El Khannouss,Genk,Leicester City,22500000.0,2024-08-29,176,Leicester City
+Ricardo Pereira,Porto,Leicester City,22000000.0,2018-07-01,176,Leicester City
+Vitor Roque,Barcelona,Palmeiras,25500000.0,2025-02-28,177,Palmeiras
+Jhon Arias,Wolverhampton Wanderers,Palmeiras,25000000.0,2026-02-07,177,Palmeiras
+Paulinho,Atlético-MG,Palmeiras,18000000.0,2025-01-01,177,Palmeiras
+Facundo Torres,Orlando,Palmeiras,13100000.0,2025-01-03,177,Palmeiras
+Ramón Sosa,Forest,Palmeiras,12500000.0,2025-07-09,177,Palmeiras
+Miguel Borja,Atl. Nacional,Palmeiras,12000000.0,2017-02-10,177,Palmeiras
+Mauricio,Internacional,Palmeiras,10500000.0,2024-07-10,177,Palmeiras
+Andreas Pereira,Fulham,Palmeiras,10000000.0,2025-08-29,177,Palmeiras
+José Manuel López,Lanús,Palmeiras,9500000.0,2022-07-18,177,Palmeiras
+Matías Viña,Nacional,Palmeiras,8360000.0,2020-01-31,177,Palmeiras
+Rodrigo Zalazar,Braga,Sporting CP,30000000.0,2026-07-01,178,Sporting CP
+Manuel Ugarte,Famalicão,Sporting CP,24500000.0,2021-08-09,178,Sporting CP
+Viktor Gyökeres,Coventry,Sporting CP,24000000.0,2023-07-13,178,Sporting CP
+Luis Suárez,Almería,Sporting CP,22950000.0,2025-07-28,178,Sporting CP
+Fotis Ioannidis,Panathinaikos,Sporting CP,22000000.0,2025-09-01,178,Sporting CP
+Morten Hjulmand,Lecce,Sporting CP,19500000.0,2023-08-13,178,Sporting CP
+Conrad Harder,Nordsjaelland,Sporting CP,19000000.0,2024-09-02,178,Sporting CP
+Zeno Debast,RSC Anderlecht,Sporting CP,18050000.0,2024-07-04,178,Sporting CP
+Francisco Trincão,Barcelona,Sporting CP,18000000.0,2023-07-01,178,Sporting CP
+Paulinho,Braga,Sporting CP,16000000.0,2021-01-31,178,Sporting CP
+Cristiano Ronaldo,Real Madrid,Juventus,117000000.0,2018-07-10,179,Juventus
+Gonzalo Higuaín,Napoli,Juventus,90000000.0,2016-07-26,179,Juventus
+Matthijs de Ligt,Ajax,Juventus,85500000.0,2019-07-18,179,Juventus
+Dušan Vlahović,Fiorentina,Juventus,85400000.0,2022-01-28,179,Juventus
+Arthur Melo,Barcelona,Juventus,80600000.0,2020-09-01,179,Juventus
+Teun Koopmeiners,Atalanta,Juventus,58400000.0,2024-08-28,179,Juventus
+Gianluigi Buffon,Parma,Juventus,52880000.0,2001-07-03,179,Juventus
+Douglas Luiz,Aston Villa,Juventus,51500000.0,2024-07-01,179,Juventus
+Bremer,Torino,Juventus,51300000.0,2022-07-20,179,Juventus
+Pavel Nedved,Lazio,Juventus,45000000.0,2001-07-01,179,Juventus
+Declan Rice,West Ham United,Arsenal,116600000.0,2023-07-15,180,Arsenal
+Nicolas Pépé,Lille,Arsenal,80000000.0,2019-08-01,180,Arsenal
+Kai Havertz,Chelsea,Arsenal,75000000.0,2023-07-01,180,Arsenal
+Martín Zubimendi,Real Sociedad,Arsenal,70000000.0,2025-07-06,180,Arsenal
+Eberechi Eze,Crystal Palace,Arsenal,69300000.0,2025-08-23,180,Arsenal
+Viktor Gyökeres,Sporting CP,Arsenal,66900000.0,2025-07-26,180,Arsenal
+Pierre-Emerick Aubameyang,Borussia Dortmund,Arsenal,63750000.0,2018-01-31,180,Arsenal
+Ben White,Brighton & Hove Albion,Arsenal,58500000.0,2021-07-30,180,Arsenal
+Noni Madueke,Chelsea,Arsenal,56000000.0,2025-07-18,180,Arsenal
+Alexandre Lacazette,Lyon,Arsenal,53000000.0,2017-07-05,180,Arsenal

@@ -10,7 +10,6 @@ import cv2
 import numpy as np
 from playwright.async_api import async_playwright
 
-# Load game metadata dynamically from games.json
 def load_games_metadata():
     games_file = "games.json"
     if os.path.exists(games_file):
@@ -42,7 +41,6 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
         )
         page = await context.new_page()
         
-        # Navigate to target game URL
         response = await page.goto(url)
         if not response or response.status >= 400:
             print(f"❌ Error: Page {url} failed to load (status {response.status if response else 'None'}).")
@@ -51,7 +49,6 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
             
         await page.wait_for_selector("#guess-input")
         
-        # Adjust day navigation if requested
         if day_offset < 0:
             for _ in range(abs(day_offset)):
                 await page.click("#nav-back-btn")
@@ -61,7 +58,6 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                 await page.click("#nav-front-btn")
                 await page.wait_for_timeout(150)
 
-        # Inject unified CSS styling for mobile video layout
         await page.add_style_tag(content="""
             header, footer, #how-to-play, #game-note-bar, section.text-center > p, main > section:last-child { 
                 display: none !important; 
@@ -98,12 +94,21 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
             }
         """)
         
-        # Inject CTA Banner
-        await page.evaluate("""
+        # Game-specific CTA banner text:
+        # - Top Transfers & Top Scorers -> "CAN YOU GUESS #1 AND #3? 🤔" / "CAN YOU GUESS THE MYSTERY PLAYERS? 🤔"
+        # - Transfer Destination & Club Connect -> "CAN YOU GUESS THE MYSTERY CLUBS? 🤔"
+        if game_id in ["top_transfers", "top_scorers"]:
+            cta_title = "CAN YOU GUESS #1 AND #3? 🤔"
+        elif game_id in ["transfer_destination", "club_connect"]:
+            cta_title = "CAN YOU GUESS THE MYSTERY CLUBS? 🤔"
+        else:
+            cta_title = "CAN YOU SOLVE THE MYSTERY PUZZLE? 🤔"
+            
+        await page.evaluate(f"""
             const cta = document.createElement("div");
             cta.id = "short-cta-banner";
             cta.innerHTML = `
-                <div style="font-family:'Anton', sans-serif; font-size:22px; color:#ffffff; font-style:italic; text-transform:uppercase;">CAN YOU GUESS THIS FOOTBALL PUZZLE? 🤔</div>
+                <div style="font-family:'Anton', sans-serif; font-size:22px; color:#ffffff; font-style:italic; text-transform:uppercase;">{cta_title}</div>
                 <div style="font-family:'Space Grotesk', sans-serif; font-size:14px; color:#00f0ff; font-weight:bold; margin-top:3px;">Comment below or play live at playmaker.best!</div>
             `;
             document.body.appendChild(cta);
@@ -122,9 +127,6 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
             for _ in range(num_frames):
                 add_frame(png_bytes)
 
-        # ----------------------------------------------------
-        # Extract target theme/entity name dynamically across ALL games
-        # ----------------------------------------------------
         target_name = ""
         if await page.locator("#target-name").count() > 0:
             target_name = await page.inner_text("#target-name")
@@ -141,22 +143,15 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
         print(f"🎯 Target Theme: {target_name} ({target_date})")
         print(f"📁 Output File: {output_mp4}")
         
-        # Start immediately without pause
         await capture_hold(5)
         
-        # Helper for initial WRONG guess (Cristiano Ronaldo / Real Madrid depending on game)
-        async def make_wrong_guess():
-            # Check input placeholder to decide wrong guess (Player vs Club)
-            input_placeholder = await page.get_attribute("#guess-input", "placeholder") or ""
-            wrong_name = "Real Madrid" if "club" in input_placeholder.lower() else "Cristiano Ronaldo"
-            
-            print(f"  ➜ Starting with wrong guess: {wrong_name}")
+        async def make_guess(name):
             input_el = page.locator("#guess-input")
             await input_el.focus()
             await input_el.fill("")
             
-            for i in range(len(wrong_name)):
-                char = wrong_name[i]
+            for i in range(len(name)):
+                char = name[i]
                 await input_el.type(char, delay=0)
                 png = await page.screenshot(type="png")
                 for _ in range(2):
@@ -173,69 +168,35 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                 clicked = False
                 for i in range(count):
                     text = await dropdown_items.nth(i).text_content()
-                    if wrong_name.split()[0].lower() in text.lower():
+                    if name.split()[0].lower() in text.lower():
                         await dropdown_items.nth(i).click()
                         clicked = True
                         break
                 if not clicked and count > 0:
                     await dropdown_items.first.click()
             except Exception:
-                await input_el.fill(wrong_name)
-                
-            await capture_hold(4)
-            await page.click("#submit-btn")
-            await capture_hold(36)
-
-        # Execute wrong guess
-        await make_wrong_guess()
-
-        # Helper to type FULL name slowly and submit
-        async def make_correct_guess(p_name, row_idx=0):
-            input_el = page.locator("#guess-input")
-            await input_el.focus()
-            await input_el.fill("")
-            
-            for i in range(len(p_name)):
-                char = p_name[i]
-                await input_el.type(char, delay=0)
-                png = await page.screenshot(type="png")
-                for _ in range(2):
-                    add_frame(png)
-                await page.wait_for_timeout(80)
-                
-            await page.wait_for_timeout(150)
-            
-            try:
-                await page.wait_for_selector("#autocomplete-list div", state="visible", timeout=2000)
-                await capture_hold(8)
-                
-                dropdown_items = page.locator("#autocomplete-list div")
-                count = await dropdown_items.count()
-                clicked = False
-                for i in range(count):
-                    text = await dropdown_items.nth(i).text_content()
-                    if p_name.lower() in text.lower():
-                        await dropdown_items.nth(i).click()
-                        clicked = True
-                        break
-                if not clicked and count > 0:
-                    await dropdown_items.first.click()
-            except Exception as e:
-                print(f"   Dropdown fallback for {p_name}: {e}")
-                await input_el.fill(p_name)
+                await input_el.fill(name)
                 
             await capture_hold(5)
             await page.click("#submit-btn")
-            
-            # Unblur hints instantly if revealHint function exists
-            await page.evaluate(f"if (typeof revealHint === 'function') revealHint({row_idx});")
-            
-            await capture_hold(55)
+            await capture_hold(45)
 
         # ----------------------------------------------------
-        # Game-Specific Correct Answers Automation
+        # Game-Specific Automation Logic
         # ----------------------------------------------------
-        if game_id == "top_transfers":
+        if game_id == "club_connect":
+            mystery_club = await page.evaluate("DAILY_CLUBCONNECT_GAME.club")
+            print(f"💡 Target Mystery Club (Hidden from viewer): {mystery_club}")
+            
+            wrong_clubs_pool = ["Real Madrid", "Chelsea", "Arsenal", "Barcelona", "Bayern Munich", "Juventus"]
+            wrong_guesses = [c for c in wrong_clubs_pool if c.lower() != mystery_club.lower()][:2]
+            
+            for idx, wrong_club in enumerate(wrong_guesses, 1):
+                print(f"  ➜ Wrong Guess {idx}/2 (unlocking next player): {wrong_club}")
+                await make_guess(wrong_club)
+                
+        elif game_id == "top_transfers":
+            await make_guess("Cristiano Ronaldo")
             players_data = await page.evaluate("DAILY_TRANSFER_GAME.transfers")
             players_data.sort(key=lambda x: float(x.get('transfer_fee', 0)), reverse=True)
             top5 = players_data[:5]
@@ -244,7 +205,7 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                 if idx < len(top5):
                     p_name = top5[idx]['player_name']
                     print(f"  ➜ Guessing #{idx+1}: {p_name}")
-                    await make_correct_guess(p_name, idx)
+                    await make_guess(p_name)
                     
             await page.evaluate("""
                 const tbody = document.getElementById("table-body");
@@ -257,14 +218,15 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
             """)
             
         elif game_id == "transfer_destination":
+            await make_guess("Real Madrid")
             transfers = await page.evaluate("DAILY_DESTINATION_GAME.transfers")
-            # Submit first 2 destination clubs
             for idx in range(min(2, len(transfers))):
                 dest_club = transfers[idx]['to_club_name']
                 print(f"  ➜ Guessing Step {idx+1} Destination: {dest_club}")
-                await make_correct_guess(dest_club, idx)
+                await make_guess(dest_club)
                 
         elif game_id == "top_scorers":
+            await make_guess("Cristiano Ronaldo")
             scorers_data = await page.evaluate("DAILY_SCORERS_GAME.scorers")
             scorers_data.sort(key=lambda x: int(x.get('goals', 0)), reverse=True)
             top5 = scorers_data[:5]
@@ -273,15 +235,7 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                 if idx < len(top5):
                     p_name = top5[idx]['player_name']
                     print(f"  ➜ Guessing #{idx+1}: {p_name}")
-                    await make_correct_guess(p_name, idx)
-                    
-        elif game_id == "club_connect":
-            mystery_club = await page.evaluate("DAILY_CLUBCONNECT_GAME.club")
-            print(f"  ➜ Guessing Mystery Club: {mystery_club}")
-            await make_correct_guess(mystery_club, 0)
-            
-        else:
-            print(f"⚠️ Game '{game_id}' generic automation runner active.")
+                    await make_guess(p_name)
 
         # Final hold on full screen with CTA (~3.5s)
         await capture_hold(105)

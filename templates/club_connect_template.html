@@ -381,7 +381,7 @@
     const activeGameData   = typeof DAILY_CLUBCONNECT_GAME !== 'undefined'
         ? DAILY_CLUBCONNECT_GAME
         : { club: "Bayern Munich", players: [] };
-    const activeClubs      = typeof ANSWER_CLUBS !== 'undefined' ? ANSWER_CLUBS : [];
+    const activeClubs      = typeof ALL_CLUBS !== 'undefined' && ALL_CLUBS.length > 0 ? ALL_CLUBS : (typeof ANSWER_CLUBS !== 'undefined' ? ANSWER_CLUBS : []);
     const puzzleNum        = typeof PUZZLE_NUMBER !== 'undefined' ? PUZZLE_NUMBER : 0;
     const isBackInTime     = typeof IS_BACK_IN_TIME !== 'undefined' ? IS_BACK_IN_TIME : false;
     const maxBackDays      = typeof MAX_BACK_DAYS !== 'undefined' ? MAX_BACK_DAYS : 7;
