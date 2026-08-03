@@ -269,10 +269,16 @@ def main():
 
     for day in range(num_days):
         selected_club = shuffled_clubs[day % len(shuffled_clubs)]
-        club_transfers = df_transfers[
-            (df_transfers['to_club_name'] == selected_club) &
-            (df_transfers['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
-        ].copy()
+        if day < len(orig_shuffled_clubs):
+            club_transfers = df_dc_transfers_clean[
+                (df_dc_transfers_clean['to_club_name'] == selected_club) &
+                (df_dc_transfers_clean['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
+            ].copy()
+        else:
+            club_transfers = df_transfers[
+                (df_transfers['to_club_name'] == selected_club) &
+                (df_transfers['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
+            ].copy()
 
         # For each player, select only their highest transfer fee (unique player)
         idx = club_transfers.groupby(['player_name'])['transfer_fee'].idxmax()
@@ -337,11 +343,16 @@ def main():
 
     for day in range(num_days):
         selected_nationality = shuffled_nationalities[day % len(shuffled_nationalities)]
-        
-        nationality_transfers = df_merged_for_nationality[
-            (df_merged_for_nationality['nationality_name'] == selected_nationality) &
-            (df_merged_for_nationality['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
-        ].copy()
+        if day < len(orig_shuffled_nats):
+            nationality_transfers = df_dc_merged_nat[
+                (df_dc_merged_nat['nationality_name'] == selected_nationality) &
+                (df_dc_merged_nat['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
+            ].copy()
+        else:
+            nationality_transfers = df_merged_for_nationality[
+                (df_merged_for_nationality['nationality_name'] == selected_nationality) &
+                (df_merged_for_nationality['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
+            ].copy()
 
         # For each player, select only their highest transfer fee (unique player)
         idx = nationality_transfers.groupby(['player_name'])['transfer_fee'].idxmax()
@@ -470,7 +481,11 @@ def main():
     clubs_in_careers = set()
     
     for day, pid in enumerate(selected_pids):
-        p_transfers = df_dest_eligible[df_dest_eligible['player_id'] == pid].copy()
+        if day < len(orig_dest_pids):
+            p_transfers = df_dc_dest_eligible[df_dc_dest_eligible['player_id'] == pid].copy()
+        else:
+            p_transfers = df_dest_eligible[df_dest_eligible['player_id'] == pid].copy()
+
         # Sort chronologically
         p_transfers = p_transfers.sort_values(by='transfer_date')
         p_transfers['game_day'] = day + 1
