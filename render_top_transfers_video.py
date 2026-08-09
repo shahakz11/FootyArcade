@@ -91,11 +91,11 @@ def generate_video(csv_path, game_day, output_path="top_transfers_short.mp4", se
     font_cta = get_font(42, bold=True)
     
     events = [
-        {"rank_idx": 4, "type_start": 1.5, "type_end": 3.8, "reveal": 4.2},
-        {"rank_idx": 3, "type_start": 5.5, "type_end": 7.8, "reveal": 8.2},
-        {"rank_idx": 1, "type_start": 9.5, "type_end": 11.8, "reveal": 12.2},
+        {"rank_idx": 4, "countdown_start": 1.0, "type_start": 4.0, "type_end": 6.2, "reveal": 6.8},
+        {"rank_idx": 3, "countdown_start": 8.5, "type_start": 11.5, "type_end": 13.7, "reveal": 14.3},
+        {"rank_idx": 1, "countdown_start": 16.0, "type_start": 19.0, "type_end": 21.2, "reveal": 21.8},
     ]
-    total_duration = 18.0
+    total_duration = 26.0
     total_frames = int(total_duration * fps)
     
     print(f"Rendering {total_frames} frames to {output_path}...")
@@ -111,9 +111,39 @@ def generate_video(csv_path, game_day, output_path="top_transfers_short.mp4", se
         draw = ImageDraw.Draw(img)
         
         # --- HEADER SECTION ---
-        draw_card(draw, (320, 90, 760, 150), (0, 240, 255, 40), border_color=(0, 240, 255, 230), corner_radius=25)
-        draw.text((540, 120), "TOP TRANSFERS", font=font_badge, fill=(0, 240, 255), anchor="mm")
+        draw_card(draw, (80, 90, 480, 150), (0, 240, 255, 40), border_color=(0, 240, 255, 230), corner_radius=25)
+        draw.text((280, 120), "TOP TRANSFERS", font=font_badge, fill=(0, 240, 255), anchor="mm")
         
+        # --- COUNTDOWN TIMER WIDGET (TOP RIGHT SAFE ZONE) ---
+        timer_text = "GUESS IN 3s"
+        timer_color = (57, 255, 20)
+        border_color = (0, 240, 255)
+        
+        for ev in events:
+            if ev["countdown_start"] <= t < ev["type_start"]:
+                rem_sec = math.ceil(ev["type_start"] - t)
+                rem_sec = max(1, min(3, rem_sec))
+                timer_text = f"GUESS IN {rem_sec}s"
+                if rem_sec == 3:
+                    timer_color = (57, 255, 20)
+                    border_color = (0, 240, 255)
+                elif rem_sec == 2:
+                    timer_color = (251, 191, 36)
+                    border_color = (251, 191, 36)
+                else:
+                    timer_color = (239, 68, 68)
+                    border_color = (239, 68, 68)
+                break
+            elif ev["type_start"] <= t <= ev["reveal"]:
+                timer_text = "GUESSING..."
+                timer_color = (0, 240, 255)
+                border_color = (0, 240, 255)
+                break
+                
+        draw_card(draw, (700, 85, 1000, 155), (15, 23, 42, 235), border_color=border_color, corner_radius=16)
+        draw.text((725, 120), "⏱️", font=font_badge, fill=(255, 255, 255), anchor="mm")
+        draw.text((865, 120), timer_text, font=font_badge, fill=timer_color, anchor="mm")
+
         draw.text((540, 205), title_entity.upper(), font=font_title, fill=(255, 255, 255), anchor="mm")
         
         timeframe_str = "Transfers 2000 – July 2026 | Non-Loan Moves"

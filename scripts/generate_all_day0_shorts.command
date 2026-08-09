@@ -9,14 +9,27 @@ echo "🎬 PLAYMAKER DAILY VIDEO GENERATOR (DAY 0)"
 echo "======================================================="
 echo ""
 
-# 1. Ensure local HTTP server is running on port 8080
-if ! lsof -i :8080 > /dev/null; then
-    echo "🌐 Starting local web server on port 8080..."
+# 1. Health check local HTTP server on port 8080
+check_server() {
+    curl -s -o /null -w "%{http_code}" http://localhost:8080/games/top_transfers.html 2>/dev/null
+}
+
+HTTP_CODE=$(check_server)
+
+if [ "$HTTP_CODE" != "200" ]; then
+    echo "🌐 Starting clean local web server on port 8080..."
+    # If port 8080 has a zombie or broken listener, free it up
+    PORT_PID=$(lsof -t -i :8080 2>/dev/null)
+    if [ -n "$PORT_PID" ]; then
+        echo "🧹 Clearing stale server process (PID $PORT_PID)..."
+        kill -9 $PORT_PID 2>/dev/null || true
+        sleep 1
+    fi
+    # Start fresh server
     python3 -m http.server 8080 > /dev/null 2>&1 &
-    SERVER_PID=$!
     sleep 2
 else
-    echo "🌐 Web server is already running on port 8080."
+    echo "🌐 Web server is healthy and responding on port 8080."
 fi
 
 # 2. Re-compile daily game puzzles for today (Day 0)
