@@ -16,6 +16,13 @@ function doPost(e) {
     // Parse incoming payload
     var payload = JSON.parse(e.postData.contents);
     var type = payload.type || 'feedback';
+    var url = (payload.url || '').toLowerCase();
+
+    // Guard: Only record events from the production domain, and never from template URLs
+    if (url && (url.indexOf('playmaker.best') === -1 || url.indexOf('/templates/') !== -1 || url.indexOf('_template.html') !== -1)) {
+      return ContentService.createTextOutput(JSON.stringify({ status: 'ignored', reason: 'Non-production or template URL' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
     
     var doc = SpreadsheetApp.getActiveSpreadsheet();
     var sheetName = type === 'feedback' ? 'Feedback' : 'Events';

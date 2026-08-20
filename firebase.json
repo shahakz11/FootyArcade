@@ -4,7 +4,43 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "templates/**",
+      "*.py",
+      "*.ipynb",
+      "*.csv",
+      "*.md",
+      "config.json",
+      "google-apps-script.js",
+      ".agents/**"
+    ],
+    "redirects": [
+      {
+        "source": "/templates/top_transfers_template.html",
+        "destination": "/games/top_transfers.html",
+        "type": 301
+      },
+      {
+        "source": "/templates/transfer_destination_template.html",
+        "destination": "/games/transfer_destination.html",
+        "type": 301
+      },
+      {
+        "source": "/templates/top_scorers_template.html",
+        "destination": "/games/top_scorers.html",
+        "type": 301
+      },
+      {
+        "source": "/templates/club_connect_template.html",
+        "destination": "/games/club_connect.html",
+        "type": 301
+      },
+      {
+        "source": "/templates/**",
+        "destination": "/",
+        "type": 301
+      }
     ]
   }
 }
+

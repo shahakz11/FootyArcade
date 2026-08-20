@@ -16,6 +16,24 @@
 (function (global) {
     'use strict';
 
+    // ── Canonical Domain & Route Enforcement ─────────────────
+    if (typeof window !== 'undefined' && window.location) {
+        const host = window.location.hostname;
+        const path = window.location.pathname;
+
+        // Redirect Firebase default subdomains to official domain
+        if (host === 'footyarcade.web.app' || host === 'footyarcade.firebaseapp.com') {
+            window.location.replace('https://playmaker.best' + path + window.location.search + window.location.hash);
+            return;
+        }
+
+        // Redirect any direct template file access to homepage
+        if (path.startsWith('/templates/') || path.includes('_template.html')) {
+            window.location.replace('https://playmaker.best/');
+            return;
+        }
+    }
+
     /**
      * Accent-insensitive normalization helper
      * e.g. "Ángel Di María" -> "angel di maria"
@@ -947,6 +965,21 @@
             return;
         }
 
+        if (typeof window !== 'undefined' && window.location) {
+            const host = window.location.hostname;
+            const path = window.location.pathname;
+
+            // Only track production events from the official domain
+            if (host !== 'playmaker.best' && host !== 'www.playmaker.best') {
+                return;
+            }
+
+            // Never track template files or invalid paths
+            if (path.includes('/templates/') || path.endsWith('_template.html')) {
+                return;
+            }
+        }
+
         const meta = getActiveGameMetadata();
 
         const payload = {
@@ -1057,6 +1090,16 @@
         const submitBtn = modal.querySelector('#fa-feedback-submit');
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            const host = window.location.hostname;
+            const path = window.location.pathname;
+            if (host !== 'playmaker.best' && host !== 'www.playmaker.best') {
+                toast('Feedback is only submitted on the live site.', 'info');
+                return;
+            }
+            if (path.includes('/templates/') || path.endsWith('_template.html')) {
+                return;
+            }
+
             const category = modal.querySelector('#fa-feedback-category').value;
             const message = modal.querySelector('#fa-feedback-message').value;
             const email = modal.querySelector('#fa-feedback-email').value;
