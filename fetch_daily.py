@@ -23,12 +23,16 @@ Adding a new game
 """
 
 import os
+import sys
 import re
 import json
 import csv
 import argparse
 import random as rand_mod
 from datetime import datetime, timedelta
+
+# Increase CSV field size limit for large JSON arrays
+csv.field_size_limit(sys.maxsize)
 
 # ─────────────────────────────────────────────────────────────
 # Constants
@@ -230,12 +234,65 @@ def load_club_connect(puzzle_num):
     return game_data, extra
 
 
+def load_player_chain(puzzle_num):
+    """Returns (game_data_dict, extra_data_dict) for the player_chain game."""
+    csv_path = "daily_player_chain_games.csv"
+    if not os.path.exists(csv_path):
+        print(f"  ERROR: {csv_path} not found.")
+        return None, None
+
+    rows = []
+    with open(csv_path, "r", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            if int(r.get("game_day", 1)) == puzzle_num:
+                rows.append(r)
+
+    if not rows:
+        print(f"  WARNING: No player_chain data for puzzle #{puzzle_num}")
+        return None, None
+
+    rows.sort(key=lambda x: int(x.get("step_number", 1)))
+    first = rows[0]
+
+    game_data = {
+        "target_player":     first.get("target_player", ""),
+        "target_nationality": first.get("target_nationality", ""),
+        "target_position":    first.get("target_position", ""),
+        "total_steps":        int(first.get("total_steps", len(rows))),
+        "steps": []
+    }
+
+    for r in rows:
+        game_data["steps"].append({
+            "step_number":        int(r.get("step_number", 1)),
+            "new_constraint":     r.get("new_constraint", ""),
+            "club":               r.get("club", ""),
+            "active_constraints": json.loads(r.get("active_constraints", "[]")),
+            "active_clubs":       json.loads(r.get("active_clubs", "[]")),
+            "valid_players":      json.loads(r.get("valid_players", "[]")),
+        })
+
+    # Extra data: all players list for dropdown autocomplete
+    all_players_json = "[]"
+    if os.path.exists("all_players.json"):
+        with open("all_players.json", "r", encoding="utf-8") as f:
+            all_players_json = f.read()
+    else:
+        print("  WARNING: all_players.json not found.")
+
+    extra = {
+        "ALL_PLAYERS": all_players_json,
+    }
+    return game_data, extra
+
+
 # Map game id → loader function
 GAME_LOADERS = {
     "top_transfers":        load_top_transfers,
     "transfer_destination": load_transfer_destination,
     "top_scorers":          load_top_scorers,
     "club_connect":         load_club_connect,
+    "player_chain":         load_player_chain,
 }
 
 # Map game id → the JS variable name for the main data object
@@ -244,6 +301,7 @@ GAME_DATA_VAR = {
     "transfer_destination": "DAILY_DESTINATION_GAME",
     "top_scorers":          "DAILY_SCORERS_GAME",
     "club_connect":         "DAILY_CLUBCONNECT_GAME",
+    "player_chain":         "DAILY_CHAIN_GAME",
 }
 
 # Patterns to strip from a template before injecting fresh data
@@ -276,6 +334,14 @@ STRIP_PATTERNS = {
         r'const\s+DAILY_CLUBCONNECT_GAME\s*=\s*\{[\s\S]*?\};',
         r'const\s+ALL_CLUBS\s*=\s*\[[\s\S]*?\];',
         r'const\s+ANSWER_CLUBS\s*=\s*\[[\s\S]*?\];',
+        r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
+        r'const\s+IS_BACK_IN_TIME\s*=\s*(true|false);',
+        r'const\s+MAX_BACK_DAYS\s*=\s*\d+;',
+        r'const\s+GAME_NOTE\s*=\s*"[^"]*";',
+    ],
+    "player_chain": [
+        r'const\s+DAILY_CHAIN_GAME\s*=\s*\{[\s\S]*?\};',
+        r'const\s+ALL_PLAYERS\s*=\s*\[[\s\S]*?\];',
         r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
         r'const\s+IS_BACK_IN_TIME\s*=\s*(true|false);',
         r'const\s+MAX_BACK_DAYS\s*=\s*\d+;',

@@ -99,17 +99,13 @@
                 if (!matches) continue;
 
                 let tier = 4;
-                if (normLabel === normQ) {
+                const words = normLabel.split(/\s+/);
+                if (normLabel === normQ || words.some(w => w === normQ)) {
                     tier = 1;
-                } else if (normLabel.startsWith(normQ)) {
+                } else if (normLabel.startsWith(normQ) || words.some(w => w.startsWith(normQ))) {
                     tier = 2;
                 } else {
-                    const words = normLabel.split(/\s+/);
-                    if (words.some(w => w === normQ)) {
-                        tier = 2;
-                    } else if (words.some(w => w.startsWith(normQ))) {
-                        tier = 3;
-                    }
+                    tier = 3;
                 }
 
                 results.push({
@@ -738,9 +734,15 @@
         const container = document.getElementById(containerId);
         const shown = new Set();
 
+        this.has = (text) => {
+            if (!text) return false;
+            return shown.has(FootyUI.normalizeStr(text));
+        };
+
         this.add = (text) => {
-            if (shown.has(text.toLowerCase())) return;
-            shown.add(text.toLowerCase());
+            const norm = FootyUI.normalizeStr(text);
+            if (shown.has(norm)) return;
+            shown.add(norm);
 
             section?.classList.remove('hidden');
             const badge = document.createElement('span');

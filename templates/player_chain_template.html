@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Player Chain — Daily Football Career Puzzle | Playmaker</title>
+    <meta name="description" content="Guess the mystery Player of the Day by identifying players who match an expanding chain of career clubs. Daily football challenge at Playmaker!"/>
+    <meta name="keywords" content="football trivia, player chain, career path quiz, playmaker, football wordle, soccer trivia, daily challenge"/>
+    <meta name="theme-color" content="#0e0e0e"/>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png"/>
+
+    <!-- Social Meta -->
+    <meta property="og:title" content="Player Chain — Daily Football Career Puzzle | Playmaker"/>
+    <meta property="og:description" content="Guess the mystery Player of the Day by identifying players who match an expanding chain of career clubs. Daily football challenge at Playmaker!"/>
+    <meta property="og:image" content="https://playmaker.best/assets/og-image.png"/>
+    <meta property="og:url" content="https://playmaker.best/games/player_chain.html"/>
+    <meta property="og:type" content="website"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@best.playmaker"/>
+    <meta name="twitter:title" content="Player Chain — Daily Football Career Puzzle | Playmaker"/>
+    <meta name="twitter:description" content="Guess the mystery Player of the Day by identifying players who match an expanding chain of career clubs. Play now!"/>
+    <meta name="twitter:image" content="https://playmaker.best/assets/og-image.png"/>
+
+    <link rel="canonical" href="https://playmaker.best/games/player_chain.html"/>
+
+    <!-- Analytics Placeholder -->
+    <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
+
+    <!-- Tailwind & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Archivo+Narrow:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <!-- Shared Playmaker styles -->
+    <link rel="stylesheet" href="../games/footy-ui.css?v=2"/>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background:                  "#0e0e0e",
+                        surface:                     "#131313",
+                        "surface-container-low":     "#1c1b1b",
+                        "surface-container":         "#201f1f",
+                        "surface-container-high":    "#2a2a2a",
+                        "surface-container-highest": "#353534",
+                        "on-background":             "#e5e2e1",
+                        "on-surface-variant":        "#a3a3a3",
+                        error:                       "#ff4d4d",
+                        correct:                     "#22c55e",
+                        accent:                      "#38bdf8",
+                        "primary-container":         "#38bdf8",
+                    },
+                    fontFamily: {
+                        headline: ["Anton", "sans-serif"],
+                        title:    ["Space Grotesk", "sans-serif"],
+                        body:     ["Archivo Narrow", "sans-serif"],
+                        mono:     ["Space Grotesk", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --fa-accent-rgb: 56, 189, 248;
+            --fa-accent-glow: rgba(56, 189, 248, 0.25);
+        }
+
+        .neon-text-glow {
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+        }
+
+        .active-node-glow {
+            box-shadow: 0 0 24px rgba(56, 189, 248, 0.18), inset 0 0 12px rgba(56, 189, 248, 0.08);
+        }
+
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        .star-anim {
+            animation: subtle-pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+
+        /* Timeline vertical connector line */
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 24px;
+            bottom: 24px;
+            width: 2px;
+            background: rgba(255,255,255,0.06);
+            z-index: 0;
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "VideoGame",
+          "name": "Player Chain — Daily Football Career Puzzle",
+          "description": "Guess the mystery Player of the Day by identifying players who match an expanding chain of career criteria step by step.",
+          "url": "https://playmaker.best/games/player_chain.html",
+          "image": "https://playmaker.best/assets/logo.png",
+          "genre": ["Trivia", "Sports"],
+          "gamePlatform": "Web",
+          "applicationCategory": "Game",
+          "isAccessibleForFree": true,
+          "author": {
+            "@type": "Organization",
+            "name": "Playmaker",
+            "url": "https://playmaker.best/",
+            "logo": "https://playmaker.best/assets/logo.png"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://playmaker.best/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Player Chain",
+              "item": "https://playmaker.best/games/player_chain.html"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body turf-pattern min-h-screen pb-24">
+
+    <!-- Header (Matching standard Playmaker pattern) -->
+    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-16 flex items-center justify-between px-4 sm:px-6 shadow-xl">
+        <a href="../index.html" class="text-on-surface-variant hover:text-accent transition-colors flex items-center gap-3" aria-label="Back to game lobby">
+            <span class="material-symbols-outlined text-xl sm:text-2xl">arrow_back</span>
+            <img src="../assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-7 md:h-8 w-auto object-contain" />
+        </a>
+        <div class="flex items-center gap-2 text-on-surface-variant">
+            <button id="how-to-play-btn" class="text-on-surface-variant hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="How to play instructions" title="How to play">
+                <span class="material-symbols-outlined text-xl">help_outline</span>
+            </button>
+            <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on Instagram" title="Instagram">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@playmaker.best" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on TikTok" title="TikTok">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.87-4.49V8.69a8.18 8.18 0 0 0 4.9 1.6V6.84a4.85 4.85 0 0 1-1-.15z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@best.playmaker" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker on YouTube" title="YouTube">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 px-4 max-w-2xl mx-auto space-y-6">
+
+        <!-- Game Intro Header -->
+        <section class="text-center space-y-3">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                <h1 class="font-headline text-2xl sm:text-3xl tracking-wider text-accent uppercase italic neon-text-glow">
+                    PLAYER CHAIN
+                </h1>
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                    <a id="nav-back-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1 px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10" title="Play previous puzzle (back in time)">
+                        <span class="material-symbols-outlined text-base">chevron_left</span>
+                        <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden sm:inline">Prev</span>
+                    </a>
+                    <span id="puzzle-badge" class="font-mono text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 px-3 py-1 rounded-lg cursor-help text-on-background" title="Daily puzzle number. Use arrows to play past puzzles!">PUZZLE #0</span>
+                    <a id="nav-front-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1 px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10" title="Play newer/today's puzzle">
+                        <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden sm:inline">Next</span>
+                        <span class="material-symbols-outlined text-base">chevron_right</span>
+                    </a>
+                </div>
+            </div>
+            <h2 class="font-title text-base sm:text-lg font-bold uppercase tracking-widest text-on-surface-variant">
+                The Career Path Puzzle
+            </h2>
+            <p class="text-on-surface-variant text-sm max-w-lg mx-auto">
+                Guess the mystery Player of the Day by identifying footballers across an expanding chain of career clubs.
+            </p>
+        </section>
+
+        <!-- Game Note Bar (injected by compiler via GAME_NOTE) -->
+        <div id="game-note-bar" class="hidden max-w-xl mx-auto">
+            <div class="flex items-center gap-2 px-4 py-2.5 bg-white/[0.03] border border-white/8 rounded-xl text-[11px] font-mono text-on-surface-variant/70">
+                <span class="material-symbols-outlined shrink-0" style="font-size:14px">info</span>
+                <span id="game-note-text"></span>
+            </div>
+        </div>
+
+        <!-- Lives & Step Counter Bar -->
+        <section class="max-w-md mx-auto w-full">
+            <div id="fa-lives-bar" class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1.5 text-error" data-fa-heart>
+                        <span class="material-symbols-outlined fill-current text-lg" id="fa-heart-icon">favorite</span>
+                        <span class="font-mono text-xs sm:text-sm font-bold uppercase tracking-wider">Lives:&nbsp;<span id="lives-counter">5</span></span>
+                    </div>
+                    <button id="add-life-btn" class="hidden flex items-center gap-1 px-2.5 py-1 bg-error/15 border border-error/30 text-error hover:bg-error/25 hover:border-error/50 rounded-lg text-xs font-bold uppercase tracking-wider transition-all">
+                        <span class="material-symbols-outlined text-xs">add_circle</span> +1 Life
+                    </button>
+                    <button id="give-up-btn" class="flex items-center gap-1 px-2.5 py-1 bg-white/5 border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-all">
+                        <span class="material-symbols-outlined text-xs">flag</span> Give Up
+                    </button>
+                </div>
+                <div class="text-accent font-mono text-xs sm:text-sm font-bold uppercase tracking-wider">
+                    Step: <span id="progress-step">1</span>/<span id="total-steps">4</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mystery Player Identity Card (Matching Transfer Destination Hero Card) -->
+        <section id="mystery-player-card" class="text-center space-y-3 bg-surface/60 border border-accent/25 rounded-2xl p-6 relative overflow-hidden shadow-2xl">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="relative z-10 flex flex-col items-center gap-2">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent font-mono text-xs uppercase font-bold tracking-widest shadow-lg">
+                    <span class="material-symbols-outlined text-sm">star</span>
+                    <span>Mystery Player of the Day</span>
+                </div>
+                <h3 id="player-name-display" class="font-headline text-3xl sm:text-4xl text-on-background uppercase italic tracking-wide py-1">
+                    ??? ??????
+                </h3>
+
+                <!-- Triggerable Hints: Position and Nationality (Hidden by default, triggered by user) -->
+                <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
+                    <!-- Nationality Hint -->
+                    <div id="hint-nat-container">
+                        <button id="hint-nat-btn" type="button" class="px-3 py-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-accent/40 text-on-surface-variant hover:text-accent font-mono text-xs transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer" title="Reveal player nationality">
+                            <span class="material-symbols-outlined text-xs text-accent">public</span>
+                            <span>Hint: Nationality</span>
+                            <span class="material-symbols-outlined text-xs opacity-50">visibility</span>
+                        </button>
+                        <span id="player-nat-badge" class="hidden font-mono text-xs bg-accent/10 border border-accent/30 text-accent px-3 py-1.5 rounded-xl flex items-center gap-1.5 font-bold animate-fadeIn">
+                            <span class="material-symbols-outlined text-xs">public</span>
+                            <span id="mystery-nat-text">...</span>
+                        </span>
+                    </div>
+
+                    <!-- Position Hint -->
+                    <div id="hint-pos-container">
+                        <button id="hint-pos-btn" type="button" class="px-3 py-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-accent/40 text-on-surface-variant hover:text-accent font-mono text-xs transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer" title="Reveal player position">
+                            <span class="material-symbols-outlined text-xs text-accent">sports_soccer</span>
+                            <span>Hint: Position</span>
+                            <span class="material-symbols-outlined text-xs opacity-50">visibility</span>
+                        </button>
+                        <span id="player-pos-badge" class="hidden font-mono text-xs bg-accent/10 border border-accent/30 text-accent px-3 py-1.5 rounded-xl flex items-center gap-1.5 font-bold animate-fadeIn">
+                            <span class="material-symbols-outlined text-xs">sports_soccer</span>
+                            <span id="mystery-pos-text">...</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mt-2 pt-2 border-t border-white/5 text-xs text-on-surface-variant/80 flex items-center gap-1.5 justify-center">
+                    <span class="material-symbols-outlined text-amber-400 text-sm star-anim">stars</span>
+                    <span><strong class="text-amber-400 font-bold uppercase tracking-wider">Instant Win:</strong> Guess this mystery player at <em>any</em> stage to win instantly!</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guesser Input Panel (ABOVE Career Chain Progression) -->
+        <section id="fa-guess-panel" class="bg-surface-container border border-white/10 rounded-2xl p-4 sm:p-5 shadow-2xl relative z-30 space-y-3">
+            <div>
+                <label id="active-step-label" class="block text-[11px] font-mono uppercase tracking-widest text-on-surface-variant mb-1">
+                    STEP 1 — NAME ANY PLAYER WHO PLAYED FOR:
+                </label>
+                <div id="current-clubs-tags" class="flex flex-wrap gap-1.5 py-1">
+                    <!-- Active club tags injected via JS -->
+                </div>
+            </div>
+
+            <div class="flex gap-2">
+                <div class="flex-grow relative">
+                    <input
+                        id="guess-input"
+                        class="w-full bg-background border border-white/10 rounded-xl h-12 px-4 text-base font-bold text-on-background focus:outline-none focus:border-accent focus:ring-0 transition-all placeholder:text-white/20"
+                        placeholder="Type a footballer's name..."
+                        type="text"
+                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text"
+                    />
+                    <div id="autocomplete-list" class="absolute left-0 right-0 mt-2 bg-surface border border-white/10 rounded-xl shadow-2xl overflow-y-auto max-h-60 z-50 hidden"></div>
+                </div>
+                <button id="submit-btn" class="h-12 px-5 sm:px-6 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all shrink-0">
+                    GUESS
+                </button>
+                <button id="skip-step-btn" class="h-12 px-3 sm:px-4 bg-white/5 border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-white rounded-xl transition-all flex items-center gap-1 shrink-0 font-mono text-xs uppercase tracking-wider" title="Skip this step if stuck">
+                    <span class="material-symbols-outlined text-base">fast_forward</span>
+                    <span class="hidden sm:inline">Skip</span>
+                </button>
+            </div>
+            <div id="error-message" class="text-error font-bold text-xs text-center hidden">
+                Please pick a footballer from the dropdown.
+            </div>
+        </section>
+
+        <!-- Career Chain Progression (Steps displayed ONE AT A TIME, below Guess Bar) -->
+        <section class="space-y-2">
+            <div class="flex items-center justify-between px-1">
+                <h3 class="font-title text-xs sm:text-sm font-bold uppercase tracking-widest text-on-surface-variant flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-accent text-base">link</span>
+                    <span>Career Chain Progression</span>
+                </h3>
+                <span class="text-[11px] font-mono text-on-surface-variant/60">No Repeat Guesses</span>
+            </div>
+
+            <!-- Steps Container (Only past steps and the current active step are revealed) -->
+            <div id="chain-steps-container" class="space-y-2.5 relative timeline-line">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </section>
+
+        <!-- Incorrect Guesses Feed -->
+        <section id="wrong-guesses-section" class="space-y-2 hidden">
+            <h4 class="text-xs uppercase font-mono tracking-widest text-on-surface-variant text-center">
+                INCORRECT GUESSES
+            </h4>
+            <div id="wrong-guesses-container" class="flex flex-wrap gap-2 justify-center"></div>
+        </section>
+
+        <!-- Post-Game Career Breakdown & Alternative Answers -->
+        <section id="endgame-summary-section" class="space-y-5 pt-6 border-t border-white/10 scroll-mt-24 hidden">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                        <span class="text-[10px] font-mono tracking-widest text-accent uppercase font-bold">CAREER RECAP</span>
+                    </div>
+                    <h3 class="font-headline text-2xl sm:text-3xl text-on-background uppercase italic tracking-wide mt-0.5">
+                        Full Career Path &amp; Answers
+                    </h3>
+                    <p class="text-xs text-on-surface-variant font-body">
+                        Explore the complete club chain and all eligible footballers for each step.
+                    </p>
+                </div>
+                <button id="reopen-modal-btn" class="self-start sm:self-auto px-4 py-2 rounded-xl bg-accent text-black font-headline text-sm uppercase italic hover:brightness-110 active:scale-95 transition-all flex items-center gap-1.5 shadow-lg shadow-accent/10 cursor-pointer">
+                    <span class="material-symbols-outlined text-base">emoji_events</span>
+                    <span>View Results</span>
+                </button>
+            </div>
+
+            <!-- Revealed Mystery Player Card -->
+            <div class="bg-surface/80 border border-accent/30 rounded-2xl p-4 sm:p-5 flex items-center gap-4 relative overflow-hidden shadow-xl">
+                <div class="w-14 h-14 rounded-2xl bg-accent/15 border border-accent/30 flex items-center justify-center text-accent shrink-0 shadow-inner">
+                    <span class="material-symbols-outlined text-3xl">sports_soccer</span>
+                </div>
+                <div class="min-w-0">
+                    <div class="text-[10px] font-mono uppercase tracking-widest text-accent font-bold">MYSTERY PLAYER OF THE DAY</div>
+                    <div id="revealed-target-name" class="font-headline text-2xl sm:text-3xl text-on-background uppercase italic tracking-wide truncate py-0.5">
+                        Roberto Baggio
+                    </div>
+                    <div class="text-xs text-on-surface-variant font-mono flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <span>Nationality: <strong id="revealed-target-nat" class="text-on-background font-bold">Italy</strong></span>
+                        <span>Position: <strong id="revealed-target-pos" class="text-on-background font-bold">Attack - Second Striker</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step by Step Breakdown -->
+            <div class="space-y-3 pt-1">
+                <div class="flex items-center justify-between px-1">
+                    <h4 class="font-title text-xs sm:text-sm font-bold uppercase tracking-widest text-on-surface-variant flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-base text-accent">rule</span>
+                        <span>Step-by-Step Breakdown</span>
+                    </h4>
+                    <span class="text-[11px] font-mono text-on-surface-variant/50">Click any step to view valid answers</span>
+                </div>
+                <div id="summary-steps-container" class="space-y-3">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- How To Play Modal -->
+    <div id="how-to-play-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-surface border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
+            <button id="close-how-to-play-btn" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-background transition-colors" aria-label="Close how to play modal">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+            <h3 class="font-headline text-2xl text-accent uppercase italic tracking-wide">HOW TO PLAY</h3>
+            <div class="space-y-3 text-sm text-on-surface-variant leading-relaxed font-body">
+                <p><strong class="text-on-background font-title">Goal:</strong> Unmask the mystery <strong class="text-on-background font-title">Player of the Day</strong> by identifying players who match an expanding chain of career clubs.</p>
+                <p><strong class="text-on-background font-title">1. Sequential Progression:</strong> Start with 1 club constraint. Each step unlocks one at a time, adding another club to the chain.</p>
+                <p><strong class="text-on-background font-title">2. 🎯 Instant Win:</strong> If you guess the Player of the Day at <em>any</em> stage, the game ends immediately in victory!</p>
+                <p><strong class="text-on-background font-title">3. Hints:</strong> Click the Hint buttons on the mystery player card to reveal their Nationality or Position.</p>
+                <p><strong class="text-on-background font-title">4. No Repeat Guesses:</strong> Once you submit a player, they cannot be used again in that session.</p>
+                <p><strong class="text-on-background font-title">5. Skipping:</strong> Stuck on a tricky club combination? Click <em>Skip</em> to unlock the next step and keep playing.</p>
+                <p><strong class="text-on-background font-title">6. Lives:</strong> Guessing an invalid player who does not meet all active constraints costs 1 life.</p>
+            </div>
+            <button id="close-how-to-play-btn2" class="w-full py-3 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all">
+                GOT IT
+            </button>
+        </div>
+    </div>
+
+    <!-- End Game Result Modal (Matching Transfer Destination / Club Connect pattern with Giphy) -->
+    <div id="result-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-start sm:justify-center p-3 sm:p-6 py-6 z-50 overflow-y-auto hidden">
+        <div class="fa-modal-card bg-surface border border-accent/20 w-full max-w-md rounded-3xl p-5 sm:p-7 text-center space-y-4 sm:space-y-5 shadow-2xl relative max-h-[85vh] sm:max-h-[90vh] overflow-y-auto my-auto">
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
+
+            <button id="modal-close-btn" class="sticky top-0 float-right -mr-1 -mt-1 text-on-surface-variant hover:text-white transition-colors bg-black/40 hover:bg-black/80 rounded-full p-1.5 z-30 backdrop-blur-sm" aria-label="Close modal">
+                <span class="material-symbols-outlined text-xl block">close</span>
+            </button>
+
+            <span id="modal-icon" class="material-symbols-outlined text-5xl sm:text-6xl text-accent">emoji_events</span>
+
+            <div class="space-y-1 sm:space-y-2">
+                <h3 id="modal-title" class="font-headline text-3xl sm:text-4xl text-accent uppercase italic tracking-wide">COMPLETED</h3>
+                <p id="modal-message" class="text-on-surface-variant text-xs sm:text-sm"></p>
+            </div>
+
+            <!-- Player reveal card -->
+            <div class="bg-background/50 border border-white/5 rounded-2xl p-3 sm:p-4 text-center">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-on-surface-variant block">THE MYSTERY PLAYER WAS</span>
+                <span id="modal-player-name" class="font-headline text-xl sm:text-2xl text-accent uppercase italic tracking-wider block mt-1 neon-text-glow">...</span>
+            </div>
+
+            <!-- Giphy GIF Element -->
+            <div id="modal-gif-container" class="w-full max-h-36 sm:max-h-44 rounded-2xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center relative my-2 sm:my-3 hidden">
+                <img id="modal-gif" class="w-full h-36 sm:h-44 object-cover rounded-2xl" src="" alt="Player celebration GIF" />
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="bg-black/30 border border-white/5 rounded-2xl p-3 sm:p-4 flex justify-around">
+                <div>
+                    <span class="block text-[10px] sm:text-xs font-mono uppercase tracking-widest text-on-surface-variant">Steps</span>
+                    <span id="modal-score" class="font-headline text-2xl sm:text-3xl text-accent">0/0</span>
+                </div>
+                <div>
+                    <span class="block text-[10px] sm:text-xs font-mono uppercase tracking-widest text-on-surface-variant">Streak</span>
+                    <span id="modal-streak" class="font-headline text-2xl sm:text-3xl text-primary-container">0</span>
+                </div>
+                <div>
+                    <span class="block text-[10px] sm:text-xs font-mono uppercase tracking-widest text-on-surface-variant">Best</span>
+                    <span id="modal-best" class="font-headline text-2xl sm:text-3xl text-on-surface-variant">0</span>
+                </div>
+            </div>
+
+            <!-- Back in Time -->
+            <div id="bit-wrapper" class="hidden space-y-2">
+                <p class="text-xs uppercase font-mono tracking-widest text-on-surface-variant">Play Past Puzzles</p>
+                <div id="back-in-time-container" class="flex flex-wrap gap-2 justify-center"></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-3 pt-1">
+                <button id="modal-share-btn" class="flex-1 py-3 bg-accent text-black font-headline text-base sm:text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-md">share</span> SHARE
+                </button>
+                <button id="modal-close-btn2" class="flex-1 py-3 bg-surface-container-high border border-white/10 text-white font-headline text-base sm:text-lg uppercase italic rounded-xl hover:bg-surface-container-highest transition-all">
+                    CLOSE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-20 text-center text-xs text-on-surface-variant/40 pb-12 font-mono space-y-4">
+        <div class="flex items-center justify-center gap-6 text-on-surface-variant">
+            <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker on Instagram">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@playmaker.best" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker on TikTok">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.87-4.49V8.69a8.18 8.18 0 0 0 4.9 1.6V6.84a4.85 4.85 0 0 1-1-.15z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@best.playmaker" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker on YouTube">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+        </div>
+        <div>PLAYMAKER &copy; 2026. ALL RIGHTS RESERVED.</div>
+        <div class="space-x-4">
+            <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Privacy Policy</a>
+            <span>·</span>
+            <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Terms & Conditions</a>
+            <span>·</span>
+            <a href="../index.html" class="hover:underline hover:text-accent transition-colors">All Games</a>
+        </div>
+    </footer>
+
+    <!-- Shared component library -->
+    <script src="../games/footy-ui.js"></script>
+
+    <!-- Micro-interaction Script -->
+    <script id="daily-game-data">
+        // Default standalone fallback data
+        const DAILY_CHAIN_GAME = {
+            target_player: "Roberto Baggio",
+            target_nationality: "Italy",
+            target_position: "Attack - Second Striker",
+            total_steps: 4,
+            steps: [
+                { step_number: 1, new_constraint: "Played for AC Milan", club: "AC Milan", active_constraints: ["Played for AC Milan"], active_clubs: ["AC Milan"], valid_players: ["Roberto Baggio", "Andrea Pirlo", "Gianluigi Donnarumma", "Zlatan Ibrahimović", "Paolo Maldini", "Clarence Seedorf"] },
+                { step_number: 2, new_constraint: "Played for Inter", club: "Inter", active_constraints: ["Played for AC Milan", "Played for Inter"], active_clubs: ["AC Milan", "Inter"], valid_players: ["Roberto Baggio", "Andrea Pirlo", "Zlatan Ibrahimović", "Clarence Seedorf", "Christian Vieri", "Mario Balotelli"] },
+                { step_number: 3, new_constraint: "Played for Juventus", club: "Juventus", active_constraints: ["Played for AC Milan", "Played for Inter", "Played for Juventus"], active_clubs: ["AC Milan", "Inter", "Juventus"], valid_players: ["Roberto Baggio", "Andrea Pirlo", "Zlatan Ibrahimović", "Christian Vieri", "Leonardo Bonucci", "Patrick Vieira", "Edgar Davids"] },
+                { step_number: 4, new_constraint: "Played for Bologna", club: "Bologna", active_constraints: ["Played for AC Milan", "Played for Inter", "Played for Juventus", "Played for Bologna"], active_clubs: ["AC Milan", "Inter", "Juventus", "Bologna"], valid_players: ["Roberto Baggio"] }
+            ]
+        };
+        const ALL_PLAYERS = [
+            { Name: "Roberto Baggio", Nationality: "Italy", Position: "Attack - Second Striker" },
+            { Name: "Andrea Pirlo", Nationality: "Italy", Position: "Midfield - Deep-Lying Playmaker" },
+            { Name: "Zlatan Ibrahimović", Nationality: "Sweden", Position: "Attack - Centre-Forward" },
+            { Name: "Gianluigi Donnarumma", Nationality: "Italy", Position: "Goalkeeper" },
+            { Name: "Clarence Seedorf", Nationality: "Netherlands", Position: "Midfield - Central Midfield" },
+            { Name: "Christian Vieri", Nationality: "Italy", Position: "Attack - Centre-Forward" },
+            { Name: "Leonardo Bonucci", Nationality: "Italy", Position: "Defender - Centre-Back" },
+            { Name: "Patrick Vieira", Nationality: "France", Position: "Midfield - Defensive Midfield" },
+            { Name: "Edgar Davids", Nationality: "Netherlands", Position: "Midfield - Defensive Midfield" },
+            { Name: "Paolo Maldini", Nationality: "Italy", Position: "Defender - Left-Back" }
+        ];
+        const PUZZLE_NUMBER = 1;
+        const IS_BACK_IN_TIME = false;
+        const MAX_BACK_DAYS = 7;
+        const GAME_NOTE = "Transfer and career data updated to July 2026.";
+    </script>
+
+    <script>
+        // ── Global Game Variables ─────────────────────────────
+        const GAME_ID        = 'player_chain';
+        const INITIAL_LIVES  = 5;
+        const activeGameData = typeof DAILY_CHAIN_GAME !== 'undefined' ? DAILY_CHAIN_GAME : null;
+        const allPlayersList = typeof ALL_PLAYERS !== 'undefined' ? ALL_PLAYERS : [];
+        const puzzleNum      = typeof PUZZLE_NUMBER !== 'undefined' ? PUZZLE_NUMBER : 1;
+        const isBackInTime   = typeof IS_BACK_IN_TIME !== 'undefined' ? IS_BACK_IN_TIME : false;
+        const maxBackDays    = typeof MAX_BACK_DAYS !== 'undefined' ? MAX_BACK_DAYS : 7;
+        const gameNote       = typeof GAME_NOTE !== 'undefined' ? GAME_NOTE : '';
+
+        // Session State
+        let activeStepIndex  = 0;
+        let guessedPlayers   = [];
+        let stepRecords      = []; 
+        let gameOver         = false;
+        let didInstantWin    = false;
+
+        // FootyUI Controller Instances
+        let dropdown, livesCtrl, wrongGuesses, modal, storage;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            FootyUI.initAccentColor('#38bdf8');
+
+            storage = new FootyUI.FootyStorage(GAME_ID);
+
+            wrongGuesses = new FootyUI.FootyWrongGuesses('wrong-guesses-container', 'wrong-guesses-section');
+
+            livesCtrl = new FootyUI.FootyLives(INITIAL_LIVES, () => {
+                endGame(false, false);
+            });
+
+            // Unified autocomplete component with proper data, labelFn, and badgeFn
+            dropdown = new FootyUI.FootyDropdown({
+                inputId:  'guess-input',
+                listId:   'autocomplete-list',
+                data:     allPlayersList,
+                labelFn:  p => p.Name,
+                badgeFn:  p => `${p.Nationality || ''}${p.Position ? ' · ' + p.Position : ''}`,
+                onSelect: () => submitGuess()
+            });
+
+            // Standard FootyModal with Giphy GIF & player reveal
+            modal = new FootyUI.FootyModal({
+                modalId:               'result-modal',
+                iconId:                'modal-icon',
+                titleId:               'modal-title',
+                messageId:             'modal-message',
+                scoreId:               'modal-score',
+                streakId:              'modal-streak',
+                extraInfoId:           'modal-player-name',
+                gifContainerId:        'modal-gif-container',
+                gifId:                 'modal-gif',
+                backInTimeContainerId: 'back-in-time-container'
+            });
+
+            setupEvents();
+            initUI();
+            checkAlreadyPlayed();
+        });
+
+        function setupEvents() {
+            document.getElementById('submit-btn').addEventListener('click', submitGuess);
+            document.getElementById('skip-step-btn').addEventListener('click', skipCurrentStep);
+
+            // Input Enter key: submit if dropdown list is closed or selection was made
+            document.getElementById('guess-input').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const list = document.getElementById('autocomplete-list');
+                    if (list && list.classList.contains('hidden')) {
+                        e.preventDefault();
+                        submitGuess();
+                    }
+                }
+            });
+
+            // Triggerable Hints: Nationality & Position
+            document.getElementById('hint-nat-btn').addEventListener('click', () => {
+                document.getElementById('hint-nat-btn').classList.add('hidden');
+                document.getElementById('player-nat-badge').classList.remove('hidden');
+                FootyUI.toast(`Nationality revealed: ${activeGameData.target_nationality}`, 'info');
+            });
+
+            document.getElementById('hint-pos-btn').addEventListener('click', () => {
+                document.getElementById('hint-pos-btn').classList.add('hidden');
+                document.getElementById('player-pos-badge').classList.remove('hidden');
+                FootyUI.toast(`Position revealed: ${activeGameData.target_position}`, 'info');
+            });
+
+            document.getElementById('give-up-btn').addEventListener('click', () => {
+                if (gameOver) return;
+                FootyUI.confirm({
+                    title: 'GIVE UP?',
+                    message: 'Are you sure you want to give up? The mystery player and full chain will be revealed.',
+                    confirmText: 'GIVE UP',
+                    cancelText: 'KEEP PLAYING',
+                    onConfirm: () => endGame(false, false)
+                });
+            });
+
+            // How To Play Modal
+            const htpModal = document.getElementById('how-to-play-modal');
+            document.getElementById('how-to-play-btn').addEventListener('click', () => htpModal.classList.remove('hidden'));
+            document.getElementById('close-how-to-play-btn').addEventListener('click', () => htpModal.classList.add('hidden'));
+            document.getElementById('close-how-to-play-btn2').addEventListener('click', () => htpModal.classList.add('hidden'));
+
+            // Result Modal Close buttons & share
+            document.getElementById('modal-close-btn').addEventListener('click', () => modal.hide());
+            document.getElementById('modal-close-btn2').addEventListener('click', () => {
+                modal.hide();
+                document.getElementById('endgame-summary-section').scrollIntoView({ behavior: 'smooth' });
+            });
+            document.getElementById('modal-share-btn').addEventListener('click', doShare);
+
+            // Reopen Modal from summary
+            document.getElementById('reopen-modal-btn').addEventListener('click', () => {
+                document.getElementById('result-modal').classList.remove('hidden');
+            });
+        }
+
+        function initUI() {
+            if (!activeGameData) return;
+
+            // Puzzle badge
+            document.getElementById('puzzle-badge').textContent = isBackInTime
+                ? `PUZZLE #${puzzleNum} — PAST`
+                : `PUZZLE #${puzzleNum}`;
+
+            // Initialize total steps
+            document.getElementById('total-steps').textContent = activeGameData.total_steps;
+
+            // Populate hint text (remains hidden until user triggers)
+            document.getElementById('mystery-nat-text').textContent = activeGameData.target_nationality || 'Unknown';
+            document.getElementById('mystery-pos-text').textContent = activeGameData.target_position || 'Forward';
+
+            // Show game note if available
+            if (gameNote) {
+                document.getElementById('game-note-text').textContent = gameNote;
+                document.getElementById('game-note-bar').classList.remove('hidden');
+            }
+
+            // Header Back-in-time Prev/Next navigation
+            let currentOffset = 0;
+            const match = window.location.pathname.match(/_d(\d+)\.html$/);
+            if (match) currentOffset = parseInt(match[1], 10);
+
+            const backBtn = document.getElementById('nav-back-btn');
+            const frontBtn = document.getElementById('nav-front-btn');
+
+            if (currentOffset + 1 <= maxBackDays && puzzleNum > 1) {
+                backBtn.href = `${GAME_ID}_d${currentOffset + 1}.html`;
+                backBtn.classList.remove('hidden');
+                backBtn.style.display = '';
+            } else {
+                backBtn.classList.add('hidden');
+                backBtn.style.display = 'none';
+                backBtn.removeAttribute('href');
+            }
+
+            if (currentOffset > 1) {
+                frontBtn.href = `${GAME_ID}_d${currentOffset - 1}.html`;
+            } else if (currentOffset === 1) {
+                frontBtn.href = `${GAME_ID}.html`;
+            } else {
+                frontBtn.classList.add('opacity-30', 'pointer-events-none');
+                frontBtn.removeAttribute('href');
+            }
+
+            renderChainUI();
+            updateActiveStepPanel();
+        }
+
+        function checkAlreadyPlayed() {
+            const result = storage.getPuzzleResult(puzzleNum, isBackInTime);
+            if (!result) return;
+
+            gameOver = true;
+            didInstantWin = result.won && result.score === activeGameData.total_steps;
+
+            // Reveal player identity and hints
+            revealMysteryPlayerCard();
+
+            renderChainUI();
+            showEndGameSummary(result.won);
+
+            // Hide guess panel
+            const guessPanel = document.getElementById('fa-guess-panel');
+            if (guessPanel) guessPanel.style.display = 'none';
+
+            const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage, puzzleNum);
+            const stats = storage.getStats();
+
+            // Populate best streak
+            const bestEl = document.getElementById('modal-best');
+            if (bestEl) bestEl.textContent = stats.bestStreak || 0;
+
+            modal.show({
+                won: result.won,
+                title: didInstantWin ? 'INSTANT WIN!' : (result.won ? 'CHAIN COMPLETED!' : 'GAME OVER'),
+                message: result.won 
+                    ? (didInstantWin ? `Incredible football IQ! You identified ${activeGameData.target_player} directly and cracked the chain.` : `Masterclass! You connected every club in the chain to reveal ${activeGameData.target_player}.`)
+                    : `Tough luck! Today's mystery player was ${activeGameData.target_player}. Review the full chain below!`,
+                score: result.score,
+                maxScore: activeGameData.total_steps,
+                streak: stats.streak,
+                playerName: activeGameData.target_player,
+                targetName: activeGameData.target_player,
+                targetType: 'player',
+                extraText: activeGameData.target_player,
+                backInTimeLinks: bitLinks
+            });
+
+            if (bitLinks.length) document.getElementById('bit-wrapper')?.classList.remove('hidden');
+        }
+
+        function revealMysteryPlayerCard() {
+            const nameEl = document.getElementById('player-name-display');
+            nameEl.textContent = activeGameData.target_player;
+            nameEl.className = 'font-headline text-3xl sm:text-4xl text-accent uppercase italic tracking-wide py-1 neon-text-glow';
+
+            // Reveal hint badges
+            document.getElementById('hint-nat-btn')?.classList.add('hidden');
+            document.getElementById('player-nat-badge')?.classList.remove('hidden');
+            document.getElementById('hint-pos-btn')?.classList.add('hidden');
+            document.getElementById('player-pos-badge')?.classList.remove('hidden');
+        }
+
+        /**
+         * Renders the chain steps.
+         * KEY REQUIREMENT: Display steps ONE AT A TIME!
+         * Future steps (step index > activeStepIndex) MUST NOT reveal their clubs.
+         */
+        function renderChainUI() {
+            const container = document.getElementById('chain-steps-container');
+            container.innerHTML = '';
+
+            activeGameData.steps.forEach((step, idx) => {
+                const nodeEl = document.createElement('div');
+                nodeEl.id = `chain-node-${idx}`;
+
+                const isPast    = idx < activeStepIndex;
+                const isCurrent = idx === activeStepIndex && !gameOver;
+                const isFuture  = idx > activeStepIndex && !gameOver;
+                const rec       = stepRecords[idx] || null;
+
+                const isSolved  = rec && rec.status === 'correct';
+                const isInstant = rec && rec.status === 'instant_win';
+                const isSkipped = rec && rec.status === 'skipped';
+
+                if (isCurrent) {
+                    // Current Active Step (Revealed club constraint with active pulse ring)
+                    nodeEl.className = 'rounded-2xl border border-accent bg-surface-container active-node-glow ring-1 ring-accent/30 p-4 transition-all duration-300 relative z-10 shadow-lg';
+                    const constraintsList = step.active_clubs.join(' & ');
+
+                    nodeEl.innerHTML = `
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div class="w-9 h-9 rounded-xl bg-accent/15 border border-accent/40 flex items-center justify-center shrink-0 text-accent">
+                                    <span class="material-symbols-outlined text-sm animate-pulse">radio_button_checked</span>
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase border bg-accent/10 text-accent border-accent/30">
+                                            CURRENT STEP ${step.step_number}
+                                        </span>
+                                        <span class="text-sm font-title font-bold text-on-background truncate">
+                                            + ${step.club}
+                                        </span>
+                                    </div>
+                                    <div class="text-xs text-on-surface-variant font-mono mt-0.5 truncate">
+                                        Must have played for: <span class="text-accent font-bold">${constraintsList}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="shrink-0 text-right">
+                                <span class="text-[11px] font-mono text-accent font-bold px-2 py-1 bg-accent/10 rounded-md border border-accent/20">ACTIVE</span>
+                            </div>
+                        </div>
+                    `;
+                } else if (isPast) {
+                    // Past Completed Step (Solved, Skipped, or Instant Win)
+                    let borderClass = 'border-correct/40 bg-correct/[0.03]';
+                    let iconHtml    = `<span class="material-symbols-outlined text-correct text-sm">check_circle</span>`;
+                    let badgeClass  = 'bg-correct/10 text-correct border-correct/30';
+                    let badgeText   = 'SOLVED';
+
+                    if (isInstant) {
+                        borderClass = 'border-amber-400/50 bg-amber-500/[0.04]';
+                        iconHtml    = `<span class="material-symbols-outlined text-amber-400 text-sm">stars</span>`;
+                        badgeClass  = 'bg-amber-400/10 text-amber-400 border-amber-400/30';
+                        badgeText   = 'INSTANT WIN ⭐️';
+                    } else if (isSkipped) {
+                        borderClass = 'border-amber-500/30 bg-amber-500/[0.02]';
+                        iconHtml    = `<span class="material-symbols-outlined text-amber-400 text-sm">fast_forward</span>`;
+                        badgeClass  = 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+                        badgeText   = 'SKIPPED';
+                    }
+
+                    nodeEl.className = `rounded-2xl border p-3.5 transition-all duration-300 relative ${borderClass}`;
+                    const constraintsList = step.active_clubs.join(' & ');
+
+                    nodeEl.innerHTML = `
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div class="w-8 h-8 rounded-xl bg-surface-container-high border border-white/10 flex items-center justify-center shrink-0">
+                                    ${iconHtml}
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="flex items-center gap-2">
+                                        <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase border ${badgeClass}">
+                                            ${badgeText}
+                                        </span>
+                                        <span class="text-xs sm:text-sm font-title font-bold text-on-background truncate">
+                                            + ${step.club}
+                                        </span>
+                                    </div>
+                                    <div class="text-[11px] text-on-surface-variant font-mono mt-0.5 truncate">
+                                        Played for: <span class="text-on-background/80">${constraintsList}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <span class="font-headline text-sm sm:text-base tracking-wide ${isSolved ? 'text-correct' : (isInstant ? 'text-amber-400' : 'text-amber-500/70')}">
+                                    ${rec ? (rec.guessed || 'Skipped') : 'Skipped'}
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // Future Locked Step (DO NOT REVEAL THE CLUB OR CONSTRAINT!)
+                    // Displayed one at a time as mystery locked step
+                    nodeEl.className = 'rounded-2xl border border-white/5 bg-surface/40 p-3 sm:p-3.5 opacity-50 transition-all relative';
+
+                    nodeEl.innerHTML = `
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div class="w-8 h-8 rounded-xl bg-surface-container-low border border-white/5 flex items-center justify-center shrink-0 text-on-surface-variant/40">
+                                    <span class="material-symbols-outlined text-sm">lock</span>
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="font-mono text-xs uppercase tracking-wider text-on-surface-variant/60 font-bold">
+                                        Step ${step.step_number} — Locked
+                                    </div>
+                                    <div class="text-[11px] text-on-surface-variant/40 font-body mt-0.5">
+                                        Complete Step ${step.step_number - 1} to reveal next constraint
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <span class="text-xs font-mono text-on-surface-variant/30 tracking-widest bg-white/5 px-2.5 py-1 rounded-md">???</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                container.appendChild(nodeEl);
+            });
+        }
+
+        function updateActiveStepPanel() {
+            if (gameOver || activeStepIndex >= activeGameData.steps.length) return;
+
+            const currStep = activeGameData.steps[activeStepIndex];
+            document.getElementById('progress-step').textContent = currStep.step_number;
+
+            document.getElementById('active-step-label').textContent =
+                `STEP ${currStep.step_number} CRITERIA — NAME ANY PLAYER WHO PLAYED FOR:`;
+
+            const tagsContainer = document.getElementById('current-clubs-tags');
+            tagsContainer.innerHTML = '';
+
+            currStep.active_clubs.forEach((club, idx) => {
+                const isNewest = idx === currStep.active_clubs.length - 1;
+                const tag = document.createElement('span');
+                tag.className = `px-3 py-1 rounded-xl text-xs sm:text-sm font-title font-bold flex items-center gap-1.5 border shadow-sm ${
+                    isNewest
+                    ? 'bg-accent/15 border-accent text-accent'
+                    : 'bg-surface-container-high border-white/10 text-on-background'
+                }`;
+                tag.innerHTML = `<span class="material-symbols-outlined text-xs">shield</span>${club}`;
+                tagsContainer.appendChild(tag);
+            });
+        }
+
+        function submitGuess() {
+            if (gameOver) return;
+
+            const input    = document.getElementById('guess-input');
+            const errEl    = document.getElementById('error-message');
+            const rawGuess = input.value.trim();
+
+            if (!rawGuess) return;
+
+            const normGuess = FootyUI.normalizeStr(rawGuess);
+            const selected  = dropdown.getSelected();
+            const matched   = selected ? selected.Name : allPlayersList.find(p => FootyUI.normalizeStr(p.Name) === normGuess)?.Name;
+
+            if (!matched) {
+                errEl.classList.remove('hidden');
+                return;
+            }
+            errEl.classList.add('hidden');
+
+            input.value = '';
+            document.getElementById('autocomplete-list').classList.add('hidden');
+            dropdown.clearSelection();
+
+            const normMatched = FootyUI.normalizeStr(matched);
+
+            // 1. Check No Repeat Guesses Rule
+            if (guessedPlayers.some(p => FootyUI.normalizeStr(p) === normMatched)) {
+                FootyUI.toast(`"${matched}" was already used in this session! No repeat guesses allowed.`, 'error');
+                return;
+            }
+
+            const currStep = activeGameData.steps[activeStepIndex];
+
+            // 2. Check Instant Win Rule (Guessing Mystery Player of the Day)
+            const normTarget = FootyUI.normalizeStr(activeGameData.target_player);
+            if (normMatched === normTarget) {
+                // INSTANT WIN!
+                didInstantWin = true;
+                guessedPlayers.push(matched);
+                stepRecords[activeStepIndex] = {
+                    step_number: currStep.step_number,
+                    status: 'instant_win',
+                    guessed: matched
+                };
+
+                FootyUI.showFeedback({
+                    isCorrect: true,
+                    title: '⭐️ INSTANT WIN! ⭐️',
+                    message: `You guessed the Player of the Day (${activeGameData.target_player}) directly!`
+                });
+
+                endGame(true, true);
+                return;
+            }
+
+            // 3. Check Valid Player for this Step
+            const validSet = new Set(currStep.valid_players.map(p => FootyUI.normalizeStr(p)));
+            const isStepValid = validSet.has(normMatched);
+
+            if (isStepValid) {
+                guessedPlayers.push(matched);
+                stepRecords[activeStepIndex] = {
+                    step_number: currStep.step_number,
+                    status: 'correct',
+                    guessed: matched
+                };
+
+                FootyUI.showFeedback({
+                    isCorrect: true,
+                    title: 'STEP SOLVED!',
+                    message: `${matched} meets all active constraints!`
+                });
+
+                activeStepIndex++;
+
+                if (activeStepIndex >= activeGameData.steps.length) {
+                    // Completed full chain!
+                    endGame(true, false);
+                } else {
+                    renderChainUI();
+                    updateActiveStepPanel();
+                }
+            } else {
+                // Invalid Guess -> Lose life
+                wrongGuesses.add(matched);
+                livesCtrl.lose(1);
+
+                const wrongEl = document.getElementById('wrong-count');
+                if (wrongEl) wrongEl.textContent = document.querySelectorAll('#wrong-guesses-container > *').length;
+
+                const activeClubsStr = currStep.active_clubs.join(' & ');
+                FootyUI.showFeedback({
+                    isCorrect: false,
+                    title: 'WRONG GUESS',
+                    message: `${matched} did not play for ${activeClubsStr}. Lost 1 life.`
+                });
+
+                // onDead will trigger endGame(false) if out of lives
+            }
+        }
+
+        function skipCurrentStep() {
+            if (gameOver) return;
+
+            const currStep = activeGameData.steps[activeStepIndex];
+            stepRecords[activeStepIndex] = {
+                step_number: currStep.step_number,
+                status: 'skipped',
+                guessed: null
+            };
+
+            FootyUI.toast(`Skipped Step ${currStep.step_number}. Next constraint unlocked!`, 'info');
+
+            activeStepIndex++;
+
+            if (activeStepIndex >= activeGameData.steps.length) {
+                endGame(getCompletedScore() > 0, false);
+            } else {
+                renderChainUI();
+                updateActiveStepPanel();
+            }
+        }
+
+        function getCompletedScore() {
+            return stepRecords.filter(r => r && (r.status === 'correct' || r.status === 'instant_win')).length;
+        }
+
+        function endGame(won, instantWin) {
+            if (gameOver) return;
+            gameOver = true;
+            didInstantWin = instantWin;
+
+            // Fill unreached steps with unreached status
+            for (let i = 0; i < activeGameData.steps.length; i++) {
+                if (!stepRecords[i]) {
+                    stepRecords[i] = {
+                        step_number: activeGameData.steps[i].step_number,
+                        status: instantWin ? 'instant_win_unreached' : 'unreached',
+                        guessed: null
+                    };
+                }
+            }
+
+            // Hide active guess panel
+            const guessPanel = document.getElementById('fa-guess-panel');
+            if (guessPanel) guessPanel.style.display = 'none';
+
+            // Reveal player identity & all hints
+            revealMysteryPlayerCard();
+
+            // Update chain nodes UI
+            renderChainUI();
+
+            // Reveal End-Game Career Breakdown
+            showEndGameSummary(won);
+
+            // Record session in FootyStorage
+            const finalScore = didInstantWin ? activeGameData.total_steps : getCompletedScore();
+            storage.recordResult(puzzleNum, won, finalScore, activeGameData.total_steps, isBackInTime);
+
+            const stats = storage.getStats();
+            const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage, puzzleNum);
+
+            // Populate best streak
+            const bestEl = document.getElementById('modal-best');
+            if (bestEl) bestEl.textContent = stats.bestStreak || 0;
+
+            let modalTitle = 'CHAIN COMPLETED!';
+            let modalMsg   = `Masterclass! You connected every club in the chain to reveal ${activeGameData.target_player}.`;
+
+            if (didInstantWin) {
+                modalTitle = 'INSTANT WIN!';
+                modalMsg   = `Incredible football IQ! You identified ${activeGameData.target_player} directly and cracked the chain.`;
+            } else if (!won) {
+                modalTitle = 'GAME OVER';
+                modalMsg   = `Tough luck! Today's mystery player was ${activeGameData.target_player}. Review the full chain below!`;
+            }
+
+            modal.show({
+                won: won,
+                title: modalTitle,
+                message: modalMsg,
+                score: finalScore,
+                maxScore: activeGameData.total_steps,
+                streak: stats.streak,
+                playerName: activeGameData.target_player,
+                targetName: activeGameData.target_player,
+                targetType: 'player',
+                extraText: activeGameData.target_player,
+                backInTimeLinks: bitLinks
+            });
+
+            if (bitLinks.length) document.getElementById('bit-wrapper')?.classList.remove('hidden');
+        }
+
+        function showEndGameSummary(won) {
+            const summarySec = document.getElementById('endgame-summary-section');
+            summarySec.classList.remove('hidden');
+
+            document.getElementById('revealed-target-name').textContent = activeGameData.target_player;
+            document.getElementById('revealed-target-nat').textContent  = activeGameData.target_nationality || 'Unknown';
+            document.getElementById('revealed-target-pos').textContent  = activeGameData.target_position || 'Forward';
+
+            const container = document.getElementById('summary-steps-container');
+            container.innerHTML = '';
+
+            const normTarget = FootyUI.normalizeStr(activeGameData.target_player);
+
+            activeGameData.steps.forEach((step, idx) => {
+                const rec = stepRecords[idx];
+                const card = document.createElement('div');
+                card.className = 'bg-surface border border-white/10 rounded-2xl p-4 sm:p-5 space-y-3 shadow-lg';
+
+                const constraintsStr = step.active_clubs.join(' & ');
+                const validList = step.valid_players || [];
+
+                let userGuessHtml = '';
+                if (rec && rec.guessed) {
+                    const isWinPick = rec.status === 'instant_win';
+                    userGuessHtml = `<span class="text-xs font-mono px-2.5 py-1 rounded-lg ${isWinPick ? 'bg-amber-400/15 text-amber-300 border border-amber-400/30' : 'bg-correct/15 text-correct border border-correct/30'}">Your pick: <strong class="font-bold">${rec.guessed}</strong></span>`;
+                } else if (rec && rec.status === 'skipped') {
+                    userGuessHtml = `<span class="text-xs font-mono px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/25">Skipped</span>`;
+                }
+
+                // Format valid players pills (starring Roberto Baggio / target player)
+                const badgesHtml = validList.map(p => {
+                    const isTarget = FootyUI.normalizeStr(p) === normTarget;
+                    const isUserGuessed = guessedPlayers.some(g => FootyUI.normalizeStr(g) === FootyUI.normalizeStr(p));
+
+                    let cls = 'px-2.5 py-1 rounded-lg text-xs font-mono border transition-all ';
+                    if (isTarget) {
+                        cls += 'bg-amber-400/20 text-amber-300 border-amber-400/40 font-bold shadow-sm';
+                    } else if (isUserGuessed) {
+                        cls += 'bg-accent/15 text-accent border-accent/30 font-bold';
+                    } else {
+                        cls += 'bg-surface-container-high text-on-surface-variant border-white/5 hover:border-white/10';
+                    }
+
+                    return `<span class="${cls}">${p} ${isTarget ? '⭐' : ''}</span>`;
+                }).join('');
+
+                card.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-white/5 pb-3">
+                        <div>
+                            <div class="text-[10px] font-mono uppercase tracking-widest text-accent font-bold">STEP ${step.step_number} · ${step.club}</div>
+                            <h5 class="font-title text-sm sm:text-base font-bold text-on-background mt-0.5">Played for: <span class="text-accent">${constraintsStr}</span></h5>
+                        </div>
+                        <div>${userGuessHtml}</div>
+                    </div>
+
+                    <details class="group cursor-pointer">
+                        <summary class="text-xs font-mono text-on-surface-variant hover:text-accent cursor-pointer flex items-center justify-between py-1 transition-colors select-none">
+                            <span class="font-medium">Show all ${validList.length} valid footballers</span>
+                            <span class="material-symbols-outlined text-sm transition-transform group-open:rotate-180">expand_more</span>
+                        </summary>
+                        <div class="details-content mt-3 pt-3 border-t border-white/5 flex flex-wrap gap-1.5">
+                            ${badgesHtml}
+                        </div>
+                    </details>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function doShare() {
+            const score = getCompletedScore();
+            const total = activeGameData.total_steps;
+            const livesUsed = INITIAL_LIVES - livesCtrl.get();
+            const livesText = livesUsed === 1 ? '1 life used' : `${livesUsed} lives used`;
+
+            // Build custom Wordle emoji grid representing chain steps
+            const emojis = stepRecords.map(r => {
+                if (r.status === 'instant_win') return '⭐️';
+                if (r.status === 'correct')     return '🟩';
+                if (r.status === 'skipped')     return '⏭️';
+                return '⬛';
+            }).join('');
+
+            const lines = [
+                `⚽ Playmaker — Player Chain #${puzzleNum}`,
+                emojis,
+                `${didInstantWin ? '⭐️ INSTANT WIN!' : (score === total ? '✅ PERFECT CHAIN!' : (livesCtrl.isDead() ? '❌ GAME OVER' : '✅ COMPLETED'))}`,
+                `🎯 ${score}/${total} steps solved · ❤️ ${livesText}`,
+                `🔗 https://playmaker.best/games/player_chain.html`
+            ];
+
+            const text = lines.join('\n');
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text)
+                    .then(() => FootyUI.toast('Copied to clipboard!', 'success'))
+                    .catch(() => _fallbackCopy(text));
+            } else {
+                _fallbackCopy(text);
+            }
+        }
+
+        function _fallbackCopy(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            FootyUI.toast('Copied to clipboard!', 'success');
+        }
+    </script>
+</body>
+</html>

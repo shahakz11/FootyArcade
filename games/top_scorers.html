@@ -5,6 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
     <title>Top Scorers — Daily Goalscorer Trivia Quiz | Playmaker</title>
     <meta name="description" content="Name the all-time top scorers for a club, league, or national team. A daily football scoring trivia challenge with 6 lives. Play free at Playmaker!"/>
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
     <link rel="canonical" href="https://playmaker.best/games/top_scorers.html" />
     
     <!-- PWA Web Manifest & Favicons for Browsers & Google Search -->
@@ -17,14 +18,14 @@
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon.png"/>
     
     <!-- Social Share Preview (OpenGraph / Twitter) -->
-    <meta property="og:title" content="Top Scorers — Daily Football Transfer Quiz | Playmaker"/>
-    <meta property="og:description" content="Guess the top 10 record signings for a club or nationality. A new daily football transfer trivia challenge with streak tracking and shareable results. Play free at Playmaker!"/>
+    <meta property="og:title" content="Top Scorers — Daily Football Goalscorer Quiz | Playmaker"/>
+    <meta property="og:description" content="Name the all-time top scorers for a club, league, or national team. A daily football scoring trivia challenge with 6 lives. Play free at Playmaker!"/>
     <meta property="og:image" content="https://playmaker.best/assets/social_share.png"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://playmaker.best/games/top_scorers.html"/>
     <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Top Scorers — Daily Football Transfer Quiz | Playmaker"/>
-    <meta name="twitter:description" content="Guess the top 10 record signings for a club or nationality. A new daily football transfer trivia challenge with streak tracking and shareable results. Play free at Playmaker!"/>
+    <meta name="twitter:title" content="Top Scorers — Daily Football Goalscorer Quiz | Playmaker"/>
+    <meta name="twitter:description" content="Name the all-time top scorers for a club, league, or national team. A daily football scoring trivia challenge with 6 lives. Play free at Playmaker!"/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
     <!-- Google Analytics Measurement ID Placeholder -->
@@ -71,26 +72,47 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "VideoGame",
-      "name": "Top Scorers — Daily Football Transfer Quiz",
-      "description": "Guess the top 10 record signings for a club or nationality. A new daily football transfer trivia challenge with streak tracking and shareable results. Play free at Playmaker!",
-      "url": "https://playmaker.best/games/top_scorers.html",
-      "image": "https://playmaker.best/assets/logo.png",
-      "genre": ["Trivia", "Sports"],
-      "gamePlatform": "Web",
-      "applicationCategory": "Game",
-      "isAccessibleForFree": true,
-      "author": {
-        "@type": "Organization",
-        "name": "Playmaker",
-        "url": "https://playmaker.best/",
-        "logo": "https://playmaker.best/assets/logo.png"
-      },
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
+      "@graph": [
+        {
+          "@type": "VideoGame",
+          "name": "Top Scorers — Daily Football Goalscorer Quiz",
+          "description": "Name the all-time top scorers for a club, league, or national team. A daily football scoring trivia challenge with 6 lives. Play free at Playmaker!",
+          "url": "https://playmaker.best/games/top_scorers.html",
+          "image": "https://playmaker.best/assets/logo.png",
+          "genre": ["Trivia", "Sports"],
+          "gamePlatform": "Web",
+          "applicationCategory": "Game",
+          "isAccessibleForFree": true,
+          "author": {
+            "@type": "Organization",
+            "name": "Playmaker",
+            "url": "https://playmaker.best/",
+            "logo": "https://playmaker.best/assets/logo.png"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://playmaker.best/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Top Scorers",
+              "item": "https://playmaker.best/games/top_scorers.html"
+            }
+          ]
+        }
+      ]
     }
     </script>
 </head>
@@ -102,6 +124,17 @@
             <span class="material-symbols-outlined text-xl sm:text-2xl">arrow_back</span>
             <img src="../assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-7 md:h-8 w-auto object-contain" />
         </a>
+        <div class="flex items-center gap-2 text-on-surface-variant">
+            <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on Instagram" title="Instagram">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@playmaker.best" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on TikTok" title="TikTok">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.87-4.49V8.69a8.18 8.18 0 0 0 4.9 1.6V6.84a4.85 4.85 0 0 1-1-.15z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@best.playmaker" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on YouTube" title="YouTube">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+        </div>
     </header>
 
     <!-- Main Content -->
@@ -214,12 +247,26 @@
     </main>
 
     <!-- Footer -->
-    <footer class="mt-20 text-center text-xs text-on-surface-variant/40 pb-12 font-mono space-y-2">
+    <footer class="mt-20 text-center text-xs text-on-surface-variant/40 pb-12 font-mono space-y-4">
+        <!-- Social Channels -->
+        <div class="flex items-center justify-center gap-6 text-on-surface-variant">
+            <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker on Instagram">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@playmaker.best" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker on TikTok">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.87-4.49V8.69a8.18 8.18 0 0 0 4.9 1.6V6.84a4.85 4.85 0 0 1-1-.15z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@best.playmaker" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker on YouTube">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+        </div>
         <div>PLAYMAKER &copy; 2026. ALL RIGHTS RESERVED.</div>
         <div class="space-x-4">
             <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Privacy Policy</a>
             <span>·</span>
-            <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Terms & Conditions</a>
+            <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Terms &amp; Conditions</a>
+            <span>·</span>
+            <a href="../index.html" class="hover:underline hover:text-accent transition-colors">Arcade Lobby</a>
         </div>
     </footer>
 
@@ -284,7 +331,7 @@
 
 
     <script id="daily-game-data">
-        const DAILY_SCORERS_GAME = {"name": "Serie A 2023/24", "scorers": [{"player_name": "Lautaro Martínez", "club_name": "Football Internazionale Milano S.p.A", "goals": 24, "appearances": 33, "nationality": "Argentina"}, {"player_name": "Dušan Vlahović", "club_name": "Juventus", "goals": 16, "appearances": 33, "nationality": "Serbia"}, {"player_name": "Olivier Giroud", "club_name": "Associazione Calcio Milan", "goals": 15, "appearances": 35, "nationality": "France"}, {"player_name": "Victor Osimhen", "club_name": "Società Sportiva Calcio Napoli", "goals": 15, "appearances": 25, "nationality": "Nigeria"}, {"player_name": "Albert Gudmundsson", "club_name": "Genoa Cricket and", "goals": 14, "appearances": 35, "nationality": "Iceland"}, {"player_name": "Romelu Lukaku", "club_name": "Associazione Sportiva Roma", "goals": 13, "appearances": 32, "nationality": "Belgium"}, {"player_name": "Marcus Thuram", "club_name": "Football Internazionale Milano S.p.A", "goals": 13, "appearances": 35, "nationality": "France"}, {"player_name": "Duván Zapata", "club_name": "Torino Calcio", "goals": 13, "appearances": 37, "nationality": "Colombia"}, {"player_name": "Hakan Çalhanoğlu", "club_name": "Football Internazionale Milano S.p.A", "goals": 13, "appearances": 32, "nationality": "Türkiye"}, {"player_name": "Paulo Dybala", "club_name": "Associazione Sportiva Roma", "goals": 13, "appearances": 28, "nationality": "Argentina"}]};
+        const DAILY_SCORERS_GAME = {"name": "UEFA Champions League 2020/21", "scorers": [{"player_name": "Erling Haaland", "club_name": "Borussia Dortmund", "goals": 10, "appearances": 8, "nationality": "Norway"}, {"player_name": "Kylian Mbappé", "club_name": "Paris Saint-Germain", "goals": 8, "appearances": 10, "nationality": "France"}, {"player_name": "Marcus Rashford", "club_name": "Manchester United", "goals": 6, "appearances": 6, "nationality": "England"}, {"player_name": "Youssef En-Nesyri", "club_name": "Sevilla S.A.D", "goals": 6, "appearances": 8, "nationality": "Morocco"}, {"player_name": "Álvaro Morata", "club_name": "Juventus", "goals": 6, "appearances": 8, "nationality": "Spain"}, {"player_name": "Olivier Giroud", "club_name": "Chelsea", "goals": 6, "appearances": 8, "nationality": "France"}, {"player_name": "Neymar", "club_name": "Paris Saint-Germain", "goals": 6, "appearances": 9, "nationality": "Brazil"}, {"player_name": "Mohamed Salah", "club_name": "Liverpool", "goals": 6, "appearances": 10, "nationality": "Egypt"}, {"player_name": "Robert Lewandowski", "club_name": "Bayern Munich", "goals": 5, "appearances": 6, "nationality": "Poland"}, {"player_name": "Sérgio Oliveira", "club_name": "Futebol Clube do Porto", "goals": 5, "appearances": 8, "nationality": "Portugal"}]};
         const ALL_PLAYERS = [
   {
     "Name": "Silvio Adzic",
@@ -527043,7 +527090,7 @@
   }
 ];
         const GAME_NOTE = "Goals data updated to July 2026.";
-        const PUZZLE_NUMBER    = 25;
+        const PUZZLE_NUMBER    = 38;
         const IS_BACK_IN_TIME  = false;
         const MAX_BACK_DAYS    = 7;
     </script>
@@ -527344,8 +527391,16 @@
         document.getElementById('autocomplete-list').classList.add('hidden');
         dropdown.clearSelection();
 
-        let found = false;
         const normMatchedName = FootyUI.normalizeStr(matched.Name);
+        const alreadyCorrect = Array.from(guessedPlayers).some(p => FootyUI.normalizeStr(p) === normMatchedName);
+        const alreadyWrong = wrongGuesses.has(matched.Name);
+
+        if (alreadyCorrect || alreadyWrong) {
+            FootyUI.toast(`"${matched.Name}" was already guessed!`, 'error');
+            return;
+        }
+
+        let found = false;
         activeGameData.scorers.forEach((scorer, idx) => {
             if (FootyUI.normalizeStr(scorer.player_name) === normMatchedName && !guessedPlayers.has(scorer.player_name)) {
                 guessedPlayers.add(scorer.player_name);
@@ -527482,6 +527537,13 @@
                 <div>
                     <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#39ff14">Transfer Destination</span>
                     <p class="text-on-surface-variant text-xs">Guess a player's career path</p>
+                </div>
+            </a>
+            <a href="club_connect.html" class="glass-card rounded-xl p-4 flex items-center gap-3 group sm:col-span-2">
+                <span class="material-symbols-outlined text-2xl" style="color:#e879f9">hub</span>
+                <div>
+                    <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#e879f9">Club Connect</span>
+                    <p class="text-on-surface-variant text-xs">5 players, 1 club signed them all — spot the mystery connection</p>
                 </div>
             </a>
         </div>

@@ -57,6 +57,21 @@
     "note": "Transfer data updated to July 2026. Players ordered from least to most expensive signing."
   },
   {
+    "id": "player_chain",
+    "name": "Player Chain",
+    "description": "Guess the Mystery Player of the Day by naming players who match an expanding chain of career clubs.",
+    "link": "games/player_chain.html",
+    "icon": "link",
+    "accentHex": "#38bdf8",
+    "initialLives": 5,
+    "maxBackDays": 7,
+    "launchDate": "2026-09-01",
+    "templateFile": "player_chain_template.html",
+    "dataVariable": "DAILY_CHAIN_GAME",
+    "storageKey": "footy_v2_player_chain",
+    "note": "Transfer and career data updated to July 2026."
+  },
+  {
     "id": "this_and_that",
     "name": "This & That",
     "description": "Name all players who match BOTH statements — e.g. played for Barcelona AND Argentina, or scored 50+ PL & La Liga goals.",

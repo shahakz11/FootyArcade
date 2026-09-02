@@ -1,8 +1,10 @@
 User-agent: *
 Allow: /
 
-# Allow PWA manifest for search engines and browsers
+# Allow PWA manifest and game list JSON for search engines and browsers
 Allow: /manifest.json
+Allow: /games.json
+Allow: /games.json?*
 
 # Block data files and build artifacts from crawling
 Disallow: /templates/
