@@ -36,6 +36,11 @@
         "type": 301
       },
       {
+        "source": "/templates/player_chain_template.html",
+        "destination": "/games/player_chain.html",
+        "type": 301
+      },
+      {
         "source": "/templates/**",
         "destination": "/",
         "type": 301

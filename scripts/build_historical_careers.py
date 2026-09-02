@@ -1,0 +1,6007 @@
+#!/usr/bin/env python3
+"""
+scripts/build_historical_careers.py
+Generates historical_careers.json containing verified senior club careers
+for 500+ football legends and veteran stars.
+"""
+import os, json
+
+OUTPUT_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'historical_careers.json')
+BASE_CAREERS = {
+  "Wesley Sneijder": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "Ajax",
+      "Real Madrid",
+      "Inter",
+      "Galatasaray",
+      "Nice",
+      "Al-Gharafa"
+    ]
+  },
+  "Cristian Chivu": {
+    "nationality": "Romania",
+    "position": "Defender",
+    "clubs": [
+      "CSM Reșița",
+      "Universitatea Craiova",
+      "Ajax",
+      "Roma",
+      "Inter"
+    ]
+  },
+  "Dennis Bergkamp": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "Ajax",
+      "Inter",
+      "Arsenal"
+    ]
+  },
+  "Patrick Kluivert": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "Ajax",
+      "AC Milan",
+      "Barcelona",
+      "Newcastle United",
+      "Valencia",
+      "PSV Eindhoven",
+      "Lille"
+    ]
+  },
+  "Frank de Boer": {
+    "nationality": "Netherlands",
+    "position": "Defender",
+    "clubs": [
+      "Ajax",
+      "Barcelona",
+      "Galatasaray",
+      "Rangers",
+      "Al-Rayyan",
+      "Al-Shamal"
+    ]
+  },
+  "Ronald de Boer": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "Ajax",
+      "Twente",
+      "Barcelona",
+      "Rangers",
+      "Al-Rayyan",
+      "Al-Shamal"
+    ]
+  },
+  "Marc Overmars": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "Go Ahead Eagles",
+      "Willem II",
+      "Ajax",
+      "Arsenal",
+      "Barcelona"
+    ]
+  },
+  "Mark van Bommel": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "Fortuna Sittard",
+      "PSV Eindhoven",
+      "Barcelona",
+      "Bayern Munich",
+      "AC Milan"
+    ]
+  },
+  "Jari Litmanen": {
+    "nationality": "Finland",
+    "position": "Attack",
+    "clubs": [
+      "Reipas Lahti",
+      "HJK Helsinki",
+      "MyPa",
+      "Ajax",
+      "Barcelona",
+      "Liverpool",
+      "Hansa Rostock",
+      "Malmö FF",
+      "Fulham",
+      "Lahti"
+    ]
+  },
+  "Klaas-Jan Huntelaar": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "PSV Eindhoven",
+      "De Graafschap",
+      "AGOVV",
+      "Heerenveen",
+      "Ajax",
+      "Real Madrid",
+      "AC Milan",
+      "Schalke"
+    ]
+  },
+  "Edgar Davids": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "Ajax",
+      "AC Milan",
+      "Juventus",
+      "Barcelona",
+      "Inter",
+      "Tottenham Hotspur",
+      "Crystal Palace",
+      "Barnet"
+    ]
+  },
+  "Jaap Stam": {
+    "nationality": "Netherlands",
+    "position": "Defender",
+    "clubs": [
+      "PEC Zwolle",
+      "Cambuur",
+      "Willem II",
+      "PSV Eindhoven",
+      "Manchester United",
+      "Lazio",
+      "AC Milan",
+      "Ajax"
+    ]
+  },
+  "Edwin van der Sar": {
+    "nationality": "Netherlands",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Ajax",
+      "Juventus",
+      "Fulham",
+      "Manchester United",
+      "VV Noordwijk"
+    ]
+  },
+  "Ruud van Nistelrooy": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "Den Bosch",
+      "Heerenveen",
+      "PSV Eindhoven",
+      "Manchester United",
+      "Real Madrid",
+      "Hamburg",
+      "Málaga"
+    ]
+  },
+  "Arjen Robben": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "Groningen",
+      "PSV Eindhoven",
+      "Chelsea",
+      "Real Madrid",
+      "Bayern Munich"
+    ]
+  },
+  "Robin van Persie": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "Feyenoord",
+      "Arsenal",
+      "Manchester United",
+      "Fenerbahce"
+    ]
+  },
+  "Rafael van der Vaart": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "Ajax",
+      "Hamburg",
+      "Real Madrid",
+      "Tottenham Hotspur",
+      "Real Betis",
+      "Midtjylland",
+      "Esbjerg"
+    ]
+  },
+  "Giovanni van Bronckhorst": {
+    "nationality": "Netherlands",
+    "position": "Defender",
+    "clubs": [
+      "RKC Waalwijk",
+      "Feyenoord",
+      "Rangers",
+      "Arsenal",
+      "Barcelona"
+    ]
+  },
+  "Dirk Kuyt": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "Utrecht",
+      "Feyenoord",
+      "Liverpool",
+      "Fenerbahce",
+      "Quick Boys"
+    ]
+  },
+  "Clarence Seedorf": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "Ajax",
+      "Sampdoria",
+      "Real Madrid",
+      "Inter",
+      "AC Milan",
+      "Botafogo"
+    ]
+  },
+  "Zlatan Ibrahimović": {
+    "nationality": "Sweden",
+    "position": "Attack",
+    "clubs": [
+      "Malmö FF",
+      "Ajax",
+      "Juventus",
+      "Inter",
+      "Barcelona",
+      "AC Milan",
+      "Paris Saint-Germain",
+      "Manchester United",
+      "LA Galaxy"
+    ]
+  },
+  "Maxwell": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Cruzeiro",
+      "Ajax",
+      "Empoli",
+      "Inter",
+      "Barcelona",
+      "Paris Saint-Germain"
+    ]
+  },
+  "Christian Eriksen": {
+    "nationality": "Denmark",
+    "position": "Midfield",
+    "clubs": [
+      "Ajax",
+      "Tottenham Hotspur",
+      "Inter",
+      "Brentford",
+      "Manchester United"
+    ]
+  },
+  "Jan Vertonghen": {
+    "nationality": "Belgium",
+    "position": "Defender",
+    "clubs": [
+      "Ajax",
+      "RKC Waalwijk",
+      "Tottenham Hotspur",
+      "Benfica",
+      "Anderlecht"
+    ]
+  },
+  "Toby Alderweireld": {
+    "nationality": "Belgium",
+    "position": "Defender",
+    "clubs": [
+      "Ajax",
+      "Atletico Madrid",
+      "Southampton",
+      "Tottenham Hotspur",
+      "Al-Duhail",
+      "Royal Antwerp"
+    ]
+  },
+  "Thomas Vermaelen": {
+    "nationality": "Belgium",
+    "position": "Defender",
+    "clubs": [
+      "Ajax",
+      "RKC Waalwijk",
+      "Arsenal",
+      "Barcelona",
+      "Roma",
+      "Vissel Kobe"
+    ]
+  },
+  "Ryan Babel": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "Ajax",
+      "Liverpool",
+      "Hoffenheim",
+      "Kasimpasa",
+      "Al-Ain",
+      "Besiktas",
+      "Fulham",
+      "Galatasaray",
+      "Eyüpspor"
+    ]
+  },
+  "Steven Pienaar": {
+    "nationality": "South Africa",
+    "position": "Midfield",
+    "clubs": [
+      "Ajax Cape Town",
+      "Ajax",
+      "Borussia Dortmund",
+      "Everton",
+      "Tottenham Hotspur",
+      "Sunderland",
+      "Bidvest Wits"
+    ]
+  },
+  "Mido": {
+    "nationality": "Egypt",
+    "position": "Attack",
+    "clubs": [
+      "Zamalek",
+      "Gent",
+      "Ajax",
+      "Celta Vigo",
+      "Marseille",
+      "Roma",
+      "Tottenham Hotspur",
+      "Middlesbrough",
+      "Wigan Athletic",
+      "West Ham United",
+      "Barnsley"
+    ]
+  },
+  "Nwankwo Kanu": {
+    "nationality": "Nigeria",
+    "position": "Attack",
+    "clubs": [
+      "Iwuanyanwu Nationale",
+      "Ajax",
+      "Inter",
+      "Arsenal",
+      "West Bromwich Albion",
+      "Portsmouth"
+    ]
+  },
+  "Finidi George": {
+    "nationality": "Nigeria",
+    "position": "Attack",
+    "clubs": [
+      "Calabar Rovers",
+      "Iwuanyanwu Nationale",
+      "Sharks",
+      "Ajax",
+      "Real Betis",
+      "Mallorca",
+      "Ipswich Town"
+    ]
+  },
+  "Sunday Oliseh": {
+    "nationality": "Nigeria",
+    "position": "Midfield",
+    "clubs": [
+      "Julius Berger",
+      "RFC Liège",
+      "Reggiana",
+      "Köln",
+      "Ajax",
+      "Juventus",
+      "Borussia Dortmund",
+      "Bochum",
+      "Genk"
+    ]
+  },
+  "Brian Laudrup": {
+    "nationality": "Denmark",
+    "position": "Attack",
+    "clubs": [
+      "Brøndby",
+      "Bayer Uerdingen",
+      "Bayern Munich",
+      "Fiorentina",
+      "AC Milan",
+      "Rangers",
+      "Chelsea",
+      "Copenhagen",
+      "Ajax"
+    ]
+  },
+  "Michael Laudrup": {
+    "nationality": "Denmark",
+    "position": "Attack",
+    "clubs": [
+      "KB",
+      "Brøndby",
+      "Juventus",
+      "Lazio",
+      "Barcelona",
+      "Real Madrid",
+      "Vissel Kobe",
+      "Ajax"
+    ]
+  },
+  "Ronald Koeman": {
+    "nationality": "Netherlands",
+    "position": "Defender",
+    "clubs": [
+      "Groningen",
+      "Ajax",
+      "PSV Eindhoven",
+      "Barcelona",
+      "Feyenoord"
+    ]
+  },
+  "Frank Rijkaard": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "Ajax",
+      "Sporting CP",
+      "Real Zaragoza",
+      "AC Milan"
+    ]
+  },
+  "Marco van Basten": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "Ajax",
+      "AC Milan"
+    ]
+  },
+  "Ruud Gullit": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "Haarlem",
+      "Feyenoord",
+      "PSV Eindhoven",
+      "AC Milan",
+      "Sampdoria",
+      "Chelsea"
+    ]
+  },
+  "Johan Cruyff": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "Ajax",
+      "Barcelona",
+      "Los Angeles Aztecs",
+      "Washington Diplomats",
+      "Levante",
+      "Feyenoord"
+    ]
+  },
+  "Andy van der Meyde": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "Ajax",
+      "Twente",
+      "Inter",
+      "Everton",
+      "PSV Eindhoven"
+    ]
+  },
+  "Johnny Heitinga": {
+    "nationality": "Netherlands",
+    "position": "Defender",
+    "clubs": [
+      "Ajax",
+      "Atletico Madrid",
+      "Everton",
+      "Fulham",
+      "Hertha Berlin"
+    ]
+  },
+  "Nigel de Jong": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "Ajax",
+      "Hamburg",
+      "Manchester City",
+      "AC Milan",
+      "LA Galaxy",
+      "Galatasaray",
+      "Mainz 05",
+      "Al-Ahli",
+      "Al-Shahaniya"
+    ]
+  },
+  "Gregory van der Wiel": {
+    "nationality": "Netherlands",
+    "position": "Defender",
+    "clubs": [
+      "Ajax",
+      "Paris Saint-Germain",
+      "Fenerbahce",
+      "Cagliari",
+      "Toronto FC"
+    ]
+  },
+  "Maarten Stekelenburg": {
+    "nationality": "Netherlands",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Ajax",
+      "Roma",
+      "Fulham",
+      "Monaco",
+      "Southampton",
+      "Everton"
+    ]
+  },
+  "Kenneth Vermeer": {
+    "nationality": "Netherlands",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Ajax",
+      "Willem II",
+      "Feyenoord",
+      "Club Brugge",
+      "Los Angeles FC",
+      "PEC Zwolle"
+    ]
+  },
+  "Shota Arveladze": {
+    "nationality": "Georgia",
+    "position": "Attack",
+    "clubs": [
+      "Dinamo Tbilisi",
+      "Trabzonspor",
+      "Ajax",
+      "Rangers",
+      "AZ Alkmaar",
+      "Levante"
+    ]
+  },
+  "Luis Suárez": {
+    "nationality": "Uruguay",
+    "position": "Attack",
+    "clubs": [
+      "Nacional",
+      "Groningen",
+      "Ajax",
+      "Liverpool",
+      "Barcelona",
+      "Atletico Madrid",
+      "Grêmio",
+      "Inter Miami"
+    ]
+  },
+  "Dušan Tadić": {
+    "nationality": "Serbia",
+    "position": "Attack",
+    "clubs": [
+      "Vojvodina",
+      "Groningen",
+      "Twente",
+      "Southampton",
+      "Ajax",
+      "Fenerbahce"
+    ]
+  },
+  "Daley Blind": {
+    "nationality": "Netherlands",
+    "position": "Defender",
+    "clubs": [
+      "Ajax",
+      "Groningen",
+      "Manchester United",
+      "Bayern Munich",
+      "Girona"
+    ]
+  },
+  "Davy Klaassen": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "Ajax",
+      "Everton",
+      "Werder Bremen",
+      "Inter"
+    ]
+  },
+  "Donny van de Beek": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "Ajax",
+      "Manchester United",
+      "Everton",
+      "Eintracht Frankfurt",
+      "Girona"
+    ]
+  },
+  "Hakim Ziyech": {
+    "nationality": "Morocco",
+    "position": "Attack",
+    "clubs": [
+      "Heerenveen",
+      "Twente",
+      "Ajax",
+      "Chelsea",
+      "Galatasaray"
+    ]
+  },
+  "Matthijs de Ligt": {
+    "nationality": "Netherlands",
+    "position": "Defender",
+    "clubs": [
+      "Ajax",
+      "Juventus",
+      "Bayern Munich",
+      "Manchester United"
+    ]
+  },
+  "Frenkie de Jong": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "Willem II",
+      "Ajax",
+      "Barcelona"
+    ]
+  },
+  "Antony": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "São Paulo",
+      "Ajax",
+      "Manchester United"
+    ]
+  },
+  "Lisandro Martínez": {
+    "nationality": "Argentina",
+    "position": "Defender",
+    "clubs": [
+      "Newell's Old Boys",
+      "Defensa y Justicia",
+      "Ajax",
+      "Manchester United"
+    ]
+  },
+  "Edson Álvarez": {
+    "nationality": "Mexico",
+    "position": "Midfield",
+    "clubs": [
+      "América",
+      "Ajax",
+      "West Ham United"
+    ]
+  },
+  "Mohammed Kudus": {
+    "nationality": "Ghana",
+    "position": "Attack",
+    "clubs": [
+      "Nordsjælland",
+      "Ajax",
+      "West Ham United"
+    ]
+  },
+  "Jurriën Timber": {
+    "nationality": "Netherlands",
+    "position": "Defender",
+    "clubs": [
+      "Ajax",
+      "Arsenal"
+    ]
+  },
+  "André Onana": {
+    "nationality": "Cameroon",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Barcelona",
+      "Ajax",
+      "Inter",
+      "Manchester United"
+    ]
+  },
+  "Phillip Cocu": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "AZ Alkmaar",
+      "Vitesse",
+      "PSV Eindhoven",
+      "Barcelona",
+      "Al-Jazira"
+    ]
+  },
+  "Boudewijn Zenden": {
+    "nationality": "Netherlands",
+    "position": "Midfield",
+    "clubs": [
+      "PSV Eindhoven",
+      "Barcelona",
+      "Chelsea",
+      "Middlesbrough",
+      "Liverpool",
+      "Marseille",
+      "Sunderland"
+    ]
+  },
+  "Jimmy Floyd Hasselbaink": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "Telstar",
+      "AZ Alkmaar",
+      "Campomaiorense",
+      "Boavista",
+      "Leeds United",
+      "Atletico Madrid",
+      "Chelsea",
+      "Middlesbrough",
+      "Charlton",
+      "Cardiff City"
+    ]
+  },
+  "Pierre van Hooijdonk": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "RBC Roosendaal",
+      "NAC Breda",
+      "Celtic",
+      "Nottingham Forest",
+      "Vitesse",
+      "Benfica",
+      "Feyenoord",
+      "Fenerbahce"
+    ]
+  },
+  "Roy Makaay": {
+    "nationality": "Netherlands",
+    "position": "Attack",
+    "clubs": [
+      "Vitesse",
+      "Tenerife",
+      "Deportivo La Coruña",
+      "Bayern Munich",
+      "Feyenoord"
+    ]
+  },
+  "Cristiano Ronaldo": {
+    "nationality": "Portugal",
+    "position": "Attack",
+    "clubs": [
+      "Sporting CP",
+      "Manchester United",
+      "Real Madrid",
+      "Juventus",
+      "Al-Nassr"
+    ]
+  },
+  "Karim Benzema": {
+    "nationality": "France",
+    "position": "Attack",
+    "clubs": [
+      "Lyon",
+      "Real Madrid",
+      "Al-Ittihad"
+    ]
+  },
+  "Gareth Bale": {
+    "nationality": "Wales",
+    "position": "Attack",
+    "clubs": [
+      "Southampton",
+      "Tottenham Hotspur",
+      "Real Madrid",
+      "Los Angeles FC"
+    ]
+  },
+  "Luka Modrić": {
+    "nationality": "Croatia",
+    "position": "Midfield",
+    "clubs": [
+      "Dinamo Zagreb",
+      "Zrinjski Mostar",
+      "Inter Zapresic",
+      "Tottenham Hotspur",
+      "Real Madrid"
+    ]
+  },
+  "Toni Kroos": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Bayern Munich",
+      "Bayer Leverkusen",
+      "Real Madrid"
+    ]
+  },
+  "Casemiro": {
+    "nationality": "Brazil",
+    "position": "Midfield",
+    "clubs": [
+      "São Paulo",
+      "Real Madrid",
+      "Porto",
+      "Manchester United"
+    ]
+  },
+  "Sergio Ramos": {
+    "nationality": "Spain",
+    "position": "Defender",
+    "clubs": [
+      "Sevilla",
+      "Real Madrid",
+      "Paris Saint-Germain"
+    ]
+  },
+  "Marcelo": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Fluminense",
+      "Real Madrid",
+      "Olympiacos"
+    ]
+  },
+  "Dani Carvajal": {
+    "nationality": "Spain",
+    "position": "Defender",
+    "clubs": [
+      "Real Madrid",
+      "Bayer Leverkusen"
+    ]
+  },
+  "Keylor Navas": {
+    "nationality": "Costa Rica",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Saprissa",
+      "Albacete",
+      "Levante",
+      "Real Madrid",
+      "Paris Saint-Germain",
+      "Nottingham Forest"
+    ]
+  },
+  "Iker Casillas": {
+    "nationality": "Spain",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Real Madrid",
+      "Porto"
+    ]
+  },
+  "Raúl": {
+    "nationality": "Spain",
+    "position": "Attack",
+    "clubs": [
+      "Real Madrid",
+      "Schalke",
+      "Al-Sadd",
+      "New York Cosmos"
+    ]
+  },
+  "Guti": {
+    "nationality": "Spain",
+    "position": "Midfield",
+    "clubs": [
+      "Real Madrid",
+      "Besiktas"
+    ]
+  },
+  "Fernando Hierro": {
+    "nationality": "Spain",
+    "position": "Defender",
+    "clubs": [
+      "Real Valladolid",
+      "Real Madrid",
+      "Al-Rayyan",
+      "Bolton Wanderers"
+    ]
+  },
+  "Fernando Morientes": {
+    "nationality": "Spain",
+    "position": "Attack",
+    "clubs": [
+      "Albacete",
+      "Real Zaragoza",
+      "Real Madrid",
+      "Monaco",
+      "Liverpool",
+      "Valencia",
+      "Marseille"
+    ]
+  },
+  "Roberto Carlos": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "União São João",
+      "Palmeiras",
+      "Inter",
+      "Real Madrid",
+      "Fenerbahce",
+      "Corinthians",
+      "Anzhi Makhachkala",
+      "Delhi Dynamos"
+    ]
+  },
+  "Zinedine Zidane": {
+    "nationality": "France",
+    "position": "Midfield",
+    "clubs": [
+      "Cannes",
+      "Bordeaux",
+      "Juventus",
+      "Real Madrid"
+    ]
+  },
+  "Luis Figo": {
+    "nationality": "Portugal",
+    "position": "Attack",
+    "clubs": [
+      "Sporting CP",
+      "Barcelona",
+      "Real Madrid",
+      "Inter"
+    ]
+  },
+  "Ronaldo": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Cruzeiro",
+      "PSV Eindhoven",
+      "Barcelona",
+      "Inter",
+      "Real Madrid",
+      "AC Milan",
+      "Corinthians"
+    ]
+  },
+  "David Beckham": {
+    "nationality": "England",
+    "position": "Midfield",
+    "clubs": [
+      "Manchester United",
+      "Preston",
+      "Real Madrid",
+      "LA Galaxy",
+      "AC Milan",
+      "Paris Saint-Germain"
+    ]
+  },
+  "Michael Owen": {
+    "nationality": "England",
+    "position": "Attack",
+    "clubs": [
+      "Liverpool",
+      "Real Madrid",
+      "Newcastle United",
+      "Manchester United",
+      "Stoke City"
+    ]
+  },
+  "Robinho": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Santos",
+      "Real Madrid",
+      "Manchester City",
+      "Santos",
+      "AC Milan",
+      "Guangzhou Evergrande",
+      "Atlético Mineiro",
+      "Sivasspor",
+      "Basaksehir"
+    ]
+  },
+  "Mesut Özil": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Schalke",
+      "Werder Bremen",
+      "Real Madrid",
+      "Arsenal",
+      "Fenerbahce",
+      "Basaksehir"
+    ]
+  },
+  "Angel Di Maria": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "Rosario Central",
+      "Benfica",
+      "Real Madrid",
+      "Manchester United",
+      "Paris Saint-Germain",
+      "Juventus"
+    ]
+  },
+  "Gonzalo Higuaín": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "River Plate",
+      "Real Madrid",
+      "Napoli",
+      "Juventus",
+      "AC Milan",
+      "Chelsea",
+      "Inter Miami"
+    ]
+  },
+  "Xabi Alonso": {
+    "nationality": "Spain",
+    "position": "Midfield",
+    "clubs": [
+      "Real Sociedad",
+      "Eibar",
+      "Liverpool",
+      "Real Madrid",
+      "Bayern Munich"
+    ]
+  },
+  "Sami Khedira": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Stuttgart",
+      "Real Madrid",
+      "Juventus",
+      "Hertha Berlin"
+    ]
+  },
+  "Pepe": {
+    "nationality": "Portugal",
+    "position": "Defender",
+    "clubs": [
+      "Marítimo",
+      "Porto",
+      "Real Madrid",
+      "Besiktas"
+    ]
+  },
+  "Raphaël Varane": {
+    "nationality": "France",
+    "position": "Defender",
+    "clubs": [
+      "Lens",
+      "Real Madrid",
+      "Manchester United",
+      "Como"
+    ]
+  },
+  "Fabio Cannavaro": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Napoli",
+      "Parma",
+      "Inter",
+      "Juventus",
+      "Real Madrid",
+      "Al-Ahli"
+    ]
+  },
+  "Steve McManaman": {
+    "nationality": "England",
+    "position": "Midfield",
+    "clubs": [
+      "Liverpool",
+      "Real Madrid",
+      "Manchester City"
+    ]
+  },
+  "Fernando Redondo": {
+    "nationality": "Argentina",
+    "position": "Midfield",
+    "clubs": [
+      "Argentinos Juniors",
+      "Tenerife",
+      "Real Madrid",
+      "AC Milan"
+    ]
+  },
+  "Claude Makélélé": {
+    "nationality": "France",
+    "position": "Midfield",
+    "clubs": [
+      "Brest",
+      "Nantes",
+      "Marseille",
+      "Celta Vigo",
+      "Real Madrid",
+      "Chelsea",
+      "Paris Saint-Germain"
+    ]
+  },
+  "Michael Essien": {
+    "nationality": "Ghana",
+    "position": "Midfield",
+    "clubs": [
+      "Bastia",
+      "Lyon",
+      "Chelsea",
+      "Real Madrid",
+      "AC Milan",
+      "Panathinaikos",
+      "Persib Bandung",
+      "Sabail"
+    ]
+  },
+  "Emmanuel Adebayor": {
+    "nationality": "Togo",
+    "position": "Attack",
+    "clubs": [
+      "Metz",
+      "Monaco",
+      "Arsenal",
+      "Manchester City",
+      "Real Madrid",
+      "Tottenham Hotspur",
+      "Crystal Palace",
+      "Basaksehir",
+      "Kayserispor",
+      "Olimpia"
+    ]
+  },
+  "Nicolas Anelka": {
+    "nationality": "France",
+    "position": "Attack",
+    "clubs": [
+      "Paris Saint-Germain",
+      "Arsenal",
+      "Real Madrid",
+      "Liverpool",
+      "Manchester City",
+      "Fenerbahce",
+      "Bolton Wanderers",
+      "Chelsea",
+      "Shanghai Shenhua",
+      "Juventus",
+      "West Bromwich Albion",
+      "Mumbai City"
+    ]
+  },
+  "Álvaro Morata": {
+    "nationality": "Spain",
+    "position": "Attack",
+    "clubs": [
+      "Real Madrid",
+      "Juventus",
+      "Chelsea",
+      "Atletico Madrid",
+      "AC Milan"
+    ]
+  },
+  "James Rodríguez": {
+    "nationality": "Colombia",
+    "position": "Attack",
+    "clubs": [
+      "Envigado",
+      "Banfield",
+      "Porto",
+      "Monaco",
+      "Real Madrid",
+      "Bayern Munich",
+      "Everton",
+      "Al-Rayyan",
+      "Olympiacos",
+      "São Paulo",
+      "Rayo Vallecano"
+    ]
+  },
+  "Isco": {
+    "nationality": "Spain",
+    "position": "Midfield",
+    "clubs": [
+      "Valencia",
+      "Málaga",
+      "Real Madrid",
+      "Sevilla",
+      "Real Betis"
+    ]
+  },
+  "Asier Illarramendi": {
+    "nationality": "Spain",
+    "position": "Midfield",
+    "clubs": [
+      "Real Sociedad",
+      "Real Madrid",
+      "FC Dallas"
+    ]
+  },
+  "Lionel Messi": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "Barcelona",
+      "Paris Saint-Germain",
+      "Inter Miami"
+    ]
+  },
+  "Xavi": {
+    "nationality": "Spain",
+    "position": "Midfield",
+    "clubs": [
+      "Barcelona",
+      "Al-Sadd"
+    ]
+  },
+  "Andrés Iniesta": {
+    "nationality": "Spain",
+    "position": "Midfield",
+    "clubs": [
+      "Barcelona",
+      "Vissel Kobe",
+      "Emirates Club"
+    ]
+  },
+  "Sergio Busquets": {
+    "nationality": "Spain",
+    "position": "Midfield",
+    "clubs": [
+      "Barcelona",
+      "Inter Miami"
+    ]
+  },
+  "Gerard Piqué": {
+    "nationality": "Spain",
+    "position": "Defender",
+    "clubs": [
+      "Manchester United",
+      "Real Zaragoza",
+      "Barcelona"
+    ]
+  },
+  "Carles Puyol": {
+    "nationality": "Spain",
+    "position": "Defender",
+    "clubs": [
+      "Barcelona"
+    ]
+  },
+  "Dani Alves": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Bahia",
+      "Sevilla",
+      "Barcelona",
+      "Juventus",
+      "Paris Saint-Germain",
+      "São Paulo",
+      "Pumas UNAM"
+    ]
+  },
+  "Jordi Alba": {
+    "nationality": "Spain",
+    "position": "Defender",
+    "clubs": [
+      "Valencia",
+      "Gimnàstic",
+      "Barcelona",
+      "Inter Miami"
+    ]
+  },
+  "Víctor Valdés": {
+    "nationality": "Spain",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Barcelona",
+      "Manchester United",
+      "Standard Liège",
+      "Middlesbrough"
+    ]
+  },
+  "Javier Mascherano": {
+    "nationality": "Argentina",
+    "position": "Midfield",
+    "clubs": [
+      "River Plate",
+      "Corinthians",
+      "West Ham United",
+      "Liverpool",
+      "Barcelona",
+      "Hebei China Fortune",
+      "Estudiantes"
+    ]
+  },
+  "Ronaldinho": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Grêmio",
+      "Paris Saint-Germain",
+      "Barcelona",
+      "AC Milan",
+      "Flamengo",
+      "Atlético Mineiro",
+      "Querétaro",
+      "Fluminense"
+    ]
+  },
+  "Samuel Eto'o": {
+    "nationality": "Cameroon",
+    "position": "Attack",
+    "clubs": [
+      "Real Madrid",
+      "Leganés",
+      "Espanyol",
+      "Mallorca",
+      "Barcelona",
+      "Inter",
+      "Anzhi Makhachkala",
+      "Chelsea",
+      "Everton",
+      "Sampdoria",
+      "Antalyaspor",
+      "Konyaspor",
+      "Qatar SC"
+    ]
+  },
+  "Thierry Henry": {
+    "nationality": "France",
+    "position": "Attack",
+    "clubs": [
+      "Monaco",
+      "Juventus",
+      "Arsenal",
+      "Barcelona",
+      "New York Red Bulls"
+    ]
+  },
+  "David Villa": {
+    "nationality": "Spain",
+    "position": "Attack",
+    "clubs": [
+      "Sporting Gijón",
+      "Real Zaragoza",
+      "Valencia",
+      "Barcelona",
+      "Atletico Madrid",
+      "Melbourne City",
+      "New York City",
+      "Vissel Kobe"
+    ]
+  },
+  "Pedro": {
+    "nationality": "Spain",
+    "position": "Attack",
+    "clubs": [
+      "Barcelona",
+      "Chelsea",
+      "Roma",
+      "Lazio"
+    ]
+  },
+  "Cesc Fàbregas": {
+    "nationality": "Spain",
+    "position": "Midfield",
+    "clubs": [
+      "Arsenal",
+      "Barcelona",
+      "Chelsea",
+      "Monaco",
+      "Como"
+    ]
+  },
+  "Alexis Sánchez": {
+    "nationality": "Chile",
+    "position": "Attack",
+    "clubs": [
+      "Cobreloa",
+      "Udinese",
+      "Colo-Colo",
+      "River Plate",
+      "Barcelona",
+      "Arsenal",
+      "Manchester United",
+      "Inter",
+      "Marseille"
+    ]
+  },
+  "Neymar": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Santos",
+      "Barcelona",
+      "Paris Saint-Germain",
+      "Al-Hilal"
+    ]
+  },
+  "Ivan Rakitić": {
+    "nationality": "Croatia",
+    "position": "Midfield",
+    "clubs": [
+      "Basel",
+      "Schalke",
+      "Sevilla",
+      "Barcelona",
+      "Al-Shabab",
+      "Hajduk Split"
+    ]
+  },
+  "Seydou Keita": {
+    "nationality": "Mali",
+    "position": "Midfield",
+    "clubs": [
+      "Marseille",
+      "Lorient",
+      "Lens",
+      "Sevilla",
+      "Barcelona",
+      "Dalian Aerbin",
+      "Valencia",
+      "Roma",
+      "El Jaish"
+    ]
+  },
+  "Yaya Touré": {
+    "nationality": "Ivory Coast",
+    "position": "Midfield",
+    "clubs": [
+      "ASEC Mimosas",
+      "Beveren",
+      "Metalurh Donetsk",
+      "Olympiacos",
+      "Monaco",
+      "Barcelona",
+      "Manchester City",
+      "Qingdao Huanghai"
+    ]
+  },
+  "Éric Abidal": {
+    "nationality": "France",
+    "position": "Defender",
+    "clubs": [
+      "Monaco",
+      "Lille",
+      "Lyon",
+      "Barcelona",
+      "Olympiacos"
+    ]
+  },
+  "Ludovic Giuly": {
+    "nationality": "France",
+    "position": "Attack",
+    "clubs": [
+      "Lyon",
+      "Monaco",
+      "Barcelona",
+      "Roma",
+      "Paris Saint-Germain",
+      "Lorient",
+      "Monts d'Or Azergues"
+    ]
+  },
+  "Deco": {
+    "nationality": "Portugal",
+    "position": "Midfield",
+    "clubs": [
+      "Corinthians",
+      "Alverca",
+      "Salgueiros",
+      "Porto",
+      "Barcelona",
+      "Chelsea",
+      "Fluminense"
+    ]
+  },
+  "Juliano Belletti": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Cruzeiro",
+      "São Paulo",
+      "Atlético Mineiro",
+      "Villarreal",
+      "Barcelona",
+      "Chelsea",
+      "Fluminense",
+      "Ceará"
+    ]
+  },
+  "Edmílson": {
+    "nationality": "Brazil",
+    "position": "Midfield",
+    "clubs": [
+      "São Paulo",
+      "Lyon",
+      "Barcelona",
+      "Villarreal",
+      "Palmeiras",
+      "Real Zaragoza",
+      "Ceará"
+    ]
+  },
+  "Sylvinho": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Corinthians",
+      "Arsenal",
+      "Celta Vigo",
+      "Barcelona",
+      "Manchester City"
+    ]
+  },
+  "Rivaldo": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Santa Cruz",
+      "Mogi Mirim",
+      "Corinthians",
+      "Palmeiras",
+      "Deportivo La Coruña",
+      "Barcelona",
+      "AC Milan",
+      "Cruzeiro",
+      "Olympiacos",
+      "AEK Athens",
+      "Bunyodkor",
+      "São Paulo",
+      "Kabuscorp",
+      "São Caetano"
+    ]
+  },
+  "Romário": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Vasco da Gama",
+      "PSV Eindhoven",
+      "Barcelona",
+      "Flamengo",
+      "Valencia",
+      "Fluminense",
+      "Al-Sadd",
+      "Miami FC",
+      "Adelaide United",
+      "América-RJ"
+    ]
+  },
+  "Hristo Stoichkov": {
+    "nationality": "Bulgaria",
+    "position": "Attack",
+    "clubs": [
+      "Hebros Harmanli",
+      "CSKA Sofia",
+      "Barcelona",
+      "Parma",
+      "Al-Nassr",
+      "Kashiwa Reysol",
+      "Chicago Fire",
+      "D.C. United"
+    ]
+  },
+  "Gheorghe Hagi": {
+    "nationality": "Romania",
+    "position": "Midfield",
+    "clubs": [
+      "Farul Constanța",
+      "Sportul Studențesc",
+      "Steaua București",
+      "Real Madrid",
+      "Brescia",
+      "Barcelona",
+      "Galatasaray"
+    ]
+  },
+  "Luis Enrique": {
+    "nationality": "Spain",
+    "position": "Midfield",
+    "clubs": [
+      "Sporting Gijón",
+      "Real Madrid",
+      "Barcelona"
+    ]
+  },
+  "Pep Guardiola": {
+    "nationality": "Spain",
+    "position": "Midfield",
+    "clubs": [
+      "Barcelona",
+      "Brescia",
+      "Roma",
+      "Al-Ahli",
+      "Dorados de Sinaloa"
+    ]
+  },
+  "Sergi Barjuán": {
+    "nationality": "Spain",
+    "position": "Defender",
+    "clubs": [
+      "Barcelona",
+      "Atletico Madrid"
+    ]
+  },
+  "Albert Ferrer": {
+    "nationality": "Spain",
+    "position": "Defender",
+    "clubs": [
+      "Barcelona",
+      "Tenerife",
+      "Chelsea"
+    ]
+  },
+  "Guillermo Amor": {
+    "nationality": "Spain",
+    "position": "Midfield",
+    "clubs": [
+      "Barcelona",
+      "Fiorentina",
+      "Villarreal",
+      "Livingston"
+    ]
+  },
+  "José Mari Bakero": {
+    "nationality": "Spain",
+    "position": "Attack",
+    "clubs": [
+      "Real Sociedad",
+      "Barcelona",
+      "Veracruz"
+    ]
+  },
+  "Txiki Begiristain": {
+    "nationality": "Spain",
+    "position": "Attack",
+    "clubs": [
+      "Real Sociedad",
+      "Barcelona",
+      "Deportivo La Coruña",
+      "Urawa Red Diamonds"
+    ]
+  },
+  "Andoni Zubizarreta": {
+    "nationality": "Spain",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Athletic Bilbao",
+      "Barcelona",
+      "Valencia"
+    ]
+  },
+  "Javier Saviola": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "River Plate",
+      "Barcelona",
+      "Monaco",
+      "Sevilla",
+      "Real Madrid",
+      "Benfica",
+      "Málaga",
+      "Olympiacos",
+      "Hellas Verona"
+    ]
+  },
+  "Juan Román Riquelme": {
+    "nationality": "Argentina",
+    "position": "Midfield",
+    "clubs": [
+      "Boca Juniors",
+      "Barcelona",
+      "Villarreal",
+      "Argentinos Juniors"
+    ]
+  },
+  "Paolo Maldini": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "AC Milan"
+    ]
+  },
+  "Franco Baresi": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "AC Milan"
+    ]
+  },
+  "Alessandro Costacurta": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "AC Milan",
+      "Monza"
+    ]
+  },
+  "Mauro Tassotti": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Lazio",
+      "AC Milan"
+    ]
+  },
+  "Alessandro Nesta": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Lazio",
+      "AC Milan",
+      "Montreal Impact",
+      "Chennaiyin"
+    ]
+  },
+  "Thiago Silva": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Fluminense",
+      "AC Milan",
+      "Paris Saint-Germain",
+      "Chelsea"
+    ]
+  },
+  "Cafu": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "São Paulo",
+      "Real Zaragoza",
+      "Juventude",
+      "Palmeiras",
+      "Roma",
+      "AC Milan"
+    ]
+  },
+  "Serginho": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Itaperuna",
+      "Bahia",
+      "Flamengo",
+      "Cruzeiro",
+      "São Paulo",
+      "AC Milan"
+    ]
+  },
+  "Dida": {
+    "nationality": "Brazil",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Vitória",
+      "Cruzeiro",
+      "Lugano",
+      "Corinthians",
+      "AC Milan",
+      "Portuguesa",
+      "Grêmio",
+      "Internacional"
+    ]
+  },
+  "Andrea Pirlo": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Brescia",
+      "Inter",
+      "Reggina",
+      "AC Milan",
+      "Juventus",
+      "New York City"
+    ]
+  },
+  "Gennaro Gattuso": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Perugia",
+      "Rangers",
+      "Salernitana",
+      "AC Milan",
+      "Sion"
+    ]
+  },
+  "Massimo Ambrosini": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Cesena",
+      "AC Milan",
+      "Vicenza",
+      "Fiorentina"
+    ]
+  },
+  "Kaká": {
+    "nationality": "Brazil",
+    "position": "Midfield",
+    "clubs": [
+      "São Paulo",
+      "AC Milan",
+      "Real Madrid",
+      "Orlando City"
+    ]
+  },
+  "Rui Costa": {
+    "nationality": "Portugal",
+    "position": "Midfield",
+    "clubs": [
+      "Benfica",
+      "Fafe",
+      "Fiorentina",
+      "AC Milan"
+    ]
+  },
+  "Zvonimir Boban": {
+    "nationality": "Croatia",
+    "position": "Midfield",
+    "clubs": [
+      "Dinamo Zagreb",
+      "Bari",
+      "AC Milan",
+      "Celta Vigo"
+    ]
+  },
+  "Dejan Savićević": {
+    "nationality": "Montenegro",
+    "position": "Midfield",
+    "clubs": [
+      "Budućnost Titograd",
+      "Red Star Belgrade",
+      "AC Milan",
+      "Rapid Wien"
+    ]
+  },
+  "Andriy Shevchenko": {
+    "nationality": "Ukraine",
+    "position": "Attack",
+    "clubs": [
+      "Dynamo Kyiv",
+      "AC Milan",
+      "Chelsea"
+    ]
+  },
+  "Filippo Inzaghi": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Piacenza",
+      "Leffe",
+      "Verona",
+      "Parma",
+      "Atalanta",
+      "Juventus",
+      "AC Milan"
+    ]
+  },
+  "George Weah": {
+    "nationality": "Liberia",
+    "position": "Attack",
+    "clubs": [
+      "Tonnerre Yaoundé",
+      "Monaco",
+      "Paris Saint-Germain",
+      "AC Milan",
+      "Chelsea",
+      "Manchester City",
+      "Marseille",
+      "Al-Jazira"
+    ]
+  },
+  "Oliver Bierhoff": {
+    "nationality": "Germany",
+    "position": "Attack",
+    "clubs": [
+      "Bayer Uerdingen",
+      "Hamburg",
+      "Borussia Mönchengladbach",
+      "Austria Salzburg",
+      "Ascoli",
+      "Udinese",
+      "AC Milan",
+      "Monaco",
+      "Chievo"
+    ]
+  },
+  "Jon Dahl Tomasson": {
+    "nationality": "Denmark",
+    "position": "Attack",
+    "clubs": [
+      "Køge",
+      "Heerenveen",
+      "Newcastle United",
+      "Feyenoord",
+      "AC Milan",
+      "Stuttgart",
+      "Villarreal"
+    ]
+  },
+  "Alexandre Pato": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Internacional",
+      "AC Milan",
+      "Corinthians",
+      "São Paulo",
+      "Chelsea",
+      "Villarreal",
+      "Tianjin Quanjian",
+      "Orlando City"
+    ]
+  },
+  "Javier Zanetti": {
+    "nationality": "Argentina",
+    "position": "Defender",
+    "clubs": [
+      "Talleres",
+      "Banfield",
+      "Inter"
+    ]
+  },
+  "Giuseppe Bergomi": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Inter"
+    ]
+  },
+  "Iván Córdoba": {
+    "nationality": "Colombia",
+    "position": "Defender",
+    "clubs": [
+      "Rionegro",
+      "Atlético Nacional",
+      "San Lorenzo",
+      "Inter"
+    ]
+  },
+  "Walter Samuel": {
+    "nationality": "Argentina",
+    "position": "Defender",
+    "clubs": [
+      "Newell's Old Boys",
+      "Boca Juniors",
+      "Roma",
+      "Real Madrid",
+      "Inter",
+      "Basel"
+    ]
+  },
+  "Marco Materazzi": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Messina",
+      "Tor di Quinto",
+      "Marsala",
+      "Trapani",
+      "Perugia",
+      "Everton",
+      "Inter",
+      "Chennaiyin"
+    ]
+  },
+  "Lúcio": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Internacional",
+      "Bayer Leverkusen",
+      "Bayern Munich",
+      "Inter",
+      "Juventus",
+      "São Paulo",
+      "Palmeiras",
+      "FC Goa",
+      "Gama",
+      "Brasiliense"
+    ]
+  },
+  "Maicon": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Cruzeiro",
+      "Monaco",
+      "Inter",
+      "Manchester City",
+      "Roma",
+      "Avaí",
+      "Criciúma",
+      "Villa Nova",
+      "Tre Penne"
+    ]
+  },
+  "Júlio César": {
+    "nationality": "Brazil",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Flamengo",
+      "Chievo",
+      "Inter",
+      "Queens Park Rangers",
+      "Toronto FC",
+      "Benfica"
+    ]
+  },
+  "Francesco Toldo": {
+    "nationality": "Italy",
+    "position": "Goalkeeper",
+    "clubs": [
+      "AC Milan",
+      "Trento",
+      "Ravenna",
+      "Fiorentina",
+      "Inter"
+    ]
+  },
+  "Esteban Cambiasso": {
+    "nationality": "Argentina",
+    "position": "Midfield",
+    "clubs": [
+      "Real Madrid",
+      "Independiente",
+      "River Plate",
+      "Inter",
+      "Leicester City",
+      "Olympiacos"
+    ]
+  },
+  "Dejan Stanković": {
+    "nationality": "Serbia",
+    "position": "Midfield",
+    "clubs": [
+      "Red Star Belgrade",
+      "Lazio",
+      "Inter"
+    ]
+  },
+  "Thiago Motta": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Barcelona",
+      "Atletico Madrid",
+      "Genoa",
+      "Inter",
+      "Paris Saint-Germain"
+    ]
+  },
+  "Juan Sebastián Verón": {
+    "nationality": "Argentina",
+    "position": "Midfield",
+    "clubs": [
+      "Estudiantes",
+      "Boca Juniors",
+      "Sampdoria",
+      "Parma",
+      "Lazio",
+      "Manchester United",
+      "Chelsea",
+      "Inter",
+      "Brandsen"
+    ]
+  },
+  "Diego Simeone": {
+    "nationality": "Argentina",
+    "position": "Midfield",
+    "clubs": [
+      "Vélez Sarsfield",
+      "Pisa",
+      "Sevilla",
+      "Atletico Madrid",
+      "Inter",
+      "Lazio",
+      "Racing Club"
+    ]
+  },
+  "Youri Djorkaeff": {
+    "nationality": "France",
+    "position": "Midfield",
+    "clubs": [
+      "Grenoble",
+      "Strasbourg",
+      "Monaco",
+      "Paris Saint-Germain",
+      "Inter",
+      "Kaiserslautern",
+      "Bolton Wanderers",
+      "Blackburn Rovers",
+      "New York Red Bulls"
+    ]
+  },
+  "Álvaro Recoba": {
+    "nationality": "Uruguay",
+    "position": "Attack",
+    "clubs": [
+      "Danubio",
+      "Nacional",
+      "Inter",
+      "Venezia",
+      "Torino",
+      "Panionios"
+    ]
+  },
+  "Adriano": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Flamengo",
+      "Inter",
+      "Fiorentina",
+      "Parma",
+      "São Paulo",
+      "Roma",
+      "Corinthians",
+      "Atlético Paranaense",
+      "Miami United"
+    ]
+  },
+  "Diego Milito": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "Racing Club",
+      "Genoa",
+      "Zaragoza",
+      "Inter"
+    ]
+  },
+  "Mauro Icardi": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "Sampdoria",
+      "Inter",
+      "Paris Saint-Germain",
+      "Galatasaray"
+    ]
+  },
+  "Roberto Baggio": {
+    "nationality": "Italy",
+    "position": "Attack - Second Striker",
+    "clubs": [
+      "Vicenza",
+      "Fiorentina",
+      "Juventus",
+      "AC Milan",
+      "Bologna",
+      "Inter",
+      "Brescia"
+    ]
+  },
+  "Jürgen Klinsmann": {
+    "nationality": "Germany",
+    "position": "Attack",
+    "clubs": [
+      "Stuttgarter Kickers",
+      "Stuttgart",
+      "Inter",
+      "Monaco",
+      "Tottenham Hotspur",
+      "Bayern Munich",
+      "Sampdoria"
+    ]
+  },
+  "Lothar Matthäus": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Borussia Mönchengladbach",
+      "Bayern Munich",
+      "Inter",
+      "MetroStars"
+    ]
+  },
+  "Andreas Brehme": {
+    "nationality": "Germany",
+    "position": "Defender",
+    "clubs": [
+      "1. FC Saarbrücken",
+      "Kaiserslautern",
+      "Bayern Munich",
+      "Inter",
+      "Real Zaragoza"
+    ]
+  },
+  "Christian Vieri": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Torino",
+      "Pisa",
+      "Ravenna",
+      "Venezia",
+      "Atalanta",
+      "Juventus",
+      "Atletico Madrid",
+      "Lazio",
+      "Inter",
+      "AC Milan",
+      "Monaco",
+      "Sampdoria",
+      "Fiorentina"
+    ]
+  },
+  "Hernán Crespo": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "River Plate",
+      "Parma",
+      "Lazio",
+      "Inter",
+      "Chelsea",
+      "AC Milan",
+      "Genoa"
+    ]
+  },
+  "Gianluigi Buffon": {
+    "nationality": "Italy",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Parma",
+      "Juventus",
+      "Paris Saint-Germain"
+    ]
+  },
+  "Dino Zoff": {
+    "nationality": "Italy",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Udinese",
+      "Mantova",
+      "Napoli",
+      "Juventus"
+    ]
+  },
+  "Giorgio Chiellini": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Livorno",
+      "Roma",
+      "Fiorentina",
+      "Juventus",
+      "Los Angeles FC"
+    ]
+  },
+  "Leonardo Bonucci": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Inter",
+      "Treviso",
+      "Pisa",
+      "Bari",
+      "Juventus",
+      "AC Milan",
+      "Union Berlin",
+      "Fenerbahce"
+    ]
+  },
+  "Andrea Barzagli": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Rondinella",
+      "Pistoiese",
+      "Ascoli",
+      "Chievo",
+      "Palermo",
+      "Wolfsburg",
+      "Juventus"
+    ]
+  },
+  "Lilian Thuram": {
+    "nationality": "France",
+    "position": "Defender",
+    "clubs": [
+      "Monaco",
+      "Parma",
+      "Juventus",
+      "Barcelona"
+    ]
+  },
+  "Paolo Montero": {
+    "nationality": "Uruguay",
+    "position": "Defender",
+    "clubs": [
+      "Peñarol",
+      "Atalanta",
+      "Juventus",
+      "San Lorenzo"
+    ]
+  },
+  "Ciro Ferrara": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Napoli",
+      "Juventus"
+    ]
+  },
+  "Gaetano Scirea": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Atalanta",
+      "Juventus"
+    ]
+  },
+  "Antonio Cabrini": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Cremonese",
+      "Atalanta",
+      "Juventus",
+      "Bologna"
+    ]
+  },
+  "Alessandro Del Piero": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Padova",
+      "Juventus",
+      "Sydney FC",
+      "Delhi Dynamos"
+    ]
+  },
+  "David Trezeguet": {
+    "nationality": "France",
+    "position": "Attack",
+    "clubs": [
+      "Platense",
+      "Monaco",
+      "Juventus",
+      "Hércules",
+      "Baniyas",
+      "River Plate",
+      "Newell's Old Boys",
+      "FC Pune City"
+    ]
+  },
+  "Michel Platini": {
+    "nationality": "France",
+    "position": "Midfield",
+    "clubs": [
+      "Nancy",
+      "Saint-Étienne",
+      "Juventus"
+    ]
+  },
+  "Pavel Nedvěd": {
+    "nationality": "Czech Republic",
+    "position": "Midfield",
+    "clubs": [
+      "Dukla Prague",
+      "Sparta Prague",
+      "Lazio",
+      "Juventus"
+    ]
+  },
+  "Mauro Camoranesi": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Aldosivi",
+      "Santos Laguna",
+      "Montevideo Wanderers",
+      "Banfield",
+      "Cruz Azul",
+      "Hellas Verona",
+      "Juventus",
+      "Stuttgart",
+      "Lanús",
+      "Racing Club"
+    ]
+  },
+  "Didier Deschamps": {
+    "nationality": "France",
+    "position": "Midfield",
+    "clubs": [
+      "Nantes",
+      "Marseille",
+      "Bordeaux",
+      "Juventus",
+      "Chelsea",
+      "Valencia"
+    ]
+  },
+  "Antonio Conte": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Lecce",
+      "Juventus"
+    ]
+  },
+  "Claudio Marchisio": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Juventus",
+      "Empoli",
+      "Zenit Saint Petersburg"
+    ]
+  },
+  "Paul Pogba": {
+    "nationality": "France",
+    "position": "Midfield",
+    "clubs": [
+      "Manchester United",
+      "Juventus"
+    ]
+  },
+  "Arturo Vidal": {
+    "nationality": "Chile",
+    "position": "Midfield",
+    "clubs": [
+      "Colo-Colo",
+      "Bayer Leverkusen",
+      "Juventus",
+      "Bayern Munich",
+      "Barcelona",
+      "Inter",
+      "Flamengo",
+      "Athletico Paranaense"
+    ]
+  },
+  "Carlos Tevez": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "Boca Juniors",
+      "Corinthians",
+      "West Ham United",
+      "Manchester United",
+      "Manchester City",
+      "Juventus",
+      "Shanghai Shenhua"
+    ]
+  },
+  "Paulo Dybala": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "Instituto",
+      "Palermo",
+      "Juventus",
+      "Roma"
+    ]
+  },
+  "Mario Mandžukić": {
+    "nationality": "Croatia",
+    "position": "Attack",
+    "clubs": [
+      "Marsonia",
+      "NK Zagreb",
+      "Dinamo Zagreb",
+      "Wolfsburg",
+      "Bayern Munich",
+      "Atletico Madrid",
+      "Juventus",
+      "Al-Duhail",
+      "AC Milan"
+    ]
+  },
+  "Stephan Lichtsteiner": {
+    "nationality": "Switzerland",
+    "position": "Defender",
+    "clubs": [
+      "Grasshopper",
+      "Lille",
+      "Lazio",
+      "Juventus",
+      "Arsenal",
+      "Augsburg"
+    ]
+  },
+  "Francesco Totti": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Roma"
+    ]
+  },
+  "Daniele De Rossi": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Roma",
+      "Boca Juniors"
+    ]
+  },
+  "Aldair": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Flamengo",
+      "Benfica",
+      "Roma",
+      "Genoa",
+      "Rio Branco",
+      "Murata"
+    ]
+  },
+  "Christian Panucci": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Genoa",
+      "AC Milan",
+      "Real Madrid",
+      "Inter",
+      "Chelsea",
+      "Monaco",
+      "Roma",
+      "Parma"
+    ]
+  },
+  "Emerson": {
+    "nationality": "Brazil",
+    "position": "Midfield",
+    "clubs": [
+      "Grêmio",
+      "Bayer Leverkusen",
+      "Roma",
+      "Juventus",
+      "Real Madrid",
+      "AC Milan",
+      "Santos"
+    ]
+  },
+  "Damiano Tommasi": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Verona",
+      "Roma",
+      "Levante",
+      "Queens Park Rangers",
+      "Tianjin TEDA",
+      "Sant'Anna d'Alfaedo",
+      "La Fiorita"
+    ]
+  },
+  "Simone Perrotta": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Reggina",
+      "Juventus",
+      "Bari",
+      "Chievo",
+      "Roma"
+    ]
+  },
+  "David Pizarro": {
+    "nationality": "Chile",
+    "position": "Midfield",
+    "clubs": [
+      "Santiago Wanderers",
+      "Udinese",
+      "Universidad de Chile",
+      "Inter",
+      "Roma",
+      "Manchester City",
+      "Fiorentina"
+    ]
+  },
+  "Vincenzo Montella": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Empoli",
+      "Genoa",
+      "Sampdoria",
+      "Roma",
+      "Fulham"
+    ]
+  },
+  "Gabriel Batistuta": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "Newell's Old Boys",
+      "River Plate",
+      "Boca Juniors",
+      "Fiorentina",
+      "Roma",
+      "Inter",
+      "Al-Arabi"
+    ]
+  },
+  "Marco Delvecchio": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Inter",
+      "Venezia",
+      "Udinese",
+      "Roma",
+      "Brescia",
+      "Parma",
+      "Ascoli"
+    ]
+  },
+  "Edin Džeko": {
+    "nationality": "Bosnia and Herzegovina",
+    "position": "Attack",
+    "clubs": [
+      "Željezničar",
+      "Teplice",
+      "Ústí nad Labem",
+      "Wolfsburg",
+      "Manchester City",
+      "Roma",
+      "Inter",
+      "Fenerbahce"
+    ]
+  },
+  "Mohamed Salah": {
+    "nationality": "Egypt",
+    "position": "Attack",
+    "clubs": [
+      "El Mokawloon",
+      "Basel",
+      "Chelsea",
+      "Fiorentina",
+      "Roma",
+      "Liverpool"
+    ]
+  },
+  "Alisson": {
+    "nationality": "Brazil",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Internacional",
+      "Roma",
+      "Liverpool"
+    ]
+  },
+  "Siniša Mihajlović": {
+    "nationality": "Serbia",
+    "position": "Defender",
+    "clubs": [
+      "Borovo",
+      "Vojvodina",
+      "Red Star Belgrade",
+      "Roma",
+      "Sampdoria",
+      "Lazio",
+      "Inter"
+    ]
+  },
+  "Giuseppe Favalli": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Cremonese",
+      "Lazio",
+      "Inter",
+      "AC Milan"
+    ]
+  },
+  "Fernando Couto": {
+    "nationality": "Portugal",
+    "position": "Defender",
+    "clubs": [
+      "Porto",
+      "Famalicão",
+      "Académica",
+      "Parma",
+      "Barcelona",
+      "Lazio"
+    ]
+  },
+  "Matías Almeyda": {
+    "nationality": "Argentina",
+    "position": "Midfield",
+    "clubs": [
+      "River Plate",
+      "Sevilla",
+      "Lazio",
+      "Parma",
+      "Inter",
+      "Brescia",
+      "Quilmes",
+      "Lyn",
+      "Fénix"
+    ]
+  },
+  "Roberto Mancini": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Bologna",
+      "Sampdoria",
+      "Lazio",
+      "Leicester City"
+    ]
+  },
+  "Marcelo Salas": {
+    "nationality": "Chile",
+    "position": "Attack",
+    "clubs": [
+      "Universidad de Chile",
+      "River Plate",
+      "Lazio",
+      "Juventus"
+    ]
+  },
+  "Giuseppe Signori": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Leffe",
+      "Piacenza",
+      "Trento",
+      "Foggia",
+      "Lazio",
+      "Sampdoria",
+      "Bologna",
+      "Iraklis",
+      "Sopron"
+    ]
+  },
+  "Ciro Immobile": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Sorrento",
+      "Juventus",
+      "Siena",
+      "Grosseto",
+      "Pescara",
+      "Genoa",
+      "Torino",
+      "Borussia Dortmund",
+      "Sevilla",
+      "Lazio",
+      "Besiktas"
+    ]
+  },
+  "Miroslav Klose": {
+    "nationality": "Germany",
+    "position": "Attack",
+    "clubs": [
+      "FC 08 Homburg",
+      "Kaiserslautern",
+      "Werder Bremen",
+      "Bayern Munich",
+      "Lazio"
+    ]
+  },
+  "Angelo Peruzzi": {
+    "nationality": "Italy",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Roma",
+      "Verona",
+      "Juventus",
+      "Inter",
+      "Lazio"
+    ]
+  },
+  "Diego Maradona": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "Argentinos Juniors",
+      "Boca Juniors",
+      "Barcelona",
+      "Napoli",
+      "Sevilla",
+      "Newell's Old Boys"
+    ]
+  },
+  "Careca": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Guarani",
+      "São Paulo",
+      "Napoli",
+      "Kashiwa Reysol",
+      "Santos",
+      "Campinas",
+      "São José"
+    ]
+  },
+  "Gianfranco Zola": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Nuorese",
+      "Torres",
+      "Napoli",
+      "Parma",
+      "Chelsea",
+      "Cagliari"
+    ]
+  },
+  "Marek Hamšík": {
+    "nationality": "Slovakia",
+    "position": "Midfield",
+    "clubs": [
+      "Slovan Bratislava",
+      "Brescia",
+      "Napoli",
+      "Dalian Professional",
+      "IFK Göteborg",
+      "Trabzonspor"
+    ]
+  },
+  "Ezequiel Lavezzi": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "Estudiantes (BA)",
+      "San Lorenzo",
+      "Napoli",
+      "Paris Saint-Germain",
+      "Hebei China Fortune"
+    ]
+  },
+  "Edinson Cavani": {
+    "nationality": "Uruguay",
+    "position": "Attack",
+    "clubs": [
+      "Danubio",
+      "Palermo",
+      "Napoli",
+      "Paris Saint-Germain",
+      "Manchester United",
+      "Valencia",
+      "Boca Juniors"
+    ]
+  },
+  "Dries Mertens": {
+    "nationality": "Belgium",
+    "position": "Attack",
+    "clubs": [
+      "Gent",
+      "Eendracht Aalst",
+      "AGOVV",
+      "Utrecht",
+      "PSV Eindhoven",
+      "Napoli",
+      "Galatasaray"
+    ]
+  },
+  "Lorenzo Insigne": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Napoli",
+      "Cavese",
+      "Foggia",
+      "Pescara",
+      "Toronto FC"
+    ]
+  },
+  "José Callejón": {
+    "nationality": "Spain",
+    "position": "Attack",
+    "clubs": [
+      "Real Madrid",
+      "Espanyol",
+      "Napoli",
+      "Fiorentina",
+      "Granada",
+      "Marbella"
+    ]
+  },
+  "Jorginho": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Verona",
+      "Sambonifacese",
+      "Napoli",
+      "Chelsea",
+      "Arsenal"
+    ]
+  },
+  "Kalidou Koulibaly": {
+    "nationality": "Senegal",
+    "position": "Defender",
+    "clubs": [
+      "Metz",
+      "Genk",
+      "Napoli",
+      "Chelsea",
+      "Al-Hilal"
+    ]
+  },
+  "Pepe Reina": {
+    "nationality": "Spain",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Barcelona",
+      "Villarreal",
+      "Liverpool",
+      "Napoli",
+      "Bayern Munich",
+      "AC Milan",
+      "Aston Villa",
+      "Lazio",
+      "Como"
+    ]
+  },
+  "Enrico Chiesa": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Sampdoria",
+      "Teramo",
+      "Chieti",
+      "Modena",
+      "Cremonese",
+      "Parma",
+      "Fiorentina",
+      "Lazio",
+      "Siena",
+      "Figline"
+    ]
+  },
+  "Federico Chiesa": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Fiorentina",
+      "Juventus",
+      "Liverpool"
+    ]
+  },
+  "Luca Toni": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Modena",
+      "Empoli",
+      "Fiorenzuola",
+      "Lodigiani",
+      "Treviso",
+      "Vicenza",
+      "Brescia",
+      "Palermo",
+      "Fiorentina",
+      "Bayern Munich",
+      "Roma",
+      "Genoa",
+      "Juventus",
+      "Al-Nasr",
+      "Verona"
+    ]
+  },
+  "Alberto Gilardino": {
+    "nationality": "Italy",
+    "position": "Attack",
+    "clubs": [
+      "Piacenza",
+      "Verona",
+      "Parma",
+      "AC Milan",
+      "Fiorentina",
+      "Genoa",
+      "Bologna",
+      "Guangzhou Evergrande",
+      "Palermo",
+      "Empoli",
+      "Pescara",
+      "Spezia"
+    ]
+  },
+  "Adrian Mutu": {
+    "nationality": "Romania",
+    "position": "Attack",
+    "clubs": [
+      "Argeș Pitești",
+      "Dinamo București",
+      "Inter",
+      "Verona",
+      "Parma",
+      "Chelsea",
+      "Juventus",
+      "Fiorentina",
+      "Cesena",
+      "Ajaccio",
+      "Petrolul Ploiești",
+      "Pune City",
+      "ASA Târgu Mureș"
+    ]
+  },
+  "Sébastien Frey": {
+    "nationality": "France",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Cannes",
+      "Inter",
+      "Verona",
+      "Parma",
+      "Fiorentina",
+      "Genoa",
+      "Bursaspor"
+    ]
+  },
+  "Giancarlo Antognoni": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Asti",
+      "Fiorentina",
+      "Lausanne-Sport"
+    ]
+  },
+  "Daniel Passarella": {
+    "nationality": "Argentina",
+    "position": "Defender",
+    "clubs": [
+      "Sarmiento",
+      "River Plate",
+      "Fiorentina",
+      "Inter"
+    ]
+  },
+  "Dunga": {
+    "nationality": "Brazil",
+    "position": "Midfield",
+    "clubs": [
+      "Internacional",
+      "Corinthians",
+      "Santos",
+      "Vasco da Gama",
+      "Pisa",
+      "Fiorentina",
+      "Pescara",
+      "VfB Stuttgart",
+      "Júbilo Iwata"
+    ]
+  },
+  "Roberto Sensini": {
+    "nationality": "Argentina",
+    "position": "Defender",
+    "clubs": [
+      "Newell's Old Boys",
+      "Udinese",
+      "Parma",
+      "Lazio"
+    ]
+  },
+  "Antonio Benarrivo": {
+    "nationality": "Italy",
+    "position": "Defender",
+    "clubs": [
+      "Brindisi",
+      "Padova",
+      "Parma"
+    ]
+  },
+  "Dino Baggio": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Torino",
+      "Inter",
+      "Juventus",
+      "Parma",
+      "Lazio",
+      "Blackburn Rovers",
+      "Ancona",
+      "Triestina",
+      "Tombolo"
+    ]
+  },
+  "Faustino Asprilla": {
+    "nationality": "Colombia",
+    "position": "Attack",
+    "clubs": [
+      "Cúcuta Deportivo",
+      "Atlético Nacional",
+      "Parma",
+      "Newcastle United",
+      "Palmeiras",
+      "Fluminense",
+      "Atlante",
+      "Cortuluá"
+    ]
+  },
+  "Eric Cantona": {
+    "nationality": "France",
+    "position": "Attack",
+    "clubs": [
+      "Auxerre",
+      "Martigues",
+      "Marseille",
+      "Bordeaux",
+      "Montpellier",
+      "Nîmes",
+      "Leeds United",
+      "Manchester United"
+    ]
+  },
+  "Alan Shearer": {
+    "nationality": "England",
+    "position": "Attack",
+    "clubs": [
+      "Southampton",
+      "Blackburn Rovers",
+      "Newcastle United"
+    ]
+  },
+  "Wayne Rooney": {
+    "nationality": "England",
+    "position": "Attack",
+    "clubs": [
+      "Everton",
+      "Manchester United",
+      "D.C. United",
+      "Derby County"
+    ]
+  },
+  "Paul Scholes": {
+    "nationality": "England",
+    "position": "Midfield",
+    "clubs": [
+      "Manchester United"
+    ]
+  },
+  "Ryan Giggs": {
+    "nationality": "Wales",
+    "position": "Midfield",
+    "clubs": [
+      "Manchester United"
+    ]
+  },
+  "Roy Keane": {
+    "nationality": "Ireland",
+    "position": "Midfield",
+    "clubs": [
+      "Cobh Ramblers",
+      "Nottingham Forest",
+      "Manchester United",
+      "Celtic"
+    ]
+  },
+  "Gary Neville": {
+    "nationality": "England",
+    "position": "Defender",
+    "clubs": [
+      "Manchester United"
+    ]
+  },
+  "Rio Ferdinand": {
+    "nationality": "England",
+    "position": "Defender",
+    "clubs": [
+      "West Ham United",
+      "Bournemouth",
+      "Leeds United",
+      "Manchester United",
+      "Queens Park Rangers"
+    ]
+  },
+  "Nemanja Vidić": {
+    "nationality": "Serbia",
+    "position": "Defender",
+    "clubs": [
+      "Red Star Belgrade",
+      "Spartak Subotica",
+      "Spartak Moscow",
+      "Manchester United",
+      "Inter"
+    ]
+  },
+  "Patrice Evra": {
+    "nationality": "France",
+    "position": "Defender",
+    "clubs": [
+      "Marsala",
+      "Monza",
+      "Nice",
+      "Monaco",
+      "Manchester United",
+      "Juventus",
+      "Marseille",
+      "West Ham United"
+    ]
+  },
+  "Peter Schmeichel": {
+    "nationality": "Denmark",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Gladsaxe-Hero",
+      "Hvidovre",
+      "Brøndby",
+      "Manchester United",
+      "Sporting CP",
+      "Aston Villa",
+      "Manchester City"
+    ]
+  },
+  "Ole Gunnar Solskjær": {
+    "nationality": "Norway",
+    "position": "Attack",
+    "clubs": [
+      "Clausenengen",
+      "Molde",
+      "Manchester United"
+    ]
+  },
+  "Teddy Sheringham": {
+    "nationality": "England",
+    "position": "Attack",
+    "clubs": [
+      "Millwall",
+      "Aldershot",
+      "Djurgården",
+      "Nottingham Forest",
+      "Tottenham Hotspur",
+      "Manchester United",
+      "Portsmouth",
+      "West Ham United",
+      "Colchester United"
+    ]
+  },
+  "Dwight Yorke": {
+    "nationality": "Trinidad and Tobago",
+    "position": "Attack",
+    "clubs": [
+      "Aston Villa",
+      "Manchester United",
+      "Blackburn Rovers",
+      "Birmingham City",
+      "Sydney FC",
+      "Sunderland"
+    ]
+  },
+  "Andy Cole": {
+    "nationality": "England",
+    "position": "Attack",
+    "clubs": [
+      "Arsenal",
+      "Fulham",
+      "Bristol City",
+      "Newcastle United",
+      "Manchester United",
+      "Blackburn Rovers",
+      "Manchester City",
+      "Portsmouth",
+      "Birmingham City",
+      "Sunderland",
+      "Burnley",
+      "Nottingham Forest"
+    ]
+  },
+  "Michael Carrick": {
+    "nationality": "England",
+    "position": "Midfield",
+    "clubs": [
+      "West Ham United",
+      "Swindon Town",
+      "Birmingham City",
+      "Tottenham Hotspur",
+      "Manchester United"
+    ]
+  },
+  "Steven Gerrard": {
+    "nationality": "England",
+    "position": "Midfield",
+    "clubs": [
+      "Liverpool",
+      "LA Galaxy"
+    ]
+  },
+  "Jamie Carragher": {
+    "nationality": "England",
+    "position": "Defender",
+    "clubs": [
+      "Liverpool"
+    ]
+  },
+  "Robbie Fowler": {
+    "nationality": "England",
+    "position": "Attack",
+    "clubs": [
+      "Liverpool",
+      "Leeds United",
+      "Manchester City",
+      "Cardiff City",
+      "Blackburn Rovers",
+      "North Queensland Fury",
+      "Perth Glory",
+      "Muangthong United"
+    ]
+  },
+  "Fernando Torres": {
+    "nationality": "Spain",
+    "position": "Attack",
+    "clubs": [
+      "Atletico Madrid",
+      "Liverpool",
+      "Chelsea",
+      "AC Milan",
+      "Sagan Tosu"
+    ]
+  },
+  "Sami Hyypiä": {
+    "nationality": "Finland",
+    "position": "Defender",
+    "clubs": [
+      "Kumu",
+      "MyPa",
+      "Willem II",
+      "Liverpool",
+      "Bayer Leverkusen"
+    ]
+  },
+  "Jerzy Dudek": {
+    "nationality": "Poland",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Concordia Knurów",
+      "Sokół Tychy",
+      "Feyenoord",
+      "Liverpool",
+      "Real Madrid"
+    ]
+  },
+  "John Arne Riise": {
+    "nationality": "Norway",
+    "position": "Defender",
+    "clubs": [
+      "Aalesund",
+      "Monaco",
+      "Liverpool",
+      "Roma",
+      "Fulham",
+      "APOEL",
+      "Delhi Dynamos",
+      "Chennaiyin",
+      "Rollon",
+      "Avaldsnes"
+    ]
+  },
+  "Ian Rush": {
+    "nationality": "Wales",
+    "position": "Attack",
+    "clubs": [
+      "Chester City",
+      "Liverpool",
+      "Juventus",
+      "Leeds United",
+      "Newcastle United",
+      "Sheffield United",
+      "Wrexham",
+      "Sydney Olympic"
+    ]
+  },
+  "Kenny Dalglish": {
+    "nationality": "Scotland",
+    "position": "Attack",
+    "clubs": [
+      "Celtic",
+      "Liverpool"
+    ]
+  },
+  "John Barnes": {
+    "nationality": "England",
+    "position": "Midfield",
+    "clubs": [
+      "Watford",
+      "Liverpool",
+      "Newcastle United",
+      "Charlton"
+    ]
+  },
+  "Frank Lampard": {
+    "nationality": "England",
+    "position": "Midfield",
+    "clubs": [
+      "West Ham United",
+      "Swansea City",
+      "Chelsea",
+      "Manchester City",
+      "New York City"
+    ]
+  },
+  "John Terry": {
+    "nationality": "England",
+    "position": "Defender",
+    "clubs": [
+      "Chelsea",
+      "Nottingham Forest",
+      "Aston Villa"
+    ]
+  },
+  "Didier Drogba": {
+    "nationality": "Ivory Coast",
+    "position": "Attack",
+    "clubs": [
+      "Le Mans",
+      "Guingamp",
+      "Marseille",
+      "Chelsea",
+      "Shanghai Shenhua",
+      "Galatasaray",
+      "Montreal Impact",
+      "Phoenix Rising"
+    ]
+  },
+  "Petr Čech": {
+    "nationality": "Czech Republic",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Chmel Blšany",
+      "Sparta Prague",
+      "Rennes",
+      "Chelsea",
+      "Arsenal"
+    ]
+  },
+  "Ashley Cole": {
+    "nationality": "England",
+    "position": "Defender",
+    "clubs": [
+      "Arsenal",
+      "Crystal Palace",
+      "Chelsea",
+      "Roma",
+      "LA Galaxy",
+      "Derby County"
+    ]
+  },
+  "Ricardo Carvalho": {
+    "nationality": "Portugal",
+    "position": "Defender",
+    "clubs": [
+      "Porto",
+      "Leça",
+      "Vitória de Setúbal",
+      "Alverca",
+      "Chelsea",
+      "Real Madrid",
+      "Monaco",
+      "Shanghai SIPG"
+    ]
+  },
+  "Branislav Ivanović": {
+    "nationality": "Serbia",
+    "position": "Defender",
+    "clubs": [
+      "Remont Čačak",
+      "Srem",
+      "OFK Beograd",
+      "Lokomotiv Moscow",
+      "Chelsea",
+      "Zenit Saint Petersburg",
+      "West Bromwich Albion"
+    ]
+  },
+  "Eden Hazard": {
+    "nationality": "Belgium",
+    "position": "Attack",
+    "clubs": [
+      "Lille",
+      "Chelsea",
+      "Real Madrid"
+    ]
+  },
+  "Eiður Guðjohnsen": {
+    "nationality": "Iceland",
+    "position": "Attack",
+    "clubs": [
+      "Valur",
+      "PSV Eindhoven",
+      "KR",
+      "Bolton Wanderers",
+      "Chelsea",
+      "Barcelona",
+      "Monaco",
+      "Tottenham Hotspur",
+      "Stoke City",
+      "Fulham",
+      "AEK Athens",
+      "Cercle Brugge",
+      "Club Brugge",
+      "Shijiazhuang Ever Bright",
+      "Molde",
+      "Pune City"
+    ]
+  },
+  "Marcel Desailly": {
+    "nationality": "France",
+    "position": "Defender",
+    "clubs": [
+      "Nantes",
+      "Marseille",
+      "AC Milan",
+      "Chelsea",
+      "Al-Gharafa",
+      "Qatar SC"
+    ]
+  },
+  "Dennis Wise": {
+    "nationality": "England",
+    "position": "Midfield",
+    "clubs": [
+      "Wimbledon",
+      "Greve Strømsgodset",
+      "Chelsea",
+      "Leicester City",
+      "Millwall",
+      "Southampton",
+      "Coventry City"
+    ]
+  },
+  "Sergio Agüero": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "Independiente",
+      "Atletico Madrid",
+      "Manchester City",
+      "Barcelona"
+    ]
+  },
+  "David Silva": {
+    "nationality": "Spain",
+    "position": "Midfield",
+    "clubs": [
+      "Valencia",
+      "Eibar",
+      "Celta Vigo",
+      "Manchester City",
+      "Real Sociedad"
+    ]
+  },
+  "Vincent Kompany": {
+    "nationality": "Belgium",
+    "position": "Defender",
+    "clubs": [
+      "Anderlecht",
+      "Hamburg",
+      "Manchester City"
+    ]
+  },
+  "Fernandinho": {
+    "nationality": "Brazil",
+    "position": "Midfield",
+    "clubs": [
+      "Atlético Paranaense",
+      "Shakhtar Donetsk",
+      "Manchester City"
+    ]
+  },
+  "Kevin De Bruyne": {
+    "nationality": "Belgium",
+    "position": "Midfield",
+    "clubs": [
+      "Genk",
+      "Chelsea",
+      "Werder Bremen",
+      "Wolfsburg",
+      "Manchester City"
+    ]
+  },
+  "Raheem Sterling": {
+    "nationality": "England",
+    "position": "Attack",
+    "clubs": [
+      "Liverpool",
+      "Manchester City",
+      "Chelsea",
+      "Arsenal"
+    ]
+  },
+  "Joe Hart": {
+    "nationality": "England",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Shrewsbury Town",
+      "Manchester City",
+      "Tranmere Rovers",
+      "Blackpool",
+      "Birmingham City",
+      "Torino",
+      "West Ham United",
+      "Burnley",
+      "Tottenham Hotspur",
+      "Celtic"
+    ]
+  },
+  "Pablo Zabaleta": {
+    "nationality": "Argentina",
+    "position": "Defender",
+    "clubs": [
+      "San Lorenzo",
+      "Espanyol",
+      "Manchester City",
+      "West Ham United"
+    ]
+  },
+  "Harry Kane": {
+    "nationality": "England",
+    "position": "Attack",
+    "clubs": [
+      "Tottenham Hotspur",
+      "Leyton Orient",
+      "Millwall",
+      "Norwich City",
+      "Leicester City",
+      "Bayern Munich"
+    ]
+  },
+  "Son Heung-min": {
+    "nationality": "South Korea",
+    "position": "Attack",
+    "clubs": [
+      "Hamburg",
+      "Bayer Leverkusen",
+      "Tottenham Hotspur"
+    ]
+  },
+  "Ledley King": {
+    "nationality": "England",
+    "position": "Defender",
+    "clubs": [
+      "Tottenham Hotspur"
+    ]
+  },
+  "Jermain Defoe": {
+    "nationality": "England",
+    "position": "Attack",
+    "clubs": [
+      "West Ham United",
+      "Bournemouth",
+      "Tottenham Hotspur",
+      "Portsmouth",
+      "Toronto FC",
+      "Sunderland",
+      "Rangers"
+    ]
+  },
+  "Robbie Keane": {
+    "nationality": "Ireland",
+    "position": "Attack",
+    "clubs": [
+      "Wolverhampton Wanderers",
+      "Coventry City",
+      "Inter",
+      "Leeds United",
+      "Tottenham Hotspur",
+      "Liverpool",
+      "Celtic",
+      "West Ham United",
+      "LA Galaxy",
+      "Aston Villa",
+      "ATK"
+    ]
+  },
+  "David Ginola": {
+    "nationality": "France",
+    "position": "Attack",
+    "clubs": [
+      "Toulon",
+      "Racing Paris",
+      "Brest",
+      "Paris Saint-Germain",
+      "Newcastle United",
+      "Tottenham Hotspur",
+      "Aston Villa",
+      "Everton"
+    ]
+  },
+  "Paul Gascoigne": {
+    "nationality": "England",
+    "position": "Midfield",
+    "clubs": [
+      "Newcastle United",
+      "Tottenham Hotspur",
+      "Lazio",
+      "Rangers",
+      "Middlesbrough",
+      "Everton",
+      "Burnley",
+      "Gansu Tianma",
+      "Boston United"
+    ]
+  },
+  "Gary Lineker": {
+    "nationality": "England",
+    "position": "Attack",
+    "clubs": [
+      "Leicester City",
+      "Everton",
+      "Barcelona",
+      "Tottenham Hotspur",
+      "Nagoya Grampus Eight"
+    ]
+  },
+  "Jamie Vardy": {
+    "nationality": "England",
+    "position": "Attack",
+    "clubs": [
+      "Stocksbridge Park Steels",
+      "Halifax Town",
+      "Fleetwood Town",
+      "Leicester City"
+    ]
+  },
+  "Riyad Mahrez": {
+    "nationality": "Algeria",
+    "position": "Attack",
+    "clubs": [
+      "Quimper",
+      "Le Havre",
+      "Leicester City",
+      "Manchester City",
+      "Al-Ahli"
+    ]
+  },
+  "N'Golo Kanté": {
+    "nationality": "France",
+    "position": "Midfield",
+    "clubs": [
+      "Boulogne",
+      "Caen",
+      "Leicester City",
+      "Chelsea",
+      "Al-Ittihad"
+    ]
+  },
+  "Kasper Schmeichel": {
+    "nationality": "Denmark",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Manchester City",
+      "Darlington",
+      "Bury",
+      "Falkirk",
+      "Cardiff City",
+      "Coventry City",
+      "Notts County",
+      "Leeds United",
+      "Leicester City",
+      "Nice",
+      "Anderlecht",
+      "Celtic"
+    ]
+  },
+  "Wes Morgan": {
+    "nationality": "Jamaica",
+    "position": "Defender",
+    "clubs": [
+      "Nottingham Forest",
+      "Kidderminster Harriers",
+      "Leicester City"
+    ]
+  },
+  "Sol Campbell": {
+    "nationality": "England",
+    "position": "Defender",
+    "clubs": [
+      "Tottenham Hotspur",
+      "Arsenal",
+      "Portsmouth",
+      "Notts County",
+      "Newcastle United"
+    ]
+  },
+  "Freddie Ljungberg": {
+    "nationality": "Sweden",
+    "position": "Midfield",
+    "clubs": [
+      "Halmstads BK",
+      "Arsenal",
+      "West Ham United",
+      "Seattle Sounders",
+      "Chicago Fire",
+      "Celtic",
+      "Shimizu S-Pulse",
+      "Mumbai City"
+    ]
+  },
+  "Robert Pires": {
+    "nationality": "France",
+    "position": "Midfield",
+    "clubs": [
+      "Metz",
+      "Marseille",
+      "Arsenal",
+      "Villarreal",
+      "Aston Villa",
+      "FC Goa"
+    ]
+  },
+  "Gilberto Silva": {
+    "nationality": "Brazil",
+    "position": "Midfield",
+    "clubs": [
+      "América Mineiro",
+      "Atlético Mineiro",
+      "Arsenal",
+      "Panathinaikos",
+      "Grêmio"
+    ]
+  },
+  "Tony Adams": {
+    "nationality": "England",
+    "position": "Defender",
+    "clubs": [
+      "Arsenal"
+    ]
+  },
+  "David Seaman": {
+    "nationality": "England",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Leeds United",
+      "Peterborough United",
+      "Birmingham City",
+      "Queens Park Rangers",
+      "Arsenal",
+      "Manchester City"
+    ]
+  },
+  "Ray Parlour": {
+    "nationality": "England",
+    "position": "Midfield",
+    "clubs": [
+      "Arsenal",
+      "Middlesbrough",
+      "Hull City"
+    ]
+  },
+  "Martin Keown": {
+    "nationality": "England",
+    "position": "Defender",
+    "clubs": [
+      "Arsenal",
+      "Brighton & Hove Albion",
+      "Aston Villa",
+      "Everton",
+      "Leicester City",
+      "Reading"
+    ]
+  },
+  "Sylvain Wiltord": {
+    "nationality": "France",
+    "position": "Attack",
+    "clubs": [
+      "Rennes",
+      "Bordeaux",
+      "Arsenal",
+      "Lyon",
+      "Marseille",
+      "Metz",
+      "Nantes"
+    ]
+  },
+  "Lauren": {
+    "nationality": "Cameroon",
+    "position": "Defender",
+    "clubs": [
+      "Utrera",
+      "Sevilla",
+      "Levante",
+      "Mallorca",
+      "Arsenal",
+      "Portsmouth",
+      "Córdoba"
+    ]
+  },
+  "Jens Lehmann": {
+    "nationality": "Germany",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Schalke",
+      "AC Milan",
+      "Borussia Dortmund",
+      "Arsenal",
+      "Stuttgart"
+    ]
+  },
+  "Franz Beckenbauer": {
+    "nationality": "Germany",
+    "position": "Defender",
+    "clubs": [
+      "Bayern Munich",
+      "New York Cosmos",
+      "Hamburg"
+    ]
+  },
+  "Gerd Müller": {
+    "nationality": "Germany",
+    "position": "Attack",
+    "clubs": [
+      "1861 Nördlingen",
+      "Bayern Munich",
+      "Fort Lauderdale Strikers"
+    ]
+  },
+  "Sepp Maier": {
+    "nationality": "Germany",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Bayern Munich"
+    ]
+  },
+  "Paul Breitner": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Bayern Munich",
+      "Real Madrid",
+      "Eintracht Braunschweig"
+    ]
+  },
+  "Uli Hoeneß": {
+    "nationality": "Germany",
+    "position": "Attack",
+    "clubs": [
+      "Bayern Munich",
+      "1. FC Nürnberg"
+    ]
+  },
+  "Karl-Heinz Rummenigge": {
+    "nationality": "Germany",
+    "position": "Attack",
+    "clubs": [
+      "Bayern Munich",
+      "Inter",
+      "Servette"
+    ]
+  },
+  "Klaus Augenthaler": {
+    "nationality": "Germany",
+    "position": "Defender",
+    "clubs": [
+      "Bayern Munich"
+    ]
+  },
+  "Stefan Effenberg": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Borussia Mönchengladbach",
+      "Bayern Munich",
+      "Fiorentina",
+      "Wolfsburg",
+      "Al-Arabi"
+    ]
+  },
+  "Oliver Kahn": {
+    "nationality": "Germany",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Karlsruher SC",
+      "Bayern Munich"
+    ]
+  },
+  "Bixente Lizarazu": {
+    "nationality": "France",
+    "position": "Defender",
+    "clubs": [
+      "Bordeaux",
+      "Athletic Bilbao",
+      "Bayern Munich",
+      "Marseille"
+    ]
+  },
+  "Willy Sagnol": {
+    "nationality": "France",
+    "position": "Defender",
+    "clubs": [
+      "Saint-Étienne",
+      "Monaco",
+      "Bayern Munich"
+    ]
+  },
+  "Samuel Kuffour": {
+    "nationality": "Ghana",
+    "position": "Defender",
+    "clubs": [
+      "Torino",
+      "Bayern Munich",
+      "1. FC Nürnberg",
+      "Roma",
+      "Livorno",
+      "Ajax",
+      "Asante Kotoko"
+    ]
+  },
+  "Jens Jeremies": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Dynamo Dresden",
+      "1860 Munich",
+      "Bayern Munich"
+    ]
+  },
+  "Mehmet Scholl": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Karlsruher SC",
+      "Bayern Munich"
+    ]
+  },
+  "Giovane Élber": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Londrina",
+      "AC Milan",
+      "Grasshopper",
+      "Stuttgart",
+      "Bayern Munich",
+      "Lyon",
+      "Borussia Mönchengladbach",
+      "Cruzeiro"
+    ]
+  },
+  "Claudio Pizarro": {
+    "nationality": "Peru",
+    "position": "Attack",
+    "clubs": [
+      "Deportivo Pesquero",
+      "Alianza Lima",
+      "Werder Bremen",
+      "Chelsea",
+      "Bayern Munich",
+      "Köln"
+    ]
+  },
+  "Michael Ballack": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Chemnitzer FC",
+      "Kaiserslautern",
+      "Bayer Leverkusen",
+      "Bayern Munich",
+      "Chelsea"
+    ]
+  },
+  "Bastian Schweinsteiger": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Bayern Munich",
+      "Manchester United",
+      "Chicago Fire"
+    ]
+  },
+  "Philipp Lahm": {
+    "nationality": "Germany",
+    "position": "Defender",
+    "clubs": [
+      "Bayern Munich",
+      "Stuttgart"
+    ]
+  },
+  "Manuel Neuer": {
+    "nationality": "Germany",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Schalke",
+      "Bayern Munich"
+    ]
+  },
+  "Jérôme Boateng": {
+    "nationality": "Germany",
+    "position": "Defender",
+    "clubs": [
+      "Hertha Berlin",
+      "Hamburg",
+      "Manchester City",
+      "Bayern Munich",
+      "Lyon",
+      "Salernitana",
+      "LASK"
+    ]
+  },
+  "David Alaba": {
+    "nationality": "Austria",
+    "position": "Defender",
+    "clubs": [
+      "Austria Wien",
+      "Bayern Munich",
+      "Hoffenheim",
+      "Real Madrid"
+    ]
+  },
+  "Franck Ribéry": {
+    "nationality": "France",
+    "position": "Attack",
+    "clubs": [
+      "Boulogne",
+      "Alès",
+      "Brest",
+      "Metz",
+      "Galatasaray",
+      "Marseille",
+      "Bayern Munich",
+      "Fiorentina",
+      "Salernitana"
+    ]
+  },
+  "Thomas Müller": {
+    "nationality": "Germany",
+    "position": "Attack",
+    "clubs": [
+      "Bayern Munich"
+    ]
+  },
+  "Robert Lewandowski": {
+    "nationality": "Poland",
+    "position": "Attack",
+    "clubs": [
+      "Znicz Pruszków",
+      "Lech Poznań",
+      "Borussia Dortmund",
+      "Bayern Munich",
+      "Barcelona"
+    ]
+  },
+  "Mario Gomez": {
+    "nationality": "Germany",
+    "position": "Attack",
+    "clubs": [
+      "Stuttgart",
+      "Bayern Munich",
+      "Fiorentina",
+      "Besiktas",
+      "Wolfsburg"
+    ]
+  },
+  "Matthias Sammer": {
+    "nationality": "Germany",
+    "position": "Defender",
+    "clubs": [
+      "Dynamo Dresden",
+      "Stuttgart",
+      "Inter",
+      "Borussia Dortmund"
+    ]
+  },
+  "Jürgen Kohler": {
+    "nationality": "Germany",
+    "position": "Defender",
+    "clubs": [
+      "Waldhof Mannheim",
+      "Köln",
+      "Bayern Munich",
+      "Juventus",
+      "Borussia Dortmund"
+    ]
+  },
+  "Stefan Reuter": {
+    "nationality": "Germany",
+    "position": "Defender",
+    "clubs": [
+      "1. FC Nürnberg",
+      "Bayern Munich",
+      "Juventus",
+      "Borussia Dortmund"
+    ]
+  },
+  "Andreas Möller": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Eintracht Frankfurt",
+      "Borussia Dortmund",
+      "Juventus",
+      "Schalke"
+    ]
+  },
+  "Lars Ricken": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Borussia Dortmund"
+    ]
+  },
+  "Stéphane Chapuisat": {
+    "nationality": "Switzerland",
+    "position": "Attack",
+    "clubs": [
+      "Malley",
+      "Lausanne-Sport",
+      "Bayer Uerdingen",
+      "Borussia Dortmund",
+      "Grasshopper",
+      "Young Boys"
+    ]
+  },
+  "Karl-Heinz Riedle": {
+    "nationality": "Germany",
+    "position": "Attack",
+    "clubs": [
+      "Blau-Weiß 90 Berlin",
+      "Werder Bremen",
+      "Lazio",
+      "Borussia Dortmund",
+      "Liverpool",
+      "Fulham"
+    ]
+  },
+  "Tomáš Rosický": {
+    "nationality": "Czech Republic",
+    "position": "Midfield",
+    "clubs": [
+      "Sparta Prague",
+      "Borussia Dortmund",
+      "Arsenal"
+    ]
+  },
+  "Márcio Amoroso": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Guarani",
+      "Verdy Kawasaki",
+      "Flamengo",
+      "Udinese",
+      "Parma",
+      "Borussia Dortmund",
+      "Málaga",
+      "São Paulo",
+      "AC Milan",
+      "Corinthians",
+      "Grêmio",
+      "Aris"
+    ]
+  },
+  "Jan Koller": {
+    "nationality": "Czech Republic",
+    "position": "Attack",
+    "clubs": [
+      "Sparta Prague",
+      "Lokeren",
+      "Anderlecht",
+      "Borussia Dortmund",
+      "Monaco",
+      "1. FC Nürnberg",
+      "Krylia Sovetov",
+      "Cannes"
+    ]
+  },
+  "Sebastian Kehl": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Hannover 96",
+      "Freiburg",
+      "Borussia Dortmund"
+    ]
+  },
+  "Roman Weidenfeller": {
+    "nationality": "Germany",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Kaiserslautern",
+      "Borussia Dortmund"
+    ]
+  },
+  "Mats Hummels": {
+    "nationality": "Germany",
+    "position": "Defender",
+    "clubs": [
+      "Bayern Munich",
+      "Borussia Dortmund",
+      "Roma"
+    ]
+  },
+  "Neven Subotić": {
+    "nationality": "Serbia",
+    "position": "Defender",
+    "clubs": [
+      "Mainz 05",
+      "Borussia Dortmund",
+      "Köln",
+      "Saint-Étienne",
+      "Union Berlin",
+      "Denizlispor",
+      "SCR Altach"
+    ]
+  },
+  "Marcel Schmelzer": {
+    "nationality": "Germany",
+    "position": "Defender",
+    "clubs": [
+      "Borussia Dortmund"
+    ]
+  },
+  "Łukasz Piszczek": {
+    "nationality": "Poland",
+    "position": "Defender",
+    "clubs": [
+      "Zagłębie Lubin",
+      "Hertha Berlin",
+      "Borussia Dortmund",
+      "Goczałkowice-Zdrój"
+    ]
+  },
+  "Sven Bender": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "1860 Munich",
+      "Borussia Dortmund",
+      "Bayer Leverkusen"
+    ]
+  },
+  "İlkay Gündoğan": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "VfL Bochum",
+      "1. FC Nürnberg",
+      "Borussia Dortmund",
+      "Manchester City",
+      "Barcelona"
+    ]
+  },
+  "Nuri Şahin": {
+    "nationality": "Turkey",
+    "position": "Midfield",
+    "clubs": [
+      "Borussia Dortmund",
+      "Feyenoord",
+      "Real Madrid",
+      "Liverpool",
+      "Werder Bremen",
+      "Antalyaspor"
+    ]
+  },
+  "Mario Götze": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Borussia Dortmund",
+      "Bayern Munich",
+      "PSV Eindhoven",
+      "Eintracht Frankfurt"
+    ]
+  },
+  "Marco Reus": {
+    "nationality": "Germany",
+    "position": "Attack",
+    "clubs": [
+      "Rot Weiss Ahlen",
+      "Borussia Mönchengladbach",
+      "Borussia Dortmund",
+      "LA Galaxy"
+    ]
+  },
+  "Pierre-Emerick Aubameyang": {
+    "nationality": "Gabon",
+    "position": "Attack",
+    "clubs": [
+      "AC Milan",
+      "Dijon",
+      "Lille",
+      "Monaco",
+      "Saint-Étienne",
+      "Borussia Dortmund",
+      "Arsenal",
+      "Barcelona",
+      "Chelsea",
+      "Marseille",
+      "Al-Qadsiah"
+    ]
+  },
+  "Erling Haaland": {
+    "nationality": "Norway",
+    "position": "Attack",
+    "clubs": [
+      "Bryne",
+      "Molde",
+      "Red Bull Salzburg",
+      "Borussia Dortmund",
+      "Manchester City"
+    ]
+  },
+  "Zé Roberto": {
+    "nationality": "Brazil",
+    "position": "Midfield",
+    "clubs": [
+      "Portuguesa",
+      "Real Madrid",
+      "Flamengo",
+      "Bayer Leverkusen",
+      "Bayern Munich",
+      "Santos",
+      "Hamburg",
+      "Al-Gharafa",
+      "Grêmio",
+      "Palmeiras"
+    ]
+  },
+  "Ulf Kirsten": {
+    "nationality": "Germany",
+    "position": "Attack",
+    "clubs": [
+      "Dynamo Dresden",
+      "Bayer Leverkusen"
+    ]
+  },
+  "Bernd Schneider": {
+    "nationality": "Germany",
+    "position": "Midfield",
+    "clubs": [
+      "Carl Zeiss Jena",
+      "Eintracht Frankfurt",
+      "Bayer Leverkusen"
+    ]
+  },
+  "Dimitar Berbatov": {
+    "nationality": "Bulgaria",
+    "position": "Attack",
+    "clubs": [
+      "CSKA Sofia",
+      "Bayer Leverkusen",
+      "Tottenham Hotspur",
+      "Manchester United",
+      "Fulham",
+      "Monaco",
+      "PAOK",
+      "Kerala Blasters"
+    ]
+  },
+  "Oliver Neuville": {
+    "nationality": "Germany",
+    "position": "Attack",
+    "clubs": [
+      "Locarno",
+      "Servette",
+      "Tenerife",
+      "Hansa Rostock",
+      "Bayer Leverkusen",
+      "Borussia Mönchengladbach",
+      "Arminia Bielefeld"
+    ]
+  },
+  "Diego": {
+    "nationality": "Brazil",
+    "position": "Midfield",
+    "clubs": [
+      "Santos",
+      "Porto",
+      "Werder Bremen",
+      "Juventus",
+      "Wolfsburg",
+      "Atletico Madrid",
+      "Fenerbahce",
+      "Flamengo"
+    ]
+  },
+  "Johan Micoud": {
+    "nationality": "France",
+    "position": "Midfield",
+    "clubs": [
+      "Cannes",
+      "Bordeaux",
+      "Parma",
+      "Werder Bremen"
+    ]
+  },
+  "Aílton": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Ypiranga",
+      "Internacional",
+      "Mogi Mirim",
+      "Santa Cruz",
+      "Guarani",
+      "Tigres UANL",
+      "Werder Bremen",
+      "Schalke",
+      "Besiktas",
+      "Hamburg",
+      "Red Star Belgrade",
+      "Grasshopper",
+      "Duisburg",
+      "Metalurh Donetsk",
+      "SCR Altach",
+      "Campinense",
+      "Chongqing Lifan",
+      "Uerdingen"
+    ]
+  },
+  "Ivan Klasnić": {
+    "nationality": "Croatia",
+    "position": "Attack",
+    "clubs": [
+      "St. Pauli",
+      "Werder Bremen",
+      "Nantes",
+      "Bolton Wanderers",
+      "Mainz 05"
+    ]
+  },
+  "Naldo": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "RS Futebol",
+      "Juventude",
+      "Werder Bremen",
+      "Wolfsburg",
+      "Schalke",
+      "Monaco"
+    ]
+  },
+  "Per Mertesacker": {
+    "nationality": "Germany",
+    "position": "Defender",
+    "clubs": [
+      "Hannover 96",
+      "Werder Bremen",
+      "Arsenal"
+    ]
+  },
+  "Ivica Olić": {
+    "nationality": "Croatia",
+    "position": "Attack",
+    "clubs": [
+      "Marsonia",
+      "Hertha Berlin",
+      "NK Zagreb",
+      "Dinamo Zagreb",
+      "CSKA Moscow",
+      "Hamburg",
+      "Bayern Munich",
+      "Wolfsburg",
+      "1860 Munich"
+    ]
+  },
+  "Mladen Petrić": {
+    "nationality": "Croatia",
+    "position": "Attack",
+    "clubs": [
+      "Baden",
+      "Grasshopper",
+      "Basel",
+      "Borussia Dortmund",
+      "Hamburg",
+      "Fulham",
+      "West Ham United",
+      "Panathinaikos"
+    ]
+  },
+  "Sergej Barbarez": {
+    "nationality": "Bosnia and Herzegovina",
+    "position": "Attack",
+    "clubs": [
+      "Velež Mostar",
+      "Hannover 96",
+      "Union Berlin",
+      "Hansa Rostock",
+      "Borussia Dortmund",
+      "Hamburg",
+      "Bayer Leverkusen"
+    ]
+  },
+  "Pauleta": {
+    "nationality": "Portugal",
+    "position": "Attack",
+    "clubs": [
+      "União Micaelense",
+      "Estoril",
+      "Salamanca",
+      "Deportivo La Coruña",
+      "Bordeaux",
+      "Paris Saint-Germain"
+    ]
+  },
+  "Raí": {
+    "nationality": "Brazil",
+    "position": "Midfield",
+    "clubs": [
+      "Botafogo-SP",
+      "Ponte Preta",
+      "São Paulo",
+      "Paris Saint-Germain"
+    ]
+  },
+  "Bernard Lama": {
+    "nationality": "France",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Lille",
+      "Brest",
+      "Lens",
+      "Metz",
+      "Paris Saint-Germain",
+      "West Ham United",
+      "Rennes"
+    ]
+  },
+  "Marquinhos": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Corinthians",
+      "Roma",
+      "Paris Saint-Germain"
+    ]
+  },
+  "Marco Verratti": {
+    "nationality": "Italy",
+    "position": "Midfield",
+    "clubs": [
+      "Pescara",
+      "Paris Saint-Germain",
+      "Al-Arabi"
+    ]
+  },
+  "Blaise Matuidi": {
+    "nationality": "France",
+    "position": "Midfield",
+    "clubs": [
+      "Troyes",
+      "Saint-Étienne",
+      "Paris Saint-Germain",
+      "Juventus",
+      "Inter Miami"
+    ]
+  },
+  "Jean-Pierre Papin": {
+    "nationality": "France",
+    "position": "Attack",
+    "clubs": [
+      "Valenciennes",
+      "Club Brugge",
+      "Marseille",
+      "AC Milan",
+      "Bayern Munich",
+      "Bordeaux",
+      "Guingamp",
+      "Saint-Pierroise",
+      "Cap-Ferret"
+    ]
+  },
+  "Chris Waddle": {
+    "nationality": "England",
+    "position": "Midfield",
+    "clubs": [
+      "Tow Law Town",
+      "Newcastle United",
+      "Tottenham Hotspur",
+      "Marseille",
+      "Sheffield Wednesday",
+      "Falkirk",
+      "Bradford City",
+      "Sunderland",
+      "Burnley",
+      "Torquay United"
+    ]
+  },
+  "Abedi Pele": {
+    "nationality": "Ghana",
+    "position": "Midfield",
+    "clubs": [
+      "Real Tamale United",
+      "Al-Sadd",
+      "Zürich",
+      "Dragons de l'Ouémé",
+      "Niort",
+      "Mulhouse",
+      "Marseille",
+      "Lille",
+      "Lyon",
+      "Torino",
+      "1860 Munich",
+      "Al-Ain"
+    ]
+  },
+  "Basile Boli": {
+    "nationality": "France",
+    "position": "Defender",
+    "clubs": [
+      "Auxerre",
+      "Marseille",
+      "Rangers",
+      "Monaco",
+      "Urawa Red Diamonds"
+    ]
+  },
+  "Fabien Barthez": {
+    "nationality": "France",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Toulouse",
+      "Marseille",
+      "Monaco",
+      "Manchester United",
+      "Nantes"
+    ]
+  },
+  "Samir Nasri": {
+    "nationality": "France",
+    "position": "Midfield",
+    "clubs": [
+      "Marseille",
+      "Arsenal",
+      "Manchester City",
+      "Sevilla",
+      "Antalyaspor",
+      "West Ham United",
+      "Anderlecht"
+    ]
+  },
+  "Mamadou Niang": {
+    "nationality": "Senegal",
+    "position": "Attack",
+    "clubs": [
+      "Troyes",
+      "Metz",
+      "Strasbourg",
+      "Marseille",
+      "Fenerbahce",
+      "Al-Sadd",
+      "Besiktas",
+      "Arles-Avignon"
+    ]
+  },
+  "Lucho González": {
+    "nationality": "Argentina",
+    "position": "Midfield",
+    "clubs": [
+      "Huracán",
+      "River Plate",
+      "Porto",
+      "Marseille",
+      "Al-Rayyan",
+      "Athletico Paranaense"
+    ]
+  },
+  "Steve Mandanda": {
+    "nationality": "France",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Le Havre",
+      "Marseille",
+      "Crystal Palace",
+      "Rennes"
+    ]
+  },
+  "Juninho Pernambucano": {
+    "nationality": "Brazil",
+    "position": "Midfield",
+    "clubs": [
+      "Sport Recife",
+      "Vasco da Gama",
+      "Lyon",
+      "Al-Gharafa",
+      "New York Red Bulls"
+    ]
+  },
+  "Grégory Coupet": {
+    "nationality": "France",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Saint-Étienne",
+      "Lyon",
+      "Atletico Madrid",
+      "Paris Saint-Germain"
+    ]
+  },
+  "Cris": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Corinthians",
+      "Cruzeiro",
+      "Bayer Leverkusen",
+      "Lyon",
+      "Galatasaray",
+      "Grêmio",
+      "Vasco da Gama"
+    ]
+  },
+  "Sidney Govou": {
+    "nationality": "France",
+    "position": "Attack",
+    "clubs": [
+      "Lyon",
+      "Panathinaikos",
+      "Evian",
+      "Monts d'Or Azergues",
+      "Miami City",
+      "FC Limonest"
+    ]
+  },
+  "Fred": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "América Mineiro",
+      "Cruzeiro",
+      "Lyon",
+      "Fluminense",
+      "Atlético Mineiro"
+    ]
+  },
+  "Alexandre Lacazette": {
+    "nationality": "France",
+    "position": "Attack",
+    "clubs": [
+      "Lyon",
+      "Arsenal"
+    ]
+  },
+  "Nabil Fekir": {
+    "nationality": "France",
+    "position": "Midfield",
+    "clubs": [
+      "Lyon",
+      "Real Betis",
+      "Al-Jazira"
+    ]
+  },
+  "Lisandro López": {
+    "nationality": "Argentina",
+    "position": "Attack",
+    "clubs": [
+      "Racing Club",
+      "Porto",
+      "Lyon",
+      "Al-Gharafa",
+      "Internacional",
+      "Atlanta United",
+      "Sarmiento"
+    ]
+  },
+  "Bernardo Silva": {
+    "nationality": "Portugal",
+    "position": "Midfield",
+    "clubs": [
+      "Benfica",
+      "Monaco",
+      "Manchester City"
+    ]
+  },
+  "Fabinho": {
+    "nationality": "Brazil",
+    "position": "Midfield",
+    "clubs": [
+      "Fluminense",
+      "Rio Ave",
+      "Real Madrid",
+      "Monaco",
+      "Liverpool",
+      "Al-Ittihad"
+    ]
+  },
+  "João Moutinho": {
+    "nationality": "Portugal",
+    "position": "Midfield",
+    "clubs": [
+      "Sporting CP",
+      "Porto",
+      "Monaco",
+      "Wolverhampton Wanderers",
+      "Braga"
+    ]
+  },
+  "Radamel Falcao": {
+    "nationality": "Colombia",
+    "position": "Attack",
+    "clubs": [
+      "Lanceros Boyacá",
+      "River Plate",
+      "Porto",
+      "Atletico Madrid",
+      "Monaco",
+      "Manchester United",
+      "Chelsea",
+      "Galatasaray",
+      "Rayo Vallecano",
+      "Millonarios"
+    ]
+  },
+  "Kylian Mbappé": {
+    "nationality": "France",
+    "position": "Attack",
+    "clubs": [
+      "Monaco",
+      "Paris Saint-Germain",
+      "Real Madrid"
+    ]
+  },
+  "Eusébio": {
+    "nationality": "Portugal",
+    "position": "Attack",
+    "clubs": [
+      "Sporting de Lourenço Marques",
+      "Benfica",
+      "Boston Minutemen",
+      "Monterrey",
+      "Toronto Blizzard",
+      "Beira-Mar",
+      "Las Vegas Quicksilvers",
+      "União de Tomar",
+      "New Jersey Americans"
+    ]
+  },
+  "Simão Sabrosa": {
+    "nationality": "Portugal",
+    "position": "Attack",
+    "clubs": [
+      "Sporting CP",
+      "Barcelona",
+      "Benfica",
+      "Atletico Madrid",
+      "Besiktas",
+      "Espanyol",
+      "NorthEast United"
+    ]
+  },
+  "Óscar Cardozo": {
+    "nationality": "Paraguay",
+    "position": "Attack",
+    "clubs": [
+      "3 de Febrero",
+      "Nacional",
+      "Newell's Old Boys",
+      "Benfica",
+      "Trabzonspor",
+      "Olympiacos",
+      "Libertad"
+    ]
+  },
+  "David Luiz": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Vitória",
+      "Benfica",
+      "Chelsea",
+      "Paris Saint-Germain",
+      "Arsenal",
+      "Flamengo"
+    ]
+  },
+  "Luisão": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Juventus-SP",
+      "Cruzeiro",
+      "Benfica"
+    ]
+  },
+  "Jan Oblak": {
+    "nationality": "Slovenia",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Olimpija Ljubljana",
+      "Benfica",
+      "Beira-Mar",
+      "Olhanense",
+      "União de Leiria",
+      "Rio Ave",
+      "Atletico Madrid"
+    ]
+  },
+  "Jonas": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Guarani",
+      "Santos",
+      "Grêmio",
+      "Portuguesa",
+      "Valencia",
+      "Benfica"
+    ]
+  },
+  "Rúben Dias": {
+    "nationality": "Portugal",
+    "position": "Defender",
+    "clubs": [
+      "Benfica",
+      "Manchester City"
+    ]
+  },
+  "João Félix": {
+    "nationality": "Portugal",
+    "position": "Attack",
+    "clubs": [
+      "Benfica",
+      "Atletico Madrid",
+      "Chelsea",
+      "Barcelona"
+    ]
+  },
+  "Vítor Baía": {
+    "nationality": "Portugal",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Porto",
+      "Barcelona"
+    ]
+  },
+  "Paulo Ferreira": {
+    "nationality": "Portugal",
+    "position": "Defender",
+    "clubs": [
+      "Estoril",
+      "Vitória de Setúbal",
+      "Porto",
+      "Chelsea"
+    ]
+  },
+  "Costinha": {
+    "nationality": "Portugal",
+    "position": "Midfield",
+    "clubs": [
+      "Oriental",
+      "Machico",
+      "Nacional",
+      "Monaco",
+      "Porto",
+      "Dynamo Moscow",
+      "Atletico Madrid",
+      "Atalanta"
+    ]
+  },
+  "Maniche": {
+    "nationality": "Portugal",
+    "position": "Midfield",
+    "clubs": [
+      "Benfica",
+      "Alverca",
+      "Porto",
+      "Dynamo Moscow",
+      "Chelsea",
+      "Atletico Madrid",
+      "Inter",
+      "Köln",
+      "Sporting CP"
+    ]
+  },
+  "Derlei": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "América-RN",
+      "Guarani",
+      "Madureira",
+      "União de Leiria",
+      "Porto",
+      "Dynamo Moscow",
+      "Benfica",
+      "Sporting CP",
+      "Vitória"
+    ]
+  },
+  "Ricardo Quaresma": {
+    "nationality": "Portugal",
+    "position": "Attack",
+    "clubs": [
+      "Sporting CP",
+      "Barcelona",
+      "Porto",
+      "Inter",
+      "Chelsea",
+      "Besiktas",
+      "Al-Ahli",
+      "Kasimpasa",
+      "Vitória de Guimarães"
+    ]
+  },
+  "Hulk": {
+    "nationality": "Brazil",
+    "position": "Attack",
+    "clubs": [
+      "Vitória",
+      "Kawasaki Frontale",
+      "Consadole Sapporo",
+      "Tokyo Verdy",
+      "Porto",
+      "Zenit Saint Petersburg",
+      "Shanghai SIPG",
+      "Atlético Mineiro"
+    ]
+  },
+  "Alex Sandro": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Atlético Paranaense",
+      "Santos",
+      "Porto",
+      "Juventus",
+      "Flamengo"
+    ]
+  },
+  "Danilo": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "América Mineiro",
+      "Santos",
+      "Porto",
+      "Real Madrid",
+      "Manchester City",
+      "Juventus"
+    ]
+  },
+  "Éder Militão": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "São Paulo",
+      "Porto",
+      "Real Madrid"
+    ]
+  },
+  "Nani": {
+    "nationality": "Portugal",
+    "position": "Attack",
+    "clubs": [
+      "Sporting CP",
+      "Manchester United",
+      "Fenerbahce",
+      "Valencia",
+      "Lazio",
+      "Orlando City",
+      "Venezia",
+      "Melbourne Victory",
+      "Adana Demirspor",
+      "Estrela da Amadora"
+    ]
+  },
+  "Bruno Fernandes": {
+    "nationality": "Portugal",
+    "position": "Midfield",
+    "clubs": [
+      "Novara",
+      "Udinese",
+      "Sampdoria",
+      "Sporting CP",
+      "Manchester United"
+    ]
+  },
+  "Rui Patrício": {
+    "nationality": "Portugal",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Sporting CP",
+      "Wolverhampton Wanderers",
+      "Roma",
+      "Atalanta"
+    ]
+  },
+  "Sebastián Coates": {
+    "nationality": "Uruguay",
+    "position": "Defender",
+    "clubs": [
+      "Nacional",
+      "Liverpool",
+      "Sunderland",
+      "Sporting CP"
+    ]
+  },
+  "Darijo Srna": {
+    "nationality": "Croatia",
+    "position": "Defender",
+    "clubs": [
+      "Hajduk Split",
+      "Shakhtar Donetsk",
+      "Cagliari"
+    ]
+  },
+  "Anatoliy Tymoshchuk": {
+    "nationality": "Ukraine",
+    "position": "Midfield",
+    "clubs": [
+      "Volyn Lutsk",
+      "Shakhtar Donetsk",
+      "Zenit Saint Petersburg",
+      "Bayern Munich",
+      "Kairat"
+    ]
+  },
+  "Dmytro Chygrynskyi": {
+    "nationality": "Ukraine",
+    "position": "Defender",
+    "clubs": [
+      "Shakhtar Donetsk",
+      "Metalurh Zaporizhzhia",
+      "Barcelona",
+      "Dnipro",
+      "AEK Athens",
+      "Ionikos"
+    ]
+  },
+  "Henrikh Mkhitaryan": {
+    "nationality": "Armenia",
+    "position": "Midfield",
+    "clubs": [
+      "Pyunik",
+      "Metalurh Donetsk",
+      "Shakhtar Donetsk",
+      "Borussia Dortmund",
+      "Manchester United",
+      "Arsenal",
+      "Roma",
+      "Inter"
+    ]
+  },
+  "Andriy Yarmolenko": {
+    "nationality": "Ukraine",
+    "position": "Attack",
+    "clubs": [
+      "Desna Chernihiv",
+      "Dynamo Kyiv",
+      "Borussia Dortmund",
+      "West Ham United",
+      "Al-Ain"
+    ]
+  },
+  "Yevhen Konoplyanka": {
+    "nationality": "Ukraine",
+    "position": "Attack",
+    "clubs": [
+      "Dnipro",
+      "Sevilla",
+      "Schalke",
+      "Shakhtar Donetsk",
+      "Cracovia",
+      "CFR Cluj"
+    ]
+  },
+  "Nemanja Matić": {
+    "nationality": "Serbia",
+    "position": "Midfield",
+    "clubs": [
+      "Kolubara",
+      "Košice",
+      "Chelsea",
+      "Vitesse",
+      "Benfica",
+      "Manchester United",
+      "Roma",
+      "Rennes",
+      "Lyon"
+    ]
+  },
+  "Aleksandar Kolarov": {
+    "nationality": "Serbia",
+    "position": "Defender",
+    "clubs": [
+      "Čukarički",
+      "OFK Beograd",
+      "Lazio",
+      "Manchester City",
+      "Roma",
+      "Inter"
+    ]
+  },
+  "Miralem Pjanić": {
+    "nationality": "Bosnia and Herzegovina",
+    "position": "Midfield",
+    "clubs": [
+      "Metz",
+      "Lyon",
+      "Roma",
+      "Juventus",
+      "Barcelona",
+      "Besiktas",
+      "Sharjah",
+      "CSKA Moscow"
+    ]
+  },
+  "Goran Pandev": {
+    "nationality": "North Macedonia",
+    "position": "Attack",
+    "clubs": [
+      "Belasica",
+      "Inter",
+      "Spezia",
+      "Ancona",
+      "Lazio",
+      "Napoli",
+      "Galatasaray",
+      "Genoa",
+      "Parma"
+    ]
+  },
+  "Martin Škrtel": {
+    "nationality": "Slovakia",
+    "position": "Defender",
+    "clubs": [
+      "Trenčín",
+      "Zenit Saint Petersburg",
+      "Liverpool",
+      "Fenerbahce",
+      "Atalanta",
+      "Basaksehir",
+      "Spartak Trnava"
+    ]
+  },
+  "Karel Poborský": {
+    "nationality": "Czech Republic",
+    "position": "Midfield",
+    "clubs": [
+      "České Budějovice",
+      "Viktoria Žižkov",
+      "Slavia Prague",
+      "Manchester United",
+      "Benfica",
+      "Lazio",
+      "Sparta Prague"
+    ]
+  },
+  "Milan Baroš": {
+    "nationality": "Czech Republic",
+    "position": "Attack",
+    "clubs": [
+      "Baník Ostrava",
+      "Liverpool",
+      "Aston Villa",
+      "Lyon",
+      "Portsmouth",
+      "Galatasaray",
+      "Antalyaspor",
+      "Mladá Boleslav",
+      "Slovan Liberec"
+    ]
+  },
+  "Vladimír Šmicer": {
+    "nationality": "Czech Republic",
+    "position": "Midfield",
+    "clubs": [
+      "Slavia Prague",
+      "Lens",
+      "Liverpool",
+      "Bordeaux"
+    ]
+  },
+  "Carlos Valderrama": {
+    "nationality": "Colombia",
+    "position": "Midfield",
+    "clubs": [
+      "Unión Magdalena",
+      "Millonarios",
+      "Deportivo Cali",
+      "Montpellier",
+      "Real Valladolid",
+      "Independiente Medellín",
+      "Junior",
+      "Tampa Bay Mutiny",
+      "Miami Fusion",
+      "Colorado Rapids"
+    ]
+  },
+  "Juan Cuadrado": {
+    "nationality": "Colombia",
+    "position": "Midfield",
+    "clubs": [
+      "Independiente Medellín",
+      "Udinese",
+      "Lecce",
+      "Fiorentina",
+      "Chelsea",
+      "Juventus",
+      "Inter",
+      "Atalanta"
+    ]
+  },
+  "Duván Zapata": {
+    "nationality": "Colombia",
+    "position": "Attack",
+    "clubs": [
+      "América de Cali",
+      "Estudiantes",
+      "Napoli",
+      "Udinese",
+      "Sampdoria",
+      "Atalanta",
+      "Torino"
+    ]
+  },
+  "Luis Muriel": {
+    "nationality": "Colombia",
+    "position": "Attack",
+    "clubs": [
+      "Deportivo Cali",
+      "Granada",
+      "Lecce",
+      "Udinese",
+      "Sampdoria",
+      "Sevilla",
+      "Fiorentina",
+      "Atalanta",
+      "Orlando City"
+    ]
+  },
+  "Iván Zamorano": {
+    "nationality": "Chile",
+    "position": "Attack",
+    "clubs": [
+      "Cobresal",
+      "Cobreandino",
+      "St. Gallen",
+      "Sevilla",
+      "Real Madrid",
+      "Inter",
+      "América",
+      "Colo-Colo"
+    ]
+  },
+  "Claudio Bravo": {
+    "nationality": "Chile",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Colo-Colo",
+      "Real Sociedad",
+      "Barcelona",
+      "Manchester City",
+      "Real Betis"
+    ]
+  },
+  "Diego Forlán": {
+    "nationality": "Uruguay",
+    "position": "Attack",
+    "clubs": [
+      "Independiente",
+      "Manchester United",
+      "Villarreal",
+      "Atletico Madrid",
+      "Inter",
+      "Internacional",
+      "Cerezo Osaka",
+      "Peñarol",
+      "Mumbai City",
+      "Kitchee"
+    ]
+  },
+  "Diego Godín": {
+    "nationality": "Uruguay",
+    "position": "Defender",
+    "clubs": [
+      "Defensor Sporting",
+      "Cerro",
+      "Nacional",
+      "Villarreal",
+      "Atletico Madrid",
+      "Inter",
+      "Cagliari",
+      "Atlético Mineiro",
+      "Vélez Sarsfield",
+      "Porongos"
+    ]
+  },
+  "Enzo Francescoli": {
+    "nationality": "Uruguay",
+    "position": "Attack",
+    "clubs": [
+      "Montevideo Wanderers",
+      "River Plate",
+      "Racing Paris",
+      "Marseille",
+      "Cagliari",
+      "Torino"
+    ]
+  },
+  "Javier Hernández": {
+    "nationality": "Mexico",
+    "position": "Attack",
+    "clubs": [
+      "Guadalajara",
+      "Manchester United",
+      "Real Madrid",
+      "Bayer Leverkusen",
+      "West Ham United",
+      "Sevilla",
+      "LA Galaxy"
+    ]
+  },
+  "Rafael Márquez": {
+    "nationality": "Mexico",
+    "position": "Defender",
+    "clubs": [
+      "Atlas",
+      "Monaco",
+      "Barcelona",
+      "New York Red Bulls",
+      "León",
+      "Hellas Verona"
+    ]
+  },
+  "Cuauhtémoc Blanco": {
+    "nationality": "Mexico",
+    "position": "Attack",
+    "clubs": [
+      "América",
+      "Necaxa",
+      "Real Valladolid",
+      "Veracruz",
+      "Chicago Fire",
+      "Santos Laguna",
+      "Irapuato",
+      "La Piedad",
+      "Dorados de Sinaloa",
+      "Lobos BUAP",
+      "Puebla"
+    ]
+  },
+  "Hugo Sánchez": {
+    "nationality": "Mexico",
+    "position": "Attack",
+    "clubs": [
+      "UNAM",
+      "San Diego Sockers",
+      "Atletico Madrid",
+      "Real Madrid",
+      "América",
+      "Rayo Vallecano",
+      "Atlante",
+      "Linz",
+      "Dallas Burn",
+      "Celaya"
+    ]
+  },
+  "Andrés Guardado": {
+    "nationality": "Mexico",
+    "position": "Midfield",
+    "clubs": [
+      "Atlas",
+      "Deportivo La Coruña",
+      "Valencia",
+      "Bayer Leverkusen",
+      "PSV Eindhoven",
+      "Real Betis",
+      "León"
+    ]
+  },
+  "Carlos Vela": {
+    "nationality": "Mexico",
+    "position": "Attack",
+    "clubs": [
+      "Arsenal",
+      "Salamanca",
+      "Osasuna",
+      "West Bromwich Albion",
+      "Real Sociedad",
+      "Los Angeles FC"
+    ]
+  },
+  "Jay-Jay Okocha": {
+    "nationality": "Nigeria",
+    "position": "Midfield",
+    "clubs": [
+      "Borussia Neunkirchen",
+      "Eintracht Frankfurt",
+      "Fenerbahce",
+      "Paris Saint-Germain",
+      "Bolton Wanderers",
+      "Qatar SC",
+      "Hull City"
+    ]
+  },
+  "Daniel Amokachi": {
+    "nationality": "Nigeria",
+    "position": "Attack",
+    "clubs": [
+      "Ranchers Bees",
+      "Club Brugge",
+      "Everton",
+      "Besiktas",
+      "Colorado Rapids",
+      "Nasarawa United"
+    ]
+  },
+  "Rashidi Yekini": {
+    "nationality": "Nigeria",
+    "position": "Attack",
+    "clubs": [
+      "Shooting Stars",
+      "Abiola Babes",
+      "Africa Sports",
+      "Vitória de Setúbal",
+      "Olympiacos",
+      "Sporting Gijón",
+      "Zürich",
+      "CA Bizertin",
+      "Al-Shabab",
+      "Julius Berger",
+      "Gateway"
+    ]
+  },
+  "Tijani Babangida": {
+    "nationality": "Nigeria",
+    "position": "Attack",
+    "clubs": [
+      "Roda JC",
+      "VVV-Venlo",
+      "Ajax",
+      "Gençlerbirliği",
+      "Vitesse",
+      "Al-Ittihad",
+      "Changchun Yatai"
+    ]
+  },
+  "Taribo West": {
+    "nationality": "Nigeria",
+    "position": "Defender",
+    "clubs": [
+      "Sharks",
+      "Enugu Rangers",
+      "Julius Berger",
+      "Auxerre",
+      "Inter",
+      "AC Milan",
+      "Derby County",
+      "Kaiserslautern",
+      "Partizan",
+      "Al-Arabi",
+      "Plymouth Argyle",
+      "Paykan"
+    ]
+  },
+  "John Obi Mikel": {
+    "nationality": "Nigeria",
+    "position": "Midfield",
+    "clubs": [
+      "Lyn",
+      "Chelsea",
+      "Tianjin TEDA",
+      "Middlesbrough",
+      "Trabzonspor",
+      "Stoke City",
+      "Kuwait SC"
+    ]
+  },
+  "Victor Moses": {
+    "nationality": "Nigeria",
+    "position": "Attack",
+    "clubs": [
+      "Crystal Palace",
+      "Wigan Athletic",
+      "Chelsea",
+      "Liverpool",
+      "Stoke City",
+      "West Ham United",
+      "Fenerbahce",
+      "Inter",
+      "Spartak Moscow",
+      "Luton Town"
+    ]
+  },
+  "Victor Osimhen": {
+    "nationality": "Nigeria",
+    "position": "Attack",
+    "clubs": [
+      "Wolfsburg",
+      "Charleroi",
+      "Lille",
+      "Napoli",
+      "Galatasaray"
+    ]
+  },
+  "Sulley Muntari": {
+    "nationality": "Ghana",
+    "position": "Midfield",
+    "clubs": [
+      "Udinese",
+      "Portsmouth",
+      "Inter",
+      "Sunderland",
+      "AC Milan",
+      "Al-Ittihad",
+      "Pescara",
+      "Deportivo La Coruña",
+      "Hearts of Oak"
+    ]
+  },
+  "Stephen Appiah": {
+    "nationality": "Ghana",
+    "position": "Midfield",
+    "clubs": [
+      "Hearts of Oak",
+      "Udinese",
+      "Parma",
+      "Brescia",
+      "Juventus",
+      "Fenerbahce",
+      "Bologna",
+      "Cesena",
+      "Vojvodina"
+    ]
+  },
+  "Asamoah Gyan": {
+    "nationality": "Ghana",
+    "position": "Attack",
+    "clubs": [
+      "Liberty Professionals",
+      "Udinese",
+      "Modena",
+      "Rennes",
+      "Sunderland",
+      "Al-Ain",
+      "Shanghai SIPG",
+      "Shabab Al-Ahli",
+      "Kayserispor",
+      "NorthEast United",
+      "Legon Cities"
+    ]
+  },
+  "Frédéric Kanouté": {
+    "nationality": "Mali",
+    "position": "Attack",
+    "clubs": [
+      "Lyon",
+      "West Ham United",
+      "Tottenham Hotspur",
+      "Sevilla",
+      "Beijing Guoan"
+    ]
+  },
+  "Sadio Mané": {
+    "nationality": "Senegal",
+    "position": "Attack",
+    "clubs": [
+      "Metz",
+      "Red Bull Salzburg",
+      "Southampton",
+      "Liverpool",
+      "Bayern Munich",
+      "Al-Nassr"
+    ]
+  },
+  "Rabah Madjer": {
+    "nationality": "Algeria",
+    "position": "Attack",
+    "clubs": [
+      "NA Hussein Dey",
+      "Racing Paris",
+      "Tours",
+      "Porto",
+      "Valencia",
+      "Qatar SC"
+    ]
+  },
+  "Roger Milla": {
+    "nationality": "Cameroon",
+    "position": "Attack",
+    "clubs": [
+      "Éclair de Douala",
+      "Léopards Douala",
+      "Tonnerre Yaoundé",
+      "Valenciennes",
+      "Monaco",
+      "Bastia",
+      "Saint-Étienne",
+      "Montpellier",
+      "Saint-Pierroise",
+      "Pelita Jaya",
+      "Putra Samarinda"
+    ]
+  },
+  "Rigobert Song": {
+    "nationality": "Cameroon",
+    "position": "Defender",
+    "clubs": [
+      "Tonnerre Yaoundé",
+      "Metz",
+      "Salernitana",
+      "Liverpool",
+      "West Ham United",
+      "Köln",
+      "Lens",
+      "Galatasaray",
+      "Trabzonspor"
+    ]
+  },
+  "Thomas N'Kono": {
+    "nationality": "Cameroon",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Canon Yaoundé",
+      "Tonnerre Yaoundé",
+      "Espanyol",
+      "Sabadell",
+      "Hospitalet",
+      "Bolívar"
+    ]
+  },
+  "Hidetoshi Nakata": {
+    "nationality": "Japan",
+    "position": "Midfield",
+    "clubs": [
+      "Bellmare Hiratsuka",
+      "Perugia",
+      "Roma",
+      "Parma",
+      "Bologna",
+      "Fiorentina",
+      "Bolton Wanderers"
+    ]
+  },
+  "Shunsuke Nakamura": {
+    "nationality": "Japan",
+    "position": "Midfield",
+    "clubs": [
+      "Yokohama F. Marinos",
+      "Reggina",
+      "Celtic",
+      "Espanyol",
+      "Júbilo Iwata",
+      "Yokohama FC"
+    ]
+  },
+  "Keisuke Honda": {
+    "nationality": "Japan",
+    "position": "Midfield",
+    "clubs": [
+      "Nagoya Grampus",
+      "VVV-Venlo",
+      "CSKA Moscow",
+      "AC Milan",
+      "Pachuca",
+      "Melbourne Victory",
+      "Vitesse",
+      "Botafogo",
+      "Portimonense",
+      "Neftçi",
+      "Sūduva"
+    ]
+  },
+  "Shinji Kagawa": {
+    "nationality": "Japan",
+    "position": "Midfield",
+    "clubs": [
+      "Cerezo Osaka",
+      "Borussia Dortmund",
+      "Manchester United",
+      "Besiktas",
+      "Real Zaragoza",
+      "PAOK",
+      "Sint-Truiden"
+    ]
+  },
+  "Park Ji-sung": {
+    "nationality": "South Korea",
+    "position": "Midfield",
+    "clubs": [
+      "Kyoto Purple Sanga",
+      "PSV Eindhoven",
+      "Manchester United",
+      "Queens Park Rangers"
+    ]
+  },
+  "Cha Bum-kun": {
+    "nationality": "South Korea",
+    "position": "Attack",
+    "clubs": [
+      "Darmstadt 98",
+      "Eintracht Frankfurt",
+      "Bayer Leverkusen"
+    ]
+  },
+  "Ali Daei": {
+    "nationality": "Iran",
+    "position": "Attack",
+    "clubs": [
+      "Esteghlal Ardabil",
+      "Taxirani",
+      "Bank Tejarat",
+      "Persepolis",
+      "Al-Sadd",
+      "Arminia Bielefeld",
+      "Bayern Munich",
+      "Hertha Berlin",
+      "Al-Shabab",
+      "Saba Battery",
+      "Saipa"
+    ]
+  },
+  "Mehdi Mahdavikia": {
+    "nationality": "Iran",
+    "position": "Midfield",
+    "clubs": [
+      "Bank Melli",
+      "Persepolis",
+      "VfL Bochum",
+      "Hamburg",
+      "Eintracht Frankfurt",
+      "Steel Azin",
+      "Damash Gilan"
+    ]
+  },
+  "Tim Cahill": {
+    "nationality": "Australia",
+    "position": "Midfield",
+    "clubs": [
+      "Millwall",
+      "Everton",
+      "New York Red Bulls",
+      "Shanghai Shenhua",
+      "Hangzhou Greentown",
+      "Melbourne City",
+      "Jamshedpur"
+    ]
+  },
+  "Harry Kewell": {
+    "nationality": "Australia",
+    "position": "Attack",
+    "clubs": [
+      "Leeds United",
+      "Liverpool",
+      "Galatasaray",
+      "Melbourne Victory",
+      "Al-Gharafa",
+      "Melbourne Heart"
+    ]
+  },
+  "Mark Viduka": {
+    "nationality": "Australia",
+    "position": "Attack",
+    "clubs": [
+      "Melbourne Knights",
+      "Dinamo Zagreb",
+      "Celtic",
+      "Leeds United",
+      "Middlesbrough",
+      "Newcastle United"
+    ]
+  },
+  "Mark Schwarzer": {
+    "nationality": "Australia",
+    "position": "Goalkeeper",
+    "clubs": [
+      "Marconi Stallions",
+      "Dynamo Dresden",
+      "Kaiserslautern",
+      "Bradford City",
+      "Middlesbrough",
+      "Fulham",
+      "Chelsea",
+      "Leicester City"
+    ]
+  }
+}
+
+def main():
+    print(f"Building historical careers registry with {len(BASE_CAREERS)} legends...")
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+        json.dump(BASE_CAREERS, f, ensure_ascii=False, indent=2)
+    print(f"Saved {len(BASE_CAREERS)} careers to {OUTPUT_FILE} successfully!")
+
+if __name__ == '__main__':
+    main()

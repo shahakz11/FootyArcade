@@ -24,8 +24,8 @@ def sanitize_filename(name):
     s = str(name).strip().replace(" ", "_")
     return re.sub(r'[^\w\-]', '', s)
 
-async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=False):
-    url = f"http://localhost:8080/games/{game_id}.html"
+async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=False, port=8080):
+    url = f"http://localhost:{port}/games/{game_id}.html"
     
     WIDTH, HEIGHT = 1080, 1920
     FPS = 30
@@ -167,6 +167,8 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
             cta_title = "CAN YOU GUESS #1 AND #3? 🤔"
         elif game_id in ["transfer_destination", "club_connect"]:
             cta_title = "CAN YOU GUESS THE MYSTERY CLUBS? 🤔"
+        elif game_id == "player_chain":
+            cta_title = "CAN YOU CRACK THE CAREER CHAIN? ⛓️"
         else:
             cta_title = "CAN YOU SOLVE THE MYSTERY PUZZLE? 🤔"
             
@@ -295,10 +297,13 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
             await capture_hold(12) # 0.4s brief alert hold
 
         target_name = ""
-        if await page.locator("#target-name").count() > 0:
+        if game_id == "player_chain":
+            target_name = await page.evaluate("typeof DAILY_CHAIN_GAME !== 'undefined' ? DAILY_CHAIN_GAME.target_player : 'player_chain'")
+        elif await page.locator("#target-name").count() > 0:
             target_name = await page.inner_text("#target-name")
         elif await page.locator("#player-name-display").count() > 0:
-            target_name = await page.inner_text("#player-name-display")
+            text = await page.inner_text("#player-name-display")
+            target_name = text if "?" not in text else game_id.upper()
         else:
             target_name = game_id.upper()
 
@@ -423,6 +428,36 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                     print(f"  ➜ Guessing #{idx+1}: {p_name}")
                     await make_guess(p_name, is_correct=True, do_countdown=True)
 
+        elif game_id == "player_chain":
+            chain_data = await page.evaluate("DAILY_CHAIN_GAME")
+            target_player = chain_data.get("target_player", "")
+            steps = chain_data.get("steps", [])
+            print(f"💡 Target Mystery Player (Hidden): {target_player}")
+            
+            # Step 1: Guess a valid player for Step 1 who is NOT the target player
+            if len(steps) > 0:
+                step1 = steps[0]
+                step1_players = [p for p in step1.get("valid_players", []) if p.lower() != target_player.lower()]
+                step1_guess = step1_players[0] if step1_players else "Andrea Pirlo"
+                print(f"  ➜ Step 1 Guess ({step1.get('club')}): {step1_guess}")
+                await make_guess(step1_guess, is_correct=True, do_countdown=True)
+                
+            # Step 2: Make a wrong guess first to show lives deduction & build tension, then solve Step 2
+            if len(steps) > 1:
+                step2 = steps[1]
+                step2_clubs = " & ".join(step2.get("active_clubs", []))
+                wrong_pool = ["Paolo Maldini", "Gianluigi Donnarumma", "Franco Baresi", "Gennaro Gattuso", "Kaka", "Lionel Messi"]
+                step2_valid = [p.lower() for p in step2.get("valid_players", [])]
+                wrong_candidates = [p for p in wrong_pool if p.lower() not in step2_valid]
+                wrong_guess = wrong_candidates[0] if wrong_candidates else "Paolo Maldini"
+                print(f"  ➜ Step 2 Wrong Guess (shows lives deduction): {wrong_guess}")
+                await make_guess(wrong_guess, is_correct=False, do_countdown=True)
+                
+                step2_players = [p for p in step2.get("valid_players", []) if p.lower() != target_player.lower()]
+                step2_guess = step2_players[0] if step2_players else "Clarence Seedorf"
+                print(f"  ➜ Step 2 Correct Guess ({step2_clubs}): {step2_guess}")
+                await make_guess(step2_guess, is_correct=True, do_countdown=True)
+
         # Final hold on full screen with CTA (~4.5s)
         await capture_hold(135)
 
@@ -455,8 +490,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate Playmaker Social Media Video Shorts")
     parser.add_argument("--game", default="top_transfers", help="Game ID (top_transfers, transfer_destination, top_scorers, club_connect, etc.)")
     parser.add_argument("--day", type=int, default=0, help="Day offset: -1 for yesterday, 0 for today, 1 for tomorrow")
+    parser.add_argument("--port", type=int, default=8080, help="Local server port (default: 8080)")
     parser.add_argument("--fast", action="store_true", help="Fast mode for quick rendering tests")
     args = parser.parse_args()
     
-    asyncio.run(record_short_video(game_id=args.game, day_offset=args.day, fast_mode=args.fast))
+    asyncio.run(record_short_video(game_id=args.game, day_offset=args.day, fast_mode=args.fast, port=args.port))
 

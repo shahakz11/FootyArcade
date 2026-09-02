@@ -45,6 +45,7 @@ python3 record_real_ui_short.py --game top_transfers --day 0
 python3 record_real_ui_short.py --game transfer_destination --day 0
 python3 record_real_ui_short.py --game top_scorers --day 0
 python3 record_real_ui_short.py --game club_connect --day 0
+python3 record_real_ui_short.py --game player_chain --day 0
 
 echo ""
 echo "======================================================="

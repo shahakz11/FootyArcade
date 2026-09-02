@@ -5,28 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Player Chain — Daily Football Career Puzzle | Playmaker</title>
     <meta name="description" content="Guess the mystery Player of the Day by identifying players who match an expanding chain of career clubs. Daily football challenge at Playmaker!"/>
-    <meta name="keywords" content="football trivia, player chain, career path quiz, playmaker, football wordle, soccer trivia, daily challenge"/>
+    <meta name="keywords" content="football trivia, player chain, career path quiz, playmaker, football wordle, soccer trivia, daily challenge, transfer quiz"/>
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
     <meta name="theme-color" content="#0e0e0e"/>
+    <link rel="canonical" href="https://playmaker.best/games/player_chain.html"/>
 
-    <!-- Favicons -->
+    <!-- PWA Web Manifest & Favicons -->
+    <link rel="manifest" href="../manifest.json"/>
+    <link rel="shortcut icon" href="../favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon.png"/>
+    <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon.png"/>
+    <link rel="icon" type="image/png" sizes="512x512" href="../assets/favicon.png"/>
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png"/>
 
-    <!-- Social Meta -->
+    <!-- Social Share Preview (OpenGraph / Twitter) -->
     <meta property="og:title" content="Player Chain — Daily Football Career Puzzle | Playmaker"/>
     <meta property="og:description" content="Guess the mystery Player of the Day by identifying players who match an expanding chain of career clubs. Daily football challenge at Playmaker!"/>
-    <meta property="og:image" content="https://playmaker.best/assets/og-image.png"/>
+    <meta property="og:image" content="https://playmaker.best/assets/social_share.png"/>
     <meta property="og:url" content="https://playmaker.best/games/player_chain.html"/>
     <meta property="og:type" content="website"/>
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="twitter:site" content="@best.playmaker"/>
     <meta name="twitter:title" content="Player Chain — Daily Football Career Puzzle | Playmaker"/>
     <meta name="twitter:description" content="Guess the mystery Player of the Day by identifying players who match an expanding chain of career clubs. Play now!"/>
-    <meta name="twitter:image" content="https://playmaker.best/assets/og-image.png"/>
+    <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <link rel="canonical" href="https://playmaker.best/games/player_chain.html"/>
-
-    <!-- Analytics Placeholder -->
+    <!-- Google Analytics Measurement ID Placeholder -->
     <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
 
     <!-- Tailwind & Google Fonts -->
@@ -510,7 +515,7 @@
 
     
     <script id="daily-game-data">
-        const DAILY_CHAIN_GAME = {"target_player": "Roberto Baggio", "target_nationality": "Italy", "target_position": "Attack - Second Striker", "total_steps": 4, "steps": [{"step_number": 1, "new_constraint": "Played for AC Milan", "club": "AC Milan", "active_constraints": ["Played for AC Milan"], "active_clubs": ["AC Milan"], "valid_players": ["Adel Taarabt", "Adil Rami", "Adnan Zahirovic", "Adrien Rabiot", "Adrià Carmona", "Alberto Aquilani", "Alberto Paloschi", "Alen Halilovic", "Alessandro Costacurta", "Alessandro Florenzi", "Alessandro Matri", "Alessandro Nesta", "Alessandro Plizzari", "Alessandro Sala", "Alessio Cerci", "Alessio Romagnoli", "Alex", "Alex Pontons", "Alexander Merkel", "Alexandre Pato", "Alexandro Cavagnera", "Alexis Saelemaekers", "Aliyu Datti", "Alphadjo Cissè", "Ameth Lo", "Andrea Bertolacci", "Andrea Bianchimano", "Andrea Conti", "Andrea Petagna", "Andrea Pirlo", "Andrea Poli", "Andrea Rabito", "Andrea Schenetti", "Andreas Jungdal", "Andrej Modic", "Andriy Shevchenko", "André Silva", "Andrés Guglielminpietro", "Andrés Llamas", "Angelo Carbone", "Ante Rebić", "Antonio Donnarumma", "Antonio Mionic", "Antonio Mirante", "Antonio Nocerino", "Ardon Jashari", "Asmir Begovic", "Aster Vranckx", "Attila Filkor", "Bartosz Salamon", "Bojan Krkic", "Brahim Díaz", "Bruno Montelongo", "Bryan Cristante", "Buba Jammeh", "Cafu", "Carlo Cudicini", "Carlo Teodorani", "Carlos Bacca", "Catilina Aubameyang", "Chaka Traorè", "Charles De Ketelaere", "Christian Abbiati", "Christian Comotto", "Christian Panucci", "Christian Pulisic", "Christian Vieri", "Christopher Nkunku", "Clarence Seedorf", "Cosmin Contra", "Cristian Brocchi", "Cristian Galliani", "Cristian Zaccardo", "Cristian Zapata", "Cristian Zenoni", "Cyril Domoraud", "Daniel Maldini", "Daniele Bonera", "Dario Simic", "Dario Smoje", "David Beckham", "David Odogu", "Davide Astori", "Davide Bartesaghi", "Davide Calabria", "Davide Di Gennaro", "Davide Di Molfetta", "Davide Dionigi", "Davide Facchin", "Davide Narduzzo", "Devis Vásquez", "Dida", "Diego Laxalt", "Diego López", "Diogo Dalot", "Divock Origi", "Djamel Mesbah", "Dominic Adiyiah", "Dídac Vilà", "Ebrima Ceesay", "Edgar Davids", "Edmund Hottor", "Elia Legati", "Emanuele Orlandi", "Emerson Royal", "Emil Roback", "Eros Favaretto", "Ezekiel Henty", "Fabio Borini", "Fabricio Coloccini", "Favour Aniekan", "Federico Furlan", "Felipe Mattioni", "Fernando Redondo", "Fernando Torres", "Fikayo Tomori", "Filippo Inzaghi", "Filippo Maniero", "Filippo Perucchini", "Filippo Porcari", "Filippo Terracciano", "Flavio Roma", "Fodé Ballo-Touré", "Francesco Acerbi", "Francesco Antonioli", "Francesco Camarda", "Francesco Coco", "Francesco De Francesco", "Francesco Toldo", "Franck Kessié", "Frank Tsadjout", "Gabriel", "Gabriel Paletta", "Gabriele Aldegani", "Gabriele Capanni", "Gennaro Gattuso", "Gerard Deulofeu", "Giacomo Beretta", "Giacomo Bonaventura", "Giampaolo Pazzini", "Giampiero Maini", "Gian Filippo Felicioli", "Gianluca Lapadula", "Gianluca Sordo", "Gianluca Zambrotta", "Gianluigi Donnarumma", "Gianluigi Lentini", "Gianmarco Zigoni", "Gianmario Comi", "Gianni Comandini", "Giorgio Frezzolini", "Giorgio Gianola", "Giovanni Crociata", "Giuseppe Cardone", "Giuseppe Pancaro", "Giuseppe Ticli", "Gonzalo Higuaín", "Gustavo Gómez", "Hachim Mastour", "Hakan Çalhanoğlu", "Harvey Esajas", "Hernán Crespo", "Ibrahim Bá", "Ignazio Abate", "Ismaël Bennacer", "Ismet Sinani", "Ivan De Santis", "Jaap Stam", "Jan-Carlo Simić", "Javi Moreno", "Jens Lehmann", "Jens Petter Hauge", "Jherson Vergara", "Johad Ferretti", "Johann Vogel", "Jon Dahl Tomasson", "José Chamot", "José Mari", "José Mauri", "José Sosa", "João Félix", "Junior Messias", "Juraj Kucka", "Jérémy Ménez", "Kakhaber Kaladze", "Kaká", "Keisuke Honda", "Kevin Zeroli", "Kevin-Prince Boateng", "Kingsley Boateng", "Kingsley Umunegbu", "Koni De Winter", "Krisztián Tamás", "Krzysztof Piatek", "Kyle Walker", "Kévin Constant", "Lapo Nava", "Leandro Grimi", "Leonardo", "Leonardo Bonucci", "Leonel Vangioni", "Leroy Abanda", "Lino Marzorati", "Lorenzo Colombo", "Lorenzo Torriani", "Luan Capanni", "Luca Antonelli", "Luca Antonini", "Luca Ceccarelli", "Luca Scapuzzi", "Luca Vido", "Lucas Ocampos", "Lucas Paquetá", "Luiz Adriano", "Luka Jović", "Luka Modrić", "Luka Romero", "Léo Duarte", "M'Baye Niang", "Malick Thiaw", "Manuel Locatelli", "Marcel Desailly", "Marco Amelia", "Marco Bergamini", "Marco Bonura", "Marco Borriello", "Marco Bortoli", "Marco Brescianini", "Marco Fossati", "Marco Frigerio", "Marco Nasti", "Marco Pellegrino", "Marco Pinato", "Marco Speranza", "Marco Sportiello", "Marco Storari", "Marco van Ginkel", "Marcus Diniz", "Marek Jankulovski", "Mario Balotelli", "Mario Pašalić", "Mario Stancanelli", "Mario Yepes", "Marko Lazetić", "Martin Laursen", "Martino Traversa", "Massimo Ambrosini", "Massimo Donati", "Massimo Maccarone", "Mateo Musacchio", "Mathieu Flamini", "Mathías Cardacio", "Matteo Ardemagni", "Matteo Bruscagin", "Matteo Contini", "Matteo Darmian", "Matteo Gabbia", "Matteo Pelatti", "Matteo Pessina", "Mattia Caldara", "Mattia De Sciglio", "Mattia Desolé", "Mattia Destro", "Mattia El Hilali", "Mattia Graffiedi", "Mattia Valoti", "Matías Silvestre", "Maurizio Domizzi", "Maurizio Ganz", "Mauro Bacchin", "Max Tonetto", "Maxi López", "Michael Agazzi", "Michael Essien", "Michael Fabbro", "Michal Miskiewicz", "Michelangelo Albertazzi", "Michele Ferri", "Michele Piccolo", "Mike Maignan", "Mirco Sadotti", "Momodou Cham", "Mustapha Deen", "Niccolò Zanellato", "Niclas Füllkrug", "Nicola Corrent", "Nicola Legrottaglie", "Nicola Pozzi", "Nigel de Jong", "Noah Okafor", "Oguchi Onyewu", "Olivier Giroud", "Pablo Armero", "Paolo Di Canio", "Paolo Ginestra", "Paolo Maldini", "Paolo Sammarco", "Pasquale Foggia", "Patrick Cutrone", "Patrick Kalambay", "Patrick Vieira", "Pelé", "Pepe Reina", "Pervis Estupiñán", "Philippe Mexès", "Philippe Senderos", "Pierre Kalulu", "Pierre-Emerick Aubameyang", "Pietro Pellegri", "Pietro Terracciano", "Rade Krunic", "Rafael Leão", "Ricardo Oliveira", "Ricardo Rodríguez", "Riccardo Forte", "Riccardo Montolivo", "Riccardo Saponara", "Riccardo Sottil", "Riccardo Tonin", "Rivaldo", "Roberto Baggio", "Roberto De Zerbi", "Roberto Massaro", "Robinho", "Rodney Strasser", "Rodrigo Ely", "Ronaldinho", "Ronaldo", "Roque Júnior", "Ruben Loftus-Cheek", "Rui Costa", "Sabino Signorile", "Salvatore Bocchetti", "Samir Beloufa", "Samu Castillejo", "Samuel Chukwueze", "Samuele Dalla Bona", "Samuele Ricci", "Sandro Bloudek", "Sandro Tonali", "Santiago Gimenez", "Serginho", "Sergiño Dest", "Simon Kjær", "Simone Ganz", "Simone Giovanni Brunelli", "Simone Romagnoli", "Simone Verdi", "Sokratis Papastathopoulos", "Soualiho Meïté", "Stefan Simic", "Stephan El Shaarawy", "Strahinja Pavlović", "Sulley Muntari", "Suso", "Tammy Abraham", "Taribo West", "Theo Hernández", "Thiago Silva", "Thomas Helveg", "Tiago Dias", "Tiemoué Bakayoko", "Tijjani Reijnders", "Tommaso Pobega", "Urby Emanuelson", "Valerio Fiori", "Valter Birsa", "Vincenzo Maiolo", "Vitaliy Kutuzov", "Warren Bondo", "Wilfred Osuji", "William Nava", "William-Fils Aubameyang", "Winston Bogarde", "Yacine Adli", "Youssouf Fofana", "Yunus Musah", "Zachary Athekame", "Zan Benedicic", "Zizi Roberts", "Zlatan Ibrahimović", "Álex Jiménez", "Álvaro Morata"]}, {"step_number": 2, "new_constraint": "Played for Inter", "club": "Inter", "active_constraints": ["Played for AC Milan", "Played for Inter"], "active_clubs": ["AC Milan", "Inter"], "valid_players": ["Andrea Pirlo", "Andrea Poli", "Andrés Guglielminpietro", "Attila Filkor", "Christian Panucci", "Christian Vieri", "Clarence Seedorf", "Cristian Brocchi", "Cyril Domoraud", "Dario Simic", "Diego Laxalt", "Edgar Davids", "Edmund Hottor", "Francesco Acerbi", "Francesco Coco", "Francesco Toldo", "Giampaolo Pazzini", "Giorgio Frezzolini", "Giuseppe Ticli", "Hakan Çalhanoğlu", "Hernán Crespo", "Leonardo Bonucci", "Luca Ceccarelli", "Mario Balotelli", "Matteo Darmian", "Mattia Destro", "Matías Silvestre", "Maurizio Ganz", "Paolo Ginestra", "Patrick Vieira", "Pelé", "Roberto Baggio", "Ronaldo", "Sulley Muntari", "Taribo West", "Thomas Helveg", "Zlatan Ibrahimović"]}, {"step_number": 3, "new_constraint": "Played for Juventus", "club": "Juventus", "active_constraints": ["Played for AC Milan", "Played for Inter", "Played for Juventus"], "active_clubs": ["AC Milan", "Inter", "Juventus"], "valid_players": ["Andrea Pirlo", "Christian Vieri", "Edgar Davids", "Leonardo Bonucci", "Patrick Vieira", "Roberto Baggio", "Zlatan Ibrahimović"]}, {"step_number": 4, "new_constraint": "Played for Bologna", "club": "Bologna", "active_constraints": ["Played for AC Milan", "Played for Inter", "Played for Juventus", "Played for Bologna"], "active_clubs": ["AC Milan", "Inter", "Juventus", "Bologna"], "valid_players": ["Roberto Baggio"]}]};
+        const DAILY_CHAIN_GAME = {"target_player": "Roberto Baggio", "target_nationality": "Italy", "target_position": "Attack - Second Striker", "total_steps": 4, "steps": [{"step_number": 1, "new_constraint": "Played for AC Milan", "club": "AC Milan", "active_constraints": ["Played for AC Milan"], "active_clubs": ["AC Milan"], "valid_players": ["Adel Taarabt", "Adil Rami", "Adnan Zahirovic", "Adrien Rabiot", "Adrià Carmona", "Alberto Aquilani", "Alberto Gilardino", "Alberto Paloschi", "Alen Halilovic", "Alessandro Costacurta", "Alessandro Florenzi", "Alessandro Matri", "Alessandro Nesta", "Alessandro Plizzari", "Alessandro Sala", "Alessio Cerci", "Alessio Romagnoli", "Alex", "Alex Pontons", "Alexander Merkel", "Alexandre Pato", "Alexandro Cavagnera", "Alexis Saelemaekers", "Aliyu Datti", "Alphadjo Cissè", "Ameth Lo", "Andrea Bertolacci", "Andrea Bianchimano", "Andrea Conti", "Andrea Petagna", "Andrea Pirlo", "Andrea Poli", "Andrea Rabito", "Andrea Schenetti", "Andreas Jungdal", "Andrej Modic", "Andriy Shevchenko", "André Silva", "Andrés Guglielminpietro", "Andrés Llamas", "Angelo Carbone", "Ante Rebić", "Antonio Donnarumma", "Antonio Mionic", "Antonio Mirante", "Antonio Nocerino", "Ardon Jashari", "Asmir Begovic", "Aster Vranckx", "Attila Filkor", "Bartosz Salamon", "Bojan Krkic", "Brahim Díaz", "Brian Laudrup", "Bruno Montelongo", "Bryan Cristante", "Buba Jammeh", "Cafu", "Carlo Cudicini", "Carlo Teodorani", "Carlos Bacca", "Catilina Aubameyang", "Chaka Traorè", "Charles De Ketelaere", "Christian Abbiati", "Christian Comotto", "Christian Panucci", "Christian Pulisic", "Christian Vieri", "Christopher Nkunku", "Clarence Seedorf", "Cosmin Contra", "Cristian Brocchi", "Cristian Galliani", "Cristian Zaccardo", "Cristian Zapata", "Cristian Zenoni", "Cyril Domoraud", "Daniel Maldini", "Daniele Bonera", "Dario Simic", "Dario Smoje", "David Beckham", "David Odogu", "Davide Astori", "Davide Bartesaghi", "Davide Calabria", "Davide Di Gennaro", "Davide Di Molfetta", "Davide Dionigi", "Davide Facchin", "Davide Narduzzo", "Dejan Savićević", "Devis Vásquez", "Dida", "Diego Laxalt", "Diego López", "Diogo Dalot", "Divock Origi", "Djamel Mesbah", "Dominic Adiyiah", "Dídac Vilà", "Ebrima Ceesay", "Edgar Davids", "Edmund Hottor", "Elia Legati", "Emanuele Orlandi", "Emerson", "Emerson Royal", "Emil Roback", "Eros Favaretto", "Ezekiel Henty", "Fabio Borini", "Fabricio Coloccini", "Favour Aniekan", "Federico Furlan", "Felipe Mattioni", "Ferdinando Coppola", "Fernando Redondo", "Fernando Torres", "Fikayo Tomori", "Filippo Inzaghi", "Filippo Maniero", "Filippo Perucchini", "Filippo Porcari", "Filippo Terracciano", "Flavio Roma", "Fodé Ballo-Touré", "Francesco Acerbi", "Francesco Antonioli", "Francesco Camarda", "Francesco Coco", "Francesco De Francesco", "Francesco Toldo", "Franck Kessié", "Franco Baresi", "Frank Rijkaard", "Frank Tsadjout", "Gabriel", "Gabriel Paletta", "Gabriele Aldegani", "Gabriele Capanni", "Gennaro Gattuso", "George Weah", "Gerard Deulofeu", "Giacomo Beretta", "Giacomo Bonaventura", "Giampaolo Pazzini", "Giampiero Maini", "Gian Filippo Felicioli", "Gianluca Lapadula", "Gianluca Sordo", "Gianluca Zambrotta", "Gianluigi Donnarumma", "Gianluigi Lentini", "Gianmarco Zigoni", "Gianmario Comi", "Gianni Comandini", "Giorgio Frezzolini", "Giorgio Gianola", "Giovane Élber", "Giovanni Crociata", "Giuseppe Cardone", "Giuseppe Favalli", "Giuseppe Pancaro", "Giuseppe Ticli", "Gonzalo Higuaín", "Gustavo Gómez", "Hachim Mastour", "Hakan Çalhanoğlu", "Harmony Ikande", "Harvey Esajas", "Hernán Crespo", "Ibrahim Bá", "Ignazio Abate", "Ismaël Bennacer", "Ismet Sinani", "Ivan De Santis", "Jaap Stam", "Jan-Carlo Simić", "Javi Moreno", "Jean-Pierre Papin", "Jens Lehmann", "Jens Petter Hauge", "Jherson Vergara", "Johad Ferretti", "Johann Vogel", "Jon Dahl Tomasson", "José Chamot", "José Mari", "José Mauri", "José Sosa", "João Félix", "Junior Messias", "Juraj Kucka", "Jérémy Ménez", "Kakhaber Kaladze", "Kaká", "Keisuke Honda", "Kevin Zeroli", "Kevin-Prince Boateng", "Kingsley Boateng", "Kingsley Umunegbu", "Klaas-Jan Huntelaar", "Koni De Winter", "Krisztián Tamás", "Krzysztof Piatek", "Kyle Walker", "Kévin Constant", "Lapo Nava", "Leandro Grimi", "Leonardo", "Leonardo Bonucci", "Leonel Vangioni", "Leroy Abanda", "Lino Marzorati", "Lorenzo Colombo", "Lorenzo Torriani", "Luan Capanni", "Luca Antonelli", "Luca Antonini", "Luca Ceccarelli", "Luca Scapuzzi", "Luca Vido", "Lucas Biglia", "Lucas Ocampos", "Lucas Paquetá", "Luiz Adriano", "Luka Jović", "Luka Modrić", "Luka Romero", "Léo Duarte", "M'Baye Niang", "Malick Thiaw", "Manuel Locatelli", "Marcel Desailly", "Marco Amelia", "Marco Bergamini", "Marco Bonura", "Marco Borriello", "Marco Bortoli", "Marco Brescianini", "Marco Donadel", "Marco Fossati", "Marco Frigerio", "Marco Nasti", "Marco Pellegrino", "Marco Pinato", "Marco Speranza", "Marco Sportiello", "Marco Storari", "Marco van Basten", "Marco van Ginkel", "Marcus Diniz", "Marek Jankulovski", "Mario Balotelli", "Mario Mandžukić", "Mario Pašalić", "Mario Stancanelli", "Mario Yepes", "Mark van Bommel", "Marko Lazetić", "Martin Laursen", "Martino Traversa", "Massimo Ambrosini", "Massimo Donati", "Massimo Maccarone", "Mateo Musacchio", "Mathieu Flamini", "Mathías Cardacio", "Matteo Ardemagni", "Matteo Bruscagin", "Matteo Contini", "Matteo Darmian", "Matteo Gabbia", "Matteo Pelatti", "Matteo Pessina", "Mattia Caldara", "Mattia De Sciglio", "Mattia Desolé", "Mattia Destro", "Mattia El Hilali", "Mattia Graffiedi", "Mattia Valoti", "Matías Silvestre", "Maurizio Domizzi", "Maurizio Ganz", "Mauro Bacchin", "Mauro Tassotti", "Max Tonetto", "Maxi López", "Michael Agazzi", "Michael Essien", "Michael Fabbro", "Michal Miskiewicz", "Michelangelo Albertazzi", "Michele Ferri", "Michele Piccolo", "Mike Maignan", "Mirco Sadotti", "Mohamed Sarr", "Momodou Cham", "Mustapha Deen", "Márcio Amoroso", "Niccolò Zanellato", "Niclas Füllkrug", "Nicola Corrent", "Nicola Legrottaglie", "Nicola Pozzi", "Nigel de Jong", "Nnamdi Oduamadi", "Noah Okafor", "Oguchi Onyewu", "Oliver Bierhoff", "Olivier Giroud", "Pablo Armero", "Pablo García", "Paolo Di Canio", "Paolo Ginestra", "Paolo Maldini", "Paolo Sammarco", "Pasquale Foggia", "Patrick Cutrone", "Patrick Kalambay", "Patrick Kluivert", "Patrick Vieira", "Pelé", "Pepe Reina", "Pervis Estupiñán", "Philippe Mexès", "Philippe Senderos", "Pierre Kalulu", "Pierre-Emerick Aubameyang", "Pietro Pellegri", "Pietro Terracciano", "Rade Krunic", "Rafael Leão", "Ricardo Oliveira", "Ricardo Rodríguez", "Riccardo Forte", "Riccardo Montolivo", "Riccardo Saponara", "Riccardo Sottil", "Riccardo Tonin", "Rivaldo", "Roberto Baggio", "Roberto De Zerbi", "Roberto Massaro", "Robinho", "Rodney Strasser", "Rodrigo Ely", "Ronaldinho", "Ronaldo", "Roque Júnior", "Ruben Loftus-Cheek", "Rui Costa", "Ruud Gullit", "Sabino Signorile", "Salvatore Bocchetti", "Samir Beloufa", "Samu Castillejo", "Samuel Chukwueze", "Samuele Dalla Bona", "Samuele Ricci", "Sandro Bloudek", "Sandro Tonali", "Santiago Gimenez", "Serginho", "Sergiño Dest", "Simon Kjær", "Simone Ganz", "Simone Giovanni Brunelli", "Simone Romagnoli", "Simone Verdi", "Sokratis Papastathopoulos", "Soualiho Meïté", "Stefan Simic", "Stephan El Shaarawy", "Strahinja Pavlović", "Sulley Muntari", "Suso", "Tabaré Viúdez", "Tammy Abraham", "Taribo West", "Theo Hernández", "Thiago Silva", "Thomas Helveg", "Tiago Dias", "Tiemoué Bakayoko", "Tijjani Reijnders", "Tommaso Pobega", "Urby Emanuelson", "Valerio Fiori", "Valter Birsa", "Vincenzo Maiolo", "Vitaliy Kutuzov", "Warren Bondo", "Wilfred Osuji", "William Nava", "William-Fils Aubameyang", "Winston Bogarde", "Yacine Adli", "Yoann Gourcuff", "Youssouf Fofana", "Yunus Musah", "Zachary Athekame", "Zan Benedicic", "Zizi Roberts", "Zlatan Ibrahimović", "Zvonimir Boban", "Álex Jiménez", "Álvaro Morata"]}, {"step_number": 2, "new_constraint": "Played for Inter", "club": "Inter", "active_constraints": ["Played for AC Milan", "Played for Inter"], "active_clubs": ["AC Milan", "Inter"], "valid_players": ["Andrea Pirlo", "Andrea Poli", "Andrés Guglielminpietro", "Attila Filkor", "Christian Panucci", "Christian Vieri", "Clarence Seedorf", "Cristian Brocchi", "Cyril Domoraud", "Dario Simic", "Diego Laxalt", "Edgar Davids", "Edmund Hottor", "Francesco Acerbi", "Francesco Coco", "Francesco Toldo", "Giampaolo Pazzini", "Giorgio Frezzolini", "Giuseppe Favalli", "Giuseppe Ticli", "Hakan Çalhanoğlu", "Hernán Crespo", "Leonardo Bonucci", "Luca Ceccarelli", "Mario Balotelli", "Matteo Darmian", "Mattia Destro", "Matías Silvestre", "Maurizio Ganz", "Paolo Ginestra", "Patrick Vieira", "Pelé", "Roberto Baggio", "Ronaldo", "Sulley Muntari", "Taribo West", "Thomas Helveg", "Zlatan Ibrahimović"]}, {"step_number": 3, "new_constraint": "Played for Juventus", "club": "Juventus", "active_constraints": ["Played for AC Milan", "Played for Inter", "Played for Juventus"], "active_clubs": ["AC Milan", "Inter", "Juventus"], "valid_players": ["Andrea Pirlo", "Christian Vieri", "Edgar Davids", "Leonardo Bonucci", "Patrick Vieira", "Roberto Baggio", "Zlatan Ibrahimović"]}, {"step_number": 4, "new_constraint": "Played for Bologna", "club": "Bologna", "active_constraints": ["Played for AC Milan", "Played for Inter", "Played for Juventus", "Played for Bologna"], "active_clubs": ["AC Milan", "Inter", "Juventus", "Bologna"], "valid_players": ["Roberto Baggio"]}]};
         const ALL_PLAYERS = [
   {
     "Name": "Silvio Adzic",
@@ -527266,6 +527271,756 @@
     "Name": "Aidan Melville",
     "Nationality": "Puerto Rico",
     "Position": "Midfield"
+  },
+  {
+    "Name": "Dennis Bergkamp",
+    "Nationality": "Netherlands",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Patrick Kluivert",
+    "Nationality": "Netherlands",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Frank de Boer",
+    "Nationality": "Netherlands",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Marc Overmars",
+    "Nationality": "Netherlands",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Jari Litmanen",
+    "Nationality": "Finland",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Finidi George",
+    "Nationality": "Nigeria",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Sunday Oliseh",
+    "Nationality": "Nigeria",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Brian Laudrup",
+    "Nationality": "Denmark",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Michael Laudrup",
+    "Nationality": "Denmark",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Ronald Koeman",
+    "Nationality": "Netherlands",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Frank Rijkaard",
+    "Nationality": "Netherlands",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Marco van Basten",
+    "Nationality": "Netherlands",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Ruud Gullit",
+    "Nationality": "Netherlands",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Johan Cruyff",
+    "Nationality": "Netherlands",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Ivica Olić",
+    "Nationality": "Croatia",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Tomáš Rosický",
+    "Nationality": "Czech Republic",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Zinedine Zidane",
+    "Nationality": "France",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Robert Pires",
+    "Nationality": "France",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Eric Cantona",
+    "Nationality": "France",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Alan Shearer",
+    "Nationality": "England",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Gabriel Batistuta",
+    "Nationality": "Argentina",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Luis Figo",
+    "Nationality": "Portugal",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Petr Čech",
+    "Nationality": "Czech Republic",
+    "Position": "Goalkeeper"
+  },
+  {
+    "Name": "Pavel Nedvěd",
+    "Nationality": "Czech Republic",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Phillip Cocu",
+    "Nationality": "Netherlands",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Boudewijn Zenden",
+    "Nationality": "Netherlands",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Dani Carvajal",
+    "Nationality": "Spain",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Fernando Hierro",
+    "Nationality": "Spain",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Angel Di Maria",
+    "Nationality": "Argentina",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Steve McManaman",
+    "Nationality": "England",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Ivan Rakitić",
+    "Nationality": "Croatia",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Juliano Belletti",
+    "Nationality": "Brazil",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Gheorghe Hagi",
+    "Nationality": "Romania",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Luis Enrique",
+    "Nationality": "Spain",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Pep Guardiola",
+    "Nationality": "Spain",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Sergi Barjuán",
+    "Nationality": "Spain",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Guillermo Amor",
+    "Nationality": "Spain",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "José Mari Bakero",
+    "Nationality": "Spain",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Txiki Begiristain",
+    "Nationality": "Spain",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Andoni Zubizarreta",
+    "Nationality": "Spain",
+    "Position": "Goalkeeper"
+  },
+  {
+    "Name": "Franco Baresi",
+    "Nationality": "Italy",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Mauro Tassotti",
+    "Nationality": "Italy",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Zvonimir Boban",
+    "Nationality": "Croatia",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Dejan Savićević",
+    "Nationality": "Montenegro",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "George Weah",
+    "Nationality": "Liberia",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Oliver Bierhoff",
+    "Nationality": "Germany",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Giuseppe Bergomi",
+    "Nationality": "Italy",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Dejan Stanković",
+    "Nationality": "Serbia",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Diego Simeone",
+    "Nationality": "Argentina",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Jürgen Klinsmann",
+    "Nationality": "Germany",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Lothar Matthäus",
+    "Nationality": "Germany",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Andreas Brehme",
+    "Nationality": "Germany",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Dino Zoff",
+    "Nationality": "Italy",
+    "Position": "Goalkeeper"
+  },
+  {
+    "Name": "Gaetano Scirea",
+    "Nationality": "Italy",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Antonio Cabrini",
+    "Nationality": "Italy",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Michel Platini",
+    "Nationality": "France",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Didier Deschamps",
+    "Nationality": "France",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Mario Mandžukić",
+    "Nationality": "Croatia",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Edin Džeko",
+    "Nationality": "Bosnia and Herzegovina",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Siniša Mihajlović",
+    "Nationality": "Serbia",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Giuseppe Favalli",
+    "Nationality": "Italy",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Fernando Couto",
+    "Nationality": "Portugal",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Matías Almeyda",
+    "Nationality": "Argentina",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Roberto Mancini",
+    "Nationality": "Italy",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Giuseppe Signori",
+    "Nationality": "Italy",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Angelo Peruzzi",
+    "Nationality": "Italy",
+    "Position": "Goalkeeper"
+  },
+  {
+    "Name": "Diego Maradona",
+    "Nationality": "Argentina",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Marek Hamšík",
+    "Nationality": "Slovakia",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Enrico Chiesa",
+    "Nationality": "Italy",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Giancarlo Antognoni",
+    "Nationality": "Italy",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Daniel Passarella",
+    "Nationality": "Argentina",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Dunga",
+    "Nationality": "Brazil",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Antonio Benarrivo",
+    "Nationality": "Italy",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Dino Baggio",
+    "Nationality": "Italy",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Faustino Asprilla",
+    "Nationality": "Colombia",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Nemanja Vidić",
+    "Nationality": "Serbia",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Robbie Fowler",
+    "Nationality": "England",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Ian Rush",
+    "Nationality": "Wales",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Kenny Dalglish",
+    "Nationality": "Scotland",
+    "Position": "Attack"
+  },
+  {
+    "Name": "John Barnes",
+    "Nationality": "England",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Branislav Ivanović",
+    "Nationality": "Serbia",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Eiður Guðjohnsen",
+    "Nationality": "Iceland",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Son Heung-min",
+    "Nationality": "South Korea",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Paul Gascoigne",
+    "Nationality": "England",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Gary Lineker",
+    "Nationality": "England",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Tony Adams",
+    "Nationality": "England",
+    "Position": "Defender"
+  },
+  {
+    "Name": "David Seaman",
+    "Nationality": "England",
+    "Position": "Goalkeeper"
+  },
+  {
+    "Name": "Ray Parlour",
+    "Nationality": "England",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Martin Keown",
+    "Nationality": "England",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Sylvain Wiltord",
+    "Nationality": "France",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Lauren",
+    "Nationality": "Cameroon",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Franz Beckenbauer",
+    "Nationality": "Germany",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Gerd Müller",
+    "Nationality": "Germany",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Sepp Maier",
+    "Nationality": "Germany",
+    "Position": "Goalkeeper"
+  },
+  {
+    "Name": "Paul Breitner",
+    "Nationality": "Germany",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Uli Hoeneß",
+    "Nationality": "Germany",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Karl-Heinz Rummenigge",
+    "Nationality": "Germany",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Klaus Augenthaler",
+    "Nationality": "Germany",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Stefan Effenberg",
+    "Nationality": "Germany",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Giovane Élber",
+    "Nationality": "Brazil",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Mario Gomez",
+    "Nationality": "Germany",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Matthias Sammer",
+    "Nationality": "Germany",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Jürgen Kohler",
+    "Nationality": "Germany",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Stefan Reuter",
+    "Nationality": "Germany",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Andreas Möller",
+    "Nationality": "Germany",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Lars Ricken",
+    "Nationality": "Germany",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Stéphane Chapuisat",
+    "Nationality": "Switzerland",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Karl-Heinz Riedle",
+    "Nationality": "Germany",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Márcio Amoroso",
+    "Nationality": "Brazil",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Neven Subotić",
+    "Nationality": "Serbia",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Łukasz Piszczek",
+    "Nationality": "Poland",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Nuri Şahin",
+    "Nationality": "Turkey",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Ulf Kirsten",
+    "Nationality": "Germany",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Bernd Schneider",
+    "Nationality": "Germany",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Oliver Neuville",
+    "Nationality": "Germany",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Johan Micoud",
+    "Nationality": "France",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Ivan Klasnić",
+    "Nationality": "Croatia",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Mladen Petrić",
+    "Nationality": "Croatia",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Sergej Barbarez",
+    "Nationality": "Bosnia and Herzegovina",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Pauleta",
+    "Nationality": "Portugal",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Bernard Lama",
+    "Nationality": "France",
+    "Position": "Goalkeeper"
+  },
+  {
+    "Name": "Jean-Pierre Papin",
+    "Nationality": "France",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Chris Waddle",
+    "Nationality": "England",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Abedi Pele",
+    "Nationality": "Ghana",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Basile Boli",
+    "Nationality": "France",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Juninho Pernambucano",
+    "Nationality": "Brazil",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Grégory Coupet",
+    "Nationality": "France",
+    "Position": "Goalkeeper"
+  },
+  {
+    "Name": "Simão Sabrosa",
+    "Nationality": "Portugal",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Vítor Baía",
+    "Nationality": "Portugal",
+    "Position": "Goalkeeper"
+  },
+  {
+    "Name": "Maniche",
+    "Nationality": "Portugal",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Yevhen Konoplyanka",
+    "Nationality": "Ukraine",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Martin Škrtel",
+    "Nationality": "Slovakia",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Karel Poborský",
+    "Nationality": "Czech Republic",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Milan Baroš",
+    "Nationality": "Czech Republic",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Vladimír Šmicer",
+    "Nationality": "Czech Republic",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Carlos Valderrama",
+    "Nationality": "Colombia",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Iván Zamorano",
+    "Nationality": "Chile",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Enzo Francescoli",
+    "Nationality": "Uruguay",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Rafael Márquez",
+    "Nationality": "Mexico",
+    "Position": "Defender"
+  },
+  {
+    "Name": "Daniel Amokachi",
+    "Nationality": "Nigeria",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Rashidi Yekini",
+    "Nationality": "Nigeria",
+    "Position": "Attack"
+  },
+  {
+    "Name": "John Obi Mikel",
+    "Nationality": "Nigeria",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Rabah Madjer",
+    "Nationality": "Algeria",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Roger Milla",
+    "Nationality": "Cameroon",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Thomas N'Kono",
+    "Nationality": "Cameroon",
+    "Position": "Goalkeeper"
+  },
+  {
+    "Name": "Hidetoshi Nakata",
+    "Nationality": "Japan",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Park Ji-sung",
+    "Nationality": "South Korea",
+    "Position": "Midfield"
+  },
+  {
+    "Name": "Cha Bum-kun",
+    "Nationality": "South Korea",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Ali Daei",
+    "Nationality": "Iran",
+    "Position": "Attack"
+  },
+  {
+    "Name": "Mark Viduka",
+    "Nationality": "Australia",
+    "Position": "Attack"
   }
 ];
         const GAME_NOTE = "Transfer and career data updated to July 2026.";

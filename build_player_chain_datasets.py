@@ -109,7 +109,7 @@ ALIASES = {
     'Sporting CP': 'Sporting CP', 'Sporting Lisbon': 'Sporting CP', 'Sporting': 'Sporting CP',
     'SL Benfica': 'Benfica', 'Benfica': 'Benfica',
     'FC Porto': 'Porto', 'Porto': 'Porto',
-    'AFC Ajax': 'Ajax', 'Ajax': 'Ajax',
+    'AFC Ajax': 'Ajax', 'Ajax': 'Ajax', 'Ajax Amsterdam': 'Ajax', 'AFC Ajax Amsterdam': 'Ajax',
     'PSV Eindhoven': 'PSV Eindhoven', 'PSV': 'PSV Eindhoven',
     'Feyenoord Rotterdam': 'Feyenoord', 'Feyenoord': 'Feyenoord',
     'Galatasaray SK': 'Galatasaray', 'Galatasaray': 'Galatasaray',
@@ -134,11 +134,17 @@ ALIASES = {
     'New York City FC': 'New York City', 'New York City': 'New York City',
 }
 
+NON_CLUBS = {
+    'retired', 'without club', 'career break', 'unknown', 'unknown club',
+    'ban', 'death', 'suspended', 'disqualified', 'draft', 'end of career',
+    'special olympics', 'none'
+}
+
 def clean_club_name(val):
     if not isinstance(val, str):
         return ''
     val = val.strip().strip('.').strip('"').strip("'")
-    if not val or YOUTH_PATTERNS.search(val):
+    if not val or val.lower() in NON_CLUBS or YOUTH_PATTERNS.search(val):
         return ''
     if val in ALIASES:
         return ALIASES[val]
@@ -149,6 +155,9 @@ def clean_club_name(val):
     cleaned = PREFIX_PATTERN.sub('', cleaned)
     cleaned = SUFFIX_PATTERN.sub('', cleaned)
     cleaned = cleaned.strip().strip('.')
+
+    if not cleaned or cleaned.lower() in NON_CLUBS:
+        return ''
 
     if cleaned in ALIASES:
         return ALIASES[cleaned]
@@ -180,22 +189,26 @@ def build_player_career_database():
 
     # 1. Davidcariboo transfers
     dc_path = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions/671')
+    dc_id_map = {}
     if os.path.exists(dc_path):
-        print("Reading Davidcariboo transfers...")
+        print("Reading Davidcariboo players & transfers...")
+        df_dc_p = pd.read_csv(os.path.join(dc_path, 'players.csv'), usecols=['player_id', 'name'], low_memory=False)
+        dc_id_map = dict(zip(df_dc_p['player_id'], df_dc_p['name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True)))
+
         df_dc_t = pd.read_csv(
             os.path.join(dc_path, 'transfers.csv'),
             usecols=['player_name', 'from_club_name', 'to_club_name'],
             low_memory=False
         )
-        for _, r in df_dc_t.iterrows():
-            name = str(r['player_name']).strip()
+        for row in df_dc_t.itertuples(index=False):
+            name = str(row.player_name).strip()
             if name and name != 'nan' and name in player_metadata:
-                c1 = clean_club_name(str(r['from_club_name']))
-                c2 = clean_club_name(str(r['to_club_name']))
+                c1 = clean_club_name(str(row.from_club_name))
+                c2 = clean_club_name(str(row.to_club_name))
                 if c1: p_clubs[name].add(c1)
                 if c2: p_clubs[name].add(c2)
 
-    # 2. Salimt transfers
+    # 2. Salimt transfers (using unified ID map so players like Chivu are mapped)
     salimt_path = os.path.expanduser('~/.cache/kagglehub/datasets/xfkzujqjvx97n/football-datasets/versions/2')
     if os.path.exists(salimt_path):
         print("Reading Salimt profiles & transfers...")
@@ -205,19 +218,22 @@ def build_player_career_database():
             low_memory=False
         )
         p_prof['name'] = p_prof['player_name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True)
-        salimt_map = dict(zip(p_prof['player_id'], p_prof['name']))
+        salimt_id_map = dict(zip(p_prof['player_id'], p_prof['name']))
+
+        # Unified ID map combines both sources
+        unified_id_map = {**dc_id_map, **salimt_id_map}
 
         salimt_tr = pd.read_csv(
             os.path.join(salimt_path, 'transfer_history', 'transfer_history.csv'),
             usecols=['player_id', 'from_team_name', 'to_team_name'],
             low_memory=False
         )
-        for _, r in salimt_tr.iterrows():
-            pid = r['player_id']
-            name = salimt_map.get(pid, '').strip()
+        for row in salimt_tr.itertuples(index=False):
+            pid = row.player_id
+            name = unified_id_map.get(pid, '').strip()
             if name and name != 'nan' and name in player_metadata:
-                c1 = clean_club_name(str(r['from_team_name']))
-                c2 = clean_club_name(str(r['to_team_name']))
+                c1 = clean_club_name(str(row.from_team_name))
+                c2 = clean_club_name(str(row.to_team_name))
                 if c1: p_clubs[name].add(c1)
                 if c2: p_clubs[name].add(c2)
 
@@ -438,6 +454,30 @@ def build_player_career_database():
             if clean_c:
                 p_clubs[name].add(clean_c)
 
+    # 4. Offline historical careers enrichment (covers Sneijder, Bergkamp, Kluivert, etc.)
+    hist_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'historical_careers.json')
+    if os.path.exists(hist_file):
+        print(f"Loading historical careers from {hist_file}...")
+        with open(hist_file, 'r', encoding='utf-8') as f_h:
+            hist_data = json.load(f_h)
+        for name, data in hist_data.items():
+            if name not in player_metadata:
+                player_metadata[name] = {
+                    'name': name,
+                    'nationality': data.get('nationality', ''),
+                    'position': data.get('position', '')
+                }
+            else:
+                if data.get('nationality') and not player_metadata[name].get('nationality'):
+                    player_metadata[name]['nationality'] = data['nationality']
+                if data.get('position') and not player_metadata[name].get('position'):
+                    player_metadata[name]['position'] = data['position']
+
+            for c in data.get('clubs', []):
+                clean_c = clean_club_name(c)
+                if clean_c:
+                    p_clubs[name].add(clean_c)
+
     print(f"Total mapped players: {len(p_clubs)}")
     return p_clubs, player_metadata
 
@@ -558,14 +598,23 @@ def generate_puzzles(p_clubs, player_metadata, total_puzzles=180):
         'Gonzalo Higuaín': ['River Plate', 'Real Madrid', 'Napoli', 'Juventus'],
     }
 
-    # Helper to find valid players for a set of clubs
+    # Inverted index for O(1) set-intersection lookups instead of scanning 90,000+ players
+    club_to_players = defaultdict(set)
+    for p_name, p_clubset in p_clubs.items():
+        if p_name and p_name != 'nan':
+            for c in p_clubset:
+                club_to_players[c].add(p_name)
+
     def find_valid(club_set):
-        matches = []
-        for p_name, p_clubset in p_clubs.items():
-            if p_name and p_name != 'nan' and club_set.issubset(p_clubset):
-                matches.append(p_name)
-        matches.sort()
-        return matches
+        if not club_set:
+            return []
+        club_list = list(club_set)
+        valid_set = club_to_players.get(club_list[0], set()).copy()
+        for c in club_list[1:]:
+            valid_set &= club_to_players.get(c, set())
+            if not valid_set:
+                break
+        return sorted(list(valid_set))
 
     for candidate in all_candidates:
         if puzzle_day > total_puzzles:
