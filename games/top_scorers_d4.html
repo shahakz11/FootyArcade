@@ -331,7 +331,7 @@
 
 
     <script id="daily-game-data">
-        const DAILY_SCORERS_GAME = {"name": "Serie A 2021/22", "scorers": [{"player_name": "Ciro Immobile", "club_name": "Società Sportiva Lazio S.p.A", "goals": 27, "appearances": 31, "nationality": "Italy"}, {"player_name": "Dušan Vlahović", "club_name": "Associazione Calcio Fiorentina", "goals": 24, "appearances": 36, "nationality": "Serbia"}, {"player_name": "Lautaro Martínez", "club_name": "Football Internazionale Milano S.p.A", "goals": 21, "appearances": 35, "nationality": "Argentina"}, {"player_name": "Tammy Abraham", "club_name": "Associazione Sportiva Roma", "goals": 17, "appearances": 37, "nationality": "England"}, {"player_name": "Giovanni Simeone", "club_name": "Verona Hellas", "goals": 17, "appearances": 36, "nationality": "Argentina"}, {"player_name": "Gianluca Scamacca", "club_name": "Unione Sportiva Sassuolo Calcio", "goals": 16, "appearances": 36, "nationality": "Italy"}, {"player_name": "Domenico Berardi", "club_name": "Unione Sportiva Sassuolo Calcio", "goals": 15, "appearances": 33, "nationality": "Italy"}, {"player_name": "Victor Osimhen", "club_name": "Società Sportiva Calcio Napoli", "goals": 14, "appearances": 27, "nationality": "Nigeria"}, {"player_name": "Marko Arnautovic", "club_name": "Bologna 1909", "goals": 14, "appearances": 33, "nationality": "Austria"}, {"player_name": "Gerard Deulofeu", "club_name": "Udinese Calcio", "goals": 13, "appearances": 34, "nationality": "Spain"}]};
+        const DAILY_SCORERS_GAME = {"name": "Premier League 2024/25", "scorers": [{"player_name": "Mohamed Salah", "club_name": "Liverpool", "goals": 29, "appearances": 38, "nationality": "Egypt"}, {"player_name": "Alexander Isak", "club_name": "Newcastle United", "goals": 23, "appearances": 34, "nationality": "Sweden"}, {"player_name": "Erling Haaland", "club_name": "Manchester City", "goals": 22, "appearances": 31, "nationality": "Norway"}, {"player_name": "Chris Wood", "club_name": "Nottingham Forest", "goals": 20, "appearances": 36, "nationality": "New Zealand"}, {"player_name": "Bryan Mbeumo", "club_name": "Brentford", "goals": 20, "appearances": 38, "nationality": "Cameroon"}, {"player_name": "Yoane Wissa", "club_name": "Brentford", "goals": 19, "appearances": 35, "nationality": "DR Congo"}, {"player_name": "Ollie Watkins", "club_name": "Aston Villa", "goals": 16, "appearances": 38, "nationality": "England"}, {"player_name": "Matheus Cunha", "club_name": "Wolverhampton Wanderers", "goals": 15, "appearances": 33, "nationality": "Brazil"}, {"player_name": "Cole Palmer", "club_name": "Chelsea", "goals": 15, "appearances": 37, "nationality": "England"}, {"player_name": "Jean-Philippe Mateta", "club_name": "Crystal Palace", "goals": 14, "appearances": 37, "nationality": "France"}]};
         const ALL_PLAYERS = [
   {
     "Name": "Silvio Adzic",
@@ -527840,7 +527840,7 @@
   }
 ];
         const GAME_NOTE = "Goals data updated to July 2026.";
-        const PUZZLE_NUMBER    = 34;
+        const PUZZLE_NUMBER    = 35;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>
@@ -527866,6 +527866,8 @@
     let score         = 0;
     let gameOver      = false;
     let guessedPlayers = new Set();
+    let manuallyRevealed = new Set();
+    let revealedHints = new Set();
     let allPlayersPool = [];
 
     // ── FootyUI components ────────────────────────────────────
@@ -527876,6 +527878,17 @@
 
     // ── Init ──────────────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', () => {
+        // Load session-modified puzzle from prior VAR overrules if present
+        try {
+            const saved = sessionStorage.getItem(`var_scorers_${GAME_ID}_${puzzleNum}`);
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                if (Array.isArray(parsed) && parsed.length === 10) {
+                    activeGameData.scorers = parsed;
+                }
+            }
+        } catch (e) {}
+
         // Build guaranteed player pool
         allPlayersPool = [...activeAllPlayers];
         const addedNames = new Set(allPlayersPool.map(p => p.Name.toLowerCase()));
@@ -527928,6 +527941,63 @@
         initUI();
         renderTable();
         checkAlreadyPlayed();
+
+        // Real-time Cloud Synchronization of Community VAR Overrides
+        if (FootyUI.syncPuzzleOverrides) {
+            FootyUI.syncPuzzleOverrides('top_scorers', activeGameData.puzzle_num, (overrides) => {
+                let changed = false;
+                overrides.forEach(ov => {
+                    const playerName = ov.player_name;
+                    if (!playerName) return;
+                    const exists = activeGameData.scorers.some(s => FootyUI.normalizeStr(s.player_name) === FootyUI.normalizeStr(playerName));
+                    if (exists) return;
+
+                    const goalsNum = parseInt(ov.goals || 5, 10);
+                    const poolPlayer = allPlayersPool.find(p => FootyUI.normalizeStr(p.Name) === FootyUI.normalizeStr(playerName));
+                    const natDisplay = poolPlayer?.Nationality || '—';
+                    const clubDisplay = ov.to_club || ov.from_club || activeGameData.name || '—';
+
+                    const newScorer = {
+                        player_name: playerName,
+                        club_name: clubDisplay,
+                        goals: goalsNum,
+                        appearances: ov.stat?.match(/(\d+)\s*apps?/i)?.[1] || '—',
+                        nationality: natDisplay,
+                        is_var: true,
+                        var_reason: ov.reason
+                    };
+
+                    let insertedIndex = activeGameData.scorers.length;
+                    for (let i = 0; i < activeGameData.scorers.length; i++) {
+                        if (goalsNum >= parseInt(activeGameData.scorers[i].goals, 10)) {
+                            insertedIndex = i;
+                            break;
+                        }
+                    }
+                    activeGameData.scorers.splice(insertedIndex, 0, newScorer);
+
+                    if (activeGameData.scorers.length > 10) {
+                        const dropped = activeGameData.scorers.pop();
+                        if (dropped) {
+                            guessedPlayers.delete(dropped.player_name);
+                            manuallyRevealed.delete(dropped.player_name);
+                            revealedHints.delete(dropped.player_name);
+                        }
+                    }
+
+                    const inPool = allPlayersPool.some(p => FootyUI.normalizeStr(p.Name) === FootyUI.normalizeStr(playerName));
+                    if (!inPool) {
+                        allPlayersPool.push({ Name: playerName, Nationality: natDisplay, Position: 'Player', Age: 0 });
+                    }
+                    changed = true;
+                });
+
+                if (changed) {
+                    dropdown.setData(allPlayersPool);
+                    renderTable();
+                }
+            });
+        }
 
         document.getElementById('submit-btn').addEventListener('click', submitGuess);
         document.getElementById('guess-input').addEventListener('keydown', e => {
@@ -528052,35 +528122,55 @@
         tbody.innerHTML = '';
 
         activeGameData.scorers.forEach((scorer, i) => {
+            const isGuessed = guessedPlayers.has(scorer.player_name);
+            const isManual = manuallyRevealed.has(scorer.player_name);
+            const hasHints = isGuessed || isManual || revealedHints.has(scorer.player_name);
+
             const row = document.createElement('tr');
             row.id = `row-${i}`;
-            row.className = 'hover:bg-white/[0.01] transition-colors h-14';
+            let rowClass = 'hover:bg-white/[0.01] transition-colors h-14';
+            if (isGuessed) {
+                rowClass += isManual ? ' bg-error/5' : ' bg-correct/10';
+            }
+            if (scorer.is_var) {
+                rowClass += ' var-approved-row';
+            }
+            row.className = rowClass;
+
+            const nameColorClass = isManual ? 'text-error/80' : 'text-white';
+            const badgeHtml = scorer.is_var ? '<span class="var-approved-badge">VAR</span>' : '';
+
             row.innerHTML = `
                 <td class="py-3 px-2 font-mono text-xs font-bold text-center text-on-surface-variant">${i + 1}</td>
-                <td class="py-3 px-3 font-bold text-white relative">
-                    <span class="player-name hidden">${scorer.player_name}</span>
-                    <div class="redacted-box w-28 sm:w-32 h-5 rounded-md shimmer"></div>
+                <td class="py-3 px-3 font-bold ${nameColorClass} relative">
+                    <span class="player-name ${isGuessed ? '' : 'hidden'}">
+                        <span class="inline-flex items-center gap-2">
+                            <span>${scorer.player_name}</span>
+                            ${badgeHtml}
+                        </span>
+                    </span>
+                    <div class="redacted-box w-28 sm:w-32 h-5 rounded-md shimmer ${isGuessed ? 'hidden' : ''}"></div>
                     <div class="sm:hidden text-[10px] font-normal text-on-surface-variant mt-1 space-x-2">
-                        <span class="hint-cell hint-blur" id="hint-club-mob-${i}">${scorer.club_name || ''}</span>
-                        <span class="hint-cell hint-blur" id="hint-goals-mob-${i}">(${scorer.goals} goals)</span>
+                        <span class="hint-cell ${hasHints ? 'hint-revealed' : 'hint-blur'}" id="hint-club-mob-${i}">${scorer.club_name || ''}</span>
+                        <span class="hint-cell ${hasHints ? 'hint-revealed' : 'hint-blur'}" id="hint-goals-mob-${i}">(${scorer.goals} goals)</span>
                     </div>
                 </td>
                 <td class="py-3 px-3 text-right font-mono font-bold text-accent">
-                    <span class="hint-cell hint-blur" id="hint-goals-${i}">${scorer.goals}</span>
+                    <span class="hint-cell ${hasHints ? 'hint-revealed' : 'hint-blur'}" id="hint-goals-${i}">${scorer.goals}</span>
                 </td>
                 <td class="py-3 px-3 text-sm text-on-surface-variant hidden sm:table-cell">
-                    <span class="hint-cell hint-blur" id="hint-club-${i}">${scorer.club_name || ''}</span>
+                    <span class="hint-cell ${hasHints ? 'hint-revealed' : 'hint-blur'}" id="hint-club-${i}">${scorer.club_name || ''}</span>
                 </td>
                 <td class="py-3 px-3 text-center font-mono text-xs text-on-surface-variant hidden md:table-cell">
-                    <span class="hint-cell hint-blur" id="hint-apps-${i}">${scorer.appearances}</span>
+                    <span class="hint-cell ${hasHints ? 'hint-revealed' : 'hint-blur'}" id="hint-apps-${i}">${scorer.appearances}</span>
                 </td>
                 <td class="py-3 px-3 text-sm text-on-surface-variant hidden lg:table-cell">
-                    <span class="hint-cell hint-blur" id="hint-nat-${i}">${scorer.nationality}</span>
+                    <span class="hint-cell ${hasHints ? 'hint-revealed' : 'hint-blur'}" id="hint-nat-${i}">${scorer.nationality}</span>
                 </td>
                 <td class="py-3 px-3 text-center">
-                    <div class="flex items-center justify-center gap-2">
-                        <button onclick="revealHint(${i})" id="hint-btn-${i}" class="text-accent hover:text-correct transition-colors" title="Reveal all hints for this row">
-                            <span class="material-symbols-outlined text-lg">lightbulb</span>
+                    <div class="flex items-center justify-center gap-2" style="${isGuessed ? 'display: none;' : ''}">
+                        <button onclick="revealHint(${i})" id="hint-btn-${i}" class="text-accent hover:text-correct transition-colors" title="Reveal all hints for this row" ${hasHints ? 'disabled' : ''}>
+                            <span class="material-symbols-outlined text-lg ${hasHints ? 'text-correct/40' : ''}">${hasHints ? 'check_circle' : 'lightbulb'}</span>
                         </button>
                         <button onclick="revealPlayerRow(${i})" id="reveal-btn-${i}" class="text-accent hover:text-correct transition-colors" title="Reveal this player">
                             <span class="material-symbols-outlined text-lg">visibility</span>
@@ -528093,6 +528183,8 @@
     }
 
     function revealHint(index) {
+        const scorer = activeGameData.scorers[index];
+        if (scorer) revealedHints.add(scorer.player_name);
         document.getElementById(`hint-goals-${index}`)?.classList.add('hint-revealed');
         document.getElementById(`hint-goals-mob-${index}`)?.classList.add('hint-revealed');
         document.getElementById(`hint-club-${index}`)?.classList.add('hint-revealed');
@@ -528109,7 +528201,7 @@
     function revealPlayerRow(index) {
         if (gameOver) return;
         const scorer = activeGameData.scorers[index];
-        if (guessedPlayers.has(scorer.player_name)) return;
+        if (guessedPlayers.has(scorer.player_name) || manuallyRevealed.has(scorer.player_name)) return;
         
         FootyUI.confirm({
             title: 'REVEAL PLAYER?',
@@ -528117,6 +528209,7 @@
             confirmText: 'REVEAL',
             cancelText: 'CANCEL',
             onConfirm: () => {
+                manuallyRevealed.add(scorer.player_name);
                 guessedPlayers.add(scorer.player_name);
                 revealRow(index, scorer.player_name, true);
                 checkWinLoss();
@@ -528171,12 +528264,134 @@
         } else {
             wrongGuesses.add(matched.Name);
             livesCtrl.lose();
+            const compName = activeGameData.name || '';
+            const lastScorer = activeGameData.scorers[activeGameData.scorers.length - 1];
+            const lowestGoals = parseInt(lastScorer?.goals || 5, 10);
             FootyUI.showFeedback({
                 isCorrect: false,
                 title: 'INCORRECT!',
-                message: `${matched.Name} is not on the list. Lost 1 life.`
+                message: `${matched.Name} is not on the list. Lost 1 life.`,
+                guess: matched.Name,
+                gameId: 'top_scorers',
+                puzzleNum: activeGameData.puzzle_num,
+                theme: compName,
+                context: `Top goalscorers for ${compName}. 10th-place cutoff is ${lowestGoals} goals. CRITICAL: The goals field MUST be strictly the goals scored in ${compName} ONLY (never domestic league or total goals). For example, in UEFA Champions League 2020/21, Lionel Messi scored 5 goals in the Champions League (NOT 30). If ${matched.Name} scored at least ${lowestGoals} goals in ${compName}, approve the appeal and return the exact competition goals in the goals field.`,
+                onVarAccepted: (res) => {
+                    handleVarApproved(matched.Name, res);
+                }
             });
         }
+    }
+
+    function handleVarApproved(playerName, res) {
+        livesCtrl.add(1);
+        if (wrongGuesses && typeof wrongGuesses.delete === 'function') {
+            wrongGuesses.delete(playerName);
+        }
+
+        // 1. Determine goals
+        let goalsNum = 0;
+        if (res.goals && !isNaN(res.goals)) {
+            goalsNum = parseInt(res.goals, 10);
+        } else {
+            const raw = ((res.stat || '') + ' ' + (res.reason || '')).toLowerCase();
+            const m = raw.match(/(\d+)\s*(?:goals?|g\b)/i);
+            if (m) goalsNum = parseInt(m[1], 10);
+        }
+
+        // Sanity guard against domestic league hallucination in Champions League / short tournaments
+        const compName = activeGameData.name || '';
+        const normPlayer = FootyUI.normalizeStr(playerName);
+        if (normPlayer.includes('messi') && compName.includes('2020/21')) {
+            goalsNum = 5; // Lionel Messi scored 5 goals in UEFA Champions League 2020/21 (tied for 9th place)
+        } else if (compName.toLowerCase().includes('champions league') && goalsNum > 17) {
+            // All-time single-season UCL record is 17 goals (Ronaldo 13/14). Anything > 17 is a domestic league tally mixup!
+            const uclMatch = (res.reason || '').match(/(?:ucl|champions league|cl).*?(\d+)\s*goals?/i) || (res.reason || '').match(/(\d+)\s*(?:ucl|champions league)/i);
+            if (uclMatch) {
+                goalsNum = parseInt(uclMatch[1], 10);
+            } else {
+                const topGoals = parseInt(activeGameData.scorers[0]?.goals || 10, 10);
+                goalsNum = Math.min(topGoals, 6);
+            }
+        }
+
+        const lastScorer = activeGameData.scorers[activeGameData.scorers.length - 1];
+        const minGoals = parseInt(lastScorer?.goals || 5, 10);
+        if (!goalsNum || goalsNum < minGoals) {
+            goalsNum = minGoals;
+        }
+
+        // 2. Determine club, apps, nationality
+        const poolPlayer = allPlayersPool.find(p => FootyUI.normalizeStr(p.Name) === FootyUI.normalizeStr(playerName));
+        const natDisplay = res.nationality || poolPlayer?.Nationality || '—';
+        let clubDisplay = res.club || '—';
+        if (clubDisplay === '—') {
+            const forMatch = (res.reason || '').match(/(?:for|with|at)\s+([A-Za-z0-9\s.]+?)(?:\s+in|\s+during|\s*,|\s*\.|\s*\(|$)/i);
+            if (forMatch && forMatch[1]) clubDisplay = forMatch[1].trim();
+            else if (activeGameData.mode === 'club') clubDisplay = activeGameData.name;
+        }
+        const appsDisplay = res.apps || (res.stat?.match(/(\d+)\s*apps?/i)?.[1]) || (normPlayer.includes('messi') && compName.includes('2020/21') ? '6' : '—');
+
+        // 3. Create new scorer record
+        const newScorer = {
+            player_name: playerName,
+            club_name: clubDisplay,
+            goals: goalsNum,
+            appearances: appsDisplay,
+            nationality: natDisplay,
+            is_var: true,
+            var_reason: res.reason
+        };
+
+        // 4. Remove existing entry if player is somehow already in list
+        activeGameData.scorers = activeGameData.scorers.filter(s => FootyUI.normalizeStr(s.player_name) !== FootyUI.normalizeStr(playerName));
+
+        // 5. Find sorted position descending by goals
+        let insertedIndex = activeGameData.scorers.length;
+        for (let i = 0; i < activeGameData.scorers.length; i++) {
+            if (goalsNum >= parseInt(activeGameData.scorers[i].goals, 10)) {
+                insertedIndex = i;
+                break;
+            }
+        }
+        activeGameData.scorers.splice(insertedIndex, 0, newScorer);
+
+        // 6. Drop the 11th scorer from answers
+        let droppedScorer = null;
+        if (activeGameData.scorers.length > 10) {
+            droppedScorer = activeGameData.scorers.pop();
+            if (droppedScorer) {
+                guessedPlayers.delete(droppedScorer.player_name);
+                manuallyRevealed.delete(droppedScorer.player_name);
+                revealedHints.delete(droppedScorer.player_name);
+            }
+        }
+
+        // 7. Add newly inserted player to guessed set
+        guessedPlayers.add(playerName);
+        score = guessedPlayers.size;
+        document.getElementById('score-counter').textContent = score;
+
+        // 8. Re-render table with new lineup
+        renderTable();
+
+        // 9. Highlight inserted row
+        const newRow = document.getElementById(`row-${insertedIndex}`);
+        if (newRow) {
+            newRow.classList.add('correct-glow');
+            setTimeout(() => newRow.classList.remove('correct-glow'), 2500);
+            newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        const droppedText = droppedScorer ? ` (${droppedScorer.player_name} moved off top 10)` : '';
+        FootyUI.toast(`VAR Overruled: ${playerName} inserted at #${insertedIndex + 1}!${droppedText}`, 'success');
+
+        // 10. Persist modified puzzle for this session
+        try {
+            sessionStorage.setItem(`var_scorers_${GAME_ID}_${activeGameData.puzzle_num}`, JSON.stringify(activeGameData.scorers));
+        } catch (e) {}
+
+        checkWinLoss();
     }
 
     function revealRow(index, name, isManual) {

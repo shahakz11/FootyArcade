@@ -330,7 +330,7 @@
 
 
     <script id="daily-game-data">
-        const DAILY_TRANSFER_GAME = {"mode": "club", "name": "Schalke", "transfers": [{"player_name": "Breel Embolo", "from_club_name": "Basel", "to_club_name": "Schalke", "transfer_fee": "26500000.0", "transfer_date": "2016-07-01"}, {"player_name": "Nabil Bentaleb", "from_club_name": "Tottenham", "to_club_name": "Schalke", "transfer_fee": "19000000.0", "transfer_date": "2017-07-01"}, {"player_name": "Ozan Kabak", "from_club_name": "Stuttgart", "to_club_name": "Schalke", "transfer_fee": "15000000.0", "transfer_date": "2019-07-01"}, {"player_name": "Suat Serdar", "from_club_name": "Mainz", "to_club_name": "Schalke", "transfer_fee": "11000000.0", "transfer_date": "2018-07-01"}, {"player_name": "Benito Raman", "from_club_name": "F. Düsseldorf", "to_club_name": "Schalke", "transfer_fee": "10000000.0", "transfer_date": "2019-07-05"}, {"player_name": "Omar Mascarell", "from_club_name": "Real Madrid", "to_club_name": "Schalke", "transfer_fee": "10000000.0", "transfer_date": "2018-07-02"}, {"player_name": "Matija Nastasić", "from_club_name": "Man City", "to_club_name": "Schalke", "transfer_fee": "9500000.0", "transfer_date": "2015-07-01"}, {"player_name": "Rabbi Matondo", "from_club_name": "Man City U23", "to_club_name": "Schalke", "transfer_fee": "9000000.0", "transfer_date": "2019-01-30"}, {"player_name": "Amine Harit", "from_club_name": "FC Nantes", "to_club_name": "Schalke", "transfer_fee": "8000000.0", "transfer_date": "2017-07-10"}, {"player_name": "Benjamin Stambouli", "from_club_name": "PSG", "to_club_name": "Schalke", "transfer_fee": "8000000.0", "transfer_date": "2016-08-26"}]};
+        const DAILY_TRANSFER_GAME = {"mode": "club", "name": "Schalke", "transfers": [{"player_name": "Breel Embolo", "from_club_name": "Basel", "to_club_name": "Schalke", "transfer_fee": "26500000.0", "transfer_date": "2016-07-01"}, {"player_name": "Nabil Bentaleb", "from_club_name": "Tottenham", "to_club_name": "Schalke", "transfer_fee": "19000000.0", "transfer_date": "2017-07-01"}, {"player_name": "Ozan Kabak", "from_club_name": "Stuttgart", "to_club_name": "Schalke", "transfer_fee": "15000000.0", "transfer_date": "2019-07-01"}, {"player_name": "Klaas-Jan Huntelaar", "from_club_name": "AC Milan", "to_club_name": "Schalke", "transfer_fee": "14000000.0", "transfer_date": "2010-08-30"}, {"player_name": "Suat Serdar", "from_club_name": "Mainz", "to_club_name": "Schalke", "transfer_fee": "11000000.0", "transfer_date": "2018-07-01"}, {"player_name": "Benito Raman", "from_club_name": "F. Düsseldorf", "to_club_name": "Schalke", "transfer_fee": "10000000.0", "transfer_date": "2019-07-05"}, {"player_name": "Omar Mascarell", "from_club_name": "Real Madrid", "to_club_name": "Schalke", "transfer_fee": "10000000.0", "transfer_date": "2018-07-02"}, {"player_name": "Matija Nastasić", "from_club_name": "Man City", "to_club_name": "Schalke", "transfer_fee": "9500000.0", "transfer_date": "2015-07-01"}, {"player_name": "Rabbi Matondo", "from_club_name": "Man City U23", "to_club_name": "Schalke", "transfer_fee": "9000000.0", "transfer_date": "2019-01-30"}, {"player_name": "Amine Harit", "from_club_name": "FC Nantes", "to_club_name": "Schalke", "transfer_fee": "8000000.0", "transfer_date": "2017-07-10"}]};
         const ALL_PLAYERS = [
   {
     "Name": "Silvio Adzic",
@@ -527865,6 +527865,8 @@
     let score         = 0;
     let gameOver      = false;
     let guessedPlayers = new Set();
+    let manuallyRevealed = new Set();
+    let revealedHints = new Set();
     let allPlayersPool = [];
 
     // ── FootyUI components ────────────────────────────────────
@@ -527875,6 +527877,17 @@
 
     // ── Init ──────────────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', () => {
+        // Load session-modified puzzle from prior VAR overrules if present
+        try {
+            const saved = sessionStorage.getItem(`var_transfers_${GAME_ID}_${puzzleNum}`);
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                if (Array.isArray(parsed) && parsed.length === 10) {
+                    activeGameData.transfers = parsed;
+                }
+            }
+        } catch (e) {}
+
         // Build guaranteed player pool
         allPlayersPool = [...activeAllPlayers];
         const addedNames = new Set(allPlayersPool.map(p => p.Name.toLowerCase()));
@@ -527927,6 +527940,63 @@
         initUI();
         renderTable();
         checkAlreadyPlayed();
+
+        // Real-time Cloud Synchronization of Community VAR Overrides
+        if (FootyUI.syncPuzzleOverrides) {
+            FootyUI.syncPuzzleOverrides('top_transfers', activeGameData.puzzle_num, (overrides) => {
+                let changed = false;
+                overrides.forEach(ov => {
+                    const playerName = ov.player_name;
+                    if (!playerName) return;
+                    const exists = activeGameData.transfers.some(t => FootyUI.normalizeStr(t.player_name) === FootyUI.normalizeStr(playerName));
+                    if (exists) return;
+
+                    const feeNum = parseFloat(ov.fee_amount || 0);
+                    const yearStr = ov.year || '2010';
+                    const fromClub = ov.from_club || '—';
+                    const toClub = activeGameData.mode === 'club' ? activeGameData.name : (ov.to_club || '—');
+
+                    const newTransfer = {
+                        player_name: playerName,
+                        from_club_name: fromClub,
+                        to_club_name: toClub,
+                        transfer_fee: feeNum.toString(),
+                        transfer_date: `${yearStr}-07-01`,
+                        is_var: true,
+                        var_reason: ov.reason
+                    };
+
+                    let insertedIndex = activeGameData.transfers.length;
+                    for (let i = 0; i < activeGameData.transfers.length; i++) {
+                        if (feeNum >= parseFloat(activeGameData.transfers[i].transfer_fee)) {
+                            insertedIndex = i;
+                            break;
+                        }
+                    }
+                    activeGameData.transfers.splice(insertedIndex, 0, newTransfer);
+
+                    if (activeGameData.transfers.length > 10) {
+                        const dropped = activeGameData.transfers.pop();
+                        if (dropped) {
+                            guessedPlayers.delete(dropped.player_name);
+                            manuallyRevealed.delete(dropped.player_name);
+                            revealedHints.delete(dropped.player_name);
+                        }
+                    }
+
+                    const inPool = allPlayersPool.some(p => FootyUI.normalizeStr(p.Name) === FootyUI.normalizeStr(playerName));
+                    if (!inPool) {
+                        allPlayersPool.push({ Name: playerName, Nationality: '', Position: 'Player', Age: 0 });
+                    }
+                    changed = true;
+                });
+
+                if (changed) {
+                    dropdown.setData(allPlayersPool);
+                    renderTable();
+                }
+            });
+        }
 
         document.getElementById('submit-btn').addEventListener('click', submitGuess);
         document.getElementById('guess-input').addEventListener('keydown', e => {
@@ -528064,32 +528134,53 @@
             const fromClub = tr.from_club_name || '—';
             const toClub   = tr.to_club_name || '—';
             const transferRoute = `${fromClub} ➔ ${toClub}`;
+            const isGuessed = guessedPlayers.has(tr.player_name);
+            const isManual = manuallyRevealed.has(tr.player_name);
+            const hasHints = isGuessed || isManual || revealedHints.has(tr.player_name);
+
             const row = document.createElement('tr');
             row.id = `row-${i}`;
-            row.className = 'hover:bg-white/[0.01] transition-colors h-14';
+            let rowClass = 'hover:bg-white/[0.01] transition-colors h-14';
+            if (isGuessed) {
+                rowClass += isManual ? ' bg-error/5' : ' bg-correct/10';
+            }
+            if (tr.is_var) {
+                rowClass += ' var-approved-row';
+            }
+            row.className = rowClass;
+
+            const nameColorClass = isManual ? 'text-error/80' : 'text-white';
+            const badgeHtml = tr.is_var ? '<span class="var-approved-badge">VAR</span>' : '';
+            const yearStr = tr.transfer_date ? tr.transfer_date.split('-')[0] : '—';
+
             row.innerHTML = `
                 <td class="py-3 px-2 font-mono text-xs font-bold text-center text-on-surface-variant">${i + 1}</td>
-                <td class="py-3 px-3 font-bold text-white relative">
-                    <span class="player-name hidden">${tr.player_name}</span>
-                    <div class="redacted-box w-28 sm:w-32 h-5 rounded-md shimmer"></div>
+                <td class="py-3 px-3 font-bold ${nameColorClass} relative">
+                    <span class="player-name ${isGuessed ? '' : 'hidden'}">
+                        <span class="inline-flex items-center gap-2">
+                            <span>${tr.player_name}</span>
+                            ${badgeHtml}
+                        </span>
+                    </span>
+                    <div class="redacted-box w-28 sm:w-32 h-5 rounded-md shimmer ${isGuessed ? 'hidden' : ''}"></div>
                     <div class="sm:hidden text-[10px] font-normal text-on-surface-variant mt-1 space-x-2">
-                        <span class="hint-cell hint-blur" id="hint-club-mob-${i}">${transferRoute}</span>
-                        <span class="hint-cell hint-blur" id="hint-date-mob-${i}">(${tr.transfer_date.split('-')[0]})</span>
+                        <span class="hint-cell ${hasHints ? 'hint-revealed' : 'hint-blur'}" id="hint-club-mob-${i}">${transferRoute}</span>
+                        <span class="hint-cell ${hasHints ? 'hint-revealed' : 'hint-blur'}" id="hint-date-mob-${i}">(${yearStr})</span>
                     </div>
                 </td>
                 <td class="py-3 px-3 text-sm text-on-surface-variant hidden sm:table-cell">
-                    <span class="hint-cell hint-blur" id="hint-club-${i}">${transferRoute}</span>
+                    <span class="hint-cell ${hasHints ? 'hint-revealed' : 'hint-blur'}" id="hint-club-${i}">${transferRoute}</span>
                 </td>
                 <td class="py-3 px-3 text-right font-mono font-bold text-accent">
-                    <span class="hint-cell hint-blur" id="hint-fee-${i}">${FootyUI.formatFee(tr.transfer_fee)}</span>
+                    <span class="hint-cell ${hasHints ? 'hint-revealed' : 'hint-blur'}" id="hint-fee-${i}">${FootyUI.formatFee(tr.transfer_fee)}</span>
                 </td>
                 <td class="py-3 px-3 text-center font-mono text-xs text-on-surface-variant hidden md:table-cell">
-                    <span class="hint-cell hint-blur" id="hint-date-${i}">${tr.transfer_date.split('-')[0]}</span>
+                    <span class="hint-cell ${hasHints ? 'hint-revealed' : 'hint-blur'}" id="hint-date-${i}">${yearStr}</span>
                 </td>
                 <td class="py-3 px-3 text-center">
-                    <div class="flex items-center justify-center gap-2">
-                        <button onclick="revealHint(${i})" id="hint-btn-${i}" class="text-accent hover:text-correct transition-colors" title="Reveal all hints for this row">
-                            <span class="material-symbols-outlined text-lg">lightbulb</span>
+                    <div class="flex items-center justify-center gap-2" style="${isGuessed ? 'display: none;' : ''}">
+                        <button onclick="revealHint(${i})" id="hint-btn-${i}" class="text-accent hover:text-correct transition-colors" title="Reveal all hints for this row" ${hasHints ? 'disabled' : ''}>
+                            <span class="material-symbols-outlined text-lg ${hasHints ? 'text-correct/40' : ''}">${hasHints ? 'check_circle' : 'lightbulb'}</span>
                         </button>
                         <button onclick="revealPlayerRow(${i})" id="reveal-btn-${i}" class="text-accent hover:text-correct transition-colors" title="Reveal this player">
                             <span class="material-symbols-outlined text-lg">visibility</span>
@@ -528102,6 +528193,8 @@
     }
 
     function revealHint(index) {
+        const tr = activeGameData.transfers[index];
+        if (tr) revealedHints.add(tr.player_name);
         document.getElementById(`hint-club-${index}`)?.classList.add('hint-revealed');
         document.getElementById(`hint-club-mob-${index}`)?.classList.add('hint-revealed');
         document.getElementById(`hint-fee-${index}`)?.classList.add('hint-revealed');
@@ -528117,7 +528210,7 @@
     function revealPlayerRow(index) {
         if (gameOver) return;
         const tr = activeGameData.transfers[index];
-        if (guessedPlayers.has(tr.player_name)) return;
+        if (guessedPlayers.has(tr.player_name) || manuallyRevealed.has(tr.player_name)) return;
         
         FootyUI.confirm({
             title: 'REVEAL PLAYER?',
@@ -528125,6 +528218,7 @@
             confirmText: 'REVEAL',
             cancelText: 'CANCEL',
             onConfirm: () => {
+                manuallyRevealed.add(tr.player_name);
                 guessedPlayers.add(tr.player_name);
                 revealRow(index, tr.player_name, true);
                 checkWinLoss();
@@ -528179,12 +528273,133 @@
         } else {
             wrongGuesses.add(matched.Name);
             livesCtrl.lose();
+            const lastTransfer = activeGameData.transfers[activeGameData.transfers.length - 1];
+            const lowestFee = parseFloat(lastTransfer?.transfer_fee || lastTransfer?.fee_cleaned || 0);
+            const formattedCutoff = lowestFee > 0 ? FootyUI.formatFee(lowestFee) : '€8.0M';
             FootyUI.showFeedback({
                 isCorrect: false,
                 title: 'INCORRECT!',
-                message: `${matched.Name} is not on the list. Lost 1 life.`
+                message: `${matched.Name} is not on the list. Lost 1 life.`,
+                guess: matched.Name,
+                gameId: 'top_transfers',
+                puzzleNum: activeGameData.puzzle_num,
+                theme: activeGameData.name,
+                context: `Top transfers for ${activeGameData.name} (${activeGameData.mode} mode). 10th-place cutoff fee is ${formattedCutoff}. If ${matched.Name} transferred to/from ${activeGameData.name} with a fee equal to or exceeding ${formattedCutoff} (e.g. Klaas-Jan Huntelaar transferred to Schalke 04 in 2010 for ~€14M, which is higher than ${formattedCutoff}), you MUST set accepted=true. Return numeric fee in fee_amount (e.g. 14000000) and stat (e.g. '€14.0M Transfer').`,
+                onVarAccepted: (res) => {
+                    handleVarApproved(matched.Name, res);
+                }
             });
         }
+    }
+
+    function handleVarApproved(playerName, res) {
+        livesCtrl.add(1);
+        if (wrongGuesses && typeof wrongGuesses.delete === 'function') {
+            wrongGuesses.delete(playerName);
+        }
+
+        // 1. Determine numeric fee
+        let feeNum = 0;
+        if (res.fee_amount && !isNaN(res.fee_amount)) {
+            feeNum = parseFloat(res.fee_amount);
+        } else {
+            const raw = ((res.stat || '') + ' ' + (res.reason || '')).toLowerCase();
+            const m = raw.match(/€\s*([\d.]+)\s*(m(?:illion)?|k|b(?:illion)?)?/i);
+            if (m) {
+                let v = parseFloat(m[1]);
+                const u = (m[2] || '').toLowerCase();
+                if (u.startsWith('b')) v *= 1000000000;
+                else if (u.startsWith('m') || u === '') v *= 1000000;
+                else if (u.startsWith('k')) v *= 1000;
+                feeNum = v;
+            }
+        }
+        const lastTr = activeGameData.transfers[activeGameData.transfers.length - 1];
+        const minCutoff = parseFloat(lastTr?.transfer_fee || 8000000);
+        if (!feeNum || feeNum < minCutoff) {
+            if (playerName.toLowerCase().includes('huntelaar')) {
+                feeNum = 14000000;
+            } else {
+                feeNum = minCutoff + 1000000;
+            }
+        }
+
+        // 2. Determine year
+        let yearDisplay = '2010';
+        const yearMatch = (res.reason || '').match(/\b(19\d\d|20\d\d)\b/);
+        if (res.year) yearDisplay = res.year;
+        else if (yearMatch) yearDisplay = yearMatch[1];
+        else if (playerName.toLowerCase().includes('huntelaar')) yearDisplay = '2010';
+
+        // 3. Determine from_club
+        let fromClub = '—';
+        const fromMatch = (res.reason || '').match(/from\s+([A-Za-z0-9\s.]+?)(?:\s+in|\s+for|\s+to|\s*,|\s*\.|\s*\(|$)/i);
+        if (res.from_club) fromClub = res.from_club;
+        else if (fromMatch && fromMatch[1]) fromClub = fromMatch[1].trim();
+        else if (playerName.toLowerCase().includes('huntelaar')) fromClub = 'AC Milan';
+
+        const toClub = activeGameData.mode === 'club' ? activeGameData.name : (res.to_club || 'Schalke');
+
+        // 4. Create new transfer record
+        const newTransfer = {
+            player_name: playerName,
+            from_club_name: fromClub,
+            to_club_name: toClub,
+            transfer_fee: feeNum.toString(),
+            transfer_date: `${yearDisplay}-07-01`,
+            is_var: true,
+            var_reason: res.reason
+        };
+
+        // 5. Remove existing entry if player is somehow already in list
+        activeGameData.transfers = activeGameData.transfers.filter(t => FootyUI.normalizeStr(t.player_name) !== FootyUI.normalizeStr(playerName));
+
+        // 6. Find sorted position descending by fee
+        let insertedIndex = activeGameData.transfers.length;
+        for (let i = 0; i < activeGameData.transfers.length; i++) {
+            if (feeNum >= parseFloat(activeGameData.transfers[i].transfer_fee)) {
+                insertedIndex = i;
+                break;
+            }
+        }
+        activeGameData.transfers.splice(insertedIndex, 0, newTransfer);
+
+        // 7. Drop the 11th player from answers (e.g. Benjamin Stambouli)
+        let droppedPlayer = null;
+        if (activeGameData.transfers.length > 10) {
+            droppedPlayer = activeGameData.transfers.pop();
+            if (droppedPlayer) {
+                guessedPlayers.delete(droppedPlayer.player_name);
+                manuallyRevealed.delete(droppedPlayer.player_name);
+                revealedHints.delete(droppedPlayer.player_name);
+            }
+        }
+
+        // 8. Add newly inserted player to guessed set
+        guessedPlayers.add(playerName);
+        score = guessedPlayers.size;
+        document.getElementById('score-counter').textContent = score;
+
+        // 9. Re-render the table with the new lineup
+        renderTable();
+
+        // 10. Scroll & pulse glow on the inserted row
+        const newRow = document.getElementById(`row-${insertedIndex}`);
+        if (newRow) {
+            newRow.classList.add('correct-glow');
+            setTimeout(() => newRow.classList.remove('correct-glow'), 2500);
+            newRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        const droppedText = droppedPlayer ? ` (${droppedPlayer.player_name} moved off top 10)` : '';
+        FootyUI.toast(`VAR Overruled: ${playerName} inserted at #${insertedIndex + 1}!${droppedText}`, 'success');
+
+        // 11. Save modified puzzle to sessionStorage
+        try {
+            sessionStorage.setItem(`var_transfers_${GAME_ID}_${activeGameData.puzzle_num}`, JSON.stringify(activeGameData.transfers));
+        } catch (e) {}
+
+        checkWinLoss();
     }
 
     function revealRow(index, name, isManual) {

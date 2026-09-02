@@ -572,7 +572,7 @@
 
             storage = new FootyUI.FootyStorage(GAME_ID);
 
-            wrongGuesses = new FootyUI.FootyWrongGuesses('wrong-guesses-container', 'wrong-guesses-section');
+            wrongGuesses = new FootyUI.FootyWrongGuesses('wrong-guesses-section', 'wrong-guesses-container');
 
             livesCtrl = new FootyUI.FootyLives(INITIAL_LIVES, () => {
                 endGame(false, false);
@@ -584,8 +584,7 @@
                 listId:   'autocomplete-list',
                 data:     allPlayersList,
                 labelFn:  p => p.Name,
-                badgeFn:  p => `${p.Nationality || ''}${p.Position ? ' · ' + p.Position : ''}`,
-                onSelect: () => submitGuess()
+                badgeFn:  p => `${p.Nationality || ''}${p.Position ? ' · ' + p.Position : ''}`
             });
 
             // Standard FootyModal with Giphy GIF & player reveal
@@ -1024,10 +1023,46 @@
                 FootyUI.showFeedback({
                     isCorrect: false,
                     title: 'WRONG GUESS',
-                    message: `${matched} did not play for ${activeClubsStr}. Lost 1 life.`
+                    message: `${matched} did not play for ${activeClubsStr}. Lost 1 life.`,
+                    guess: matched,
+                    gameId: 'player_chain',
+                    puzzleNum: activeGameData.puzzle_num,
+                    theme: `Target Player: ${activeGameData.target_player}`,
+                    context: `Player Chain Step ${currStep.step_number}. Constraint: Must have played for ${activeClubsStr}.`,
+                    onVarAccepted: (res) => {
+                        handleVarApproved(matched, res);
+                    }
                 });
 
                 // onDead will trigger endGame(false) if out of lives
+            }
+        }
+
+        function handleVarApproved(matched, res) {
+            livesCtrl.add(1);
+            if (wrongGuesses && typeof wrongGuesses.delete === 'function') {
+                wrongGuesses.delete(matched);
+            }
+            const wrongEl = document.getElementById('wrong-count');
+            if (wrongEl) wrongEl.textContent = document.querySelectorAll('#wrong-guesses-container > *').length;
+
+            const currStep = activeGameData.steps[activeStepIndex];
+            guessedPlayers.push(matched);
+            stepRecords[activeStepIndex] = {
+                step_number: currStep.step_number,
+                status: 'correct',
+                guessed: matched,
+                isVar: true
+            };
+
+            FootyUI.toast(`VAR Overruled: Step ${currStep.step_number} solved with "${matched}"!`, 'success');
+
+            activeStepIndex++;
+            if (activeStepIndex >= activeGameData.steps.length) {
+                endGame(true, false);
+            } else {
+                renderChainUI();
+                updateActiveStepPanel();
             }
         }
 

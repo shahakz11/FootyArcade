@@ -182,6 +182,9 @@
         // Public method — returns the currently selected item (null if none)
         this.getSelected = () => selectedItem;
 
+        // Public method — update dataset
+        this.setData = (newData) => { cfg.data = newData; };
+
         // Public method — clear the input & selection
         this.reset = () => {
             input.value = '';
@@ -276,6 +279,30 @@
     }
 
 
+    // Shared Giphy GIF fetcher
+    function fetchGiphyGif(query, callback) {
+        if (!query) return callback(null);
+        const apiKey = window.GIPHY_API_KEY || 'hAjBkiCSPhfKZhcg0knhPOGhVVEA6EUD';
+        const url = `https://api.giphy.com/v1/gifs/search?api_key=${encodeURIComponent(apiKey)}&q=${encodeURIComponent(query)}&limit=10&rating=g`;
+
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.data && data.data.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * Math.min(data.data.length, 5));
+                    const gifObj = data.data[randomIndex];
+                    const gifUrl = gifObj.images?.downsized_medium?.url || gifObj.images?.fixed_height?.url || gifObj.images?.original?.url;
+                    callback(gifUrl);
+                } else {
+                    callback(null);
+                }
+            })
+            .catch(err => {
+                console.warn('Giphy API fetch failed:', err);
+                callback(null);
+            });
+    }
+
     // ────────────────────────────────────────────────────────
     // 3. FootyModal — End-game modal (success / failure)
     // ────────────────────────────────────────────────────────
@@ -330,29 +357,6 @@
             }
 
             return 'soccer celebration';
-        }
-
-        function fetchGiphyGif(query, callback) {
-            if (!query) return callback(null);
-            const apiKey = window.GIPHY_API_KEY || 'hAjBkiCSPhfKZhcg0knhPOGhVVEA6EUD';
-            const url = `https://api.giphy.com/v1/gifs/search?api_key=${encodeURIComponent(apiKey)}&q=${encodeURIComponent(query)}&limit=10&rating=g`;
-
-            fetch(url)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && data.data && data.data.length > 0) {
-                        const randomIndex = Math.floor(Math.random() * Math.min(data.data.length, 5));
-                        const gifObj = data.data[randomIndex];
-                        const gifUrl = gifObj.images?.downsized_medium?.url || gifObj.images?.fixed_height?.url || gifObj.images?.original?.url;
-                        callback(gifUrl);
-                    } else {
-                        callback(null);
-                    }
-                })
-                .catch(err => {
-                    console.warn('Giphy API fetch failed:', err);
-                    callback(null);
-                });
         }
 
         this.show = (opts) => {
@@ -589,14 +593,38 @@
         document.getElementById('fa-confirm-cancel').onclick = () => close(opts.onCancel);
     }
 
+    // ── VAR System State ──────────────────────────────────────────
+    const varState = {
+        checkedPlayers: new Set(),
+        tokens: 1,           // Player starts with 1 token!
+        successfulUses: 0,   // Number of successful appeals
+        maxSuccess: 3        // Hard cap: max 3 successful reviews per game
+    };
+
     /**
-     * Shows a transient right/wrong answer feedback popup.
+     * Shows a transient right/wrong answer feedback popup with optional VAR review button.
      * @param {object} opts
      * @param {boolean} opts.isCorrect
      * @param {string} opts.title
      * @param {string} opts.message
+     * @param {string} [opts.guess]
+     * @param {string} [opts.gameId]
+     * @param {number} [opts.puzzleNum]
+     * @param {string} [opts.theme]
+     * @param {string} [opts.context]
+     * @param {boolean} [opts.canVar]
+     * @param {Function} [opts.onVarAccepted]
+     * @param {Function} [opts.onVarRejected]
      */
     function showFeedback(opts) {
+        const meta = getActiveGameMetadata();
+        const gameId = opts.gameId || meta.gameId;
+        const isVarSupportedGame = ['top_scorers', 'top_transfers', 'player_chain'].includes(gameId);
+        const normGuess = opts.guess ? normalizeStr(opts.guess) : '';
+        const alreadyChecked = normGuess && varState.checkedPlayers.has(normGuess);
+        const hasToken = varState.tokens > 0 && varState.successfulUses < varState.maxSuccess;
+        const canShowVar = !opts.isCorrect && opts.canVar !== false && isVarSupportedGame && Boolean(opts.guess) && !alreadyChecked && hasToken;
+
         const backdrop = document.createElement('div');
         backdrop.className = 'fa-feedback-backdrop';
 
@@ -613,25 +641,353 @@
             <span class="material-symbols-outlined text-4xl shrink-0" style="color: ${color}">
                 ${opts.isCorrect ? 'check_circle' : 'cancel'}
             </span>
-            <div>
+            <div style="flex: 1;">
                 <h4 class="font-headline text-lg uppercase italic tracking-wide" style="color: ${color}; margin: 0; line-height: 1.2;">
                     ${opts.title}
                 </h4>
                 <p class="text-on-surface-variant text-xs font-semibold" style="margin: 4px 0 0 0; color: #a3a3a3; line-height: 1.3;">
                     ${opts.message}
                 </p>
+                ${canShowVar ? `
+                <div style="margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                    <button id="fa-feedback-var-btn" class="fa-var-btn" type="button">
+                        <span class="material-symbols-outlined" style="font-size: 15px;">live_tv</span>
+                        <span>Check VAR</span>
+                        <span class="fa-var-badge">1 left</span>
+                    </button>
+                </div>
+                ` : ''}
             </div>
         `;
 
         backdrop.appendChild(card);
         document.body.appendChild(backdrop);
 
-        setTimeout(() => {
+        let dismissTimer = null;
+        const dismissDelay = canShowVar ? 5500 : 1500;
+
+        function dismiss() {
+            if (!backdrop.parentNode) return;
             backdrop.style.opacity = '0';
             backdrop.style.transform = 'translate(-50%, -20px)';
             backdrop.style.transition = 'opacity 0.25s cubic-bezier(0.4, 0, 1, 1), transform 0.25s cubic-bezier(0.4, 0, 1, 1)';
-            setTimeout(() => backdrop.remove(), 250);
-        }, 1500);
+            setTimeout(() => { if (backdrop.parentNode) backdrop.remove(); }, 250);
+        }
+
+        dismissTimer = setTimeout(dismiss, dismissDelay);
+
+        if (canShowVar) {
+            const varBtn = card.querySelector('#fa-feedback-var-btn');
+            if (varBtn) {
+                varBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    clearTimeout(dismissTimer);
+                    backdrop.remove();
+                    startVarReview(opts);
+                });
+            }
+        }
+    }
+
+    /**
+     * Triggers the full VAR Review Modal and dispatches Groq Llama 3.3 verification via Google Apps Script.
+     * @param {object} opts
+     */
+    function startVarReview(opts) {
+        const meta = getActiveGameMetadata();
+        const gameId = opts.gameId || meta.gameId;
+        const puzzleNum = opts.puzzleNum !== undefined ? opts.puzzleNum : meta.puzzleNum;
+        const normGuess = normalizeStr(opts.guess || '');
+
+        if (!opts.guess) return;
+
+        if (varState.checkedPlayers.has(normGuess)) {
+            toast(`"${opts.guess}" was already reviewed by VAR!`, 'info');
+            return;
+        }
+
+        if (varState.tokens <= 0 || varState.successfulUses >= varState.maxSuccess) {
+            toast('No VAR checks remaining for this match!', 'error');
+            return;
+        }
+
+        // Consume token while review is in flight
+        varState.tokens = 0;
+        // Mark this player as reviewed for this match (strictly 1 time per player per game)
+        varState.checkedPlayers.add(normGuess);
+
+        // Build Loading Modal DOM
+        const modalBackdrop = document.createElement('div');
+        modalBackdrop.className = 'fa-var-modal-backdrop';
+
+        const modalCard = document.createElement('div');
+        modalCard.className = 'fa-var-modal-card';
+
+        modalCard.innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="material-symbols-outlined" style="color: #39ff14; font-size: 20px;">live_tv</span>
+                    <span style="font-family: 'Space Grotesk', monospace; font-size: 0.75rem; font-weight: 700; color: #39ff14; letter-spacing: 0.08em; text-transform: uppercase;">
+                        OFFICIAL VAR REVIEW
+                    </span>
+                </div>
+                <span class="fa-var-badge">1 in review</span>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+                <h3 style="font-family: 'Anton', Impact, sans-serif; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 0.03em; margin: 0; line-height: 1.1; color: #ffffff;" id="var-modal-title">
+                    VAR CHECK IN PROGRESS
+                </h3>
+                <p style="margin: 4px 0 0 0; font-size: 0.82rem; color: #a3a3a3;">
+                    Appealing: <strong style="color: #ffffff;">${opts.guess}</strong>
+                </p>
+            </div>
+
+            <!-- TV Monitor Frame -->
+            <div class="fa-var-monitor" id="var-monitor">
+                <div class="fa-var-scanlines"></div>
+                <div class="fa-var-rec-badge">
+                    <span class="fa-var-rec-dot"></span>
+                    <span>VAR ROOM / LIVE</span>
+                </div>
+                <img class="fa-var-gif" id="var-gif-img" src="" alt="VAR Replay" style="display: none;" />
+                <div id="var-gif-spinner" style="display: flex; flex-direction: column; align-items: center; gap: 8px; color: #666;">
+                    <span class="material-symbols-outlined text-3xl animate-spin" style="color: #39ff14;">rotate_right</span>
+                    <span style="font-size: 0.7rem; font-family: 'Space Grotesk', monospace; letter-spacing: 0.05em; color: #888;">LOADING REPLAY...</span>
+                </div>
+            </div>
+
+            <!-- Animated Scanline Pulse Bar -->
+            <div class="fa-var-pulse-bar" id="var-pulse-bar">
+                <div class="fa-var-pulse-bar-fill"></div>
+            </div>
+
+            <!-- Status Box / Result Explanation -->
+            <div id="var-status-box" style="text-align: center; margin-top: 8px;">
+                <p id="var-status-text" style="margin: 0; font-size: 0.8rem; font-weight: 600; color: #a3a3a3; font-family: 'Space Grotesk', monospace; letter-spacing: 0.04em;">
+                    CONNECTING TO MATCH OFFICIALS...
+                </p>
+            </div>
+
+            <!-- Action Button -->
+            <div id="var-action-container" style="display: none; margin-top: 16px; text-align: center;">
+                <button id="var-dismiss-btn" style="width: 100%; padding: 12px; border-radius: 10px; font-weight: 700; font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s;">
+                    CONTINUE MATCH
+                </button>
+            </div>
+        `;
+
+        modalBackdrop.appendChild(modalCard);
+        document.body.appendChild(modalBackdrop);
+
+        // Fetch Giphy GIF using search query 'VAR'
+        const gifImg = modalCard.querySelector('#var-gif-img');
+        const gifSpinner = modalCard.querySelector('#var-gif-spinner');
+
+        fetchGiphyGif('VAR', (gifUrl) => {
+            if (gifUrl && gifImg) {
+                gifImg.src = gifUrl;
+                gifImg.onload = () => {
+                    gifImg.style.display = 'block';
+                    if (gifSpinner) gifSpinner.style.display = 'none';
+                };
+            }
+        });
+
+        // Backup fallback GIF if Giphy search is delayed
+        setTimeout(() => {
+            if (gifSpinner && gifImg && gifImg.style.display === 'none') {
+                gifImg.src = 'https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif';
+                gifImg.style.display = 'block';
+                gifSpinner.style.display = 'none';
+            }
+        }, 2200);
+
+        // Rotating status messages while checking
+        const statusMsgs = [
+            'CONNECTING TO MATCH OFFICIALS...',
+            'ANALYZING MULTI-ANGLE REPLAY...',
+            'REVIEWING OFFICIAL COMPETITION ARCHIVE...',
+            'DECISION PENDING...'
+        ];
+        let msgIndex = 0;
+        const msgInterval = setInterval(() => {
+            msgIndex = (msgIndex + 1) % statusMsgs.length;
+            const sEl = modalCard.querySelector('#var-status-text');
+            if (sEl && !sEl.dataset.done) {
+                sEl.textContent = statusMsgs[msgIndex];
+            }
+        }, 800);
+
+        // Prepare payload for backend
+        const payload = {
+            type: 'var_check',
+            gameId: gameId,
+            puzzleNum: puzzleNum,
+            theme: opts.theme || '',
+            guess: opts.guess,
+            context: opts.context || '',
+            visitorId: getVisitorId(),
+            sessionId: getSessionId(),
+            url: window.location.href
+        };
+
+        fetch(FEEDBACK_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(data => {
+            clearInterval(msgInterval);
+            renderDecision(data);
+        })
+        .catch(err => {
+            console.error('[FootyUI] VAR check request failed:', err);
+            clearInterval(msgInterval);
+            renderDecision({
+                accepted: false,
+                reason: 'Unable to reach VAR review server. Please check connection.'
+            });
+        });
+
+        function renderDecision(result) {
+            const titleEl = modalCard.querySelector('#var-modal-title');
+            const statusTextEl = modalCard.querySelector('#var-status-text');
+            const pulseBar = modalCard.querySelector('#var-pulse-bar');
+            const actionCont = modalCard.querySelector('#var-action-container');
+            const dismissBtn = modalCard.querySelector('#var-dismiss-btn');
+
+            if (statusTextEl) statusTextEl.dataset.done = 'true';
+            if (pulseBar) pulseBar.style.display = 'none';
+
+            if (result.accepted) {
+                modalCard.classList.add('accepted');
+                if (titleEl) {
+                    titleEl.innerHTML = 'DECISION OVERRULED! ⚽';
+                    titleEl.style.color = '#39ff14';
+                }
+
+                // If correct, refund the token (up to max 3 successful uses)
+                varState.successfulUses++;
+                if (varState.successfulUses < varState.maxSuccess) {
+                    varState.tokens = 1; // REFUND TOKEN!
+                } else {
+                    varState.tokens = 0; // Reached max 3 successful appeals
+                }
+
+                const remainingCap = varState.maxSuccess - varState.successfulUses;
+                const tokenStatusNote = varState.tokens > 0 
+                    ? `✓ TOKEN REFUNDED (1 VAR AVAILABLE • ${varState.successfulUses}/${varState.maxSuccess} USED)`
+                    : `✓ MAX 3 VAR REVIEWS REACHED (0 LEFT)`;
+
+                if (statusTextEl) {
+                    statusTextEl.innerHTML = `
+                        <div style="background: rgba(57, 255, 20, 0.12); border: 1px solid rgba(57, 255, 20, 0.35); border-radius: 10px; padding: 12px; margin-top: 8px; text-align: left;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                                <span class="material-symbols-outlined text-sm" style="color: #39ff14;">check_circle</span>
+                                <span style="color: #39ff14; font-weight: 700; font-size: 0.75rem; text-transform: uppercase;">APPEAL UPHELD — DECISION OVERRULED</span>
+                            </div>
+                            <p style="margin: 0 0 6px 0; color: #e5e2e1; font-size: 0.82rem; line-height: 1.4; font-family: system-ui, sans-serif;">
+                                ${result.reason || 'Criteria met according to official records.'}
+                            </p>
+                            <div style="font-family: 'Space Grotesk', monospace; font-size: 0.68rem; font-weight: 700; color: #39ff14; letter-spacing: 0.05em; text-transform: uppercase;">
+                                ${tokenStatusNote}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (dismissBtn) {
+                    dismissBtn.textContent = 'CONTINUE MATCH';
+                    dismissBtn.style.background = '#39ff14';
+                    dismissBtn.style.color = '#000000';
+                    dismissBtn.style.border = 'none';
+                    dismissBtn.style.boxShadow = '0 0 15px rgba(57, 255, 20, 0.35)';
+                }
+
+                if (opts.onVarAccepted) opts.onVarAccepted(result);
+
+            } else if (result.isError) {
+                modalCard.classList.add('rejected');
+                // Technical error — refund token and unmark player so they can retry
+                varState.tokens = 1;
+                varState.checkedPlayers.delete(normGuess);
+
+                if (titleEl) {
+                    titleEl.innerHTML = 'VAR UNAVAILABLE ⚠️';
+                    titleEl.style.color = '#ffcc00';
+                }
+
+                if (statusTextEl) {
+                    statusTextEl.innerHTML = `
+                        <div style="background: rgba(255, 204, 0, 0.1); border: 1px solid rgba(255, 204, 0, 0.3); border-radius: 10px; padding: 12px; margin-top: 8px; text-align: left;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                                <span class="material-symbols-outlined text-sm" style="color: #ffcc00;">warning</span>
+                                <span style="color: #ffcc00; font-weight: 700; font-size: 0.75rem; text-transform: uppercase;">TECHNICAL ERROR — TOKEN RESTORED</span>
+                            </div>
+                            <p style="margin: 0 0 6px 0; color: #e5e2e1; font-size: 0.82rem; line-height: 1.4; font-family: system-ui, sans-serif;">
+                                ${result.reason || 'VAR review service temporary issue.'}
+                            </p>
+                            <div style="font-family: 'Space Grotesk', monospace; font-size: 0.68rem; font-weight: 700; color: #ffcc00; letter-spacing: 0.05em; text-transform: uppercase;">
+                                ✓ 1 VAR TOKEN PRESERVED FOR RETRY
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (dismissBtn) {
+                    dismissBtn.textContent = 'CLOSE';
+                    dismissBtn.style.background = '#222';
+                    dismissBtn.style.color = '#fff';
+                    dismissBtn.style.border = '1px solid rgba(255,255,255,0.15)';
+                }
+
+            } else {
+                modalCard.classList.add('rejected');
+                // If incorrect, DO NOT refund token!
+                varState.tokens = 0;
+
+                if (titleEl) {
+                    titleEl.innerHTML = 'DECISION STANDS ❌';
+                    titleEl.style.color = '#ff4d4d';
+                }
+
+                if (statusTextEl) {
+                    statusTextEl.innerHTML = `
+                        <div style="background: rgba(255, 77, 77, 0.1); border: 1px solid rgba(255, 77, 77, 0.3); border-radius: 10px; padding: 14px; margin-top: 8px; text-align: left;">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                                <span class="material-symbols-outlined text-sm" style="color: #ff4d4d;">cancel</span>
+                                <span style="color: #ff4d4d; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">VAR CHALLENGE FAILED</span>
+                            </div>
+                            <p style="margin: 0; color: #e5e2e1; font-size: 0.88rem; line-height: 1.4; font-family: system-ui, sans-serif;">
+                                The VAR challenge failed and the decision stands.
+                            </p>
+                        </div>
+                    `;
+                }
+
+                if (dismissBtn) {
+                    dismissBtn.textContent = 'CLOSE';
+                    dismissBtn.style.background = '#222';
+                    dismissBtn.style.color = '#fff';
+                    dismissBtn.style.border = '1px solid rgba(255,255,255,0.15)';
+                }
+
+                if (opts.onVarRejected) opts.onVarRejected(result);
+            }
+
+            if (actionCont) actionCont.style.display = 'block';
+            if (dismissBtn) {
+                dismissBtn.onclick = () => {
+                    modalBackdrop.style.opacity = '0';
+                    modalBackdrop.style.transition = 'opacity 0.2s ease-out';
+                    setTimeout(() => modalBackdrop.remove(), 200);
+                };
+            }
+        }
     }
 
 
@@ -730,8 +1086,14 @@
      * @param {string} containerId — ID of the flex container for badges
      */
     function FootyWrongGuesses(sectionId, containerId) {
-        const section = document.getElementById(sectionId);
-        const container = document.getElementById(containerId);
+        let section = document.getElementById(sectionId);
+        let container = document.getElementById(containerId);
+
+        // Auto-correct if arguments were passed in reverse
+        if (section && typeof sectionId === 'string' && sectionId.includes('container') && typeof containerId === 'string' && containerId.includes('section')) {
+            const tmp = section; section = container; container = tmp;
+        }
+
         const shown = new Set();
 
         this.has = (text) => {
@@ -750,6 +1112,26 @@
             badge.textContent = text;
             container?.appendChild(badge);
         };
+
+        this.delete = (text) => {
+            if (!text) return;
+            const norm = FootyUI.normalizeStr(text);
+            if (!shown.has(norm)) return;
+            shown.delete(norm);
+
+            if (container) {
+                const badges = container.querySelectorAll('.fa-wrong-badge');
+                badges.forEach(b => {
+                    if (FootyUI.normalizeStr(b.textContent) === norm) {
+                        b.remove();
+                    }
+                });
+            }
+            if (shown.size === 0 && section) {
+                section.classList.add('hidden');
+            }
+        };
+        this.remove = this.delete;
 
         this.clear = () => {
             shown.clear();
@@ -1013,6 +1395,46 @@
         });
     }
 
+    // ── Global Puzzle Overrides (Real-time Cloud Sync) ───────
+    async function syncPuzzleOverrides(gameId, puzzleNum, onApply) {
+        if (!gameId || !puzzleNum || !FEEDBACK_WEBHOOK_URL) return;
+
+        const cacheKey = `fa_overrides_${gameId}_${puzzleNum}`;
+        const cacheTimeKey = `fa_overrides_time_${gameId}_${puzzleNum}`;
+        const now = Date.now();
+
+        // 1. Check local cache (valid for 15 minutes)
+        try {
+            const cached = localStorage.getItem(cacheKey);
+            const cachedTime = parseInt(localStorage.getItem(cacheTimeKey) || '0', 10);
+            if (cached && (now - cachedTime < 15 * 60 * 1000)) {
+                const parsed = JSON.parse(cached);
+                if (Array.isArray(parsed) && parsed.length > 0 && typeof onApply === 'function') {
+                    onApply(parsed);
+                }
+            }
+        } catch (e) {}
+
+        // 2. Fetch fresh overrides from Apps Script backend
+        try {
+            const url = `${FEEDBACK_WEBHOOK_URL}?action=get_overrides&gameId=${encodeURIComponent(gameId)}&puzzleNum=${encodeURIComponent(puzzleNum)}`;
+            const res = await fetch(url);
+            if (res.ok) {
+                const data = await res.json();
+                if (data.status === 'success' && Array.isArray(data.overrides)) {
+                    localStorage.setItem(cacheKey, JSON.stringify(data.overrides));
+                    localStorage.setItem(cacheTimeKey, now.toString());
+                    if (data.overrides.length > 0 && typeof onApply === 'function') {
+                        onApply(data.overrides);
+                    }
+                }
+            }
+        } catch (err) {
+            // Non-blocking background sync
+            console.debug('[FootyUI] Cloud overrides sync error:', err);
+        }
+    }
+
     function initFeedbackSystem() {
         // Create floating button
         const trigger = document.createElement('button');
@@ -1196,7 +1618,10 @@
         toast,
         confirm: confirmModal,
         showFeedback,
+        startVarReview,
+        getVarState: () => varState,
         trackEvent,
+        syncPuzzleOverrides,
         getVisitorId,
         getSessionId,
         normalizeStr,
