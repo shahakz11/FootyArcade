@@ -795,32 +795,56 @@
                 const isSkipped = rec && rec.status === 'skipped';
 
                 if (isCurrent) {
-                    // Current Active Step (Revealed club constraint with active pulse ring)
+                    // Current Active Step (Revealed club constraint with responsive wrapping club chips)
                     nodeEl.className = 'rounded-2xl border border-accent bg-surface-container active-node-glow ring-1 ring-accent/30 p-4 transition-all duration-300 relative z-10 shadow-lg';
-                    const constraintsList = step.active_clubs.join(' & ');
+
+                    const clubChipsHtml = step.active_clubs.map((c, cIdx) => {
+                        const isNewest = cIdx === step.active_clubs.length - 1;
+                        if (isNewest) {
+                            return `
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-accent/15 border border-accent/40 text-xs font-title font-bold text-accent shadow-sm">
+                                    <span class="material-symbols-outlined text-xs text-accent">add_circle</span>
+                                    <span>${c}</span>
+                                </span>
+                            `;
+                        }
+                        return `
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-title font-bold text-on-background shadow-sm">
+                                <span class="material-symbols-outlined text-xs text-accent/70">shield</span>
+                                <span>${c}</span>
+                            </span>
+                        `;
+                    }).join('<span class="text-accent/40 text-xs font-bold font-mono px-0.5">&amp;</span>');
 
                     nodeEl.innerHTML = `
-                        <div class="flex items-center justify-between gap-3">
-                            <div class="flex items-center gap-3 min-w-0">
-                                <div class="w-9 h-9 rounded-xl bg-accent/15 border border-accent/40 flex items-center justify-center shrink-0 text-accent">
-                                    <span class="material-symbols-outlined text-sm animate-pulse">radio_button_checked</span>
-                                </div>
-                                <div class="min-w-0">
-                                    <div class="flex items-center gap-2">
-                                        <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase border bg-accent/10 text-accent border-accent/30">
+                        <div class="space-y-2.5">
+                            <div class="flex items-center justify-between gap-3">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <div class="w-8 h-8 rounded-xl bg-accent/15 border border-accent/40 flex items-center justify-center shrink-0 text-accent">
+                                        <span class="material-symbols-outlined text-sm animate-pulse">radio_button_checked</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase border bg-accent/10 text-accent border-accent/30 shrink-0">
                                             CURRENT STEP ${step.step_number}
                                         </span>
-                                        <span class="text-sm font-title font-bold text-on-background truncate">
+                                        <span class="text-sm font-title font-bold text-white">
                                             + ${step.club}
                                         </span>
                                     </div>
-                                    <div class="text-xs text-on-surface-variant font-mono mt-0.5 truncate">
-                                        Must have played for: <span class="text-accent font-bold">${constraintsList}</span>
-                                    </div>
+                                </div>
+                                <div class="shrink-0 text-right">
+                                    <span class="text-[10px] sm:text-[11px] font-mono text-accent font-bold px-2 py-1 bg-accent/10 rounded-md border border-accent/20">ACTIVE</span>
                                 </div>
                             </div>
-                            <div class="shrink-0 text-right">
-                                <span class="text-[11px] font-mono text-accent font-bold px-2 py-1 bg-accent/10 rounded-md border border-accent/20">ACTIVE</span>
+
+                            <div class="pt-2 border-t border-white/5">
+                                <div class="text-[10px] uppercase font-mono tracking-wider text-on-surface-variant/80 mb-1.5 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-xs text-accent">link</span>
+                                    <span>Must have played for all ${step.active_clubs.length} clubs:</span>
+                                </div>
+                                <div class="flex flex-wrap items-center gap-1.5">
+                                    ${clubChipsHtml}
+                                </div>
                             </div>
                         </div>
                     `;
@@ -844,32 +868,41 @@
                     }
 
                     nodeEl.className = `rounded-2xl border p-3.5 transition-all duration-300 relative ${borderClass}`;
-                    const constraintsList = step.active_clubs.join(' & ');
+
+                    const clubChipsHtml = step.active_clubs.map(c => {
+                        return `
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/8 text-[11px] font-medium text-on-surface-variant">
+                                <span>${c}</span>
+                            </span>
+                        `;
+                    }).join('<span class="text-white/20 text-[10px] px-0.5">&amp;</span>');
 
                     nodeEl.innerHTML = `
-                        <div class="flex items-center justify-between gap-3">
-                            <div class="flex items-center gap-3 min-w-0">
-                                <div class="w-8 h-8 rounded-xl bg-surface-container-high border border-white/10 flex items-center justify-center shrink-0">
-                                    ${iconHtml}
-                                </div>
-                                <div class="min-w-0">
-                                    <div class="flex items-center gap-2">
-                                        <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase border ${badgeClass}">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between gap-3">
+                                <div class="flex items-center gap-2.5 min-w-0">
+                                    <div class="w-7 h-7 rounded-lg bg-surface-container-high border border-white/10 flex items-center justify-center shrink-0">
+                                        ${iconHtml}
+                                    </div>
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <span class="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase border ${badgeClass} shrink-0">
                                             ${badgeText}
                                         </span>
-                                        <span class="text-xs sm:text-sm font-title font-bold text-on-background truncate">
-                                            + ${step.club}
+                                        <span class="text-xs sm:text-sm font-title font-bold text-white">
+                                            Step ${step.step_number}: + ${step.club}
                                         </span>
                                     </div>
-                                    <div class="text-[11px] text-on-surface-variant font-mono mt-0.5 truncate">
-                                        Played for: <span class="text-on-background/80">${constraintsList}</span>
-                                    </div>
+                                </div>
+                                <div class="text-right shrink-0">
+                                    <span class="font-headline text-sm sm:text-base tracking-wide ${isSolved ? 'text-correct' : (isInstant ? 'text-amber-400' : 'text-amber-500/70')}">
+                                        ${rec ? (rec.guessed || 'Skipped') : 'Skipped'}
+                                    </span>
                                 </div>
                             </div>
-                            <div class="text-right shrink-0">
-                                <span class="font-headline text-sm sm:text-base tracking-wide ${isSolved ? 'text-correct' : (isInstant ? 'text-amber-400' : 'text-amber-500/70')}">
-                                    ${rec ? (rec.guessed || 'Skipped') : 'Skipped'}
-                                </span>
+
+                            <div class="pt-1.5 border-t border-white/5 flex flex-wrap items-center gap-1 text-[11px] text-on-surface-variant">
+                                <span class="text-[10px] font-mono uppercase text-on-surface-variant/60 mr-1">Clubs:</span>
+                                ${clubChipsHtml}
                             </div>
                         </div>
                     `;

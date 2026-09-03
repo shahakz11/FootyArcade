@@ -164,7 +164,7 @@ function handleVarCheck(payload) {
       "   - If their goals in '" + theme + "' equal or exceed the 10th-place cutoff mentioned in the context (or tie with the cutoff rank), set accepted=true and return their exact competition goal count in 'goals'.\n" +
       "   - If their goals in '" + theme + "' fall below the cutoff or they did not participate in that competition, set accepted=false.\n" +
       "2. For 'top_transfers': Check if " + guess + " legitimately transferred to/from the club or fits the nationality transfer criteria with a fee that meets or exceeds the 10th-place cutoff fee mentioned in the context (or ranks among the club's record transfers). For example, Klaas-Jan Huntelaar transferred from AC Milan to Schalke 04 in 2010 for ~€14M, which is higher than an €8.0M cutoff and MUST be accepted. If their transfer fee meets or exceeds the cutoff, set accepted=true.\n" +
-      "3. For 'player_chain': Check if " + guess + " legitimately satisfies the step constraint (e.g. was a teammate at the specified club, or has the required nationality/position). If factually true, set accepted=true.\n" +
+      "3. For 'player_chain': The context specifies the required clubs (e.g. 'Must have played for Club A & Club B & Club C'). The guessed player (" + guess + ") MUST have played for ALL listed clubs during their senior professional career. If they played for only some of the clubs, or were merely international teammates with the target player, you MUST set accepted=false.\n" +
       "4. If the player clearly does NOT meet the criteria or did not play/score/transfer as claimed, set accepted=false.\n\n" +
       "Return ONLY a JSON object with this exact schema:\n" +
       "{\n" +
