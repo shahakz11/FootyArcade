@@ -120,6 +120,7 @@
 .fa-modal-card {
     animation: fa-modal-card-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     max-height: calc(100vh - 2.5rem);
+    max-height: calc(100dvh - 2rem);
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
@@ -137,6 +138,36 @@
 @keyframes fa-modal-card-in {
     from { opacity: 0; transform: scale(0.9) translateY(20px); }
     to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Result Modal GIF Container & Framing ────────────────── */
+#modal-gif-container {
+    background: radial-gradient(circle at center, rgba(30, 30, 30, 0.8) 0%, rgba(10, 10, 10, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+    max-height: 220px !important;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 1rem;
+    position: relative;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+#modal-gif-container.hidden {
+    display: none !important;
+}
+#modal-gif {
+    max-width: 100%;
+    max-height: 210px !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    border-radius: 0.75rem;
+    display: block;
+    margin: 0 auto;
 }
 
 /* ── Glass card (for lobby) ───────────────────────────────── */
@@ -480,6 +511,8 @@
     justify-content: center;
     padding: 16px;
     animation: fa-modal-in 0.25s ease-out;
+    overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 /* VAR Modal Card */
@@ -494,7 +527,10 @@
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(57, 255, 20, 0.15);
     animation: fa-modal-card-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     color: #e5e2e1;
-    overflow: hidden;
+    overflow-y: auto;
+    max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem);
+    margin: auto;
 }
 
 .fa-var-modal-card.accepted {
@@ -515,7 +551,7 @@
     background: #000;
     border: 2px solid #282828;
     box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
-    min-height: 180px;
+    min-height: 160px;
     max-height: 220px;
     display: flex;
     align-items: center;
@@ -523,11 +559,13 @@
 }
 
 .fa-var-gif {
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
     max-height: 220px;
-    object-fit: cover;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     display: block;
+    margin: 0 auto;
 }
 
 .fa-var-scanlines {

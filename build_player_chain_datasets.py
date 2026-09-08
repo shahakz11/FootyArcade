@@ -13,6 +13,7 @@ import json
 import csv
 import random
 from collections import defaultdict
+from datetime import datetime
 import pandas as pd
 
 # Patterns to strip youth, reserves, corporate prefixes/suffixes from club names
@@ -188,18 +189,28 @@ def build_player_career_database():
     p_clubs = defaultdict(set)
 
     # 1. Davidcariboo transfers
-    dc_path = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions/671')
+    today_str = datetime.now().strftime('%Y-%m-%d')
+    dc_dir = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions')
+    if os.path.exists(dc_dir):
+        versions = sorted([v for v in os.listdir(dc_dir) if v.isdigit()], key=int)
+        dc_path = os.path.join(dc_dir, versions[-1]) if versions else os.path.join(dc_dir, '679')
+    else:
+        dc_path = os.path.join(dc_dir, '679')
+
     dc_id_map = {}
     if os.path.exists(dc_path):
-        print("Reading Davidcariboo players & transfers...")
+        print(f"Reading Davidcariboo players & transfers from {dc_path}...")
         df_dc_p = pd.read_csv(os.path.join(dc_path, 'players.csv'), usecols=['player_id', 'name'], low_memory=False)
         dc_id_map = dict(zip(df_dc_p['player_id'], df_dc_p['name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True)))
 
         df_dc_t = pd.read_csv(
             os.path.join(dc_path, 'transfers.csv'),
-            usecols=['player_name', 'from_club_name', 'to_club_name'],
+            usecols=['player_name', 'from_club_name', 'to_club_name', 'transfer_date'],
             low_memory=False
         )
+        df_dc_t['parsed_date'] = pd.to_datetime(df_dc_t['transfer_date'], errors='coerce')
+        df_dc_t = df_dc_t[(df_dc_t['parsed_date'].isna()) | (df_dc_t['parsed_date'] <= today_str)]
+
         for row in df_dc_t.itertuples(index=False):
             name = str(row.player_name).strip()
             if name and name != 'nan' and name in player_metadata:
@@ -209,9 +220,15 @@ def build_player_career_database():
                 if c2: p_clubs[name].add(c2)
 
     # 2. Salimt transfers (using unified ID map so players like Chivu are mapped)
-    salimt_path = os.path.expanduser('~/.cache/kagglehub/datasets/xfkzujqjvx97n/football-datasets/versions/2')
+    salimt_dir = os.path.expanduser('~/.cache/kagglehub/datasets/xfkzujqjvx97n/football-datasets/versions')
+    if os.path.exists(salimt_dir):
+        versions = sorted([v for v in os.listdir(salimt_dir) if v.isdigit()], key=int)
+        salimt_path = os.path.join(salimt_dir, versions[-1]) if versions else os.path.join(salimt_dir, '2')
+    else:
+        salimt_path = os.path.join(salimt_dir, '2')
+
     if os.path.exists(salimt_path):
-        print("Reading Salimt profiles & transfers...")
+        print(f"Reading Salimt profiles & transfers from {salimt_path}...")
         p_prof = pd.read_csv(
             os.path.join(salimt_path, 'player_profiles', 'player_profiles.csv'),
             usecols=['player_id', 'player_name'],
@@ -225,9 +242,12 @@ def build_player_career_database():
 
         salimt_tr = pd.read_csv(
             os.path.join(salimt_path, 'transfer_history', 'transfer_history.csv'),
-            usecols=['player_id', 'from_team_name', 'to_team_name'],
+            usecols=['player_id', 'from_team_name', 'to_team_name', 'transfer_date'],
             low_memory=False
         )
+        salimt_tr['parsed_date'] = pd.to_datetime(salimt_tr['transfer_date'], errors='coerce')
+        salimt_tr = salimt_tr[(salimt_tr['parsed_date'].isna()) | (salimt_tr['parsed_date'] <= today_str)]
+
         for row in salimt_tr.itertuples(index=False):
             pid = row.player_id
             name = unified_id_map.get(pid, '').strip()

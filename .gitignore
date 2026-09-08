@@ -25,4 +25,7 @@ real_guesses_frame_*
 unblurred_frame_*
 wrong_guess_frame_*
 correct_guesses_frame_*
-
+# Local tooling & backlog
+private/
+StartBacklog.command
+skills-lock.json.bak

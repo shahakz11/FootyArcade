@@ -168,7 +168,7 @@
             </div>
             <h2 class="font-title text-base sm:text-lg font-bold uppercase tracking-widest text-on-surface-variant">Career Path Challenge</h2>
             <p class="text-on-surface-variant text-sm max-w-xl mx-auto">
-                Guess the destination club for each transfer in the player's career chronologically!
+                Guess each previous club in the player's career, starting from their most recent destination back to where it all began!
             </p>
         </section>
 
@@ -299,8 +299,8 @@
             </div>
 
             <!-- Giphy GIF Element -->
-            <div id="modal-gif-container" class="w-full max-h-36 sm:max-h-44 rounded-2xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center relative my-2 sm:my-3 hidden">
-                <img id="modal-gif" class="w-full h-36 sm:h-44 object-cover rounded-2xl" src="" alt="Giphy GIF" />
+            <div id="modal-gif-container" class="w-full max-h-48 sm:max-h-56 rounded-2xl overflow-hidden bg-black/60 border border-white/10 flex items-center justify-center relative my-2 sm:my-3 hidden">
+                <img id="modal-gif" class="max-w-full max-h-48 sm:max-h-56 w-auto h-auto object-contain rounded-xl" src="" alt="Giphy GIF" />
             </div>
 
             <!-- Stats -->
@@ -351,7 +351,18 @@
     const activeGameData = typeof DAILY_DESTINATION_GAME !== 'undefined'
         ? DAILY_DESTINATION_GAME
         : { player_name: "Cristiano Ronaldo", nationality: "Portugal", position: "Attack", transfers: [] };
-    const allClubs      = typeof ALL_CLUBS !== 'undefined' ? ALL_CLUBS : [];
+    const allClubs      = typeof ALL_CLUBS !== 'undefined' ? [...ALL_CLUBS] : [];
+    // Ensure all clubs from the active puzzle are guaranteed to be in allClubs
+    if (activeGameData && Array.isArray(activeGameData.transfers)) {
+        activeGameData.transfers.forEach(tr => {
+            if (tr.from_club_name && !allClubs.includes(tr.from_club_name)) {
+                allClubs.push(tr.from_club_name);
+            }
+            if (tr.to_club_name && !allClubs.includes(tr.to_club_name)) {
+                allClubs.push(tr.to_club_name);
+            }
+        });
+    }
     const puzzleNum     = typeof PUZZLE_NUMBER !== 'undefined' ? PUZZLE_NUMBER : 0;
     const isBackInTime  = typeof IS_BACK_IN_TIME !== 'undefined' ? IS_BACK_IN_TIME : false;
     const maxBackDays   = typeof MAX_BACK_DAYS !== 'undefined' ? MAX_BACK_DAYS : 7;
@@ -435,12 +446,13 @@
             if (gameOver) return;
             FootyUI.confirm({
                 title: 'REVEAL STEP?',
-                message: 'Are you sure you want to reveal the destination for this step? It will count as unsolved/incorrect.',
+                message: 'Are you sure you want to reveal the previous club for this step? It will count as unsolved/incorrect.',
                 confirmText: 'REVEAL',
                 cancelText: 'CANCEL',
                 onConfirm: () => {
                     revealedSteps.add(activeStep);
                     activeStep++;
+                    wrongGuesses.clear();
                     updateStepState();
                     checkWinLoss();
                 }
@@ -567,7 +579,7 @@
                         <div class="col-span-2">
                             <span class="text-[8px] uppercase font-mono tracking-wider text-on-surface-variant block">FROM</span>
                             <span class="block h-5 w-full rounded shimmer" id="redacted-from-${i}"></span>
-                            <span class="font-bold text-white text-xs md:text-sm line-clamp-2 hidden" id="revealed-from-${i}">${tr.from_club_name}</span>
+                            <span class="font-bold text-accent text-xs md:text-sm line-clamp-2 hidden" id="revealed-from-${i}">${tr.from_club_name}</span>
                         </div>
                         <div class="col-span-1 text-center text-on-surface-variant">
                             <span class="material-symbols-outlined text-base">arrow_forward</span>
@@ -575,7 +587,7 @@
                         <div class="col-span-2">
                             <span class="text-[8px] uppercase font-mono tracking-wider text-on-surface-variant block">TO</span>
                             <span class="block h-5 w-full rounded shimmer" id="redacted-dest-${i}"></span>
-                            <span class="font-bold text-accent text-xs md:text-sm hidden line-clamp-2" id="revealed-dest-${i}">${tr.to_club_name}</span>
+                            <span class="font-bold text-white text-xs md:text-sm hidden line-clamp-2" id="revealed-dest-${i}">${tr.to_club_name}</span>
                         </div>
                     </div>
                 </div>
@@ -602,11 +614,11 @@
                 if (revealedSteps.has(i)) {
                     badge.className = 'relative z-10 flex items-center justify-center w-10 h-10 rounded-full border border-error bg-error/10 text-error font-mono font-bold text-xs shrink-0';
                     content.className = 'flex-grow bg-surface border border-error/20 rounded-2xl p-4 space-y-2 relative overflow-hidden bg-error/[0.02]';
-                    revDest.classList.add('text-error/85');
+                    revFrom.classList.add('text-error/85');
                 } else {
                     badge.className = 'relative z-10 flex items-center justify-center w-10 h-10 rounded-full border border-accent bg-accent/10 text-accent font-mono font-bold text-xs shrink-0';
                     content.className = 'flex-grow bg-surface border border-accent/20 rounded-2xl p-4 space-y-2 relative overflow-hidden';
-                    revDest.classList.remove('text-error/85');
+                    revFrom.classList.remove('text-error/85');
                 }
                 redFrom.classList.add('hidden'); revFrom.classList.remove('hidden');
                 redDest.classList.add('hidden'); revDest.classList.remove('hidden');
@@ -616,23 +628,20 @@
                 card.style.pointerEvents = 'auto';
                 badge.className = 'relative z-10 flex items-center justify-center w-10 h-10 rounded-full border-2 border-accent bg-surface text-accent font-mono font-bold text-xs shrink-0 scale-105 shadow-lg';
                 content.className = 'flex-grow bg-surface-container-high border border-white/20 rounded-2xl p-4 space-y-2 relative overflow-hidden';
-                // Show FROM, hide TO
-                redFrom.classList.add('hidden'); revFrom.classList.remove('hidden');
-                redDest.classList.remove('hidden'); revDest.classList.add('hidden');
+                // Show TO (revealed), hide FROM (redacted for user to guess)
+                redDest.classList.add('hidden'); revDest.classList.remove('hidden');
+                redFrom.classList.remove('hidden'); revFrom.classList.add('hidden');
                 // Update guess label
                 document.getElementById('active-step-label').textContent =
-                    `GUESS DESTINATION FROM ${activeGameData.transfers[i].from_club_name.toUpperCase()}`;
+                    `GUESS CLUB BEFORE ${activeGameData.transfers[i].to_club_name.toUpperCase()}`;
             } else {
                 // Locked future
                 card.style.opacity      = '0.3';
                 card.style.pointerEvents = 'none';
                 badge.className = 'relative z-10 flex items-center justify-center w-10 h-10 rounded-full border border-white/5 bg-surface/50 text-on-surface-variant/30 font-mono font-bold text-xs shrink-0';
                 content.className = 'flex-grow bg-surface/50 border border-white/5 rounded-2xl p-4 space-y-2 relative overflow-hidden';
-                if (i === 0) {
-                    redFrom.classList.add('hidden'); revFrom.classList.remove('hidden');
-                } else {
-                    redFrom.classList.remove('hidden'); revFrom.classList.add('hidden');
-                }
+                // Hide both FROM and TO so answers never leak
+                redFrom.classList.remove('hidden'); revFrom.classList.add('hidden');
                 redDest.classList.remove('hidden'); revDest.classList.add('hidden');
             }
         });
@@ -655,20 +664,19 @@
         document.getElementById('autocomplete-list').classList.add('hidden');
         dropdown.clearSelection();
 
-        const normMatchedClub = FootyUI.normalizeStr(matched);
         const alreadyWrong = wrongGuesses.has(matched);
-        const alreadyCorrect = activeGameData.transfers
-            .slice(0, activeStep)
-            .some(tr => FootyUI.normalizeStr(tr.to_club_name) === normMatchedClub);
-
-        if (alreadyWrong || alreadyCorrect) {
+        if (alreadyWrong) {
             FootyUI.toast(`"${matched}" was already guessed!`, 'error');
             return;
         }
 
-        const correct = FootyUI.normalizeStr(activeGameData.transfers[activeStep].to_club_name);
+        const targetClub = activeGameData.transfers[activeStep].from_club_name;
+        const isMatch = FootyUI.isClubMatch
+            ? FootyUI.isClubMatch(matched, targetClub)
+            : (FootyUI.normalizeStr(matched) === FootyUI.normalizeStr(targetClub));
 
-        if (FootyUI.normalizeStr(matched) === correct) {
+        if (isMatch) {
+            wrongGuesses.clear();
             score++;
             activeStep++;
             document.getElementById('progress-counter').textContent = score;
@@ -695,7 +703,7 @@
             FootyUI.showFeedback({
                 isCorrect: false,
                 title: 'INCORRECT!',
-                message: `${matched} is not the destination. Lost 1 life.`
+                message: `${matched} is not the previous club. Lost 1 life.`
             });
 
             // livesCtrl.onDead fires endGame if at 0
@@ -722,11 +730,10 @@
 
             if (card) card.style.opacity = '1';
             redFrom?.classList.add('hidden');    revFrom?.classList.remove('hidden');
-            redDest?.classList.add('hidden');
-            if (revDest) {
-                revDest.classList.remove('hidden');
+            redDest?.classList.add('hidden');    revDest?.classList.remove('hidden');
+            if (revFrom) {
                 if (i >= activeStep || revealedSteps.has(i)) {
-                    revDest.classList.add('text-error/85');
+                    revFrom.classList.add('text-error/85');
                     content?.classList.add('border-error/20', 'bg-error/[0.02]');
                     if (revealedSteps.has(i)) {
                         badge?.classList.replace('border-accent', 'border-error');

@@ -54,6 +54,104 @@
             .trim();
     }
 
+    /**
+     * Common club aliases and equivalence mapping
+     */
+    const CLUB_ALIASES = {
+        // England
+        'man city': 'manchester city', 'manchester city': 'manchester city',
+        'man utd': 'manchester united', 'man united': 'manchester united', 'manchester united': 'manchester united',
+        'spurs': 'tottenham hotspur', 'tottenham': 'tottenham hotspur', 'tottenham hotspur': 'tottenham hotspur',
+        'newcastle': 'newcastle united', 'newcastle united': 'newcastle united',
+        'west ham': 'west ham united', 'west ham united': 'west ham united',
+        'wolves': 'wolverhampton wanderers', 'wolverhampton': 'wolverhampton wanderers', 'wolverhampton wanderers': 'wolverhampton wanderers',
+        'leicester': 'leicester city', 'leicester city': 'leicester city',
+        'leeds': 'leeds united', 'leeds united': 'leeds united',
+        'brighton': 'brighton and hove albion', 'brighton hove albion': 'brighton and hove albion', 'brighton and hove albion': 'brighton and hove albion',
+        'aston villa': 'aston villa',
+
+        // Spain
+        'barca': 'barcelona', 'fc barcelona': 'barcelona', 'barcelona': 'barcelona',
+        'real madrid': 'real madrid',
+        'atletico': 'atletico madrid', 'atletico madrid': 'atletico madrid',
+        'athletic bilbao': 'athletic bilbao', 'athletic club': 'athletic bilbao',
+        'sevilla': 'sevilla', 'sevilla fc': 'sevilla',
+        'real betis': 'real betis', 'betis': 'real betis',
+        'real sociedad': 'real sociedad',
+        'villarreal': 'villarreal', 'villarreal cf': 'villarreal',
+        'valencia': 'valencia', 'valencia cf': 'valencia',
+        'celta vigo': 'celta vigo', 'celta de vigo': 'celta vigo',
+        'espanyol': 'espanyol', 'rcd espanyol': 'espanyol',
+        'mallorca': 'mallorca', 'rcd mallorca': 'mallorca',
+
+        // Germany
+        'bayern munich': 'bayern munich', 'bayern munchen': 'bayern munich', 'fc bayern': 'bayern munich', 'fc bayern munchen': 'bayern munich',
+        'dortmund': 'borussia dortmund', 'b dortmund': 'borussia dortmund', 'bor dortmund': 'borussia dortmund', 'borussia dortmund': 'borussia dortmund',
+        'leverkusen': 'bayer leverkusen', 'b leverkusen': 'bayer leverkusen', 'bayer leverkusen': 'bayer leverkusen', 'bayer 04 leverkusen': 'bayer leverkusen',
+        'leipzig': 'rb leipzig', 'rb leipzig': 'rb leipzig', 'rasenballsport leipzig': 'rb leipzig',
+        'm gladbach': 'borussia monchengladbach', 'borussia m gladbach': 'borussia monchengladbach', 'borussia monchengladbach': 'borussia monchengladbach',
+        'schalke': 'schalke 04', 'schalke 04': 'schalke 04', 'fc schalke 04': 'schalke 04',
+        'hoffenheim': 'tsg hoffenheim', 'tsg hoffenheim': 'tsg hoffenheim', 'tsg 1899 hoffenheim': 'tsg hoffenheim',
+        'mainz': 'mainz 05', 'mainz 05': 'mainz 05', '1 fsv mainz 05': 'mainz 05', 'fsv mainz 05': 'mainz 05',
+        'frankfurt': 'eintracht frankfurt', 'eintracht frankfurt': 'eintracht frankfurt',
+        'stuttgart': 'vfb stuttgart', 'vfb stuttgart': 'vfb stuttgart',
+        'wolfsburg': 'vfl wolfsburg', 'vfl wolfsburg': 'vfl wolfsburg',
+        'nuremberg': '1 fc nurnberg', 'nurnberg': '1 fc nurnberg', '1 fc nuremberg': '1 fc nurnberg',
+        'koln': '1 fc koln', 'cologne': '1 fc koln', 'fc koln': '1 fc koln', '1 fc koln': '1 fc koln',
+
+        // Italy
+        'inter': 'inter milan', 'inter milan': 'inter milan', 'internazionale': 'inter milan', 'fc internazionale': 'inter milan',
+        'ac milan': 'ac milan', 'milan': 'ac milan',
+        'juventus': 'juventus', 'juve': 'juventus',
+        'roma': 'as roma', 'as roma': 'as roma',
+        'napoli': 'ssc napoli', 'ssc napoli': 'ssc napoli',
+        'lazio': 'ss lazio', 'ss lazio': 'ss lazio',
+        'atalanta': 'atalanta', 'atalanta bc': 'atalanta',
+        'fiorentina': 'acf fiorentina', 'acf fiorentina': 'fiorentina',
+
+        // France
+        'psg': 'paris saint germain', 'paris sg': 'paris saint germain', 'paris saint germain': 'paris saint germain',
+        'om': 'marseille', 'olympique marseille': 'marseille', 'olympique de marseille': 'marseille', 'marseille': 'marseille',
+        'ol': 'lyon', 'olympique lyon': 'lyon', 'olympique lyonnais': 'lyon', 'lyon': 'lyon',
+        'monaco': 'as monaco', 'as monaco': 'as monaco',
+        'lille': 'lille osc', 'lille osc': 'lille osc', 'losc lille': 'lille osc',
+        'rennes': 'stade rennais', 'stade rennais': 'stade rennais',
+
+        // Others
+        'sporting': 'sporting cp', 'sporting lisbon': 'sporting cp', 'sporting cp': 'sporting cp',
+        'benfica': 'sl benfica', 'sl benfica': 'sl benfica',
+        'porto': 'fc porto', 'fc porto': 'fc porto',
+        'ajax': 'afc ajax', 'afc ajax': 'afc ajax',
+        'psv': 'psv eindhoven', 'psv eindhoven': 'psv eindhoven',
+        'feyenoord': 'feyenoord rotterdam', 'feyenoord rotterdam': 'feyenoord rotterdam',
+        'salzburg': 'red bull salzburg', 'rb salzburg': 'red bull salzburg', 'red bull salzburg': 'red bull salzburg',
+        'club brugge': 'club brugge', 'brugge': 'club brugge', 'bruges': 'club brugge',
+        'lyngby': 'lyngby', 'lyngby bk': 'lyngby', 'lyngby boldklub': 'lyngby',
+        'copenhagen': 'fc copenhagen', 'fc copenhagen': 'fc copenhagen',
+    };
+
+    function canonicalClub(str) {
+        const norm = normalizeStr(str);
+        if (!norm) return '';
+        if (CLUB_ALIASES[norm]) return CLUB_ALIASES[norm];
+        const stripped = norm
+            .replace(/^(1\s+fc|1\s+fsv|fc|cf|ac|as|ss|sv|sc|sd|cd|ud|rc|rcd|fk|sk|bk|if|ifk|ogc|us|afc|ca|vfb|vfl|tsg|bsc|fsv)\s+/, '')
+            .replace(/\s+(fc|cf|sc|bk|sv|ac|sd|ud|rc|united|city|hotspur|wanderers|albion|b|ii)$/, '')
+            .trim();
+        if (CLUB_ALIASES[stripped]) return CLUB_ALIASES[stripped];
+        return stripped || norm;
+    }
+
+    function isClubMatch(guess, target) {
+        if (!guess || !target) return false;
+        const normG = normalizeStr(guess);
+        const normT = normalizeStr(target);
+        if (normG === normT) return true;
+        const canonG = canonicalClub(normG);
+        const canonT = canonicalClub(normT);
+        return Boolean(canonG && canonT && canonG === canonT);
+    }
+
     // ────────────────────────────────────────────────────────
     // 1. FootyDropdown — Unified autocomplete component
     // ────────────────────────────────────────────────────────
@@ -398,10 +496,10 @@
                 if (modalCard) {
                     gifContainer = document.createElement('div');
                     gifContainer.id = cfg.gifContainerId || 'modal-gif-container';
-                    gifContainer.className = 'w-full max-h-36 sm:max-h-44 rounded-2xl overflow-hidden bg-black/40 border border-white/10 flex items-center justify-center relative my-2 sm:my-3 hidden';
+                    gifContainer.className = 'w-full max-h-48 sm:max-h-56 rounded-2xl overflow-hidden bg-black/60 border border-white/10 flex items-center justify-center relative my-2 sm:my-3 hidden';
                     gifEl = document.createElement('img');
                     gifEl.id = cfg.gifId || 'modal-gif';
-                    gifEl.className = 'w-full h-36 sm:h-44 object-cover rounded-2xl';
+                    gifEl.className = 'max-w-full max-h-48 sm:max-h-56 w-auto h-auto object-contain rounded-xl';
                     gifContainer.appendChild(gifEl);
 
                     const msgElParent = msgEl?.parentElement || titleEl?.parentElement;
@@ -416,6 +514,11 @@
             if (gifContainer && gifEl) {
                 gifContainer.classList.add('hidden');
                 gifEl.src = '';
+                // Ensure responsive non-crop classes if HTML already had fixed object-cover
+                gifContainer.classList.remove('max-h-36');
+                gifContainer.classList.add('max-h-48', 'sm:max-h-56');
+                gifEl.classList.remove('object-cover', 'h-36', 'sm:h-44');
+                gifEl.classList.add('object-contain', 'w-auto', 'h-auto', 'mx-auto', 'max-h-48', 'sm:max-h-56');
 
                 const query = buildGiphyQuery(opts);
 
@@ -1625,6 +1728,8 @@
         getVisitorId,
         getSessionId,
         normalizeStr,
+        canonicalClub,
+        isClubMatch,
     };
 
 })(window);

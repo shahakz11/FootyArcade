@@ -3,13 +3,19 @@ import re
 import pandas as pd
 import random
 import kagglehub
+from datetime import datetime
 
 def main():
     print("Loading davidcariboo/player-scores dataset...")
     try:
         path = kagglehub.dataset_download("davidcariboo/player-scores")
     except Exception:
-        path = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions/671')
+        dc_dir = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions')
+        if os.path.exists(dc_dir):
+            versions = sorted([v for v in os.listdir(dc_dir) if v.isdigit()], key=int)
+            path = os.path.join(dc_dir, versions[-1]) if versions else os.path.join(dc_dir, '679')
+        else:
+            path = os.path.join(dc_dir, '679')
     print(f"davidcariboo Dataset path: {path}")
 
     # Load davidcariboo players and transfers
@@ -24,7 +30,12 @@ def main():
     try:
         salimt_path = kagglehub.dataset_download("xfkzujqjvx97n/football-datasets")
     except Exception:
-        salimt_path = os.path.expanduser('~/.cache/kagglehub/datasets/xfkzujqjvx97n/football-datasets/versions/2')
+        salimt_dir = os.path.expanduser('~/.cache/kagglehub/datasets/xfkzujqjvx97n/football-datasets/versions')
+        if os.path.exists(salimt_dir):
+            versions = sorted([v for v in os.listdir(salimt_dir) if v.isdigit()], key=int)
+            salimt_path = os.path.join(salimt_dir, versions[-1]) if versions else os.path.join(salimt_dir, '2')
+        else:
+            salimt_path = os.path.join(salimt_dir, '2')
     print(f"salimt Dataset path: {salimt_path}")
 
     salimt_profiles_file = os.path.join(salimt_path, 'player_profiles', 'player_profiles.csv')
@@ -92,6 +103,11 @@ def main():
         }
     ])
     df_transfers = pd.concat([df_transfers, manual_transfers], ignore_index=True)
+
+    # Filter out future arranged transfers/placeholder loan expirations beyond today
+    today_str = datetime.now().strftime('%Y-%m-%d')
+    parsed_dates = pd.to_datetime(df_transfers['transfer_date'], errors='coerce')
+    df_transfers = df_transfers[(parsed_dates.isna()) | (parsed_dates <= today_str)].copy()
 
 
     # Normalize/clean club names (Youth, B teams, different variations, corporate suffixes, trailing dots)
@@ -269,16 +285,10 @@ def main():
 
     for day in range(num_days):
         selected_club = shuffled_clubs[day % len(shuffled_clubs)]
-        if day < len(orig_shuffled_clubs):
-            club_transfers = df_dc_transfers_clean[
-                (df_dc_transfers_clean['to_club_name'] == selected_club) &
-                (df_dc_transfers_clean['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
-            ].copy()
-        else:
-            club_transfers = df_transfers[
-                (df_transfers['to_club_name'] == selected_club) &
-                (df_transfers['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
-            ].copy()
+        club_transfers = df_transfers[
+            (df_transfers['to_club_name'] == selected_club) &
+            (df_transfers['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
+        ].copy()
 
         # For each player, select only their highest transfer fee (unique player)
         idx = club_transfers.groupby(['player_name'])['transfer_fee'].idxmax()
@@ -343,16 +353,10 @@ def main():
 
     for day in range(num_days):
         selected_nationality = shuffled_nationalities[day % len(shuffled_nationalities)]
-        if day < len(orig_shuffled_nats):
-            nationality_transfers = df_dc_merged_nat[
-                (df_dc_merged_nat['nationality_name'] == selected_nationality) &
-                (df_dc_merged_nat['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
-            ].copy()
-        else:
-            nationality_transfers = df_merged_for_nationality[
-                (df_merged_for_nationality['nationality_name'] == selected_nationality) &
-                (df_merged_for_nationality['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
-            ].copy()
+        nationality_transfers = df_merged_for_nationality[
+            (df_merged_for_nationality['nationality_name'] == selected_nationality) &
+            (df_merged_for_nationality['transfer_fee'] > TRANSFER_FEE_THRESHOLD)
+        ].copy()
 
         # For each player, select only their highest transfer fee (unique player)
         idx = nationality_transfers.groupby(['player_name'])['transfer_fee'].idxmax()
@@ -481,10 +485,7 @@ def main():
     clubs_in_careers = set()
     
     for day, pid in enumerate(selected_pids):
-        if day < len(orig_dest_pids):
-            p_transfers = df_dc_dest_eligible[df_dc_dest_eligible['player_id'] == pid].copy()
-        else:
-            p_transfers = df_dest_eligible[df_dest_eligible['player_id'] == pid].copy()
+        p_transfers = df_dest_eligible[df_dest_eligible['player_id'] == pid].copy()
 
         # Sort chronologically
         p_transfers = p_transfers.sort_values(by='transfer_date')
@@ -650,8 +651,16 @@ def main():
     csv_clubs = set(df_clubs_csv['name'].dropna().apply(clean_club_name).unique()) if not df_clubs_csv.empty else set()
     cleaned_careers = set([clean_club_name(c) for c in clubs_in_careers if c])
 
-    raw_clubs = cleaned_careers | from_clubs | to_clubs | csv_clubs
-    all_autocomplete_clubs = sorted(list(set(clean_club_name(c) for c in raw_clubs if c)))
+    existing_all_clubs = set()
+    if os.path.exists('all_clubs.json'):
+        try:
+            with open('all_clubs.json', 'r', encoding='utf-8') as f_old:
+                existing_all_clubs = set(json.load(f_old))
+        except Exception:
+            pass
+
+    raw_clubs = cleaned_careers | from_clubs | to_clubs | csv_clubs | set(c.strip() for c in clubs_in_careers if c) | existing_all_clubs
+    all_autocomplete_clubs = sorted(list(set(c.strip() for c in raw_clubs if c and c.strip())))
 
     with open('all_clubs.json', 'w', encoding='utf-8') as f_clubs:
         json.dump(all_autocomplete_clubs, f_clubs, ensure_ascii=False, indent=2)

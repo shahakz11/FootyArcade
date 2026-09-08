@@ -132,6 +132,9 @@ def load_transfer_destination(puzzle_num):
         print(f"  WARNING: No transfer_destination data for puzzle #{puzzle_num}")
         return None, None
 
+    # Reverse transfers so the game runs from most recent club/transfer back to the first
+    game_data["transfers"].reverse()
+
     all_clubs_json = "[]"
     if os.path.exists("all_clubs.json"):
         with open("all_clubs.json", "r", encoding="utf-8") as f:

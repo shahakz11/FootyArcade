@@ -407,13 +407,19 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
             """)
             
         elif game_id == "transfer_destination":
-            # Baseline first guess (always has 3s countdown)
-            await make_guess("Real Madrid", is_correct=False, do_countdown=True)
             transfers = await page.evaluate("DAILY_DESTINATION_GAME.transfers")
+            step1_from = transfers[0]['from_club_name'] if transfers else ""
+            wrong_candidates = [c for c in ["Real Madrid", "Barcelona", "Bayern Munich", "Juventus", "Manchester City"] if c.lower() != step1_from.lower()]
+            wrong_club = wrong_candidates[0] if wrong_candidates else "Bayern Munich"
+
+            # Baseline first guess (shows lives deduction & tension)
+            print(f"  ➜ Step 1 Wrong Guess: {wrong_club}")
+            await make_guess(wrong_club, is_correct=False, do_countdown=True)
+            
             for idx in range(min(2, len(transfers))):
-                dest_club = transfers[idx]['to_club_name']
-                print(f"  ➜ Guessing Step {idx+1} Destination: {dest_club}")
-                await make_guess(dest_club, is_correct=True, do_countdown=True)
+                prev_club = transfers[idx]['from_club_name']
+                print(f"  ➜ Guessing Step {idx+1} Previous Club: {prev_club}")
+                await make_guess(prev_club, is_correct=True, do_countdown=True)
                 
         elif game_id == "top_scorers":
             # Baseline first guess (always has 3s countdown)

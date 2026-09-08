@@ -427,8 +427,10 @@
     // ── Injected data (replaced by fetch_daily.py) ────────────
     const activeGameData   = typeof DAILY_CLUBCONNECT_GAME !== 'undefined'
         ? DAILY_CLUBCONNECT_GAME
-        : { club: "Bayern Munich", players: [] };
-    const activeClubs      = typeof ALL_CLUBS !== 'undefined' && ALL_CLUBS.length > 0 ? ALL_CLUBS : (typeof ANSWER_CLUBS !== 'undefined' ? ANSWER_CLUBS : []);
+    const activeClubs      = typeof ALL_CLUBS !== 'undefined' && ALL_CLUBS.length > 0 ? [...ALL_CLUBS] : (typeof ANSWER_CLUBS !== 'undefined' ? [...ANSWER_CLUBS] : []);
+    if (activeGameData && activeGameData.club && !activeClubs.includes(activeGameData.club)) {
+        activeClubs.push(activeGameData.club);
+    }
     const puzzleNum        = typeof PUZZLE_NUMBER !== 'undefined' ? PUZZLE_NUMBER : 0;
     const isBackInTime     = typeof IS_BACK_IN_TIME !== 'undefined' ? IS_BACK_IN_TIME : false;
     const maxBackDays      = typeof MAX_BACK_DAYS !== 'undefined' ? MAX_BACK_DAYS : 7;
@@ -686,8 +688,9 @@
         guessCount++;
         const normAnswer  = FootyUI.normalizeStr(activeGameData.club);
         const normGuess   = FootyUI.normalizeStr(guessedName);
+        const isMatch     = FootyUI.isClubMatch ? FootyUI.isClubMatch(guessedName, activeGameData.club) : (normGuess === normAnswer);
 
-        if (normGuess === normAnswer) {
+        if (isMatch) {
             // ✅ Correct!
             endGame(true);
         } else {

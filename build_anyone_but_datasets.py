@@ -5,8 +5,13 @@ import random
 from collections import defaultdict
 
 def main():
-    cache_path = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions/671')
-    print("Loading player-scores dataset from cache...")
+    dc_dir = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions')
+    if os.path.exists(dc_dir):
+        versions = sorted([v for v in os.listdir(dc_dir) if v.isdigit()], key=int)
+        cache_path = os.path.join(dc_dir, versions[-1]) if versions else os.path.join(dc_dir, '679')
+    else:
+        cache_path = os.path.join(dc_dir, '679')
+    print(f"Loading player-scores dataset from {cache_path}...")
     
     players_df = pd.read_csv(os.path.join(cache_path, 'players.csv'))
     transfers_df = pd.read_csv(os.path.join(cache_path, 'transfers.csv'))
