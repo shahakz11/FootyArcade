@@ -419,7 +419,7 @@
 
 
     <script id="daily-game-data">
-        const DAILY_CLUBCONNECT_GAME = {"club": "Lazio", "players": [{"player_name": "Marcelo Salas", "from_club_name": "River Plate", "transfer_fee": 17500000.0, "transfer_date": "1998-07-01"}, {"player_name": "Joaquín Correa", "from_club_name": "Sevilla", "transfer_fee": 17850000.0, "transfer_date": "2018-08-01"}, {"player_name": "Taty Castellanos", "from_club_name": "New York City", "transfer_fee": 18600000.0, "transfer_date": "2023-07-21"}, {"player_name": "Mauro Zárate", "from_club_name": "Al-Sadd", "transfer_fee": 20200000.0, "transfer_date": "2009-07-01"}, {"player_name": "Vedat Muriqi", "from_club_name": "Fenerbahce", "transfer_fee": 21000000.0, "transfer_date": "2020-09-15"}]};
+        const DAILY_CLUBCONNECT_GAME = {"club": "Sampdoria", "players": [{"player_name": "Giampaolo Pazzini", "from_club_name": "Fiorentina", "transfer_fee": 9000000.0, "transfer_date": "2009-01-15"}, {"player_name": "Omar Colley", "from_club_name": "KRC Genk", "transfer_fee": 9250000.0, "transfer_date": "2018-07-01"}, {"player_name": "", "from_club_name": "Valencia", "transfer_fee": 10800000.0, "transfer_date": "1998-07-28"}, {"player_name": "Manolo Gabbiadini", "from_club_name": "Southampton", "transfer_fee": 11900000.0, "transfer_date": "2019-01-11"}, {"player_name": "Luis Muriel", "from_club_name": "Udinese", "transfer_fee": 12000000.0, "transfer_date": "2015-07-01"}]};
         const ALL_CLUBS = [
   "---",
   "01 Bamberg",
@@ -41261,7 +41261,7 @@
 ];
         const ANSWER_CLUBS = ["AC Milan", "Ajax", "Al-Ahli", "Al-Duhail", "Al-Hilal", "Al-Ittihad", "Al-Nassr", "Al-Qadsiah", "Al-Rayyan", "Al-Sadd", "Almería", "América", "Anzhi", "Arsenal", "Aston Villa", "Atalanta", "Atletico Madrid", "BJ Guoan", "Barcelona", "Bayer Leverkusen", "Bayern Munich", "Benfica", "Besiktas", "Blackburn", "Bologna", "Borussia Dortmund", "Borussia Mönchengladbach", "Botafogo", "Bournemouth", "Brentford", "Brighton & Hove Albion", "Brugge", "Burnley", "CSKA Moscow", "Cagliari", "Celta Vigo", "Celtic", "Chelsea", "Como", "Cruz Azul", "Crystal Palace", "Dep. La Coruña", "Dinamo Moscow", "Dynamo Kyiv", "E. Frankfurt", "Espanyol", "Everton", "Fenerbahce", "Fenerbahçe", "Feyenoord", "Fiorentina", "Flamengo", "Forest", "Frankfurt", "Freiburg", "Fulham", "G. Bordeaux", "GZ Evergrande", "Galatasaray", "Genoa", "HB CFFC", "Hamburger", "Hertha Berlin", "Hoffenheim", "Inter", "Ipswich", "Juventus", "Krasnodar", "Lazio", "Leeds United", "Leicester City", "Lens", "Lille", "Liverpool", "Lyon", "Manchester City", "Manchester United", "Marseille", "Middlesbrough", "Monaco", "Mönchengladbach", "Napoli", "Newcastle United", "Nice", "Norwich", "Nott'm Forest", "PSV Eindhoven", "Palmeiras", "Paris Saint-Germain", "Parma", "Porto", "R. Strasbourg", "RB Leipzig", "RB Salzburg", "Rangers", "Real Betis", "Real Madrid", "Real Sociedad", "Rennes", "River Plate", "Roma", "Rubin Kazan", "Salzburg", "Sampdoria", "Sassuolo", "Schalke", "Sevilla", "Shakhtar D", "Sheff Utd", "Southampton", "Spartak Moscow", "Sporting CP", "Stoke City", "Stuttgart", "Sunderland", "Swansea", "Tigres UANL", "Torino", "Tottenham Hotspur", "Udinese", "Valencia", "Villarreal", "Watford", "West Brom", "West Ham United", "Wolfsburg", "Wolverhampton Wanderers", "Zenit S-Pb"];
         const GAME_NOTE = "Transfer data updated to September 2026 (Summer window shut). Players ordered from least to most expensive signing.";
-        const PUZZLE_NUMBER    = 34;
+        const PUZZLE_NUMBER    = 35;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>
@@ -41276,6 +41276,7 @@
     // ── Injected data (replaced by fetch_daily.py) ────────────
     const activeGameData   = typeof DAILY_CLUBCONNECT_GAME !== 'undefined'
         ? DAILY_CLUBCONNECT_GAME
+        : { club: "Bayern Munich", players: [] };
     const activeClubs      = typeof ALL_CLUBS !== 'undefined' && ALL_CLUBS.length > 0 ? [...ALL_CLUBS] : (typeof ANSWER_CLUBS !== 'undefined' ? [...ANSWER_CLUBS] : []);
     if (activeGameData && activeGameData.club && !activeClubs.includes(activeGameData.club)) {
         activeClubs.push(activeGameData.club);

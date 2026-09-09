@@ -427,6 +427,7 @@
     // ── Injected data (replaced by fetch_daily.py) ────────────
     const activeGameData   = typeof DAILY_CLUBCONNECT_GAME !== 'undefined'
         ? DAILY_CLUBCONNECT_GAME
+        : { club: "Bayern Munich", players: [] };
     const activeClubs      = typeof ALL_CLUBS !== 'undefined' && ALL_CLUBS.length > 0 ? [...ALL_CLUBS] : (typeof ANSWER_CLUBS !== 'undefined' ? [...ANSWER_CLUBS] : []);
     if (activeGameData && activeGameData.club && !activeClubs.includes(activeGameData.club)) {
         activeClubs.push(activeGameData.club);
