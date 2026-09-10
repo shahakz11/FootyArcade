@@ -15,6 +15,7 @@ import random
 from collections import defaultdict
 from datetime import datetime
 import pandas as pd
+from player_chain_ml import build_recognizability_index, find_best_chain_for_player
 
 # Patterns to strip youth, reserves, corporate prefixes/suffixes from club names
 PREFIX_PATTERN = re.compile(
@@ -26,7 +27,7 @@ SUFFIX_PATTERN = re.compile(
     re.I
 )
 YOUTH_PATTERNS = re.compile(
-    r'(?i)U\d+|Sub-\d+|Sub\s+\d+|Youth|Yth|Academy|Junioren|Under-|Sub\s+1|Sub\s+2|Castilla|II\b|B\b'
+    r'(?i)U\d+|Sub-\d+|Sub\s+\d+|Youth|Yth|Academy|Junioren|Jugend|Under-|Sub\s+1|Sub\s+2|Castilla|II\b|B\b|\bCJ\b'
 )
 
 ALIASES = {
@@ -555,75 +556,15 @@ def generate_puzzles(p_clubs, player_metadata, total_puzzles=180):
         'Gonzalo Higuaín',
     ]
 
-    all_candidates = []
-    seen = set()
-    for s in priority_stars + dest_stars:
-        if s not in seen and s in p_clubs and len(p_clubs[s]) >= 3:
-            all_candidates.append(s)
-            seen.add(s)
-
-    # If more candidates needed, find high profile players with >= 3 clubs
-    if len(all_candidates) < total_puzzles:
-        for p, clubs in p_clubs.items():
-            if p not in seen and len(clubs) >= 3:
-                all_candidates.append(p)
-                seen.add(p)
-                if len(all_candidates) >= total_puzzles + 50:
-                    break
-
-    print(f"Candidate star pool size: {len(all_candidates)}")
-
-    puzzle_rows = []
-    puzzle_day = 1
-
-    # Specific handcrafted sequences for famous superstars to make them exceptionally fun
-    handcrafted = {
-        'Roberto Baggio': ['AC Milan', 'Inter', 'Juventus', 'Bologna'],
-        'Zlatan Ibrahimović': ['Ajax', 'Juventus', 'Inter', 'Barcelona'],
-        'Cristiano Ronaldo': ['Sporting CP', 'Manchester United', 'Real Madrid', 'Juventus'],
-        'Andrea Pirlo': ['Brescia', 'Inter', 'AC Milan', 'Juventus'],
-        'Álvaro Morata': ['Real Madrid', 'Juventus', 'Chelsea', 'Atletico Madrid'],
-        'Alexis Sánchez': ['Udinese', 'Barcelona', 'Arsenal', 'Inter'],
-        'Cesc Fàbregas': ['Arsenal', 'Barcelona', 'Chelsea', 'Monaco'],
-        'Angel Di Maria': ['Benfica', 'Real Madrid', 'Paris Saint-Germain', 'Juventus'],
-        'Romelu Lukaku': ['Anderlecht', 'Chelsea', 'Everton', 'Inter'],
-        'Pierre-Emerick Aubameyang': ['Saint-Étienne', 'Borussia Dortmund', 'Arsenal', 'Barcelona'],
-        'Thiago Silva': ['Fluminense', 'AC Milan', 'Paris Saint-Germain', 'Chelsea'],
-        'Luis Figo': ['Sporting CP', 'Barcelona', 'Real Madrid', 'Inter'],
-        'Nicolas Anelka': ['Paris Saint-Germain', 'Arsenal', 'Real Madrid', 'Chelsea'],
-        'Michael Owen': ['Liverpool', 'Real Madrid', 'Newcastle United', 'Manchester United'],
-        'Clarence Seedorf': ['Ajax', 'Sampdoria', 'Real Madrid', 'Inter'],
-        'Ronaldo': ['PSV Eindhoven', 'Barcelona', 'Inter', 'Real Madrid'],
-        'David Beckham': ['Manchester United', 'Real Madrid', 'LA Galaxy', 'AC Milan'],
-        'Thierry Henry': ['Monaco', 'Juventus', 'Arsenal', 'Barcelona'],
-        'Gianluigi Buffon': ['Parma', 'Juventus', 'Paris Saint-Germain'],
-        'Xabi Alonso': ['Real Sociedad', 'Liverpool', 'Real Madrid', 'Bayern Munich'],
-        'Mesut Özil': ['Werder Bremen', 'Real Madrid', 'Arsenal', 'Fenerbahce'],
-        'Dani Alves': ['Sevilla', 'Barcelona', 'Juventus', 'Paris Saint-Germain'],
-        'James Rodríguez': ['Porto', 'Monaco', 'Real Madrid', 'Bayern Munich'],
-        'Memphis Depay': ['PSV Eindhoven', 'Manchester United', 'Lyon', 'Barcelona'],
-        'Henrikh Mkhitaryan': ['Shakhtar Donetsk', 'Borussia Dortmund', 'Manchester United', 'Arsenal'],
-        'Christian Pulisic': ['Borussia Dortmund', 'Chelsea', 'AC Milan'],
-        'Karim Benzema': ['Lyon', 'Real Madrid', 'Al-Ittihad'],
-        'Robert Lewandowski': ['Lech Poznan', 'Borussia Dortmund', 'Bayern Munich', 'Barcelona'],
-        'Erling Haaland': ['Molde', 'Red Bull Salzburg', 'Borussia Dortmund', 'Manchester City'],
-        'Jude Bellingham': ['Birmingham City', 'Borussia Dortmund', 'Real Madrid'],
-        'Eden Hazard': ['Lille', 'Chelsea', 'Real Madrid'],
-        'Kevin De Bruyne': ['Genk', 'Chelsea', 'Wolfsburg', 'Manchester City'],
-        'Mohamed Salah': ['Basel', 'Chelsea', 'Roma', 'Liverpool'],
-        'Sadio Mané': ['Metz', 'Red Bull Salzburg', 'Southampton', 'Liverpool'],
-        'Gareth Bale': ['Southampton', 'Tottenham Hotspur', 'Real Madrid'],
-        'Luka Modrić': ['Dinamo Zagreb', 'Tottenham Hotspur', 'Real Madrid'],
-        'Toni Kroos': ['Bayer Leverkusen', 'Bayern Munich', 'Real Madrid'],
-        'Gonzalo Higuaín': ['River Plate', 'Real Madrid', 'Napoli', 'Juventus'],
-    }
-
     # Inverted index for O(1) set-intersection lookups instead of scanning 90,000+ players
     club_to_players = defaultdict(set)
     for p_name, p_clubset in p_clubs.items():
         if p_name and p_name != 'nan':
             for c in p_clubset:
                 club_to_players[c].add(p_name)
+
+    # Compute ML player recognizability scores
+    rec_map = build_recognizability_index(p_clubs, player_metadata)
 
     def find_valid(club_set):
         if not club_set:
@@ -636,53 +577,51 @@ def generate_puzzles(p_clubs, player_metadata, total_puzzles=180):
                 break
         return sorted(list(valid_set))
 
+    # Build candidate pool: start with priority stars, then add destination stars and top recognized players
+    all_candidates = []
+    seen = set()
+    for s in priority_stars:
+        if s not in seen and s in p_clubs and len(p_clubs[s]) >= 3:
+            all_candidates.append(s)
+            seen.add(s)
+
+    for s in dest_stars:
+        if s not in seen and s in p_clubs and len(p_clubs[s]) >= 3:
+            all_candidates.append(s)
+            seen.add(s)
+
+    # Add remaining high-profile players ranked by ML recognizability * club depth
+    remaining_candidates = []
+    for p, clubs in p_clubs.items():
+        if p not in seen and len(clubs) >= 3:
+            rec = rec_map.get(p, 0.0)
+            if rec >= 0.40:
+                score = rec * min(len(clubs), 6)
+                remaining_candidates.append((score, p))
+
+    remaining_candidates.sort(key=lambda x: x[0], reverse=True)
+    for _, p in remaining_candidates:
+        all_candidates.append(p)
+        seen.add(p)
+
+    print(f"Candidate star pool size: {len(all_candidates)}")
+
+    all_puzzles = []
+
     for candidate in all_candidates:
-        if puzzle_day > total_puzzles:
+        if len(all_puzzles) >= total_puzzles:
             break
 
         cand_clubs = list(p_clubs[candidate])
         if len(cand_clubs) < 2:
             continue
 
-        selected_chain = None
+        # ML-driven combinatorial search for the optimal funnel
+        selected_chain, score, stats = find_best_chain_for_player(
+            candidate, cand_clubs, club_to_players, rec_map
+        )
 
-        if candidate in handcrafted:
-            seq = handcrafted[candidate]
-            if all(c in p_clubs[candidate] for c in seq):
-                selected_chain = seq
-
-        if not selected_chain:
-            # Pick 3 or 4 clubs that form a descending funnel of valid players
-            clubs_to_try = cand_clubs[:6]
-            best_chain = None
-            best_score = -1
-
-            chain_len = 4 if len(clubs_to_try) >= 4 else 3
-            import itertools
-            for comb in itertools.permutations(clubs_to_try, chain_len):
-                valid_counts = []
-                is_funnel = True
-                curr_set = set()
-                for c in comb:
-                    curr_set.add(c)
-                    cnt = len(find_valid(curr_set))
-                    valid_counts.append(cnt)
-                    if cnt == 0:
-                        is_funnel = False
-                        break
-
-                if not is_funnel:
-                    continue
-
-                if valid_counts[0] >= 5 and valid_counts[-1] >= 1:
-                    score = valid_counts[0] - valid_counts[-1]
-                    if score > best_score:
-                        best_score = score
-                        best_chain = list(comb)
-
-            selected_chain = best_chain
-
-        if not selected_chain or len(selected_chain) < 2:
+        if not selected_chain or score == -float('inf') or len(selected_chain) < 2:
             continue
 
         # Verify each step has valid players and candidate is present
@@ -718,9 +657,9 @@ def generate_puzzles(p_clubs, player_metadata, total_puzzles=180):
         pos = meta.get('position', 'Forward')
         total_steps = len(steps_data)
 
+        puzzle_steps = []
         for step in steps_data:
-            puzzle_rows.append({
-                'game_day': puzzle_day,
+            puzzle_steps.append({
                 'target_player': candidate,
                 'target_nationality': nat,
                 'target_position': pos,
@@ -732,10 +671,19 @@ def generate_puzzles(p_clubs, player_metadata, total_puzzles=180):
                 'active_clubs': json.dumps(step['active_clubs'], ensure_ascii=False),
                 'valid_players': json.dumps(step['valid_players'], ensure_ascii=False),
             })
+        all_puzzles.append(puzzle_steps)
 
-        puzzle_day += 1
+    # Randomly shuffle all generated puzzles for variety
+    rng = random.Random(42)
+    rng.shuffle(all_puzzles)
 
-    print(f"Successfully generated {puzzle_day - 1} puzzles with {len(puzzle_rows)} total step records.")
+    puzzle_rows = []
+    for day_idx, p_steps in enumerate(all_puzzles[:total_puzzles], 1):
+        for step in p_steps:
+            step['game_day'] = day_idx
+            puzzle_rows.append(step)
+
+    print(f"Successfully generated and shuffled {len(all_puzzles)} puzzles with {len(puzzle_rows)} total step records.")
     return puzzle_rows
 
 

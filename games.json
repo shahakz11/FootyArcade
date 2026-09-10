@@ -11,7 +11,7 @@
     "templateFile": "top_transfers_template.html",
     "dataVariable": "DAILY_TRANSFER_GAME",
     "storageKey": "footy_v2_top_transfers",
-    "note": "Transfer data updated to September 2026 (Summer window shut). Does not include loan moves."
+    "note": "Transfer data updated to September 2026 . Does not include loan moves."
   },
   {
     "id": "transfer_destination",
@@ -25,7 +25,7 @@
     "templateFile": "transfer_destination_template.html",
     "dataVariable": "DAILY_DESTINATION_GAME",
     "storageKey": "footy_v2_transfer_destination",
-    "note": "Transfer data updated to September 2026 (Summer window shut). Only transfers worth €1M+ are included."
+    "note": "Transfer data updated to September 2026 . Only transfers worth €1M+ are included."
   },
   {
     "id": "top_scorers",
@@ -54,7 +54,7 @@
     "templateFile": "club_connect_template.html",
     "dataVariable": "DAILY_CLUBCONNECT_GAME",
     "storageKey": "footy_v2_club_connect",
-    "note": "Transfer data updated to September 2026 (Summer window shut). Players ordered from least to most expensive signing."
+    "note": "Transfer data updated to September 2026 . Players ordered from least to most expensive signing."
   },
   {
     "id": "player_chain",
@@ -65,11 +65,11 @@
     "accentHex": "#38bdf8",
     "initialLives": 5,
     "maxBackDays": 7,
-    "launchDate": "2026-09-01",
+    "launchDate": "2026-09-11",
     "templateFile": "player_chain_template.html",
     "dataVariable": "DAILY_CHAIN_GAME",
     "storageKey": "footy_v2_player_chain",
-    "note": "Transfer and career data updated to September 2026 (Summer window shut)."
+    "note": "Transfer and career data updated to September 2026 ."
   },
   {
     "id": "this_and_that",
