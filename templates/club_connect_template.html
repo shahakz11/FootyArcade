@@ -749,6 +749,7 @@
         document.getElementById('modal-best').textContent = stats.bestStreak;
 
         modal.show({
+            gameId:  GAME_ID,
             won,
             title:   won ? 'CONNECTED!' : 'GAME OVER',
             message: won
@@ -758,6 +759,8 @@
                 : `The club was ${activeGameData.club}. Better luck tomorrow!`,
             score,
             maxScore: totalPlayers,
+            lives:    livesCtrl.get(),
+            initialLives: INITIAL_LIVES,
             streak:   stats.streak,
             backInTimeLinks: bitLinks,
         });
@@ -765,6 +768,7 @@
 
     function doShare() {
         FootyUI.share({
+            gameId:       GAME_ID,
             gameName:     'Club Connect',
             puzzleNum,
             score:        gameOver && !livesCtrl.isDead() ? (totalPlayers - livesCtrl.get()) : totalPlayers,

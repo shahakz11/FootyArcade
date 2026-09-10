@@ -419,7 +419,7 @@
 
 
     <script id="daily-game-data">
-        const DAILY_CLUBCONNECT_GAME = {"club": "Sampdoria", "players": [{"player_name": "Giampaolo Pazzini", "from_club_name": "Fiorentina", "transfer_fee": 9000000.0, "transfer_date": "2009-01-15"}, {"player_name": "Omar Colley", "from_club_name": "KRC Genk", "transfer_fee": 9250000.0, "transfer_date": "2018-07-01"}, {"player_name": "", "from_club_name": "Valencia", "transfer_fee": 10800000.0, "transfer_date": "1998-07-28"}, {"player_name": "Manolo Gabbiadini", "from_club_name": "Southampton", "transfer_fee": 11900000.0, "transfer_date": "2019-01-11"}, {"player_name": "Luis Muriel", "from_club_name": "Udinese", "transfer_fee": 12000000.0, "transfer_date": "2015-07-01"}]};
+        const DAILY_CLUBCONNECT_GAME = {"club": "Frankfurt", "players": [{"player_name": "Can Uzun", "from_club_name": "Nuremberg", "transfer_fee": 11000000.0, "transfer_date": "2024-07-02"}, {"player_name": "Sébastien Haller", "from_club_name": "Utrecht", "transfer_fee": 12000000.0, "transfer_date": "2017-07-01"}, {"player_name": "Arthur Theate", "from_club_name": "Rennes", "transfer_fee": 13000000.0, "transfer_date": "2025-02-02"}, {"player_name": "Willian Pacho", "from_club_name": "Royal Antwerp", "transfer_fee": 13650000.0, "transfer_date": "2023-07-01"}, {"player_name": "Djibril Sow", "from_club_name": "Young Boys", "transfer_fee": 14000000.0, "transfer_date": "2019-07-01"}]};
         const ALL_CLUBS = [
   "---",
   "01 Bamberg",
@@ -41261,7 +41261,7 @@
 ];
         const ANSWER_CLUBS = ["AC Milan", "Ajax", "Al-Ahli", "Al-Duhail", "Al-Hilal", "Al-Ittihad", "Al-Nassr", "Al-Qadsiah", "Al-Rayyan", "Al-Sadd", "Almería", "América", "Anzhi", "Arsenal", "Aston Villa", "Atalanta", "Atletico Madrid", "BJ Guoan", "Barcelona", "Bayer Leverkusen", "Bayern Munich", "Benfica", "Besiktas", "Blackburn", "Bologna", "Borussia Dortmund", "Borussia Mönchengladbach", "Botafogo", "Bournemouth", "Brentford", "Brighton & Hove Albion", "Brugge", "Burnley", "CSKA Moscow", "Cagliari", "Celta Vigo", "Celtic", "Chelsea", "Como", "Cruz Azul", "Crystal Palace", "Dep. La Coruña", "Dinamo Moscow", "Dynamo Kyiv", "E. Frankfurt", "Espanyol", "Everton", "Fenerbahce", "Fenerbahçe", "Feyenoord", "Fiorentina", "Flamengo", "Forest", "Frankfurt", "Freiburg", "Fulham", "G. Bordeaux", "GZ Evergrande", "Galatasaray", "Genoa", "HB CFFC", "Hamburger", "Hertha Berlin", "Hoffenheim", "Inter", "Ipswich", "Juventus", "Krasnodar", "Lazio", "Leeds United", "Leicester City", "Lens", "Lille", "Liverpool", "Lyon", "Manchester City", "Manchester United", "Marseille", "Middlesbrough", "Monaco", "Mönchengladbach", "Napoli", "Newcastle United", "Nice", "Norwich", "Nott'm Forest", "PSV Eindhoven", "Palmeiras", "Paris Saint-Germain", "Parma", "Porto", "R. Strasbourg", "RB Leipzig", "RB Salzburg", "Rangers", "Real Betis", "Real Madrid", "Real Sociedad", "Rennes", "River Plate", "Roma", "Rubin Kazan", "Salzburg", "Sampdoria", "Sassuolo", "Schalke", "Sevilla", "Shakhtar D", "Sheff Utd", "Southampton", "Spartak Moscow", "Sporting CP", "Stoke City", "Stuttgart", "Sunderland", "Swansea", "Tigres UANL", "Torino", "Tottenham Hotspur", "Udinese", "Valencia", "Villarreal", "Watford", "West Brom", "West Ham United", "Wolfsburg", "Wolverhampton Wanderers", "Zenit S-Pb"];
         const GAME_NOTE = "Transfer data updated to September 2026 (Summer window shut). Players ordered from least to most expensive signing.";
-        const PUZZLE_NUMBER    = 35;
+        const PUZZLE_NUMBER    = 36;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>
@@ -41598,6 +41598,7 @@
         document.getElementById('modal-best').textContent = stats.bestStreak;
 
         modal.show({
+            gameId:  GAME_ID,
             won,
             title:   won ? 'CONNECTED!' : 'GAME OVER',
             message: won
@@ -41607,6 +41608,8 @@
                 : `The club was ${activeGameData.club}. Better luck tomorrow!`,
             score,
             maxScore: totalPlayers,
+            lives:    livesCtrl.get(),
+            initialLives: INITIAL_LIVES,
             streak:   stats.streak,
             backInTimeLinks: bitLinks,
         });
@@ -41614,6 +41617,7 @@
 
     function doShare() {
         FootyUI.share({
+            gameId:       GAME_ID,
             gameName:     'Club Connect',
             puzzleNum,
             score:        gameOver && !livesCtrl.isDead() ? (totalPlayers - livesCtrl.get()) : totalPlayers,

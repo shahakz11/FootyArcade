@@ -342,7 +342,7 @@
 
 
     <script id="daily-game-data">
-        const DAILY_DESTINATION_GAME = {"player_name": "André Gomes", "nationality": "Portugal", "position": "Midfield", "transfers": [{"transfer_date": "2026-02-19", "from_club_name": "Lille", "to_club_name": "Columbus", "transfer_fee": 0.0, "market_value_in_eur": 4500000.0}, {"transfer_date": "2024-09-06", "from_club_name": "Without", "to_club_name": "Lille", "transfer_fee": 0.0, "market_value_in_eur": 10000000.0}, {"transfer_date": "2024-07-01", "from_club_name": "Everton", "to_club_name": "Without", "transfer_fee": 0.0, "market_value_in_eur": 10000000.0}, {"transfer_date": "2023-06-30", "from_club_name": "Lille", "to_club_name": "Everton", "transfer_fee": 0.0, "market_value_in_eur": 16000000.0}, {"transfer_date": "2022-09-01", "from_club_name": "Everton", "to_club_name": "Lille", "transfer_fee": 0.0, "market_value_in_eur": 18000000.0}, {"transfer_date": "2019-07-01", "from_club_name": "Barcelona", "to_club_name": "Everton", "transfer_fee": 25000000.0, "market_value_in_eur": 28000000.0}, {"transfer_date": "2019-06-30", "from_club_name": "Everton", "to_club_name": "Barcelona", "transfer_fee": 0.0, "market_value_in_eur": 28000000.0}, {"transfer_date": "2018-08-09", "from_club_name": "Barcelona", "to_club_name": "Everton", "transfer_fee": 0.0, "market_value_in_eur": 15000000.0}, {"transfer_date": "2016-07-21", "from_club_name": "Valencia", "to_club_name": "Barcelona", "transfer_fee": 37000000.0, "market_value_in_eur": 30000000.0}, {"transfer_date": "2015-07-01", "from_club_name": "Benfica", "to_club_name": "Valencia", "transfer_fee": 20000000.0, "market_value_in_eur": 20000000.0}, {"transfer_date": "2015-06-30", "from_club_name": "Valencia", "to_club_name": "Benfica", "transfer_fee": 0.0, "market_value_in_eur": 15000000.0}, {"transfer_date": "2014-07-17", "from_club_name": "Benfica", "to_club_name": "Valencia", "transfer_fee": 0.0, "market_value_in_eur": 5000000.0}, {"transfer_date": "2012-07-01", "from_club_name": "Benfica", "to_club_name": "Benfica", "transfer_fee": 0.0, "market_value_in_eur": 0.0}, {"transfer_date": "2011-07-01", "from_club_name": "Boavista Y19", "to_club_name": "Benfica", "transfer_fee": 0.0, "market_value_in_eur": 0.0}]};
+        const DAILY_DESTINATION_GAME = {"player_name": "Dean Huijsen", "nationality": "Spain", "position": "Defender", "transfers": [{"transfer_date": "2025-06-01", "from_club_name": "Bournemouth", "to_club_name": "Real Madrid", "transfer_fee": 62500000.0, "market_value_in_eur": 60000000.0}, {"transfer_date": "2024-07-30", "from_club_name": "Juventus", "to_club_name": "Bournemouth", "transfer_fee": 22100000.0, "market_value_in_eur": 10000000.0}, {"transfer_date": "2024-06-30", "from_club_name": "Roma", "to_club_name": "Juventus", "transfer_fee": 0.0, "market_value_in_eur": 10000000.0}, {"transfer_date": "2024-01-06", "from_club_name": "Juventus", "to_club_name": "Roma", "transfer_fee": 0.0, "market_value_in_eur": 2500000.0}, {"transfer_date": "2023-11-07", "from_club_name": "Juve Next Gen", "to_club_name": "Juventus", "transfer_fee": 0.0, "market_value_in_eur": 400000.0}, {"transfer_date": "2023-01-01", "from_club_name": "Juventus", "to_club_name": "Juve Next Gen", "transfer_fee": 0.0, "market_value_in_eur": 0.0}, {"transfer_date": "2022-07-01", "from_club_name": "Juventus", "to_club_name": "Juventus", "transfer_fee": 0.0, "market_value_in_eur": 0.0}]};
         const ALL_CLUBS = [
   "---",
   "01 Bamberg",
@@ -41183,7 +41183,7 @@
   "Футбольный клуб \"Локомотив\" Москва"
 ];
         const GAME_NOTE = "Transfer data updated to September 2026 (Summer window shut). Only transfers worth €1M+ are included.";
-        const PUZZLE_NUMBER    = 41;
+        const PUZZLE_NUMBER    = 42;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>
@@ -41600,6 +41600,7 @@
         const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage);
 
         modal.show({
+            gameId:      GAME_ID,
             won,
             title:   won ? 'CAREER SOLVED!' : 'GAME OVER',
             message: won
@@ -41607,6 +41608,8 @@
                 : 'You couldn\'t predict the entire career path.',
             score,
             maxScore:    activeGameData.transfers.length,
+            lives:       livesCtrl.get(),
+            initialLives: INITIAL_LIVES,
             streak:      stats.streak,
             targetName:  activeGameData.player_name,
             targetType:  'player',
@@ -41619,6 +41622,7 @@
 
     function doShare() {
         FootyUI.share({
+            gameId:       GAME_ID,
             gameName:     'Transfer Destination',
             puzzleNum,
             score,

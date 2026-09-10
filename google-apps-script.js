@@ -80,13 +80,23 @@ function doPost(e) {
           'Extra Details',
           'URL',
           'Visitor ID',
-          'Session ID'
+          'Session ID',
+          'URL Source'
         ]);
       }
       sheet.getRange(1, 1, 1, sheet.getLastColumn())
         .setFontWeight('bold')
         .setBackground('#1c1b1b')
         .setFontColor('#ffffff');
+    } else if (type !== 'feedback') {
+      // Auto-migrate: check if column 14 header needs to be added for URL Source
+      var lastCol = sheet.getLastColumn();
+      if (lastCol === 13) {
+        sheet.getRange(1, 14).setValue('URL Source')
+          .setFontWeight('bold')
+          .setBackground('#1c1b1b')
+          .setFontColor('#ffffff');
+      }
     }
 
     var timestamp = new Date().toISOString();
@@ -115,7 +125,8 @@ function doPost(e) {
         payload.extraDetails || '',
         payload.url || '',
         payload.visitorId || '',
-        payload.sessionId || ''
+        payload.sessionId || '',
+        payload.urlSource || payload.source || ''
       ]);
     }
 

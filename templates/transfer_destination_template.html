@@ -752,6 +752,7 @@
         const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage);
 
         modal.show({
+            gameId:      GAME_ID,
             won,
             title:   won ? 'CAREER SOLVED!' : 'GAME OVER',
             message: won
@@ -759,6 +760,8 @@
                 : 'You couldn\'t predict the entire career path.',
             score,
             maxScore:    activeGameData.transfers.length,
+            lives:       livesCtrl.get(),
+            initialLives: INITIAL_LIVES,
             streak:      stats.streak,
             targetName:  activeGameData.player_name,
             targetType:  'player',
@@ -771,6 +774,7 @@
 
     function doShare() {
         FootyUI.share({
+            gameId:       GAME_ID,
             gameName:     'Transfer Destination',
             puzzleNum,
             score,

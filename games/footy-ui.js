@@ -538,6 +538,62 @@
                 });
             }
 
+            // Results Emoji Preview Container
+            let emojiPreviewEl = document.getElementById('modal-emoji-preview');
+            const emojiGrid = opts.customEmojiGrid || buildEmojiGrid(opts.score, opts.maxScore, opts.won);
+
+            if (!emojiPreviewEl && modal) {
+                const modalCard = modal.querySelector('.fa-modal-card') || modal.firstElementChild;
+                const bitWrapper = document.getElementById('bit-wrapper');
+                emojiPreviewEl = document.createElement('div');
+                emojiPreviewEl.id = 'modal-emoji-preview';
+                emojiPreviewEl.className = 'w-full py-2 px-3 bg-black/40 border border-white/10 rounded-xl my-2 text-center font-mono text-sm sm:text-base tracking-widest leading-normal text-white select-all cursor-pointer hover:border-accent/40 transition-all';
+                
+                if (bitWrapper && bitWrapper.parentElement === modalCard) {
+                    modalCard.insertBefore(emojiPreviewEl, bitWrapper);
+                } else {
+                    const actionGroup = modal.querySelector('#modal-share-btn')?.parentElement || modal.querySelector('.flex.gap-3.pt-1');
+                    if (actionGroup) {
+                        modalCard.insertBefore(emojiPreviewEl, actionGroup);
+                    } else {
+                        modalCard.appendChild(emojiPreviewEl);
+                    }
+                }
+            }
+
+            if (emojiPreviewEl) {
+                emojiPreviewEl.innerHTML = `
+                    <div class="text-[10px] uppercase font-mono tracking-widest text-on-surface-variant mb-0.5">Your Share Card</div>
+                    <div class="whitespace-pre-line font-medium">${emojiGrid}</div>
+                `;
+                emojiPreviewEl.title = 'Click to copy result';
+                emojiPreviewEl.onclick = () => share(opts);
+            }
+
+            // WhatsApp Share Button Integration
+            let waBtn = document.getElementById('modal-whatsapp-btn');
+            const shareBtn = document.getElementById('modal-share-btn');
+            if (!waBtn && shareBtn && shareBtn.parentElement) {
+                waBtn = document.createElement('button');
+                waBtn.id = 'modal-whatsapp-btn';
+                waBtn.className = 'flex-1 py-3 bg-[#25D366] text-black font-headline text-sm sm:text-base uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5 shadow-lg shadow-[#25D366]/20';
+                waBtn.innerHTML = '<span class="material-symbols-outlined text-base">chat</span> WHATSAPP';
+                shareBtn.parentElement.insertBefore(waBtn, shareBtn);
+            }
+
+            if (waBtn) {
+                waBtn.onclick = (e) => {
+                    e.preventDefault();
+                    shareWhatsApp(opts);
+                };
+            }
+            if (shareBtn) {
+                shareBtn.onclick = (e) => {
+                    e.preventDefault();
+                    share(opts);
+                };
+            }
+
             // Back-in-time links
             if (cfg.backInTimeContainerId && opts.backInTimeLinks?.length) {
                 const container = document.getElementById(cfg.backInTimeContainerId);
@@ -554,53 +610,259 @@
                 }
             }
 
+            lastEndGameOpts = opts;
             modal?.classList.remove('hidden');
         };
 
         this.hide = () => modal?.classList.add('hidden');
     }
 
+    let lastEndGameOpts = null;
 
     // ────────────────────────────────────────────────────────
-    // 4. FootyShare — Standardised share text
+    // 4. FootyShare — Standardised Game-Specific Share Cards
     // ────────────────────────────────────────────────────────
     /**
-     * Builds and copies the canonical share text for any game.
-     * @param {object} opts
-     * @param {string} opts.gameName
-     * @param {number} opts.puzzleNum
-     * @param {number} opts.score
-     * @param {number} opts.maxScore
-     * @param {number} opts.lives       — remaining lives
-     * @param {number} opts.initialLives
-     * @param {boolean} opts.won
-     * @param {string} opts.url
+     * Constructs a clean canonical share URL with the given source parameter (e.g. utm_source=whatsapp or utm_source=share).
+     * Automatically strips existing tracking parameters to prevent compounding.
      */
+    function buildShareUrl(rawUrl, source) {
+        let base = rawUrl;
+        if (!base) {
+            if (typeof window !== 'undefined' && window.location) {
+                const host = window.location.hostname;
+                const path = window.location.pathname;
+                if (host === 'playmaker.best' || host === 'www.playmaker.best') {
+                    base = window.location.href;
+                } else if (path && path !== '/') {
+                    base = 'https://playmaker.best' + (path.startsWith('/') ? path : '/' + path);
+                } else {
+                    base = window.location.href;
+                }
+            } else {
+                base = 'https://playmaker.best/';
+            }
+        }
+        try {
+            const parsed = new URL(base, 'https://playmaker.best');
+            parsed.searchParams.delete('utm_source');
+            parsed.searchParams.delete('utm_medium');
+            parsed.searchParams.delete('utm_campaign');
+            parsed.searchParams.delete('ref');
+            parsed.searchParams.delete('source');
+            if (source) {
+                parsed.searchParams.set('utm_source', source);
+            }
+            return parsed.toString();
+        } catch (e) {
+            const clean = (base || 'https://playmaker.best/').split('?')[0];
+            return source ? `${clean}?utm_source=${encodeURIComponent(source)}` : clean;
+        }
+    }
+
+    /**
+     * Detects incoming traffic source from URL query parameters (utm_source, ref, source)
+     * or session storage, or document.referrer.
+     */
+    function getUrlSource() {
+        if (typeof window === 'undefined' || !window.location) return '';
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const source = params.get('utm_source') || params.get('ref') || params.get('source');
+            if (source) {
+                const cleanSource = source.trim().toLowerCase();
+                try {
+                    sessionStorage.setItem('fa_url_source', cleanSource);
+                } catch (e) {}
+                return cleanSource;
+            }
+            const stored = sessionStorage.getItem('fa_url_source');
+            if (stored) return stored;
+
+            // Fallback to document.referrer if available
+            if (document.referrer) {
+                const ref = document.referrer.toLowerCase();
+                if (ref.includes('whatsapp') || ref.includes('wa.me')) {
+                    try { sessionStorage.setItem('fa_url_source', 'whatsapp'); } catch (e) {}
+                    return 'whatsapp';
+                }
+                if (ref.includes('twitter.com') || ref.includes('t.co') || ref.includes('x.com')) {
+                    try { sessionStorage.setItem('fa_url_source', 'twitter'); } catch (e) {}
+                    return 'twitter';
+                }
+                if (ref.includes('instagram.com')) {
+                    try { sessionStorage.setItem('fa_url_source', 'instagram'); } catch (e) {}
+                    return 'instagram';
+                }
+                if (ref.includes('facebook.com')) {
+                    try { sessionStorage.setItem('fa_url_source', 'facebook'); } catch (e) {}
+                    return 'facebook';
+                }
+                if (ref.includes('reddit.com')) {
+                    try { sessionStorage.setItem('fa_url_source', 'reddit'); } catch (e) {}
+                    return 'reddit';
+                }
+            }
+        } catch (e) {}
+        return '';
+    }
+
+    /**
+     * Builds game-specific spoiler-free share text for any game.
+     */
+    function buildShareText(opts, source) {
+        opts = opts || lastEndGameOpts || {};
+        const meta = getActiveGameMetadata();
+        const gameId = opts.gameId || meta.gameId;
+        const puzzleNum = opts.puzzleNum !== undefined ? opts.puzzleNum : meta.puzzleNum;
+        const score = opts.score !== undefined ? opts.score : 0;
+        const maxScore = opts.maxScore !== undefined ? opts.maxScore : 10;
+        const won = !!opts.won;
+        const lives = opts.lives !== undefined ? opts.lives : 0;
+        const initialLives = opts.initialLives !== undefined ? opts.initialLives : 5;
+        const livesUsed = Math.max(0, initialLives - lives);
+        const shareSource = source || opts.shareSource || opts.source || 'share';
+        const url = buildShareUrl(opts.url, shareSource);
+
+        let titleLine = `⚽ Playmaker: ${opts.gameName || 'Daily Football Quiz'} #${puzzleNum}`;
+        let subLine = '';
+        let emojiGrid = opts.customEmojiGrid || '';
+        let statusLine = '';
+        const challengeLine = 'Can you beat my score?';
+
+        if (!emojiGrid) {
+            emojiGrid = buildEmojiGrid(score, maxScore, won);
+        }
+
+        switch (gameId) {
+            case 'top_transfers': {
+                titleLine = `⚽ Playmaker: Top Transfers #${puzzleNum}`;
+                const target = opts.targetName || (typeof DAILY_TRANSFER_GAME !== 'undefined' ? DAILY_TRANSFER_GAME.name : 'Record Transfers');
+                subLine = `🏛️ ${target}: Record Transfers`;
+                statusLine = won 
+                    ? `🏆 ALL ${maxScore} TRANSFERS FOUND! · ❤️ ${lives} left`
+                    : `🎯 ${score}/${maxScore} transfers found · ❤️ ${lives} left`;
+                break;
+            }
+            case 'transfer_destination': {
+                titleLine = `⚽ Playmaker: Transfer Destination #${puzzleNum}`;
+                subLine = `🧭 Mystery Player Career Path (${maxScore} Transfers)`;
+                statusLine = won
+                    ? `🌟 CAREER PATH COMPLETED! · ❤️ ${lives} left`
+                    : `🎯 ${score}/${maxScore} clubs guessed backwards · ❤️ ${lives} left`;
+                break;
+            }
+            case 'club_connect': {
+                titleLine = `⚽ Playmaker: Club Connect #${puzzleNum}`;
+                subLine = `🔍 Mystery Club Connection`;
+                statusLine = won
+                    ? `✨ CONNECTED IN ${score} REVEAL${score > 1 ? 'S' : ''}! · ❤️ ${lives} left`
+                    : `🎯 Connected ${score}/${maxScore} players · ❤️ ${lives} left`;
+                break;
+            }
+            case 'player_chain': {
+                titleLine = `⚽ Playmaker: Player Chain #${puzzleNum}`;
+                subLine = `🔗 Teammate Chain (${maxScore} Steps)`;
+                if (opts.didInstantWin) {
+                    statusLine = `⭐️ INSTANT WIN! · 🎯 1-step direct teammate connection!`;
+                } else {
+                    statusLine = won
+                        ? `✅ PERFECT CHAIN! · ❤️ ${lives} left`
+                        : `🎯 ${score}/${maxScore} steps solved · ❤️ ${lives} left`;
+                }
+                break;
+            }
+            case 'top_scorers': {
+                titleLine = `⚽ Playmaker: Top Scorers #${puzzleNum}`;
+                const target = opts.targetName || (typeof DAILY_SCORERS_GAME !== 'undefined' ? `${DAILY_SCORERS_GAME.league} ${DAILY_SCORERS_GAME.season}` : 'Golden Boot');
+                subLine = `🏆 ${target} Golden Boot`;
+                statusLine = won
+                    ? `👑 ALL ${maxScore} TOP SCORERS FOUND! · ❤️ ${lives} left`
+                    : `🎯 ${score}/${maxScore} top scorers guessed · ❤️ ${lives} left`;
+                break;
+            }
+            default: {
+                titleLine = `⚽ Playmaker: ${opts.gameName || 'Daily Quiz'} #${puzzleNum}`;
+                statusLine = `${won ? '✅' : '❌'} ${score}/${maxScore} correct · ❤️ ${lives} left`;
+                break;
+            }
+        }
+
+        const lines = [
+            titleLine,
+            subLine,
+            emojiGrid,
+            statusLine,
+            challengeLine,
+            `🔗 ${url}`
+        ].filter(Boolean);
+
+        return lines.join('\n');
+    }
+
+    /**
+     * Builds and copies the canonical share text for any game.
+     */
+    let _lastShareTime = 0;
     function share(opts) {
-        // Track share event
+        const now = Date.now();
+        if (now - _lastShareTime < 600) return;
+        _lastShareTime = now;
+
+        opts = opts || lastEndGameOpts || {};
+        const shareSource = opts.source || opts.shareSource || 'share';
+        const text = buildShareText(opts, shareSource);
+        const shareUrl = buildShareUrl(opts.url, shareSource);
+
         trackEvent('share', {
+            method: 'clipboard',
+            urlSource: shareSource,
+            shareUrl: shareUrl,
+            extraDetails: `source: ${shareSource}`,
+            gameId: opts.gameId || getActiveGameMetadata().gameId,
             won: opts.won,
             score: opts.score,
             maxScore: opts.maxScore,
             lives: opts.lives
         });
 
-        const livesUsed = opts.initialLives - opts.lives;
-        const blocks = buildEmojiGrid(opts.score, opts.maxScore, opts.won);
-        const text = [
-            `⚽ Playmaker — ${opts.gameName} #${opts.puzzleNum}`,
-            blocks,
-            `${opts.won ? '✅' : '❌'} ${opts.score}/${opts.maxScore} correct · ❤️ ${livesUsed} lives used`,
-            `🔗 ${opts.url}`
-        ].join('\n');
-
-        if (navigator.clipboard) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text)
-                .then(() => _toast('Copied to clipboard!'))
+                .then(() => toast('Copied result to clipboard!', 'success'))
                 .catch(() => _fallbackShare(text));
         } else {
             _fallbackShare(text);
         }
+    }
+
+    /**
+     * Opens WhatsApp with pre-filled share card text.
+     */
+    let _lastWaTime = 0;
+    function shareWhatsApp(opts) {
+        const now = Date.now();
+        if (now - _lastWaTime < 600) return;
+        _lastWaTime = now;
+
+        opts = opts || lastEndGameOpts || {};
+        const shareSource = 'whatsapp';
+        const text = buildShareText(opts, shareSource);
+        const shareUrl = buildShareUrl(opts.url, shareSource);
+
+        trackEvent('share', {
+            method: 'whatsapp',
+            urlSource: shareSource,
+            shareUrl: shareUrl,
+            extraDetails: `source: ${shareSource}`,
+            gameId: opts.gameId || getActiveGameMetadata().gameId,
+            won: opts.won,
+            score: opts.score,
+            maxScore: opts.maxScore,
+            lives: opts.lives
+        });
+
+        const waUrl = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(text);
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
     }
 
     function buildEmojiGrid(score, maxScore, won) {
@@ -1468,6 +1730,15 @@
         }
 
         const meta = getActiveGameMetadata();
+        const urlSource = params.urlSource || params.source || getUrlSource();
+
+        let extraDetails = params.extraDetails || '';
+        if (urlSource && !extraDetails.includes('source:')) {
+            extraDetails = extraDetails ? `${extraDetails} | source: ${urlSource}` : `source: ${urlSource}`;
+        }
+        if (params.method && !extraDetails.includes('method:')) {
+            extraDetails = extraDetails ? `${extraDetails} | method: ${params.method}` : `method: ${params.method}`;
+        }
 
         const payload = {
             type: 'event',
@@ -1481,8 +1752,12 @@
             lives: params.lives,
             won: params.won,
             isBackInTime: params.isBackInTime !== undefined ? params.isBackInTime : meta.isBackInTime,
-            extraDetails: params.extraDetails || '',
+            extraDetails: extraDetails,
             url: window.location.href,
+            urlSource: urlSource,
+            source: urlSource,
+            method: params.method || '',
+            shareUrl: params.shareUrl || '',
             timestamp: new Date().toISOString()
         };
 
@@ -1716,6 +1991,11 @@
         buildBackInTimeLinks,
         initAccentColor,
         share,
+        shareWhatsApp,
+        buildShareText,
+        buildShareUrl,
+        getUrlSource,
+        buildEmojiGrid,
         formatFee,
         todayStr,
         toast,

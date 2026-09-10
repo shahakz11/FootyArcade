@@ -942,6 +942,7 @@
         const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage);
 
         modal.show({
+            gameId:  GAME_ID,
             won,
             title:   won ? 'MASTERMIND' : 'GAME OVER',
             message: won
@@ -949,6 +950,8 @@
                 : `You found ${score} out of ${activeGameData.transfers.length} record transfers.`,
             score,
             maxScore: activeGameData.transfers.length,
+            lives:    livesCtrl.get(),
+            initialLives: INITIAL_LIVES,
             streak:   stats.streak,
             targetName: activeGameData.name,
             targetType: activeGameData.mode,
@@ -960,12 +963,15 @@
 
     function doShare() {
         FootyUI.share({
+            gameId:       GAME_ID,
             gameName:     'Top Transfers',
             puzzleNum,
             score,
             maxScore:     activeGameData.transfers.length,
             lives:        livesCtrl.get(),
             initialLives: INITIAL_LIVES,
+            targetName:   activeGameData.name,
+            targetType:   activeGameData.mode,
             won:          score >= activeGameData.transfers.length,
             url:          window.location.href
         });

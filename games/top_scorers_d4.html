@@ -331,7 +331,7 @@
 
 
     <script id="daily-game-data">
-        const DAILY_SCORERS_GAME = {"name": "UEFA Champions League 2021/22", "scorers": [{"player_name": "Karim Benzema", "club_name": "Real Madrid", "goals": 15, "appearances": 12, "nationality": "France"}, {"player_name": "Robert Lewandowski", "club_name": "Bayern Munich", "goals": 13, "appearances": 10, "nationality": "Poland"}, {"player_name": "Sébastien Haller", "club_name": "Ajax Amsterdam", "goals": 11, "appearances": 8, "nationality": "Cote d'Ivoire"}, {"player_name": "Mohamed Salah", "club_name": "Liverpool", "goals": 8, "appearances": 13, "nationality": "Egypt"}, {"player_name": "Riyad Mahrez", "club_name": "Manchester City", "goals": 7, "appearances": 12, "nationality": "Algeria"}, {"player_name": "Christopher Nkunku", "club_name": "RB Leipzig", "goals": 7, "appearances": 6, "nationality": "France"}, {"player_name": "Darwin Núñez", "club_name": "Benfica", "goals": 6, "appearances": 10, "nationality": "Uruguay"}, {"player_name": "Kylian Mbappé", "club_name": "Paris Saint-Germain", "goals": 6, "appearances": 8, "nationality": "France"}, {"player_name": "Leroy Sané", "club_name": "Bayern Munich", "goals": 6, "appearances": 10, "nationality": "Germany"}, {"player_name": "Cristiano Ronaldo", "club_name": "Manchester United", "goals": 6, "appearances": 7, "nationality": "Portugal"}]};
+        const DAILY_SCORERS_GAME = {"name": "Ligue 1 2022/23", "scorers": [{"player_name": "Kylian Mbappé", "club_name": "Paris Saint-Germain", "goals": 29, "appearances": 34, "nationality": "France"}, {"player_name": "Alexandre Lacazette", "club_name": "Lyon", "goals": 27, "appearances": 35, "nationality": "France"}, {"player_name": "Jonathan David", "club_name": "Lille", "goals": 24, "appearances": 37, "nationality": "Canada"}, {"player_name": "Folarin Balogun", "club_name": "Stade Reims", "goals": 21, "appearances": 37, "nationality": "United States"}, {"player_name": "Loïs Openda", "club_name": "Lens", "goals": 21, "appearances": 38, "nationality": "Belgium"}, {"player_name": "Habib Diallo", "club_name": "Strasbourg Alsace", "goals": 20, "appearances": 37, "nationality": "Senegal"}, {"player_name": "Wissam Ben Yedder", "club_name": "Monaco", "goals": 19, "appearances": 32, "nationality": "France"}, {"player_name": "Elye Wahi", "club_name": "Montpellier HSC", "goals": 19, "appearances": 33, "nationality": "Cote d'Ivoire"}, {"player_name": "Terem Moffi", "club_name": "Lorient", "goals": 18, "appearances": 34, "nationality": "Nigeria"}, {"player_name": "Lionel Messi", "club_name": "Paris Saint-Germain", "goals": 16, "appearances": 32, "nationality": "Argentina"}]};
         const ALL_PLAYERS = [
   {
     "Name": "Silvio Adzic",
@@ -533330,7 +533330,7 @@
   }
 ];
         const GAME_NOTE = "Goals data updated to September 2026.";
-        const PUZZLE_NUMBER    = 41;
+        const PUZZLE_NUMBER    = 42;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>
@@ -533940,13 +533940,16 @@
         const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage);
 
         modal.show({
+            gameId:  GAME_ID,
             won,
-            title:   won ? 'MASTERMIND' : 'GAME OVER',
+            title:   won ? 'GOLDEN BOOT' : 'GAME OVER',
             message: won
                 ? 'Incredible! You solved the scorers grid flawlessly.'
                 : `You found ${score} out of ${activeGameData.scorers.length} top scorers.`,
             score,
             maxScore: activeGameData.scorers.length,
+            lives:    livesCtrl.get(),
+            initialLives: INITIAL_LIVES,
             streak:   stats.streak,
             targetName: activeGameData.name,
             targetType: activeGameData.mode || 'auto',
@@ -533959,12 +533962,15 @@
 
     function doShare() {
         FootyUI.share({
+            gameId:       GAME_ID,
             gameName:     'Top Scorers',
             puzzleNum,
             score,
             maxScore:     activeGameData.scorers.length,
             lives:        livesCtrl.get(),
             initialLives: INITIAL_LIVES,
+            targetName:   activeGameData.name,
+            targetType:   activeGameData.mode || 'auto',
             won:          score >= activeGameData.scorers.length,
             url:          window.location.href
         });

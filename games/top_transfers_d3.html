@@ -330,7 +330,7 @@
 
 
     <script id="daily-game-data">
-        const DAILY_TRANSFER_GAME = {"mode": "nationality", "name": "England", "transfers": [{"player_name": "Jude Bellingham", "from_club_name": "Borussia Dortmund", "to_club_name": "Real Madrid", "transfer_fee": "127000000.0", "transfer_date": "2023-07-01"}, {"player_name": "Jack Grealish", "from_club_name": "Aston Villa", "to_club_name": "Manchester City", "transfer_fee": "117500000.0", "transfer_date": "2021-08-05"}, {"player_name": "Declan Rice", "from_club_name": "West Ham United", "to_club_name": "Arsenal", "transfer_fee": "116600000.0", "transfer_date": "2023-07-15"}, {"player_name": "Harry Kane", "from_club_name": "Tottenham Hotspur", "to_club_name": "Bayern Munich", "transfer_fee": "95000000.0", "transfer_date": "2023-08-12"}, {"player_name": "Harry Maguire", "from_club_name": "Leicester City", "to_club_name": "Manchester United", "transfer_fee": "87000000.0", "transfer_date": "2019-08-05"}, {"player_name": "Jadon Sancho", "from_club_name": "Borussia Dortmund", "to_club_name": "Manchester United", "transfer_fee": "85000000.0", "transfer_date": "2021-07-23"}, {"player_name": "Anthony Gordon", "from_club_name": "Newcastle United", "to_club_name": "Barcelona", "transfer_fee": "80000000.0", "transfer_date": "2026-07-01"}, {"player_name": "Eberechi Eze", "from_club_name": "Crystal Palace", "to_club_name": "Arsenal", "transfer_fee": "69300000.0", "transfer_date": "2025-08-23"}, {"player_name": "Mason Mount", "from_club_name": "Chelsea", "to_club_name": "Manchester United", "transfer_fee": "67700000.0", "transfer_date": "2023-07-05"}, {"player_name": "Dominic Solanke", "from_club_name": "Bournemouth", "to_club_name": "Tottenham Hotspur", "transfer_fee": "64300000.0", "transfer_date": "2024-08-10"}]};
+        const DAILY_TRANSFER_GAME = {"mode": "club", "name": "Paris Saint-Germain", "transfers": [{"player_name": "Neymar", "from_club_name": "Barcelona", "to_club_name": "Paris Saint-Germain", "transfer_fee": "222000000.0", "transfer_date": "2017-08-03"}, {"player_name": "Kylian Mbappé", "from_club_name": "Monaco", "to_club_name": "Paris Saint-Germain", "transfer_fee": "180000000.0", "transfer_date": "2018-07-01"}, {"player_name": "Randal Kolo Muani", "from_club_name": "E. Frankfurt", "to_club_name": "Paris Saint-Germain", "transfer_fee": "95000000.0", "transfer_date": "2023-09-01"}, {"player_name": "Khvicha Kvaratskhelia", "from_club_name": "Napoli", "to_club_name": "Paris Saint-Germain", "transfer_fee": "80000000.0", "transfer_date": "2025-01-17"}, {"player_name": "Achraf Hakimi", "from_club_name": "Inter", "to_club_name": "Paris Saint-Germain", "transfer_fee": "68000000.0", "transfer_date": "2021-07-06"}, {"player_name": "João Neves", "from_club_name": "Benfica", "to_club_name": "Paris Saint-Germain", "transfer_fee": "65920000.0", "transfer_date": "2024-08-05"}, {"player_name": "Gonçalo Ramos", "from_club_name": "Benfica", "to_club_name": "Paris Saint-Germain", "transfer_fee": "65000000.0", "transfer_date": "2024-01-01"}, {"player_name": "Edinson Cavani", "from_club_name": "Napoli", "to_club_name": "Paris Saint-Germain", "transfer_fee": "64500000.0", "transfer_date": "2013-07-16"}, {"player_name": "Ilya Zabarnyi", "from_club_name": "Bournemouth", "to_club_name": "Paris Saint-Germain", "transfer_fee": "63000000.0", "transfer_date": "2025-08-12"}, {"player_name": "Ángel Di María", "from_club_name": "Manchester United", "to_club_name": "Paris Saint-Germain", "transfer_fee": "63000000.0", "transfer_date": "2015-08-06"}]};
         const ALL_PLAYERS = [
   {
     "Name": "Silvio Adzic",
@@ -533329,7 +533329,7 @@
   }
 ];
         const GAME_NOTE = "Transfer data updated to September 2026 (Summer window shut). Does not include loan moves.";
-        const PUZZLE_NUMBER    = 42;
+        const PUZZLE_NUMBER    = 43;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>
@@ -533948,6 +533948,7 @@
         const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage);
 
         modal.show({
+            gameId:  GAME_ID,
             won,
             title:   won ? 'MASTERMIND' : 'GAME OVER',
             message: won
@@ -533955,6 +533956,8 @@
                 : `You found ${score} out of ${activeGameData.transfers.length} record transfers.`,
             score,
             maxScore: activeGameData.transfers.length,
+            lives:    livesCtrl.get(),
+            initialLives: INITIAL_LIVES,
             streak:   stats.streak,
             targetName: activeGameData.name,
             targetType: activeGameData.mode,
@@ -533966,12 +533969,15 @@
 
     function doShare() {
         FootyUI.share({
+            gameId:       GAME_ID,
             gameName:     'Top Transfers',
             puzzleNum,
             score,
             maxScore:     activeGameData.transfers.length,
             lives:        livesCtrl.get(),
             initialLives: INITIAL_LIVES,
+            targetName:   activeGameData.name,
+            targetType:   activeGameData.mode,
             won:          score >= activeGameData.transfers.length,
             url:          window.location.href
         });

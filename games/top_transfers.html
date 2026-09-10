@@ -330,7 +330,7 @@
 
 
     <script id="daily-game-data">
-        const DAILY_TRANSFER_GAME = {"mode": "club", "name": "Brugge", "transfers": [{"player_name": "Roman Yaremchuk", "from_club_name": "Benfica", "to_club_name": "Brugge", "transfer_fee": "17000000.0", "transfer_date": "2022-08-29"}, {"player_name": "Igor Thiago", "from_club_name": "Ludogorets", "to_club_name": "Brugge", "transfer_fee": "11000000.0", "transfer_date": "2023-07-01"}, {"player_name": "Raphael Onyedika", "from_club_name": "Midtjylland", "to_club_name": "Brugge", "transfer_fee": "9500000.0", "transfer_date": "2022-08-28"}, {"player_name": "Aleksandar Stanković", "from_club_name": "Inter", "to_club_name": "Brugge", "transfer_fee": "9500000.0", "transfer_date": "2025-07-24"}, {"player_name": "Kamal Sowah", "from_club_name": "Leicester City", "to_club_name": "Brugge", "transfer_fee": "9000000.0", "transfer_date": "2021-08-27"}, {"player_name": "Mamadou Diakhon", "from_club_name": "Stade Reims", "to_club_name": "Brugge", "transfer_fee": "9000000.0", "transfer_date": "2025-08-18"}, {"player_name": "David Okereke", "from_club_name": "Spezia Calcio", "to_club_name": "Brugge", "transfer_fee": "8160000.0", "transfer_date": "2019-07-09"}, {"player_name": "Hugo Vetlesen", "from_club_name": "Bodø/Glimt", "to_club_name": "Brugge", "transfer_fee": "7750000.0", "transfer_date": "2023-07-03"}, {"player_name": "Casper Nielsen", "from_club_name": "Union SG", "to_club_name": "Brugge", "transfer_fee": "7750000.0", "transfer_date": "2022-07-18"}, {"player_name": "Nicolò Tresoldi", "from_club_name": "Hannover 96", "to_club_name": "Brugge", "transfer_fee": "7500000.0", "transfer_date": "2025-07-01"}]};
+        const DAILY_TRANSFER_GAME = {"mode": "nationality", "name": "Switzerland", "transfers": [{"player_name": "Granit Xhaka", "from_club_name": "Mönchengladbach", "to_club_name": "Arsenal", "transfer_fee": "45000000.0", "transfer_date": "2016-07-01"}, {"player_name": "Dan Ndoye", "from_club_name": "Bologna", "to_club_name": "Nott'm Forest", "transfer_fee": "42000000.0", "transfer_date": "2025-07-31"}, {"player_name": "Ardon Jashari", "from_club_name": "Brugge", "to_club_name": "AC Milan", "transfer_fee": "36000000.0", "transfer_date": "2025-08-06"}, {"player_name": "Breel Embolo", "from_club_name": "Basel", "to_club_name": "Schalke", "transfer_fee": "26500000.0", "transfer_date": "2016-07-01"}, {"player_name": "Manuel Akanji", "from_club_name": "Basel", "to_club_name": "Borussia Dortmund", "transfer_fee": "21500000.0", "transfer_date": "2018-01-15"}, {"player_name": "Denis Zakaria", "from_club_name": "Juventus", "to_club_name": "Monaco", "transfer_fee": "20000000.0", "transfer_date": "2023-08-14"}, {"player_name": "Noah Okafor", "from_club_name": "AC Milan", "to_club_name": "Leeds United", "transfer_fee": "19000000.0", "transfer_date": "2025-08-21"}, {"player_name": "Zeki Amdouni", "from_club_name": "Basel", "to_club_name": "Burnley", "transfer_fee": "18600000.0", "transfer_date": "2023-07-19"}, {"player_name": "Gökhan Inler", "from_club_name": "Udinese Calcio", "to_club_name": "Napoli", "transfer_fee": "18000000.0", "transfer_date": "2011-07-11"}, {"player_name": "Xherdan Shaqiri", "from_club_name": "Inter", "to_club_name": "Stoke City", "transfer_fee": "17000000.0", "transfer_date": "2015-08-11"}]};
         const ALL_PLAYERS = [
   {
     "Name": "Silvio Adzic",
@@ -533329,7 +533329,7 @@
   }
 ];
         const GAME_NOTE = "Transfer data updated to September 2026 (Summer window shut). Does not include loan moves.";
-        const PUZZLE_NUMBER    = 45;
+        const PUZZLE_NUMBER    = 46;
         const IS_BACK_IN_TIME  = false;
         const MAX_BACK_DAYS    = 7;
     </script>
@@ -533948,6 +533948,7 @@
         const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage);
 
         modal.show({
+            gameId:  GAME_ID,
             won,
             title:   won ? 'MASTERMIND' : 'GAME OVER',
             message: won
@@ -533955,6 +533956,8 @@
                 : `You found ${score} out of ${activeGameData.transfers.length} record transfers.`,
             score,
             maxScore: activeGameData.transfers.length,
+            lives:    livesCtrl.get(),
+            initialLives: INITIAL_LIVES,
             streak:   stats.streak,
             targetName: activeGameData.name,
             targetType: activeGameData.mode,
@@ -533966,12 +533969,15 @@
 
     function doShare() {
         FootyUI.share({
+            gameId:       GAME_ID,
             gameName:     'Top Transfers',
             puzzleNum,
             score,
             maxScore:     activeGameData.transfers.length,
             lives:        livesCtrl.get(),
             initialLives: INITIAL_LIVES,
+            targetName:   activeGameData.name,
+            targetType:   activeGameData.mode,
             won:          score >= activeGameData.transfers.length,
             url:          window.location.href
         });

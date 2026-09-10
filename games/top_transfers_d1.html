@@ -330,7 +330,7 @@
 
 
     <script id="daily-game-data">
-        const DAILY_TRANSFER_GAME = {"mode": "nationality", "name": "Argentina", "transfers": [{"player_name": "Enzo Fernández", "from_club_name": "Benfica", "to_club_name": "Chelsea", "transfer_fee": "121000000.0", "transfer_date": "2023-01-31"}, {"player_name": "Gonzalo Higuaín", "from_club_name": "Napoli", "to_club_name": "Juventus", "transfer_fee": "90000000.0", "transfer_date": "2016-07-26"}, {"player_name": "Ángel Di María", "from_club_name": "Real Madrid", "to_club_name": "Manchester United", "transfer_fee": "75000000.0", "transfer_date": "2014-08-26"}, {"player_name": "Julián Alvarez", "from_club_name": "Manchester City", "to_club_name": "Atletico Madrid", "transfer_fee": "75000000.0", "transfer_date": "2024-08-12"}, {"player_name": "Lisandro Martínez", "from_club_name": "Ajax", "to_club_name": "Manchester United", "transfer_fee": "57370000.0", "transfer_date": "2022-07-27"}, {"player_name": "Hernán Crespo", "from_club_name": "Parma", "to_club_name": "Lazio", "transfer_fee": "56810000.0", "transfer_date": "2000-07-11"}, {"player_name": "Cristian Romero", "from_club_name": "Atalanta", "to_club_name": "Tottenham Hotspur", "transfer_fee": "53800000.0", "transfer_date": "2022-08-30"}, {"player_name": "Mauro Icardi", "from_club_name": "Inter", "to_club_name": "Paris Saint-Germain", "transfer_fee": "50000000.0", "transfer_date": "2020-07-01"}, {"player_name": "Alejandro Garnacho", "from_club_name": "Manchester United", "to_club_name": "Chelsea", "transfer_fee": "46200000.0", "transfer_date": "2025-08-30"}, {"player_name": "Franco Mastantuono", "from_club_name": "River Plate", "to_club_name": "Real Madrid", "transfer_fee": "45000000.0", "transfer_date": "2025-08-14"}]};
+        const DAILY_TRANSFER_GAME = {"mode": "club", "name": "Brugge", "transfers": [{"player_name": "Roman Yaremchuk", "from_club_name": "Benfica", "to_club_name": "Brugge", "transfer_fee": "17000000.0", "transfer_date": "2022-08-29"}, {"player_name": "Igor Thiago", "from_club_name": "Ludogorets", "to_club_name": "Brugge", "transfer_fee": "11000000.0", "transfer_date": "2023-07-01"}, {"player_name": "Raphael Onyedika", "from_club_name": "Midtjylland", "to_club_name": "Brugge", "transfer_fee": "9500000.0", "transfer_date": "2022-08-28"}, {"player_name": "Aleksandar Stanković", "from_club_name": "Inter", "to_club_name": "Brugge", "transfer_fee": "9500000.0", "transfer_date": "2025-07-24"}, {"player_name": "Kamal Sowah", "from_club_name": "Leicester City", "to_club_name": "Brugge", "transfer_fee": "9000000.0", "transfer_date": "2021-08-27"}, {"player_name": "Mamadou Diakhon", "from_club_name": "Stade Reims", "to_club_name": "Brugge", "transfer_fee": "9000000.0", "transfer_date": "2025-08-18"}, {"player_name": "David Okereke", "from_club_name": "Spezia Calcio", "to_club_name": "Brugge", "transfer_fee": "8160000.0", "transfer_date": "2019-07-09"}, {"player_name": "Hugo Vetlesen", "from_club_name": "Bodø/Glimt", "to_club_name": "Brugge", "transfer_fee": "7750000.0", "transfer_date": "2023-07-03"}, {"player_name": "Casper Nielsen", "from_club_name": "Union SG", "to_club_name": "Brugge", "transfer_fee": "7750000.0", "transfer_date": "2022-07-18"}, {"player_name": "Nicolò Tresoldi", "from_club_name": "Hannover 96", "to_club_name": "Brugge", "transfer_fee": "7500000.0", "transfer_date": "2025-07-01"}]};
         const ALL_PLAYERS = [
   {
     "Name": "Silvio Adzic",
@@ -533329,7 +533329,7 @@
   }
 ];
         const GAME_NOTE = "Transfer data updated to September 2026 (Summer window shut). Does not include loan moves.";
-        const PUZZLE_NUMBER    = 44;
+        const PUZZLE_NUMBER    = 45;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>
@@ -533948,6 +533948,7 @@
         const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage);
 
         modal.show({
+            gameId:  GAME_ID,
             won,
             title:   won ? 'MASTERMIND' : 'GAME OVER',
             message: won
@@ -533955,6 +533956,8 @@
                 : `You found ${score} out of ${activeGameData.transfers.length} record transfers.`,
             score,
             maxScore: activeGameData.transfers.length,
+            lives:    livesCtrl.get(),
+            initialLives: INITIAL_LIVES,
             streak:   stats.streak,
             targetName: activeGameData.name,
             targetType: activeGameData.mode,
@@ -533966,12 +533969,15 @@
 
     function doShare() {
         FootyUI.share({
+            gameId:       GAME_ID,
             gameName:     'Top Transfers',
             puzzleNum,
             score,
             maxScore:     activeGameData.transfers.length,
             lives:        livesCtrl.get(),
             initialLives: INITIAL_LIVES,
+            targetName:   activeGameData.name,
+            targetType:   activeGameData.mode,
             won:          score >= activeGameData.transfers.length,
             url:          window.location.href
         });

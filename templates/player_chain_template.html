@@ -1198,12 +1198,24 @@
                 modalMsg   = `Tough luck! Today's mystery player was ${activeGameData.target_player}. Review the full chain below!`;
             }
 
+            const emojis = stepRecords.map(r => {
+                if (r.status === 'instant_win') return '⭐️';
+                if (r.status === 'correct')     return '🟩';
+                if (r.status === 'skipped')     return '⏭️';
+                return '⬛';
+            }).join('');
+
             modal.show({
+                gameId: GAME_ID,
                 won: won,
                 title: modalTitle,
                 message: modalMsg,
                 score: finalScore,
                 maxScore: activeGameData.total_steps,
+                lives: livesCtrl.get(),
+                initialLives: INITIAL_LIVES,
+                customEmojiGrid: emojis,
+                didInstantWin: didInstantWin,
                 streak: stats.streak,
                 playerName: activeGameData.target_player,
                 targetName: activeGameData.target_player,
@@ -1288,10 +1300,6 @@
         function doShare() {
             const score = getCompletedScore();
             const total = activeGameData.total_steps;
-            const livesUsed = INITIAL_LIVES - livesCtrl.get();
-            const livesText = livesUsed === 1 ? '1 life used' : `${livesUsed} lives used`;
-
-            // Build custom Wordle emoji grid representing chain steps
             const emojis = stepRecords.map(r => {
                 if (r.status === 'instant_win') return '⭐️';
                 if (r.status === 'correct')     return '🟩';
@@ -1299,35 +1307,19 @@
                 return '⬛';
             }).join('');
 
-            const lines = [
-                `⚽ Playmaker — Player Chain #${puzzleNum}`,
-                emojis,
-                `${didInstantWin ? '⭐️ INSTANT WIN!' : (score === total ? '✅ PERFECT CHAIN!' : (livesCtrl.isDead() ? '❌ GAME OVER' : '✅ COMPLETED'))}`,
-                `🎯 ${score}/${total} steps solved · ❤️ ${livesText}`,
-                `🔗 https://playmaker.best/games/player_chain.html`
-            ];
-
-            const text = lines.join('\n');
-
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(text)
-                    .then(() => FootyUI.toast('Copied to clipboard!', 'success'))
-                    .catch(() => _fallbackCopy(text));
-            } else {
-                _fallbackCopy(text);
-            }
-        }
-
-        function _fallbackCopy(text) {
-            const ta = document.createElement('textarea');
-            ta.value = text;
-            ta.style.position = 'fixed';
-            ta.style.opacity = '0';
-            document.body.appendChild(ta);
-            ta.select();
-            document.execCommand('copy');
-            document.body.removeChild(ta);
-            FootyUI.toast('Copied to clipboard!', 'success');
+            FootyUI.share({
+                gameId: GAME_ID,
+                gameName: 'Player Chain',
+                puzzleNum,
+                score,
+                maxScore: total,
+                lives: livesCtrl.get(),
+                initialLives: INITIAL_LIVES,
+                customEmojiGrid: emojis,
+                didInstantWin: didInstantWin,
+                won: didInstantWin || score === total,
+                url: 'https://playmaker.best/games/player_chain.html'
+            });
         }
     </script>
 </body>

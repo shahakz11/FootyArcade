@@ -492,13 +492,44 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
         print(f"✨ Video successfully created with audio: {final_mp4}")
         return final_mp4
 
+def ensure_server_running(port=8080):
+    """Checks if server is running on port; if not, starts a lightweight background HTTP server."""
+    import urllib.request
+    import subprocess
+    import time
+
+    try:
+        with urllib.request.urlopen(f"http://localhost:{port}/games/top_transfers.html", timeout=1.2) as resp:
+            if resp.status < 400:
+                return None  # Server is already running externally
+    except Exception:
+        pass
+
+    print(f"📡 No local server detected on port {port}. Auto-starting background HTTP server...")
+    proc = subprocess.Popen([sys.executable, "-m", "http.server", str(port)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    time.sleep(1.2)
+    return proc
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate Playmaker Social Media Video Shorts")
     parser.add_argument("--game", default="top_transfers", help="Game ID (top_transfers, transfer_destination, top_scorers, club_connect, etc.)")
     parser.add_argument("--day", type=int, default=0, help="Day offset: -1 for yesterday, 0 for today, 1 for tomorrow")
     parser.add_argument("--port", type=int, default=8080, help="Local server port (default: 8080)")
     parser.add_argument("--fast", action="store_true", help="Fast mode for quick rendering tests")
+    parser.add_argument("--upload", action="store_true", help="Upload generated video directly to YouTube Shorts")
+    parser.add_argument("--privacy", default="public", choices=["public", "private", "unlisted"], help="YouTube Shorts privacy status")
     args = parser.parse_args()
     
-    asyncio.run(record_short_video(game_id=args.game, day_offset=args.day, fast_mode=args.fast, port=args.port))
+    server_proc = ensure_server_running(args.port)
+    try:
+        video_path = asyncio.run(record_short_video(game_id=args.game, day_offset=args.day, fast_mode=args.fast, port=args.port))
+    finally:
+        if server_proc:
+            server_proc.terminate()
+            print("📡 Background HTTP server stopped.")
+    
+    if args.upload and video_path and os.path.exists(video_path):
+        from scripts.youtube_uploader import upload_short, build_default_metadata
+        title, desc, tags = build_default_metadata(game_id=args.game)
+        upload_short(video_path, title=title, description=desc, tags=tags, privacy_status=args.privacy)
 
