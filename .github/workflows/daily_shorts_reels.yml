@@ -1,0 +1,57 @@
+name: Daily Shorts & Reels Auto-Publisher
+
+on:
+  schedule:
+    # Runs daily at 08:00 UTC (11:00 AM local time)
+    - cron: '0 8 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI / mobile app
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360 # Allows up to 6 hours for staggered 1-hr interval publishing
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install system dependencies (FFmpeg)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          python3 -m playwright install --with-deps chromium
+
+      - name: Restore API Secrets & Credentials
+        env:
+          YOUTUBE_TOKEN_BASE64: ${{ secrets.YOUTUBE_TOKEN_BASE64 }}
+          INSTAGRAM_CONFIG: ${{ secrets.INSTAGRAM_CONFIG }}
+        run: |
+          mkdir -p private
+          if [ -n "$YOUTUBE_TOKEN_BASE64" ]; then
+            echo "$YOUTUBE_TOKEN_BASE64" | base64 --decode > private/youtube_token.pickle
+            echo "✅ Restored YouTube credentials."
+          else
+            echo "⚠️ Warning: YOUTUBE_TOKEN_BASE64 secret is missing."
+          fi
+
+          if [ -n "$INSTAGRAM_CONFIG" ]; then
+            echo "$INSTAGRAM_CONFIG" > private/instagram_config.json
+            echo "✅ Restored Instagram credentials."
+          else
+            echo "⚠️ Warning: INSTAGRAM_CONFIG secret is missing."
+          fi
+
+      - name: Run Daily Batch Pipeline (Shorts & Reels with Delay)
+        run: |
+          python3 scripts/upload_daily_shorts.py --wait-queue

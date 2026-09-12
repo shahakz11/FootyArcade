@@ -1,0 +1,10 @@
+playwright
+opencv-python-headless
+numpy
+scipy
+imageio-ffmpeg
+Pillow
+pandas
+google-api-python-client
+google-auth-oauthlib
+google-auth-httplib2
