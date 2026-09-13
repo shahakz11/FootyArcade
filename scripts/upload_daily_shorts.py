@@ -101,7 +101,17 @@ async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_ru
             print("-" * 68)
 
             # Render video
-            video_path, target_name = await record_short_video(game_id=game_id, day_offset=0, fast_mode=fast_mode, port=port)
+            try:
+                render_res = await record_short_video(game_id=game_id, day_offset=0, fast_mode=fast_mode, port=port)
+                if isinstance(render_res, tuple):
+                    video_path, target_name = render_res
+                else:
+                    video_path, target_name = render_res, ""
+            except Exception as e:
+                import traceback
+                print(f"❌ Video rendering exception for {game_name}: {e}")
+                traceback.print_exc()
+                video_path, target_name = None, ""
 
             if not video_path or not os.path.exists(video_path):
                 print(f"❌ Failed to render video for {game_name}. Skipping...")

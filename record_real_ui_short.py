@@ -25,7 +25,7 @@ def sanitize_filename(name):
     return re.sub(r'[^\w\-]', '', s)
 
 async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=False, port=8080):
-    url = f"http://localhost:{port}/games/{game_id}.html"
+    url = f"http://127.0.0.1:{port}/games/{game_id}.html"
     
     WIDTH, HEIGHT = 1080, 1920
     FPS = 30
@@ -47,7 +47,7 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
         if not response or response.status >= 400:
             print(f"❌ Error: Page {url} failed to load (status {response.status if response else 'None'}).")
             await browser.close()
-            return None
+            return None, None
             
         await page.wait_for_selector("#guess-input", timeout=10000)
         try:
@@ -504,16 +504,16 @@ def ensure_server_running(port=8080):
     import time
 
     try:
-        with urllib.request.urlopen(f"http://localhost:{port}/games/top_transfers.html", timeout=1.2) as resp:
+        with urllib.request.urlopen(f"http://127.0.0.1:{port}/games/top_transfers.html", timeout=1.2) as resp:
             if resp.status < 400:
                 return None  # Server is already running externally
     except Exception:
         pass
 
-    print(f"📡 No local server detected on port {port}. Auto-starting background HTTP server...")
+    print(f"📡 No local server detected on 127.0.0.1:{port}. Auto-starting background HTTP server...")
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    proc = subprocess.Popen([sys.executable, "-m", "http.server", str(port)], cwd=base_dir, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    time.sleep(1.2)
+    proc = subprocess.Popen([sys.executable, "-m", "http.server", str(port), "--bind", "127.0.0.1"], cwd=base_dir, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    time.sleep(1.5)
     return proc
 
 if __name__ == "__main__":

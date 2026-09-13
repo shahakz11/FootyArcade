@@ -84,7 +84,7 @@ jobs:
           INPUT_DRY_RUN: ${{ github.event.inputs.dry_run }}
           INPUT_FAST: ${{ github.event.inputs.fast }}
         run: |
-          CMD="python3 scripts/upload_daily_shorts.py --wait-queue"
+          CMD="python3 -u scripts/upload_daily_shorts.py --wait-queue"
           if [ -n "$INPUT_GAME" ]; then
             CMD="$CMD --game $INPUT_GAME"
           fi
