@@ -310,7 +310,8 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
         target_clean = sanitize_filename(target_name)
         target_date = (datetime.date.today() + datetime.timedelta(days=day_offset)).strftime("%Y-%m-%d")
         
-        output_mp4 = f"/Users/ggbushi/Documents/Football/output_{game_id}_{target_clean}_{target_date}.mp4"
+        repo_dir = os.path.dirname(os.path.abspath(__file__))
+        output_mp4 = os.path.join(repo_dir, f"output_{game_id}_{target_clean}_{target_date}.mp4")
 
         print(f"🎯 Target Theme: {target_name} ({target_date})")
         print(f"📁 Output File: {output_mp4}")

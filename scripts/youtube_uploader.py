@@ -31,8 +31,7 @@ def find_client_secrets():
     # Check Football/private or root
     candidates = (
         glob.glob(os.path.join(PRIVATE_DIR, "client_secret*.json")) +
-        glob.glob(os.path.join(BASE_DIR, "client_secret*.json")) +
-        glob.glob("/Users/ggbushi/Documents/Manualz/manuals_to_video/client_secret*.json")
+        glob.glob(os.path.join(BASE_DIR, "client_secret*.json"))
     )
     if candidates:
         return candidates[0]

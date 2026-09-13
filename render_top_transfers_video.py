@@ -261,7 +261,8 @@ def generate_video(csv_path, game_day, output_path="top_transfers_short.mp4", se
     print(f"✅ Video rendering complete: {output_path}")
 
 if __name__ == "__main__":
-    csv_file = "/Users/ggbushi/Documents/Football/daily_nationality_transfer_games.csv"
+    repo_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_file = os.path.join(repo_dir, "daily_nationality_transfer_games.csv")
     game_day = 2
-    out_file = "/Users/ggbushi/Documents/Football/output_top_transfers_day2.mp4"
+    out_file = os.path.join(repo_dir, "output_top_transfers_day2.mp4")
     generate_video(csv_file, game_day, output_path=out_file)
