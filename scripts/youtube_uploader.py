@@ -19,6 +19,7 @@ SCOPES = [
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PRIVATE_DIR = os.path.join(BASE_DIR, "private")
 TOKEN_FILE = os.path.join(PRIVATE_DIR, "youtube_token.pickle")
+TOKEN_JSON_FILE = os.path.join(PRIVATE_DIR, "youtube_token.json")
 
 def find_client_secrets():
     """Finds client_secrets.json in Football or Manualz directory."""
@@ -41,12 +42,20 @@ def get_authenticated_service():
     os.makedirs(PRIVATE_DIR, exist_ok=True)
     credentials = None
 
-    if os.path.exists(TOKEN_FILE):
+    if os.path.exists(TOKEN_JSON_FILE):
+        try:
+            with open(TOKEN_JSON_FILE, 'r', encoding='utf-8') as f:
+                from google.oauth2.credentials import Credentials
+                credentials = Credentials.from_authorized_user_info(json.load(f))
+        except Exception as e:
+            print(f"⚠️ Could not load youtube_token.json ({e}). Falling back to pickle...")
+
+    if not credentials and os.path.exists(TOKEN_FILE):
         try:
             with open(TOKEN_FILE, 'rb') as token:
                 credentials = pickle.load(token)
         except Exception as e:
-            print(f"⚠️ Could not load token ({e}). Re-authenticating...")
+            print(f"⚠️ Could not load token pickle ({e}). Re-authenticating...")
 
     if not credentials or not credentials.valid:
         refreshed = False
@@ -74,7 +83,12 @@ def get_authenticated_service():
 
         with open(TOKEN_FILE, 'wb') as token:
             pickle.dump(credentials, token)
-            print(f"✅ Credentials saved to {TOKEN_FILE}")
+        try:
+            with open(TOKEN_JSON_FILE, 'w', encoding='utf-8') as f:
+                f.write(credentials.to_json())
+        except Exception:
+            pass
+        print(f"✅ Credentials saved to {TOKEN_FILE}")
 
     return googleapiclient.discovery.build("youtube", "v3", credentials=credentials)
 

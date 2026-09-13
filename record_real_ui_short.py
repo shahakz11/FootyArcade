@@ -511,7 +511,8 @@ def ensure_server_running(port=8080):
         pass
 
     print(f"📡 No local server detected on port {port}. Auto-starting background HTTP server...")
-    proc = subprocess.Popen([sys.executable, "-m", "http.server", str(port)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    proc = subprocess.Popen([sys.executable, "-m", "http.server", str(port)], cwd=base_dir, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     time.sleep(1.2)
     return proc
 
