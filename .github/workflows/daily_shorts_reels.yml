@@ -4,7 +4,23 @@ on:
   schedule:
     # Runs daily at 08:00 UTC (11:00 AM local time)
     - cron: '0 8 * * *'
-  workflow_dispatch: # Allows manual trigger from GitHub UI / mobile app
+  workflow_dispatch:
+    inputs:
+      game:
+        description: 'Specific game ID (leave blank for all 5 games)'
+        required: false
+        default: ''
+        type: string
+      dry_run:
+        description: 'Dry run (render only, do not upload)'
+        required: false
+        default: false
+        type: boolean
+      fast:
+        description: 'Fast preview mode for testing'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   build-and-publish:
@@ -38,20 +54,33 @@ jobs:
           INSTAGRAM_CONFIG: ${{ secrets.INSTAGRAM_CONFIG }}
         run: |
           mkdir -p private
-          if [ -n "$YOUTUBE_TOKEN_BASE64" ]; then
-            echo "$YOUTUBE_TOKEN_BASE64" | base64 --decode > private/youtube_token.pickle
-            echo "✅ Restored YouTube credentials."
-          else
-            echo "⚠️ Warning: YOUTUBE_TOKEN_BASE64 secret is missing."
+          if [ -z "$YOUTUBE_TOKEN_BASE64" ]; then
+            echo "❌ Error: YOUTUBE_TOKEN_BASE64 secret is missing in GitHub Repository Secrets!"
+            exit 1
           fi
-
-          if [ -n "$INSTAGRAM_CONFIG" ]; then
-            echo "$INSTAGRAM_CONFIG" > private/instagram_config.json
-            echo "✅ Restored Instagram credentials."
-          else
-            echo "⚠️ Warning: INSTAGRAM_CONFIG secret is missing."
+          if [ -z "$INSTAGRAM_CONFIG" ]; then
+            echo "❌ Error: INSTAGRAM_CONFIG secret is missing in GitHub Repository Secrets!"
+            exit 1
           fi
+          echo "$YOUTUBE_TOKEN_BASE64" | base64 --decode > private/youtube_token.pickle
+          echo "$INSTAGRAM_CONFIG" > private/instagram_config.json
+          echo "✅ Restored YouTube and Instagram credentials."
 
-      - name: Run Daily Batch Pipeline (Shorts & Reels with Delay)
+      - name: Run Daily Batch Pipeline (Shorts & Reels)
+        env:
+          INPUT_GAME: ${{ github.event.inputs.game }}
+          INPUT_DRY_RUN: ${{ github.event.inputs.dry_run }}
+          INPUT_FAST: ${{ github.event.inputs.fast }}
         run: |
-          python3 scripts/upload_daily_shorts.py --wait-queue
+          CMD="python3 scripts/upload_daily_shorts.py --wait-queue"
+          if [ -n "$INPUT_GAME" ]; then
+            CMD="$CMD --game $INPUT_GAME"
+          fi
+          if [ "$INPUT_DRY_RUN" = "true" ]; then
+            CMD="$CMD --dry-run"
+          fi
+          if [ "$INPUT_FAST" = "true" ]; then
+            CMD="$CMD --fast"
+          fi
+          echo "Executing: $CMD"
+          $CMD

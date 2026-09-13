@@ -1,7 +1,7 @@
 #!/bin/bash
 # ==============================================================================
 # UploadTodayShorts.command
-# Double-clickable macOS launcher: Renders & schedules all of today's Shorts
+# Double-clickable macOS launcher: Renders & schedules today's Shorts & Reels
 # ==============================================================================
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -11,20 +11,33 @@ export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PAT
 [ -f "$HOME/.zshrc" ] && source "$HOME/.zshrc" > /dev/null 2>&1
 
 echo "=========================================================="
-echo "    ⚽  PLAYMAKER — DAILY SHORTS AUTOMATED BATCH"
+echo "    ⚽  PLAYMAKER — DAILY SHORTS & REELS BATCH PIPELINE"
 echo "=========================================================="
-echo "1. Checks authenticated YouTube Channel"
-echo "2. Renders 9:16 Shorts with audio for all 5 games"
-echo "3. Publishes #1 immediately, and schedules #2..#5 with 1-hr gaps"
+echo "1. Checks YouTube Channel & Instagram Business Account"
+echo "2. Renders 9:16 vertical videos with audio for all 5 games"
+echo "3. Publishes Game #1 immediately (YouTube & Instagram)"
+echo "4. Schedules Games #2..#5 with 1-hr delays"
 echo "=========================================================="
 echo ""
 
-# First verify authentication / channel
+# 1. Verify YouTube authentication / channel
+echo "🔍 Checking YouTube authentication..."
 python3 scripts/youtube_uploader.py --channel
-AUTH_STATUS=$?
+YT_STATUS=$?
 
-if [ $AUTH_STATUS -ne 0 ]; then
+if [ $YT_STATUS -ne 0 ]; then
     echo "⚠️ Setup required: Browser will open once for YouTube authentication."
+fi
+
+echo ""
+
+# 2. Verify Instagram authentication
+echo "🔍 Checking Instagram authentication..."
+python3 scripts/instagram_uploader.py --check
+IG_STATUS=$?
+
+if [ $IG_STATUS -ne 0 ]; then
+    echo "⚠️ Instagram check failed. Please check private/instagram_config.json."
 fi
 
 echo ""

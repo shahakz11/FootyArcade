@@ -84,7 +84,7 @@ def build_default_metadata(game_id="top_transfers", target_name=""):
         "top_transfers": f"Can you guess {target_name or 'the club'}'s record transfers? ⚽ #Shorts",
         "transfer_destination": f"Guess the mystery player's career path backwards! ⚽ #Shorts",
         "player_chain": f"Can you complete this teammate chain? ⚽ #Shorts",
-        "club_connect": f"Name players who played for both clubs! ⚽ #Shorts",
+        "club_connect": f"Can you guess which team all of these players transferred to? ⚽ #Shorts",
         "top_scorers": f"Who scored the most goals in {target_name or 'this season'}? ⚽ #Shorts"
     }
     

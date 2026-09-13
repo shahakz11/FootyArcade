@@ -314,6 +314,11 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
 
         print(f"🎯 Target Theme: {target_name} ({target_date})")
         print(f"📁 Output File: {output_mp4}")
+
+        if os.path.exists(output_mp4) and os.path.getsize(output_mp4) > 1000000:
+            print(f"⚡ Video file already exists and is complete: {output_mp4}. Skipping re-render!")
+            await browser.close()
+            return output_mp4, target_name
         
         await capture_hold(15)
         
@@ -490,7 +495,7 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
             os.remove(wav_track_path)
             
         print(f"✨ Video successfully created with audio: {final_mp4}")
-        return final_mp4
+        return final_mp4, target_name
 
 def ensure_server_running(port=8080):
     """Checks if server is running on port; if not, starts a lightweight background HTTP server."""
@@ -522,7 +527,7 @@ if __name__ == "__main__":
     
     server_proc = ensure_server_running(args.port)
     try:
-        video_path = asyncio.run(record_short_video(game_id=args.game, day_offset=args.day, fast_mode=args.fast, port=args.port))
+        video_path, target_name = asyncio.run(record_short_video(game_id=args.game, day_offset=args.day, fast_mode=args.fast, port=args.port))
     finally:
         if server_proc:
             server_proc.terminate()
@@ -530,6 +535,6 @@ if __name__ == "__main__":
     
     if args.upload and video_path and os.path.exists(video_path):
         from scripts.youtube_uploader import upload_short, build_default_metadata
-        title, desc, tags = build_default_metadata(game_id=args.game)
+        title, desc, tags = build_default_metadata(game_id=args.game, target_name=target_name)
         upload_short(video_path, title=title, description=desc, tags=tags, privacy_status=args.privacy)
 
