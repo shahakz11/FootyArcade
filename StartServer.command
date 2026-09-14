@@ -28,6 +28,7 @@ echo "   - Transfer Destination: http://localhost:$PORT/games/transfer_destinati
 echo "   - Club Connect:         http://localhost:$PORT/games/club_connect.html"
 echo "   - Player Chain:         http://localhost:$PORT/games/player_chain.html"
 echo "   - Top Scorers:          http://localhost:$PORT/games/top_scorers.html"
+echo "   - Passport FC:          http://localhost:$PORT/games/passport_fc.html"
 echo ""
 echo "💡 Press Ctrl+C in this terminal window to stop the server."
 echo "=========================================================="

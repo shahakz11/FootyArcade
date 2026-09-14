@@ -561,7 +561,7 @@
             const existingNames = new Set(allPlayersList.map(p => FootyUI.normalizeStr(p.Name)));
             if (activeGameData.target_player && !existingNames.has(FootyUI.normalizeStr(activeGameData.target_player))) {
                 existingNames.add(FootyUI.normalizeStr(activeGameData.target_player));
-                allPlayersList.push({ Name: activeGameData.target_player, Nationality: activeGameData.target_nationality || '', Position: activeGameData.target_position || 'Player' });
+                allPlayersList.push({ Name: activeGameData.target_player, Nationality: activeGameData.target_nationality || '', Position: activeGameData.target_position || 'Player', MarketValue: 50000000 });
             }
             if (Array.isArray(activeGameData.steps)) {
                 activeGameData.steps.forEach(st => {
@@ -570,7 +570,7 @@
                             const normVp = FootyUI.normalizeStr(vp);
                             if (vp && !existingNames.has(normVp)) {
                                 existingNames.add(normVp);
-                                allPlayersList.push({ Name: vp, Nationality: '', Position: 'Player' });
+                                allPlayersList.push({ Name: vp, Nationality: '', Position: 'Player', MarketValue: 50000000 });
                             }
                         });
                     }

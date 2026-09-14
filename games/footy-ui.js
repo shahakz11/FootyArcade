@@ -215,9 +215,17 @@
                     tier = 3;
                 }
 
+                let value = 0;
+                if (typeof cfg.valueFn === 'function') {
+                    value = Number(cfg.valueFn(item)) || 0;
+                } else if (item && typeof item === 'object') {
+                    value = Number(item.MarketValue || item.market_value || item.highest_market_value || item.value || 0) || 0;
+                }
+
                 results.push({
                     item,
                     tier,
+                    value,
                     len: normLabel.length,
                     label: rawLabel
                 });
@@ -225,6 +233,7 @@
 
             results.sort((a, b) => {
                 if (a.tier !== b.tier) return a.tier - b.tier;
+                if (b.value !== a.value) return b.value - a.value;
                 if (a.len !== b.len) return a.len - b.len;
                 return a.label.localeCompare(b.label);
             });
@@ -239,8 +248,14 @@
                     uniqueResults.push(r);
                 } else {
                     const existing = seenNorms.get(norm);
-                    // Prefer version with accents or special characters
-                    if (/[^\x00-\x7F]/.test(r.label) && !/[^\x00-\x7F]/.test(existing.label)) {
+                    if (r.value > existing.value) {
+                        const idx = uniqueResults.indexOf(existing);
+                        if (idx !== -1) {
+                            uniqueResults[idx] = r;
+                            seenNorms.set(norm, r);
+                        }
+                    } else if (r.value === existing.value && /[^\x00-\x7F]/.test(r.label) && !/[^\x00-\x7F]/.test(existing.label)) {
+                        // Prefer version with accents or special characters if equal value
                         const idx = uniqueResults.indexOf(existing);
                         if (idx !== -1) {
                             uniqueResults[idx] = r;
@@ -350,11 +365,33 @@
                 if (activeIndex >= 0) {
                     e.preventDefault();
                     select(currentItems[activeIndex]);
+                } else if (currentItems.length > 0) {
+                    e.preventDefault();
+                    select(currentItems[0]);
                 }
             } else if (e.key === 'Escape') {
                 list.classList.add('hidden');
             }
         });
+
+        // Public method — select highlighted item, or fall back to top result
+        this.selectHighlightedOrTop = () => {
+            if (!currentItems.length) return null;
+            const item = activeIndex >= 0 ? currentItems[activeIndex] : currentItems[0];
+            select(item);
+            return item;
+        };
+
+        // Public method — resolve top matching item for a query string
+        this.getTopMatch = (query) => {
+            const q = (query || input.value || '').trim();
+            if (!q) return null;
+            const matches = searchAndRank(cfg.data, q);
+            return matches.length > 0 ? matches[0] : null;
+        };
+
+        // Public method — get current matching items
+        this.getCurrentItems = () => currentItems;
 
         document.addEventListener('click', (e) => {
             if (!input.contains(e.target) && !list.contains(e.target)) {
@@ -809,6 +846,15 @@
                 statusLine = won
                     ? `👑 ALL ${maxScore} TOP SCORERS FOUND! · ❤️ ${lives} left`
                     : `🎯 ${score}/${maxScore} top scorers guessed · ❤️ ${lives} left`;
+                break;
+            }
+            case 'passport_fc': {
+                titleLine = `⚽ Playmaker: Passport FC #${puzzleNum}`;
+                const club = opts.targetName || (typeof DAILY_PASSPORT_GAME !== 'undefined' ? DAILY_PASSPORT_GAME.club : 'Club Passport');
+                subLine = `✈️ Club Passport: ${club}`;
+                statusLine = won
+                    ? `🌟 PASSPORT COMPLETED! · ❤️ ${lives} left`
+                    : `🎯 ${score}/${maxScore} stamps collected · ❤️ ${lives} left`;
                 break;
             }
             default: {

@@ -404,6 +404,11 @@ def main():
     with open('all_players.json', 'w', encoding='utf-8') as f_out:
         json.dump(autocomplete_list, f_out, ensure_ascii=False, indent=2)
     print(f"Successfully generated autocomplete list with {len(autocomplete_list)} players in 'all_players.json'")
+    try:
+        from scripts.enrich_player_market_values import main as enrich_market_values
+        enrich_market_values()
+    except Exception as e:
+        print(f"Warning: Could not enrich player market values: {e}")
 
     # --- 4. Generating Transfer Destination Games ---
     print("Processing Transfer Destination Games...")

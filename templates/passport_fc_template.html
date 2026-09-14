@@ -577,7 +577,7 @@
     </footer>
 
     <!-- Shared component library -->
-    <script src="../games/footy-ui.js?v=3"></script>
+    <script src="../games/footy-ui.js?v=4"></script>
 
     <!-- Micro-interaction Script -->
     <script id="daily-game-data">
@@ -805,9 +805,12 @@
                 playerMap.set(norm, p);
             } else {
                 const existing = playerMap.get(norm);
+                const higherValue = Math.max(Number(p.MarketValue || 0), Number(existing.MarketValue || 0));
                 // Prefer canonical name with accents / non-ASCII characters
                 if (/[^\x00-\x7F]/.test(p.Name) && !/[^\x00-\x7F]/.test(existing.Name)) {
-                    playerMap.set(norm, p);
+                    playerMap.set(norm, { ...p, MarketValue: higherValue });
+                } else {
+                    existing.MarketValue = higherValue;
                 }
             }
         }
@@ -820,7 +823,7 @@
                         if (!vp) return;
                         const nVp = FootyUI.normalizeStr(vp);
                         if (!playerMap.has(nVp)) {
-                            playerMap.set(nVp, { Name: vp, Nationality: st.nationality || '', Position: 'Player' });
+                            playerMap.set(nVp, { Name: vp, Nationality: st.nationality || '', Position: 'Player', MarketValue: 50000000 });
                         } else {
                             const existing = playerMap.get(nVp);
                             if (/[^\x00-\x7F]/.test(vp) && !/[^\x00-\x7F]/.test(existing.Name)) {
@@ -895,14 +898,15 @@
             document.getElementById('submit-btn').addEventListener('click', submitGuess);
             document.getElementById('skip-step-btn').addEventListener('click', skipCurrentStep);
 
-            // Input Enter key: submit if dropdown is closed
+            // Input Enter key: if dropdown is open, select highlighted or top result, then submit
             document.getElementById('guess-input').addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
+                    e.preventDefault();
                     const list = document.getElementById('autocomplete-list');
-                    if (list && list.classList.contains('hidden')) {
-                        e.preventDefault();
-                        submitGuess();
+                    if (list && !list.classList.contains('hidden') && dropdown) {
+                        dropdown.selectHighlightedOrTop();
                     }
+                    submitGuess();
                 }
             });
 
@@ -1130,10 +1134,15 @@
                 hintBox.classList.add('hidden');
             }
 
-            // Clear input
+            // Clear input & dropdown state
             const input = document.getElementById('guess-input');
             input.value = '';
             input.placeholder = `Type any ${demonym} footballer who played for ${activeGameData.club}...`;
+            if (dropdown && typeof dropdown.clearSelection === 'function') {
+                dropdown.clearSelection();
+            }
+            const list = document.getElementById('autocomplete-list');
+            if (list) list.classList.add('hidden');
             input.focus();
         }
 
@@ -1179,11 +1188,23 @@
                 return;
             }
 
-            // Validate that player exists in allPlayersList
-            const matchedPlayer = allPlayersList.find(p => FootyUI.normalizeStr(p.Name) === normVal);
+            // Resolve player: 1) dropdown selection, 2) exact name match, 3) top autocomplete match
+            const selected = dropdown && typeof dropdown.getSelected === 'function' ? dropdown.getSelected() : null;
+            const matchedPlayer = selected 
+                || allPlayersList.find(p => FootyUI.normalizeStr(p.Name) === normVal)
+                || (dropdown && typeof dropdown.getTopMatch === 'function' ? dropdown.getTopMatch(rawVal) : null);
+
             if (!matchedPlayer) {
                 showError('Player not recognized. Please pick from the dropdown.');
                 return;
+            }
+
+            // Clear input and dropdown state upon valid resolution
+            input.value = '';
+            const list = document.getElementById('autocomplete-list');
+            if (list) list.classList.add('hidden');
+            if (dropdown && typeof dropdown.clearSelection === 'function') {
+                dropdown.clearSelection();
             }
 
             const playerName = matchedPlayer.Name;

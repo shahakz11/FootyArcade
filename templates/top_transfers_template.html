@@ -384,7 +384,7 @@
             const nl = tr.player_name.toLowerCase();
             if (!addedNames.has(nl)) {
                 addedNames.add(nl);
-                allPlayersPool.push({ Name: tr.player_name, Nationality: '', Position: 'Player', Age: 0 });
+                allPlayersPool.push({ Name: tr.player_name, Nationality: '', Position: 'Player', Age: 0, MarketValue: parseFloat(tr.transfer_fee) || 50000000 });
             }
         });
 
