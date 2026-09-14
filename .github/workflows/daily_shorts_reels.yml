@@ -29,6 +29,12 @@ on:
         default: false
         type: boolean
 
+# Prevent concurrent runs: If the primary run is currently executing (uploading queued reels),
+# any second run will wait in queue rather than running in parallel.
+concurrency:
+  group: daily-shorts-reels
+  cancel-in-progress: false
+
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
