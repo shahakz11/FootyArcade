@@ -14,8 +14,8 @@
     <link rel="manifest" href="../manifest.json"/>
     <link rel="shortcut icon" href="../favicon.ico"/>
     <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon.png"/>
-    <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png"/>
+    <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png"/>
     <link rel="icon" type="image/png" sizes="512x512" href="../assets/favicon.png"/>
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png"/>
 
@@ -23,6 +23,11 @@
     <meta property="og:title" content="Passport FC — Daily Football Nationality Passport Puzzle | Playmaker"/>
     <meta property="og:description" content="Complete today's club passport by naming footballers across 4 progressive nationality stamps — from deep talent pools down to rare 1-player unicorns. Play now!"/>
     <meta property="og:image" content="https://playmaker.best/assets/social_share.png"/>
+    <meta property="og:image:secure_url" content="https://playmaker.best/assets/social_share.png"/>
+    <meta property="og:image:type" content="image/png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta property="og:image:alt" content="Playmaker — Daily Football Trivia"/>
     <meta property="og:url" content="https://playmaker.best/games/passport_fc.html"/>
     <meta property="og:type" content="website"/>
     <meta name="twitter:card" content="summary_large_image"/>
@@ -326,7 +331,7 @@
                     <input
                         id="guess-input"
                         class="w-full bg-background border border-white/10 rounded-xl h-12 px-4 text-base font-bold text-on-background focus:outline-none focus:border-accent focus:ring-0 transition-all placeholder:text-white/20"
-                        placeholder="Type any qualifying footballer..."
+                        placeholder="Type any French footballer who played for Barcelona..."
                         type="text"
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text"
                     />
@@ -534370,6 +534375,109 @@
             return COUNTRY_FLAGS[nat] || '🌐';
         }
 
+        // ── Country to Nationality Demonym Mapping ─────────────────
+        const COUNTRY_DEMONYMS = {
+            'Albania': 'Albanian',
+            'Algeria': 'Algerian',
+            'Argentina': 'Argentine',
+            'Armenia': 'Armenian',
+            'Australia': 'Australian',
+            'Austria': 'Austrian',
+            'Belgium': 'Belgian',
+            'Bosnia & Herzegovina': 'Bosnian',
+            'Bosnia and Herzegovina': 'Bosnian',
+            'Brazil': 'Brazilian',
+            'Bulgaria': 'Bulgarian',
+            'Burkina Faso': 'Burkinabe',
+            'Cameroon': 'Cameroonian',
+            'Canada': 'Canadian',
+            'Cape Verde': 'Cape Verdean',
+            'Chile': 'Chilean',
+            'Colombia': 'Colombian',
+            'Costa Rica': 'Costa Rican',
+            'Croatia': 'Croatian',
+            'Curacao': 'Curacaoan',
+            'Czech Republic': 'Czech',
+            'DR Congo': 'Congolese',
+            'Congo': 'Congolese',
+            'Denmark': 'Danish',
+            'Ecuador': 'Ecuadorian',
+            'Egypt': 'Egyptian',
+            'England': 'English',
+            'Finland': 'Finnish',
+            'France': 'French',
+            'Gabon': 'Gabonese',
+            'Georgia': 'Georgian',
+            'Germany': 'German',
+            'Ghana': 'Ghanaian',
+            'Greece': 'Greek',
+            'Guinea': 'Guinean',
+            'Guinea-Bissau': 'Bissau-Guinean',
+            'Hungary': 'Hungarian',
+            'Iceland': 'Icelandic',
+            'Iran': 'Iranian',
+            'Israel': 'Israeli',
+            'Italy': 'Italian',
+            'Ivory Coast': 'Ivorian',
+            "Cote d'Ivoire": 'Ivorian',
+            'Japan': 'Japanese',
+            'Kenya': 'Kenyan',
+            'Kosovo': 'Kosovar',
+            'Liberia': 'Liberian',
+            'Luxembourg': 'Luxembourgish',
+            'Mali': 'Malian',
+            'Mexico': 'Mexican',
+            'Montenegro': 'Montenegrin',
+            'Morocco': 'Moroccan',
+            'Netherlands': 'Dutch',
+            'Nigeria': 'Nigerian',
+            'North Macedonia': 'North Macedonian',
+            'Norway': 'Norwegian',
+            'Panama': 'Panamanian',
+            'Paraguay': 'Paraguayan',
+            'Peru': 'Peruvian',
+            'Poland': 'Polish',
+            'Portugal': 'Portuguese',
+            'Qatar': 'Qatari',
+            'Republic of Ireland': 'Irish',
+            'Ireland': 'Irish',
+            'Northern Ireland': 'Northern Irish',
+            'Romania': 'Romanian',
+            'Saudi Arabia': 'Saudi',
+            'Scotland': 'Scottish',
+            'Senegal': 'Senegalese',
+            'Serbia': 'Serbian',
+            'Slovakia': 'Slovak',
+            'Slovenia': 'Slovenian',
+            'South Africa': 'South African',
+            'South Korea': 'South Korean',
+            'Spain': 'Spanish',
+            'Sweden': 'Swedish',
+            'Switzerland': 'Swiss',
+            'Tanzania': 'Tanzanian',
+            'Togo': 'Togolese',
+            'Trinidad and Tobago': 'Trinidadian',
+            'Tunisia': 'Tunisian',
+            'Turkey': 'Turkish',
+            'Türkiye': 'Turkish',
+            'Ukraine': 'Ukrainian',
+            'United States': 'American',
+            'USA': 'American',
+            'Uruguay': 'Uruguayan',
+            'Venezuela': 'Venezuelan',
+            'Wales': 'Welsh'
+        };
+
+        function getDemonym(country) {
+            return COUNTRY_DEMONYMS[country] || country;
+        }
+
+        function getArticle(word) {
+            if (!word) return 'A';
+            const first = word.trim().charAt(0).toUpperCase();
+            return ['A', 'E', 'I', 'O', 'U'].includes(first) ? 'AN' : 'A';
+        }
+
         // Deduplicate spelling variants (accents vs non-accents) to canonical names
         function dedupeCanonicalNames(names) {
             if (!Array.isArray(names)) return [];
@@ -534716,8 +534824,10 @@
 
             document.getElementById('progress-step').textContent = activeStepIndex + 1;
             const flag = getFlag(step.nationality);
+            const demonym = getDemonym(step.nationality);
+            const article = getArticle(demonym);
             document.getElementById('active-step-label').textContent = 
-                `STEP ${activeStepIndex + 1} — NAME A ${step.nationality.toUpperCase()} PLAYER FOR ${activeGameData.club.toUpperCase()}:`;
+                `STEP ${activeStepIndex + 1} — NAME ${article} ${demonym.toUpperCase()} PLAYER FOR ${activeGameData.club.toUpperCase()}:`;
 
             // Reset hint box
             const hintBox = document.getElementById('hint-display-box');
@@ -534730,7 +534840,7 @@
             // Clear input
             const input = document.getElementById('guess-input');
             input.value = '';
-            input.placeholder = `Type any ${step.nationality} footballer who played for ${activeGameData.club}...`;
+            input.placeholder = `Type any ${demonym} footballer who played for ${activeGameData.club}...`;
             input.focus();
         }
 
