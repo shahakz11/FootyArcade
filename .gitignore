@@ -19,6 +19,8 @@ config.json
 # Media generator outputs & frame captures
 *.mp4
 *.png
+!assets/*.png
+!assets/marketing/*.png
 output_*
 corrected_ui_frame_*
 real_guesses_frame_*
