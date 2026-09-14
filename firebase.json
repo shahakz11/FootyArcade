@@ -41,6 +41,11 @@
         "type": 301
       },
       {
+        "source": "/templates/passport_fc_template.html",
+        "destination": "/games/passport_fc.html",
+        "type": 301
+      },
+      {
         "source": "/templates/**",
         "destination": "/",
         "type": 301

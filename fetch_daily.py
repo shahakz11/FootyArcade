@@ -28,6 +28,7 @@ import re
 import json
 import csv
 import argparse
+import unicodedata
 import random as rand_mod
 from datetime import datetime, timedelta
 
@@ -289,6 +290,74 @@ def load_player_chain(puzzle_num):
     return game_data, extra
 
 
+def _dedupe_canonical_names(names):
+    if not isinstance(names, list):
+        return []
+    seen = {}
+    for name in names:
+        if not name:
+            continue
+        norm = unicodedata.normalize('NFKD', name).encode('ascii', 'ignore').decode('ascii').lower().strip()
+        if norm not in seen:
+            seen[norm] = name
+        else:
+            if name != norm and seen[norm] == norm:
+                seen[norm] = name
+    return list(seen.values())
+
+
+def load_passport_fc(puzzle_num):
+    """Returns (game_data_dict, extra_data_dict) for the passport_fc game."""
+    csv_path = "daily_passport_fc_games.csv"
+    if not os.path.exists(csv_path):
+        print(f"  ERROR: {csv_path} not found.")
+        return None, None
+
+    rows = []
+    with open(csv_path, "r", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            if int(r.get("game_day", 1)) == puzzle_num:
+                rows.append(r)
+
+    if not rows:
+        print(f"  WARNING: No passport_fc data for puzzle #{puzzle_num}")
+        return None, None
+
+    rows.sort(key=lambda x: int(x.get("step_number", 1)))
+    first = rows[0]
+
+    game_data = {
+        "club": first.get("club", ""),
+        "total_steps": int(first.get("total_steps", len(rows))),
+        "steps": []
+    }
+
+    for r in rows:
+        v_players = _dedupe_canonical_names(json.loads(r.get("valid_players", "[]")))
+        s_players = _dedupe_canonical_names(json.loads(r.get("sample_players", "[]")))
+        p_size = len(v_players) if v_players else int(r.get("pool_size", 0))
+        game_data["steps"].append({
+            "step_number":    int(r.get("step_number", 1)),
+            "difficulty":     r.get("difficulty", ""),
+            "nationality":    r.get("nationality", ""),
+            "pool_size":      p_size,
+            "sample_players": s_players,
+            "valid_players":  v_players,
+        })
+
+    all_players_json = "[]"
+    if os.path.exists("all_players.json"):
+        with open("all_players.json", "r", encoding="utf-8") as f:
+            all_players_json = f.read()
+    else:
+        print("  WARNING: all_players.json not found.")
+
+    extra = {
+        "ALL_PLAYERS": all_players_json,
+    }
+    return game_data, extra
+
+
 # Map game id → loader function
 GAME_LOADERS = {
     "top_transfers":        load_top_transfers,
@@ -296,6 +365,7 @@ GAME_LOADERS = {
     "top_scorers":          load_top_scorers,
     "club_connect":         load_club_connect,
     "player_chain":         load_player_chain,
+    "passport_fc":          load_passport_fc,
 }
 
 # Map game id → the JS variable name for the main data object
@@ -305,6 +375,7 @@ GAME_DATA_VAR = {
     "top_scorers":          "DAILY_SCORERS_GAME",
     "club_connect":         "DAILY_CLUBCONNECT_GAME",
     "player_chain":         "DAILY_CHAIN_GAME",
+    "passport_fc":          "DAILY_PASSPORT_GAME",
 }
 
 # Patterns to strip from a template before injecting fresh data
@@ -344,6 +415,14 @@ STRIP_PATTERNS = {
     ],
     "player_chain": [
         r'const\s+DAILY_CHAIN_GAME\s*=\s*\{[\s\S]*?\};',
+        r'const\s+ALL_PLAYERS\s*=\s*\[[\s\S]*?\];',
+        r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
+        r'const\s+IS_BACK_IN_TIME\s*=\s*(true|false);',
+        r'const\s+MAX_BACK_DAYS\s*=\s*\d+;',
+        r'const\s+GAME_NOTE\s*=\s*"[^"]*";',
+    ],
+    "passport_fc": [
+        r'const\s+DAILY_PASSPORT_GAME\s*=\s*\{[\s\S]*?\};',
         r'const\s+ALL_PLAYERS\s*=\s*\[[\s\S]*?\];',
         r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
         r'const\s+IS_BACK_IN_TIME\s*=\s*(true|false);',
@@ -487,8 +566,8 @@ def main():
     for game_cfg in games:
         gid = game_cfg["id"]
 
-        # Skip games not yet ready
-        if game_cfg.get("status") == "coming_soon":
+        # Skip games not yet ready unless explicitly requested via --game
+        if game_cfg.get("status") == "coming_soon" and not args.game:
             print(f"── {game_cfg['name']} ({gid}) — SKIPPED (coming soon)\n")
             continue
 

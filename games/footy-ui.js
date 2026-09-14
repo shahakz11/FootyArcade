@@ -984,7 +984,7 @@
     function showFeedback(opts) {
         const meta = getActiveGameMetadata();
         const gameId = opts.gameId || meta.gameId;
-        const isVarSupportedGame = ['top_scorers', 'top_transfers', 'player_chain'].includes(gameId);
+        const isVarSupportedGame = ['top_scorers', 'top_transfers', 'player_chain', 'passport_fc'].includes(gameId);
         const normGuess = opts.guess ? normalizeStr(opts.guess) : '';
         const alreadyChecked = normGuess && varState.checkedPlayers.has(normGuess);
         const hasToken = varState.tokens > 0 && varState.successfulUses < varState.maxSuccess;

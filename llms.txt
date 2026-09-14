@@ -1,0 +1,16 @@
+# Playmaker — Daily Football Trivia & Transfer Arcade
+> Playmaker (https://playmaker.best) is a free web-based football trivia and arcade platform featuring daily browser puzzles based on official senior club transfers, career paths, and appearances.
+
+## Daily Games
+- `Passport FC -> https://playmaker.best/games/passport_fc.html`: Complete the daily club passport by naming qualifying footballers who played for the anchor club across 4 progressive nationality tiers, from large talent pools down to rare 1-player unicorns.
+- `Club Connect -> https://playmaker.best/games/club_connect.html`: Spot the secret club connection that bought all five mystery footballers revealed one-by-one by transfer fee.
+- `Player Chain -> https://playmaker.best/games/player_chain.html`: Climb the sequential teammate chain linking football clubs through shared squad members to reveal the mystery Player of the Day.
+- `Top Transfers -> https://playmaker.best/games/top_transfers.html`: Name the top 10 all-time record transfer signings for a specific club and nationality before running out of lives.
+- `Transfer Destination -> https://playmaker.best/games/transfer_destination.html`: Deduce a footballer's career trajectory and identity in reverse chronologically through their club transfers.
+- `Top Scorers -> https://playmaker.best/games/top_scorers.html`: Guess the most prolific goalscorers across memorable league seasons and tournaments.
+
+## Key Facts & Verification
+- Database scope covers official senior club appearances and transfers since 1990 alongside verified historic footballing legends.
+- Data updated to September 2026.
+- Interactive VAR (Video Assistant Referee) mechanism allows real-time appeals for disputed football transfers and appearances.
+- No account, download, or payment required. All games reset daily at 00:00 UTC.

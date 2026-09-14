@@ -100,5 +100,21 @@
     "storageKey": "footy_v2_anyone_but",
     "note": "Data updated to September 2026.",
     "status": "coming_soon"
+  },
+  {
+    "id": "passport_fc",
+    "name": "Passport FC",
+    "description": "Complete today's club passport by unlocking 4 progressive nationality stamps — from massive pools to rare 1-player unicorns.",
+    "link": "games/passport_fc.html",
+    "icon": "public",
+    "accentHex": "#10b981",
+    "initialLives": 5,
+    "maxBackDays": 7,
+    "launchDate": "2026-09-14",
+    "templateFile": "passport_fc_template.html",
+    "dataVariable": "DAILY_PASSPORT_GAME",
+    "storageKey": "footy_v2_passport_fc",
+    "note": "Includes official transfers and appearances since 1990 + verified historical legends throughout club history (updated to September 2026).",
+    "status": "coming_soon"
   }
 ]

@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Passport FC — Daily Football Nationality Passport Puzzle | Playmaker</title>
+    <meta name="description" content="Complete today's club passport by naming footballers across 4 progressive nationality stamps — from deep talent pools down to rare 1-player unicorns. Free daily football quiz!"/>
+    <meta name="keywords" content="passport fc, football trivia, club passport, nationality quiz, football wordle, soccer trivia, daily football puzzle, transfer quiz, playmaker"/>
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+    <meta name="theme-color" content="#0e0e0e"/>
+    <link rel="canonical" href="https://playmaker.best/games/passport_fc.html"/>
+
+    <!-- PWA Web Manifest & Favicons -->
+    <link rel="manifest" href="../manifest.json"/>
+    <link rel="shortcut icon" href="../favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon.png"/>
+    <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon.png"/>
+    <link rel="icon" type="image/png" sizes="512x512" href="../assets/favicon.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png"/>
+
+    <!-- Social Share Preview (OpenGraph / Twitter) -->
+    <meta property="og:title" content="Passport FC — Daily Football Nationality Passport Puzzle | Playmaker"/>
+    <meta property="og:description" content="Complete today's club passport by naming footballers across 4 progressive nationality stamps — from deep talent pools down to rare 1-player unicorns. Play now!"/>
+    <meta property="og:image" content="https://playmaker.best/assets/social_share.png"/>
+    <meta property="og:url" content="https://playmaker.best/games/passport_fc.html"/>
+    <meta property="og:type" content="website"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@best.playmaker"/>
+    <meta name="twitter:title" content="Passport FC — Daily Football Nationality Passport Puzzle | Playmaker"/>
+    <meta name="twitter:description" content="Complete today's club passport by naming footballers across 4 progressive nationality stamps. Play now!"/>
+    <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
+
+    <!-- Google Analytics Measurement ID Placeholder -->
+    <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
+
+    <!-- Tailwind & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Archivo+Narrow:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <!-- Shared Playmaker styles -->
+    <link rel="stylesheet" href="../games/footy-ui.css?v=2"/>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background:                  "#0e0e0e",
+                        surface:                     "#131313",
+                        "surface-container-low":     "#1c1b1b",
+                        "surface-container":         "#201f1f",
+                        "surface-container-high":    "#2a2a2a",
+                        "surface-container-highest": "#353534",
+                        "on-background":             "#e5e2e1",
+                        "on-surface-variant":        "#a3a3a3",
+                        error:                       "#ff4d4d",
+                        correct:                     "#22c55e",
+                        accent:                      "#10b981",
+                        "primary-container":         "#10b981",
+                    },
+                    fontFamily: {
+                        headline: ["Anton", "sans-serif"],
+                        title:    ["Space Grotesk", "sans-serif"],
+                        body:     ["Archivo Narrow", "sans-serif"],
+                        mono:     ["Space Grotesk", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --fa-accent-rgb: 16, 185, 129;
+            --fa-accent-glow: rgba(16, 185, 129, 0.25);
+        }
+
+        .neon-text-glow {
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .active-node-glow {
+            box-shadow: 0 0 24px rgba(16, 185, 129, 0.2), inset 0 0 12px rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.6) !important;
+        }
+
+        .unicorn-glow {
+            box-shadow: 0 0 24px rgba(168, 85, 247, 0.25), inset 0 0 12px rgba(168, 85, 247, 0.1);
+            border-color: rgba(168, 85, 247, 0.6) !important;
+        }
+
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.04); opacity: 1; }
+        }
+        .pulse-anim {
+            animation: subtle-pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+
+        /* Ladder vertical connector line */
+        .ladder-line::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 24px;
+            bottom: 24px;
+            width: 2px;
+            background: rgba(255,255,255,0.06);
+            z-index: 0;
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "VideoGame",
+          "name": "Passport FC — Daily Football Nationality Passport Puzzle",
+          "description": "Complete today's club passport by naming footballers who represented the featured anchor club across four progressive nationality tiers from large pools down to rare 1-player unicorns.",
+          "url": "https://playmaker.best/games/passport_fc.html",
+          "image": "https://playmaker.best/assets/logo.png",
+          "genre": ["Trivia", "Sports"],
+          "gamePlatform": "Web",
+          "applicationCategory": "Game",
+          "isAccessibleForFree": true,
+          "author": {
+            "@type": "Organization",
+            "name": "Playmaker",
+            "url": "https://playmaker.best/",
+            "logo": "https://playmaker.best/assets/logo.png"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://playmaker.best/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Passport FC",
+              "item": "https://playmaker.best/games/passport_fc.html"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is Passport FC?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Passport FC is a daily football trivia puzzle where players complete a club passport by naming footballers who represented the featured anchor club across four progressive nationality tiers from common nations down to rare 1-player unicorns."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I name any player or is there only one correct answer?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Any footballer who made official senior appearances or signed for the anchor club and represented that nationality is accepted to collect the passport stamp."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is The Unicorn in Passport FC?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The Unicorn is the fourth and most challenging passport stamp, featuring an unexpected footballing nation with only one or two qualifying players in the club's entire history."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What years does the database cover?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Our database includes official club appearances and senior transfers since 1990 alongside verified historical legends throughout club history, updated to September 2026."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body turf-pattern min-h-screen pb-24">
+
+    <!-- Header (Matching standard Playmaker pattern) -->
+    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-16 flex items-center justify-between px-4 sm:px-6 shadow-xl">
+        <a href="../index.html" class="text-on-surface-variant hover:text-accent transition-colors flex items-center gap-3" aria-label="Back to game lobby">
+            <span class="material-symbols-outlined text-xl sm:text-2xl">arrow_back</span>
+            <img src="../assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-7 md:h-8 w-auto object-contain" />
+        </a>
+        <div class="flex items-center gap-2 text-on-surface-variant">
+            <button id="how-to-play-btn" class="text-on-surface-variant hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="How to play instructions" title="How to play">
+                <span class="material-symbols-outlined text-xl">help_outline</span>
+            </button>
+            <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on Instagram" title="Instagram">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@playmaker.best" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on TikTok" title="TikTok">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.87-4.49V8.69a8.18 8.18 0 0 0 4.9 1.6V6.84a4.85 4.85 0 0 1-1-.15z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@best.playmaker" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker on YouTube" title="YouTube">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 px-4 max-w-2xl mx-auto space-y-6">
+
+        <!-- Game Intro Header -->
+        <section class="text-center space-y-3">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                <h1 class="font-headline text-2xl sm:text-3xl tracking-wider text-accent uppercase italic neon-text-glow">
+                    PASSPORT FC
+                </h1>
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                    <a id="nav-back-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1 px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10" title="Play previous puzzle (back in time)">
+                        <span class="material-symbols-outlined text-base">chevron_left</span>
+                        <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden sm:inline">Prev</span>
+                    </a>
+                    <span id="puzzle-badge" class="font-mono text-xs font-bold uppercase tracking-wider bg-white/5 border border-white/10 px-3 py-1 rounded-lg cursor-help text-on-background" title="Daily puzzle number. Use arrows to play past puzzles!">PUZZLE #1</span>
+                    <a id="nav-front-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1 px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10" title="Play newer/today's puzzle">
+                        <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden sm:inline">Next</span>
+                        <span class="material-symbols-outlined text-base">chevron_right</span>
+                    </a>
+                </div>
+            </div>
+            <h2 class="font-title text-base sm:text-lg font-bold uppercase tracking-widest text-on-surface-variant">
+                Stamp The Club Passport
+            </h2>
+            <p class="text-on-surface-variant text-sm max-w-lg mx-auto">
+                Name qualifying footballers across 4 progressive nationality tiers to fill today's club passport — from major talent pools down to rare 1-player unicorns.
+            </p>
+        </section>
+
+        <!-- Game Note Bar (injected by compiler via GAME_NOTE) -->
+        <div id="game-note-bar" class="hidden max-w-xl mx-auto">
+            <div class="flex items-center gap-2 px-4 py-2.5 bg-white/[0.03] border border-white/8 rounded-xl text-[11px] font-mono text-on-surface-variant/70">
+                <span class="material-symbols-outlined shrink-0" style="font-size:14px">info</span>
+                <span id="game-note-text"></span>
+            </div>
+        </div>
+
+        <!-- Lives & Step Counter Bar -->
+        <section class="max-w-md mx-auto w-full">
+            <div id="fa-lives-bar" class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1.5 text-error" data-fa-heart>
+                        <span class="material-symbols-outlined fill-current text-lg" id="fa-heart-icon">favorite</span>
+                        <span class="font-mono text-xs sm:text-sm font-bold uppercase tracking-wider">Lives:&nbsp;<span id="lives-counter">5</span></span>
+                    </div>
+                    <button id="add-life-btn" class="hidden flex items-center gap-1 px-2.5 py-1 bg-error/15 border border-error/30 text-error hover:bg-error/25 hover:border-error/50 rounded-lg text-xs font-bold uppercase tracking-wider transition-all">
+                        <span class="material-symbols-outlined text-xs">add_circle</span> +1 Life
+                    </button>
+                    <button id="give-up-btn" class="flex items-center gap-1 px-2.5 py-1 bg-white/5 border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer">
+                        <span class="material-symbols-outlined text-xs">flag</span> Give Up
+                    </button>
+                </div>
+                <div class="text-accent font-mono text-xs sm:text-sm font-bold uppercase tracking-wider">
+                    Stamp: <span id="progress-step">1</span>/<span id="total-steps">4</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Anchor Club Hero Banner -->
+        <section id="anchor-club-card" class="text-center space-y-2 bg-surface/80 border border-accent/30 rounded-2xl p-6 relative overflow-hidden shadow-2xl">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="relative z-10 flex flex-col items-center gap-1.5">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/15 border border-accent/40 text-accent font-mono text-xs uppercase font-bold tracking-widest shadow-lg">
+                    <span class="material-symbols-outlined text-sm">flight_takeoff</span>
+                    <span>TODAY'S CLUB PASSPORT</span>
+                </div>
+                <h3 id="anchor-club-name" class="font-headline text-3xl sm:text-5xl text-on-background uppercase italic tracking-wide py-1 neon-text-glow">
+                    BARCELONA
+                </h3>
+                <p class="text-xs sm:text-sm text-on-surface-variant font-mono">
+                    Collect all 4 nationality stamps for <strong id="anchor-club-subtext" class="text-white">Barcelona</strong>!
+                </p>
+            </div>
+        </section>
+
+        <!-- Active Guess Input Panel -->
+        <section id="fa-guess-panel" class="bg-surface-container border border-white/10 rounded-2xl p-4 sm:p-5 shadow-2xl relative z-30 space-y-3">
+            <div class="flex items-center justify-between">
+                <label id="active-step-label" class="block text-[11px] font-mono uppercase tracking-widest text-on-surface-variant">
+                    STEP 1 — NAME A FRENCH PLAYER FOR BARCELONA:
+                </label>
+                <!-- Triggerable Hint Button -->
+                <button id="hint-btn" type="button" class="px-2.5 py-1 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-accent/40 text-on-surface-variant hover:text-accent font-mono text-[11px] transition-all flex items-center gap-1 cursor-pointer">
+                    <span class="material-symbols-outlined text-xs text-amber-400">lightbulb</span>
+                    <span id="hint-btn-text">Hint</span>
+                </button>
+            </div>
+
+            <!-- Revealed Hint Box (Hidden until clicked) -->
+            <div id="hint-display-box" class="hidden p-3 rounded-xl bg-amber-400/10 border border-amber-400/30 text-amber-300 font-mono text-xs flex items-center gap-2 animate-fadeIn">
+                <span class="material-symbols-outlined text-amber-400 text-sm">tips_and_updates</span>
+                <span id="hint-display-text">Position: Forward</span>
+            </div>
+
+            <div class="flex gap-2">
+                <div class="flex-grow relative">
+                    <input
+                        id="guess-input"
+                        class="w-full bg-background border border-white/10 rounded-xl h-12 px-4 text-base font-bold text-on-background focus:outline-none focus:border-accent focus:ring-0 transition-all placeholder:text-white/20"
+                        placeholder="Type any qualifying footballer..."
+                        type="text"
+                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text"
+                    />
+                    <div id="autocomplete-list" class="absolute left-0 right-0 mt-2 bg-surface border border-white/10 rounded-xl shadow-2xl overflow-y-auto max-h-60 z-50 hidden"></div>
+                </div>
+                <button id="submit-btn" class="h-12 px-5 sm:px-6 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all shrink-0 cursor-pointer">
+                    GUESS
+                </button>
+                <button id="skip-step-btn" class="h-12 px-3 sm:px-4 bg-white/5 border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-white rounded-xl transition-all flex items-center gap-1 shrink-0 font-mono text-xs uppercase tracking-wider cursor-pointer" title="Skip this nationality stamp">
+                    <span class="material-symbols-outlined text-base">fast_forward</span>
+                    <span class="hidden sm:inline">Skip</span>
+                </button>
+            </div>
+            <div id="error-message" class="text-error font-bold text-xs text-center hidden">
+                Please pick a footballer from the dropdown.
+            </div>
+        </section>
+
+        <!-- The Nationality Ladder Container -->
+        <section class="space-y-2.5">
+            <div class="flex items-center justify-between px-1">
+                <h3 class="font-title text-xs sm:text-sm font-bold uppercase tracking-widest text-on-surface-variant flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-accent text-base">stairs</span>
+                    <span>The Nationality Ladder</span>
+                </h3>
+                <span class="text-[11px] font-mono text-on-surface-variant/60">Large Pool &rarr; Rare Unicorn</span>
+            </div>
+
+            <!-- 4 Ladder Step Cards -->
+            <div id="ladder-steps-container" class="space-y-3 relative ladder-line">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </section>
+
+        <!-- Incorrect Guesses Feed -->
+        <section id="wrong-guesses-section" class="space-y-2 hidden">
+            <h4 class="text-xs uppercase font-mono tracking-widest text-on-surface-variant text-center">
+                INCORRECT GUESSES
+            </h4>
+            <div id="wrong-guesses-container" class="flex flex-wrap gap-2 justify-center"></div>
+        </section>
+
+        <!-- Post-Game Answers Breakdown -->
+        <section id="endgame-summary-section" class="space-y-5 pt-6 border-t border-white/10 scroll-mt-24 hidden">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                        <span class="text-[10px] font-mono tracking-widest text-accent uppercase font-bold">GAME COMPLETED</span>
+                    </div>
+                    <h3 class="font-headline text-2xl sm:text-3xl text-on-background uppercase italic tracking-wide mt-0.5">
+                        Complete Ladder &amp; Answers
+                    </h3>
+                    <p class="text-xs text-on-surface-variant font-body">
+                        Explore all eligible footballers who played for the anchor club for each nation.
+                    </p>
+                </div>
+                <button id="reopen-modal-btn" class="self-start sm:self-auto px-4 py-2 rounded-xl bg-accent text-black font-headline text-sm uppercase italic hover:brightness-110 active:scale-95 transition-all flex items-center gap-1.5 shadow-lg shadow-accent/10 cursor-pointer">
+                    <span class="material-symbols-outlined text-base">emoji_events</span>
+                    <span>View Results</span>
+                </button>
+            </div>
+
+            <!-- Step by Step Breakdown -->
+            <div id="summary-breakdown-container" class="space-y-3">
+                <!-- Populated via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- How To Play Modal -->
+    <div id="how-to-play-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-surface border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
+            <button id="close-how-to-play-btn" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-background transition-colors cursor-pointer" aria-label="Close how to play modal">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+            <h3 class="font-headline text-2xl text-accent uppercase italic tracking-wide">HOW TO PLAY</h3>
+            <div class="space-y-3 text-sm text-on-surface-variant leading-relaxed font-body">
+                <p><strong class="text-on-background font-title">Goal:</strong> Fill today's club passport by collecting all 4 nationality stamps for the featured <strong class="text-on-background font-title">Anchor Club</strong>.</p>
+                <p><strong class="text-on-background font-title">1. Progressive Stamps:</strong> Name any qualifying footballer who played for today's anchor club and represented the designated nationality. Each destination unlocks once you solve the previous one!</p>
+                <p><strong class="text-on-background font-title">2. Escalating Difficulty:</strong> The passport starts with major footballing nations (large talent pool) and ascends to <em>The Unicorn</em> — a rare nation with only 1 or 2 eligible legends in club history.</p>
+                <p><strong class="text-on-background font-title">3. Any Valid Player Works:</strong> If Barcelona &amp; France is active, you can name any French player who wore the Blaugrana shirt (e.g. Henry, Griezmann, Dembélé, Thuram, Umtiti, or Koundé).</p>
+                <p><strong class="text-on-background font-title">4. Lives &amp; VAR:</strong> Incorrect guesses deduct 1 life. If you believe your player qualifies, appeal the decision via official VAR review.</p>
+                <p><strong class="text-on-background font-title">5. Hints &amp; Skip:</strong> Reveal position clues if you need guidance, or skip ahead to the next destination without losing a life.</p>
+                <p><strong class="text-on-background font-title">6. Database Scope:</strong> Includes official senior club appearances and transfers since 1990 alongside verified historic legends throughout club history (updated to September 2026).</p>
+            </div>
+            <button id="close-how-to-play-btn2" class="w-full py-3 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all cursor-pointer">
+                GOT IT
+            </button>
+        </div>
+    </div>
+
+    <!-- End Game Result Modal -->
+    <div id="result-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-start sm:justify-center p-3 sm:p-6 py-6 z-50 overflow-y-auto hidden">
+        <div class="fa-modal-card bg-surface border border-accent/20 w-full max-w-md rounded-3xl p-5 sm:p-7 text-center space-y-4 sm:space-y-5 shadow-2xl relative max-h-[85vh] sm:max-h-[90vh] overflow-y-auto my-auto">
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
+
+            <button id="modal-close-btn" class="sticky top-0 float-right -mr-1 -mt-1 text-on-surface-variant hover:text-white transition-colors bg-black/40 hover:bg-black/80 rounded-full p-1.5 z-30 backdrop-blur-sm cursor-pointer" aria-label="Close modal">
+                <span class="material-symbols-outlined text-xl block">close</span>
+            </button>
+
+            <span id="modal-icon" class="material-symbols-outlined text-5xl sm:text-6xl text-accent">emoji_events</span>
+
+            <div class="space-y-1 sm:space-y-2">
+                <h3 id="modal-title" class="font-headline text-3xl sm:text-4xl text-accent uppercase italic tracking-wide">COMPLETED</h3>
+                <p id="modal-message" class="text-on-surface-variant text-xs sm:text-sm"></p>
+            </div>
+
+            <!-- Anchor Club Card in Modal -->
+            <div class="bg-background/50 border border-white/5 rounded-2xl p-3 sm:p-4 text-center">
+                <span class="text-[10px] font-mono uppercase tracking-widest text-on-surface-variant block">ANCHOR CLUB</span>
+                <span id="modal-club-name" class="font-headline text-xl sm:text-2xl text-accent uppercase italic tracking-wider block mt-1 neon-text-glow">BARCELONA</span>
+            </div>
+
+            <!-- Giphy GIF Element -->
+            <div id="modal-gif-container" class="w-full max-h-48 sm:max-h-56 rounded-2xl overflow-hidden bg-black/60 border border-white/10 flex items-center justify-center relative my-2 sm:my-3 hidden">
+                <img id="modal-gif" class="max-w-full max-h-48 sm:max-h-56 w-auto h-auto object-contain rounded-xl" src="" alt="Player celebration GIF" />
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="bg-black/30 border border-white/5 rounded-2xl p-3 sm:p-4 flex justify-around">
+                <div>
+                    <span class="block text-[10px] sm:text-xs font-mono uppercase tracking-widest text-on-surface-variant">Steps</span>
+                    <span id="modal-score" class="font-headline text-2xl sm:text-3xl text-accent">0/4</span>
+                </div>
+                <div>
+                    <span class="block text-[10px] sm:text-xs font-mono uppercase tracking-widest text-on-surface-variant">Streak</span>
+                    <span id="modal-streak" class="font-headline text-2xl sm:text-3xl text-primary-container">0</span>
+                </div>
+                <div>
+                    <span class="block text-[10px] sm:text-xs font-mono uppercase tracking-widest text-on-surface-variant">Best</span>
+                    <span id="modal-best" class="font-headline text-2xl sm:text-3xl text-on-surface-variant">0</span>
+                </div>
+            </div>
+
+            <!-- Back in Time -->
+            <div id="bit-wrapper" class="hidden space-y-2">
+                <p class="text-xs uppercase font-mono tracking-widest text-on-surface-variant">Play Past Puzzles</p>
+                <div id="back-in-time-container" class="flex flex-wrap gap-2 justify-center"></div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-3 pt-1">
+                <button id="modal-share-btn" class="flex-1 py-3 bg-accent text-black font-headline text-base sm:text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                    <span class="material-symbols-outlined text-md">share</span> SHARE
+                </button>
+                <button id="modal-close-btn2" class="flex-1 py-3 bg-surface-container-high border border-white/10 text-white font-headline text-base sm:text-lg uppercase italic rounded-xl hover:bg-surface-container-highest transition-all cursor-pointer">
+                    CLOSE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Static Crawlable SEO/GEO Section & Cross-Game Directory -->
+    <section class="max-w-2xl mx-auto px-4 mt-16 space-y-8" aria-label="Game Guide and More Challenges">
+        <!-- Static Game Guide (134-167 words self-contained answer block for AI search engines & crawlers) -->
+        <article class="bg-surface/60 border border-white/10 rounded-2xl p-5 sm:p-6 space-y-4">
+            <h2 class="font-headline text-xl uppercase italic text-accent tracking-wide">
+                What is Passport FC?
+            </h2>
+            <p class="font-body text-on-surface-variant text-sm leading-relaxed">
+                Passport FC is a daily football trivia puzzle by Playmaker where fans collect nationality stamps for a featured anchor club. Each day highlights one world-famous club alongside four progressive nationality tiers. Players must name any qualifying footballer who made senior appearances or signed for that club while representing the designated nation. The puzzle begins with major footballing countries that have extensive talent pools before ascending to "The Unicorn" — an unexpected country with only one or two eligible players across the club's entire transfer history.
+            </p>
+            <div class="border-t border-white/5 pt-3 space-y-2 text-xs font-mono text-on-surface-variant/70">
+                <p><strong>Database Coverage:</strong> Official senior appearances and transfers since 1990 plus verified historic legends throughout club history (updated to September 2026).</p>
+                <p><strong>VAR Verification:</strong> Players can submit any disputed answer to the automated VAR engine to appeal real-world transfer and appearance records.</p>
+            </div>
+        </article>
+
+        <!-- More Daily Challenges (Directory linking all Playmaker games) -->
+        <div class="space-y-3">
+            <h3 class="font-title text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+                MORE DAILY CHALLENGES
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <a href="top_transfers.html" class="bg-surface/50 border border-white/10 hover:border-cyan-400/50 rounded-xl p-4 flex items-center gap-3 group transition-all">
+                    <span class="material-symbols-outlined text-2xl" style="color:#00f0ff">payments</span>
+                    <div>
+                        <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#00f0ff">Top Transfers</span>
+                        <p class="text-on-surface-variant text-xs">Guess the record signings</p>
+                    </div>
+                </a>
+                <a href="transfer_destination.html" class="bg-surface/50 border border-white/10 hover:border-lime-400/50 rounded-xl p-4 flex items-center gap-3 group transition-all">
+                    <span class="material-symbols-outlined text-2xl" style="color:#39ff14">alt_route</span>
+                    <div>
+                        <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#39ff14">Transfer Destination</span>
+                        <p class="text-on-surface-variant text-xs">Guess a player's career path</p>
+                    </div>
+                </a>
+                <a href="top_scorers.html" class="bg-surface/50 border border-white/10 hover:border-amber-400/50 rounded-xl p-4 flex items-center gap-3 group transition-all">
+                    <span class="material-symbols-outlined text-2xl" style="color:#f59e0b">sports_soccer</span>
+                    <div>
+                        <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#f59e0b">Top Scorers</span>
+                        <p class="text-on-surface-variant text-xs">Name the top goalscorers</p>
+                    </div>
+                </a>
+                <a href="club_connect.html" class="bg-surface/50 border border-white/10 hover:border-purple-400/50 rounded-xl p-4 flex items-center gap-3 group transition-all">
+                    <span class="material-symbols-outlined text-2xl" style="color:#e879f9">hub</span>
+                    <div>
+                        <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#e879f9">Club Connect</span>
+                        <p class="text-on-surface-variant text-xs">5 players, 1 club signed them all</p>
+                    </div>
+                </a>
+                <a href="player_chain.html" class="bg-surface/50 border border-white/10 hover:border-sky-400/50 rounded-xl p-4 flex items-center gap-3 group sm:col-span-2 transition-all">
+                    <span class="material-symbols-outlined text-2xl" style="color:#38bdf8">link</span>
+                    <div>
+                        <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#38bdf8">Player Chain</span>
+                        <p class="text-on-surface-variant text-xs">Connect consecutive clubs through shared teammates</p>
+                    </div>
+                </a>
+            </div>
+            <div class="text-center pt-2">
+                <a href="../index.html" class="font-mono text-xs uppercase tracking-wider text-on-surface-variant hover:text-accent transition-colors inline-flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span>
+                    <span>Back to Playmaker Lobby</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-20 text-center text-xs text-on-surface-variant/40 pb-12 font-mono space-y-4">
+        <div class="flex items-center justify-center gap-6 text-on-surface-variant">
+            <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker on Instagram">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@playmaker.best" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker on TikTok">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.87-4.49V8.69a8.18 8.18 0 0 0 4.9 1.6V6.84a4.85 4.85 0 0 1-1-.15z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@best.playmaker" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker on YouTube">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+        </div>
+        <div>PLAYMAKER &copy; 2026. ALL RIGHTS RESERVED.</div>
+        <div class="space-x-4">
+            <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Privacy Policy</a>
+            <span>·</span>
+            <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Terms & Conditions</a>
+            <span>·</span>
+            <a href="../index.html" class="hover:underline hover:text-accent transition-colors">All Games</a>
+        </div>
+    </footer>
+
+    <!-- Shared component library -->
+    <script src="../games/footy-ui.js?v=3"></script>
+
+    <!-- Micro-interaction Script -->
+    <script id="daily-game-data">
+        // Default standalone fallback data (Day 1: Barcelona)
+        const DAILY_PASSPORT_GAME = {
+            club: "Barcelona",
+            total_steps: 4,
+            steps: [
+                {
+                    step_number: 1,
+                    difficulty: "Easy",
+                    nationality: "France",
+                    pool_size: 12,
+                    sample_players: ["Antoine Griezmann", "Ousmane Dembélé", "Jules Koundé"],
+                    valid_players: ["Antoine Griezmann", "Ousmane Dembélé", "Jules Koundé", "Thierry Henry", "Lilian Thuram", "Samuel Umtiti", "Clément Lenglet", "Éric Abidal", "Ludovic Giuly", "Jérémy Mathieu", "Lucas Digne", "Laurent Blanc"]
+                },
+                {
+                    step_number: 2,
+                    difficulty: "Medium",
+                    nationality: "Argentina",
+                    pool_size: 6,
+                    sample_players: ["Lionel Messi", "Javier Saviola", "Sergio Agüero"],
+                    valid_players: ["Lionel Messi", "Javier Saviola", "Sergio Agüero", "Javier Mascherano", "Juan Román Riquelme", "Diego Maradona"]
+                },
+                {
+                    step_number: 3,
+                    difficulty: "Hard",
+                    nationality: "Ivory Coast",
+                    pool_size: 3,
+                    sample_players: ["Franck Kessié", "Yaya Touré", "Adama Traoré"],
+                    valid_players: ["Franck Kessié", "Yaya Touré", "Adama Traoré"]
+                },
+                {
+                    step_number: 4,
+                    difficulty: "The Unicorn",
+                    nationality: "Iceland",
+                    pool_size: 1,
+                    sample_players: ["Eiður Guðjohnsen"],
+                    valid_players: ["Eiður Guðjohnsen"]
+                }
+            ]
+        };
+        const ALL_PLAYERS = [
+            { Name: "Antoine Griezmann", Nationality: "France", Position: "Attack" },
+            { Name: "Ousmane Dembélé", Nationality: "France", Position: "Attack" },
+            { Name: "Jules Koundé", Nationality: "France", Position: "Defender" },
+            { Name: "Thierry Henry", Nationality: "France", Position: "Attack" },
+            { Name: "Lilian Thuram", Nationality: "France", Position: "Defender" },
+            { Name: "Lionel Messi", Nationality: "Argentina", Position: "Attack" },
+            { Name: "Javier Mascherano", Nationality: "Argentina", Position: "Midfield" },
+            { Name: "Franck Kessié", Nationality: "Ivory Coast", Position: "Midfield" },
+            { Name: "Yaya Touré", Nationality: "Ivory Coast", Position: "Midfield" },
+            { Name: "Eiður Guðjohnsen", Nationality: "Iceland", Position: "Attack" },
+            { Name: "Eidur Gudjohnsen", Nationality: "Iceland", Position: "Attack" }
+        ];
+        const PUZZLE_NUMBER = 1;
+        const IS_BACK_IN_TIME = false;
+        const MAX_BACK_DAYS = 7;
+        const GAME_NOTE = "Transfer and appearance data updated to September 2026.";
+    </script>
+
+    <script>
+        // ── Country Flag Mapping ──────────────────────────────────
+        const COUNTRY_FLAGS = {
+            'France': '🇫🇷', 'Argentina': '🇦🇷', 'Ivory Coast': '🇨🇮', "Cote d'Ivoire": '🇨🇮',
+            'Iceland': '🇮🇸', 'Spain': '🇪🇸', 'Brazil': '🇧🇷', 'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+            'Germany': '🇩🇪', 'Italy': '🇮🇹', 'Netherlands': '🇳🇱', 'Portugal': '🇵🇹',
+            'Uruguay': '🇺🇾', 'Belgium': '🇧🇪', 'Croatia': '🇭🇷', 'Colombia': '🇨🇴',
+            'Chile': '🇨🇱', 'Denmark': '🇩🇰', 'Sweden': '🇸🇪', 'Norway': '🇳🇴',
+            'Poland': '🇵🇱', 'United States': '🇺🇸', 'Mexico': '🇲🇽', 'Nigeria': '🇳🇬',
+            'Cameroon': '🇨🇲', 'Senegal': '🇸🇳', 'Ghana': '🇬🇭', 'Egypt': '🇪🇬',
+            'Morocco': '🇲🇦', 'Algeria': '🇩🇿', 'Turkey': '🇹🇷', 'Türkiye': '🇹🇷',
+            'Ukraine': '🇺🇦', 'Serbia': '🇷🇸', 'Switzerland': '🇨🇭', 'Austria': '🇦🇹',
+            'Czech Republic': '🇨🇿', 'Scotland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿', 'Wales': '🏴󠁧󠁢󠁷󠁬󠁳󠁿',
+            'Republic of Ireland': '🇮🇪', 'Northern Ireland': '🇬🇧', 'Japan': '🇯🇵',
+            'South Korea': '🇰🇷', 'Australia': '🇦🇺', 'Canada': '🇨🇦', 'Costa Rica': '🇨🇷',
+            'Gabon': '🇬🇦', 'Bulgaria': '🇧🇬', 'Finland': '🇫🇮', 'Romania': '🇷🇴',
+            'Greece': '🇬🇷', 'Hungary': '🇭🇺', 'Slovakia': '🇸🇰', 'Slovenia': '🇸🇮',
+            'Bosnia & Herzegovina': '🇧🇦', 'North Macedonia': '🇲🇰', 'Montenegro': '🇲🇪',
+            'Albania': '🇦🇱', 'Kosovo': '🇽🇰', 'Georgia': '🇬🇪', 'Armenia': '🇦🇲',
+            'Israel': '🇮🇱', 'Mali': '🇲🇱', 'Guinea': '🇬🇳', 'Burkina Faso': '🇧🇫',
+            'DR Congo': '🇨🇩', 'South Africa': '🇿🇦', 'Togo': '🇹🇬', 'Ecuador': '🇪🇨',
+            'Paraguay': '🇵🇾', 'Peru': '🇵🇪', 'Venezuela': '🇻🇪', 'Curacao': '🇨🇼',
+            'Cape Verde': '🇨🇻', 'Luxembourg': '🇱🇺'
+        };
+
+        function getFlag(nat) {
+            return COUNTRY_FLAGS[nat] || '🌐';
+        }
+
+        // Deduplicate spelling variants (accents vs non-accents) to canonical names
+        function dedupeCanonicalNames(names) {
+            if (!Array.isArray(names)) return [];
+            const seen = new Map();
+            for (const name of names) {
+                if (!name || typeof name !== 'string') continue;
+                const norm = FootyUI.normalizeStr(name);
+                if (!seen.has(norm)) {
+                    seen.set(norm, name);
+                } else {
+                    const existing = seen.get(norm);
+                    if (name !== norm && existing === norm) {
+                        seen.set(norm, name);
+                    }
+                }
+            }
+            return Array.from(seen.values());
+        }
+
+        // ── Global Game Variables ─────────────────────────────
+        const GAME_ID        = 'passport_fc';
+        const INITIAL_LIVES  = 5;
+        const activeGameData = typeof DAILY_PASSPORT_GAME !== 'undefined' ? DAILY_PASSPORT_GAME : null;
+        const allPlayersList = typeof ALL_PLAYERS !== 'undefined' ? [...ALL_PLAYERS] : [];
+
+        // Ensure all valid players are in the autocomplete index
+        if (activeGameData && Array.isArray(activeGameData.steps)) {
+            const existingNorms = new Set(allPlayersList.map(p => FootyUI.normalizeStr(p.Name)));
+            activeGameData.steps.forEach(st => {
+                if (Array.isArray(st.valid_players)) {
+                    st.valid_players.forEach(vp => {
+                        const nVp = FootyUI.normalizeStr(vp);
+                        if (vp && !existingNorms.has(nVp)) {
+                            existingNorms.add(nVp);
+                            allPlayersList.push({ Name: vp, Nationality: st.nationality || '', Position: 'Player' });
+                        }
+                    });
+                }
+            });
+        }
+
+        const puzzleNum      = typeof PUZZLE_NUMBER !== 'undefined' ? PUZZLE_NUMBER : 1;
+        const isBackInTime   = typeof IS_BACK_IN_TIME !== 'undefined' ? IS_BACK_IN_TIME : false;
+        const maxBackDays    = typeof MAX_BACK_DAYS !== 'undefined' ? MAX_BACK_DAYS : 7;
+        const gameNote       = typeof GAME_NOTE !== 'undefined' ? GAME_NOTE : '';
+
+        // Session State
+        let activeStepIndex  = 0;
+        let guessedPlayers   = []; // player names already used
+        let stepRecords      = []; // { step: 0, won: bool, guessed: name, skipped: bool }
+        let gameOver         = false;
+        let revealedHints    = new Set(); // tracks step indexes where hint was revealed
+
+        // FootyUI Controller Instances
+        let dropdown, livesCtrl, wrongGuesses, modal, storage;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            FootyUI.initAccentColor('#10b981');
+
+            storage = new FootyUI.FootyStorage(GAME_ID);
+            wrongGuesses = new FootyUI.FootyWrongGuesses('wrong-guesses-section', 'wrong-guesses-container');
+            livesCtrl = new FootyUI.FootyLives({
+                counterId: 'lives-counter',
+                heartId: 'fa-heart-icon',
+                initial: INITIAL_LIVES,
+                onDead: () => {
+                    endGame(false);
+                }
+            });
+
+            // Autocomplete setup
+            dropdown = new FootyUI.FootyDropdown({
+                inputId:  'guess-input',
+                listId:   'autocomplete-list',
+                data:     allPlayersList,
+                labelFn:  p => p.Name,
+                badgeFn:  p => `${p.Nationality || ''}${p.Position ? ' · ' + p.Position : ''}`
+            });
+
+            // End-game modal setup
+            modal = new FootyUI.FootyModal({
+                modalId:               'result-modal',
+                iconId:                'modal-icon',
+                titleId:               'modal-title',
+                messageId:             'modal-message',
+                scoreId:               'modal-score',
+                streakId:              'modal-streak',
+                extraInfoId:           'modal-club-name',
+                gifContainerId:        'modal-gif-container',
+                gifId:                 'modal-gif',
+                backInTimeContainerId: 'back-in-time-container'
+            });
+
+            setupEvents();
+            initUI();
+            checkAlreadyPlayed();
+        });
+
+        function setupEvents() {
+            document.getElementById('submit-btn').addEventListener('click', submitGuess);
+            document.getElementById('skip-step-btn').addEventListener('click', skipCurrentStep);
+
+            // Input Enter key: submit if dropdown is closed
+            document.getElementById('guess-input').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const list = document.getElementById('autocomplete-list');
+                    if (list && list.classList.contains('hidden')) {
+                        e.preventDefault();
+                        submitGuess();
+                    }
+                }
+            });
+
+            // Hint Button
+            document.getElementById('hint-btn').addEventListener('click', revealActiveHint);
+
+            // Give Up button
+            document.getElementById('give-up-btn').addEventListener('click', () => {
+                if (gameOver) return;
+                FootyUI.confirm({
+                    title: 'GIVE UP?',
+                    message: 'Are you sure you want to give up? The full ladder answers will be revealed.',
+                    confirmText: 'GIVE UP',
+                    cancelText: 'KEEP PLAYING',
+                    onConfirm: () => endGame(false)
+                });
+            });
+
+            // How To Play Modal
+            const htpModal = document.getElementById('how-to-play-modal');
+            document.getElementById('how-to-play-btn').addEventListener('click', () => htpModal.classList.remove('hidden'));
+            document.getElementById('close-how-to-play-btn').addEventListener('click', () => htpModal.classList.add('hidden'));
+            document.getElementById('close-how-to-play-btn2').addEventListener('click', () => htpModal.classList.add('hidden'));
+
+            // Result Modal Close & Share
+            document.getElementById('modal-close-btn').addEventListener('click', () => modal.hide());
+            document.getElementById('modal-close-btn2').addEventListener('click', () => {
+                modal.hide();
+                const sum = document.getElementById('endgame-summary-section');
+                if (sum) sum.scrollIntoView({ behavior: 'smooth' });
+            });
+            document.getElementById('modal-share-btn').addEventListener('click', doShare);
+
+            // Reopen Modal from summary
+            document.getElementById('reopen-modal-btn').addEventListener('click', () => {
+                document.getElementById('result-modal').classList.remove('hidden');
+            });
+        }
+
+        function initUI() {
+            if (!activeGameData) return;
+
+            // Puzzle badge
+            document.getElementById('puzzle-badge').textContent = isBackInTime
+                ? `PUZZLE #${puzzleNum} — PAST`
+                : `PUZZLE #${puzzleNum}`;
+
+            // Initialize anchor club text
+            const clubName = activeGameData.club || 'BARCELONA';
+            document.getElementById('anchor-club-name').textContent = clubName;
+            document.getElementById('anchor-club-subtext').textContent = clubName;
+            document.getElementById('total-steps').textContent = activeGameData.total_steps || 4;
+
+            // Game note
+            if (gameNote) {
+                document.getElementById('game-note-text').textContent = gameNote;
+                document.getElementById('game-note-bar').classList.remove('hidden');
+            }
+
+            // Back-in-time Prev/Next navigation
+            let currentOffset = 0;
+            const match = window.location.pathname.match(/_d(\d+)\.html$/);
+            if (match) currentOffset = parseInt(match[1], 10);
+
+            const backBtn = document.getElementById('nav-back-btn');
+            const frontBtn = document.getElementById('nav-front-btn');
+
+            if (currentOffset + 1 <= maxBackDays && puzzleNum > 1) {
+                backBtn.href = `${GAME_ID}_d${currentOffset + 1}.html`;
+                backBtn.classList.remove('hidden');
+            } else {
+                backBtn.classList.add('hidden');
+                backBtn.removeAttribute('href');
+            }
+
+            if (currentOffset > 1) {
+                frontBtn.href = `${GAME_ID}_d${currentOffset - 1}.html`;
+            } else if (currentOffset === 1) {
+                frontBtn.href = `${GAME_ID}.html`;
+            } else {
+                frontBtn.classList.add('opacity-30', 'pointer-events-none');
+                frontBtn.removeAttribute('href');
+            }
+
+            renderLadderUI();
+            updateActiveStepPanel();
+        }
+
+        function renderLadderUI() {
+            const container = document.getElementById('ladder-steps-container');
+            container.innerHTML = '';
+
+            const steps = activeGameData.steps || [];
+            steps.forEach((st, idx) => {
+                const isCurrent = (idx === activeStepIndex && !gameOver);
+                const isPassed  = (idx < activeStepIndex || (gameOver && stepRecords[idx]));
+                const isSkipped = stepRecords[idx]?.skipped;
+                const rec       = stepRecords[idx];
+                const flag      = getFlag(st.nationality);
+                const isUnicorn = (st.step_number === 4 || st.difficulty === 'The Unicorn');
+
+                let cardBorderClass = 'border-white/10 bg-surface/50 opacity-40';
+                if (isCurrent) {
+                    cardBorderClass = isUnicorn ? 'unicorn-glow bg-surface border-purple-500' : 'active-node-glow bg-surface border-accent';
+                } else if (isPassed) {
+                    cardBorderClass = isSkipped ? 'border-error/40 bg-surface/60' : 'border-correct/40 bg-surface/80';
+                }
+
+                const card = document.createElement('div');
+                card.className = `p-4 sm:p-5 rounded-2xl border transition-all duration-300 relative z-10 ${cardBorderClass}`;
+
+                // Progressive reveal: Lock future steps until current step is completed (unless game over)
+                if (!isCurrent && !isPassed && !gameOver) {
+                    card.innerHTML = `
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-on-surface-variant/40">
+                                    <span class="material-symbols-outlined text-xl">flight_takeoff</span>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-headline text-lg sm:text-xl text-on-surface-variant/60 uppercase tracking-wide">STAMP #${idx + 1}</span>
+                                        <span class="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 text-on-surface-variant/40 border border-white/5">LOCKED</span>
+                                    </div>
+                                    <span class="text-xs font-mono text-on-surface-variant/40">Complete Stamp #${idx} to reveal destination</span>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="inline-flex items-center gap-1 text-xs font-mono text-on-surface-variant/40"><span class="material-symbols-outlined text-sm">lock</span> Locked</span>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                    return;
+                }
+
+                // Difficulty pill color
+                let diffPill = 'bg-white/10 text-on-surface-variant';
+                if (st.difficulty === 'Easy') diffPill = 'bg-accent/15 text-accent border border-accent/30';
+                else if (st.difficulty === 'Medium') diffPill = 'bg-sky-500/15 text-sky-400 border border-sky-500/30';
+                else if (st.difficulty === 'Hard') diffPill = 'bg-amber-500/15 text-amber-400 border border-amber-500/30';
+                else if (isUnicorn) diffPill = 'bg-purple-500/20 text-purple-300 border border-purple-500/40 font-bold pulse-anim';
+
+                const canonicalPool = dedupeCanonicalNames(st.valid_players);
+                const poolCount = canonicalPool.length || st.pool_size;
+                let poolText = `${poolCount} Qualifying Players`;
+                if (poolCount === 1) poolText = 'Only 1 Qualifying Unicorn!';
+
+                let statusBadge = '';
+                if (isPassed) {
+                    if (isSkipped) {
+                        statusBadge = `<span class="inline-flex items-center gap-1 text-xs font-mono text-error font-bold"><span class="material-symbols-outlined text-sm">cancel</span> Skipped</span>`;
+                    } else {
+                        statusBadge = `<span class="inline-flex items-center gap-1 text-xs font-mono text-correct font-bold"><span class="material-symbols-outlined text-sm">check_circle</span> Solved</span>`;
+                    }
+                } else if (isCurrent) {
+                    statusBadge = `<span class="inline-flex items-center gap-1 text-xs font-mono text-accent font-bold"><span class="material-symbols-outlined text-sm animate-spin">sync</span> In Progress</span>`;
+                } else {
+                    statusBadge = `<span class="inline-flex items-center gap-1 text-xs font-mono text-on-surface-variant/50"><span class="material-symbols-outlined text-sm">lock</span> Locked</span>`;
+                }
+
+                // Answer reveal section for passed or game over
+                let answerDetail = '';
+                if (isPassed && rec && !isSkipped) {
+                    answerDetail = `
+                        <div class="mt-2 pt-2 border-t border-white/5 flex items-center justify-between">
+                            <span class="text-xs font-mono text-on-surface-variant">Your answer: <strong class="text-white font-bold">${rec.guessed}</strong></span>
+                            <span class="text-[11px] font-mono text-accent/80">${poolCount} total qualifying</span>
+                        </div>
+                    `;
+                } else if (gameOver) {
+                    const sampleNames = dedupeCanonicalNames(st.sample_players || canonicalPool).slice(0, 3);
+                    answerDetail = `
+                        <div class="mt-2 pt-2 border-t border-white/5 text-xs font-mono text-on-surface-variant/80">
+                            Valid: <strong class="text-white">${sampleNames.join(', ')}</strong>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl sm:text-3xl">${flag}</span>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-headline text-lg sm:text-xl text-on-background uppercase tracking-wide">${st.nationality}</span>
+                                    <span class="text-[10px] font-mono px-2 py-0.5 rounded-md ${diffPill}">${st.difficulty.toUpperCase()}</span>
+                                </div>
+                                <span class="text-xs font-mono text-on-surface-variant">${poolText}</span>
+                            </div>
+                        </div>
+                        <div>
+                            ${statusBadge}
+                        </div>
+                    </div>
+                    ${answerDetail}
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function updateActiveStepPanel() {
+            if (gameOver || !activeGameData) {
+                document.getElementById('fa-guess-panel').classList.add('hidden');
+                return;
+            }
+
+            document.getElementById('fa-guess-panel').classList.remove('hidden');
+            const step = activeGameData.steps[activeStepIndex];
+            if (!step) return;
+
+            document.getElementById('progress-step').textContent = activeStepIndex + 1;
+            const flag = getFlag(step.nationality);
+            document.getElementById('active-step-label').textContent = 
+                `STEP ${activeStepIndex + 1} — NAME A ${step.nationality.toUpperCase()} PLAYER FOR ${activeGameData.club.toUpperCase()}:`;
+
+            // Reset hint box
+            const hintBox = document.getElementById('hint-display-box');
+            if (revealedHints.has(activeStepIndex)) {
+                hintBox.classList.remove('hidden');
+            } else {
+                hintBox.classList.add('hidden');
+            }
+
+            // Clear input
+            const input = document.getElementById('guess-input');
+            input.value = '';
+            input.placeholder = `Type any ${step.nationality} footballer who played for ${activeGameData.club}...`;
+            input.focus();
+        }
+
+        function revealActiveHint() {
+            if (gameOver) return;
+            const step = activeGameData.steps[activeStepIndex];
+            if (!step) return;
+
+            revealedHints.add(activeStepIndex);
+
+            // Find a notable player from valid_players to base hint on
+            const sampleName = (step.sample_players && step.sample_players[0]) || step.valid_players[0];
+            const meta = allPlayersList.find(p => FootyUI.normalizeStr(p.Name) === FootyUI.normalizeStr(sampleName));
+            const pos = (meta && meta.Position) || 'First Team Player';
+
+            // First letter masked: e.g. "E. G____"
+            const parts = sampleName.split(' ');
+            let masked = sampleName;
+            if (parts.length > 1) {
+                masked = `${parts[0][0]}. ${parts[parts.length - 1][0]}${'_'.repeat(parts[parts.length - 1].length - 1)}`;
+            }
+
+            const hintBox = document.getElementById('hint-display-box');
+            const hintText = document.getElementById('hint-display-text');
+            hintText.innerHTML = `Position: <strong class="text-white">${pos}</strong> &bull; Star initials: <strong class="text-white">${masked}</strong>`;
+            hintBox.classList.remove('hidden');
+
+            FootyUI.toast('Hint revealed!', 'info');
+        }
+
+        function submitGuess() {
+            if (gameOver) return;
+
+            const input = document.getElementById('guess-input');
+            const rawVal = input.value.trim();
+            const normVal = FootyUI.normalizeStr(rawVal);
+
+            const errElem = document.getElementById('error-message');
+            errElem.classList.add('hidden');
+
+            if (!rawVal) {
+                showError('Please type a footballer\'s name.');
+                return;
+            }
+
+            // Validate that player exists in allPlayersList
+            const matchedPlayer = allPlayersList.find(p => FootyUI.normalizeStr(p.Name) === normVal);
+            if (!matchedPlayer) {
+                showError('Player not recognized. Please pick from the dropdown.');
+                return;
+            }
+
+            const playerName = matchedPlayer.Name;
+
+            // Check if player was already guessed in an earlier step
+            if (guessedPlayers.some(p => FootyUI.normalizeStr(p) === normVal)) {
+                showError('You already used this player in an earlier step!');
+                return;
+            }
+
+            const currentStep = activeGameData.steps[activeStepIndex];
+            const validNorms = new Set(currentStep.valid_players.map(vp => FootyUI.normalizeStr(vp)));
+
+            if (validNorms.has(normVal)) {
+                // Correct!
+                guessedPlayers.push(playerName);
+                stepRecords[activeStepIndex] = {
+                    step: activeStepIndex,
+                    won: true,
+                    guessed: playerName,
+                    skipped: false
+                };
+
+                FootyUI.showFeedback({
+                    isCorrect: true,
+                    title: 'STAMP COLLECTED!',
+                    message: `${playerName} played for ${activeGameData.club} & ${currentStep.nationality}!`
+                });
+                activeStepIndex++;
+
+                if (activeStepIndex >= activeGameData.total_steps) {
+                    renderLadderUI();
+                    endGame(true);
+                } else {
+                    renderLadderUI();
+                    updateActiveStepPanel();
+                }
+            } else {
+                // Incorrect
+                livesCtrl.lose(1);
+                wrongGuesses.add(playerName);
+                shakeInput();
+
+                FootyUI.showFeedback({
+                    isCorrect: false,
+                    title: 'INCORRECT GUESS',
+                    message: `${playerName} did not represent ${activeGameData.club} with ${currentStep.nationality}. Lost 1 life.`,
+                    guess: playerName,
+                    gameId: 'passport_fc',
+                    puzzleNum: puzzleNum,
+                    theme: `Anchor Club: ${activeGameData.club}`,
+                    context: `Passport FC Step ${currentStep.step_number} (${currentStep.nationality}). Constraint: Represented ${activeGameData.club} and ${currentStep.nationality}.`,
+                    onVarAccepted: (res) => {
+                        handleVarApproved(playerName, res);
+                    }
+                });
+            }
+        }
+
+        function handleVarApproved(matched, res) {
+            livesCtrl.add(1);
+            if (wrongGuesses && typeof wrongGuesses.delete === 'function') {
+                wrongGuesses.delete(matched);
+            }
+
+            const currentStep = activeGameData.steps[activeStepIndex];
+            guessedPlayers.push(matched);
+            stepRecords[activeStepIndex] = {
+                step: activeStepIndex,
+                won: true,
+                guessed: matched,
+                skipped: false,
+                isVar: true
+            };
+
+            FootyUI.toast(`VAR Overruled: ${currentStep.nationality} stamp unlocked with "${matched}"!`, 'success');
+
+            activeStepIndex++;
+            if (activeStepIndex >= activeGameData.total_steps) {
+                renderLadderUI();
+                endGame(true);
+            } else {
+                renderLadderUI();
+                updateActiveStepPanel();
+            }
+        }
+
+        function skipCurrentStep() {
+            if (gameOver) return;
+
+            FootyUI.confirm({
+                title: 'SKIP THIS STAMP?',
+                message: 'Skip this nationality stamp and proceed to the next country?',
+                confirmText: 'SKIP STAMP',
+                cancelText: 'KEEP TRYING',
+                onConfirm: () => {
+                    stepRecords[activeStepIndex] = {
+                        step: activeStepIndex,
+                        won: false,
+                        guessed: 'Skipped',
+                        skipped: true
+                    };
+                    FootyUI.toast('Stamp skipped.', 'info');
+                    activeStepIndex++;
+
+                    if (activeStepIndex >= activeGameData.total_steps) {
+                        renderLadderUI();
+                        endGame(true);
+                    } else {
+                        renderLadderUI();
+                        updateActiveStepPanel();
+                    }
+                }
+            });
+        }
+
+        function showError(msg) {
+            const errElem = document.getElementById('error-message');
+            errElem.textContent = msg;
+            errElem.classList.remove('hidden');
+        }
+
+        function shakeInput() {
+            const panel = document.getElementById('fa-guess-panel');
+            panel.classList.add('animate-shake');
+            setTimeout(() => panel.classList.remove('animate-shake'), 400);
+        }
+
+        function generateEmojiGrid(won, score, total) {
+            let grid = '';
+            (activeGameData.steps || []).forEach((st, idx) => {
+                const rec = stepRecords[idx];
+                const flag = getFlag(st.nationality);
+                if (rec && rec.won) {
+                    grid += `🟩 Step ${idx + 1}: ${flag} ${st.nationality}\n`;
+                } else {
+                    grid += `🟥 Step ${idx + 1}: ${flag} ${st.nationality}\n`;
+                }
+            });
+            return grid.trim();
+        }
+
+        function generateShareText(won, score, total) {
+            const grid = generateEmojiGrid(won, score, total);
+            const remainingLives = livesCtrl.get();
+            const hearts = '❤️'.repeat(Math.max(0, remainingLives)) + '🖤'.repeat(Math.max(0, INITIAL_LIVES - remainingLives));
+            return `PASSPORT FC #${puzzleNum} ✈️\nAnchor: ${activeGameData.club}\n${grid}\nScore: ${score}/${total} • ${hearts}\nhttps://playmaker.best/games/passport_fc.html`;
+        }
+
+        function endGame(won) {
+            gameOver = true;
+            document.getElementById('fa-guess-panel').classList.add('hidden');
+
+            const score = stepRecords.filter(r => r && r.won).length;
+            const total = activeGameData.total_steps;
+
+            // Save to FootyStorage and step history
+            storage.recordResult(puzzleNum, won, score, total, isBackInTime);
+            try {
+                const stepKey = `passport_fc_steps_${isBackInTime ? 'bit_' : ''}${puzzleNum}`;
+                localStorage.setItem(stepKey, JSON.stringify(stepRecords));
+            } catch (_) {}
+
+            // Populate End-Game Summary Breakdown
+            populateSummaryBreakdown();
+            document.getElementById('endgame-summary-section').classList.remove('hidden');
+
+            // Modal Display
+            const stats = storage.getStats();
+            const shareText = generateShareText(won, score, total);
+            const customEmojiGrid = generateEmojiGrid(won, score, total);
+
+            modal.show({
+                won: won,
+                score: score,
+                maxScore: total,
+                streak: stats.streak || 0,
+                title: won ? 'LADDER CONQUERED!' : 'OUT OF LIVES!',
+                message: won
+                    ? `Outstanding! You mastered the nationality ladder for ${activeGameData.club}.`
+                    : `Tough break! You completed ${score} of ${total} steps for ${activeGameData.club}.`,
+                extraText: activeGameData.club,
+                customEmojiGrid: customEmojiGrid,
+                shareText: shareText
+            });
+
+            renderLadderUI();
+        }
+
+        function populateSummaryBreakdown() {
+            const container = document.getElementById('summary-breakdown-container');
+            container.innerHTML = '';
+
+            const steps = activeGameData.steps || [];
+            steps.forEach((st, idx) => {
+                const rec = stepRecords[idx];
+                const flag = getFlag(st.nationality);
+                const isWon = rec && rec.won;
+                const canonicalPool = dedupeCanonicalNames(st.valid_players);
+                const poolCount = canonicalPool.length || st.pool_size;
+                const card = document.createElement('div');
+                card.className = 'bg-surface/80 border border-white/10 rounded-2xl p-4 sm:p-5 space-y-3';
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-2xl">${flag}</span>
+                            <div>
+                                <span class="font-headline text-lg text-white uppercase tracking-wide">${st.nationality}</span>
+                                <span class="text-[11px] font-mono text-on-surface-variant block">${st.difficulty} &bull; ${poolCount} Eligible Players</span>
+                            </div>
+                        </div>
+                        <div>
+                            ${isWon 
+                                ? `<span class="text-xs font-mono text-correct font-bold flex items-center gap-1"><span class="material-symbols-outlined text-sm">check_circle</span> Solved: ${rec.guessed}</span>`
+                                : `<span class="text-xs font-mono text-error font-bold flex items-center gap-1"><span class="material-symbols-outlined text-sm">cancel</span> ${rec ? 'Skipped' : 'Unfinished'}</span>`}
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-white/5">
+                        <details class="cursor-pointer">
+                            <summary class="text-xs font-mono text-accent hover:underline flex items-center gap-1">
+                                <span>View all ${canonicalPool.length} qualifying players</span>
+                                <span class="material-symbols-outlined text-xs">expand_more</span>
+                            </summary>
+                            <div class="mt-2.5 flex flex-wrap gap-1.5 pt-1">
+                                ${canonicalPool.map(p => `
+                                    <span class="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-on-surface-variant">
+                                        ${p}
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </details>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function checkAlreadyPlayed() {
+            const result = storage.getPuzzleResult(puzzleNum, isBackInTime);
+            if (!result) return;
+
+            gameOver = true;
+            try {
+                const stepKey = `passport_fc_steps_${isBackInTime ? 'bit_' : ''}${puzzleNum}`;
+                const raw = localStorage.getItem(stepKey);
+                if (raw) stepRecords = JSON.parse(raw) || [];
+            } catch (_) {}
+
+            guessedPlayers = stepRecords.filter(r => r && r.won).map(r => r.guessed);
+
+            renderLadderUI();
+            populateSummaryBreakdown();
+            document.getElementById('endgame-summary-section').classList.remove('hidden');
+            document.getElementById('fa-guess-panel').classList.add('hidden');
+        }
+
+        function doShare() {
+            const score = stepRecords.filter(r => r && r.won).length;
+            const total = activeGameData.total_steps;
+            const won = score === total;
+            const shareText = generateShareText(won, score, total);
+
+            FootyUI.share({
+                title: 'Passport FC — Playmaker',
+                text: shareText
+            });
+        }
+    </script>
+</body>
+</html>
