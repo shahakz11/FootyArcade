@@ -169,6 +169,8 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
             cta_title = "CAN YOU GUESS THE MYSTERY CLUBS? 🤔"
         elif game_id == "player_chain":
             cta_title = "CAN YOU CRACK THE CAREER CHAIN? ⛓️"
+        elif game_id == "passport_fc":
+            cta_title = "CAN YOU COMPLETE THE PASSPORT? ✈️"
         else:
             cta_title = "CAN YOU SOLVE THE MYSTERY PUZZLE? 🤔"
             
@@ -299,6 +301,8 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
         target_name = ""
         if game_id == "player_chain":
             target_name = await page.evaluate("typeof DAILY_CHAIN_GAME !== 'undefined' ? DAILY_CHAIN_GAME.target_player : 'player_chain'")
+        elif game_id == "passport_fc":
+            target_name = await page.evaluate("typeof DAILY_PASSPORT_GAME !== 'undefined' ? DAILY_PASSPORT_GAME.club : 'passport_fc'")
         elif await page.locator("#target-name").count() > 0:
             target_name = await page.inner_text("#target-name")
         elif await page.locator("#player-name-display").count() > 0:
@@ -468,6 +472,34 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                 step2_players = [p for p in step2.get("valid_players", []) if p.lower() != target_player.lower()]
                 step2_guess = step2_players[0] if step2_players else "Clarence Seedorf"
                 print(f"  ➜ Step 2 Correct Guess ({step2_clubs}): {step2_guess}")
+                await make_guess(step2_guess, is_correct=True, do_countdown=True)
+
+        elif game_id == "passport_fc":
+            passport_data = await page.evaluate("DAILY_PASSPORT_GAME")
+            club = passport_data.get("club", "Mystery Club")
+            steps = passport_data.get("steps", [])
+            print(f"✈️ Anchor Club: {club}")
+            
+            # Step 1: Guess a valid player for Step 1
+            if len(steps) > 0:
+                step1 = steps[0]
+                step1_players = step1.get("sample_players", []) or step1.get("valid_players", [])
+                step1_guess = step1_players[0] if step1_players else "Thierry Henry"
+                print(f"  ➜ Step 1 Guess ({step1.get('nationality')}): {step1_guess}")
+                await make_guess(step1_guess, is_correct=True, do_countdown=True)
+                
+            # Step 2: Make a wrong guess first to show lives deduction & tension, then solve Step 2
+            if len(steps) > 1:
+                step2 = steps[1]
+                step2_valid = [p.lower() for p in step2.get("valid_players", [])]
+                wrong_candidates = ["Cristiano Ronaldo", "Zlatan Ibrahimovic", "Erling Haaland", "Kylian Mbappe"]
+                wrong_guess = next((c for c in wrong_candidates if c.lower() not in step2_valid), "Cristiano Ronaldo")
+                print(f"  ➜ Step 2 Wrong Guess (shows lives deduction): {wrong_guess}")
+                await make_guess(wrong_guess, is_correct=False, do_countdown=True)
+                
+                step2_players = step2.get("sample_players", []) or step2.get("valid_players", [])
+                step2_guess = step2_players[0] if step2_players else "Lionel Messi"
+                print(f"  ➜ Step 2 Correct Guess ({step2.get('nationality')}): {step2_guess}")
                 await make_guess(step2_guess, is_correct=True, do_countdown=True)
 
         # Final hold on full screen with CTA (~4.5s)

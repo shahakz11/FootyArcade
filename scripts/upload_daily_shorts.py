@@ -10,7 +10,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 
 from record_real_ui_short import record_short_video, ensure_server_running
-from scripts.youtube_uploader import upload_short, build_default_metadata, get_channel_info
+from scripts.youtube_uploader import (
+    upload_short,
+    build_default_metadata,
+    get_channel_info,
+    is_youtube_already_uploaded
+)
 from scripts.instagram_uploader import (
     check_connection as check_ig_connection,
     upload_reel_now,
@@ -27,10 +32,41 @@ DAILY_GAMES = [
     {"id": "transfer_destination", "name": "Transfer Destination"},
     {"id": "club_connect",         "name": "Club Connect"},
     {"id": "player_chain",         "name": "Player Chain"},
-    {"id": "top_scorers",          "name": "Top Scorers"}
+    {"id": "top_scorers",          "name": "Top Scorers"},
+    {"id": "passport_fc",          "name": "Passport FC"}
 ]
 
-async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_run=False, selected_game="", no_youtube=False, no_instagram=False, instant_reels=False, wait_queue=False):
+def get_target_name_from_game(game_id):
+    """
+    Extracts the daily puzzle target name/theme directly from the compiled HTML.
+    Allows running live API deduplication BEFORE spending 2-3 minutes rendering video.
+    """
+    import json, re
+    html_path = os.path.join(BASE_DIR, "games", f"{game_id}.html")
+    if not os.path.exists(html_path):
+        return ""
+    try:
+        with open(html_path, "r", encoding="utf-8") as f:
+            html = f.read()
+        var_map = {
+            "top_transfers": r'const\s+DAILY_TRANSFER_GAME\s*=\s*(\{[\s\S]*?\});',
+            "transfer_destination": r'const\s+DAILY_DESTINATION_GAME\s*=\s*(\{[\s\S]*?\});',
+            "top_scorers": r'const\s+DAILY_SCORERS_GAME\s*=\s*(\{[\s\S]*?\});',
+            "club_connect": r'const\s+DAILY_CLUBCONNECT_GAME\s*=\s*(\{[\s\S]*?\});',
+            "player_chain": r'const\s+DAILY_CHAIN_GAME\s*=\s*(\{[\s\S]*?\});',
+            "passport_fc": r'const\s+DAILY_PASSPORT_GAME\s*=\s*(\{[\s\S]*?\});',
+        }
+        pattern = var_map.get(game_id)
+        if pattern:
+            m = re.search(pattern, html)
+            if m:
+                data = json.loads(m.group(1))
+                return data.get("name") or data.get("player_name") or data.get("target_player") or data.get("club") or ""
+    except Exception as e:
+        print(f"⚠️ Could not parse target name from {game_id}.html: {e}")
+    return ""
+
+async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_run=False, selected_game="", no_youtube=False, no_instagram=False, instant_reels=False, wait_queue=False, force=False):
     print("\n" + "=" * 68)
     print("   ⚽  PLAYMAKER — DAILY SHORTS & REELS BATCH RENDER & UPLOADER")
     print("=" * 68)
@@ -100,6 +136,60 @@ async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_ru
             print(f"⏰ Schedule Target: {timing_label}")
             print("-" * 68)
 
+            # Pre-flight check: extract target name from HTML
+            preview_target = get_target_name_from_game(game_id)
+            if preview_target:
+                print(f"🔍 Pre-flight detected target: '{preview_target}' for {game_name}")
+
+            # Deduplication checks
+            yt_already_done = False
+            yt_existing_url = ""
+            ig_already_done = False
+            ig_existing_url = ""
+
+            if not force and not dry_run:
+                # 1. YouTube check
+                if not no_youtube and channel_id:
+                    try:
+                        yt_already_done, yt_existing_url = is_youtube_already_uploaded(
+                            game_id=game_id,
+                            target_name=preview_target,
+                            date_str=today_str
+                        )
+                        if yt_already_done:
+                            print(f"   ℹ️ [YouTube Check] Already uploaded today: {yt_existing_url}")
+                    except Exception as e:
+                        print(f"   ⚠️ YouTube deduplication check error: {e}")
+
+                # 2. Instagram check
+                if not no_instagram and ig_id:
+                    try:
+                        ig_already_done, ig_existing_url = is_ig_already_posted(
+                            game_id=game_id,
+                            date_str=today_str,
+                            target_name=preview_target
+                        )
+                        if ig_already_done:
+                            print(f"   ℹ️ [Instagram Check] Already uploaded today: {ig_existing_url}")
+                    except Exception as e:
+                        print(f"   ⚠️ Instagram deduplication check error: {e}")
+
+                # If all requested platforms are already uploaded, skip rendering!
+                yt_satisfied = no_youtube or yt_already_done
+                ig_satisfied = no_instagram or ig_already_done
+
+                if yt_satisfied and ig_satisfied:
+                    print(f"\n⚡ [Deduplication] Both platforms already have today's video for {game_name}!")
+                    print(f"   Skipping browser launch and video rendering to save compute & prevent duplicates.\n")
+                    results.append({
+                        "game": game_name,
+                        "yt_status": "Already Uploaded" if yt_already_done else "Skipped",
+                        "yt_url": yt_existing_url if yt_already_done else "—",
+                        "ig_status": "Already Uploaded" if ig_already_done else "Skipped",
+                        "ig_url": ig_existing_url if ig_already_done else "—"
+                    })
+                    continue
+
             # Render video
             try:
                 render_res = await record_short_video(game_id=game_id, day_offset=0, fast_mode=fast_mode, port=port)
@@ -133,7 +223,10 @@ async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_ru
 
             # ── A. Upload to YouTube Shorts ───────────────────────────────────
             yt_status, yt_url = "Skipped", "—"
-            if not no_youtube:
+            if yt_already_done:
+                yt_status = "Already Uploaded"
+                yt_url = yt_existing_url
+            elif not no_youtube:
                 title, desc, tags = build_default_metadata(game_id=game_id, target_name=target_name)
                 try:
                     vid, shorts_url = upload_short(
@@ -153,15 +246,13 @@ async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_ru
 
             # ── B. Upload to Instagram Reels ──────────────────────────────────
             ig_status, ig_url = "Skipped", "—"
-            if not no_instagram and ig_id:
+            if ig_already_done:
+                ig_status = "Already Uploaded"
+                ig_url = ig_existing_url
+            elif not no_instagram and ig_id:
                 ig_caption = build_instagram_caption(game_id=game_id, target_name=target_name)
                 
-                # Check deduplication ledger
-                if is_ig_already_posted(game_id, today_str):
-                    print(f"ℹ️ [Instagram] {game_name} was already posted today according to ledger.")
-                    ig_status = "Already Posted"
-                    ig_url = "In Ledger"
-                elif i == 0 or instant_reels:
+                if i == 0 or instant_reels:
                     # Upload immediately
                     try:
                         print(f"🚀 Uploading Reel immediately to Instagram...")
@@ -235,6 +326,7 @@ def main():
     parser.add_argument("--no-instagram", action="store_true", help="Skip Instagram upload")
     parser.add_argument("--instant-reels", action="store_true", help="Publish all Instagram Reels immediately without queue delay")
     parser.add_argument("--wait-queue", action="store_true", help="Wait in foreground for all queued reels to finish (ideal for GitHub Actions)")
+    parser.add_argument("--force", action="store_true", help="Bypass deduplication checks and re-render/re-upload")
 
     args = parser.parse_args()
     asyncio.run(process_all_games(
@@ -246,7 +338,8 @@ def main():
         no_youtube=args.no_youtube,
         no_instagram=args.no_instagram,
         instant_reels=args.instant_reels,
-        wait_queue=args.wait_queue
+        wait_queue=args.wait_queue,
+        force=args.force
     ))
 
 if __name__ == "__main__":

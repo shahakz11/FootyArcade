@@ -77,7 +77,8 @@ def build_instagram_caption(game_id="top_transfers", target_name=""):
         "transfer_destination": "Guess the mystery player's career path backwards! ⚽",
         "player_chain": "Can you complete this teammate chain? ⚽",
         "club_connect": "Name players who played for both clubs! ⚽",
-        "top_scorers": f"Who scored the most goals in {target_name or 'this season'}? ⚽"
+        "top_scorers": f"Who scored the most goals in {target_name or 'this season'}? ⚽",
+        "passport_fc": f"Can you complete {target_name or 'today'}'s club passport? ✈️"
     }
     hook = game_hooks.get(game_id, "Daily Football Quiz Challenge! ⚽")
     
@@ -106,10 +107,47 @@ def _save_ledger(ledger):
     with open(LEDGER_FILE, "w", encoding="utf-8") as f:
         json.dump(ledger, f, indent=2)
 
-def is_already_posted(game_id, date_str):
+def is_already_posted(game_id, date_str, target_name=""):
+    """
+    Checks if a reel for game_id was already posted on date_str.
+    Checks both the local ledger and live Instagram Graph API.
+    Returns (already_posted: bool, permalink_or_reason: str).
+    """
+    # 1. Check local ledger
     ledger = _load_ledger()
     key = f"{date_str}_{game_id}"
-    return key in ledger
+    if key in ledger:
+        return True, ledger[key].get("permalink", "In Local Ledger")
+
+    # 2. Check live Instagram Graph API
+    try:
+        config = load_config()
+        token = config.get("access_token")
+        ig_user_id = config.get("ig_user_id")
+        if not token or not ig_user_id:
+            return False, ""
+        url = f"https://graph.facebook.com/v21.0/{ig_user_id}/media?fields=id,caption,timestamp,permalink&limit=15&access_token={token}"
+        req = urllib.request.Request(url)
+        with urllib.request.urlopen(req, timeout=12) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            expected_caption = build_instagram_caption(game_id, target_name)
+            hook = expected_caption.splitlines()[0].strip().lower()
+            
+            for item in data.get("data", []):
+                pub_date = item.get("timestamp", "")[:10]
+                caption = item.get("caption", "")
+                permalink = item.get("permalink", f"https://www.instagram.com/reel/{item.get('id')}/")
+                first_line = caption.splitlines()[0].strip().lower() if caption else ""
+                
+                # Check if published on the given date and hook or target_name matches
+                if pub_date == date_str:
+                    if hook in first_line or first_line in hook or (target_name and target_name.lower() in caption.lower()):
+                        mark_as_posted(game_id, date_str, permalink, item.get("id"))
+                        return True, permalink
+    except Exception as e:
+        log_message(f"⚠️ Instagram live deduplication check warning: {e}")
+
+    return False, ""
 
 def mark_as_posted(game_id, date_str, permalink, ig_media_id):
     ledger = _load_ledger()

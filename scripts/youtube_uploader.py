@@ -99,7 +99,8 @@ def build_default_metadata(game_id="top_transfers", target_name=""):
         "transfer_destination": f"Guess the mystery player's career path backwards! ⚽ #Shorts",
         "player_chain": f"Can you complete this teammate chain? ⚽ #Shorts",
         "club_connect": f"Can you guess which team all of these players transferred to? ⚽ #Shorts",
-        "top_scorers": f"Who scored the most goals in {target_name or 'this season'}? ⚽ #Shorts"
+        "top_scorers": f"Who scored the most goals in {target_name or 'this season'}? ⚽ #Shorts",
+        "passport_fc": f"Can you complete {target_name or 'today'}'s club passport? ✈️ #Shorts"
     }
     
     title = game_titles.get(game_id, f"Daily Football Quiz Challenge! ⚽ #Shorts")
@@ -136,6 +137,66 @@ def get_channel_info(youtube=None):
     except Exception as e:
         print(f"⚠️ Could not fetch channel info: {e}")
         return None, None
+
+def is_youtube_already_uploaded(game_id, target_name="", date_str=None, youtube=None):
+    """
+    Checks YouTube channel recent uploads via API.
+    Returns (already_uploaded: bool, url_or_msg: str).
+    """
+    import datetime
+    if not date_str:
+        date_str = datetime.date.today().strftime("%Y-%m-%d")
+    
+    expected_title, _, _ = build_default_metadata(game_id, target_name)
+    clean_expected = expected_title.replace("#Shorts", "").replace("#shorts", "").strip().lower()
+
+    if youtube is None:
+        try:
+            youtube = get_authenticated_service()
+        except Exception:
+            return False, ""
+
+    try:
+        res = youtube.channels().list(mine=True, part="contentDetails").execute()
+        items = res.get("items", [])
+        if not items:
+            return False, ""
+        uploads_id = items[0]["contentDetails"]["relatedPlaylists"]["uploads"]
+        vids = youtube.playlistItems().list(playlistId=uploads_id, part="snippet", maxResults=20).execute().get("items", [])
+        
+        # Game generic title prefixes for matching even if target name varies
+        game_patterns = {
+            "top_transfers": "record transfers",
+            "transfer_destination": "career path backwards",
+            "player_chain": "teammate chain",
+            "club_connect": "which team all of these players transferred to",
+            "top_scorers": "scored the most goals",
+            "passport_fc": "club passport"
+        }
+        pattern = game_patterns.get(game_id, "").lower()
+
+        for v in vids:
+            pub_date = v["snippet"].get("publishedAt", "")[:10]
+            vtitle = v["snippet"].get("title", "")
+            clean_vtitle = vtitle.replace("#Shorts", "").replace("#shorts", "").strip().lower()
+            vid_id = v["snippet"]["resourceId"]["videoId"]
+            shorts_url = f"https://youtube.com/shorts/{vid_id}"
+
+            # If published on target date
+            if pub_date == date_str:
+                # 1. Exact or near match
+                if clean_vtitle == clean_expected:
+                    return True, shorts_url
+                # 2. Target name in title
+                if target_name and target_name.lower() in clean_vtitle:
+                    return True, shorts_url
+                # 3. Game pattern match (each game only posts once per day)
+                if pattern and pattern in clean_vtitle:
+                    return True, shorts_url
+    except Exception as e:
+        print(f"⚠️ YouTube deduplication check warning: {e}")
+
+    return False, ""
 
 def upload_short(video_path, title=None, description=None, tags=None, category="17", privacy_status="public", publish_at=None):
     """

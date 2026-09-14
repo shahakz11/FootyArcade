@@ -2,12 +2,14 @@ name: Daily Shorts & Reels Auto-Publisher
 
 on:
   schedule:
-    # Runs daily at 08:00 UTC (11:00 AM local time)
-    - cron: '0 8 * * *'
+    # Primary trigger: 07:45 UTC (10:45 AM local time) - off-peak minute avoids top-of-hour congestion
+    - cron: '45 7 * * *'
+    # Fallback trigger: 08:35 UTC (11:35 AM local time) - if earlier run was delayed or missed
+    - cron: '35 8 * * *'
   workflow_dispatch:
     inputs:
       game:
-        description: 'Specific game ID (leave blank for all 5 games)'
+        description: 'Specific game ID (leave blank for all 6 games)'
         required: false
         default: ''
         type: string
@@ -18,6 +20,11 @@ on:
         type: boolean
       fast:
         description: 'Fast preview mode for testing'
+        required: false
+        default: false
+        type: boolean
+      force:
+        description: 'Force re-render & re-upload (bypasses deduplication checks)'
         required: false
         default: false
         type: boolean
@@ -83,6 +90,7 @@ jobs:
           INPUT_GAME: ${{ github.event.inputs.game }}
           INPUT_DRY_RUN: ${{ github.event.inputs.dry_run }}
           INPUT_FAST: ${{ github.event.inputs.fast }}
+          INPUT_FORCE: ${{ github.event.inputs.force }}
         run: |
           CMD="python3 -u scripts/upload_daily_shorts.py --wait-queue"
           if [ -n "$INPUT_GAME" ]; then
@@ -93,6 +101,9 @@ jobs:
           fi
           if [ "$INPUT_FAST" = "true" ]; then
             CMD="$CMD --fast"
+          fi
+          if [ "$INPUT_FORCE" = "true" ]; then
+            CMD="$CMD --force"
           fi
           echo "Executing: $CMD"
           $CMD
