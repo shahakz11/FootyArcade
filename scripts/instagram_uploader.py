@@ -316,7 +316,7 @@ def _save_queue(queue):
     with open(QUEUE_FILE, "w", encoding="utf-8") as f:
         json.dump(queue, f, indent=2)
 
-def queue_reel(video_path, caption, scheduled_utc_iso, game_id, date_str):
+def queue_reel(video_path, caption, scheduled_utc_iso, game_id, date_str, target_name=""):
     """Adds a reel to the local queue for delayed publishing."""
     queue = _load_queue()
     # Check if this exact item is already queued
@@ -331,6 +331,7 @@ def queue_reel(video_path, caption, scheduled_utc_iso, game_id, date_str):
         "scheduled_utc": scheduled_utc_iso,
         "game_id": game_id,
         "date_str": date_str,
+        "target_name": target_name,
         "status": "pending",
         "retries": 0,
         "added_at": datetime.datetime.now(datetime.timezone.utc).isoformat()
@@ -375,11 +376,10 @@ def process_queue(force_all=False):
             remaining_queue.append(item)
             continue
 
-        log_message(f"⏰ [Instagram Queue] Processing due reel: {game_id} (scheduled {sched_str})")
-
         # Deduplication check
-        if is_already_posted(game_id, date_str):
-            log_message(f"ℹ️ [Instagram Queue] {game_id} ({date_str}) is already recorded in ledger. Skipping.")
+        already_done, existing_link = is_already_posted(game_id, date_str, target_name=item.get("target_name", ""))
+        if already_done:
+            log_message(f"ℹ️ [Instagram Queue] {game_id} ({date_str}) is already recorded in ledger or posted online ({existing_link}). Skipping.")
             item["status"] = "already_posted"
             processed_results.append({"game_id": game_id, "status": "Already Posted"})
             continue

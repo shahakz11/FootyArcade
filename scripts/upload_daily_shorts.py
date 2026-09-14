@@ -272,7 +272,8 @@ async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_ru
                             caption=ig_caption,
                             scheduled_utc_iso=sched_utc_dt.isoformat(),
                             game_id=game_id,
-                            date_str=today_str
+                            date_str=today_str,
+                            target_name=target_name
                         )
                         ig_status = f"Queued ({timing_label})"
                         ig_url = "Pending Schedule"
