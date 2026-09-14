@@ -686,23 +686,45 @@
         const GAME_ID        = 'passport_fc';
         const INITIAL_LIVES  = 5;
         const activeGameData = typeof DAILY_PASSPORT_GAME !== 'undefined' ? DAILY_PASSPORT_GAME : null;
-        const allPlayersList = typeof ALL_PLAYERS !== 'undefined' ? [...ALL_PLAYERS] : [];
 
-        // Ensure all valid players are in the autocomplete index
+        // Deduplicate base player list so spelling/accent variations have only 1 canonical entry
+        const rawPlayers = typeof ALL_PLAYERS !== 'undefined' ? ALL_PLAYERS : [];
+        const playerMap = new Map();
+        for (const p of rawPlayers) {
+            if (!p || !p.Name) continue;
+            const norm = FootyUI.normalizeStr(p.Name);
+            if (!playerMap.has(norm)) {
+                playerMap.set(norm, p);
+            } else {
+                const existing = playerMap.get(norm);
+                // Prefer canonical name with accents / non-ASCII characters
+                if (/[^\x00-\x7F]/.test(p.Name) && !/[^\x00-\x7F]/.test(existing.Name)) {
+                    playerMap.set(norm, p);
+                }
+            }
+        }
+
+        // Ensure all valid players are in the autocomplete index with canonical names
         if (activeGameData && Array.isArray(activeGameData.steps)) {
-            const existingNorms = new Set(allPlayersList.map(p => FootyUI.normalizeStr(p.Name)));
             activeGameData.steps.forEach(st => {
                 if (Array.isArray(st.valid_players)) {
                     st.valid_players.forEach(vp => {
+                        if (!vp) return;
                         const nVp = FootyUI.normalizeStr(vp);
-                        if (vp && !existingNorms.has(nVp)) {
-                            existingNorms.add(nVp);
-                            allPlayersList.push({ Name: vp, Nationality: st.nationality || '', Position: 'Player' });
+                        if (!playerMap.has(nVp)) {
+                            playerMap.set(nVp, { Name: vp, Nationality: st.nationality || '', Position: 'Player' });
+                        } else {
+                            const existing = playerMap.get(nVp);
+                            if (/[^\x00-\x7F]/.test(vp) && !/[^\x00-\x7F]/.test(existing.Name)) {
+                                playerMap.set(nVp, { ...existing, Name: vp });
+                            }
                         }
                     });
                 }
             });
         }
+
+        const allPlayersList = Array.from(playerMap.values());
 
         const puzzleNum      = typeof PUZZLE_NUMBER !== 'undefined' ? PUZZLE_NUMBER : 1;
         const isBackInTime   = typeof IS_BACK_IN_TIME !== 'undefined' ? IS_BACK_IN_TIME : false;
@@ -1055,9 +1077,13 @@
             }
 
             const playerName = matchedPlayer.Name;
+            const normPlayerName = FootyUI.normalizeStr(playerName);
 
             // Check if player was already guessed in an earlier step
-            if (guessedPlayers.some(p => FootyUI.normalizeStr(p) === normVal)) {
+            if (guessedPlayers.some(p => {
+                const normP = FootyUI.normalizeStr(p);
+                return normP === normVal || normP === normPlayerName;
+            })) {
                 showError('You already used this player in an earlier step!');
                 return;
             }
@@ -1065,7 +1091,7 @@
             const currentStep = activeGameData.steps[activeStepIndex];
             const validNorms = new Set(currentStep.valid_players.map(vp => FootyUI.normalizeStr(vp)));
 
-            if (validNorms.has(normVal)) {
+            if (validNorms.has(normVal) || validNorms.has(normPlayerName)) {
                 // Correct!
                 guessedPlayers.push(playerName);
                 stepRecords[activeStepIndex] = {

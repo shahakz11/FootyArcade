@@ -295,14 +295,19 @@ def _dedupe_canonical_names(names):
         return []
     seen = {}
     for name in names:
-        if not name:
+        if not name or not isinstance(name, str):
             continue
-        norm = unicodedata.normalize('NFKD', name).encode('ascii', 'ignore').decode('ascii').lower().strip()
+        clean_name = re.sub(r'[\u200b-\u200f\u202a-\u202e\ufeff]', '', name).strip()
+        s = clean_name.replace('ð', 'd').replace('Ð', 'D').replace('þ', 'th').replace('Þ', 'Th')
+        s = s.replace('ø', 'o').replace('Ø', 'O').replace('ł', 'l').replace('Ł', 'L')
+        s = s.replace('đ', 'd').replace('Đ', 'D').replace('æ', 'ae').replace('Æ', 'Ae')
+        s = s.replace('œ', 'oe').replace('Œ', 'Oe').replace('ß', 'ss')
+        norm = ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn').strip().lower()
         if norm not in seen:
-            seen[norm] = name
+            seen[norm] = clean_name
         else:
-            if name != norm and seen[norm] == norm:
-                seen[norm] = name
+            if clean_name != norm and seen[norm] == norm:
+                seen[norm] = clean_name
     return list(seen.values())
 
 

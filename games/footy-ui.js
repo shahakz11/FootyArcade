@@ -45,7 +45,16 @@
      */
     function normalizeStr(str) {
         if (!str) return '';
-        return str
+        return String(str)
+            .replace(/[\u200b-\u200f\u202a-\u202e\ufeff]/g, '')
+            .replace(/[ðÐ]/g, 'd')
+            .replace(/[þÞ]/g, 'th')
+            .replace(/[øØ]/g, 'o')
+            .replace(/[łŁ]/g, 'l')
+            .replace(/[đĐ]/g, 'd')
+            .replace(/[æÆ]/g, 'ae')
+            .replace(/[œŒ]/g, 'oe')
+            .replace(/ß/g, 'ss')
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
             .toLowerCase()
@@ -220,7 +229,28 @@
                 return a.label.localeCompare(b.label);
             });
 
-            return results.map(r => r.item);
+            // Deduplicate by normalized label so spelling variations show only 1 entry
+            const uniqueResults = [];
+            const seenNorms = new Map();
+            for (const r of results) {
+                const norm = normalizeStr(r.label);
+                if (!seenNorms.has(norm)) {
+                    seenNorms.set(norm, r);
+                    uniqueResults.push(r);
+                } else {
+                    const existing = seenNorms.get(norm);
+                    // Prefer version with accents or special characters
+                    if (/[^\x00-\x7F]/.test(r.label) && !/[^\x00-\x7F]/.test(existing.label)) {
+                        const idx = uniqueResults.indexOf(existing);
+                        if (idx !== -1) {
+                            uniqueResults[idx] = r;
+                            seenNorms.set(norm, r);
+                        }
+                    }
+                }
+            }
+
+            return uniqueResults.map(r => r.item);
         }
 
         function renderList(items) {
