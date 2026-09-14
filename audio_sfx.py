@@ -67,9 +67,9 @@ def generate_wrong_sound():
     audio = (sig1 + sig2) * 0.3 * envelope
     return audio
 
-def build_audio_track(events, total_duration, output_wav_path):
+def build_audio_track(events, total_duration, output_wav_path, voice_wav_path=None):
     """
-    Builds a composite audio track from timeline events:
+    Builds a composite audio track from timeline events and an optional voice narration track:
     events = [
         ('tick_3', timestamp_sec),
         ('tick_2', timestamp_sec),
@@ -77,9 +77,10 @@ def build_audio_track(events, total_duration, output_wav_path):
         ('correct', timestamp_sec),
         ('wrong', timestamp_sec)
     ]
+    voice_wav_path: Optional path to synthesized voiceover WAV track.
     """
     total_samples = int(SAMPLE_RATE * (total_duration + 0.5))
-    audio_track = np.zeros(total_samples, dtype=np.float32)
+    sfx_track = np.zeros(total_samples, dtype=np.float32)
     
     tick_sound = generate_tick_sound(is_tok=False)
     tok_sound = generate_tick_sound(is_tok=True)
@@ -104,8 +105,31 @@ def build_audio_track(events, total_duration, output_wav_path):
             
         end_idx = min(start_idx + len(clip), total_samples)
         length = end_idx - start_idx
-        audio_track[start_idx:end_idx] += clip[:length]
+        sfx_track[start_idx:end_idx] += clip[:length]
         
+    # Scale SFX when voiceover is present so narration is crystal clear
+    if voice_wav_path and os.path.exists(voice_wav_path):
+        try:
+            _, v_data = wavfile.read(voice_wav_path)
+            if v_data.dtype == np.int16:
+                v_float = v_data.astype(np.float32) / 32768.0
+            elif v_data.dtype == np.int32:
+                v_float = v_data.astype(np.float32) / 2147483648.0
+            else:
+                v_float = v_data.astype(np.float32)
+            if len(v_float.shape) > 1:
+                v_float = np.mean(v_float, axis=1)
+
+            # Duck SFX to 60% and lay down voice at full 100% volume
+            audio_track = sfx_track * 0.60
+            v_len = min(len(v_float), total_samples)
+            audio_track[:v_len] += v_float[:v_len]
+        except Exception as e:
+            print(f"⚠️ Warning: Could not mix voice track ({e}). Using pure SFX.")
+            audio_track = sfx_track
+    else:
+        audio_track = sfx_track
+
     # Clip to prevent distortion & normalize
     max_val = np.max(np.abs(audio_track))
     if max_val > 0.95:

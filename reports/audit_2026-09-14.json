@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-09-14T19:04:09.687973",
+  "targetDate": "2026-09-14",
+  "offset": 0,
+  "status": "PASS",
+  "puzzles": {
+    "top_transfers": 50,
+    "transfer_destination": 50,
+    "top_scorers": 50,
+    "club_connect": 46,
+    "player_chain": 4,
+    "passport_fc": 1
+  },
+  "issues": [],
+  "fixes": [],
+  "ai_checks": [],
+  "execTimeSec": 0.61
+}

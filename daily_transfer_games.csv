@@ -4,7 +4,6 @@ Juan Sebastián Verón,Sampdoria,Parma,17500000.0,1998-07-01,1,Parma
 Sérgio Conceição,Lazio,Parma,17000000.0,2000-07-01,1,Parma
 Vratislav Gresko,Inter,Parma,16000000.0,2002-07-01,1,Parma
 Ousmane Dabo,Inter,Parma,15490000.0,1999-07-01,1,Parma
-,Borussia Dortmund,Parma,15000000.0,2001-07-01,1,Parma
 Daniele Bonera,Brescia,Parma,15000000.0,2002-07-01,1,Parma
 Adriano,Inter,Parma,14500000.0,2002-07-01,1,Parma
 Dennis Man,FCSB,Parma,12600000.0,2021-01-29,1,Parma
@@ -346,7 +345,6 @@ Jakub Jankto,Udinese,Sampdoria,14500000.0,2019-07-01,35,Sampdoria
 Jeison Murillo,Valencia,Sampdoria,13300000.0,2020-01-14,35,Sampdoria
 Luis Muriel,Udinese,Sampdoria,12000000.0,2015-07-01,35,Sampdoria
 Manolo Gabbiadini,Southampton,Sampdoria,11900000.0,2019-01-11,35,Sampdoria
-,Valencia,Sampdoria,10800000.0,1998-07-28,35,Sampdoria
 Omar Colley,KRC Genk,Sampdoria,9250000.0,2018-07-01,35,Sampdoria
 Giampaolo Pazzini,Fiorentina,Sampdoria,9000000.0,2009-01-15,35,Sampdoria
 Hugo Ekitiké,Paris Saint-Germain,Frankfurt,31500000.0,2024-07-01,36,Frankfurt
@@ -429,7 +427,6 @@ Gonçalo Ramos,Benfica,Paris Saint-Germain,65000000.0,2024-01-01,43,Paris Saint-
 Edinson Cavani,Napoli,Paris Saint-Germain,64500000.0,2013-07-16,43,Paris Saint-Germain
 Ilya Zabarnyi,Bournemouth,Paris Saint-Germain,63000000.0,2025-08-12,43,Paris Saint-Germain
 Ángel Di María,Manchester United,Paris Saint-Germain,63000000.0,2015-08-06,43,Paris Saint-Germain
-,São Paulo,Real Betis,30000000.0,1998-07-30,44,Real Betis
 Borja Iglesias,Espanyol,Real Betis,28000000.0,2019-08-14,44,Real Betis
 Antony,Manchester United,Real Betis,22000000.0,2025-09-01,44,Real Betis
 Giovani Lo Celso,Paris Saint-Germain,Real Betis,22000000.0,2019-07-01,44,Real Betis
@@ -693,7 +690,6 @@ Victor Osimhen,Napoli,Galatasaray,75000000.0,2025-07-31,70,Galatasaray
 Wilfried Singo,Monaco,Galatasaray,30770000.0,2025-08-28,70,Galatasaray
 Uğurcan Çakır,Trabzonspor,Galatasaray,27500000.0,2025-09-01,70,Galatasaray
 Gabriel Sara,Norwich,Galatasaray,18000000.0,2024-08-04,70,Galatasaray
-,Porto,Galatasaray,17050000.0,2000-07-27,70,Galatasaray
 Nicolò Zaniolo,Roma,Galatasaray,15000000.0,2023-02-08,70,Galatasaray
 Bruma,Sporting CP,Galatasaray,13000000.0,2013-09-03,70,Galatasaray
 Mbaye Diagne,Kasimpasa,Galatasaray,13000000.0,2019-01-31,70,Galatasaray
@@ -762,7 +758,6 @@ Sammie Szmodics,Blackburn,Ipswich,10600000.0,2024-08-16,76,Ipswich
 Ruben van Bommel,AZ Alkmaar,PSV Eindhoven,15800000.0,2025-07-11,77,PSV Eindhoven
 Hirving Lozano,Napoli,PSV Eindhoven,15000000.0,2023-09-01,77,PSV Eindhoven
 Paul Wanner,Bayern Munich,PSV Eindhoven,15000000.0,2025-08-22,77,PSV Eindhoven
-,Partizan,PSV Eindhoven,14000000.0,2000-07-01,77,PSV Eindhoven
 Noa Lang,Brugge,PSV Eindhoven,12500000.0,2023-07-08,77,PSV Eindhoven
 Jerdy Schouten,Bologna,PSV Eindhoven,12350000.0,2023-08-16,77,PSV Eindhoven
 Bruma,RB Leipzig,PSV Eindhoven,12000000.0,2019-07-01,77,PSV Eindhoven
@@ -982,7 +977,6 @@ Oleksandr Aliyev,Loko Moskau,Dynamo Kyiv,8000000.0,2011-03-02,98,Dynamo Kyiv
 Claudinho,Zenit S-Pb,Al-Sadd,20000000.0,2025-01-22,99,Al-Sadd
 Mohamed Camara,Monaco,Al-Sadd,16500000.0,2024-07-30,99,Al-Sadd
 Mauro Zárate,Vélez Sarsfield,Al-Sadd,15000000.0,2007-07-01,99,Al-Sadd
-,Middlesbrough,Al-Sadd,12000000.0,2009-09-01,99,Al-Sadd
 Gonzalo Plata,Real Valladolid,Al-Sadd,12000000.0,2023-07-23,99,Al-Sadd
 Rafa Mujica,Arouca,Al-Sadd,10000000.0,2024-07-01,99,Al-Sadd
 Giovani,Palmeiras,Al-Sadd,9000000.0,2023-07-01,99,Al-Sadd
@@ -1029,7 +1023,6 @@ Rodrigo Tabata,Gaziantepspor,Besiktas,8000000.0,2009-08-29,103,Besiktas
 Wilfred Ndidi,Leicester City,Besiktas,8000000.0,2025-08-07,103,Besiktas
 Ricardo Quaresma,Inter,Besiktas,7300000.0,2010-07-01,103,Besiktas
 Yoann Gourcuff,AC Milan,G. Bordeaux,13500000.0,2009-07-01,104,G. Bordeaux
-,Paris Saint-Germain,G. Bordeaux,12000000.0,2001-07-04,104,G. Bordeaux
 Rémi Oudin,Stade Reims,G. Bordeaux,10000000.0,2020-01-09,104,G. Bordeaux
 Fernando Cavenaghi,Spartak Moscow,G. Bordeaux,9000000.0,2007-01-20,104,G. Bordeaux
 Jean-Claude Darcheville,Lorient,G. Bordeaux,9000000.0,2002-07-01,104,G. Bordeaux
@@ -1044,7 +1037,6 @@ Talisca,Benfica,GZ Evergrande,19200000.0,2019-01-01,105,GZ Evergrande
 Ricardo Goulart,Cruzeiro,GZ Evergrande,15000000.0,2015-01-13,105,GZ Evergrande
 Alan,RB Salzburg,GZ Evergrande,11100000.0,2015-01-16,105,GZ Evergrande
 Wenzhao Zhang,Luneng,GZ Evergrande,10400000.0,2016-07-07,105,GZ Evergrande
-,BJ Renhe,GZ Evergrande,9650000.0,2017-01-01,105,GZ Evergrande
 Lucas Barrios,Borussia Dortmund,GZ Evergrande,8500000.0,2012-07-01,105,GZ Evergrande
 Darío Conca,Fluminense,GZ Evergrande,8200000.0,2011-07-01,105,GZ Evergrande
 Alessandro Diamanti,Bologna,GZ Evergrande,7500000.0,2014-02-07,105,GZ Evergrande
@@ -1093,7 +1085,6 @@ Diego Tristán,Mallorca,Dep. La Coruña,17750000.0,2000-07-01,110,Dep. La Coruñ
 Albert Luque,Mallorca,Dep. La Coruña,15000000.0,2002-08-30,110,Dep. La Coruña
 Aldo Duscher,Sporting CP,Dep. La Coruña,13000000.0,2000-07-01,110,Dep. La Coruña
 Juan Carlos Valerón,Atletico Madrid,Dep. La Coruña,11000000.0,2000-07-01,110,Dep. La Coruña
-,San Lorenzo,Dep. La Coruña,10500000.0,1998-01-01,110,Dep. La Coruña
 Roy Makaay,Tenerife,Dep. La Coruña,8600000.0,1999-07-01,110,Dep. La Coruña
 César Martín,Real Oviedo,Dep. La Coruña,7400000.0,1999-07-01,110,Dep. La Coruña
 Andrés Guardado,Atlas,Dep. La Coruña,7000000.0,2007-07-01,110,Dep. La Coruña
@@ -1112,7 +1103,6 @@ Cédric Bakambu,Villarreal,BJ Guoan,40000000.0,2018-01-17,112,BJ Guoan
 Jonathan Soriano,RB Salzburg,BJ Guoan,15000000.0,2017-02-26,112,BJ Guoan
 Jonathan Viera,Las Palmas,BJ Guoan,11000000.0,2018-02-19,112,BJ Guoan
 Fernando,Spartak Moscow,BJ Guoan,9600000.0,2020-02-28,112,BJ Guoan
-,CQ Dangdai Lif,BJ Guoan,8900000.0,2018-01-01,112,BJ Guoan
 Burak Yilmaz,Galatasaray,BJ Guoan,8000000.0,2016-02-22,112,BJ Guoan
 Renato Augusto,Corinthians,BJ Guoan,8000000.0,2016-01-08,112,BJ Guoan
 Omari Hutchinson,Ipswich,Forest,43400000.0,2025-08-16,113,Forest
@@ -1155,7 +1145,6 @@ Craig Bellamy,Newcastle United,Blackburn,7500000.0,2005-07-08,116,Blackburn
 Nikola Kalinic,Hajduk Split,Blackburn,7000000.0,2009-08-03,116,Blackburn
 Scott Dann,Birmingham,Blackburn,6800000.0,2011-08-31,116,Blackburn
 Britt Assombalonga,Nottm Forest,Middlesbrough,17100000.0,2017-07-17,117,Middlesbrough
-,Heerenveen,Middlesbrough,17000000.0,2008-01-01,117,Middlesbrough
 Ugo Ehiogu,Aston Villa,Middlesbrough,12200000.0,2000-10-20,117,Middlesbrough
 Jordan Rhodes,Blackburn,Middlesbrough,11900000.0,2016-02-01,117,Middlesbrough
 Martin Braithwaite,Toulouse,Middlesbrough,11300000.0,2017-07-13,117,Middlesbrough
@@ -1278,7 +1267,6 @@ Juan Sebastián Verón,Sampdoria,Parma,17500000.0,1998-07-01,129,Parma
 Sérgio Conceição,Lazio,Parma,17000000.0,2000-07-01,129,Parma
 Vratislav Gresko,Inter,Parma,16000000.0,2002-07-01,129,Parma
 Ousmane Dabo,Inter,Parma,15490000.0,1999-07-01,129,Parma
-,Borussia Dortmund,Parma,15000000.0,2001-07-01,129,Parma
 Daniele Bonera,Brescia,Parma,15000000.0,2002-07-01,129,Parma
 Adriano,Inter,Parma,14500000.0,2002-07-01,129,Parma
 Dennis Man,FCSB,Parma,12600000.0,2021-01-29,129,Parma
@@ -1620,7 +1608,6 @@ Jakub Jankto,Udinese,Sampdoria,14500000.0,2019-07-01,163,Sampdoria
 Jeison Murillo,Valencia,Sampdoria,13300000.0,2020-01-14,163,Sampdoria
 Luis Muriel,Udinese,Sampdoria,12000000.0,2015-07-01,163,Sampdoria
 Manolo Gabbiadini,Southampton,Sampdoria,11900000.0,2019-01-11,163,Sampdoria
-,Valencia,Sampdoria,10800000.0,1998-07-28,163,Sampdoria
 Omar Colley,KRC Genk,Sampdoria,9250000.0,2018-07-01,163,Sampdoria
 Giampaolo Pazzini,Fiorentina,Sampdoria,9000000.0,2009-01-15,163,Sampdoria
 Hugo Ekitiké,Paris Saint-Germain,Frankfurt,31500000.0,2024-07-01,164,Frankfurt
@@ -1703,7 +1690,6 @@ Gonçalo Ramos,Benfica,Paris Saint-Germain,65000000.0,2024-01-01,171,Paris Saint
 Edinson Cavani,Napoli,Paris Saint-Germain,64500000.0,2013-07-16,171,Paris Saint-Germain
 Ilya Zabarnyi,Bournemouth,Paris Saint-Germain,63000000.0,2025-08-12,171,Paris Saint-Germain
 Ángel Di María,Manchester United,Paris Saint-Germain,63000000.0,2015-08-06,171,Paris Saint-Germain
-,São Paulo,Real Betis,30000000.0,1998-07-30,172,Real Betis
 Borja Iglesias,Espanyol,Real Betis,28000000.0,2019-08-14,172,Real Betis
 Antony,Manchester United,Real Betis,22000000.0,2025-09-01,172,Real Betis
 Giovani Lo Celso,Paris Saint-Germain,Real Betis,22000000.0,2019-07-01,172,Real Betis

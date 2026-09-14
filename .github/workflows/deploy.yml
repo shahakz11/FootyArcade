@@ -20,6 +20,12 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Verify daily puzzles (Tier 1 & Proactive AI Guard)
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          python scripts/verify_daily_puzzles.py --offset 1 --report-sheet
+
       - name: Compile daily puzzles
         run: |
           python fetch_daily.py --max-back-days 7

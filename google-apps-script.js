@@ -42,6 +42,11 @@ function doPost(e) {
       return handleVarCheck(payload);
     }
 
+    // ── 1b. Daily Puzzle Verification Cron Audit Report ─────────
+    if (type === 'puzzle_audit') {
+      return handlePuzzleAudit(payload);
+    }
+
     // ── 2. Guard for general feedback/events ─────────────────────
     // Only record events from the production domain, and never from template URLs
     if (url && (url.indexOf('playmaker.best') === -1 || url.indexOf('/templates/') !== -1 || url.indexOf('_template.html') !== -1)) {
@@ -189,7 +194,7 @@ function handleVarCheck(payload) {
       '  "club": "Real Madrid"\n' +
       "}";
 
-    var modelsToTry = ["openai/gpt-oss-20b", "qwen/qwen3.8-27b", "groq/compound-mini"];
+    var modelsToTry = ["openai/gpt-oss-20b", "openai/gpt-oss-120b", "qwen/qwen3.8-27b", "qwen/qwen3.6-27b", "meta-llama/llama-prompt-guard-2-22m", "groq/compound-mini"];
     var success = false;
     var lastError = "";
 
@@ -314,8 +319,8 @@ function handleVarCheck(payload) {
         var alreadySaved = false;
         for (var r = 1; r < existingRows.length; r++) {
           if (existingRows[r][1] === gameId &&
-              parseInt(existingRows[r][2], 10) === parseInt(puzzleNum, 10) &&
-              existingRows[r][3].toString().toLowerCase() === guess.toLowerCase()) {
+            parseInt(existingRows[r][2], 10) === parseInt(puzzleNum, 10) &&
+            existingRows[r][3].toString().toLowerCase() === guess.toLowerCase()) {
             alreadySaved = true;
             break;
           }
@@ -359,9 +364,157 @@ function handleVarCheck(payload) {
   })).setMimeType(ContentService.MimeType.JSON);
 }
 
+/**
+ * Handles daily puzzle verification cron audit reports
+ */
+function handlePuzzleAudit(payload) {
+  var doc = SpreadsheetApp.getActiveSpreadsheet();
+  var sheetName = 'Puzzle Audits';
+  var sheet = doc.getSheetByName(sheetName);
+
+  if (!sheet) {
+    sheet = doc.insertSheet(sheetName);
+    sheet.appendRow([
+      'Timestamp',
+      'Target Date',
+      'Puzzle Number',
+      'Status',
+      'Games Audited',
+      'Issues Detected',
+      'Auto-Fixes Applied',
+      'Execution Time (s)',
+      'Details / Summary'
+    ]);
+    sheet.getRange(1, 1, 1, 9)
+      .setFontWeight('bold')
+      .setBackground('#1c1b1b')
+      .setFontColor('#00f0ff');
+  }
+
+  var timestamp = new Date().toISOString();
+  var targetDate = payload.targetDate || '';
+  var puzzleNum = payload.puzzleNum || 0;
+  var status = payload.status || 'UNKNOWN';
+  var gamesAudited = payload.gamesAudited || '';
+  var issuesCount = payload.issuesCount !== undefined ? payload.issuesCount : 0;
+  var fixesCount = payload.fixesCount !== undefined ? payload.fixesCount : 0;
+  var execTime = payload.execTimeSec !== undefined ? payload.execTimeSec : '';
+  var summary = typeof payload.summary === 'object' ? JSON.stringify(payload.summary) : (payload.summary || '');
+
+  sheet.appendRow([
+    timestamp,
+    targetDate,
+    puzzleNum,
+    status,
+    gamesAudited,
+    issuesCount,
+    fixesCount,
+    execTime,
+    summary
+  ]);
+
+  // Also log flagged discrepancies / suggestions into 'Puzzle Review' tab for easy human approval
+  var flaggedReviews = payload.flaggedReviews || [];
+  if (flaggedReviews && flaggedReviews.length > 0) {
+    try {
+      var reviewSheetName = 'Puzzle Review';
+      var reviewSheet = doc.getSheetByName(reviewSheetName);
+      if (!reviewSheet) {
+        reviewSheet = doc.insertSheet(reviewSheetName);
+        reviewSheet.appendRow([
+          'Timestamp',
+          'Target Date',
+          'Game ID',
+          'Puzzle #',
+          'Field / Player',
+          'Current Value',
+          'Suggested / Correct',
+          'Reason / Note',
+          'Status (Action)',
+          'Applied Date'
+        ]);
+        reviewSheet.getRange(1, 1, 1, 10)
+          .setFontWeight('bold')
+          .setBackground('#1c1b1b')
+          .setFontColor('#ffd700');
+        reviewSheet.setFrozenRows(1);
+      }
+
+      // Add each flagged item with a Pending dropdown
+      for (var f = 0; f < flaggedReviews.length; f++) {
+        var item = flaggedReviews[f];
+        var newRow = reviewSheet.getLastRow() + 1;
+        reviewSheet.appendRow([
+          timestamp,
+          targetDate,
+          item.game_id || '',
+          item.puzzle_num || '',
+          item.field || '',
+          item.current || '',
+          item.correct || '',
+          item.reason || '',
+          'Pending',
+          ''
+        ]);
+
+        // Build interactive dropdown in Column I: Pending, Approved, Rejected
+        var rule = SpreadsheetApp.newDataValidation()
+          .requireValueInList(['Pending', 'Approved', 'Rejected'], true)
+          .setAllowInvalid(false)
+          .build();
+        reviewSheet.getRange(newRow, 9).setDataValidation(rule).setFontWeight('bold').setFontColor('#ffaa00');
+      }
+    } catch (revErr) {
+      console.error('Failed to log to Puzzle Review sheet:', revErr);
+    }
+  }
+
+  return ContentService.createTextOutput(JSON.stringify({
+    status: 'success',
+    message: 'Puzzle audit logged successfully'
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
 function doGet(e) {
   try {
     var params = e ? e.parameter : {};
+
+    // ── 1. Get Approved Reviews for Auto-Applying Fixes ──────────
+    if (params && params.action === 'get_approved_reviews') {
+      var doc = SpreadsheetApp.getActiveSpreadsheet();
+      var reviewSheet = doc.getSheetByName('Puzzle Review');
+      var approved = [];
+
+      if (reviewSheet) {
+        var data = reviewSheet.getDataRange().getValues();
+        for (var i = 1; i < data.length; i++) {
+          var row = data[i];
+          var status = (row[8] || '').toString().trim();
+          var appliedDate = row[9];
+
+          // Return rows marked 'Approved' that have not yet been marked applied
+          if (status === 'Approved' && !appliedDate) {
+            approved.push({
+              rowIndex: i + 1, // 1-indexed for sheet
+              targetDate: row[1],
+              gameId: row[2],
+              puzzleNum: parseInt(row[3], 10),
+              field: row[4],
+              current: row[5],
+              correct: row[6],
+              reason: row[7]
+            });
+          }
+        }
+      }
+
+      return ContentService.createTextOutput(JSON.stringify({
+        status: 'success',
+        approved: approved
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // ── 2. Get Global Overrides for Runtime App ──────────────────
     if (params && params.action === 'get_overrides') {
       var targetGameId = params.gameId || '';
       var targetPuzzleNum = parseInt(params.puzzleNum || '0', 10);
