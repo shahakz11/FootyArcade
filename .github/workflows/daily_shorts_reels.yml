@@ -28,6 +28,11 @@ on:
         required: false
         default: false
         type: boolean
+      instant_reels:
+        description: 'Publish all Instagram Reels immediately without 1-hour delays'
+        required: false
+        default: false
+        type: boolean
 
 # Prevent concurrent runs: If the primary run is currently executing (uploading queued reels),
 # any second run will wait in queue rather than running in parallel.
@@ -97,6 +102,7 @@ jobs:
           INPUT_DRY_RUN: ${{ github.event.inputs.dry_run }}
           INPUT_FAST: ${{ github.event.inputs.fast }}
           INPUT_FORCE: ${{ github.event.inputs.force }}
+          INPUT_INSTANT_REELS: ${{ github.event.inputs.instant_reels }}
         run: |
           CMD="python3 -u scripts/upload_daily_shorts.py --wait-queue"
           if [ -n "$INPUT_GAME" ]; then
@@ -110,6 +116,9 @@ jobs:
           fi
           if [ "$INPUT_FORCE" = "true" ]; then
             CMD="$CMD --force"
+          fi
+          if [ "$INPUT_INSTANT_REELS" = "true" ]; then
+            CMD="$CMD --instant-reels"
           fi
           echo "Executing: $CMD"
           $CMD
