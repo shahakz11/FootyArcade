@@ -17,7 +17,7 @@ import imageio_ffmpeg
 
 SAMPLE_RATE = 44100
 DEFAULT_VOICE = "en-GB-RyanNeural" # Energetic British sports commentator tone
-DEFAULT_RATE = "+12%"
+DEFAULT_RATE = "+28%"
 
 def _clean_text_for_speech(text):
     """Sanitizes text for clean pronunciation by the TTS engine."""
@@ -82,68 +82,58 @@ def format_fee_spoken(fee):
     try:
         f = float(fee)
         if f <= 0:
-            return "a free transfer"
+            return "free"
         m = round(f / 1000000.0)
         if m >= 100:
-            return f"over {m} million euros"
-        return f"{m} million euros"
+            return f"{m} million"
+        return f"{m} million"
     except Exception:
-        return "a record fee"
+        return "record fee"
 
 def get_game_voice_script(game_id, target_name="", extra_data=None):
     """
     Generates a structured commentary script tailored to today's specific puzzle data.
-    Announces the exact position and clues BEFORE the answer is submitted.
+    Ultra-condensed 3-6 word phrases designed for concurrent audio-visual staging and circular looping.
     """
     extra_data = extra_data or {}
     clean_target = str(target_name or "").strip()
 
     if game_id == "top_transfers":
         transfers = extra_data.get("transfers", [])
-        t1_fee = format_fee_spoken(transfers[0].get("transfer_fee")) if len(transfers) > 0 else "a record fee"
+        t1_fee = format_fee_spoken(transfers[0].get("transfer_fee")) if len(transfers) > 0 else "record fee"
         t2_from = transfers[1].get("from_club_name", "another club") if len(transfers) > 1 else "another club"
-        t2_fee = format_fee_spoken(transfers[1].get("transfer_fee")) if len(transfers) > 1 else "a massive fee"
-        t4_from = transfers[3].get("from_club_name", "another club") if len(transfers) > 3 else "another club"
-        t4_fee = format_fee_spoken(transfers[3].get("transfer_fee")) if len(transfers) > 3 else "a high fee"
+        t2_fee = format_fee_spoken(transfers[1].get("transfer_fee")) if len(transfers) > 1 else "huge fee"
         t5_from = transfers[4].get("from_club_name", "another club") if len(transfers) > 4 else "another club"
-        t5_fee = format_fee_spoken(transfers[4].get("transfer_fee")) if len(transfers) > 4 else "a big fee"
+        t5_fee = format_fee_spoken(transfers[4].get("transfer_fee")) if len(transfers) > 4 else "big fee"
 
         return {
-            "intro": f"Can you guess {clean_target or 'this club'}'s top five record transfers? Let's test your ball knowledge!",
-            "guess_5": f"Can you guess number five? Signed from {t5_from} for {t5_fee}!",
-            "guess_4": f"Next up is number four! Signed from {t4_from} for {t4_fee}!",
-            "guess_2": f"And coming in at number two! Signed from {t2_from} for {t2_fee}!",
-            "cliffhanger": f"We skipped number three and the record-breaking number one of {t1_fee}! Who is number one? Pause and comment below!",
-            "outro": "Play today's free daily challenge at playmaker dot best, link in bio!"
+            "intro": f"{clean_target or 'Club'} top five transfers! Guess them!",
+            "guess_5": f"Number five! {t5_from}, {t5_fee}!",
+            "guess_2": f"Number two! {t2_from}, {t2_fee}!",
+            "cliffhanger": f"Who is number one for {t1_fee}? Comment before it loops!"
         }
     elif game_id == "top_scorers":
         scorers = extra_data.get("scorers", [])
         s1_goals = scorers[0].get("goals", "top") if len(scorers) > 0 else "record"
         s2 = scorers[1] if len(scorers) > 1 else {}
-        s4 = scorers[3] if len(scorers) > 3 else {}
         s5 = scorers[4] if len(scorers) > 4 else {}
 
         return {
-            "intro": f"Who scored the most goals in {clean_target or 'this competition'}? Let's find out!",
-            "guess_5": f"Can you guess number five? He scored {s5.get('goals', 14)} goals for {s5.get('club_name', 'his club')}!",
-            "guess_4": f"Next is number four! {s4.get('goals', 14)} goals for {s4.get('club_name', 'his club')}!",
-            "guess_2": f"Coming in at number two! {s2.get('goals', 15)} goals for {s2.get('club_name', 'his club')}!",
-            "cliffhanger": f"Who is the all-time number one top scorer with {s1_goals} goals? Drop your guess in the comments!",
-            "outro": "Test your football IQ at playmaker dot best, link in bio!"
+            "intro": f"{clean_target or 'Team'} top goalscorers! Name them!",
+            "guess_5": f"Number five! {s5.get('goals', 14)} goals, {s5.get('club_name', 'his club')}!",
+            "guess_2": f"Number two! {s2.get('goals', 15)} goals, {s2.get('club_name', 'his club')}!",
+            "cliffhanger": f"Who is number one with {s1_goals} goals? Comment before it loops!"
         }
     elif game_id == "transfer_destination":
         transfers = extra_data.get("transfers", [])
-        step1_to = transfers[0].get("to_club_name", "his current club") if transfers else "his club"
+        step1_to = transfers[0].get("to_club_name", "his club") if transfers else "his club"
         step1_from = transfers[0].get("from_club_name", "another club") if transfers else "another club"
-        step2_from = transfers[1].get("from_club_name", "his previous club") if len(transfers) > 1 else "another club"
 
         return {
-            "intro": "Can you guess this mystery player's career path backwards?",
-            "wrong_1": "Not that club! Try again!",
-            "step_1": f"First destination backwards! Which club did he play for before moving to {step1_to}?",
-            "step_2": f"Before {step1_from}, which club did he play for next backwards?",
-            "cliffhanger": "Can you name this mystery player and where his career started? Drop your answer in the comments!",
-            "outro": "Play the full mystery player career at playmaker dot best!"
+            "intro": "Guess this career backwards!",
+            "step_1": f"Before {step1_to}, which club?",
+            "step_2": f"Before {step1_from}, where did he play?",
+            "cliffhanger": "Who is this player? Comment before it loops!"
         }
     elif game_id == "club_connect":
         players = extra_data.get("players", [])
@@ -151,11 +141,10 @@ def get_game_voice_script(game_id, target_name="", extra_data=None):
         p2 = players[1] if len(players) > 1 else "this star"
 
         return {
-            "intro": "Which mystery club did all these football stars transfer to?",
-            "clue_1": f"First clue! {p1} played for today's mystery club!",
-            "clue_2": f"Second clue! {p2} also played here!",
-            "cliffhanger": "What club connects all of them? Comment your guess before time runs out!",
-            "outro": "Play live on playmaker dot best!"
+            "intro": "Which club connects these stars?",
+            "clue_1": f"Clue one! {p1} played here!",
+            "clue_2": f"Clue two! {p2} played here!",
+            "cliffhanger": "What club connects them? Guess before it loops!"
         }
     elif game_id == "player_chain":
         steps = extra_data.get("steps", [])
@@ -163,12 +152,10 @@ def get_game_voice_script(game_id, target_name="", extra_data=None):
         s2_clubs = " and ".join(steps[1].get("active_clubs", [])) if len(steps) > 1 else "these clubs"
 
         return {
-            "intro": "Can you crack today's teammate transfer chain?",
-            "step_1": f"Step one! Name a teammate who played for {s1_club}!",
-            "wrong_1": "Not him! Keep thinking!",
-            "step_2": f"Step two! Name a player connecting {s2_clubs}!",
-            "cliffhanger": "Who is the mystery target player linking all of them? Comment your answer below!",
-            "outro": "Solve the full chain at playmaker dot best!"
+            "intro": "Crack today's teammate chain!",
+            "step_1": f"Teammate at {s1_club}!",
+            "step_2": f"Connecting {s2_clubs}!",
+            "cliffhanger": "Who is the mystery target? Guess before it loops!"
         }
     elif game_id == "passport_fc":
         steps = extra_data.get("steps", [])
@@ -176,18 +163,15 @@ def get_game_voice_script(game_id, target_name="", extra_data=None):
         n2 = steps[1].get("nationality", "second nationality") if len(steps) > 1 else "second nationality"
 
         return {
-            "intro": f"Can you complete the club passport for {clean_target or 'today'}?",
-            "step_1": f"First player! Name a {n1} star who played for {clean_target}!",
-            "wrong_1": "Not on this team!",
-            "step_2": f"Second player! Name a {n2} star for this club!",
-            "cliffhanger": "Can you complete the remaining nationalities? Drop your answers in the comments!",
-            "outro": "Play today's free passport challenge at playmaker dot best!"
+            "intro": f"Complete the {clean_target or 'club'} passport!",
+            "step_1": f"Name a {n1} star for {clean_target}!",
+            "step_2": f"Name a {n2} star for this club!",
+            "cliffhanger": "Name the remaining stars! Comment before it loops!"
         }
     else:
         return {
-            "intro": "Daily Football Quiz Challenge! Let's see your ball knowledge!",
-            "cliffhanger": "Can you guess the answer? Drop your comment below!",
-            "outro": "Play today's free puzzle at playmaker dot best!"
+            "intro": "Daily Football Quiz! Guess the answer!",
+            "cliffhanger": "Drop your guess before the video loops!"
         }
 
 async def pre_synthesize_voice_script(script_dict, temp_dir, voice=DEFAULT_VOICE, rate=DEFAULT_RATE):

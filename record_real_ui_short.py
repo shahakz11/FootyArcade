@@ -318,7 +318,7 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                 """)
 
             async def run_countdown(seconds=3):
-                """Runs a synchronized visual countdown timer before each guess and emits SFX audio ticks."""
+                """Runs a synchronized 2.0s visual countdown timer (20 frames per tick) and emits SFX audio ticks."""
                 await set_timer_visible(True)
                 colors = {3: "#39ff14", 2: "#fbbf24", 1: "#ef4444"}
                 borders = {3: "#00f0ff", 2: "#fbbf24", 1: "#ef4444"}
@@ -330,12 +330,12 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                 
                     current_t = len(frames) / FPS
                     audio_events.append((f"tick_{sec}", current_t))
-                    await capture_hold(30) # 1 second hold per tick @ 30 FPS
+                    await capture_hold(20) # 0.67s hold per tick @ 30 FPS (2.0s total)
                 
                 await set_timer_state("TIME'S UP!", "GO!", color="#ef4444", border_color="#ef4444", icon="🚨")
                 current_t = len(frames) / FPS
                 audio_events.append(("tick_go", current_t))
-                await capture_hold(12) # 0.4s brief alert hold
+                await capture_hold(8) # 0.26s alert hold
 
             target_name = ""
             if game_id == "player_chain":
@@ -411,26 +411,24 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                 for k, info in synthesized_cues.items():
                     print(f"   [{k}]: \"{info['text']}\" ({info['duration']:.2f}s)")
 
-                async def play_cue_and_hold(cue_key):
-                    """Plays the synthesized voice clip at current timestamp and holds UI for its duration."""
+                def trigger_voice_cue(cue_key):
+                    """Triggers synthesized voice cue at current timestamp concurrently with visual timeline."""
                     if cue_key and cue_key in synthesized_cues:
                         info = synthesized_cues[cue_key]
                         if info.get("wav_path") and os.path.exists(info["wav_path"]):
                             t_sec = len(frames) / FPS
                             cue_placements.append((info["wav_path"], t_sec))
-                            hold_frames = max(15, int(info["duration"] * FPS) + 4)
-                            await capture_hold(hold_frames)
 
-                await capture_hold(10)
-                # Play intro narration and hold
-                await play_cue_and_hold("intro")
+                # Intro stage (1.5s hold with concurrent intro hook narration)
+                trigger_voice_cue("intro")
+                await capture_hold(45)
 
                 async def make_guess(name, is_correct=True, do_countdown=True, cue_key=None):
-                    # 1. Announce clue and position BEFORE countdown
+                    # 1. Announce clue concurrently with countdown
                     if cue_key:
-                        await play_cue_and_hold(cue_key)
+                        trigger_voice_cue(cue_key)
 
-                    # 2. Visual countdown widget
+                    # 2. Visual countdown widget (1.5s snappy countdown)
                     if do_countdown:
                         await run_countdown(3)
                     
@@ -441,19 +439,20 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                     await input_el.focus()
                     await input_el.fill("")
                 
+                    # Fast responsive typing (~15ms per char)
                     for i in range(len(name)):
                         char = name[i]
                         await input_el.type(char, delay=0)
-                        png = await page.screenshot(type="png", timeout=10000)
-                        for _ in range(2):
+                        if i % 2 == 0 or i == len(name) - 1:
+                            png = await page.screenshot(type="png", timeout=10000)
                             add_frame(png)
-                        await page.wait_for_timeout(70)
+                        await page.wait_for_timeout(15)
                     
-                    await page.wait_for_timeout(150)
+                    await page.wait_for_timeout(40)
                 
                     try:
-                        await page.wait_for_selector("#autocomplete-list div", state="visible", timeout=2000)
-                        await capture_hold(8)
+                        await page.wait_for_selector("#autocomplete-list div", state="visible", timeout=1500)
+                        await capture_hold(2)
                         dropdown_items = page.locator("#autocomplete-list div")
                         count = await dropdown_items.count()
                         clicked = False
@@ -468,22 +467,22 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                     except Exception:
                         await input_el.fill(name)
                     
-                    await capture_hold(5)
+                    await capture_hold(2)
                     await page.click("#submit-btn")
                 
                     # Emit audio SFX event for correct / wrong answer
                     current_t = len(frames) / FPS
                     audio_events.append(('correct' if is_correct else 'wrong', current_t))
                 
-                    # Display prominent centered modal feedback overlay
+                    # Display prominent centered modal feedback overlay (0.7s hold)
                     sub_title = "GREAT GUESS!" if is_correct else "NOT ON THE LIST!"
                     await show_middle_feedback(is_correct=is_correct, message=sub_title)
-                    await capture_hold(45) # Hold modal for ~1.5s
+                    await capture_hold(22) # Snappy 0.7s hold
                     await hide_middle_feedback()
-                    await capture_hold(15)
+                    await capture_hold(6) # 0.2s transition hold
 
                 # ----------------------------------------------------
-                # Game-Specific Automation Logic
+                # Game-Specific Automation Logic (2-Clue Lightning Format)
                 # ----------------------------------------------------
                 if game_id == "club_connect":
                     mystery_club = await page.evaluate("DAILY_CLUBCONNECT_GAME.club")
@@ -493,22 +492,24 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                     wrong_guesses = [c for c in wrong_clubs_pool if c.lower() != mystery_club.lower()][:2]
                 
                     for idx, wrong_club in enumerate(wrong_guesses, 1):
-                        print(f"  ➜ Wrong Guess {idx}/2 (unlocking next player): {wrong_club}")
+                        print(f"  ➜ Clue {idx}/2 Unlock Guess: {wrong_club}")
                         await make_guess(wrong_club, is_correct=False, do_countdown=True, cue_key=f"clue_{idx}")
                 
-                    await play_cue_and_hold("cliffhanger")
+                    trigger_voice_cue("cliffhanger")
+                    await capture_hold(120) # 4.0s loop cliffhanger hold
                     
                 elif game_id == "top_transfers":
-                    # Baseline wrong guess first to show mechanics
-                    await make_guess("Cristiano Ronaldo", is_correct=False, do_countdown=True)
                     top5 = extra_data.get("transfers", [])[:5]
-                    reveal_indices = [4, 3, 1]
-                    cue_map = {4: "guess_5", 3: "guess_4", 1: "guess_2"}
-                    for idx in reveal_indices:
-                        if idx < len(top5):
-                            p_name = top5[idx]['player_name']
-                            print(f"  ➜ Guessing #{idx+1}: {p_name}")
-                            await make_guess(p_name, is_correct=True, do_countdown=True, cue_key=cue_map.get(idx))
+                    # 2-Clue reveal: Guess #5 and Guess #2
+                    if len(top5) > 4:
+                        p5_name = top5[4]['player_name']
+                        print(f"  ➜ Guessing #5: {p5_name}")
+                        await make_guess(p5_name, is_correct=True, do_countdown=True, cue_key="guess_5")
+                    
+                    if len(top5) > 1:
+                        p2_name = top5[1]['player_name']
+                        print(f"  ➜ Guessing #2: {p2_name}")
+                        await make_guess(p2_name, is_correct=True, do_countdown=True, cue_key="guess_2")
                         
                     await page.evaluate("""
                         const tbody = document.getElementById("table-body");
@@ -519,36 +520,47 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                             tbody.children[2].style.opacity = "0.4";
                         }
                     """)
-                    await play_cue_and_hold("cliffhanger")
+                    trigger_voice_cue("cliffhanger")
+                    await capture_hold(120) # 4.0s loop cliffhanger hold
                 
                 elif game_id == "transfer_destination":
                     transfers = extra_data.get("transfers", [])
-                    step1_from = transfers[0]['from_club_name'] if transfers else ""
-                    wrong_candidates = [c for c in ["Real Madrid", "Barcelona", "Bayern Munich", "Juventus", "Manchester City"] if c.lower() != step1_from.lower()]
-                    wrong_club = wrong_candidates[0] if wrong_candidates else "Bayern Munich"
-
-                    print(f"  ➜ Step 1 Wrong Guess: {wrong_club}")
-                    await make_guess(wrong_club, is_correct=False, do_countdown=True, cue_key="wrong_1")
+                    if len(transfers) > 0:
+                        prev_club_1 = transfers[0]['from_club_name']
+                        print(f"  ➜ Destination Step 1 Previous Club: {prev_club_1}")
+                        await make_guess(prev_club_1, is_correct=True, do_countdown=True, cue_key="step_1")
+                    
+                    if len(transfers) > 1:
+                        prev_club_2 = transfers[1]['from_club_name']
+                        print(f"  ➜ Destination Step 2 Previous Club: {prev_club_2}")
+                        await make_guess(prev_club_2, is_correct=True, do_countdown=True, cue_key="step_2")
                 
-                    for idx in range(min(2, len(transfers))):
-                        prev_club = transfers[idx]['from_club_name']
-                        print(f"  ➜ Guessing Step {idx+1} Previous Club: {prev_club}")
-                        await make_guess(prev_club, is_correct=True, do_countdown=True, cue_key=f"step_{idx+1}")
-                
-                    await play_cue_and_hold("cliffhanger")
+                    trigger_voice_cue("cliffhanger")
+                    await capture_hold(120) # 4.0s loop cliffhanger hold
                     
                 elif game_id == "top_scorers":
-                    await make_guess("Cristiano Ronaldo", is_correct=False, do_countdown=True)
                     top5 = extra_data.get("scorers", [])[:5]
-                    reveal_indices = [4, 3, 1]
-                    cue_map = {4: "guess_5", 3: "guess_4", 1: "guess_2"}
-                    for idx in reveal_indices:
-                        if idx < len(top5):
-                            p_name = top5[idx]['player_name']
-                            print(f"  ➜ Guessing #{idx+1}: {p_name}")
-                            await make_guess(p_name, is_correct=True, do_countdown=True, cue_key=cue_map.get(idx))
+                    if len(top5) > 4:
+                        p5_name = top5[4]['player_name']
+                        print(f"  ➜ Guessing #5: {p5_name}")
+                        await make_guess(p5_name, is_correct=True, do_countdown=True, cue_key="guess_5")
+                    
+                    if len(top5) > 1:
+                        p2_name = top5[1]['player_name']
+                        print(f"  ➜ Guessing #2: {p2_name}")
+                        await make_guess(p2_name, is_correct=True, do_countdown=True, cue_key="guess_2")
                 
-                    await play_cue_and_hold("cliffhanger")
+                    await page.evaluate("""
+                        const tbody = document.getElementById("table-body");
+                        if (tbody && tbody.children.length >= 3) {
+                            tbody.children[0].style.filter = "blur(8px)";
+                            tbody.children[0].style.opacity = "0.4";
+                            tbody.children[2].style.filter = "blur(8px)";
+                            tbody.children[2].style.opacity = "0.4";
+                        }
+                    """)
+                    trigger_voice_cue("cliffhanger")
+                    await capture_hold(120) # 4.0s loop cliffhanger hold
 
                 elif game_id == "player_chain":
                     chain_data = await page.evaluate("DAILY_CHAIN_GAME")
@@ -565,20 +577,13 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                     
                     if len(steps) > 1:
                         step2 = steps[1]
-                        step2_clubs = " & ".join(step2.get("active_clubs", []))
-                        wrong_pool = ["Paolo Maldini", "Gianluigi Donnarumma", "Franco Baresi", "Gennaro Gattuso", "Kaka", "Lionel Messi"]
-                        step2_valid = [p.lower() for p in step2.get("valid_players", [])]
-                        wrong_candidates = [p for p in wrong_pool if p.lower() not in step2_valid]
-                        wrong_guess = wrong_candidates[0] if wrong_candidates else "Paolo Maldini"
-                        print(f"  ➜ Step 2 Wrong Guess (shows lives deduction): {wrong_guess}")
-                        await make_guess(wrong_guess, is_correct=False, do_countdown=True, cue_key="wrong_1")
-                    
                         step2_players = [p for p in step2.get("valid_players", []) if p.lower() != target_player.lower()]
                         step2_guess = step2_players[0] if step2_players else "Clarence Seedorf"
-                        print(f"  ➜ Step 2 Correct Guess ({step2_clubs}): {step2_guess}")
+                        print(f"  ➜ Step 2 Guess: {step2_guess}")
                         await make_guess(step2_guess, is_correct=True, do_countdown=True, cue_key="step_2")
                 
-                    await play_cue_and_hold("cliffhanger")
+                    trigger_voice_cue("cliffhanger")
+                    await capture_hold(120) # 4.0s loop cliffhanger hold
 
                 elif game_id == "passport_fc":
                     passport_data = await page.evaluate("DAILY_PASSPORT_GAME")
@@ -595,22 +600,13 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                     
                     if len(steps) > 1:
                         step2 = steps[1]
-                        step2_valid = [p.lower() for p in step2.get("valid_players", [])]
-                        wrong_candidates = ["Cristiano Ronaldo", "Zlatan Ibrahimovic", "Erling Haaland", "Kylian Mbappe"]
-                        wrong_guess = next((c for c in wrong_candidates if c.lower() not in step2_valid), "Cristiano Ronaldo")
-                        print(f"  ➜ Step 2 Wrong Guess (shows lives deduction): {wrong_guess}")
-                        await make_guess(wrong_guess, is_correct=False, do_countdown=True, cue_key="wrong_1")
-                    
                         step2_players = step2.get("sample_players", []) or step2.get("valid_players", [])
                         step2_guess = step2_players[0] if step2_players else "Lionel Messi"
-                        print(f"  ➜ Step 2 Correct Guess ({step2.get('nationality')}): {step2_guess}")
+                        print(f"  ➜ Step 2 Guess ({step2.get('nationality')}): {step2_guess}")
                         await make_guess(step2_guess, is_correct=True, do_countdown=True, cue_key="step_2")
                 
-                    await play_cue_and_hold("cliffhanger")
-
-                # Final hold on full screen with outro and CTA
-                await play_cue_and_hold("outro")
-                await capture_hold(60)
+                    trigger_voice_cue("cliffhanger")
+                    await capture_hold(120) # 4.0s loop cliffhanger hold
 
                 print(f"📹 Writing {len(frames)} raw video frames...")
                 pid = os.getpid()

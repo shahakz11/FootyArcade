@@ -30,12 +30,59 @@ from scripts.instagram_uploader import (
 
 DAILY_GAMES = [
     {"id": "top_transfers",        "name": "Top Transfers"},
+    {"id": "transfer_destination", "name": "Transfer Destination"}
+]
+
+ALL_AVAILABLE_GAMES = [
+    {"id": "top_transfers",        "name": "Top Transfers"},
     {"id": "transfer_destination", "name": "Transfer Destination"},
     {"id": "club_connect",         "name": "Club Connect"},
     {"id": "player_chain",         "name": "Player Chain"},
     {"id": "top_scorers",          "name": "Top Scorers"},
     {"id": "passport_fc",          "name": "Passport FC"}
 ]
+
+DEFAULT_PEAK_SLOTS = [12, 20]  # 12:00 PM UTC and 8:00 PM UTC peak football engagement windows
+
+def compute_scheduled_slots(num_videos, start_dt=None, slot_hours=None, immediate_first=False):
+    """
+    Computes scheduled publishing datetime slots targeting prime engagement windows (e.g. 12:00 UTC and 20:00 UTC).
+    Returns list of dicts: [{"dt": datetime, "iso": str or None, "label": str}]
+    """
+    if start_dt is None:
+        start_dt = datetime.datetime.now(datetime.timezone.utc)
+    if slot_hours is None:
+        slot_hours = DEFAULT_PEAK_SLOTS
+    
+    sorted_hours = sorted(slot_hours)
+    slots = []
+    
+    if immediate_first and num_videos > 0:
+        slots.append({
+            "dt": start_dt,
+            "iso": None,
+            "label": "NOW (Immediate Public)"
+        })
+    
+    curr_date = start_dt.date()
+    for day_offset in range(14):  # search up to 14 days ahead
+        d = curr_date + datetime.timedelta(days=day_offset)
+        for h in sorted_hours:
+            candidate_dt = datetime.datetime(d.year, d.month, d.day, h, 0, 0, tzinfo=datetime.timezone.utc)
+            # Must be at least 5 minutes into the future for API scheduled publish
+            if candidate_dt > start_dt + datetime.timedelta(minutes=5):
+                if len(slots) < num_videos:
+                    slots.append({
+                        "dt": candidate_dt,
+                        "iso": candidate_dt.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                        "label": f"{candidate_dt.strftime('%Y-%m-%d %H:%M UTC')}"
+                    })
+            if len(slots) >= num_videos:
+                break
+        if len(slots) >= num_videos:
+            break
+
+    return slots
 
 def get_target_name_from_game(game_id):
     """
@@ -67,7 +114,20 @@ def get_target_name_from_game(game_id):
         print(f"⚠️ Could not parse target name from {game_id}.html: {e}")
     return ""
 
-async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_run=False, selected_game="", no_youtube=False, no_instagram=False, instant_reels=False, wait_queue=False, force=False):
+async def process_all_games(
+    slot_hours=None,
+    fast_mode=False,
+    port=8080,
+    dry_run=False,
+    selected_game="",
+    all_games=False,
+    no_youtube=False,
+    no_instagram=False,
+    instant_reels=False,
+    immediate_first=False,
+    wait_queue=False,
+    force=False
+):
     print("\n" + "=" * 68)
     print("   ⚽  PLAYMAKER — DAILY SHORTS & REELS BATCH RENDER & UPLOADER")
     print("=" * 68)
@@ -111,7 +171,7 @@ async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_ru
         print(f"   Tags: {' '.join(matchday_context.get('hashtags', []))}")
         print("🔥" * 34 + "\n")
 
-    print("\n💡 Video #1 will publish immediately; Videos #2..#5 will publish with 1-hour delays.")
+    print("\n💡 Publishing Cadence: 1 Short every 12 hours (12:00 PM UTC & 8:00 PM UTC peak windows).")
     print("   (YouTube scheduled via API, Instagram queued via background scheduler).\n")
 
     # 3. Compile today's latest daily puzzles
@@ -120,25 +180,32 @@ async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_ru
 
     server_proc = ensure_server_running(port)
     results = []
-    games_to_run = [g for g in DAILY_GAMES if not selected_game or g["id"] == selected_game]
+    
+    if all_games:
+        games_to_run = ALL_AVAILABLE_GAMES
+    elif selected_game:
+        games_to_run = [g for g in ALL_AVAILABLE_GAMES if g["id"] == selected_game]
+    else:
+        games_to_run = DAILY_GAMES
+
     has_queued_reels = False
 
     try:
         now_utc = datetime.datetime.now(datetime.timezone.utc)
+        target_slots = compute_scheduled_slots(
+            num_videos=len(games_to_run),
+            start_dt=now_utc,
+            slot_hours=slot_hours,
+            immediate_first=immediate_first
+        )
 
         for i, game in enumerate(games_to_run):
             game_id = game["id"]
             game_name = game["name"]
-
-            # Calculate schedule
-            if i == 0:
-                publish_at = None
-                timing_label = "NOW (Immediate Public)"
-                sched_utc_dt = now_utc
-            else:
-                sched_utc_dt = now_utc + datetime.timedelta(hours=i * interval_hours)
-                publish_at = sched_utc_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
-                timing_label = f"+{i * interval_hours} hr ({sched_utc_dt.strftime('%H:%M UTC')})"
+            slot_info = target_slots[i]
+            publish_at = slot_info["iso"]
+            timing_label = slot_info["label"]
+            sched_utc_dt = slot_info["dt"]
 
             print("\n" + "-" * 68)
             print(f"🎬 [{i+1}/{len(games_to_run)}] Processing: {game_name} ({game_id})")
@@ -261,7 +328,7 @@ async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_ru
             elif not no_instagram and ig_id:
                 ig_caption = build_instagram_caption(game_id=game_id, target_name=target_name)
                 
-                if i == 0 or instant_reels:
+                if publish_at is None or instant_reels:
                     # Upload immediately
                     try:
                         print(f"🚀 Uploading Reel immediately to Instagram...")
@@ -279,7 +346,7 @@ async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_ru
                         queue_reel(
                             video_path=video_path,
                             caption=ig_caption,
-                            scheduled_utc_iso=sched_utc_dt.isoformat(),
+                            scheduled_utc_iso=publish_at,
                             game_id=game_id,
                             date_str=today_str,
                             target_name=target_name
@@ -327,7 +394,9 @@ async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_ru
 
 def main():
     parser = argparse.ArgumentParser(description="Render and upload daily Playmaker games to YouTube Shorts & Instagram Reels.")
-    parser.add_argument("--interval", type=int, default=1, help="Interval in hours between scheduled uploads (default: 1)")
+    parser.add_argument("--slots", type=str, default="12,20", help="Comma-separated UTC peak hours (default: '12,20' for 12:00 PM & 8:00 PM UTC)")
+    parser.add_argument("--immediate-first", action="store_true", help="Publish the first video immediately instead of waiting for next peak slot")
+    parser.add_argument("--all-games", action="store_true", help="Render all 6 games instead of default 2 (Top Transfers & Transfer Destination)")
     parser.add_argument("--port", type=int, default=8080, help="Local server port (default: 8080)")
     parser.add_argument("--fast", action="store_true", help="Fast mode for testing")
     parser.add_argument("--dry-run", action="store_true", help="Render videos only without uploading")
@@ -339,15 +408,23 @@ def main():
     parser.add_argument("--force", action="store_true", help="Bypass deduplication checks and re-render/re-upload")
 
     args = parser.parse_args()
+    
+    try:
+        slot_hours = [int(h.strip()) for h in args.slots.split(",") if h.strip()]
+    except Exception:
+        slot_hours = DEFAULT_PEAK_SLOTS
+
     asyncio.run(process_all_games(
-        interval_hours=args.interval,
+        slot_hours=slot_hours,
         fast_mode=args.fast,
         port=args.port,
         dry_run=args.dry_run,
         selected_game=args.game,
+        all_games=args.all_games,
         no_youtube=args.no_youtube,
         no_instagram=args.no_instagram,
         instant_reels=args.instant_reels,
+        immediate_first=args.immediate_first,
         wait_queue=args.wait_queue,
         force=args.force
     ))

@@ -11,12 +11,12 @@ export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PAT
 [ -f "$HOME/.zshrc" ] && source "$HOME/.zshrc" > /dev/null 2>&1
 
 echo "=========================================================="
-echo "    ⚽  PLAYMAKER — DAILY SHORTS & REELS BATCH PIPELINE"
+echo "    ⚽  PLAYMAKER — DAILY SHORTS & REELS PIPELINE"
 echo "=========================================================="
 echo "1. Checks YouTube Channel & Instagram Business Account"
-echo "2. Renders 9:16 vertical videos with audio for all 5 games"
-echo "3. Publishes Game #1 immediately (YouTube & Instagram)"
-echo "4. Schedules Games #2..#5 with 1-hr delays"
+echo "2. Renders 9:16 vertical videos for Top Transfers & Transfer Destination"
+echo "3. Schedules Video #1 at 12:00 PM UTC (Peak Window 1)"
+echo "4. Schedules Video #2 at 8:00 PM UTC (Peak Window 2)"
 echo "=========================================================="
 echo ""
 
