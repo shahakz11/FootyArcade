@@ -76,7 +76,7 @@ def build_instagram_caption(game_id="top_transfers", target_name=""):
         "top_transfers": f"Can you guess {target_name or 'the club'}'s record transfers? ⚽",
         "transfer_destination": "Guess the mystery player's career path backwards! ⚽",
         "player_chain": "Can you complete this teammate chain? ⚽",
-        "club_connect": "Name players who played for both clubs! ⚽",
+        "club_connect": "Can you guess which team all of these players transferred to? ⚽",
         "top_scorers": f"Who scored the most goals in {target_name or 'this season'}? ⚽",
         "passport_fc": f"Can you complete {target_name or 'today'}'s club passport? ✈️"
     }

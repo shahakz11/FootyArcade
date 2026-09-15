@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-09-15T11:14:24.076733",
+  "timestamp": "2026-09-15T15:41:20.856998",
   "targetDate": "2026-09-16",
   "offset": 1,
-  "status": "PASS",
+  "status": "PARTIAL_FIX",
   "puzzles": {
     "top_transfers": 52,
     "transfer_destination": 52,
@@ -11,8 +11,162 @@
     "player_chain": 6,
     "passport_fc": 3
   },
-  "issues": [],
-  "fixes": [],
-  "ai_checks": [],
-  "execTimeSec": 13.33
+  "issues": [
+    {
+      "game_id": "top_transfers",
+      "puzzle_num": 52,
+      "severity": "ERROR",
+      "message": "AI Consensus Discrepancy confirmed by openai/gpt-oss-120b & qwen/qwen3.8-27b: Both openai/gpt-oss-120b and qwen/qwen3.8-27b agree on discrepancy!",
+      "entity_type": null,
+      "entity_val": null
+    }
+  ],
+  "fixes": [
+    {
+      "game_id": "passport_fc",
+      "puzzle_num": 3,
+      "action": "expand_pool",
+      "detail": "Added verified player 'Paulo Sousa' to Step 2"
+    }
+  ],
+  "ai_checks": [
+    {
+      "game_id": "top_transfers",
+      "puzzle_num": 52,
+      "result": {
+        "consensus": true,
+        "all_factual": false,
+        "confirmed_discrepancy": true,
+        "primary_model": "openai/gpt-oss-120b",
+        "secondary_model": "qwen/qwen3.8-27b",
+        "model1_discrepancies": [
+          "Mateo Retegui is Argentine, not Italian, and never transferred from Atalanta to Al‑Qadsiah for €68.25 m.",
+          "Sandro Tonali's fee to Newcastle United in 2023 was about €23 m, not €60.8 m.",
+          "Riccardo Calafiori's move to Arsenal in 2024 was reported at roughly €30 m, not €45 m.",
+          "Marco Verratti has not moved from PSG to Al‑Arabi; no such transfer occurred.",
+          "Alessandro Bastoni's 2017 transfer to Inter was around €31 m, not €40.7 m.",
+          "The list omits Gianluigi Donnarumma’s €60 m transfer to Paris Saint‑Germain, which is the highest fee for an Italian player."
+        ],
+        "model2_discrepancies": [
+          "Marco Verratti did not transfer from Paris Saint-Germain to Al-Arabi in 2023. He remained at PSG until his contract expired in 2025, after which he joined Al-Arabi for free (or a nominal fee), not for a €45m transfer fee. This is a severe factual error regarding the transfer event and fee.",
+          "Federico Chiesa's transfer from Fiorentina to Juventus in 2022 was a loan with an obligation to buy, but the initial fee was not €44.6m. The total obligation was around €42m, but more importantly, the listing implies a direct permanent transfer fee of €44.6m which is inaccurate for the initial move. However, the bigger issue is Verratti. Let's re-evaluate Chiesa. Actually, Chiesa's move was a loan for €10m with an obligation to buy for €32m, totaling €42m. The €44.6m figure is likely incorrect or refers to a different metric. But the Verratti error is definitive."
+        ],
+        "suggested_corrections": [
+          {
+            "field": "Mateo Retegui nationality/transfer",
+            "current": "Italian, Atalanta→Al‑Qadsiah €68.25 m",
+            "correct": "Argentine, no such transfer",
+            "reason": "Player is not Italian and never joined Al‑Qadsiah"
+          },
+          {
+            "field": "Sandro Tonali fee",
+            "current": "€60.8 m",
+            "correct": "≈€23 m",
+            "reason": "Actual Newcastle United fee was about €23 m"
+          },
+          {
+            "field": "Riccardo Calafiori fee",
+            "current": "€45 m",
+            "correct": "≈€30 m",
+            "reason": "Arsenal paid roughly €30 m"
+          },
+          {
+            "field": "Marco Verratti transfer",
+            "current": "PSG→Al‑Arabi €45 m",
+            "correct": "No transfer; remained at PSG (as of 2026)",
+            "reason": "Transfer never happened"
+          },
+          {
+            "field": "Alessandro Bastoni fee",
+            "current": "€40.7 m",
+            "correct": "≈€31 m",
+            "reason": "Inter paid about €31 m"
+          },
+          {
+            "field": "Missing top Italian signing",
+            "current": "Not listed",
+            "correct": "Gianluigi Donnarumma – PSG €60 m (2021)",
+            "reason": "Highest fee for an Italian player omitted"
+          }
+        ],
+        "notes": "Both openai/gpt-oss-120b and qwen/qwen3.8-27b agree on discrepancy!"
+      }
+    },
+    {
+      "game_id": "transfer_destination",
+      "puzzle_num": 52,
+      "result": {
+        "consensus": true,
+        "all_factual": true,
+        "primary_model": "openai/gpt-oss-120b",
+        "notes": "All listed transfers for Manuel Ugarte match official records; dates and fees are within acceptable rounding tolerances."
+      }
+    },
+    {
+      "game_id": "top_scorers",
+      "puzzle_num": 52,
+      "result": {
+        "consensus": true,
+        "all_factual": true,
+        "primary_model": "openai/gpt-oss-120b",
+        "notes": "All ten entries correctly reflect the Premier League 2014/15 top‑10 scorers and their appearance counts."
+      }
+    },
+    {
+      "game_id": "club_connect",
+      "puzzle_num": 48,
+      "result": {
+        "consensus": false,
+        "all_factual": true,
+        "primary_model": "openai/gpt-oss-120b",
+        "secondary_model": "openai/gpt-oss-20b",
+        "notes": "Model 1 flagged an issue, but Model 2 rejected it as a false alarm. Maintained original puzzle."
+      }
+    },
+    {
+      "game": "player_chain",
+      "step": 2,
+      "result": {
+        "status": "skipped",
+        "reason": "All Groq model attempts failed"
+      }
+    },
+    {
+      "game": "player_chain",
+      "step": 3,
+      "result": {
+        "status": "skipped",
+        "reason": "All Groq model attempts failed"
+      }
+    },
+    {
+      "game": "passport_fc",
+      "step": 2,
+      "result": {
+        "status": "success",
+        "missing_added": [
+          "Paulo Sousa"
+        ],
+        "primary_model": "openai/gpt-oss-120b",
+        "notes": "Added 1 missing qualifying player(s) confirmed by 2 models."
+      }
+    },
+    {
+      "game": "passport_fc",
+      "step": 3,
+      "result": {
+        "status": "skipped",
+        "reason": "All Groq model attempts failed"
+      }
+    },
+    {
+      "game": "passport_fc",
+      "step": 4,
+      "result": {
+        "status": "skipped",
+        "reason": "All Groq model attempts failed"
+      }
+    }
+  ],
+  "execTimeSec": 59.45
 }

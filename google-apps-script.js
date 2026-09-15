@@ -14,6 +14,10 @@
  * 5. (Recommended) Go to Project Settings (⚙️) -> Script Properties -> Add "GROQ_API_KEY" with your Groq key.
  * 6. Click "Deploy" -> "Manage deployments" -> edit (pencil icon) -> select "New version" -> "Deploy".
  *    Make sure "Execute as" is "Me" and "Who has access" is "Anyone".
+ * 7. (ONE-TIME REPAIR FOR TASK #17):
+ *    - Select function "repairFeedbackSheet" from the Apps Script editor toolbar and click "Run" (▶).
+ *    - OR simply open in your browser: <WEB_APP_URL>?action=repair_feedback
+ *    - This will auto-migrate headers and unshift any previously corrupted feedback rows!
  */
 
 /**
@@ -23,6 +27,109 @@ function authorizeScript() {
   var testUrl = "https://httpbin.org/get";
   var res = UrlFetchApp.fetch(testUrl);
   Logger.log("UrlFetchApp authorized successfully! Response code: " + res.getResponseCode());
+}
+
+/**
+ * Resolves feedback payload into an array matching the sheet's actual header names dynamically.
+ */
+function buildFeedbackRow(headers, payload, timestamp) {
+  return headers.map(function(header) {
+    var h = (header || '').toString().trim().toLowerCase();
+    if (h.indexOf('time') !== -1 || h.indexOf('date') !== -1) {
+      return timestamp;
+    }
+    if (h.indexOf('visitor') !== -1) {
+      return payload.visitorId || '';
+    }
+    if (h.indexOf('session') !== -1) {
+      return payload.sessionId || '';
+    }
+    if (h.indexOf('category') !== -1 || h.indexOf('type') !== -1) {
+      return payload.category || '';
+    }
+    if (h.indexOf('message') !== -1 || h.indexOf('feedback') !== -1 || h.indexOf('comment') !== -1) {
+      return payload.message || '';
+    }
+    if (h.indexOf('email') !== -1) {
+      return payload.email || '';
+    }
+    if (h.indexOf('url') !== -1 || h.indexOf('page') !== -1) {
+      return payload.url || '';
+    }
+    return '';
+  });
+}
+
+/**
+ * Resolves event payload into an array matching the sheet's actual header names dynamically.
+ */
+function buildEventsRow(headers, payload, timestamp) {
+  return headers.map(function(header) {
+    var h = (header || '').toString().trim().toLowerCase();
+    if (h.indexOf('time') !== -1 || h.indexOf('date') !== -1) return timestamp;
+    if (h.indexOf('event') !== -1) return payload.eventName || '';
+    if (h.indexOf('game') !== -1) return payload.gameId || '';
+    if (h.indexOf('puzzle') !== -1) return payload.puzzleNum !== undefined ? payload.puzzleNum : 0;
+    if (h === 'score') return payload.score !== undefined ? payload.score : '';
+    if (h.indexOf('max') !== -1) return payload.maxScore !== undefined ? payload.maxScore : '';
+    if (h.indexOf('live') !== -1) return payload.lives !== undefined ? payload.lives : '';
+    if (h === 'won') return payload.won !== undefined ? payload.won : '';
+    if (h.indexOf('back') !== -1) return payload.isBackInTime !== undefined ? payload.isBackInTime : '';
+    if (h.indexOf('detail') !== -1 || h.indexOf('extra') !== -1) return payload.extraDetails || '';
+    if (h.indexOf('source') !== -1) return payload.urlSource || payload.source || '';
+    if (h.indexOf('visitor') !== -1) return payload.visitorId || '';
+    if (h.indexOf('session') !== -1) return payload.sessionId || '';
+    if (h === 'url' || h.indexOf('page') !== -1) return payload.url || '';
+    return '';
+  });
+}
+
+/**
+ * Ensures Feedback sheet headers include Visitor ID and Session ID without shifting data.
+ */
+function ensureFeedbackHeaders(sheet) {
+  var lastCol = sheet.getLastColumn();
+  if (lastCol === 0) {
+    var defaultHeaders = [
+      'Timestamp',
+      'Category',
+      'Message',
+      'Email',
+      'Visitor ID',
+      'Session ID',
+      'URL'
+    ];
+    sheet.appendRow(defaultHeaders);
+    sheet.getRange(1, 1, 1, defaultHeaders.length)
+      .setFontWeight('bold')
+      .setBackground('#1c1b1b')
+      .setFontColor('#ffffff');
+    return defaultHeaders;
+  }
+
+  var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+  var norm = headers.map(function(h) { return (h || '').toString().trim().toLowerCase(); });
+  var hasVisitorId = norm.some(function(h) { return h.indexOf('visitor') !== -1; });
+  var hasSessionId = norm.some(function(h) { return h.indexOf('session') !== -1; });
+
+  if (!hasVisitorId) {
+    var nextCol = sheet.getLastColumn() + 1;
+    sheet.getRange(1, nextCol).setValue('Visitor ID')
+      .setFontWeight('bold')
+      .setBackground('#1c1b1b')
+      .setFontColor('#ffffff');
+    headers.push('Visitor ID');
+  }
+  if (!hasSessionId) {
+    var nextCol = sheet.getLastColumn() + 1;
+    sheet.getRange(1, nextCol).setValue('Session ID')
+      .setFontWeight('bold')
+      .setBackground('#1c1b1b')
+      .setFontColor('#ffffff');
+    headers.push('Session ID');
+  }
+
+  return headers;
 }
 
 function doPost(e) {
@@ -57,22 +164,20 @@ function doPost(e) {
     var doc = SpreadsheetApp.getActiveSpreadsheet();
     var sheetName = type === 'feedback' ? 'Feedback' : 'Events';
     var sheet = doc.getSheetByName(sheetName);
+    var timestamp = new Date().toISOString();
 
-    // Auto-create sheet and write headers if it does not exist
-    if (!sheet) {
-      sheet = doc.insertSheet(sheetName);
-      if (type === 'feedback') {
-        sheet.appendRow([
-          'Timestamp',
-          'Visitor ID',
-          'Session ID',
-          'Category',
-          'Message',
-          'Email',
-          'URL'
-        ]);
-      } else {
-        sheet.appendRow([
+    if (type === 'feedback') {
+      if (!sheet) {
+        sheet = doc.insertSheet(sheetName);
+      }
+      var feedbackHeaders = ensureFeedbackHeaders(sheet);
+      var feedbackRow = buildFeedbackRow(feedbackHeaders, payload, timestamp);
+      sheet.appendRow(feedbackRow);
+    } else {
+      // Auto-create Events sheet and write headers if it does not exist
+      if (!sheet) {
+        sheet = doc.insertSheet(sheetName);
+        var defaultEventsHeaders = [
           'Timestamp',
           'Event Name',
           'Game ID',
@@ -87,52 +192,26 @@ function doPost(e) {
           'Visitor ID',
           'Session ID',
           'URL Source'
-        ]);
-      }
-      sheet.getRange(1, 1, 1, sheet.getLastColumn())
-        .setFontWeight('bold')
-        .setBackground('#1c1b1b')
-        .setFontColor('#ffffff');
-    } else if (type !== 'feedback') {
-      // Auto-migrate: check if column 14 header needs to be added for URL Source
-      var lastCol = sheet.getLastColumn();
-      if (lastCol === 13) {
-        sheet.getRange(1, 14).setValue('URL Source')
+        ];
+        sheet.appendRow(defaultEventsHeaders);
+        sheet.getRange(1, 1, 1, defaultEventsHeaders.length)
           .setFontWeight('bold')
           .setBackground('#1c1b1b')
           .setFontColor('#ffffff');
+      } else {
+        // Auto-migrate: check if column 14 header needs to be added for URL Source
+        var lastCol = sheet.getLastColumn();
+        if (lastCol === 13) {
+          sheet.getRange(1, 14).setValue('URL Source')
+            .setFontWeight('bold')
+            .setBackground('#1c1b1b')
+            .setFontColor('#ffffff');
+        }
       }
-    }
 
-    var timestamp = new Date().toISOString();
-
-    if (type === 'feedback') {
-      sheet.appendRow([
-        timestamp,
-        payload.visitorId || '',
-        payload.sessionId || '',
-        payload.category || '',
-        payload.message || '',
-        payload.email || '',
-        payload.url || ''
-      ]);
-    } else {
-      sheet.appendRow([
-        timestamp,
-        payload.eventName || '',
-        payload.gameId || '',
-        payload.puzzleNum || 0,
-        payload.score !== undefined ? payload.score : '',
-        payload.maxScore !== undefined ? payload.maxScore : '',
-        payload.lives !== undefined ? payload.lives : '',
-        payload.won !== undefined ? payload.won : '',
-        payload.isBackInTime !== undefined ? payload.isBackInTime : '',
-        payload.extraDetails || '',
-        payload.url || '',
-        payload.visitorId || '',
-        payload.sessionId || '',
-        payload.urlSource || payload.source || ''
-      ]);
+      var eventHeaders = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+      var eventRow = buildEventsRow(eventHeaders, payload, timestamp);
+      sheet.appendRow(eventRow);
     }
 
     return ContentService.createTextOutput(JSON.stringify({ status: 'success' }))
@@ -479,6 +558,13 @@ function doGet(e) {
   try {
     var params = e ? e.parameter : {};
 
+    // ── 0. Repair Feedback Sheet Historical Data ─────────────────
+    if (params && params.action === 'repair_feedback') {
+      var repairResult = repairFeedbackSheet();
+      return ContentService.createTextOutput(JSON.stringify(repairResult))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
     // ── 1. Get Approved Reviews for Auto-Applying Fixes ──────────
     if (params && params.action === 'get_approved_reviews') {
       var doc = SpreadsheetApp.getActiveSpreadsheet();
@@ -558,4 +644,96 @@ function doGet(e) {
   }
 
   return HtmlService.createHtmlOutput("<h3>FootyArcade Analytics & VAR Webhook is active!</h3><p>Send a POST request with event, feedback, or VAR review data.</p>");
+}
+
+/**
+ * Repairs historical corrupted rows in the 'Feedback' sheet where UUIDs were shifted into Category/Message.
+ * Can be run from the Apps Script editor or triggered via doGet(?action=repair_feedback).
+ */
+function repairFeedbackSheet() {
+  try {
+    var doc = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = doc.getSheetByName('Feedback');
+    if (!sheet) {
+      return { status: 'error', message: "No 'Feedback' sheet found" };
+    }
+
+    // Ensure headers exist and have Visitor ID & Session ID
+    var headers = ensureFeedbackHeaders(sheet);
+    var numCols = headers.length;
+    var lastRow = sheet.getLastRow();
+    if (lastRow <= 1) {
+      return { status: 'success', message: 'No data rows to repair', repairedRows: 0, totalRows: 0 };
+    }
+
+    var colMap = {};
+    for (var i = 0; i < headers.length; i++) {
+      var hl = (headers[i] || '').toString().trim().toLowerCase();
+      if (hl.indexOf('time') !== -1 || hl.indexOf('date') !== -1) {
+        colMap['timestamp'] = i;
+      } else if (hl.indexOf('visitor') !== -1) {
+        colMap['visitorId'] = i;
+      } else if (hl.indexOf('session') !== -1) {
+        colMap['sessionId'] = i;
+      } else if (hl.indexOf('category') !== -1 || hl.indexOf('type') !== -1) {
+        colMap['category'] = i;
+      } else if (hl.indexOf('message') !== -1 || hl.indexOf('feedback') !== -1 || hl.indexOf('comment') !== -1) {
+        colMap['message'] = i;
+      } else if (hl.indexOf('email') !== -1) {
+        colMap['email'] = i;
+      } else if (hl.indexOf('url') !== -1 || hl.indexOf('page') !== -1) {
+        colMap['url'] = i;
+      }
+    }
+
+    var catIdx = colMap['category'] !== undefined ? colMap['category'] : 1;
+    var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    
+    // Read all data rows
+    var dataRange = sheet.getRange(2, 1, lastRow - 1, sheet.getLastColumn());
+    var rows = dataRange.getValues();
+    var repairedCount = 0;
+
+    for (var r = 0; r < rows.length; r++) {
+      var row = rows[r];
+      var valInCat = (row[catIdx] || '').toString().trim();
+
+      // Check if category column has a UUID (corrupted by shifted visitorId)
+      if (uuidRegex.test(valInCat)) {
+        // Row was previously inserted as: [timestamp, visitorId, sessionId, category, message, email, url]
+        var origTs = row[0];
+        var trueVisitorId = row[1] || '';
+        var trueSessionId = row[2] || '';
+        var trueCategory = row[3] || '';
+        var trueMessage = row[4] || '';
+        var trueEmail = row[5] || '';
+        var trueUrl = row[6] || '';
+
+        var correctedRow = new Array(numCols).fill('');
+        if (colMap['timestamp'] !== undefined) correctedRow[colMap['timestamp']] = origTs;
+        if (colMap['visitorId'] !== undefined) correctedRow[colMap['visitorId']] = trueVisitorId;
+        if (colMap['sessionId'] !== undefined) correctedRow[colMap['sessionId']] = trueSessionId;
+        if (colMap['category'] !== undefined) correctedRow[colMap['category']] = trueCategory;
+        if (colMap['message'] !== undefined) correctedRow[colMap['message']] = trueMessage;
+        if (colMap['email'] !== undefined) correctedRow[colMap['email']] = trueEmail;
+        if (colMap['url'] !== undefined) correctedRow[colMap['url']] = trueUrl;
+
+        // Update row in sheet (row index is r + 2 because 1-indexed and header is row 1)
+        sheet.getRange(r + 2, 1, 1, numCols).setValues([correctedRow]);
+        repairedCount++;
+      }
+    }
+
+    var result = {
+      status: 'success',
+      message: 'Feedback sheet processed successfully',
+      repairedRows: repairedCount,
+      totalRows: rows.length
+    };
+    Logger.log(JSON.stringify(result));
+    return result;
+  } catch (err) {
+    Logger.log('Error repairing feedback sheet: ' + err.toString());
+    return { status: 'error', message: err.toString() };
+  }
 }

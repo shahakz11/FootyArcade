@@ -537,7 +537,9 @@
             const iconEl = document.getElementById(cfg.iconId || 'modal-icon');
             const titleEl = document.getElementById(cfg.titleId || 'modal-title');
             const msgEl = document.getElementById(cfg.messageId || 'modal-message');
-            const scoreEl = document.getElementById(cfg.scoreId || 'modal-score');
+            const scoreEl = (cfg.scoreId !== undefined && cfg.scoreId !== null)
+                ? (cfg.scoreId ? document.getElementById(cfg.scoreId) : null)
+                : document.getElementById('modal-score');
             const streakEl = document.getElementById(cfg.streakId || 'modal-streak');
 
             if (iconEl) {
@@ -824,7 +826,7 @@
                 subLine = `🔍 Mystery Club Connection`;
                 statusLine = won
                     ? `✨ CONNECTED IN ${score} REVEAL${score > 1 ? 'S' : ''}! · ❤️ ${lives} left`
-                    : `🎯 Connected ${score}/${maxScore} players · ❤️ ${lives} left`;
+                    : `❌ Connection Missed · 💔 Out of lives`;
                 break;
             }
             case 'player_chain': {

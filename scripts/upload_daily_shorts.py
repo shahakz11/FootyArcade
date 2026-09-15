@@ -192,7 +192,7 @@ async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_ru
 
             # Render video
             try:
-                render_res = await record_short_video(game_id=game_id, day_offset=0, fast_mode=fast_mode, port=port)
+                render_res = await record_short_video(game_id=game_id, day_offset=0, fast_mode=fast_mode, port=port, force=force)
                 if isinstance(render_res, tuple):
                     video_path, target_name = render_res
                 else:

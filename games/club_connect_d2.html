@@ -381,8 +381,8 @@
 
             <!-- Answer reveal in modal -->
             <div id="modal-answer-block" class="hidden bg-black/30 border border-accent/20 rounded-2xl p-4 space-y-1">
-                <span class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant">The Club Was</span>
-                <span id="modal-score" class="font-headline text-3xl sm:text-4xl text-accent">—</span>
+                <span id="modal-answer-label" class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant">THE MYSTERY CLUB WAS</span>
+                <span id="modal-club-name" class="font-headline text-2xl sm:text-3xl text-accent uppercase italic tracking-wider block mt-1 neon-text-glow">—</span>
             </div>
 
             <!-- Stats -->
@@ -41335,7 +41335,8 @@
             iconId:                'modal-icon',
             titleId:               'modal-title',
             messageId:             'modal-message',
-            scoreId:               'modal-score',
+            scoreId:               null,
+            extraInfoId:           'modal-club-name',
             streakId:              'modal-streak',
             backInTimeContainerId: 'back-in-time-container',
         });
@@ -41588,49 +41589,101 @@
     }
 
     function showResultModal(won, score, stats, bitLinks) {
-        // Populate the answer block (club name shown in score slot)
-        document.getElementById('modal-answer-block').classList.remove('hidden');
-        document.getElementById('modal-score').textContent = activeGameData.club;
+        // Populate the answer block (mystery club name)
+        const answerBlock = document.getElementById('modal-answer-block');
+        if (answerBlock) answerBlock.classList.remove('hidden');
+        const clubEl = document.getElementById('modal-club-name');
+        if (clubEl) clubEl.textContent = activeGameData.club;
+
+        const answerLabel = document.getElementById('modal-answer-label');
+        if (answerLabel) {
+            answerLabel.textContent = won ? 'THE MYSTERY CLUB' : 'THE MYSTERY CLUB WAS';
+        }
 
         // "Guessed In" stat
         const guessedInEl = document.getElementById('modal-guessed-in');
-        if (won) {
-            guessedInEl.textContent = score === 1 ? '1 card' : `${score} cards`;
-        } else {
-            guessedInEl.textContent = '—';
+        if (guessedInEl) {
+            if (won) {
+                guessedInEl.textContent = score === 1 ? '1 card' : `${score} cards`;
+            } else {
+                guessedInEl.textContent = '—';
+            }
         }
 
-        document.getElementById('modal-best').textContent = stats.bestStreak;
+        const bestEl = document.getElementById('modal-best');
+        if (bestEl) bestEl.textContent = stats.bestStreak;
+
+        // Custom emoji share grid: misses (🟥), correct card (🟩), unrevealed (⬛)
+        const emojiCells = [];
+        for (let i = 0; i < totalPlayers; i++) {
+            if (won) {
+                if (i < score - 1) emojiCells.push('🟥');
+                else if (i === score - 1) emojiCells.push('🟩');
+                else emojiCells.push('⬛');
+            } else {
+                emojiCells.push('🟥');
+            }
+        }
+        const customEmojiGrid = emojiCells.join('');
+
+        let modalMessage = '';
+        if (won) {
+            if (score === 1) {
+                modalMessage = `Unbelievable! You spotted ${activeGameData.club} from just one player!`;
+            } else if (score === totalPlayers) {
+                modalMessage = `Clutch! You connected all players to ${activeGameData.club} on the final reveal!`;
+            } else {
+                modalMessage = `Brilliant! You connected all players to ${activeGameData.club} after ${score} reveals!`;
+            }
+        } else {
+            modalMessage = `Today's mystery club was ${activeGameData.club}. Better luck tomorrow!`;
+        }
 
         modal.show({
-            gameId:  GAME_ID,
+            gameId:          GAME_ID,
             won,
-            title:   won ? 'CONNECTED!' : 'GAME OVER',
-            message: won
-                ? score === 1
-                    ? `Unbelievable! You spotted ${activeGameData.club} from just one player!`
-                    : `Brilliant! You connected all players to ${activeGameData.club} after ${score} reveal${score > 1 ? 's' : ''}.`
-                : `The club was ${activeGameData.club}. Better luck tomorrow!`,
+            title:           won ? 'CONNECTED!' : 'GAME OVER',
+            message:         modalMessage,
             score,
-            maxScore: totalPlayers,
-            lives:    livesCtrl.get(),
-            initialLives: INITIAL_LIVES,
-            streak:   stats.streak,
+            maxScore:        totalPlayers,
+            lives:           livesCtrl.get(),
+            initialLives:    INITIAL_LIVES,
+            streak:          stats.streak,
+            targetName:      activeGameData.club,
+            targetType:      'club',
+            extraText:       activeGameData.club,
+            customEmojiGrid: customEmojiGrid,
             backInTimeLinks: bitLinks,
         });
     }
 
     function doShare() {
+        const result = storage.getPuzzleResult(puzzleNum, isBackInTime);
+        const won = result ? result.won : (!livesCtrl.isDead() && gameOver);
+        const score = result ? result.score : (won ? revealedCount : totalPlayers);
+
+        const emojiCells = [];
+        for (let i = 0; i < totalPlayers; i++) {
+            if (won) {
+                if (i < score - 1) emojiCells.push('🟥');
+                else if (i === score - 1) emojiCells.push('🟩');
+                else emojiCells.push('⬛');
+            } else {
+                emojiCells.push('🟥');
+            }
+        }
+
         FootyUI.share({
-            gameId:       GAME_ID,
-            gameName:     'Club Connect',
+            gameId:          GAME_ID,
+            gameName:        'Club Connect',
             puzzleNum,
-            score:        gameOver && !livesCtrl.isDead() ? (totalPlayers - livesCtrl.get()) : totalPlayers,
-            maxScore:     totalPlayers,
-            lives:        livesCtrl.get(),
-            initialLives: INITIAL_LIVES,
-            won:          !livesCtrl.isDead() && gameOver,
-            url:          window.location.href,
+            score,
+            maxScore:        totalPlayers,
+            lives:           livesCtrl.get(),
+            initialLives:    INITIAL_LIVES,
+            won,
+            customEmojiGrid: emojiCells.join(''),
+            url:             window.location.href,
         });
     }
 </script>
