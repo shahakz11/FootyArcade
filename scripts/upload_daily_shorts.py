@@ -14,7 +14,8 @@ from scripts.youtube_uploader import (
     upload_short,
     build_default_metadata,
     get_channel_info,
-    is_youtube_already_uploaded
+    is_youtube_already_uploaded,
+    load_matchday_context_for_date
 )
 from scripts.instagram_uploader import (
     check_connection as check_ig_connection,
@@ -101,6 +102,14 @@ async def process_all_games(interval_hours=1, fast_mode=False, port=8080, dry_ru
         except Exception as e:
             print(f"⚠️ Instagram warning: {e}")
             print("   Reels upload will be skipped if authentication is invalid.")
+
+    matchday_context = load_matchday_context_for_date(today_str)
+    if matchday_context:
+        print("\n" + "🔥" * 34)
+        print(f"   MATCHDAY SPECIAL ACTIVE: {matchday_context.get('clash_name')} ({matchday_context.get('competition')})")
+        print(f"   Hook: {matchday_context.get('hook')}")
+        print(f"   Tags: {' '.join(matchday_context.get('hashtags', []))}")
+        print("🔥" * 34 + "\n")
 
     print("\n💡 Video #1 will publish immediately; Videos #2..#5 will publish with 1-hour delays.")
     print("   (YouTube scheduled via API, Instagram queued via background scheduler).\n")

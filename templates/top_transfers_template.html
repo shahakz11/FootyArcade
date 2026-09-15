@@ -543,15 +543,22 @@
         // Show result modal
         const stats = storage.getStats();
         const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage, puzzleNum);
+        const total = activeGameData.transfers.length;
+        const isPartial = result.outcome === 'partial' || (!result.won && result.score > 0 && result.score < total);
+        const outcome = result.outcome || (result.won ? 'win' : (isPartial ? 'partial' : 'loss'));
 
         modal.show({
             won: result.won,
-            title: result.won ? 'COMPLETED' : 'GAME OVER',
+            outcome,
+            isPartial,
+            title: result.won ? 'COMPLETED' : (isPartial ? 'SOLID EFFORT!' : 'GAME OVER'),
             message: result.won
                 ? 'You have already completed this puzzle.'
-                : `You already played this puzzle. Final score: ${result.score} / ${activeGameData.transfers.length}.`,
+                : (isPartial
+                    ? `You already played this puzzle. Final score: ${result.score} / ${total}.`
+                    : `You already played this puzzle. Final score: ${result.score} / ${total}.`),
             score: result.score,
-            maxScore: activeGameData.transfers.length,
+            maxScore: total,
             streak: stats.streak,
             targetName: activeGameData.name,
             targetType: activeGameData.mode,
@@ -940,21 +947,33 @@
 
         document.getElementById('fa-guess-panel').style.display = 'none';
 
-        const stats = storage.recordResult(puzzleNum, won, score, activeGameData.transfers.length, isBackInTime);
+        const total = activeGameData.transfers.length;
+        const isFullWin = score >= total;
+        const isPartial = !isFullWin && (score >= (total / 2));
+        const outcome = isFullWin ? 'win' : (isPartial ? 'partial' : 'loss');
+
+        const stats = storage.recordResult(puzzleNum, isFullWin, score, total, isBackInTime, outcome);
 
         document.getElementById('modal-best').textContent = stats.bestStreak;
 
         const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage);
 
+        const modalTitle = isFullWin ? 'MASTERMIND' : (isPartial ? 'SOLID EFFORT!' : 'GAME OVER');
+        const modalMsg = isFullWin
+            ? 'Incredible! You solved the transfer grid flawlessly.'
+            : (isPartial
+                ? `Hard-fought shift! You cleared the board and found ${score} out of ${total} record transfers.`
+                : `You found ${score} out of ${total} record transfers.`);
+
         modal.show({
             gameId:  GAME_ID,
-            won,
-            title:   won ? 'MASTERMIND' : 'GAME OVER',
-            message: won
-                ? 'Incredible! You solved the transfer grid flawlessly.'
-                : `You found ${score} out of ${activeGameData.transfers.length} record transfers.`,
+            won:     isFullWin,
+            outcome,
+            isPartial,
+            title:   modalTitle,
+            message: modalMsg,
             score,
-            maxScore: activeGameData.transfers.length,
+            maxScore: total,
             lives:    livesCtrl.get(),
             initialLives: INITIAL_LIVES,
             streak:   stats.streak,

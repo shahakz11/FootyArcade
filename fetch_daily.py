@@ -31,6 +31,12 @@ import argparse
 import unicodedata
 import random as rand_mod
 from datetime import datetime, timedelta
+from scripts.alias_utils import (
+    load_aliases_config,
+    get_club_alias_map,
+    filter_and_canonicalize_clubs,
+    filter_hidden_players
+)
 
 # Increase CSV field size limit for large JSON arrays
 csv.field_size_limit(sys.maxsize)
@@ -42,6 +48,61 @@ TOTAL_DAYS   = 180   # puzzle cycle length
 GAMES_JSON   = "games.json"
 TEMPLATES_DIR = "templates"
 OUTPUT_DIR   = "games"
+LEDGER_FILE  = os.path.join("data", "puzzle_schedule_ledger.json")
+
+
+def load_schedule_ledger(ledger_path=LEDGER_FILE):
+    """Loads pre-computed contextual puzzle schedule ledger if present."""
+    if os.path.exists(ledger_path):
+        try:
+            with open(ledger_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"⚠️ Warning: Could not read schedule ledger ({e}). Falling back to linear modulo.")
+    return {}
+
+
+_CACHED_PROCESSED_CLUBS = None
+_CACHED_PROCESSED_PLAYERS = None
+
+def get_processed_all_clubs():
+    global _CACHED_PROCESSED_CLUBS
+    if _CACHED_PROCESSED_CLUBS is not None:
+        return _CACHED_PROCESSED_CLUBS
+    if not os.path.exists("all_clubs.json"):
+        print("  WARNING: all_clubs.json not found.")
+        _CACHED_PROCESSED_CLUBS = "[]"
+        return _CACHED_PROCESSED_CLUBS
+    try:
+        with open("all_clubs.json", "r", encoding="utf-8") as f:
+            raw_clubs = json.load(f)
+        alias_cfg = load_aliases_config()
+        filtered = filter_and_canonicalize_clubs(raw_clubs, alias_cfg)
+        _CACHED_PROCESSED_CLUBS = json.dumps(filtered, ensure_ascii=False)
+    except Exception as e:
+        print(f"  WARNING: Error processing all_clubs.json: {e}")
+        _CACHED_PROCESSED_CLUBS = "[]"
+    return _CACHED_PROCESSED_CLUBS
+
+
+def get_processed_all_players():
+    global _CACHED_PROCESSED_PLAYERS
+    if _CACHED_PROCESSED_PLAYERS is not None:
+        return _CACHED_PROCESSED_PLAYERS
+    if not os.path.exists("all_players.json"):
+        print("  WARNING: all_players.json not found.")
+        _CACHED_PROCESSED_PLAYERS = "[]"
+        return _CACHED_PROCESSED_PLAYERS
+    try:
+        with open("all_players.json", "r", encoding="utf-8") as f:
+            raw_players = json.load(f)
+        alias_cfg = load_aliases_config()
+        filtered = filter_hidden_players(raw_players, alias_cfg)
+        _CACHED_PROCESSED_PLAYERS = json.dumps(filtered, ensure_ascii=False)
+    except Exception as e:
+        print(f"  WARNING: Error processing all_players.json: {e}")
+        _CACHED_PROCESSED_PLAYERS = "[]"
+    return _CACHED_PROCESSED_PLAYERS
 
 
 # ─────────────────────────────────────────────────────────────
@@ -91,16 +152,8 @@ def load_top_transfers(puzzle_num):
         print(f"  WARNING: No top_transfers data for puzzle #{puzzle_num}")
         return None, None
 
-    # extra data: all players list
-    all_players_json = "[]"
-    if os.path.exists("all_players.json"):
-        with open("all_players.json", "r", encoding="utf-8") as f:
-            all_players_json = f.read()
-    else:
-        print("  WARNING: all_players.json not found.")
-
     extra = {
-        "ALL_PLAYERS": all_players_json,
+        "ALL_PLAYERS": get_processed_all_players(),
     }
     return game_data, extra
 
@@ -117,14 +170,20 @@ def load_transfer_destination(puzzle_num):
     with open(csv_path, "r", encoding="utf-8") as f:
         for r in csv.DictReader(f):
             if int(r.get("game_day", 1)) == puzzle_num:
+                from_c = r.get("from_club_name", "").strip()
+                to_c = r.get("to_club_name", "").strip()
+                # Exclude internal transfers between same club/aliases (e.g. youth/B team to senior)
+                if from_c and to_c and from_c.lower() == to_c.lower():
+                    continue
+
                 if not game_data["player_name"]:
                     game_data["player_name"] = r.get("player_name", "")
                     game_data["nationality"]  = r.get("country_of_citizenship", "")
                     game_data["position"]     = r.get("position", "")
                 game_data["transfers"].append({
                     "transfer_date":      r.get("transfer_date_str", r.get("transfer_date", "")),
-                    "from_club_name":     r.get("from_club_name", ""),
-                    "to_club_name":       r.get("to_club_name", ""),
+                    "from_club_name":     from_c,
+                    "to_club_name":       to_c,
                     "transfer_fee":       float(r.get("transfer_fee", "0.0") or 0.0),
                     "market_value_in_eur": float(r.get("market_value_in_eur", "0.0") or 0.0),
                 })
@@ -136,15 +195,8 @@ def load_transfer_destination(puzzle_num):
     # Reverse transfers so the game runs from most recent club/transfer back to the first
     game_data["transfers"].reverse()
 
-    all_clubs_json = "[]"
-    if os.path.exists("all_clubs.json"):
-        with open("all_clubs.json", "r", encoding="utf-8") as f:
-            all_clubs_json = f.read()
-    else:
-        print("  WARNING: all_clubs.json not found.")
-
     extra = {
-        "ALL_CLUBS": all_clubs_json,
+        "ALL_CLUBS": get_processed_all_clubs(),
     }
     return game_data, extra
 
@@ -175,16 +227,8 @@ def load_top_scorers(puzzle_num):
         print(f"  WARNING: No top_scorers data for puzzle #{puzzle_num}")
         return None, None
 
-    # extra data: all players list
-    all_players_json = "[]"
-    if os.path.exists("all_players.json"):
-        with open("all_players.json", "r", encoding="utf-8") as f:
-            all_players_json = f.read()
-    else:
-        print("  WARNING: all_players.json not found.")
-
     extra = {
-        "ALL_PLAYERS": all_players_json,
+        "ALL_PLAYERS": get_processed_all_players(),
     }
     return game_data, extra
 
@@ -220,20 +264,10 @@ def load_club_connect(puzzle_num):
     } for r in all_rows[:5]]
 
     game_data = {"club": club, "players": players}
-
-    # Load all clubs from all_clubs.json for complete autocomplete options
-    all_clubs_json = "[]"
-    if os.path.exists("all_clubs.json"):
-        with open("all_clubs.json", "r", encoding="utf-8") as f:
-            all_clubs_json = f.read()
-    else:
-        print("  WARNING: all_clubs.json not found.")
-
     sorted_clubs = sorted(answer_clubs - {""})
-    import json as _json
     extra = {
-        "ALL_CLUBS": all_clubs_json,
-        "ANSWER_CLUBS": _json.dumps(sorted_clubs, ensure_ascii=False),
+        "ALL_CLUBS": get_processed_all_clubs(),
+        "ANSWER_CLUBS": json.dumps(sorted_clubs, ensure_ascii=False),
     }
     return game_data, extra
 
@@ -277,15 +311,8 @@ def load_player_chain(puzzle_num):
         })
 
     # Extra data: all players list for dropdown autocomplete
-    all_players_json = "[]"
-    if os.path.exists("all_players.json"):
-        with open("all_players.json", "r", encoding="utf-8") as f:
-            all_players_json = f.read()
-    else:
-        print("  WARNING: all_players.json not found.")
-
     extra = {
-        "ALL_PLAYERS": all_players_json,
+        "ALL_PLAYERS": get_processed_all_players(),
     }
     return game_data, extra
 
@@ -350,15 +377,8 @@ def load_passport_fc(puzzle_num):
             "valid_players":  v_players,
         })
 
-    all_players_json = "[]"
-    if os.path.exists("all_players.json"):
-        with open("all_players.json", "r", encoding="utf-8") as f:
-            all_players_json = f.read()
-    else:
-        print("  WARNING: all_players.json not found.")
-
     extra = {
-        "ALL_PLAYERS": all_players_json,
+        "ALL_PLAYERS": get_processed_all_players(),
     }
     return game_data, extra
 
@@ -440,12 +460,14 @@ STRIP_PATTERNS = {
 # ─────────────────────────────────────────────────────────────
 # Core compiler
 # ─────────────────────────────────────────────────────────────
-def compile_game(game_cfg, puzzle_num, day_offset=0, max_back_days=7):
+def compile_game(game_cfg, puzzle_num, day_offset=0, max_back_days=7, content_puzzle_id=None):
     """
     Compile a single game HTML for a given puzzle_num.
     day_offset=0 → today's file (game_id.html)
     day_offset=1 → yesterday's file (game_id_d1.html)
     etc.
+    puzzle_num: The chronological user-facing puzzle number (e.g. PUZZLE #47).
+    content_puzzle_id: The specific dataset row ID to load. If None, defaults to puzzle_num.
     """
     game_id       = game_cfg["id"]
     template_file = game_cfg.get("templateFile", f"{game_id}_template.html")
@@ -461,7 +483,8 @@ def compile_game(game_cfg, puzzle_num, day_offset=0, max_back_days=7):
         print(f"  ERROR: no loader registered for game id '{game_id}'")
         return False
 
-    game_data, extra = loader(puzzle_num)
+    content_id = content_puzzle_id if content_puzzle_id is not None else puzzle_num
+    game_data, extra = loader(content_id)
     if game_data is None:
         return False
 
@@ -545,23 +568,42 @@ def main():
 
     # Base default launch date: 2026-07-27 is Day 1 (Puzzle #1)
     DEFAULT_LAUNCH_DATE = datetime(2026, 7, 27)
+    schedule_ledger = load_schedule_ledger()
+    if schedule_ledger:
+        print(f"📖 Loaded schedule ledger ({len(schedule_ledger)} dates mapped)")
 
-    # Determine base puzzle number for today (offset=0)
-    def puzzle_for_offset(off, launch_date_str=""):
+    # Determine (chronological_puzzle_num, content_puzzle_id) for target date and game
+    def puzzle_for_offset(off, launch_date_str="", game_id=""):
+        target_date = datetime.today() + timedelta(days=args.offset - off)
+        date_str = target_date.strftime("%Y-%m-%d")
+        today_str = datetime.today().strftime("%Y-%m-%d")
+
         if args.random:
-            return rand_mod.randint(1, TOTAL_DAYS)
+            rand_p = rand_mod.randint(1, TOTAL_DAYS)
+            return rand_p, rand_p
         if args.puzzle > 0:
             p = args.puzzle - off
             if p < 1:
-                return None
-            return p
-        
+                return None, None
+            return p, p
+
+        # 1. Chronological puzzle number (always strictly linear by days from launch)
         launch_dt = datetime.strptime(launch_date_str, "%Y-%m-%d") if launch_date_str else DEFAULT_LAUNCH_DATE
-        target_date = datetime.today() + timedelta(days=args.offset - off)
         days_diff = (target_date.date() - launch_dt.date()).days
         if days_diff < 0:
-            return None
-        return (days_diff % TOTAL_DAYS) + 1
+            return None, None
+        chrono_pnum = (days_diff % TOTAL_DAYS) + 1
+
+        # 2. Content puzzle ID:
+        # For past and today (date_str <= today_str): strictly maintain historical puzzle content.
+        # For future dates (date_str > today_str): pull contextual matchday / rotation from schedule ledger.
+        content_id = chrono_pnum
+        if date_str > today_str and schedule_ledger and date_str in schedule_ledger:
+            ledger_content = schedule_ledger[date_str].get("puzzles", {}).get(game_id)
+            if ledger_content is not None:
+                content_id = ledger_content
+
+        return chrono_pnum, content_id
 
     max_back = args.max_back_days
 
@@ -580,20 +622,20 @@ def main():
 
         # Today (offset 0)
         g_launch = game_cfg.get("launchDate", "")
-        pnum_today = puzzle_for_offset(0, g_launch)
+        pnum_today, content_today = puzzle_for_offset(0, g_launch, game_id=gid)
         if pnum_today is not None:
-            compile_game(game_cfg, pnum_today, day_offset=0, max_back_days=max_back)
+            compile_game(game_cfg, pnum_today, day_offset=0, max_back_days=max_back, content_puzzle_id=content_today)
 
         # Back-in-time files
         for d in range(1, max_back + 1):
-            pnum_past = puzzle_for_offset(d, g_launch)
+            pnum_past, content_past = puzzle_for_offset(d, g_launch, game_id=gid)
             if pnum_past is None:
                 out_name = f"{gid}_d{d}.html"
                 out_path = os.path.join(OUTPUT_DIR, out_name)
                 if os.path.exists(out_path):
                     os.remove(out_path)
                 continue
-            compile_game(game_cfg, pnum_past, day_offset=d, max_back_days=max_back)
+            compile_game(game_cfg, pnum_past, day_offset=d, max_back_days=max_back, content_puzzle_id=content_past)
 
         print()
 

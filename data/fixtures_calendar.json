@@ -1,0 +1,1076 @@
+[
+  {
+    "date": "2026-09-06",
+    "clash_name": "Arsenal vs Chelsea (London Derby)",
+    "competition": "Premier League",
+    "home_club": "Arsenal",
+    "away_club": "Chelsea",
+    "hashtags": [
+      "#LondonDerby",
+      "#Arsenal",
+      "#Chelsea",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ LONDON DERBY SHOWDOWN!"
+  },
+  {
+    "date": "2026-09-08",
+    "clash_name": "Real Madrid vs Inter",
+    "competition": "Champions League",
+    "home_club": "Real Madrid",
+    "away_club": "Inter",
+    "hashtags": [
+      "#UCL",
+      "#ChampionsLeague",
+      "#RealMadrid",
+      "#Inter"
+    ],
+    "hook": "⭐ CHAMPIONS LEAGUE NIGHT!"
+  },
+  {
+    "date": "2026-09-09",
+    "clash_name": "Liverpool vs Atletico Madrid",
+    "competition": "Champions League",
+    "home_club": "Liverpool",
+    "away_club": "Atletico Madrid",
+    "hashtags": [
+      "#UCL",
+      "#ChampionsLeague",
+      "#Liverpool",
+      "#AtleticoMadrid"
+    ],
+    "hook": "⭐ CHAMPIONS LEAGUE NIGHT!"
+  },
+  {
+    "date": "2026-09-12",
+    "clash_name": "Lazio vs AC Milan",
+    "competition": "Serie A",
+    "home_club": "Lazio",
+    "away_club": "AC Milan",
+    "hashtags": [
+      "#Lazio",
+      "#ACMilan",
+      "#SerieA"
+    ],
+    "hook": "⚔️ SERIE A MATCHDAY SPECIAL!"
+  },
+  {
+    "date": "2026-09-13",
+    "clash_name": "Manchester Derby",
+    "competition": "Premier League",
+    "home_club": "Manchester United",
+    "away_club": "Manchester City",
+    "hashtags": [
+      "#ManchesterDerby",
+      "#ManCity",
+      "#MUFC",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ MANCHESTER DERBY SPECIAL!"
+  },
+  {
+    "date": "2026-09-19",
+    "clash_name": "Roma vs Inter",
+    "competition": "Serie A",
+    "home_club": "Roma",
+    "away_club": "Inter",
+    "hashtags": [
+      "#Roma",
+      "#Inter",
+      "#SerieA"
+    ],
+    "hook": "⚔️ SERIE A MATCHDAY SPECIAL!"
+  },
+  {
+    "date": "2026-09-20",
+    "clash_name": "Madrid Derby",
+    "competition": "La Liga",
+    "home_club": "Atletico Madrid",
+    "away_club": "Real Madrid",
+    "hashtags": [
+      "#DerbiMadrileno",
+      "#RealMadrid",
+      "#Atleti",
+      "#LaLiga"
+    ],
+    "hook": "⚔️ MADRID DERBY SPECIAL!"
+  },
+  {
+    "date": "2026-09-24",
+    "clash_name": "Tottenham Hotspur vs Roma",
+    "competition": "UEFA Europa League",
+    "home_club": "Tottenham Hotspur",
+    "away_club": "Roma",
+    "hashtags": [
+      "#UEL",
+      "#EuropaLeague",
+      "#COYS",
+      "#Roma"
+    ],
+    "hook": "⭐ EUROPA LEAGUE BLOCKBUSTER!"
+  },
+  {
+    "date": "2026-10-01",
+    "clash_name": "Porto vs Manchester United",
+    "competition": "UEFA Europa League",
+    "home_club": "Porto",
+    "away_club": "Manchester United",
+    "hashtags": [
+      "#UEL",
+      "#EuropaLeague",
+      "#FCPorto",
+      "#MUFC"
+    ],
+    "hook": "⭐ EUROPA LEAGUE CLASH!"
+  },
+  {
+    "date": "2026-10-09",
+    "clash_name": "England vs Germany",
+    "competition": "UEFA Nations League",
+    "home_club": "England",
+    "away_club": "Germany",
+    "hashtags": [
+      "#NationsLeague",
+      "#England",
+      "#Germany",
+      "#ENGGER"
+    ],
+    "hook": "🌍 NATIONS LEAGUE HEAVYWEIGHT CLASH!"
+  },
+  {
+    "date": "2026-10-10",
+    "clash_name": "Italy vs Belgium",
+    "competition": "UEFA Nations League",
+    "home_club": "Italy",
+    "away_club": "Belgium",
+    "hashtags": [
+      "#NationsLeague",
+      "#Italy",
+      "#Belgium",
+      "#ITABEL"
+    ],
+    "hook": "🌍 NATIONS LEAGUE SHOWDOWN!"
+  },
+  {
+    "date": "2026-10-11",
+    "clash_name": "Liverpool vs Manchester City",
+    "competition": "Premier League",
+    "home_club": "Liverpool",
+    "away_club": "Manchester City",
+    "hashtags": [
+      "#LIVMCI",
+      "#Liverpool",
+      "#ManCity",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ PREMIER LEAGUE TITANS CLASH!"
+  },
+  {
+    "date": "2026-10-13",
+    "clash_name": "Atletico Madrid vs Manchester United",
+    "competition": "Champions League",
+    "home_club": "Atletico Madrid",
+    "away_club": "Manchester United",
+    "hashtags": [
+      "#UCL",
+      "#ChampionsLeague",
+      "#AtleticoMadrid",
+      "#ManchesterUnited"
+    ],
+    "hook": "⭐ CHAMPIONS LEAGUE NIGHT!"
+  },
+  {
+    "date": "2026-10-14",
+    "clash_name": "Manchester City vs Paris Saint-Germain",
+    "competition": "Champions League",
+    "home_club": "Manchester City",
+    "away_club": "Paris Saint-Germain",
+    "hashtags": [
+      "#UCL",
+      "#ChampionsLeague",
+      "#ManchesterCity",
+      "#ParisSaint-Germain"
+    ],
+    "hook": "⭐ CHAMPIONS LEAGUE NIGHT!"
+  },
+  {
+    "date": "2026-10-18",
+    "clash_name": "Juventus vs Lazio",
+    "competition": "Serie A",
+    "home_club": "Juventus",
+    "away_club": "Lazio",
+    "hashtags": [
+      "#Juventus",
+      "#Lazio",
+      "#SerieA"
+    ],
+    "hook": "⚔️ SERIE A MATCHDAY SPECIAL!"
+  },
+  {
+    "date": "2026-10-20",
+    "clash_name": "Paris Saint-Germain vs Barcelona",
+    "competition": "Champions League",
+    "home_club": "Paris Saint-Germain",
+    "away_club": "Barcelona",
+    "hashtags": [
+      "#UCL",
+      "#ChampionsLeague",
+      "#ParisSaint-Germain",
+      "#Barcelona"
+    ],
+    "hook": "⭐ CHAMPIONS LEAGUE NIGHT!"
+  },
+  {
+    "date": "2026-10-21",
+    "clash_name": "Bayern Munich vs Arsenal",
+    "competition": "Champions League",
+    "home_club": "Bayern Munich",
+    "away_club": "Arsenal",
+    "hashtags": [
+      "#UCL",
+      "#ChampionsLeague",
+      "#BayernMunich",
+      "#Arsenal"
+    ],
+    "hook": "⭐ CHAMPIONS LEAGUE NIGHT!"
+  },
+  {
+    "date": "2026-10-22",
+    "clash_name": "Fenerbahce vs Manchester United",
+    "competition": "UEFA Europa League",
+    "home_club": "Fenerbahce",
+    "away_club": "Manchester United",
+    "hashtags": [
+      "#UEL",
+      "#EuropaLeague",
+      "#Fenerbahce",
+      "#MUFC"
+    ],
+    "hook": "⭐ EUROPA LEAGUE NIGHT!"
+  },
+  {
+    "date": "2026-10-24",
+    "clash_name": "Chelsea vs Tottenham Hotspur",
+    "competition": "Premier League",
+    "home_club": "Chelsea",
+    "away_club": "Tottenham Hotspur",
+    "hashtags": [
+      "#LondonDerby",
+      "#Chelsea",
+      "#COYS",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ LONDON DERBY CLASH!"
+  },
+  {
+    "date": "2026-10-25",
+    "clash_name": "El Clásico",
+    "competition": "La Liga",
+    "home_club": "Barcelona",
+    "away_club": "Real Madrid",
+    "hashtags": [
+      "#ElClasico",
+      "#RealMadrid",
+      "#FCBarcelona",
+      "#LaLiga"
+    ],
+    "hook": "⚔️ EL CLÁSICO SPECIAL!"
+  },
+  {
+    "date": "2026-10-31",
+    "clash_name": "Der Klassiker",
+    "competition": "Bundesliga",
+    "home_club": "Bayern Munich",
+    "away_club": "Borussia Dortmund",
+    "hashtags": [
+      "#DerKlassiker",
+      "#BVBFCB",
+      "#Bundesliga",
+      "#BayernMunich",
+      "#BVB"
+    ],
+    "hook": "⚔️ DER KLASSIKER SPECIAL!"
+  },
+  {
+    "date": "2026-11-01",
+    "clash_name": "Derby della Madonnina",
+    "competition": "Serie A",
+    "home_club": "AC Milan",
+    "away_club": "Inter",
+    "hashtags": [
+      "#InterMilan",
+      "#DerbyMilano",
+      "#SerieA",
+      "#Inter",
+      "#ACMilan"
+    ],
+    "hook": "⚔️ DERBY DELLA MADONNINA SPECIAL!"
+  },
+  {
+    "date": "2026-11-03",
+    "clash_name": "Manchester United vs Roma",
+    "competition": "Champions League",
+    "home_club": "Manchester United",
+    "away_club": "Roma",
+    "hashtags": [
+      "#UCL",
+      "#ChampionsLeague",
+      "#ManchesterUnited",
+      "#Roma"
+    ],
+    "hook": "⭐ CHAMPIONS LEAGUE NIGHT!"
+  },
+  {
+    "date": "2026-11-05",
+    "clash_name": "Galatasaray vs Tottenham Hotspur",
+    "competition": "UEFA Europa League",
+    "home_club": "Galatasaray",
+    "away_club": "Tottenham Hotspur",
+    "hashtags": [
+      "#UEL",
+      "#EuropaLeague",
+      "#Galatasaray",
+      "#COYS"
+    ],
+    "hook": "⭐ EUROPA LEAGUE SHOWDOWN!"
+  },
+  {
+    "date": "2026-11-08",
+    "clash_name": "Barcelona vs Atletico Madrid",
+    "competition": "La Liga",
+    "home_club": "Atletico Madrid",
+    "away_club": "Barcelona",
+    "hashtags": [
+      "#BarcaAtleti",
+      "#LaLiga",
+      "#Barcelona",
+      "#Atleti"
+    ],
+    "hook": "⚔️ LA LIGA TITANS SHOWDOWN!"
+  },
+  {
+    "date": "2026-11-14",
+    "clash_name": "France vs Italy",
+    "competition": "UEFA Nations League",
+    "home_club": "France",
+    "away_club": "Italy",
+    "hashtags": [
+      "#NationsLeague",
+      "#France",
+      "#Italy",
+      "#FRAITA"
+    ],
+    "hook": "🌍 NATIONS LEAGUE BLOCKBUSTER!"
+  },
+  {
+    "date": "2026-11-17",
+    "clash_name": "Spain vs Switzerland",
+    "competition": "UEFA Nations League",
+    "home_club": "Spain",
+    "away_club": "Switzerland",
+    "hashtags": [
+      "#NationsLeague",
+      "#Spain",
+      "#Switzerland",
+      "#SUIESP"
+    ],
+    "hook": "🌍 NATIONS LEAGUE CLASH!"
+  },
+  {
+    "date": "2026-11-21",
+    "clash_name": "North West Derby",
+    "competition": "Premier League",
+    "home_club": "Liverpool",
+    "away_club": "Manchester United",
+    "hashtags": [
+      "#NorthWestDerby",
+      "#LFC",
+      "#MUFC",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ NORTH WEST DERBY SPECIAL!"
+  },
+  {
+    "date": "2026-11-24",
+    "clash_name": "Arsenal vs Borussia Dortmund",
+    "competition": "Champions League",
+    "home_club": "Arsenal",
+    "away_club": "Borussia Dortmund",
+    "hashtags": [
+      "#UCL",
+      "#ChampionsLeague",
+      "#Arsenal",
+      "#BorussiaDortmund"
+    ],
+    "hook": "⭐ CHAMPIONS LEAGUE NIGHT!"
+  },
+  {
+    "date": "2026-11-25",
+    "clash_name": "Paris Saint-Germain vs Roma",
+    "competition": "Champions League",
+    "home_club": "Paris Saint-Germain",
+    "away_club": "Roma",
+    "hashtags": [
+      "#UCL",
+      "#ChampionsLeague",
+      "#ParisSaint-Germain",
+      "#Roma"
+    ],
+    "hook": "⭐ CHAMPIONS LEAGUE NIGHT!"
+  },
+  {
+    "date": "2026-11-26",
+    "clash_name": "Tottenham Hotspur vs Roma",
+    "competition": "UEFA Europa League",
+    "home_club": "Tottenham Hotspur",
+    "away_club": "Roma",
+    "hashtags": [
+      "#UEL",
+      "#EuropaLeague",
+      "#COYS",
+      "#Roma"
+    ],
+    "hook": "⭐ EUROPA LEAGUE GIANTS CLASH!"
+  },
+  {
+    "date": "2026-11-28",
+    "clash_name": "Manchester City vs Arsenal",
+    "competition": "Premier League",
+    "home_club": "Arsenal",
+    "away_club": "Manchester City",
+    "hashtags": [
+      "#TitleRace",
+      "#ManCity",
+      "#Arsenal",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ PREMIER LEAGUE TITLE SHOWDOWN!"
+  },
+  {
+    "date": "2026-12-05",
+    "clash_name": "North London Derby",
+    "competition": "Premier League",
+    "home_club": "Tottenham Hotspur",
+    "away_club": "Arsenal",
+    "hashtags": [
+      "#NorthLondonDerby",
+      "#Arsenal",
+      "#COYS",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ NORTH LONDON DERBY SPECIAL!"
+  },
+  {
+    "date": "2026-12-06",
+    "clash_name": "Chelsea vs Liverpool",
+    "competition": "Premier League",
+    "home_club": "Chelsea",
+    "away_club": "Liverpool",
+    "hashtags": [
+      "#CHELIV",
+      "#Chelsea",
+      "#Liverpool",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!"
+  },
+  {
+    "date": "2026-12-08",
+    "clash_name": "Barcelona vs Manchester City",
+    "competition": "Champions League",
+    "home_club": "Barcelona",
+    "away_club": "Manchester City",
+    "hashtags": [
+      "#UCL",
+      "#ChampionsLeague",
+      "#Barcelona",
+      "#ManchesterCity"
+    ],
+    "hook": "⭐ CHAMPIONS LEAGUE NIGHT!"
+  },
+  {
+    "date": "2026-12-09",
+    "clash_name": "Borussia Dortmund vs Inter",
+    "competition": "Champions League",
+    "home_club": "Borussia Dortmund",
+    "away_club": "Inter",
+    "hashtags": [
+      "#UCL",
+      "#ChampionsLeague",
+      "#BorussiaDortmund",
+      "#Inter"
+    ],
+    "hook": "⭐ CHAMPIONS LEAGUE NIGHT!"
+  },
+  {
+    "date": "2026-12-10",
+    "clash_name": "Rangers vs Tottenham Hotspur",
+    "competition": "UEFA Europa League",
+    "home_club": "Rangers",
+    "away_club": "Tottenham Hotspur",
+    "hashtags": [
+      "#UEL",
+      "#EuropaLeague",
+      "#Rangers",
+      "#COYS"
+    ],
+    "hook": "⭐ BRITISH SHOWDOWN IN EUROPE!"
+  },
+  {
+    "date": "2026-12-12",
+    "clash_name": "Chelsea vs Manchester City",
+    "competition": "Premier League",
+    "home_club": "Manchester City",
+    "away_club": "Chelsea",
+    "hashtags": [
+      "#CHEMCI",
+      "#Chelsea",
+      "#ManCity",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!"
+  },
+  {
+    "date": "2026-12-13",
+    "clash_name": "Derby della Capitale",
+    "competition": "Serie A",
+    "home_club": "Lazio",
+    "away_club": "Roma",
+    "hashtags": [
+      "#DerbyDellaCapitale",
+      "#Roma",
+      "#Lazio",
+      "#SerieA"
+    ],
+    "hook": "⚔️ DERBY DELLA CAPITALE SPECIAL!"
+  },
+  {
+    "date": "2026-12-19",
+    "clash_name": "Tottenham Hotspur vs Liverpool",
+    "competition": "Premier League",
+    "home_club": "Liverpool",
+    "away_club": "Tottenham Hotspur",
+    "hashtags": [
+      "#TOTLIV",
+      "#COYS",
+      "#Liverpool",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!"
+  },
+  {
+    "date": "2026-12-20",
+    "clash_name": "Roma vs Juventus",
+    "competition": "Serie A",
+    "home_club": "Roma",
+    "away_club": "Juventus",
+    "hashtags": [
+      "#Roma",
+      "#Juventus",
+      "#SerieA"
+    ],
+    "hook": "⚔️ SERIE A MATCHDAY SPECIAL!"
+  },
+  {
+    "date": "2027-01-03",
+    "clash_name": "Tottenham Hotspur vs Manchester City",
+    "competition": "Premier League",
+    "home_club": "Manchester City",
+    "away_club": "Tottenham Hotspur",
+    "hashtags": [
+      "#TOTMCI",
+      "#COYS",
+      "#ManCity",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!"
+  },
+  {
+    "date": "2027-01-06",
+    "clash_name": "Lazio vs Inter",
+    "competition": "Serie A",
+    "home_club": "Lazio",
+    "away_club": "Inter",
+    "hashtags": [
+      "#Lazio",
+      "#Inter",
+      "#SerieA"
+    ],
+    "hook": "⚔️ SERIE A MATCHDAY SPECIAL!"
+  },
+  {
+    "date": "2027-01-10",
+    "clash_name": "Derby d'Italia",
+    "competition": "Serie A",
+    "home_club": "Inter",
+    "away_club": "Juventus",
+    "hashtags": [
+      "#InterJuve",
+      "#DerbyDItalia",
+      "#SerieA",
+      "#Inter",
+      "#Juventus"
+    ],
+    "hook": "⚔️ DERBY D'ITALIA SPECIAL!"
+  },
+  {
+    "date": "2027-01-19",
+    "clash_name": "Inter vs Liverpool",
+    "competition": "Champions League",
+    "home_club": "Inter",
+    "away_club": "Liverpool",
+    "hashtags": [
+      "#UCL",
+      "#ChampionsLeague",
+      "#Inter",
+      "#Liverpool"
+    ],
+    "hook": "⭐ CHAMPIONS LEAGUE NIGHT!"
+  },
+  {
+    "date": "2027-01-20",
+    "clash_name": "Manchester United vs Bayern Munich",
+    "competition": "Champions League",
+    "home_club": "Manchester United",
+    "away_club": "Bayern Munich",
+    "hashtags": [
+      "#UCL",
+      "#ChampionsLeague",
+      "#ManchesterUnited",
+      "#BayernMunich"
+    ],
+    "hook": "⭐ CHAMPIONS LEAGUE NIGHT!"
+  },
+  {
+    "date": "2027-01-21",
+    "clash_name": "Chelsea vs Real Betis",
+    "competition": "UEFA Conference League",
+    "home_club": "Chelsea",
+    "away_club": "Real Betis",
+    "hashtags": [
+      "#UECL",
+      "#ConferenceLeague",
+      "#Chelsea",
+      "#RealBetis"
+    ],
+    "hook": "⭐ CONFERENCE LEAGUE SPECIAL!"
+  },
+  {
+    "date": "2027-01-23",
+    "clash_name": "North West Derby",
+    "competition": "Premier League",
+    "home_club": "Manchester United",
+    "away_club": "Liverpool",
+    "hashtags": [
+      "#NorthWestDerby",
+      "#LFC",
+      "#MUFC",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ NORTH WEST DERBY SPECIAL!"
+  },
+  {
+    "date": "2027-01-28",
+    "clash_name": "Lazio vs Real Sociedad",
+    "competition": "UEFA Europa League",
+    "home_club": "Lazio",
+    "away_club": "Real Sociedad",
+    "hashtags": [
+      "#UEL",
+      "#EuropaLeague",
+      "#Lazio",
+      "#RealSociedad"
+    ],
+    "hook": "⭐ EUROPA LEAGUE SHOWDOWN!"
+  },
+  {
+    "date": "2027-01-30",
+    "clash_name": "Manchester City vs Arsenal",
+    "competition": "Premier League",
+    "home_club": "Manchester City",
+    "away_club": "Arsenal",
+    "hashtags": [
+      "#TitleRace",
+      "#ManCity",
+      "#Arsenal",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ PREMIER LEAGUE TITLE SHOWDOWN!"
+  },
+  {
+    "date": "2027-01-31",
+    "clash_name": "AC Milan vs Juventus",
+    "competition": "Serie A",
+    "home_club": "AC Milan",
+    "away_club": "Juventus",
+    "hashtags": [
+      "#MilanJuve",
+      "#SerieA",
+      "#ACMilan",
+      "#Juventus"
+    ],
+    "hook": "⚔️ SERIE A CLASSIC SHOWDOWN!"
+  },
+  {
+    "date": "2027-02-06",
+    "clash_name": "Manchester United vs Chelsea",
+    "competition": "Premier League",
+    "home_club": "Manchester United",
+    "away_club": "Chelsea",
+    "hashtags": [
+      "#MUNCHE",
+      "#MUFC",
+      "#Chelsea",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!"
+  },
+  {
+    "date": "2027-02-07",
+    "clash_name": "Barcelona vs Atletico Madrid",
+    "competition": "La Liga",
+    "home_club": "Barcelona",
+    "away_club": "Atletico Madrid",
+    "hashtags": [
+      "#BarcaAtleti",
+      "#LaLiga",
+      "#Barcelona",
+      "#Atleti"
+    ],
+    "hook": "⚔️ LA LIGA TITANS SHOWDOWN!"
+  },
+  {
+    "date": "2027-02-10",
+    "clash_name": "Tottenham Hotspur vs Manchester City",
+    "competition": "Premier League",
+    "home_club": "Tottenham Hotspur",
+    "away_club": "Manchester City",
+    "hashtags": [
+      "#TOTMCI",
+      "#COYS",
+      "#ManCity",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!"
+  },
+  {
+    "date": "2027-02-14",
+    "clash_name": "Derby della Madonnina",
+    "competition": "Serie A",
+    "home_club": "Inter",
+    "away_club": "AC Milan",
+    "hashtags": [
+      "#InterMilan",
+      "#DerbyMilano",
+      "#SerieA",
+      "#Inter",
+      "#ACMilan"
+    ],
+    "hook": "⚔️ DERBY DELLA MADONNINA SPECIAL!"
+  },
+  {
+    "date": "2027-02-27",
+    "clash_name": "Tottenham Hotspur vs Liverpool",
+    "competition": "Premier League",
+    "home_club": "Tottenham Hotspur",
+    "away_club": "Liverpool",
+    "hashtags": [
+      "#TOTLIV",
+      "#COYS",
+      "#Liverpool",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!"
+  },
+  {
+    "date": "2027-03-06",
+    "clash_name": "Der Klassiker",
+    "competition": "Bundesliga",
+    "home_club": "Borussia Dortmund",
+    "away_club": "Bayern Munich",
+    "hashtags": [
+      "#DerKlassiker",
+      "#BVBFCB",
+      "#Bundesliga",
+      "#BayernMunich",
+      "#BVB"
+    ],
+    "hook": "⚔️ DER KLASSIKER SPECIAL!"
+  },
+  {
+    "date": "2027-03-07",
+    "clash_name": "Juventus vs Roma",
+    "competition": "Serie A",
+    "home_club": "Juventus",
+    "away_club": "Roma",
+    "hashtags": [
+      "#Juventus",
+      "#Roma",
+      "#SerieA"
+    ],
+    "hook": "⚔️ SERIE A MATCHDAY SPECIAL!"
+  },
+  {
+    "date": "2027-03-13",
+    "clash_name": "Arsenal vs Chelsea (London Derby)",
+    "competition": "Premier League",
+    "home_club": "Chelsea",
+    "away_club": "Arsenal",
+    "hashtags": [
+      "#LondonDerby",
+      "#Arsenal",
+      "#Chelsea",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ LONDON DERBY SHOWDOWN!"
+  },
+  {
+    "date": "2027-03-14",
+    "clash_name": "Lazio vs Juventus",
+    "competition": "Serie A",
+    "home_club": "Lazio",
+    "away_club": "Juventus",
+    "hashtags": [
+      "#Lazio",
+      "#Juventus",
+      "#SerieA"
+    ],
+    "hook": "⚔️ SERIE A MATCHDAY SPECIAL!"
+  },
+  {
+    "date": "2027-03-20",
+    "clash_name": "Manchester Derby",
+    "competition": "Premier League",
+    "home_club": "Manchester City",
+    "away_club": "Manchester United",
+    "hashtags": [
+      "#ManchesterDerby",
+      "#ManCity",
+      "#MUFC",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ MANCHESTER DERBY SPECIAL!"
+  },
+  {
+    "date": "2027-03-25",
+    "clash_name": "Netherlands vs Spain",
+    "competition": "UEFA Nations League",
+    "home_club": "Netherlands",
+    "away_club": "Spain",
+    "hashtags": [
+      "#NationsLeague",
+      "#Netherlands",
+      "#Spain",
+      "#NEDESP"
+    ],
+    "hook": "🌍 NATIONS LEAGUE QUARTER-FINAL!"
+  },
+  {
+    "date": "2027-03-28",
+    "clash_name": "France vs Croatia",
+    "competition": "UEFA Nations League",
+    "home_club": "France",
+    "away_club": "Croatia",
+    "hashtags": [
+      "#NationsLeague",
+      "#France",
+      "#Croatia",
+      "#FRACRO"
+    ],
+    "hook": "🌍 NATIONS LEAGUE QUARTER-FINAL!"
+  },
+  {
+    "date": "2027-04-04",
+    "clash_name": "Madrid Derby",
+    "competition": "La Liga",
+    "home_club": "Real Madrid",
+    "away_club": "Atletico Madrid",
+    "hashtags": [
+      "#DerbiMadrileno",
+      "#RealMadrid",
+      "#Atleti",
+      "#LaLiga"
+    ],
+    "hook": "⚔️ MADRID DERBY SPECIAL!"
+  },
+  {
+    "date": "2027-04-11",
+    "clash_name": "Inter vs Roma",
+    "competition": "Serie A",
+    "home_club": "Inter",
+    "away_club": "Roma",
+    "hashtags": [
+      "#Inter",
+      "#Roma",
+      "#SerieA"
+    ],
+    "hook": "⚔️ SERIE A MATCHDAY SPECIAL!"
+  },
+  {
+    "date": "2027-04-18",
+    "clash_name": "Derby della Capitale",
+    "competition": "Serie A",
+    "home_club": "Roma",
+    "away_club": "Lazio",
+    "hashtags": [
+      "#DerbyDellaCapitale",
+      "#Roma",
+      "#Lazio",
+      "#SerieA"
+    ],
+    "hook": "⚔️ DERBY DELLA CAPITALE SPECIAL!"
+  },
+  {
+    "date": "2027-04-24",
+    "clash_name": "Chelsea vs Manchester City",
+    "competition": "Premier League",
+    "home_club": "Chelsea",
+    "away_club": "Manchester City",
+    "hashtags": [
+      "#CHEMCI",
+      "#Chelsea",
+      "#ManCity",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!"
+  },
+  {
+    "date": "2027-05-01",
+    "clash_name": "North London Derby",
+    "competition": "Premier League",
+    "home_club": "Arsenal",
+    "away_club": "Tottenham Hotspur",
+    "hashtags": [
+      "#NorthLondonDerby",
+      "#Arsenal",
+      "#COYS",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ NORTH LONDON DERBY SPECIAL!"
+  },
+  {
+    "date": "2027-05-02",
+    "clash_name": "Chelsea vs Liverpool",
+    "competition": "Premier League",
+    "home_club": "Liverpool",
+    "away_club": "Chelsea",
+    "hashtags": [
+      "#CHELIV",
+      "#Liverpool",
+      "#Chelsea",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!"
+  },
+  {
+    "date": "2027-05-08",
+    "clash_name": "Chelsea vs Tottenham Hotspur",
+    "competition": "Premier League",
+    "home_club": "Tottenham Hotspur",
+    "away_club": "Chelsea",
+    "hashtags": [
+      "#LondonDerby",
+      "#Chelsea",
+      "#COYS",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ LONDON DERBY CLASH!"
+  },
+  {
+    "date": "2027-05-09",
+    "clash_name": "El Clásico",
+    "competition": "La Liga",
+    "home_club": "Real Madrid",
+    "away_club": "Barcelona",
+    "hashtags": [
+      "#ElClasico",
+      "#RealMadrid",
+      "#FCBarcelona",
+      "#LaLiga"
+    ],
+    "hook": "⚔️ EL CLÁSICO SPECIAL!"
+  },
+  {
+    "date": "2027-05-16",
+    "clash_name": "Derby d'Italia",
+    "competition": "Serie A",
+    "home_club": "Juventus",
+    "away_club": "Inter",
+    "hashtags": [
+      "#InterJuve",
+      "#DerbyDItalia",
+      "#SerieA",
+      "#Inter",
+      "#Juventus"
+    ],
+    "hook": "⚔️ DERBY D'ITALIA SPECIAL!"
+  },
+  {
+    "date": "2027-05-19",
+    "clash_name": "Manchester United vs Roma (UEL Final)",
+    "competition": "UEFA Europa League",
+    "home_club": "Manchester United",
+    "away_club": "Roma",
+    "hashtags": [
+      "#UELFinal",
+      "#EuropaLeague",
+      "#MUFC",
+      "#Roma"
+    ],
+    "hook": "🏆 EUROPA LEAGUE FINAL!"
+  },
+  {
+    "date": "2027-05-23",
+    "clash_name": "Tottenham Hotspur vs Manchester United",
+    "competition": "Premier League",
+    "home_club": "Tottenham Hotspur",
+    "away_club": "Manchester United",
+    "hashtags": [
+      "#TOTMUN",
+      "#COYS",
+      "#MUFC",
+      "#PremierLeague"
+    ],
+    "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!"
+  },
+  {
+    "date": "2027-05-26",
+    "clash_name": "Chelsea vs Fiorentina (UECL Final)",
+    "competition": "UEFA Conference League",
+    "home_club": "Chelsea",
+    "away_club": "Fiorentina",
+    "hashtags": [
+      "#UECLFinal",
+      "#ConferenceLeague",
+      "#Chelsea",
+      "#Fiorentina"
+    ],
+    "hook": "🏆 CONFERENCE LEAGUE FINAL!"
+  },
+  {
+    "date": "2027-06-04",
+    "clash_name": "Germany vs Spain (Nations League SF)",
+    "competition": "UEFA Nations League",
+    "home_club": "Germany",
+    "away_club": "Spain",
+    "hashtags": [
+      "#NationsLeague",
+      "#NationsLeagueFinals",
+      "#GERESP"
+    ],
+    "hook": "🏆 NATIONS LEAGUE SEMI-FINAL!"
+  },
+  {
+    "date": "2027-06-06",
+    "clash_name": "France vs Spain (Nations League Final)",
+    "competition": "UEFA Nations League",
+    "home_club": "France",
+    "away_club": "Spain",
+    "hashtags": [
+      "#NationsLeague",
+      "#NationsLeagueFinals",
+      "#FRASPN"
+    ],
+    "hook": "🏆 NATIONS LEAGUE FINAL!"
+  }
+]

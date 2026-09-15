@@ -1,0 +1,4950 @@
+{
+  "2026-07-27": {
+    "puzzles": {
+      "top_transfers": 1,
+      "transfer_destination": 1,
+      "top_scorers": 1,
+      "club_connect": 117,
+      "player_chain": 85,
+      "passport_fc": 92
+    },
+    "matchday_context": null
+  },
+  "2026-07-28": {
+    "puzzles": {
+      "top_transfers": 2,
+      "transfer_destination": 2,
+      "top_scorers": 2,
+      "club_connect": 118,
+      "player_chain": 86,
+      "passport_fc": 93
+    },
+    "matchday_context": null
+  },
+  "2026-07-29": {
+    "puzzles": {
+      "top_transfers": 3,
+      "transfer_destination": 3,
+      "top_scorers": 3,
+      "club_connect": 119,
+      "player_chain": 87,
+      "passport_fc": 94
+    },
+    "matchday_context": null
+  },
+  "2026-07-30": {
+    "puzzles": {
+      "top_transfers": 4,
+      "transfer_destination": 4,
+      "top_scorers": 4,
+      "club_connect": 120,
+      "player_chain": 88,
+      "passport_fc": 95
+    },
+    "matchday_context": null
+  },
+  "2026-07-31": {
+    "puzzles": {
+      "top_transfers": 5,
+      "transfer_destination": 5,
+      "top_scorers": 5,
+      "club_connect": 1,
+      "player_chain": 89,
+      "passport_fc": 96
+    },
+    "matchday_context": null
+  },
+  "2026-08-01": {
+    "puzzles": {
+      "top_transfers": 6,
+      "transfer_destination": 6,
+      "top_scorers": 6,
+      "club_connect": 2,
+      "player_chain": 90,
+      "passport_fc": 97
+    },
+    "matchday_context": null
+  },
+  "2026-08-02": {
+    "puzzles": {
+      "top_transfers": 7,
+      "transfer_destination": 7,
+      "top_scorers": 7,
+      "club_connect": 3,
+      "player_chain": 91,
+      "passport_fc": 98
+    },
+    "matchday_context": null
+  },
+  "2026-08-03": {
+    "puzzles": {
+      "top_transfers": 8,
+      "transfer_destination": 8,
+      "top_scorers": 8,
+      "club_connect": 4,
+      "player_chain": 92,
+      "passport_fc": 99
+    },
+    "matchday_context": null
+  },
+  "2026-08-04": {
+    "puzzles": {
+      "top_transfers": 9,
+      "transfer_destination": 9,
+      "top_scorers": 9,
+      "club_connect": 5,
+      "player_chain": 93,
+      "passport_fc": 100
+    },
+    "matchday_context": null
+  },
+  "2026-08-05": {
+    "puzzles": {
+      "top_transfers": 10,
+      "transfer_destination": 10,
+      "top_scorers": 10,
+      "club_connect": 6,
+      "player_chain": 94,
+      "passport_fc": 101
+    },
+    "matchday_context": null
+  },
+  "2026-08-06": {
+    "puzzles": {
+      "top_transfers": 11,
+      "transfer_destination": 11,
+      "top_scorers": 11,
+      "club_connect": 7,
+      "player_chain": 95,
+      "passport_fc": 102
+    },
+    "matchday_context": null
+  },
+  "2026-08-07": {
+    "puzzles": {
+      "top_transfers": 12,
+      "transfer_destination": 12,
+      "top_scorers": 12,
+      "club_connect": 8,
+      "player_chain": 96,
+      "passport_fc": 103
+    },
+    "matchday_context": null
+  },
+  "2026-08-08": {
+    "puzzles": {
+      "top_transfers": 13,
+      "transfer_destination": 13,
+      "top_scorers": 13,
+      "club_connect": 9,
+      "player_chain": 97,
+      "passport_fc": 104
+    },
+    "matchday_context": null
+  },
+  "2026-08-09": {
+    "puzzles": {
+      "top_transfers": 14,
+      "transfer_destination": 14,
+      "top_scorers": 14,
+      "club_connect": 10,
+      "player_chain": 98,
+      "passport_fc": 105
+    },
+    "matchday_context": null
+  },
+  "2026-08-10": {
+    "puzzles": {
+      "top_transfers": 15,
+      "transfer_destination": 15,
+      "top_scorers": 15,
+      "club_connect": 11,
+      "player_chain": 99,
+      "passport_fc": 106
+    },
+    "matchday_context": null
+  },
+  "2026-08-11": {
+    "puzzles": {
+      "top_transfers": 16,
+      "transfer_destination": 16,
+      "top_scorers": 16,
+      "club_connect": 12,
+      "player_chain": 100,
+      "passport_fc": 107
+    },
+    "matchday_context": null
+  },
+  "2026-08-12": {
+    "puzzles": {
+      "top_transfers": 17,
+      "transfer_destination": 17,
+      "top_scorers": 17,
+      "club_connect": 13,
+      "player_chain": 101,
+      "passport_fc": 108
+    },
+    "matchday_context": null
+  },
+  "2026-08-13": {
+    "puzzles": {
+      "top_transfers": 18,
+      "transfer_destination": 18,
+      "top_scorers": 18,
+      "club_connect": 14,
+      "player_chain": 102,
+      "passport_fc": 109
+    },
+    "matchday_context": null
+  },
+  "2026-08-14": {
+    "puzzles": {
+      "top_transfers": 19,
+      "transfer_destination": 19,
+      "top_scorers": 19,
+      "club_connect": 15,
+      "player_chain": 103,
+      "passport_fc": 110
+    },
+    "matchday_context": null
+  },
+  "2026-08-15": {
+    "puzzles": {
+      "top_transfers": 20,
+      "transfer_destination": 20,
+      "top_scorers": 20,
+      "club_connect": 16,
+      "player_chain": 104,
+      "passport_fc": 111
+    },
+    "matchday_context": null
+  },
+  "2026-08-16": {
+    "puzzles": {
+      "top_transfers": 21,
+      "transfer_destination": 21,
+      "top_scorers": 21,
+      "club_connect": 17,
+      "player_chain": 105,
+      "passport_fc": 112
+    },
+    "matchday_context": null
+  },
+  "2026-08-17": {
+    "puzzles": {
+      "top_transfers": 22,
+      "transfer_destination": 22,
+      "top_scorers": 22,
+      "club_connect": 18,
+      "player_chain": 106,
+      "passport_fc": 113
+    },
+    "matchday_context": null
+  },
+  "2026-08-18": {
+    "puzzles": {
+      "top_transfers": 23,
+      "transfer_destination": 23,
+      "top_scorers": 23,
+      "club_connect": 19,
+      "player_chain": 107,
+      "passport_fc": 114
+    },
+    "matchday_context": null
+  },
+  "2026-08-19": {
+    "puzzles": {
+      "top_transfers": 24,
+      "transfer_destination": 24,
+      "top_scorers": 24,
+      "club_connect": 20,
+      "player_chain": 108,
+      "passport_fc": 115
+    },
+    "matchday_context": null
+  },
+  "2026-08-20": {
+    "puzzles": {
+      "top_transfers": 25,
+      "transfer_destination": 25,
+      "top_scorers": 25,
+      "club_connect": 21,
+      "player_chain": 109,
+      "passport_fc": 116
+    },
+    "matchday_context": null
+  },
+  "2026-08-21": {
+    "puzzles": {
+      "top_transfers": 26,
+      "transfer_destination": 26,
+      "top_scorers": 26,
+      "club_connect": 22,
+      "player_chain": 110,
+      "passport_fc": 117
+    },
+    "matchday_context": null
+  },
+  "2026-08-22": {
+    "puzzles": {
+      "top_transfers": 27,
+      "transfer_destination": 27,
+      "top_scorers": 27,
+      "club_connect": 23,
+      "player_chain": 111,
+      "passport_fc": 118
+    },
+    "matchday_context": null
+  },
+  "2026-08-23": {
+    "puzzles": {
+      "top_transfers": 28,
+      "transfer_destination": 28,
+      "top_scorers": 28,
+      "club_connect": 24,
+      "player_chain": 112,
+      "passport_fc": 119
+    },
+    "matchday_context": null
+  },
+  "2026-08-24": {
+    "puzzles": {
+      "top_transfers": 29,
+      "transfer_destination": 29,
+      "top_scorers": 29,
+      "club_connect": 25,
+      "player_chain": 113,
+      "passport_fc": 120
+    },
+    "matchday_context": null
+  },
+  "2026-08-25": {
+    "puzzles": {
+      "top_transfers": 30,
+      "transfer_destination": 30,
+      "top_scorers": 30,
+      "club_connect": 26,
+      "player_chain": 114,
+      "passport_fc": 121
+    },
+    "matchday_context": null
+  },
+  "2026-08-26": {
+    "puzzles": {
+      "top_transfers": 31,
+      "transfer_destination": 31,
+      "top_scorers": 31,
+      "club_connect": 27,
+      "player_chain": 115,
+      "passport_fc": 122
+    },
+    "matchday_context": null
+  },
+  "2026-08-27": {
+    "puzzles": {
+      "top_transfers": 32,
+      "transfer_destination": 32,
+      "top_scorers": 32,
+      "club_connect": 28,
+      "player_chain": 116,
+      "passport_fc": 123
+    },
+    "matchday_context": null
+  },
+  "2026-08-28": {
+    "puzzles": {
+      "top_transfers": 33,
+      "transfer_destination": 33,
+      "top_scorers": 33,
+      "club_connect": 29,
+      "player_chain": 117,
+      "passport_fc": 124
+    },
+    "matchday_context": null
+  },
+  "2026-08-29": {
+    "puzzles": {
+      "top_transfers": 34,
+      "transfer_destination": 34,
+      "top_scorers": 34,
+      "club_connect": 30,
+      "player_chain": 118,
+      "passport_fc": 125
+    },
+    "matchday_context": null
+  },
+  "2026-08-30": {
+    "puzzles": {
+      "top_transfers": 35,
+      "transfer_destination": 35,
+      "top_scorers": 35,
+      "club_connect": 31,
+      "player_chain": 119,
+      "passport_fc": 126
+    },
+    "matchday_context": null
+  },
+  "2026-08-31": {
+    "puzzles": {
+      "top_transfers": 36,
+      "transfer_destination": 36,
+      "top_scorers": 36,
+      "club_connect": 32,
+      "player_chain": 120,
+      "passport_fc": 127
+    },
+    "matchday_context": null
+  },
+  "2026-09-01": {
+    "puzzles": {
+      "top_transfers": 37,
+      "transfer_destination": 37,
+      "top_scorers": 37,
+      "club_connect": 33,
+      "player_chain": 121,
+      "passport_fc": 128
+    },
+    "matchday_context": null
+  },
+  "2026-09-02": {
+    "puzzles": {
+      "top_transfers": 38,
+      "transfer_destination": 38,
+      "top_scorers": 38,
+      "club_connect": 34,
+      "player_chain": 122,
+      "passport_fc": 129
+    },
+    "matchday_context": null
+  },
+  "2026-09-03": {
+    "puzzles": {
+      "top_transfers": 39,
+      "transfer_destination": 39,
+      "top_scorers": 39,
+      "club_connect": 35,
+      "player_chain": 123,
+      "passport_fc": 130
+    },
+    "matchday_context": null
+  },
+  "2026-09-04": {
+    "puzzles": {
+      "top_transfers": 40,
+      "transfer_destination": 40,
+      "top_scorers": 40,
+      "club_connect": 36,
+      "player_chain": 124,
+      "passport_fc": 131
+    },
+    "matchday_context": null
+  },
+  "2026-09-05": {
+    "puzzles": {
+      "top_transfers": 41,
+      "transfer_destination": 41,
+      "top_scorers": 41,
+      "club_connect": 37,
+      "player_chain": 125,
+      "passport_fc": 132
+    },
+    "matchday_context": null
+  },
+  "2026-09-06": {
+    "puzzles": {
+      "top_transfers": 42,
+      "transfer_destination": 42,
+      "top_scorers": 42,
+      "club_connect": 38,
+      "player_chain": 126,
+      "passport_fc": 133
+    },
+    "matchday_context": null
+  },
+  "2026-09-07": {
+    "puzzles": {
+      "top_transfers": 43,
+      "transfer_destination": 43,
+      "top_scorers": 43,
+      "club_connect": 39,
+      "player_chain": 127,
+      "passport_fc": 134
+    },
+    "matchday_context": null
+  },
+  "2026-09-08": {
+    "puzzles": {
+      "top_transfers": 44,
+      "transfer_destination": 44,
+      "top_scorers": 44,
+      "club_connect": 40,
+      "player_chain": 128,
+      "passport_fc": 135
+    },
+    "matchday_context": null
+  },
+  "2026-09-09": {
+    "puzzles": {
+      "top_transfers": 45,
+      "transfer_destination": 45,
+      "top_scorers": 45,
+      "club_connect": 41,
+      "player_chain": 129,
+      "passport_fc": 136
+    },
+    "matchday_context": null
+  },
+  "2026-09-10": {
+    "puzzles": {
+      "top_transfers": 46,
+      "transfer_destination": 46,
+      "top_scorers": 46,
+      "club_connect": 42,
+      "player_chain": 130,
+      "passport_fc": 137
+    },
+    "matchday_context": null
+  },
+  "2026-09-11": {
+    "puzzles": {
+      "top_transfers": 47,
+      "transfer_destination": 47,
+      "top_scorers": 47,
+      "club_connect": 43,
+      "player_chain": 1,
+      "passport_fc": 138
+    },
+    "matchday_context": null
+  },
+  "2026-09-12": {
+    "puzzles": {
+      "top_transfers": 48,
+      "transfer_destination": 48,
+      "top_scorers": 48,
+      "club_connect": 44,
+      "player_chain": 2,
+      "passport_fc": 139
+    },
+    "matchday_context": null
+  },
+  "2026-09-13": {
+    "puzzles": {
+      "top_transfers": 49,
+      "transfer_destination": 49,
+      "top_scorers": 49,
+      "club_connect": 45,
+      "player_chain": 3,
+      "passport_fc": 140
+    },
+    "matchday_context": null
+  },
+  "2026-09-14": {
+    "puzzles": {
+      "top_transfers": 50,
+      "transfer_destination": 50,
+      "top_scorers": 50,
+      "club_connect": 46,
+      "player_chain": 4,
+      "passport_fc": 1
+    },
+    "matchday_context": null
+  },
+  "2026-09-15": {
+    "puzzles": {
+      "top_transfers": 51,
+      "transfer_destination": 51,
+      "top_scorers": 51,
+      "club_connect": 47,
+      "player_chain": 5,
+      "passport_fc": 2
+    },
+    "matchday_context": null
+  },
+  "2026-09-16": {
+    "puzzles": {
+      "club_connect": 48,
+      "top_transfers": 53,
+      "top_scorers": 52,
+      "transfer_destination": 52,
+      "player_chain": 6,
+      "passport_fc": 3
+    },
+    "matchday_context": null
+  },
+  "2026-09-17": {
+    "puzzles": {
+      "club_connect": 49,
+      "top_transfers": 54,
+      "top_scorers": 53,
+      "transfer_destination": 53,
+      "player_chain": 7,
+      "passport_fc": 4
+    },
+    "matchday_context": null
+  },
+  "2026-09-18": {
+    "puzzles": {
+      "club_connect": 50,
+      "top_transfers": 55,
+      "top_scorers": 54,
+      "transfer_destination": 54,
+      "player_chain": 8,
+      "passport_fc": 5
+    },
+    "matchday_context": null
+  },
+  "2026-09-19": {
+    "puzzles": {
+      "club_connect": 85,
+      "top_transfers": 85,
+      "top_scorers": 56,
+      "transfer_destination": 55,
+      "player_chain": 9,
+      "passport_fc": 6
+    },
+    "matchday_context": {
+      "clash_name": "Roma vs Inter",
+      "competition": "Serie A",
+      "home_club": "Roma",
+      "away_club": "Inter",
+      "featured_club": "Roma",
+      "hook": "⚔️ SERIE A MATCHDAY SPECIAL!",
+      "hashtags": [
+        "#Roma",
+        "#Inter",
+        "#SerieA"
+      ]
+    }
+  },
+  "2026-09-20": {
+    "puzzles": {
+      "club_connect": 166,
+      "top_transfers": 56,
+      "top_scorers": 55,
+      "transfer_destination": 56,
+      "player_chain": 10,
+      "passport_fc": 7
+    },
+    "matchday_context": {
+      "clash_name": "Madrid Derby",
+      "competition": "La Liga",
+      "home_club": "Atletico Madrid",
+      "away_club": "Real Madrid",
+      "featured_club": "Atletico Madrid",
+      "hook": "⚔️ MADRID DERBY SPECIAL!",
+      "hashtags": [
+        "#DerbiMadrileno",
+        "#RealMadrid",
+        "#Atleti",
+        "#LaLiga"
+      ]
+    }
+  },
+  "2026-09-21": {
+    "puzzles": {
+      "club_connect": 53,
+      "top_transfers": 57,
+      "top_scorers": 57,
+      "transfer_destination": 57,
+      "player_chain": 11,
+      "passport_fc": 8
+    },
+    "matchday_context": null
+  },
+  "2026-09-22": {
+    "puzzles": {
+      "club_connect": 54,
+      "top_transfers": 59,
+      "top_scorers": 58,
+      "transfer_destination": 58,
+      "player_chain": 12,
+      "passport_fc": 9
+    },
+    "matchday_context": null
+  },
+  "2026-09-23": {
+    "puzzles": {
+      "club_connect": 55,
+      "top_transfers": 60,
+      "top_scorers": 59,
+      "transfer_destination": 59,
+      "player_chain": 13,
+      "passport_fc": 10
+    },
+    "matchday_context": null
+  },
+  "2026-09-24": {
+    "puzzles": {
+      "club_connect": 93,
+      "top_transfers": 93,
+      "top_scorers": 60,
+      "transfer_destination": 60,
+      "player_chain": 14,
+      "passport_fc": 11
+    },
+    "matchday_context": {
+      "clash_name": "Tottenham Hotspur vs Roma",
+      "competition": "UEFA Europa League",
+      "home_club": "Tottenham Hotspur",
+      "away_club": "Roma",
+      "featured_club": "Tottenham Hotspur",
+      "hook": "⭐ EUROPA LEAGUE BLOCKBUSTER!",
+      "hashtags": [
+        "#UEL",
+        "#EuropaLeague",
+        "#COYS",
+        "#Roma"
+      ]
+    }
+  },
+  "2026-09-25": {
+    "puzzles": {
+      "club_connect": 56,
+      "top_transfers": 61,
+      "top_scorers": 61,
+      "transfer_destination": 61,
+      "player_chain": 15,
+      "passport_fc": 12
+    },
+    "matchday_context": null
+  },
+  "2026-09-26": {
+    "puzzles": {
+      "club_connect": 57,
+      "top_transfers": 62,
+      "top_scorers": 62,
+      "transfer_destination": 62,
+      "player_chain": 16,
+      "passport_fc": 13
+    },
+    "matchday_context": null
+  },
+  "2026-09-27": {
+    "puzzles": {
+      "club_connect": 59,
+      "top_transfers": 64,
+      "top_scorers": 63,
+      "transfer_destination": 63,
+      "player_chain": 17,
+      "passport_fc": 14
+    },
+    "matchday_context": null
+  },
+  "2026-09-28": {
+    "puzzles": {
+      "club_connect": 60,
+      "top_transfers": 65,
+      "top_scorers": 64,
+      "transfer_destination": 64,
+      "player_chain": 18,
+      "passport_fc": 15
+    },
+    "matchday_context": null
+  },
+  "2026-09-29": {
+    "puzzles": {
+      "club_connect": 61,
+      "top_transfers": 66,
+      "top_scorers": 65,
+      "transfer_destination": 65,
+      "player_chain": 19,
+      "passport_fc": 16
+    },
+    "matchday_context": null
+  },
+  "2026-09-30": {
+    "puzzles": {
+      "club_connect": 62,
+      "top_transfers": 67,
+      "top_scorers": 66,
+      "transfer_destination": 66,
+      "player_chain": 20,
+      "passport_fc": 17
+    },
+    "matchday_context": null
+  },
+  "2026-10-01": {
+    "puzzles": {
+      "club_connect": 137,
+      "top_transfers": 137,
+      "top_scorers": 70,
+      "transfer_destination": 67,
+      "player_chain": 21,
+      "passport_fc": 18
+    },
+    "matchday_context": {
+      "clash_name": "Porto vs Manchester United",
+      "competition": "UEFA Europa League",
+      "home_club": "Porto",
+      "away_club": "Manchester United",
+      "featured_club": "Porto",
+      "hook": "⭐ EUROPA LEAGUE CLASH!",
+      "hashtags": [
+        "#UEL",
+        "#EuropaLeague",
+        "#FCPorto",
+        "#MUFC"
+      ]
+    }
+  },
+  "2026-10-02": {
+    "puzzles": {
+      "club_connect": 64,
+      "top_transfers": 69,
+      "top_scorers": 67,
+      "transfer_destination": 68,
+      "player_chain": 22,
+      "passport_fc": 19
+    },
+    "matchday_context": null
+  },
+  "2026-10-03": {
+    "puzzles": {
+      "club_connect": 65,
+      "top_transfers": 70,
+      "top_scorers": 68,
+      "transfer_destination": 69,
+      "player_chain": 23,
+      "passport_fc": 20
+    },
+    "matchday_context": null
+  },
+  "2026-10-04": {
+    "puzzles": {
+      "club_connect": 66,
+      "top_transfers": 71,
+      "top_scorers": 69,
+      "transfer_destination": 70,
+      "player_chain": 24,
+      "passport_fc": 21
+    },
+    "matchday_context": null
+  },
+  "2026-10-05": {
+    "puzzles": {
+      "club_connect": 67,
+      "top_transfers": 72,
+      "top_scorers": 71,
+      "transfer_destination": 71,
+      "player_chain": 25,
+      "passport_fc": 22
+    },
+    "matchday_context": null
+  },
+  "2026-10-06": {
+    "puzzles": {
+      "club_connect": 69,
+      "top_transfers": 73,
+      "top_scorers": 72,
+      "transfer_destination": 72,
+      "player_chain": 26,
+      "passport_fc": 23
+    },
+    "matchday_context": null
+  },
+  "2026-10-07": {
+    "puzzles": {
+      "club_connect": 70,
+      "top_transfers": 74,
+      "top_scorers": 73,
+      "transfer_destination": 73,
+      "player_chain": 27,
+      "passport_fc": 24
+    },
+    "matchday_context": null
+  },
+  "2026-10-08": {
+    "puzzles": {
+      "club_connect": 71,
+      "top_transfers": 75,
+      "top_scorers": 74,
+      "transfer_destination": 74,
+      "player_chain": 28,
+      "passport_fc": 25
+    },
+    "matchday_context": null
+  },
+  "2026-10-09": {
+    "puzzles": {
+      "club_connect": 72,
+      "top_transfers": 92,
+      "top_scorers": 75,
+      "transfer_destination": 75,
+      "player_chain": 29,
+      "passport_fc": 26
+    },
+    "matchday_context": {
+      "clash_name": "England vs Germany",
+      "competition": "UEFA Nations League",
+      "home_club": "England",
+      "away_club": "Germany",
+      "featured_club": "England",
+      "hook": "🌍 NATIONS LEAGUE HEAVYWEIGHT CLASH!",
+      "hashtags": [
+        "#NationsLeague",
+        "#England",
+        "#Germany",
+        "#ENGGER"
+      ]
+    }
+  },
+  "2026-10-10": {
+    "puzzles": {
+      "club_connect": 73,
+      "top_transfers": 52,
+      "top_scorers": 76,
+      "transfer_destination": 76,
+      "player_chain": 30,
+      "passport_fc": 27
+    },
+    "matchday_context": {
+      "clash_name": "Italy vs Belgium",
+      "competition": "UEFA Nations League",
+      "home_club": "Italy",
+      "away_club": "Belgium",
+      "featured_club": "Italy",
+      "hook": "🌍 NATIONS LEAGUE SHOWDOWN!",
+      "hashtags": [
+        "#NationsLeague",
+        "#Italy",
+        "#Belgium",
+        "#ITABEL"
+      ]
+    }
+  },
+  "2026-10-11": {
+    "puzzles": {
+      "club_connect": 63,
+      "top_transfers": 63,
+      "top_scorers": 82,
+      "transfer_destination": 77,
+      "player_chain": 31,
+      "passport_fc": 28
+    },
+    "matchday_context": {
+      "clash_name": "Liverpool vs Manchester City",
+      "competition": "Premier League",
+      "home_club": "Liverpool",
+      "away_club": "Manchester City",
+      "featured_club": "Liverpool",
+      "hook": "⚔️ PREMIER LEAGUE TITANS CLASH!",
+      "hashtags": [
+        "#LIVMCI",
+        "#Liverpool",
+        "#ManCity",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2026-10-12": {
+    "puzzles": {
+      "club_connect": 74,
+      "top_transfers": 76,
+      "top_scorers": 77,
+      "transfer_destination": 78,
+      "player_chain": 32,
+      "passport_fc": 29
+    },
+    "matchday_context": null
+  },
+  "2026-10-13": {
+    "puzzles": {
+      "club_connect": 58,
+      "top_transfers": 77,
+      "top_scorers": 86,
+      "transfer_destination": 79,
+      "player_chain": 33,
+      "passport_fc": 30
+    },
+    "matchday_context": {
+      "clash_name": "Atletico Madrid vs Manchester United",
+      "competition": "Champions League",
+      "home_club": "Atletico Madrid",
+      "away_club": "Manchester United",
+      "featured_club": "Manchester United",
+      "hook": "⭐ CHAMPIONS LEAGUE NIGHT!",
+      "hashtags": [
+        "#UCL",
+        "#ChampionsLeague",
+        "#AtleticoMadrid",
+        "#ManchesterUnited"
+      ]
+    }
+  },
+  "2026-10-14": {
+    "puzzles": {
+      "club_connect": 135,
+      "top_transfers": 135,
+      "top_scorers": 98,
+      "transfer_destination": 80,
+      "player_chain": 34,
+      "passport_fc": 31
+    },
+    "matchday_context": {
+      "clash_name": "Manchester City vs Paris Saint-Germain",
+      "competition": "Champions League",
+      "home_club": "Manchester City",
+      "away_club": "Paris Saint-Germain",
+      "featured_club": "Manchester City",
+      "hook": "⭐ CHAMPIONS LEAGUE NIGHT!",
+      "hashtags": [
+        "#UCL",
+        "#ChampionsLeague",
+        "#ManchesterCity",
+        "#ParisSaint-Germain"
+      ]
+    }
+  },
+  "2026-10-15": {
+    "puzzles": {
+      "club_connect": 75,
+      "top_transfers": 78,
+      "top_scorers": 78,
+      "transfer_destination": 81,
+      "player_chain": 35,
+      "passport_fc": 32
+    },
+    "matchday_context": null
+  },
+  "2026-10-16": {
+    "puzzles": {
+      "club_connect": 76,
+      "top_transfers": 79,
+      "top_scorers": 79,
+      "transfer_destination": 82,
+      "player_chain": 36,
+      "passport_fc": 33
+    },
+    "matchday_context": null
+  },
+  "2026-10-17": {
+    "puzzles": {
+      "club_connect": 77,
+      "top_transfers": 80,
+      "top_scorers": 80,
+      "transfer_destination": 83,
+      "player_chain": 37,
+      "passport_fc": 34
+    },
+    "matchday_context": null
+  },
+  "2026-10-18": {
+    "puzzles": {
+      "club_connect": 51,
+      "top_transfers": 179,
+      "top_scorers": 85,
+      "transfer_destination": 84,
+      "player_chain": 38,
+      "passport_fc": 35
+    },
+    "matchday_context": {
+      "clash_name": "Juventus vs Lazio",
+      "competition": "Serie A",
+      "home_club": "Juventus",
+      "away_club": "Lazio",
+      "featured_club": "Juventus",
+      "hook": "⚔️ SERIE A MATCHDAY SPECIAL!",
+      "hashtags": [
+        "#Juventus",
+        "#Lazio",
+        "#SerieA"
+      ]
+    }
+  },
+  "2026-10-19": {
+    "puzzles": {
+      "club_connect": 78,
+      "top_transfers": 81,
+      "top_scorers": 81,
+      "transfer_destination": 85,
+      "player_chain": 39,
+      "passport_fc": 36
+    },
+    "matchday_context": null
+  },
+  "2026-10-20": {
+    "puzzles": {
+      "club_connect": 171,
+      "top_transfers": 171,
+      "top_scorers": 105,
+      "transfer_destination": 86,
+      "player_chain": 40,
+      "passport_fc": 37
+    },
+    "matchday_context": {
+      "clash_name": "Paris Saint-Germain vs Barcelona",
+      "competition": "Champions League",
+      "home_club": "Paris Saint-Germain",
+      "away_club": "Barcelona",
+      "featured_club": "Paris Saint-Germain",
+      "hook": "⭐ CHAMPIONS LEAGUE NIGHT!",
+      "hashtags": [
+        "#UCL",
+        "#ChampionsLeague",
+        "#ParisSaint-Germain",
+        "#Barcelona"
+      ]
+    }
+  },
+  "2026-10-21": {
+    "puzzles": {
+      "club_connect": 133,
+      "top_transfers": 133,
+      "top_scorers": 117,
+      "transfer_destination": 87,
+      "player_chain": 41,
+      "passport_fc": 38
+    },
+    "matchday_context": {
+      "clash_name": "Bayern Munich vs Arsenal",
+      "competition": "Champions League",
+      "home_club": "Bayern Munich",
+      "away_club": "Arsenal",
+      "featured_club": "Bayern Munich",
+      "hook": "⭐ CHAMPIONS LEAGUE NIGHT!",
+      "hashtags": [
+        "#UCL",
+        "#ChampionsLeague",
+        "#BayernMunich",
+        "#Arsenal"
+      ]
+    }
+  },
+  "2026-10-22": {
+    "puzzles": {
+      "club_connect": 127,
+      "top_transfers": 127,
+      "top_scorers": 88,
+      "transfer_destination": 88,
+      "player_chain": 42,
+      "passport_fc": 39
+    },
+    "matchday_context": {
+      "clash_name": "Fenerbahce vs Manchester United",
+      "competition": "UEFA Europa League",
+      "home_club": "Fenerbahce",
+      "away_club": "Manchester United",
+      "featured_club": "Fenerbahce",
+      "hook": "⭐ EUROPA LEAGUE NIGHT!",
+      "hashtags": [
+        "#UEL",
+        "#EuropaLeague",
+        "#Fenerbahce",
+        "#MUFC"
+      ]
+    }
+  },
+  "2026-10-23": {
+    "puzzles": {
+      "club_connect": 79,
+      "top_transfers": 82,
+      "top_scorers": 83,
+      "transfer_destination": 89,
+      "player_chain": 43,
+      "passport_fc": 40
+    },
+    "matchday_context": null
+  },
+  "2026-10-24": {
+    "puzzles": {
+      "club_connect": 68,
+      "top_transfers": 83,
+      "top_scorers": 92,
+      "transfer_destination": 90,
+      "player_chain": 44,
+      "passport_fc": 41
+    },
+    "matchday_context": {
+      "clash_name": "Chelsea vs Tottenham Hotspur",
+      "competition": "Premier League",
+      "home_club": "Chelsea",
+      "away_club": "Tottenham Hotspur",
+      "featured_club": "Chelsea",
+      "hook": "⚔️ LONDON DERBY CLASH!",
+      "hashtags": [
+        "#LondonDerby",
+        "#Chelsea",
+        "#COYS",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2026-10-25": {
+    "puzzles": {
+      "club_connect": 90,
+      "top_transfers": 84,
+      "top_scorers": 94,
+      "transfer_destination": 91,
+      "player_chain": 45,
+      "passport_fc": 42
+    },
+    "matchday_context": {
+      "clash_name": "El Clásico",
+      "competition": "La Liga",
+      "home_club": "Barcelona",
+      "away_club": "Real Madrid",
+      "featured_club": "Barcelona",
+      "hook": "⚔️ EL CLÁSICO SPECIAL!",
+      "hashtags": [
+        "#ElClasico",
+        "#RealMadrid",
+        "#FCBarcelona",
+        "#LaLiga"
+      ]
+    }
+  },
+  "2026-10-26": {
+    "puzzles": {
+      "club_connect": 80,
+      "top_transfers": 86,
+      "top_scorers": 84,
+      "transfer_destination": 92,
+      "player_chain": 46,
+      "passport_fc": 43
+    },
+    "matchday_context": null
+  },
+  "2026-10-27": {
+    "puzzles": {
+      "club_connect": 81,
+      "top_transfers": 87,
+      "top_scorers": 87,
+      "transfer_destination": 93,
+      "player_chain": 47,
+      "passport_fc": 44
+    },
+    "matchday_context": null
+  },
+  "2026-10-28": {
+    "puzzles": {
+      "club_connect": 82,
+      "top_transfers": 89,
+      "top_scorers": 89,
+      "transfer_destination": 94,
+      "player_chain": 48,
+      "passport_fc": 45
+    },
+    "matchday_context": null
+  },
+  "2026-10-29": {
+    "puzzles": {
+      "club_connect": 83,
+      "top_transfers": 91,
+      "top_scorers": 90,
+      "transfer_destination": 95,
+      "player_chain": 49,
+      "passport_fc": 46
+    },
+    "matchday_context": null
+  },
+  "2026-10-30": {
+    "puzzles": {
+      "club_connect": 84,
+      "top_transfers": 94,
+      "top_scorers": 91,
+      "transfer_destination": 96,
+      "player_chain": 50,
+      "passport_fc": 47
+    },
+    "matchday_context": null
+  },
+  "2026-10-31": {
+    "puzzles": {
+      "club_connect": 140,
+      "top_transfers": 95,
+      "top_scorers": 102,
+      "transfer_destination": 97,
+      "player_chain": 51,
+      "passport_fc": 48
+    },
+    "matchday_context": {
+      "clash_name": "Der Klassiker",
+      "competition": "Bundesliga",
+      "home_club": "Bayern Munich",
+      "away_club": "Borussia Dortmund",
+      "featured_club": "Borussia Dortmund",
+      "hook": "⚔️ DER KLASSIKER SPECIAL!",
+      "hashtags": [
+        "#DerKlassiker",
+        "#BVBFCB",
+        "#Bundesliga",
+        "#BayernMunich",
+        "#BVB"
+      ]
+    }
+  },
+  "2026-11-01": {
+    "puzzles": {
+      "club_connect": 175,
+      "top_transfers": 175,
+      "top_scorers": 95,
+      "transfer_destination": 98,
+      "player_chain": 52,
+      "passport_fc": 49
+    },
+    "matchday_context": {
+      "clash_name": "Derby della Madonnina",
+      "competition": "Serie A",
+      "home_club": "AC Milan",
+      "away_club": "Inter",
+      "featured_club": "AC Milan",
+      "hook": "⚔️ DERBY DELLA MADONNINA SPECIAL!",
+      "hashtags": [
+        "#InterMilan",
+        "#DerbyMilano",
+        "#SerieA",
+        "#Inter",
+        "#ACMilan"
+      ]
+    }
+  },
+  "2026-11-02": {
+    "puzzles": {
+      "club_connect": 86,
+      "top_transfers": 96,
+      "top_scorers": 93,
+      "transfer_destination": 99,
+      "player_chain": 53,
+      "passport_fc": 50
+    },
+    "matchday_context": null
+  },
+  "2026-11-03": {
+    "puzzles": {
+      "club_connect": 87,
+      "top_transfers": 97,
+      "top_scorers": 120,
+      "transfer_destination": 100,
+      "player_chain": 54,
+      "passport_fc": 51
+    },
+    "matchday_context": {
+      "clash_name": "Manchester United vs Roma",
+      "competition": "Champions League",
+      "home_club": "Manchester United",
+      "away_club": "Roma",
+      "featured_club": "Manchester United",
+      "hook": "⭐ CHAMPIONS LEAGUE NIGHT!",
+      "hashtags": [
+        "#UCL",
+        "#ChampionsLeague",
+        "#ManchesterUnited",
+        "#Roma"
+      ]
+    }
+  },
+  "2026-11-04": {
+    "puzzles": {
+      "club_connect": 89,
+      "top_transfers": 98,
+      "top_scorers": 96,
+      "transfer_destination": 101,
+      "player_chain": 55,
+      "passport_fc": 52
+    },
+    "matchday_context": null
+  },
+  "2026-11-05": {
+    "puzzles": {
+      "club_connect": 91,
+      "top_transfers": 99,
+      "top_scorers": 108,
+      "transfer_destination": 102,
+      "player_chain": 56,
+      "passport_fc": 53
+    },
+    "matchday_context": {
+      "clash_name": "Galatasaray vs Tottenham Hotspur",
+      "competition": "UEFA Europa League",
+      "home_club": "Galatasaray",
+      "away_club": "Tottenham Hotspur",
+      "featured_club": "Galatasaray",
+      "hook": "⭐ EUROPA LEAGUE SHOWDOWN!",
+      "hashtags": [
+        "#UEL",
+        "#EuropaLeague",
+        "#Galatasaray",
+        "#COYS"
+      ]
+    }
+  },
+  "2026-11-06": {
+    "puzzles": {
+      "club_connect": 92,
+      "top_transfers": 100,
+      "top_scorers": 97,
+      "transfer_destination": 103,
+      "player_chain": 57,
+      "passport_fc": 54
+    },
+    "matchday_context": null
+  },
+  "2026-11-07": {
+    "puzzles": {
+      "club_connect": 94,
+      "top_transfers": 101,
+      "top_scorers": 99,
+      "transfer_destination": 104,
+      "player_chain": 58,
+      "passport_fc": 55
+    },
+    "matchday_context": null
+  },
+  "2026-11-08": {
+    "puzzles": {
+      "club_connect": 95,
+      "top_transfers": 102,
+      "top_scorers": 3,
+      "transfer_destination": 105,
+      "player_chain": 59,
+      "passport_fc": 56
+    },
+    "matchday_context": {
+      "clash_name": "Barcelona vs Atletico Madrid",
+      "competition": "La Liga",
+      "home_club": "Atletico Madrid",
+      "away_club": "Barcelona",
+      "featured_club": "Atletico Madrid",
+      "hook": "⚔️ LA LIGA TITANS SHOWDOWN!",
+      "hashtags": [
+        "#BarcaAtleti",
+        "#LaLiga",
+        "#Barcelona",
+        "#Atleti"
+      ]
+    }
+  },
+  "2026-11-09": {
+    "puzzles": {
+      "club_connect": 96,
+      "top_transfers": 103,
+      "top_scorers": 100,
+      "transfer_destination": 106,
+      "player_chain": 60,
+      "passport_fc": 57
+    },
+    "matchday_context": null
+  },
+  "2026-11-10": {
+    "puzzles": {
+      "club_connect": 97,
+      "top_transfers": 104,
+      "top_scorers": 101,
+      "transfer_destination": 107,
+      "player_chain": 61,
+      "passport_fc": 58
+    },
+    "matchday_context": null
+  },
+  "2026-11-11": {
+    "puzzles": {
+      "club_connect": 98,
+      "top_transfers": 105,
+      "top_scorers": 103,
+      "transfer_destination": 108,
+      "player_chain": 62,
+      "passport_fc": 59
+    },
+    "matchday_context": null
+  },
+  "2026-11-12": {
+    "puzzles": {
+      "club_connect": 99,
+      "top_transfers": 106,
+      "top_scorers": 104,
+      "transfer_destination": 109,
+      "player_chain": 63,
+      "passport_fc": 60
+    },
+    "matchday_context": null
+  },
+  "2026-11-13": {
+    "puzzles": {
+      "club_connect": 100,
+      "top_transfers": 107,
+      "top_scorers": 106,
+      "transfer_destination": 110,
+      "player_chain": 64,
+      "passport_fc": 61
+    },
+    "matchday_context": null
+  },
+  "2026-11-14": {
+    "puzzles": {
+      "club_connect": 101,
+      "top_transfers": 130,
+      "top_scorers": 107,
+      "transfer_destination": 111,
+      "player_chain": 65,
+      "passport_fc": 62
+    },
+    "matchday_context": {
+      "clash_name": "France vs Italy",
+      "competition": "UEFA Nations League",
+      "home_club": "France",
+      "away_club": "Italy",
+      "featured_club": "France",
+      "hook": "🌍 NATIONS LEAGUE BLOCKBUSTER!",
+      "hashtags": [
+        "#NationsLeague",
+        "#France",
+        "#Italy",
+        "#FRAITA"
+      ]
+    }
+  },
+  "2026-11-15": {
+    "puzzles": {
+      "club_connect": 102,
+      "top_transfers": 108,
+      "top_scorers": 109,
+      "transfer_destination": 112,
+      "player_chain": 66,
+      "passport_fc": 63
+    },
+    "matchday_context": null
+  },
+  "2026-11-16": {
+    "puzzles": {
+      "club_connect": 103,
+      "top_transfers": 109,
+      "top_scorers": 110,
+      "transfer_destination": 113,
+      "player_chain": 67,
+      "passport_fc": 64
+    },
+    "matchday_context": null
+  },
+  "2026-11-17": {
+    "puzzles": {
+      "club_connect": 104,
+      "top_transfers": 126,
+      "top_scorers": 111,
+      "transfer_destination": 114,
+      "player_chain": 68,
+      "passport_fc": 65
+    },
+    "matchday_context": {
+      "clash_name": "Spain vs Switzerland",
+      "competition": "UEFA Nations League",
+      "home_club": "Spain",
+      "away_club": "Switzerland",
+      "featured_club": "Spain",
+      "hook": "🌍 NATIONS LEAGUE CLASH!",
+      "hashtags": [
+        "#NationsLeague",
+        "#Spain",
+        "#Switzerland",
+        "#SUIESP"
+      ]
+    }
+  },
+  "2026-11-18": {
+    "puzzles": {
+      "club_connect": 105,
+      "top_transfers": 110,
+      "top_scorers": 112,
+      "transfer_destination": 115,
+      "player_chain": 69,
+      "passport_fc": 66
+    },
+    "matchday_context": null
+  },
+  "2026-11-19": {
+    "puzzles": {
+      "club_connect": 106,
+      "top_transfers": 111,
+      "top_scorers": 113,
+      "transfer_destination": 116,
+      "player_chain": 70,
+      "passport_fc": 67
+    },
+    "matchday_context": null
+  },
+  "2026-11-20": {
+    "puzzles": {
+      "club_connect": 107,
+      "top_transfers": 112,
+      "top_scorers": 114,
+      "transfer_destination": 117,
+      "player_chain": 71,
+      "passport_fc": 68
+    },
+    "matchday_context": null
+  },
+  "2026-11-21": {
+    "puzzles": {
+      "club_connect": 108,
+      "top_transfers": 113,
+      "top_scorers": 1,
+      "transfer_destination": 118,
+      "player_chain": 72,
+      "passport_fc": 69
+    },
+    "matchday_context": {
+      "clash_name": "North West Derby",
+      "competition": "Premier League",
+      "home_club": "Liverpool",
+      "away_club": "Manchester United",
+      "featured_club": "Liverpool",
+      "hook": "⚔️ NORTH WEST DERBY SPECIAL!",
+      "hashtags": [
+        "#NorthWestDerby",
+        "#LFC",
+        "#MUFC",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2026-11-22": {
+    "puzzles": {
+      "club_connect": 109,
+      "top_transfers": 114,
+      "top_scorers": 115,
+      "transfer_destination": 119,
+      "player_chain": 73,
+      "passport_fc": 70
+    },
+    "matchday_context": null
+  },
+  "2026-11-23": {
+    "puzzles": {
+      "club_connect": 110,
+      "top_transfers": 115,
+      "top_scorers": 116,
+      "transfer_destination": 120,
+      "player_chain": 74,
+      "passport_fc": 71
+    },
+    "matchday_context": null
+  },
+  "2026-11-24": {
+    "puzzles": {
+      "club_connect": 52,
+      "top_transfers": 116,
+      "top_scorers": 7,
+      "transfer_destination": 121,
+      "player_chain": 75,
+      "passport_fc": 72
+    },
+    "matchday_context": {
+      "clash_name": "Arsenal vs Borussia Dortmund",
+      "competition": "Champions League",
+      "home_club": "Arsenal",
+      "away_club": "Borussia Dortmund",
+      "featured_club": "Arsenal",
+      "hook": "⭐ CHAMPIONS LEAGUE NIGHT!",
+      "hashtags": [
+        "#UCL",
+        "#ChampionsLeague",
+        "#Arsenal",
+        "#BorussiaDortmund"
+      ]
+    }
+  },
+  "2026-11-25": {
+    "puzzles": {
+      "club_connect": 111,
+      "top_transfers": 117,
+      "top_scorers": 14,
+      "transfer_destination": 122,
+      "player_chain": 76,
+      "passport_fc": 73
+    },
+    "matchday_context": {
+      "clash_name": "Paris Saint-Germain vs Roma",
+      "competition": "Champions League",
+      "home_club": "Paris Saint-Germain",
+      "away_club": "Roma",
+      "featured_club": "Paris Saint-Germain",
+      "hook": "⭐ CHAMPIONS LEAGUE NIGHT!",
+      "hashtags": [
+        "#UCL",
+        "#ChampionsLeague",
+        "#ParisSaint-Germain",
+        "#Roma"
+      ]
+    }
+  },
+  "2026-11-26": {
+    "puzzles": {
+      "club_connect": 112,
+      "top_transfers": 118,
+      "top_scorers": 5,
+      "transfer_destination": 123,
+      "player_chain": 77,
+      "passport_fc": 74
+    },
+    "matchday_context": {
+      "clash_name": "Tottenham Hotspur vs Roma",
+      "competition": "UEFA Europa League",
+      "home_club": "Tottenham Hotspur",
+      "away_club": "Roma",
+      "featured_club": "Roma",
+      "hook": "⭐ EUROPA LEAGUE GIANTS CLASH!",
+      "hashtags": [
+        "#UEL",
+        "#EuropaLeague",
+        "#COYS",
+        "#Roma"
+      ]
+    }
+  },
+  "2026-11-27": {
+    "puzzles": {
+      "club_connect": 113,
+      "top_transfers": 119,
+      "top_scorers": 118,
+      "transfer_destination": 124,
+      "player_chain": 78,
+      "passport_fc": 75
+    },
+    "matchday_context": null
+  },
+  "2026-11-28": {
+    "puzzles": {
+      "club_connect": 180,
+      "top_transfers": 7,
+      "top_scorers": 15,
+      "transfer_destination": 125,
+      "player_chain": 79,
+      "passport_fc": 76
+    },
+    "matchday_context": {
+      "clash_name": "Manchester City vs Arsenal",
+      "competition": "Premier League",
+      "home_club": "Arsenal",
+      "away_club": "Manchester City",
+      "featured_club": "Arsenal",
+      "hook": "⚔️ PREMIER LEAGUE TITLE SHOWDOWN!",
+      "hashtags": [
+        "#TitleRace",
+        "#ManCity",
+        "#Arsenal",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2026-11-29": {
+    "puzzles": {
+      "club_connect": 114,
+      "top_transfers": 120,
+      "top_scorers": 119,
+      "transfer_destination": 126,
+      "player_chain": 80,
+      "passport_fc": 77
+    },
+    "matchday_context": null
+  },
+  "2026-11-30": {
+    "puzzles": {
+      "club_connect": 115,
+      "top_transfers": 121,
+      "top_scorers": 121,
+      "transfer_destination": 127,
+      "player_chain": 81,
+      "passport_fc": 78
+    },
+    "matchday_context": null
+  },
+  "2026-12-01": {
+    "puzzles": {
+      "club_connect": 116,
+      "top_transfers": 122,
+      "top_scorers": 122,
+      "transfer_destination": 128,
+      "player_chain": 82,
+      "passport_fc": 79
+    },
+    "matchday_context": null
+  },
+  "2026-12-02": {
+    "puzzles": {
+      "club_connect": 117,
+      "top_transfers": 123,
+      "top_scorers": 123,
+      "transfer_destination": 129,
+      "player_chain": 83,
+      "passport_fc": 80
+    },
+    "matchday_context": null
+  },
+  "2026-12-03": {
+    "puzzles": {
+      "club_connect": 118,
+      "top_transfers": 124,
+      "top_scorers": 124,
+      "transfer_destination": 130,
+      "player_chain": 84,
+      "passport_fc": 81
+    },
+    "matchday_context": null
+  },
+  "2026-12-04": {
+    "puzzles": {
+      "club_connect": 119,
+      "top_transfers": 125,
+      "top_scorers": 125,
+      "transfer_destination": 131,
+      "player_chain": 85,
+      "passport_fc": 82
+    },
+    "matchday_context": null
+  },
+  "2026-12-05": {
+    "puzzles": {
+      "club_connect": 120,
+      "top_transfers": 128,
+      "top_scorers": 21,
+      "transfer_destination": 132,
+      "player_chain": 86,
+      "passport_fc": 83
+    },
+    "matchday_context": {
+      "clash_name": "North London Derby",
+      "competition": "Premier League",
+      "home_club": "Tottenham Hotspur",
+      "away_club": "Arsenal",
+      "featured_club": "Tottenham Hotspur",
+      "hook": "⚔️ NORTH LONDON DERBY SPECIAL!",
+      "hashtags": [
+        "#NorthLondonDerby",
+        "#Arsenal",
+        "#COYS",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2026-12-06": {
+    "puzzles": {
+      "club_connect": 121,
+      "top_transfers": 129,
+      "top_scorers": 22,
+      "transfer_destination": 133,
+      "player_chain": 87,
+      "passport_fc": 84
+    },
+    "matchday_context": {
+      "clash_name": "Chelsea vs Liverpool",
+      "competition": "Premier League",
+      "home_club": "Chelsea",
+      "away_club": "Liverpool",
+      "featured_club": "Chelsea",
+      "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!",
+      "hashtags": [
+        "#CHELIV",
+        "#Chelsea",
+        "#Liverpool",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2026-12-07": {
+    "puzzles": {
+      "club_connect": 122,
+      "top_transfers": 131,
+      "top_scorers": 126,
+      "transfer_destination": 134,
+      "player_chain": 88,
+      "passport_fc": 85
+    },
+    "matchday_context": null
+  },
+  "2026-12-08": {
+    "puzzles": {
+      "club_connect": 7,
+      "top_transfers": 132,
+      "top_scorers": 26,
+      "transfer_destination": 135,
+      "player_chain": 89,
+      "passport_fc": 86
+    },
+    "matchday_context": {
+      "clash_name": "Barcelona vs Manchester City",
+      "competition": "Champions League",
+      "home_club": "Barcelona",
+      "away_club": "Manchester City",
+      "featured_club": "Manchester City",
+      "hook": "⭐ CHAMPIONS LEAGUE NIGHT!",
+      "hashtags": [
+        "#UCL",
+        "#ChampionsLeague",
+        "#Barcelona",
+        "#ManchesterCity"
+      ]
+    }
+  },
+  "2026-12-09": {
+    "puzzles": {
+      "club_connect": 12,
+      "top_transfers": 134,
+      "top_scorers": 29,
+      "transfer_destination": 136,
+      "player_chain": 90,
+      "passport_fc": 87
+    },
+    "matchday_context": {
+      "clash_name": "Borussia Dortmund vs Inter",
+      "competition": "Champions League",
+      "home_club": "Borussia Dortmund",
+      "away_club": "Inter",
+      "featured_club": "Borussia Dortmund",
+      "hook": "⭐ CHAMPIONS LEAGUE NIGHT!",
+      "hashtags": [
+        "#UCL",
+        "#ChampionsLeague",
+        "#BorussiaDortmund",
+        "#Inter"
+      ]
+    }
+  },
+  "2026-12-10": {
+    "puzzles": {
+      "club_connect": 126,
+      "top_transfers": 136,
+      "top_scorers": 17,
+      "transfer_destination": 137,
+      "player_chain": 91,
+      "passport_fc": 88
+    },
+    "matchday_context": {
+      "clash_name": "Rangers vs Tottenham Hotspur",
+      "competition": "UEFA Europa League",
+      "home_club": "Rangers",
+      "away_club": "Tottenham Hotspur",
+      "featured_club": "Rangers",
+      "hook": "⭐ BRITISH SHOWDOWN IN EUROPE!",
+      "hashtags": [
+        "#UEL",
+        "#EuropaLeague",
+        "#Rangers",
+        "#COYS"
+      ]
+    }
+  },
+  "2026-12-11": {
+    "puzzles": {
+      "club_connect": 123,
+      "top_transfers": 138,
+      "top_scorers": 127,
+      "transfer_destination": 138,
+      "player_chain": 92,
+      "passport_fc": 89
+    },
+    "matchday_context": null
+  },
+  "2026-12-12": {
+    "puzzles": {
+      "club_connect": 124,
+      "top_transfers": 139,
+      "top_scorers": 28,
+      "transfer_destination": 139,
+      "player_chain": 93,
+      "passport_fc": 90
+    },
+    "matchday_context": {
+      "clash_name": "Chelsea vs Manchester City",
+      "competition": "Premier League",
+      "home_club": "Manchester City",
+      "away_club": "Chelsea",
+      "featured_club": "Manchester City",
+      "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!",
+      "hashtags": [
+        "#CHEMCI",
+        "#Chelsea",
+        "#ManCity",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2026-12-13": {
+    "puzzles": {
+      "club_connect": 34,
+      "top_transfers": 141,
+      "top_scorers": 4,
+      "transfer_destination": 140,
+      "player_chain": 94,
+      "passport_fc": 91
+    },
+    "matchday_context": {
+      "clash_name": "Derby della Capitale",
+      "competition": "Serie A",
+      "home_club": "Lazio",
+      "away_club": "Roma",
+      "featured_club": "Lazio",
+      "hook": "⚔️ DERBY DELLA CAPITALE SPECIAL!",
+      "hashtags": [
+        "#DerbyDellaCapitale",
+        "#Roma",
+        "#Lazio",
+        "#SerieA"
+      ]
+    }
+  },
+  "2026-12-14": {
+    "puzzles": {
+      "club_connect": 125,
+      "top_transfers": 142,
+      "top_scorers": 128,
+      "transfer_destination": 141,
+      "player_chain": 95,
+      "passport_fc": 92
+    },
+    "matchday_context": null
+  },
+  "2026-12-15": {
+    "puzzles": {
+      "club_connect": 128,
+      "top_transfers": 143,
+      "top_scorers": 129,
+      "transfer_destination": 142,
+      "player_chain": 96,
+      "passport_fc": 93
+    },
+    "matchday_context": null
+  },
+  "2026-12-16": {
+    "puzzles": {
+      "club_connect": 129,
+      "top_transfers": 144,
+      "top_scorers": 130,
+      "transfer_destination": 143,
+      "player_chain": 97,
+      "passport_fc": 94
+    },
+    "matchday_context": null
+  },
+  "2026-12-17": {
+    "puzzles": {
+      "club_connect": 130,
+      "top_transfers": 145,
+      "top_scorers": 131,
+      "transfer_destination": 144,
+      "player_chain": 98,
+      "passport_fc": 95
+    },
+    "matchday_context": null
+  },
+  "2026-12-18": {
+    "puzzles": {
+      "club_connect": 131,
+      "top_transfers": 146,
+      "top_scorers": 132,
+      "transfer_destination": 145,
+      "player_chain": 99,
+      "passport_fc": 96
+    },
+    "matchday_context": null
+  },
+  "2026-12-19": {
+    "puzzles": {
+      "club_connect": 132,
+      "top_transfers": 147,
+      "top_scorers": 35,
+      "transfer_destination": 146,
+      "player_chain": 100,
+      "passport_fc": 97
+    },
+    "matchday_context": {
+      "clash_name": "Tottenham Hotspur vs Liverpool",
+      "competition": "Premier League",
+      "home_club": "Liverpool",
+      "away_club": "Tottenham Hotspur",
+      "featured_club": "Liverpool",
+      "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!",
+      "hashtags": [
+        "#TOTLIV",
+        "#COYS",
+        "#Liverpool",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2026-12-20": {
+    "puzzles": {
+      "club_connect": 179,
+      "top_transfers": 148,
+      "top_scorers": 9,
+      "transfer_destination": 147,
+      "player_chain": 101,
+      "passport_fc": 98
+    },
+    "matchday_context": {
+      "clash_name": "Roma vs Juventus",
+      "competition": "Serie A",
+      "home_club": "Roma",
+      "away_club": "Juventus",
+      "featured_club": "Juventus",
+      "hook": "⚔️ SERIE A MATCHDAY SPECIAL!",
+      "hashtags": [
+        "#Roma",
+        "#Juventus",
+        "#SerieA"
+      ]
+    }
+  },
+  "2026-12-21": {
+    "puzzles": {
+      "club_connect": 134,
+      "top_transfers": 149,
+      "top_scorers": 133,
+      "transfer_destination": 148,
+      "player_chain": 102,
+      "passport_fc": 99
+    },
+    "matchday_context": null
+  },
+  "2026-12-22": {
+    "puzzles": {
+      "club_connect": 136,
+      "top_transfers": 150,
+      "top_scorers": 134,
+      "transfer_destination": 149,
+      "player_chain": 103,
+      "passport_fc": 100
+    },
+    "matchday_context": null
+  },
+  "2026-12-23": {
+    "puzzles": {
+      "club_connect": 138,
+      "top_transfers": 151,
+      "top_scorers": 135,
+      "transfer_destination": 150,
+      "player_chain": 104,
+      "passport_fc": 101
+    },
+    "matchday_context": null
+  },
+  "2026-12-24": {
+    "puzzles": {
+      "club_connect": 139,
+      "top_transfers": 153,
+      "top_scorers": 136,
+      "transfer_destination": 151,
+      "player_chain": 105,
+      "passport_fc": 102
+    },
+    "matchday_context": null
+  },
+  "2026-12-25": {
+    "puzzles": {
+      "club_connect": 141,
+      "top_transfers": 154,
+      "top_scorers": 137,
+      "transfer_destination": 152,
+      "player_chain": 106,
+      "passport_fc": 103
+    },
+    "matchday_context": null
+  },
+  "2026-12-26": {
+    "puzzles": {
+      "club_connect": 142,
+      "top_transfers": 155,
+      "top_scorers": 138,
+      "transfer_destination": 153,
+      "player_chain": 107,
+      "passport_fc": 104
+    },
+    "matchday_context": null
+  },
+  "2026-12-27": {
+    "puzzles": {
+      "club_connect": 143,
+      "top_transfers": 156,
+      "top_scorers": 139,
+      "transfer_destination": 154,
+      "player_chain": 108,
+      "passport_fc": 105
+    },
+    "matchday_context": null
+  },
+  "2026-12-28": {
+    "puzzles": {
+      "club_connect": 144,
+      "top_transfers": 157,
+      "top_scorers": 140,
+      "transfer_destination": 155,
+      "player_chain": 109,
+      "passport_fc": 106
+    },
+    "matchday_context": null
+  },
+  "2026-12-29": {
+    "puzzles": {
+      "club_connect": 145,
+      "top_transfers": 158,
+      "top_scorers": 141,
+      "transfer_destination": 156,
+      "player_chain": 110,
+      "passport_fc": 107
+    },
+    "matchday_context": null
+  },
+  "2026-12-30": {
+    "puzzles": {
+      "club_connect": 146,
+      "top_transfers": 159,
+      "top_scorers": 142,
+      "transfer_destination": 157,
+      "player_chain": 111,
+      "passport_fc": 108
+    },
+    "matchday_context": null
+  },
+  "2026-12-31": {
+    "puzzles": {
+      "club_connect": 147,
+      "top_transfers": 160,
+      "top_scorers": 143,
+      "transfer_destination": 158,
+      "player_chain": 112,
+      "passport_fc": 109
+    },
+    "matchday_context": null
+  },
+  "2027-01-01": {
+    "puzzles": {
+      "club_connect": 148,
+      "top_transfers": 161,
+      "top_scorers": 144,
+      "transfer_destination": 159,
+      "player_chain": 113,
+      "passport_fc": 110
+    },
+    "matchday_context": null
+  },
+  "2027-01-02": {
+    "puzzles": {
+      "club_connect": 149,
+      "top_transfers": 163,
+      "top_scorers": 145,
+      "transfer_destination": 160,
+      "player_chain": 114,
+      "passport_fc": 111
+    },
+    "matchday_context": null
+  },
+  "2027-01-03": {
+    "puzzles": {
+      "club_connect": 93,
+      "top_transfers": 93,
+      "top_scorers": 39,
+      "transfer_destination": 161,
+      "player_chain": 115,
+      "passport_fc": 112
+    },
+    "matchday_context": {
+      "clash_name": "Tottenham Hotspur vs Manchester City",
+      "competition": "Premier League",
+      "home_club": "Manchester City",
+      "away_club": "Tottenham Hotspur",
+      "featured_club": "Tottenham Hotspur",
+      "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!",
+      "hashtags": [
+        "#TOTMCI",
+        "#COYS",
+        "#ManCity",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2027-01-04": {
+    "puzzles": {
+      "club_connect": 150,
+      "top_transfers": 164,
+      "top_scorers": 146,
+      "transfer_destination": 162,
+      "player_chain": 116,
+      "passport_fc": 113
+    },
+    "matchday_context": null
+  },
+  "2027-01-05": {
+    "puzzles": {
+      "club_connect": 151,
+      "top_transfers": 165,
+      "top_scorers": 147,
+      "transfer_destination": 163,
+      "player_chain": 117,
+      "passport_fc": 114
+    },
+    "matchday_context": null
+  },
+  "2027-01-06": {
+    "puzzles": {
+      "club_connect": 162,
+      "top_transfers": 167,
+      "top_scorers": 10,
+      "transfer_destination": 164,
+      "player_chain": 118,
+      "passport_fc": 115
+    },
+    "matchday_context": {
+      "clash_name": "Lazio vs Inter",
+      "competition": "Serie A",
+      "home_club": "Lazio",
+      "away_club": "Inter",
+      "featured_club": "Lazio",
+      "hook": "⚔️ SERIE A MATCHDAY SPECIAL!",
+      "hashtags": [
+        "#Lazio",
+        "#Inter",
+        "#SerieA"
+      ]
+    }
+  },
+  "2027-01-07": {
+    "puzzles": {
+      "club_connect": 153,
+      "top_transfers": 168,
+      "top_scorers": 148,
+      "transfer_destination": 165,
+      "player_chain": 119,
+      "passport_fc": 116
+    },
+    "matchday_context": null
+  },
+  "2027-01-08": {
+    "puzzles": {
+      "club_connect": 154,
+      "top_transfers": 169,
+      "top_scorers": 149,
+      "transfer_destination": 166,
+      "player_chain": 120,
+      "passport_fc": 117
+    },
+    "matchday_context": null
+  },
+  "2027-01-09": {
+    "puzzles": {
+      "club_connect": 155,
+      "top_transfers": 170,
+      "top_scorers": 150,
+      "transfer_destination": 167,
+      "player_chain": 121,
+      "passport_fc": 118
+    },
+    "matchday_context": null
+  },
+  "2027-01-10": {
+    "puzzles": {
+      "club_connect": 88,
+      "top_transfers": 51,
+      "top_scorers": 12,
+      "transfer_destination": 168,
+      "player_chain": 122,
+      "passport_fc": 119
+    },
+    "matchday_context": {
+      "clash_name": "Derby d'Italia",
+      "competition": "Serie A",
+      "home_club": "Inter",
+      "away_club": "Juventus",
+      "featured_club": "Inter",
+      "hook": "⚔️ DERBY D'ITALIA SPECIAL!",
+      "hashtags": [
+        "#InterJuve",
+        "#DerbyDItalia",
+        "#SerieA",
+        "#Inter",
+        "#Juventus"
+      ]
+    }
+  },
+  "2027-01-11": {
+    "puzzles": {
+      "club_connect": 156,
+      "top_transfers": 172,
+      "top_scorers": 151,
+      "transfer_destination": 169,
+      "player_chain": 123,
+      "passport_fc": 120
+    },
+    "matchday_context": null
+  },
+  "2027-01-12": {
+    "puzzles": {
+      "club_connect": 157,
+      "top_transfers": 173,
+      "top_scorers": 152,
+      "transfer_destination": 170,
+      "player_chain": 124,
+      "passport_fc": 121
+    },
+    "matchday_context": null
+  },
+  "2027-01-13": {
+    "puzzles": {
+      "club_connect": 158,
+      "top_transfers": 174,
+      "top_scorers": 153,
+      "transfer_destination": 171,
+      "player_chain": 125,
+      "passport_fc": 122
+    },
+    "matchday_context": null
+  },
+  "2027-01-14": {
+    "puzzles": {
+      "club_connect": 159,
+      "top_transfers": 176,
+      "top_scorers": 154,
+      "transfer_destination": 172,
+      "player_chain": 126,
+      "passport_fc": 123
+    },
+    "matchday_context": null
+  },
+  "2027-01-15": {
+    "puzzles": {
+      "club_connect": 160,
+      "top_transfers": 177,
+      "top_scorers": 155,
+      "transfer_destination": 173,
+      "player_chain": 127,
+      "passport_fc": 124
+    },
+    "matchday_context": null
+  },
+  "2027-01-16": {
+    "puzzles": {
+      "club_connect": 161,
+      "top_transfers": 178,
+      "top_scorers": 156,
+      "transfer_destination": 174,
+      "player_chain": 128,
+      "passport_fc": 125
+    },
+    "matchday_context": null
+  },
+  "2027-01-17": {
+    "puzzles": {
+      "club_connect": 163,
+      "top_transfers": 1,
+      "top_scorers": 157,
+      "transfer_destination": 175,
+      "player_chain": 129,
+      "passport_fc": 126
+    },
+    "matchday_context": null
+  },
+  "2027-01-18": {
+    "puzzles": {
+      "club_connect": 164,
+      "top_transfers": 2,
+      "top_scorers": 158,
+      "transfer_destination": 176,
+      "player_chain": 130,
+      "passport_fc": 127
+    },
+    "matchday_context": null
+  },
+  "2027-01-19": {
+    "puzzles": {
+      "club_connect": 63,
+      "top_transfers": 63,
+      "top_scorers": 32,
+      "transfer_destination": 177,
+      "player_chain": 131,
+      "passport_fc": 128
+    },
+    "matchday_context": {
+      "clash_name": "Inter vs Liverpool",
+      "competition": "Champions League",
+      "home_club": "Inter",
+      "away_club": "Liverpool",
+      "featured_club": "Liverpool",
+      "hook": "⭐ CHAMPIONS LEAGUE NIGHT!",
+      "hashtags": [
+        "#UCL",
+        "#ChampionsLeague",
+        "#Inter",
+        "#Liverpool"
+      ]
+    }
+  },
+  "2027-01-20": {
+    "puzzles": {
+      "club_connect": 5,
+      "top_transfers": 5,
+      "top_scorers": 38,
+      "transfer_destination": 178,
+      "player_chain": 132,
+      "passport_fc": 129
+    },
+    "matchday_context": {
+      "clash_name": "Manchester United vs Bayern Munich",
+      "competition": "Champions League",
+      "home_club": "Manchester United",
+      "away_club": "Bayern Munich",
+      "featured_club": "Bayern Munich",
+      "hook": "⭐ CHAMPIONS LEAGUE NIGHT!",
+      "hashtags": [
+        "#UCL",
+        "#ChampionsLeague",
+        "#ManchesterUnited",
+        "#BayernMunich"
+      ]
+    }
+  },
+  "2027-01-21": {
+    "puzzles": {
+      "club_connect": 44,
+      "top_transfers": 3,
+      "top_scorers": 159,
+      "transfer_destination": 179,
+      "player_chain": 133,
+      "passport_fc": 130
+    },
+    "matchday_context": {
+      "clash_name": "Chelsea vs Real Betis",
+      "competition": "UEFA Conference League",
+      "home_club": "Chelsea",
+      "away_club": "Real Betis",
+      "featured_club": "Real Betis",
+      "hook": "⭐ CONFERENCE LEAGUE SPECIAL!",
+      "hashtags": [
+        "#UECL",
+        "#ConferenceLeague",
+        "#Chelsea",
+        "#RealBetis"
+      ]
+    }
+  },
+  "2027-01-22": {
+    "puzzles": {
+      "club_connect": 165,
+      "top_transfers": 4,
+      "top_scorers": 160,
+      "transfer_destination": 180,
+      "player_chain": 134,
+      "passport_fc": 131
+    },
+    "matchday_context": null
+  },
+  "2027-01-23": {
+    "puzzles": {
+      "club_connect": 58,
+      "top_transfers": 6,
+      "top_scorers": 50,
+      "transfer_destination": 1,
+      "player_chain": 135,
+      "passport_fc": 132
+    },
+    "matchday_context": {
+      "clash_name": "North West Derby",
+      "competition": "Premier League",
+      "home_club": "Manchester United",
+      "away_club": "Liverpool",
+      "featured_club": "Manchester United",
+      "hook": "⚔️ NORTH WEST DERBY SPECIAL!",
+      "hashtags": [
+        "#NorthWestDerby",
+        "#LFC",
+        "#MUFC",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2027-01-24": {
+    "puzzles": {
+      "club_connect": 167,
+      "top_transfers": 8,
+      "top_scorers": 161,
+      "transfer_destination": 2,
+      "player_chain": 136,
+      "passport_fc": 133
+    },
+    "matchday_context": null
+  },
+  "2027-01-25": {
+    "puzzles": {
+      "club_connect": 168,
+      "top_transfers": 9,
+      "top_scorers": 162,
+      "transfer_destination": 3,
+      "player_chain": 137,
+      "passport_fc": 134
+    },
+    "matchday_context": null
+  },
+  "2027-01-26": {
+    "puzzles": {
+      "club_connect": 169,
+      "top_transfers": 10,
+      "top_scorers": 163,
+      "transfer_destination": 4,
+      "player_chain": 138,
+      "passport_fc": 135
+    },
+    "matchday_context": null
+  },
+  "2027-01-27": {
+    "puzzles": {
+      "club_connect": 170,
+      "top_transfers": 11,
+      "top_scorers": 164,
+      "transfer_destination": 5,
+      "player_chain": 139,
+      "passport_fc": 136
+    },
+    "matchday_context": null
+  },
+  "2027-01-28": {
+    "puzzles": {
+      "club_connect": 8,
+      "top_transfers": 13,
+      "top_scorers": 18,
+      "transfer_destination": 6,
+      "player_chain": 140,
+      "passport_fc": 137
+    },
+    "matchday_context": {
+      "clash_name": "Lazio vs Real Sociedad",
+      "competition": "UEFA Europa League",
+      "home_club": "Lazio",
+      "away_club": "Real Sociedad",
+      "featured_club": "Real Sociedad",
+      "hook": "⭐ EUROPA LEAGUE SHOWDOWN!",
+      "hashtags": [
+        "#UEL",
+        "#EuropaLeague",
+        "#Lazio",
+        "#RealSociedad"
+      ]
+    }
+  },
+  "2027-01-29": {
+    "puzzles": {
+      "club_connect": 172,
+      "top_transfers": 14,
+      "top_scorers": 165,
+      "transfer_destination": 7,
+      "player_chain": 141,
+      "passport_fc": 138
+    },
+    "matchday_context": null
+  },
+  "2027-01-30": {
+    "puzzles": {
+      "club_connect": 135,
+      "top_transfers": 135,
+      "top_scorers": 52,
+      "transfer_destination": 8,
+      "player_chain": 142,
+      "passport_fc": 139
+    },
+    "matchday_context": {
+      "clash_name": "Manchester City vs Arsenal",
+      "competition": "Premier League",
+      "home_club": "Manchester City",
+      "away_club": "Arsenal",
+      "featured_club": "Manchester City",
+      "hook": "⚔️ PREMIER LEAGUE TITLE SHOWDOWN!",
+      "hashtags": [
+        "#TitleRace",
+        "#ManCity",
+        "#Arsenal",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2027-01-31": {
+    "puzzles": {
+      "club_connect": 47,
+      "top_transfers": 47,
+      "top_scorers": 24,
+      "transfer_destination": 9,
+      "player_chain": 143,
+      "passport_fc": 140
+    },
+    "matchday_context": {
+      "clash_name": "AC Milan vs Juventus",
+      "competition": "Serie A",
+      "home_club": "AC Milan",
+      "away_club": "Juventus",
+      "featured_club": "AC Milan",
+      "hook": "⚔️ SERIE A CLASSIC SHOWDOWN!",
+      "hashtags": [
+        "#MilanJuve",
+        "#SerieA",
+        "#ACMilan",
+        "#Juventus"
+      ]
+    }
+  },
+  "2027-02-01": {
+    "puzzles": {
+      "club_connect": 173,
+      "top_transfers": 15,
+      "top_scorers": 166,
+      "transfer_destination": 10,
+      "player_chain": 144,
+      "passport_fc": 141
+    },
+    "matchday_context": null
+  },
+  "2027-02-02": {
+    "puzzles": {
+      "club_connect": 174,
+      "top_transfers": 16,
+      "top_scorers": 167,
+      "transfer_destination": 11,
+      "player_chain": 145,
+      "passport_fc": 142
+    },
+    "matchday_context": null
+  },
+  "2027-02-03": {
+    "puzzles": {
+      "club_connect": 176,
+      "top_transfers": 17,
+      "top_scorers": 168,
+      "transfer_destination": 12,
+      "player_chain": 146,
+      "passport_fc": 143
+    },
+    "matchday_context": null
+  },
+  "2027-02-04": {
+    "puzzles": {
+      "club_connect": 177,
+      "top_transfers": 18,
+      "top_scorers": 169,
+      "transfer_destination": 13,
+      "player_chain": 147,
+      "passport_fc": 144
+    },
+    "matchday_context": null
+  },
+  "2027-02-05": {
+    "puzzles": {
+      "club_connect": 178,
+      "top_transfers": 19,
+      "top_scorers": 170,
+      "transfer_destination": 14,
+      "player_chain": 148,
+      "passport_fc": 145
+    },
+    "matchday_context": null
+  },
+  "2027-02-06": {
+    "puzzles": {
+      "club_connect": 68,
+      "top_transfers": 20,
+      "top_scorers": 73,
+      "transfer_destination": 15,
+      "player_chain": 149,
+      "passport_fc": 146
+    },
+    "matchday_context": {
+      "clash_name": "Manchester United vs Chelsea",
+      "competition": "Premier League",
+      "home_club": "Manchester United",
+      "away_club": "Chelsea",
+      "featured_club": "Chelsea",
+      "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!",
+      "hashtags": [
+        "#MUNCHE",
+        "#MUFC",
+        "#Chelsea",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2027-02-07": {
+    "puzzles": {
+      "club_connect": 90,
+      "top_transfers": 21,
+      "top_scorers": 6,
+      "transfer_destination": 16,
+      "player_chain": 150,
+      "passport_fc": 147
+    },
+    "matchday_context": {
+      "clash_name": "Barcelona vs Atletico Madrid",
+      "competition": "La Liga",
+      "home_club": "Barcelona",
+      "away_club": "Atletico Madrid",
+      "featured_club": "Barcelona",
+      "hook": "⚔️ LA LIGA TITANS SHOWDOWN!",
+      "hashtags": [
+        "#BarcaAtleti",
+        "#LaLiga",
+        "#Barcelona",
+        "#Atleti"
+      ]
+    }
+  },
+  "2027-02-08": {
+    "puzzles": {
+      "club_connect": 1,
+      "top_transfers": 22,
+      "top_scorers": 171,
+      "transfer_destination": 17,
+      "player_chain": 151,
+      "passport_fc": 148
+    },
+    "matchday_context": null
+  },
+  "2027-02-09": {
+    "puzzles": {
+      "club_connect": 2,
+      "top_transfers": 23,
+      "top_scorers": 172,
+      "transfer_destination": 18,
+      "player_chain": 152,
+      "passport_fc": 149
+    },
+    "matchday_context": null
+  },
+  "2027-02-10": {
+    "puzzles": {
+      "club_connect": 3,
+      "top_transfers": 25,
+      "top_scorers": 75,
+      "transfer_destination": 19,
+      "player_chain": 153,
+      "passport_fc": 150
+    },
+    "matchday_context": {
+      "clash_name": "Tottenham Hotspur vs Manchester City",
+      "competition": "Premier League",
+      "home_club": "Tottenham Hotspur",
+      "away_club": "Manchester City",
+      "featured_club": "Manchester City",
+      "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!",
+      "hashtags": [
+        "#TOTMCI",
+        "#COYS",
+        "#ManCity",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2027-02-11": {
+    "puzzles": {
+      "club_connect": 4,
+      "top_transfers": 26,
+      "top_scorers": 173,
+      "transfer_destination": 20,
+      "player_chain": 154,
+      "passport_fc": 151
+    },
+    "matchday_context": null
+  },
+  "2027-02-12": {
+    "puzzles": {
+      "club_connect": 6,
+      "top_transfers": 27,
+      "top_scorers": 174,
+      "transfer_destination": 21,
+      "player_chain": 155,
+      "passport_fc": 152
+    },
+    "matchday_context": null
+  },
+  "2027-02-13": {
+    "puzzles": {
+      "club_connect": 9,
+      "top_transfers": 28,
+      "top_scorers": 175,
+      "transfer_destination": 22,
+      "player_chain": 156,
+      "passport_fc": 153
+    },
+    "matchday_context": null
+  },
+  "2027-02-14": {
+    "puzzles": {
+      "club_connect": 175,
+      "top_transfers": 175,
+      "top_scorers": 25,
+      "transfer_destination": 23,
+      "player_chain": 157,
+      "passport_fc": 154
+    },
+    "matchday_context": {
+      "clash_name": "Derby della Madonnina",
+      "competition": "Serie A",
+      "home_club": "Inter",
+      "away_club": "AC Milan",
+      "featured_club": "AC Milan",
+      "hook": "⚔️ DERBY DELLA MADONNINA SPECIAL!",
+      "hashtags": [
+        "#InterMilan",
+        "#DerbyMilano",
+        "#SerieA",
+        "#Inter",
+        "#ACMilan"
+      ]
+    }
+  },
+  "2027-02-15": {
+    "puzzles": {
+      "club_connect": 10,
+      "top_transfers": 29,
+      "top_scorers": 176,
+      "transfer_destination": 24,
+      "player_chain": 158,
+      "passport_fc": 155
+    },
+    "matchday_context": null
+  },
+  "2027-02-16": {
+    "puzzles": {
+      "club_connect": 11,
+      "top_transfers": 30,
+      "top_scorers": 177,
+      "transfer_destination": 25,
+      "player_chain": 159,
+      "passport_fc": 156
+    },
+    "matchday_context": null
+  },
+  "2027-02-17": {
+    "puzzles": {
+      "club_connect": 13,
+      "top_transfers": 31,
+      "top_scorers": 178,
+      "transfer_destination": 26,
+      "player_chain": 160,
+      "passport_fc": 157
+    },
+    "matchday_context": null
+  },
+  "2027-02-18": {
+    "puzzles": {
+      "club_connect": 14,
+      "top_transfers": 32,
+      "top_scorers": 179,
+      "transfer_destination": 27,
+      "player_chain": 161,
+      "passport_fc": 158
+    },
+    "matchday_context": null
+  },
+  "2027-02-19": {
+    "puzzles": {
+      "club_connect": 15,
+      "top_transfers": 33,
+      "top_scorers": 180,
+      "transfer_destination": 28,
+      "player_chain": 162,
+      "passport_fc": 159
+    },
+    "matchday_context": null
+  },
+  "2027-02-20": {
+    "puzzles": {
+      "club_connect": 16,
+      "top_transfers": 35,
+      "top_scorers": 2,
+      "transfer_destination": 29,
+      "player_chain": 163,
+      "passport_fc": 160
+    },
+    "matchday_context": null
+  },
+  "2027-02-21": {
+    "puzzles": {
+      "club_connect": 17,
+      "top_transfers": 36,
+      "top_scorers": 3,
+      "transfer_destination": 30,
+      "player_chain": 164,
+      "passport_fc": 161
+    },
+    "matchday_context": null
+  },
+  "2027-02-22": {
+    "puzzles": {
+      "club_connect": 18,
+      "top_transfers": 37,
+      "top_scorers": 8,
+      "transfer_destination": 31,
+      "player_chain": 165,
+      "passport_fc": 162
+    },
+    "matchday_context": null
+  },
+  "2027-02-23": {
+    "puzzles": {
+      "club_connect": 19,
+      "top_transfers": 39,
+      "top_scorers": 11,
+      "transfer_destination": 32,
+      "player_chain": 166,
+      "passport_fc": 163
+    },
+    "matchday_context": null
+  },
+  "2027-02-24": {
+    "puzzles": {
+      "club_connect": 20,
+      "top_transfers": 40,
+      "top_scorers": 13,
+      "transfer_destination": 33,
+      "player_chain": 167,
+      "passport_fc": 164
+    },
+    "matchday_context": null
+  },
+  "2027-02-25": {
+    "puzzles": {
+      "club_connect": 21,
+      "top_transfers": 41,
+      "top_scorers": 16,
+      "transfer_destination": 34,
+      "player_chain": 168,
+      "passport_fc": 165
+    },
+    "matchday_context": null
+  },
+  "2027-02-26": {
+    "puzzles": {
+      "club_connect": 22,
+      "top_transfers": 42,
+      "top_scorers": 19,
+      "transfer_destination": 35,
+      "player_chain": 169,
+      "passport_fc": 166
+    },
+    "matchday_context": null
+  },
+  "2027-02-27": {
+    "puzzles": {
+      "club_connect": 23,
+      "top_transfers": 44,
+      "top_scorers": 76,
+      "transfer_destination": 36,
+      "player_chain": 170,
+      "passport_fc": 167
+    },
+    "matchday_context": {
+      "clash_name": "Tottenham Hotspur vs Liverpool",
+      "competition": "Premier League",
+      "home_club": "Tottenham Hotspur",
+      "away_club": "Liverpool",
+      "featured_club": "Tottenham Hotspur",
+      "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!",
+      "hashtags": [
+        "#TOTLIV",
+        "#COYS",
+        "#Liverpool",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2027-02-28": {
+    "puzzles": {
+      "club_connect": 25,
+      "top_transfers": 45,
+      "top_scorers": 20,
+      "transfer_destination": 37,
+      "player_chain": 171,
+      "passport_fc": 168
+    },
+    "matchday_context": null
+  },
+  "2027-03-01": {
+    "puzzles": {
+      "club_connect": 26,
+      "top_transfers": 46,
+      "top_scorers": 23,
+      "transfer_destination": 38,
+      "player_chain": 172,
+      "passport_fc": 169
+    },
+    "matchday_context": null
+  },
+  "2027-03-02": {
+    "puzzles": {
+      "club_connect": 27,
+      "top_transfers": 48,
+      "top_scorers": 27,
+      "transfer_destination": 39,
+      "player_chain": 173,
+      "passport_fc": 170
+    },
+    "matchday_context": null
+  },
+  "2027-03-03": {
+    "puzzles": {
+      "club_connect": 28,
+      "top_transfers": 49,
+      "top_scorers": 30,
+      "transfer_destination": 40,
+      "player_chain": 174,
+      "passport_fc": 171
+    },
+    "matchday_context": null
+  },
+  "2027-03-04": {
+    "puzzles": {
+      "club_connect": 29,
+      "top_transfers": 50,
+      "top_scorers": 31,
+      "transfer_destination": 41,
+      "player_chain": 175,
+      "passport_fc": 172
+    },
+    "matchday_context": null
+  },
+  "2027-03-05": {
+    "puzzles": {
+      "club_connect": 30,
+      "top_transfers": 53,
+      "top_scorers": 33,
+      "transfer_destination": 42,
+      "player_chain": 176,
+      "passport_fc": 173
+    },
+    "matchday_context": null
+  },
+  "2027-03-06": {
+    "puzzles": {
+      "club_connect": 133,
+      "top_transfers": 133,
+      "top_scorers": 48,
+      "transfer_destination": 43,
+      "player_chain": 177,
+      "passport_fc": 174
+    },
+    "matchday_context": {
+      "clash_name": "Der Klassiker",
+      "competition": "Bundesliga",
+      "home_club": "Borussia Dortmund",
+      "away_club": "Bayern Munich",
+      "featured_club": "Bayern Munich",
+      "hook": "⚔️ DER KLASSIKER SPECIAL!",
+      "hashtags": [
+        "#DerKlassiker",
+        "#BVBFCB",
+        "#Bundesliga",
+        "#BayernMunich",
+        "#BVB"
+      ]
+    }
+  },
+  "2027-03-07": {
+    "puzzles": {
+      "club_connect": 85,
+      "top_transfers": 85,
+      "top_scorers": 34,
+      "transfer_destination": 44,
+      "player_chain": 178,
+      "passport_fc": 175
+    },
+    "matchday_context": {
+      "clash_name": "Juventus vs Roma",
+      "competition": "Serie A",
+      "home_club": "Juventus",
+      "away_club": "Roma",
+      "featured_club": "Roma",
+      "hook": "⚔️ SERIE A MATCHDAY SPECIAL!",
+      "hashtags": [
+        "#Juventus",
+        "#Roma",
+        "#SerieA"
+      ]
+    }
+  },
+  "2027-03-08": {
+    "puzzles": {
+      "club_connect": 31,
+      "top_transfers": 54,
+      "top_scorers": 36,
+      "transfer_destination": 45,
+      "player_chain": 179,
+      "passport_fc": 176
+    },
+    "matchday_context": null
+  },
+  "2027-03-09": {
+    "puzzles": {
+      "club_connect": 32,
+      "top_transfers": 55,
+      "top_scorers": 37,
+      "transfer_destination": 46,
+      "player_chain": 180,
+      "passport_fc": 177
+    },
+    "matchday_context": null
+  },
+  "2027-03-10": {
+    "puzzles": {
+      "club_connect": 33,
+      "top_transfers": 56,
+      "top_scorers": 40,
+      "transfer_destination": 47,
+      "player_chain": 1,
+      "passport_fc": 178
+    },
+    "matchday_context": null
+  },
+  "2027-03-11": {
+    "puzzles": {
+      "club_connect": 35,
+      "top_transfers": 57,
+      "top_scorers": 41,
+      "transfer_destination": 48,
+      "player_chain": 2,
+      "passport_fc": 179
+    },
+    "matchday_context": null
+  },
+  "2027-03-12": {
+    "puzzles": {
+      "club_connect": 36,
+      "top_transfers": 59,
+      "top_scorers": 42,
+      "transfer_destination": 49,
+      "player_chain": 3,
+      "passport_fc": 180
+    },
+    "matchday_context": null
+  },
+  "2027-03-13": {
+    "puzzles": {
+      "club_connect": 52,
+      "top_transfers": 60,
+      "top_scorers": 1,
+      "transfer_destination": 50,
+      "player_chain": 4,
+      "passport_fc": 1
+    },
+    "matchday_context": {
+      "clash_name": "Arsenal vs Chelsea (London Derby)",
+      "competition": "Premier League",
+      "home_club": "Chelsea",
+      "away_club": "Arsenal",
+      "featured_club": "Arsenal",
+      "hook": "⚔️ LONDON DERBY SHOWDOWN!",
+      "hashtags": [
+        "#LondonDerby",
+        "#Arsenal",
+        "#Chelsea",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2027-03-14": {
+    "puzzles": {
+      "club_connect": 51,
+      "top_transfers": 179,
+      "top_scorers": 56,
+      "transfer_destination": 51,
+      "player_chain": 5,
+      "passport_fc": 2
+    },
+    "matchday_context": {
+      "clash_name": "Lazio vs Juventus",
+      "competition": "Serie A",
+      "home_club": "Lazio",
+      "away_club": "Juventus",
+      "featured_club": "Juventus",
+      "hook": "⚔️ SERIE A MATCHDAY SPECIAL!",
+      "hashtags": [
+        "#Lazio",
+        "#Juventus",
+        "#SerieA"
+      ]
+    }
+  },
+  "2027-03-15": {
+    "puzzles": {
+      "club_connect": 37,
+      "top_transfers": 61,
+      "top_scorers": 43,
+      "transfer_destination": 52,
+      "player_chain": 6,
+      "passport_fc": 3
+    },
+    "matchday_context": null
+  },
+  "2027-03-16": {
+    "puzzles": {
+      "club_connect": 39,
+      "top_transfers": 62,
+      "top_scorers": 44,
+      "transfer_destination": 53,
+      "player_chain": 7,
+      "passport_fc": 4
+    },
+    "matchday_context": null
+  },
+  "2027-03-17": {
+    "puzzles": {
+      "club_connect": 40,
+      "top_transfers": 64,
+      "top_scorers": 45,
+      "transfer_destination": 54,
+      "player_chain": 8,
+      "passport_fc": 5
+    },
+    "matchday_context": null
+  },
+  "2027-03-18": {
+    "puzzles": {
+      "club_connect": 41,
+      "top_transfers": 65,
+      "top_scorers": 46,
+      "transfer_destination": 55,
+      "player_chain": 9,
+      "passport_fc": 6
+    },
+    "matchday_context": null
+  },
+  "2027-03-19": {
+    "puzzles": {
+      "club_connect": 42,
+      "top_transfers": 66,
+      "top_scorers": 47,
+      "transfer_destination": 56,
+      "player_chain": 10,
+      "passport_fc": 7
+    },
+    "matchday_context": null
+  },
+  "2027-03-20": {
+    "puzzles": {
+      "club_connect": 7,
+      "top_transfers": 7,
+      "top_scorers": 15,
+      "transfer_destination": 57,
+      "player_chain": 11,
+      "passport_fc": 8
+    },
+    "matchday_context": {
+      "clash_name": "Manchester Derby",
+      "competition": "Premier League",
+      "home_club": "Manchester City",
+      "away_club": "Manchester United",
+      "featured_club": "Manchester City",
+      "hook": "⚔️ MANCHESTER DERBY SPECIAL!",
+      "hashtags": [
+        "#ManchesterDerby",
+        "#ManCity",
+        "#MUFC",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2027-03-21": {
+    "puzzles": {
+      "club_connect": 45,
+      "top_transfers": 67,
+      "top_scorers": 49,
+      "transfer_destination": 58,
+      "player_chain": 12,
+      "passport_fc": 9
+    },
+    "matchday_context": null
+  },
+  "2027-03-22": {
+    "puzzles": {
+      "club_connect": 46,
+      "top_transfers": 69,
+      "top_scorers": 51,
+      "transfer_destination": 59,
+      "player_chain": 13,
+      "passport_fc": 10
+    },
+    "matchday_context": null
+  },
+  "2027-03-23": {
+    "puzzles": {
+      "club_connect": 48,
+      "top_transfers": 70,
+      "top_scorers": 53,
+      "transfer_destination": 60,
+      "player_chain": 14,
+      "passport_fc": 11
+    },
+    "matchday_context": null
+  },
+  "2027-03-24": {
+    "puzzles": {
+      "club_connect": 49,
+      "top_transfers": 71,
+      "top_scorers": 54,
+      "transfer_destination": 61,
+      "player_chain": 15,
+      "passport_fc": 12
+    },
+    "matchday_context": null
+  },
+  "2027-03-25": {
+    "puzzles": {
+      "club_connect": 50,
+      "top_transfers": 72,
+      "top_scorers": 55,
+      "transfer_destination": 62,
+      "player_chain": 16,
+      "passport_fc": 13
+    },
+    "matchday_context": {
+      "clash_name": "Netherlands vs Spain",
+      "competition": "UEFA Nations League",
+      "home_club": "Netherlands",
+      "away_club": "Spain",
+      "featured_club": "Netherlands",
+      "hook": "🌍 NATIONS LEAGUE QUARTER-FINAL!",
+      "hashtags": [
+        "#NationsLeague",
+        "#Netherlands",
+        "#Spain",
+        "#NEDESP"
+      ]
+    }
+  },
+  "2027-03-26": {
+    "puzzles": {
+      "club_connect": 53,
+      "top_transfers": 73,
+      "top_scorers": 57,
+      "transfer_destination": 63,
+      "player_chain": 17,
+      "passport_fc": 14
+    },
+    "matchday_context": null
+  },
+  "2027-03-27": {
+    "puzzles": {
+      "club_connect": 54,
+      "top_transfers": 74,
+      "top_scorers": 58,
+      "transfer_destination": 64,
+      "player_chain": 18,
+      "passport_fc": 15
+    },
+    "matchday_context": null
+  },
+  "2027-03-28": {
+    "puzzles": {
+      "club_connect": 55,
+      "top_transfers": 80,
+      "top_scorers": 59,
+      "transfer_destination": 65,
+      "player_chain": 19,
+      "passport_fc": 16
+    },
+    "matchday_context": {
+      "clash_name": "France vs Croatia",
+      "competition": "UEFA Nations League",
+      "home_club": "France",
+      "away_club": "Croatia",
+      "featured_club": "France",
+      "hook": "🌍 NATIONS LEAGUE QUARTER-FINAL!",
+      "hashtags": [
+        "#NationsLeague",
+        "#France",
+        "#Croatia",
+        "#FRACRO"
+      ]
+    }
+  },
+  "2027-03-29": {
+    "puzzles": {
+      "club_connect": 56,
+      "top_transfers": 75,
+      "top_scorers": 60,
+      "transfer_destination": 66,
+      "player_chain": 20,
+      "passport_fc": 17
+    },
+    "matchday_context": null
+  },
+  "2027-03-30": {
+    "puzzles": {
+      "club_connect": 57,
+      "top_transfers": 76,
+      "top_scorers": 61,
+      "transfer_destination": 67,
+      "player_chain": 21,
+      "passport_fc": 18
+    },
+    "matchday_context": null
+  },
+  "2027-03-31": {
+    "puzzles": {
+      "club_connect": 59,
+      "top_transfers": 77,
+      "top_scorers": 62,
+      "transfer_destination": 68,
+      "player_chain": 22,
+      "passport_fc": 19
+    },
+    "matchday_context": null
+  },
+  "2027-04-01": {
+    "puzzles": {
+      "club_connect": 60,
+      "top_transfers": 78,
+      "top_scorers": 63,
+      "transfer_destination": 69,
+      "player_chain": 23,
+      "passport_fc": 20
+    },
+    "matchday_context": null
+  },
+  "2027-04-02": {
+    "puzzles": {
+      "club_connect": 61,
+      "top_transfers": 79,
+      "top_scorers": 64,
+      "transfer_destination": 70,
+      "player_chain": 24,
+      "passport_fc": 21
+    },
+    "matchday_context": null
+  },
+  "2027-04-03": {
+    "puzzles": {
+      "club_connect": 62,
+      "top_transfers": 81,
+      "top_scorers": 65,
+      "transfer_destination": 71,
+      "player_chain": 25,
+      "passport_fc": 22
+    },
+    "matchday_context": null
+  },
+  "2027-04-04": {
+    "puzzles": {
+      "club_connect": 24,
+      "top_transfers": 82,
+      "top_scorers": 80,
+      "transfer_destination": 72,
+      "player_chain": 26,
+      "passport_fc": 23
+    },
+    "matchday_context": {
+      "clash_name": "Madrid Derby",
+      "competition": "La Liga",
+      "home_club": "Real Madrid",
+      "away_club": "Atletico Madrid",
+      "featured_club": "Real Madrid",
+      "hook": "⚔️ MADRID DERBY SPECIAL!",
+      "hashtags": [
+        "#DerbiMadrileno",
+        "#RealMadrid",
+        "#Atleti",
+        "#LaLiga"
+      ]
+    }
+  },
+  "2027-04-05": {
+    "puzzles": {
+      "club_connect": 64,
+      "top_transfers": 83,
+      "top_scorers": 66,
+      "transfer_destination": 73,
+      "player_chain": 27,
+      "passport_fc": 24
+    },
+    "matchday_context": null
+  },
+  "2027-04-06": {
+    "puzzles": {
+      "club_connect": 65,
+      "top_transfers": 84,
+      "top_scorers": 67,
+      "transfer_destination": 74,
+      "player_chain": 28,
+      "passport_fc": 25
+    },
+    "matchday_context": null
+  },
+  "2027-04-07": {
+    "puzzles": {
+      "club_connect": 66,
+      "top_transfers": 86,
+      "top_scorers": 68,
+      "transfer_destination": 75,
+      "player_chain": 29,
+      "passport_fc": 26
+    },
+    "matchday_context": null
+  },
+  "2027-04-08": {
+    "puzzles": {
+      "club_connect": 67,
+      "top_transfers": 87,
+      "top_scorers": 69,
+      "transfer_destination": 76,
+      "player_chain": 30,
+      "passport_fc": 27
+    },
+    "matchday_context": null
+  },
+  "2027-04-09": {
+    "puzzles": {
+      "club_connect": 69,
+      "top_transfers": 89,
+      "top_scorers": 70,
+      "transfer_destination": 77,
+      "player_chain": 31,
+      "passport_fc": 28
+    },
+    "matchday_context": null
+  },
+  "2027-04-10": {
+    "puzzles": {
+      "club_connect": 70,
+      "top_transfers": 91,
+      "top_scorers": 71,
+      "transfer_destination": 78,
+      "player_chain": 32,
+      "passport_fc": 29
+    },
+    "matchday_context": null
+  },
+  "2027-04-11": {
+    "puzzles": {
+      "club_connect": 71,
+      "top_transfers": 92,
+      "top_scorers": 4,
+      "transfer_destination": 79,
+      "player_chain": 33,
+      "passport_fc": 30
+    },
+    "matchday_context": {
+      "clash_name": "Inter vs Roma",
+      "competition": "Serie A",
+      "home_club": "Inter",
+      "away_club": "Roma",
+      "featured_club": "Inter",
+      "hook": "⚔️ SERIE A MATCHDAY SPECIAL!",
+      "hashtags": [
+        "#Inter",
+        "#Roma",
+        "#SerieA"
+      ]
+    }
+  },
+  "2027-04-12": {
+    "puzzles": {
+      "club_connect": 72,
+      "top_transfers": 94,
+      "top_scorers": 72,
+      "transfer_destination": 80,
+      "player_chain": 34,
+      "passport_fc": 31
+    },
+    "matchday_context": null
+  },
+  "2027-04-13": {
+    "puzzles": {
+      "club_connect": 73,
+      "top_transfers": 95,
+      "top_scorers": 74,
+      "transfer_destination": 81,
+      "player_chain": 35,
+      "passport_fc": 32
+    },
+    "matchday_context": null
+  },
+  "2027-04-14": {
+    "puzzles": {
+      "club_connect": 74,
+      "top_transfers": 96,
+      "top_scorers": 77,
+      "transfer_destination": 82,
+      "player_chain": 36,
+      "passport_fc": 33
+    },
+    "matchday_context": null
+  },
+  "2027-04-15": {
+    "puzzles": {
+      "club_connect": 75,
+      "top_transfers": 97,
+      "top_scorers": 78,
+      "transfer_destination": 83,
+      "player_chain": 37,
+      "passport_fc": 34
+    },
+    "matchday_context": null
+  },
+  "2027-04-16": {
+    "puzzles": {
+      "club_connect": 76,
+      "top_transfers": 98,
+      "top_scorers": 79,
+      "transfer_destination": 84,
+      "player_chain": 38,
+      "passport_fc": 35
+    },
+    "matchday_context": null
+  },
+  "2027-04-17": {
+    "puzzles": {
+      "club_connect": 77,
+      "top_transfers": 99,
+      "top_scorers": 81,
+      "transfer_destination": 85,
+      "player_chain": 39,
+      "passport_fc": 36
+    },
+    "matchday_context": null
+  },
+  "2027-04-18": {
+    "puzzles": {
+      "club_connect": 34,
+      "top_transfers": 100,
+      "top_scorers": 9,
+      "transfer_destination": 86,
+      "player_chain": 40,
+      "passport_fc": 37
+    },
+    "matchday_context": {
+      "clash_name": "Derby della Capitale",
+      "competition": "Serie A",
+      "home_club": "Roma",
+      "away_club": "Lazio",
+      "featured_club": "Lazio",
+      "hook": "⚔️ DERBY DELLA CAPITALE SPECIAL!",
+      "hashtags": [
+        "#DerbyDellaCapitale",
+        "#Roma",
+        "#Lazio",
+        "#SerieA"
+      ]
+    }
+  },
+  "2027-04-19": {
+    "puzzles": {
+      "club_connect": 78,
+      "top_transfers": 101,
+      "top_scorers": 82,
+      "transfer_destination": 87,
+      "player_chain": 41,
+      "passport_fc": 38
+    },
+    "matchday_context": null
+  },
+  "2027-04-20": {
+    "puzzles": {
+      "club_connect": 79,
+      "top_transfers": 102,
+      "top_scorers": 83,
+      "transfer_destination": 88,
+      "player_chain": 42,
+      "passport_fc": 39
+    },
+    "matchday_context": null
+  },
+  "2027-04-21": {
+    "puzzles": {
+      "club_connect": 80,
+      "top_transfers": 103,
+      "top_scorers": 84,
+      "transfer_destination": 89,
+      "player_chain": 43,
+      "passport_fc": 40
+    },
+    "matchday_context": null
+  },
+  "2027-04-22": {
+    "puzzles": {
+      "club_connect": 81,
+      "top_transfers": 104,
+      "top_scorers": 85,
+      "transfer_destination": 90,
+      "player_chain": 44,
+      "passport_fc": 41
+    },
+    "matchday_context": null
+  },
+  "2027-04-23": {
+    "puzzles": {
+      "club_connect": 82,
+      "top_transfers": 105,
+      "top_scorers": 86,
+      "transfer_destination": 91,
+      "player_chain": 45,
+      "passport_fc": 42
+    },
+    "matchday_context": null
+  },
+  "2027-04-24": {
+    "puzzles": {
+      "club_connect": 83,
+      "top_transfers": 106,
+      "top_scorers": 21,
+      "transfer_destination": 92,
+      "player_chain": 46,
+      "passport_fc": 43
+    },
+    "matchday_context": {
+      "clash_name": "Chelsea vs Manchester City",
+      "competition": "Premier League",
+      "home_club": "Chelsea",
+      "away_club": "Manchester City",
+      "featured_club": "Chelsea",
+      "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!",
+      "hashtags": [
+        "#CHEMCI",
+        "#Chelsea",
+        "#ManCity",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2027-04-25": {
+    "puzzles": {
+      "club_connect": 84,
+      "top_transfers": 107,
+      "top_scorers": 87,
+      "transfer_destination": 93,
+      "player_chain": 47,
+      "passport_fc": 44
+    },
+    "matchday_context": null
+  },
+  "2027-04-26": {
+    "puzzles": {
+      "club_connect": 86,
+      "top_transfers": 108,
+      "top_scorers": 88,
+      "transfer_destination": 94,
+      "player_chain": 48,
+      "passport_fc": 45
+    },
+    "matchday_context": null
+  },
+  "2027-04-27": {
+    "puzzles": {
+      "club_connect": 87,
+      "top_transfers": 109,
+      "top_scorers": 89,
+      "transfer_destination": 95,
+      "player_chain": 49,
+      "passport_fc": 46
+    },
+    "matchday_context": null
+  },
+  "2027-04-28": {
+    "puzzles": {
+      "club_connect": 89,
+      "top_transfers": 110,
+      "top_scorers": 90,
+      "transfer_destination": 96,
+      "player_chain": 50,
+      "passport_fc": 47
+    },
+    "matchday_context": null
+  },
+  "2027-04-29": {
+    "puzzles": {
+      "club_connect": 91,
+      "top_transfers": 111,
+      "top_scorers": 91,
+      "transfer_destination": 97,
+      "player_chain": 51,
+      "passport_fc": 48
+    },
+    "matchday_context": null
+  },
+  "2027-04-30": {
+    "puzzles": {
+      "club_connect": 92,
+      "top_transfers": 112,
+      "top_scorers": 92,
+      "transfer_destination": 98,
+      "player_chain": 52,
+      "passport_fc": 49
+    },
+    "matchday_context": null
+  },
+  "2027-05-01": {
+    "puzzles": {
+      "club_connect": 180,
+      "top_transfers": 93,
+      "top_scorers": 22,
+      "transfer_destination": 99,
+      "player_chain": 53,
+      "passport_fc": 50
+    },
+    "matchday_context": {
+      "clash_name": "North London Derby",
+      "competition": "Premier League",
+      "home_club": "Arsenal",
+      "away_club": "Tottenham Hotspur",
+      "featured_club": "Arsenal",
+      "hook": "⚔️ NORTH LONDON DERBY SPECIAL!",
+      "hashtags": [
+        "#NorthLondonDerby",
+        "#Arsenal",
+        "#COYS",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2027-05-02": {
+    "puzzles": {
+      "club_connect": 63,
+      "top_transfers": 63,
+      "top_scorers": 28,
+      "transfer_destination": 100,
+      "player_chain": 54,
+      "passport_fc": 51
+    },
+    "matchday_context": {
+      "clash_name": "Chelsea vs Liverpool",
+      "competition": "Premier League",
+      "home_club": "Liverpool",
+      "away_club": "Chelsea",
+      "featured_club": "Liverpool",
+      "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!",
+      "hashtags": [
+        "#CHELIV",
+        "#Liverpool",
+        "#Chelsea",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2027-05-03": {
+    "puzzles": {
+      "club_connect": 94,
+      "top_transfers": 113,
+      "top_scorers": 93,
+      "transfer_destination": 101,
+      "player_chain": 55,
+      "passport_fc": 52
+    },
+    "matchday_context": null
+  },
+  "2027-05-04": {
+    "puzzles": {
+      "club_connect": 95,
+      "top_transfers": 114,
+      "top_scorers": 94,
+      "transfer_destination": 102,
+      "player_chain": 56,
+      "passport_fc": 53
+    },
+    "matchday_context": null
+  },
+  "2027-05-05": {
+    "puzzles": {
+      "club_connect": 96,
+      "top_transfers": 115,
+      "top_scorers": 95,
+      "transfer_destination": 103,
+      "player_chain": 57,
+      "passport_fc": 54
+    },
+    "matchday_context": null
+  },
+  "2027-05-06": {
+    "puzzles": {
+      "club_connect": 97,
+      "top_transfers": 116,
+      "top_scorers": 96,
+      "transfer_destination": 104,
+      "player_chain": 58,
+      "passport_fc": 55
+    },
+    "matchday_context": null
+  },
+  "2027-05-07": {
+    "puzzles": {
+      "club_connect": 98,
+      "top_transfers": 117,
+      "top_scorers": 97,
+      "transfer_destination": 105,
+      "player_chain": 59,
+      "passport_fc": 56
+    },
+    "matchday_context": null
+  },
+  "2027-05-08": {
+    "puzzles": {
+      "club_connect": 93,
+      "top_transfers": 118,
+      "top_scorers": 35,
+      "transfer_destination": 106,
+      "player_chain": 60,
+      "passport_fc": 57
+    },
+    "matchday_context": {
+      "clash_name": "Chelsea vs Tottenham Hotspur",
+      "competition": "Premier League",
+      "home_club": "Tottenham Hotspur",
+      "away_club": "Chelsea",
+      "featured_club": "Tottenham Hotspur",
+      "hook": "⚔️ LONDON DERBY CLASH!",
+      "hashtags": [
+        "#LondonDerby",
+        "#Chelsea",
+        "#COYS",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2027-05-09": {
+    "puzzles": {
+      "club_connect": 152,
+      "top_transfers": 119,
+      "top_scorers": 107,
+      "transfer_destination": 107,
+      "player_chain": 61,
+      "passport_fc": 58
+    },
+    "matchday_context": {
+      "clash_name": "El Clásico",
+      "competition": "La Liga",
+      "home_club": "Real Madrid",
+      "away_club": "Barcelona",
+      "featured_club": "Real Madrid",
+      "hook": "⚔️ EL CLÁSICO SPECIAL!",
+      "hashtags": [
+        "#ElClasico",
+        "#RealMadrid",
+        "#FCBarcelona",
+        "#LaLiga"
+      ]
+    }
+  },
+  "2027-05-10": {
+    "puzzles": {
+      "club_connect": 99,
+      "top_transfers": 120,
+      "top_scorers": 98,
+      "transfer_destination": 108,
+      "player_chain": 62,
+      "passport_fc": 59
+    },
+    "matchday_context": null
+  },
+  "2027-05-11": {
+    "puzzles": {
+      "club_connect": 100,
+      "top_transfers": 121,
+      "top_scorers": 99,
+      "transfer_destination": 109,
+      "player_chain": 63,
+      "passport_fc": 60
+    },
+    "matchday_context": null
+  },
+  "2027-05-12": {
+    "puzzles": {
+      "club_connect": 101,
+      "top_transfers": 122,
+      "top_scorers": 100,
+      "transfer_destination": 110,
+      "player_chain": 64,
+      "passport_fc": 61
+    },
+    "matchday_context": null
+  },
+  "2027-05-13": {
+    "puzzles": {
+      "club_connect": 102,
+      "top_transfers": 123,
+      "top_scorers": 101,
+      "transfer_destination": 111,
+      "player_chain": 65,
+      "passport_fc": 62
+    },
+    "matchday_context": null
+  },
+  "2027-05-14": {
+    "puzzles": {
+      "club_connect": 103,
+      "top_transfers": 124,
+      "top_scorers": 102,
+      "transfer_destination": 112,
+      "player_chain": 66,
+      "passport_fc": 63
+    },
+    "matchday_context": null
+  },
+  "2027-05-15": {
+    "puzzles": {
+      "club_connect": 104,
+      "top_transfers": 125,
+      "top_scorers": 103,
+      "transfer_destination": 113,
+      "player_chain": 67,
+      "passport_fc": 64
+    },
+    "matchday_context": null
+  },
+  "2027-05-16": {
+    "puzzles": {
+      "club_connect": 179,
+      "top_transfers": 51,
+      "top_scorers": 10,
+      "transfer_destination": 114,
+      "player_chain": 68,
+      "passport_fc": 65
+    },
+    "matchday_context": {
+      "clash_name": "Derby d'Italia",
+      "competition": "Serie A",
+      "home_club": "Juventus",
+      "away_club": "Inter",
+      "featured_club": "Juventus",
+      "hook": "⚔️ DERBY D'ITALIA SPECIAL!",
+      "hashtags": [
+        "#InterJuve",
+        "#DerbyDItalia",
+        "#SerieA",
+        "#Inter",
+        "#Juventus"
+      ]
+    }
+  },
+  "2027-05-17": {
+    "puzzles": {
+      "club_connect": 105,
+      "top_transfers": 126,
+      "top_scorers": 104,
+      "transfer_destination": 115,
+      "player_chain": 69,
+      "passport_fc": 66
+    },
+    "matchday_context": null
+  },
+  "2027-05-18": {
+    "puzzles": {
+      "club_connect": 106,
+      "top_transfers": 127,
+      "top_scorers": 105,
+      "transfer_destination": 116,
+      "player_chain": 70,
+      "passport_fc": 67
+    },
+    "matchday_context": null
+  },
+  "2027-05-19": {
+    "puzzles": {
+      "club_connect": 58,
+      "top_transfers": 128,
+      "top_scorers": 5,
+      "transfer_destination": 117,
+      "player_chain": 71,
+      "passport_fc": 68
+    },
+    "matchday_context": {
+      "clash_name": "Manchester United vs Roma (UEL Final)",
+      "competition": "UEFA Europa League",
+      "home_club": "Manchester United",
+      "away_club": "Roma",
+      "featured_club": "Manchester United",
+      "hook": "🏆 EUROPA LEAGUE FINAL!",
+      "hashtags": [
+        "#UELFinal",
+        "#EuropaLeague",
+        "#MUFC",
+        "#Roma"
+      ]
+    }
+  },
+  "2027-05-20": {
+    "puzzles": {
+      "club_connect": 107,
+      "top_transfers": 129,
+      "top_scorers": 106,
+      "transfer_destination": 118,
+      "player_chain": 72,
+      "passport_fc": 69
+    },
+    "matchday_context": null
+  },
+  "2027-05-21": {
+    "puzzles": {
+      "club_connect": 108,
+      "top_transfers": 130,
+      "top_scorers": 108,
+      "transfer_destination": 119,
+      "player_chain": 73,
+      "passport_fc": 70
+    },
+    "matchday_context": null
+  },
+  "2027-05-22": {
+    "puzzles": {
+      "club_connect": 109,
+      "top_transfers": 131,
+      "top_scorers": 109,
+      "transfer_destination": 120,
+      "player_chain": 74,
+      "passport_fc": 71
+    },
+    "matchday_context": null
+  },
+  "2027-05-23": {
+    "puzzles": {
+      "club_connect": 110,
+      "top_transfers": 132,
+      "top_scorers": 39,
+      "transfer_destination": 121,
+      "player_chain": 75,
+      "passport_fc": 72
+    },
+    "matchday_context": {
+      "clash_name": "Tottenham Hotspur vs Manchester United",
+      "competition": "Premier League",
+      "home_club": "Tottenham Hotspur",
+      "away_club": "Manchester United",
+      "featured_club": "Tottenham Hotspur",
+      "hook": "⚔️ PREMIER LEAGUE BLOCKBUSTER!",
+      "hashtags": [
+        "#TOTMUN",
+        "#COYS",
+        "#MUFC",
+        "#PremierLeague"
+      ]
+    }
+  },
+  "2027-05-24": {
+    "puzzles": {
+      "club_connect": 111,
+      "top_transfers": 134,
+      "top_scorers": 110,
+      "transfer_destination": 122,
+      "player_chain": 76,
+      "passport_fc": 73
+    },
+    "matchday_context": null
+  },
+  "2027-05-25": {
+    "puzzles": {
+      "club_connect": 112,
+      "top_transfers": 136,
+      "top_scorers": 111,
+      "transfer_destination": 123,
+      "player_chain": 77,
+      "passport_fc": 74
+    },
+    "matchday_context": null
+  },
+  "2027-05-26": {
+    "puzzles": {
+      "club_connect": 68,
+      "top_transfers": 137,
+      "top_scorers": 112,
+      "transfer_destination": 124,
+      "player_chain": 78,
+      "passport_fc": 75
+    },
+    "matchday_context": {
+      "clash_name": "Chelsea vs Fiorentina (UECL Final)",
+      "competition": "UEFA Conference League",
+      "home_club": "Chelsea",
+      "away_club": "Fiorentina",
+      "featured_club": "Chelsea",
+      "hook": "🏆 CONFERENCE LEAGUE FINAL!",
+      "hashtags": [
+        "#UECLFinal",
+        "#ConferenceLeague",
+        "#Chelsea",
+        "#Fiorentina"
+      ]
+    }
+  },
+  "2027-05-27": {
+    "puzzles": {
+      "club_connect": 113,
+      "top_transfers": 138,
+      "top_scorers": 113,
+      "transfer_destination": 125,
+      "player_chain": 79,
+      "passport_fc": 76
+    },
+    "matchday_context": null
+  },
+  "2027-05-28": {
+    "puzzles": {
+      "club_connect": 114,
+      "top_transfers": 139,
+      "top_scorers": 114,
+      "transfer_destination": 126,
+      "player_chain": 80,
+      "passport_fc": 77
+    },
+    "matchday_context": null
+  },
+  "2027-05-29": {
+    "puzzles": {
+      "club_connect": 115,
+      "top_transfers": 141,
+      "top_scorers": 115,
+      "transfer_destination": 127,
+      "player_chain": 81,
+      "passport_fc": 78
+    },
+    "matchday_context": null
+  },
+  "2027-05-30": {
+    "puzzles": {
+      "club_connect": 116,
+      "top_transfers": 142,
+      "top_scorers": 116,
+      "transfer_destination": 128,
+      "player_chain": 82,
+      "passport_fc": 79
+    },
+    "matchday_context": null
+  },
+  "2027-05-31": {
+    "puzzles": {
+      "club_connect": 117,
+      "top_transfers": 143,
+      "top_scorers": 117,
+      "transfer_destination": 129,
+      "player_chain": 83,
+      "passport_fc": 80
+    },
+    "matchday_context": null
+  },
+  "2027-06-01": {
+    "puzzles": {
+      "club_connect": 118,
+      "top_transfers": 144,
+      "top_scorers": 118,
+      "transfer_destination": 130,
+      "player_chain": 84,
+      "passport_fc": 81
+    },
+    "matchday_context": null
+  },
+  "2027-06-02": {
+    "puzzles": {
+      "club_connect": 119,
+      "top_transfers": 145,
+      "top_scorers": 119,
+      "transfer_destination": 131,
+      "player_chain": 85,
+      "passport_fc": 82
+    },
+    "matchday_context": null
+  },
+  "2027-06-03": {
+    "puzzles": {
+      "club_connect": 120,
+      "top_transfers": 146,
+      "top_scorers": 120,
+      "transfer_destination": 132,
+      "player_chain": 86,
+      "passport_fc": 83
+    },
+    "matchday_context": null
+  },
+  "2027-06-04": {
+    "puzzles": {
+      "club_connect": 121,
+      "top_transfers": 26,
+      "top_scorers": 121,
+      "transfer_destination": 133,
+      "player_chain": 87,
+      "passport_fc": 84
+    },
+    "matchday_context": {
+      "clash_name": "Germany vs Spain (Nations League SF)",
+      "competition": "UEFA Nations League",
+      "home_club": "Germany",
+      "away_club": "Spain",
+      "featured_club": "Germany",
+      "hook": "🏆 NATIONS LEAGUE SEMI-FINAL!",
+      "hashtags": [
+        "#NationsLeague",
+        "#NationsLeagueFinals",
+        "#GERESP"
+      ]
+    }
+  },
+  "2027-06-05": {
+    "puzzles": {
+      "club_connect": 122,
+      "top_transfers": 147,
+      "top_scorers": 122,
+      "transfer_destination": 134,
+      "player_chain": 88,
+      "passport_fc": 85
+    },
+    "matchday_context": null
+  },
+  "2027-06-06": {
+    "puzzles": {
+      "club_connect": 123,
+      "top_transfers": 30,
+      "top_scorers": 123,
+      "transfer_destination": 135,
+      "player_chain": 89,
+      "passport_fc": 86
+    },
+    "matchday_context": {
+      "clash_name": "France vs Spain (Nations League Final)",
+      "competition": "UEFA Nations League",
+      "home_club": "France",
+      "away_club": "Spain",
+      "featured_club": "France",
+      "hook": "🏆 NATIONS LEAGUE FINAL!",
+      "hashtags": [
+        "#NationsLeague",
+        "#NationsLeagueFinals",
+        "#FRASPN"
+      ]
+    }
+  },
+  "2027-06-07": {
+    "puzzles": {
+      "club_connect": 124,
+      "top_transfers": 148,
+      "top_scorers": 124,
+      "transfer_destination": 136,
+      "player_chain": 90,
+      "passport_fc": 87
+    },
+    "matchday_context": null
+  },
+  "2027-06-08": {
+    "puzzles": {
+      "club_connect": 125,
+      "top_transfers": 149,
+      "top_scorers": 125,
+      "transfer_destination": 137,
+      "player_chain": 91,
+      "passport_fc": 88
+    },
+    "matchday_context": null
+  },
+  "2027-06-09": {
+    "puzzles": {
+      "club_connect": 126,
+      "top_transfers": 150,
+      "top_scorers": 126,
+      "transfer_destination": 138,
+      "player_chain": 92,
+      "passport_fc": 89
+    },
+    "matchday_context": null
+  },
+  "2027-06-10": {
+    "puzzles": {
+      "club_connect": 127,
+      "top_transfers": 151,
+      "top_scorers": 127,
+      "transfer_destination": 139,
+      "player_chain": 93,
+      "passport_fc": 90
+    },
+    "matchday_context": null
+  },
+  "2027-06-11": {
+    "puzzles": {
+      "club_connect": 128,
+      "top_transfers": 153,
+      "top_scorers": 128,
+      "transfer_destination": 140,
+      "player_chain": 94,
+      "passport_fc": 91
+    },
+    "matchday_context": null
+  },
+  "2027-06-12": {
+    "puzzles": {
+      "club_connect": 129,
+      "top_transfers": 154,
+      "top_scorers": 129,
+      "transfer_destination": 141,
+      "player_chain": 95,
+      "passport_fc": 92
+    },
+    "matchday_context": null
+  },
+  "2027-06-13": {
+    "puzzles": {
+      "club_connect": 130,
+      "top_transfers": 155,
+      "top_scorers": 130,
+      "transfer_destination": 142,
+      "player_chain": 96,
+      "passport_fc": 93
+    },
+    "matchday_context": null
+  },
+  "2027-06-14": {
+    "puzzles": {
+      "club_connect": 131,
+      "top_transfers": 156,
+      "top_scorers": 131,
+      "transfer_destination": 143,
+      "player_chain": 97,
+      "passport_fc": 94
+    },
+    "matchday_context": null
+  },
+  "2027-06-15": {
+    "puzzles": {
+      "club_connect": 132,
+      "top_transfers": 157,
+      "top_scorers": 132,
+      "transfer_destination": 144,
+      "player_chain": 98,
+      "passport_fc": 95
+    },
+    "matchday_context": null
+  },
+  "2027-06-16": {
+    "puzzles": {
+      "club_connect": 134,
+      "top_transfers": 158,
+      "top_scorers": 133,
+      "transfer_destination": 145,
+      "player_chain": 99,
+      "passport_fc": 96
+    },
+    "matchday_context": null
+  },
+  "2027-06-17": {
+    "puzzles": {
+      "club_connect": 136,
+      "top_transfers": 159,
+      "top_scorers": 134,
+      "transfer_destination": 146,
+      "player_chain": 100,
+      "passport_fc": 97
+    },
+    "matchday_context": null
+  },
+  "2027-06-18": {
+    "puzzles": {
+      "club_connect": 137,
+      "top_transfers": 160,
+      "top_scorers": 135,
+      "transfer_destination": 147,
+      "player_chain": 101,
+      "passport_fc": 98
+    },
+    "matchday_context": null
+  },
+  "2027-06-19": {
+    "puzzles": {
+      "club_connect": 138,
+      "top_transfers": 161,
+      "top_scorers": 136,
+      "transfer_destination": 148,
+      "player_chain": 102,
+      "passport_fc": 99
+    },
+    "matchday_context": null
+  },
+  "2027-06-20": {
+    "puzzles": {
+      "club_connect": 139,
+      "top_transfers": 163,
+      "top_scorers": 137,
+      "transfer_destination": 149,
+      "player_chain": 103,
+      "passport_fc": 100
+    },
+    "matchday_context": null
+  },
+  "2027-06-21": {
+    "puzzles": {
+      "club_connect": 141,
+      "top_transfers": 164,
+      "top_scorers": 138,
+      "transfer_destination": 150,
+      "player_chain": 104,
+      "passport_fc": 101
+    },
+    "matchday_context": null
+  },
+  "2027-06-22": {
+    "puzzles": {
+      "club_connect": 142,
+      "top_transfers": 165,
+      "top_scorers": 139,
+      "transfer_destination": 151,
+      "player_chain": 105,
+      "passport_fc": 102
+    },
+    "matchday_context": null
+  },
+  "2027-06-23": {
+    "puzzles": {
+      "club_connect": 143,
+      "top_transfers": 167,
+      "top_scorers": 140,
+      "transfer_destination": 152,
+      "player_chain": 106,
+      "passport_fc": 103
+    },
+    "matchday_context": null
+  },
+  "2027-06-24": {
+    "puzzles": {
+      "club_connect": 144,
+      "top_transfers": 168,
+      "top_scorers": 141,
+      "transfer_destination": 153,
+      "player_chain": 107,
+      "passport_fc": 104
+    },
+    "matchday_context": null
+  },
+  "2027-06-25": {
+    "puzzles": {
+      "club_connect": 145,
+      "top_transfers": 169,
+      "top_scorers": 142,
+      "transfer_destination": 154,
+      "player_chain": 108,
+      "passport_fc": 105
+    },
+    "matchday_context": null
+  },
+  "2027-06-26": {
+    "puzzles": {
+      "club_connect": 146,
+      "top_transfers": 170,
+      "top_scorers": 143,
+      "transfer_destination": 155,
+      "player_chain": 109,
+      "passport_fc": 106
+    },
+    "matchday_context": null
+  },
+  "2027-06-27": {
+    "puzzles": {
+      "club_connect": 147,
+      "top_transfers": 172,
+      "top_scorers": 144,
+      "transfer_destination": 156,
+      "player_chain": 110,
+      "passport_fc": 107
+    },
+    "matchday_context": null
+  },
+  "2027-06-28": {
+    "puzzles": {
+      "club_connect": 148,
+      "top_transfers": 173,
+      "top_scorers": 145,
+      "transfer_destination": 157,
+      "player_chain": 111,
+      "passport_fc": 108
+    },
+    "matchday_context": null
+  },
+  "2027-06-29": {
+    "puzzles": {
+      "club_connect": 149,
+      "top_transfers": 174,
+      "top_scorers": 146,
+      "transfer_destination": 158,
+      "player_chain": 112,
+      "passport_fc": 109
+    },
+    "matchday_context": null
+  },
+  "2027-06-30": {
+    "puzzles": {
+      "club_connect": 150,
+      "top_transfers": 176,
+      "top_scorers": 147,
+      "transfer_destination": 159,
+      "player_chain": 113,
+      "passport_fc": 110
+    },
+    "matchday_context": null
+  },
+  "2027-07-01": {
+    "puzzles": {
+      "club_connect": 151,
+      "top_transfers": 177,
+      "top_scorers": 148,
+      "transfer_destination": 160,
+      "player_chain": 114,
+      "passport_fc": 111
+    },
+    "matchday_context": null
+  },
+  "2027-07-02": {
+    "puzzles": {
+      "club_connect": 153,
+      "top_transfers": 178,
+      "top_scorers": 149,
+      "transfer_destination": 161,
+      "player_chain": 115,
+      "passport_fc": 112
+    },
+    "matchday_context": null
+  },
+  "2027-07-03": {
+    "puzzles": {
+      "club_connect": 154,
+      "top_transfers": 1,
+      "top_scorers": 150,
+      "transfer_destination": 162,
+      "player_chain": 116,
+      "passport_fc": 113
+    },
+    "matchday_context": null
+  },
+  "2027-07-04": {
+    "puzzles": {
+      "club_connect": 155,
+      "top_transfers": 2,
+      "top_scorers": 151,
+      "transfer_destination": 163,
+      "player_chain": 117,
+      "passport_fc": 114
+    },
+    "matchday_context": null
+  },
+  "2027-07-05": {
+    "puzzles": {
+      "club_connect": 156,
+      "top_transfers": 3,
+      "top_scorers": 152,
+      "transfer_destination": 164,
+      "player_chain": 118,
+      "passport_fc": 115
+    },
+    "matchday_context": null
+  },
+  "2027-07-06": {
+    "puzzles": {
+      "club_connect": 157,
+      "top_transfers": 4,
+      "top_scorers": 153,
+      "transfer_destination": 165,
+      "player_chain": 119,
+      "passport_fc": 116
+    },
+    "matchday_context": null
+  },
+  "2027-07-07": {
+    "puzzles": {
+      "club_connect": 158,
+      "top_transfers": 6,
+      "top_scorers": 154,
+      "transfer_destination": 166,
+      "player_chain": 120,
+      "passport_fc": 117
+    },
+    "matchday_context": null
+  },
+  "2027-07-08": {
+    "puzzles": {
+      "club_connect": 159,
+      "top_transfers": 8,
+      "top_scorers": 155,
+      "transfer_destination": 167,
+      "player_chain": 121,
+      "passport_fc": 118
+    },
+    "matchday_context": null
+  },
+  "2027-07-09": {
+    "puzzles": {
+      "club_connect": 160,
+      "top_transfers": 9,
+      "top_scorers": 156,
+      "transfer_destination": 168,
+      "player_chain": 122,
+      "passport_fc": 119
+    },
+    "matchday_context": null
+  },
+  "2027-07-10": {
+    "puzzles": {
+      "club_connect": 161,
+      "top_transfers": 10,
+      "top_scorers": 157,
+      "transfer_destination": 169,
+      "player_chain": 123,
+      "passport_fc": 120
+    },
+    "matchday_context": null
+  },
+  "2027-07-11": {
+    "puzzles": {
+      "club_connect": 163,
+      "top_transfers": 11,
+      "top_scorers": 158,
+      "transfer_destination": 170,
+      "player_chain": 124,
+      "passport_fc": 121
+    },
+    "matchday_context": null
+  },
+  "2027-07-12": {
+    "puzzles": {
+      "club_connect": 164,
+      "top_transfers": 13,
+      "top_scorers": 159,
+      "transfer_destination": 171,
+      "player_chain": 125,
+      "passport_fc": 122
+    },
+    "matchday_context": null
+  },
+  "2027-07-13": {
+    "puzzles": {
+      "club_connect": 165,
+      "top_transfers": 14,
+      "top_scorers": 160,
+      "transfer_destination": 172,
+      "player_chain": 126,
+      "passport_fc": 123
+    },
+    "matchday_context": null
+  },
+  "2027-07-14": {
+    "puzzles": {
+      "club_connect": 167,
+      "top_transfers": 15,
+      "top_scorers": 161,
+      "transfer_destination": 173,
+      "player_chain": 127,
+      "passport_fc": 124
+    },
+    "matchday_context": null
+  },
+  "2027-07-15": {
+    "puzzles": {
+      "club_connect": 168,
+      "top_transfers": 16,
+      "top_scorers": 162,
+      "transfer_destination": 174,
+      "player_chain": 128,
+      "passport_fc": 125
+    },
+    "matchday_context": null
+  },
+  "2027-07-16": {
+    "puzzles": {
+      "club_connect": 169,
+      "top_transfers": 17,
+      "top_scorers": 163,
+      "transfer_destination": 175,
+      "player_chain": 129,
+      "passport_fc": 126
+    },
+    "matchday_context": null
+  },
+  "2027-07-17": {
+    "puzzles": {
+      "club_connect": 170,
+      "top_transfers": 18,
+      "top_scorers": 164,
+      "transfer_destination": 176,
+      "player_chain": 130,
+      "passport_fc": 127
+    },
+    "matchday_context": null
+  },
+  "2027-07-18": {
+    "puzzles": {
+      "club_connect": 172,
+      "top_transfers": 19,
+      "top_scorers": 165,
+      "transfer_destination": 177,
+      "player_chain": 131,
+      "passport_fc": 128
+    },
+    "matchday_context": null
+  },
+  "2027-07-19": {
+    "puzzles": {
+      "club_connect": 173,
+      "top_transfers": 20,
+      "top_scorers": 166,
+      "transfer_destination": 178,
+      "player_chain": 132,
+      "passport_fc": 129
+    },
+    "matchday_context": null
+  },
+  "2027-07-20": {
+    "puzzles": {
+      "club_connect": 174,
+      "top_transfers": 21,
+      "top_scorers": 167,
+      "transfer_destination": 179,
+      "player_chain": 133,
+      "passport_fc": 130
+    },
+    "matchday_context": null
+  },
+  "2027-07-21": {
+    "puzzles": {
+      "club_connect": 176,
+      "top_transfers": 22,
+      "top_scorers": 168,
+      "transfer_destination": 180,
+      "player_chain": 134,
+      "passport_fc": 131
+    },
+    "matchday_context": null
+  },
+  "2027-07-22": {
+    "puzzles": {
+      "club_connect": 177,
+      "top_transfers": 23,
+      "top_scorers": 169,
+      "transfer_destination": 1,
+      "player_chain": 135,
+      "passport_fc": 132
+    },
+    "matchday_context": null
+  },
+  "2027-07-23": {
+    "puzzles": {
+      "club_connect": 178,
+      "top_transfers": 25,
+      "top_scorers": 170,
+      "transfer_destination": 2,
+      "player_chain": 136,
+      "passport_fc": 133
+    },
+    "matchday_context": null
+  },
+  "2027-07-24": {
+    "puzzles": {
+      "club_connect": 1,
+      "top_transfers": 27,
+      "top_scorers": 171,
+      "transfer_destination": 3,
+      "player_chain": 137,
+      "passport_fc": 134
+    },
+    "matchday_context": null
+  },
+  "2027-07-25": {
+    "puzzles": {
+      "club_connect": 2,
+      "top_transfers": 28,
+      "top_scorers": 172,
+      "transfer_destination": 4,
+      "player_chain": 138,
+      "passport_fc": 135
+    },
+    "matchday_context": null
+  },
+  "2027-07-26": {
+    "puzzles": {
+      "club_connect": 3,
+      "top_transfers": 29,
+      "top_scorers": 173,
+      "transfer_destination": 5,
+      "player_chain": 139,
+      "passport_fc": 136
+    },
+    "matchday_context": null
+  }
+}

@@ -92,33 +92,71 @@ def get_authenticated_service():
 
     return googleapiclient.discovery.build("youtube", "v3", credentials=credentials)
 
-def build_default_metadata(game_id="top_transfers", target_name=""):
-    """Generates high-converting title, description, and tags for Shorts."""
+def load_matchday_context_for_date(date_str=None):
+    """Loads matchday context for the given date (default today) from the schedule ledger."""
+    import datetime
+    if not date_str:
+        date_str = datetime.date.today().strftime("%Y-%m-%d")
+    ledger_path = os.path.join(BASE_DIR, "data", "puzzle_schedule_ledger.json")
+    if os.path.exists(ledger_path):
+        try:
+            with open(ledger_path, "r", encoding="utf-8") as f:
+                ledger = json.load(f)
+                return ledger.get(date_str, {}).get("matchday_context")
+        except Exception:
+            pass
+    return None
+
+def build_default_metadata(game_id="top_transfers", target_name="", matchday_context=None, date_str=None):
+    """Generates high-converting title, description, and tags for Shorts, with contextual matchday injection."""
+    if matchday_context is None:
+        matchday_context = load_matchday_context_for_date(date_str)
+
+    hook_prefix = ""
+    extra_desc = ""
+    extra_tags = []
+
+    if matchday_context:
+        hook_prefix = f"{matchday_context.get('hook', '⚔️ MATCHDAY SPECIAL!')} "
+        clash_name = matchday_context.get("clash_name", "")
+        comp = matchday_context.get("competition", "")
+        extra_desc = f"⚔️ Today's Matchday Special: {clash_name} ({comp})\n\n"
+        for tag in matchday_context.get("hashtags", []):
+            clean_tag = tag.lstrip("#")
+            if clean_tag not in extra_tags:
+                extra_tags.append(clean_tag)
+        for club in [matchday_context.get("home_club"), matchday_context.get("away_club")]:
+            if club and club not in extra_tags:
+                extra_tags.append(club)
+
     game_titles = {
-        "top_transfers": f"Can you guess {target_name or 'the club'}'s record transfers? ⚽ #Shorts",
-        "transfer_destination": f"Guess the mystery player's career path backwards! ⚽ #Shorts",
-        "player_chain": f"Can you complete this teammate chain? ⚽ #Shorts",
-        "club_connect": f"Can you guess which team all of these players transferred to? ⚽ #Shorts",
-        "top_scorers": f"Who scored the most goals in {target_name or 'this season'}? ⚽ #Shorts",
-        "passport_fc": f"Can you complete {target_name or 'today'}'s club passport? ✈️ #Shorts"
+        "top_transfers": f"{hook_prefix}Can you guess {target_name or 'the club'}'s record transfers? ⚽ #Shorts",
+        "transfer_destination": f"{hook_prefix}Guess the mystery player's career path backwards! ⚽ #Shorts",
+        "player_chain": f"{hook_prefix}Can you complete this teammate chain? ⚽ #Shorts",
+        "club_connect": f"{hook_prefix}Can you guess which team all of these players transferred to? ⚽ #Shorts",
+        "top_scorers": f"{hook_prefix}Who scored the most goals in {target_name or 'this season'}? ⚽ #Shorts",
+        "passport_fc": f"{hook_prefix}Can you complete {target_name or 'today'}'s club passport? ✈️ #Shorts"
     }
-    
-    title = game_titles.get(game_id, f"Daily Football Quiz Challenge! ⚽ #Shorts")
-    
+
+    title = game_titles.get(game_id, f"{hook_prefix}Daily Football Quiz Challenge! ⚽ #Shorts")
+
     description = (
+        f"{extra_desc}"
         f"⚽ Playmaker — Daily Football Trivia & Transfer Arcade\n\n"
         f"Can you beat today's challenge? Comment your score below! 👇\n\n"
         f"🎮 Play today's free daily puzzle (no download, no sign up):\n"
         f"👉 https://playmaker.best/\n\n"
         f"#Shorts #football #soccer #footballquiz #soccerquiz #premierleague #realmadrid #championsleague #footballtrivia #playmaker"
     )
-    
+
     tags = [
         "Shorts", "football", "soccer", "football quiz", "soccer quiz",
         "football trivia", "transfer quiz", "premier league", "champions league",
         "playmaker", "footy arcade", "trivia game"
     ]
-    
+    if extra_tags:
+        tags = extra_tags + tags
+
     return title, description, tags
 
 def get_channel_info(youtube=None):

@@ -486,6 +486,19 @@
         const modal = document.getElementById(cfg.modalId || 'result-modal');
 
         function buildGiphyQuery(opts) {
+            const isPartial = opts.outcome === 'partial' || opts.isPartial;
+            if (isPartial) {
+                if (opts.partialQuery) return opts.partialQuery;
+                if (opts.query) return opts.query;
+                const targetName = (opts.targetName || '').trim();
+                const playerName = (opts.playerName || opts.extraText || '').trim();
+                const name = playerName || targetName;
+                if (name) {
+                    return `${name} football respect`;
+                }
+                return 'football applause';
+            }
+
             if (!opts.won) {
                 return 'soccer fail';
             }
@@ -525,15 +538,20 @@
         }
 
         this.show = (opts) => {
+            const outcome = opts.outcome || (opts.won ? 'win' : (opts.isPartial ? 'partial' : 'loss'));
+            const isWin = outcome === 'win';
+            const isPartial = outcome === 'partial';
+
             // Track game completion
             trackEvent('game_end', {
                 won: opts.won,
+                outcome: outcome,
                 score: opts.score,
                 maxScore: opts.maxScore,
                 extraDetails: opts.title
             });
 
-            // opts: { won, score, maxScore, streak, extraText, shareText, backInTimeLinks, playerName, targetName, targetType }
+            // opts: { won, outcome, isPartial, score, maxScore, streak, extraText, shareText, backInTimeLinks, playerName, targetName, targetType }
             const iconEl = document.getElementById(cfg.iconId || 'modal-icon');
             const titleEl = document.getElementById(cfg.titleId || 'modal-title');
             const msgEl = document.getElementById(cfg.messageId || 'modal-message');
@@ -541,14 +559,47 @@
                 ? (cfg.scoreId ? document.getElementById(cfg.scoreId) : null)
                 : document.getElementById('modal-score');
             const streakEl = document.getElementById(cfg.streakId || 'modal-streak');
+            const modalCard = modal ? (modal.querySelector('.fa-modal-card') || modal.firstElementChild) : null;
+
+            if (modalCard) {
+                if (isPartial) {
+                    modalCard.classList.add('is-partial');
+                } else {
+                    modalCard.classList.remove('is-partial');
+                }
+            }
 
             if (iconEl) {
-                iconEl.textContent = opts.won ? 'emoji_events' : 'dangerous';
-                iconEl.className = `material-symbols-outlined text-6xl ${opts.won ? 'text-accent' : 'text-error'}`;
+                if (isWin) {
+                    iconEl.textContent = 'emoji_events';
+                    iconEl.className = 'material-symbols-outlined text-6xl text-accent';
+                } else if (isPartial) {
+                    iconEl.textContent = 'military_tech';
+                    iconEl.className = 'material-symbols-outlined text-6xl text-amber-400';
+                } else {
+                    iconEl.textContent = 'dangerous';
+                    iconEl.className = 'material-symbols-outlined text-6xl text-error';
+                }
             }
-            if (titleEl) titleEl.textContent = opts.title || (opts.won ? 'COMPLETED!' : 'GAME OVER');
-            if (msgEl) msgEl.textContent = opts.message || '';
-            if (scoreEl) scoreEl.textContent = `${opts.score}/${opts.maxScore}`;
+            if (titleEl) {
+                const defaultTitle = isWin ? 'COMPLETED!' : (isPartial ? 'GRITTY FINISH!' : 'GAME OVER');
+                titleEl.textContent = opts.title || defaultTitle;
+                titleEl.className = `font-headline text-3xl sm:text-4xl uppercase italic tracking-wide ${isWin ? 'text-accent' : (isPartial ? 'text-amber-400' : 'text-error')}`;
+            }
+            if (msgEl) {
+                const defaultMsg = isWin ? '' : (isPartial ? `You reached the final whistle! Score: ${opts.score}/${opts.maxScore}. Not a clean sheet, but a resilient shift.` : '');
+                msgEl.textContent = opts.message || defaultMsg;
+            }
+            if (scoreEl) {
+                scoreEl.textContent = `${opts.score}/${opts.maxScore}`;
+                if (isPartial) {
+                    scoreEl.className = 'font-headline text-2xl sm:text-3xl text-amber-400';
+                } else if (isWin) {
+                    scoreEl.className = 'font-headline text-2xl sm:text-3xl text-correct';
+                } else {
+                    scoreEl.className = 'font-headline text-2xl sm:text-3xl text-on-surface-variant';
+                }
+            }
             if (streakEl) streakEl.textContent = opts.streak;
 
             if (cfg.extraInfoId && opts.extraText) {
@@ -561,7 +612,6 @@
             let gifEl = document.getElementById(cfg.gifId || 'modal-gif');
 
             if (!gifContainer && modal) {
-                const modalCard = modal.querySelector('.fa-modal-card') || modal.firstElementChild;
                 if (modalCard) {
                     gifContainer = document.createElement('div');
                     gifContainer.id = cfg.gifContainerId || 'modal-gif-container';
@@ -595,6 +645,13 @@
                     if (gifUrl) {
                         gifEl.src = gifUrl;
                         gifContainer.classList.remove('hidden');
+                    } else if (isPartial && query !== 'football applause') {
+                        fetchGiphyGif('football applause', (fallbackUrl) => {
+                            if (fallbackUrl) {
+                                gifEl.src = fallbackUrl;
+                                gifContainer.classList.remove('hidden');
+                            }
+                        });
                     } else if (opts.won && query !== 'soccer celebration') {
                         // Fallback search if specific GIF not found
                         fetchGiphyGif('soccer celebration', (fallbackUrl) => {
@@ -609,14 +666,14 @@
 
             // Results Emoji Preview Container
             let emojiPreviewEl = document.getElementById('modal-emoji-preview');
-            const emojiGrid = opts.customEmojiGrid || buildEmojiGrid(opts.score, opts.maxScore, opts.won);
+            const emojiGrid = opts.customEmojiGrid || buildEmojiGrid(opts.score, opts.maxScore, opts.won, isPartial);
 
             if (!emojiPreviewEl && modal) {
-                const modalCard = modal.querySelector('.fa-modal-card') || modal.firstElementChild;
                 const bitWrapper = document.getElementById('bit-wrapper');
                 emojiPreviewEl = document.createElement('div');
                 emojiPreviewEl.id = 'modal-emoji-preview';
                 emojiPreviewEl.className = 'w-full py-2 px-3 bg-black/40 border border-white/10 rounded-xl my-2 text-center font-mono text-sm sm:text-base tracking-widest leading-normal text-white select-all cursor-pointer hover:border-accent/40 transition-all';
+
                 
                 if (bitWrapper && bitWrapper.parentElement === modalCard) {
                     modalCard.insertBefore(emojiPreviewEl, bitWrapper);
@@ -787,6 +844,8 @@
         const score = opts.score !== undefined ? opts.score : 0;
         const maxScore = opts.maxScore !== undefined ? opts.maxScore : 10;
         const won = !!opts.won;
+        const outcome = opts.outcome || (won ? 'win' : (opts.isPartial ? 'partial' : 'loss'));
+        const isPartial = outcome === 'partial';
         const lives = opts.lives !== undefined ? opts.lives : 0;
         const initialLives = opts.initialLives !== undefined ? opts.initialLives : 5;
         const livesUsed = Math.max(0, initialLives - lives);
@@ -800,7 +859,7 @@
         const challengeLine = 'Can you beat my score?';
 
         if (!emojiGrid) {
-            emojiGrid = buildEmojiGrid(score, maxScore, won);
+            emojiGrid = buildEmojiGrid(score, maxScore, won, isPartial);
         }
 
         switch (gameId) {
@@ -810,7 +869,9 @@
                 subLine = `🏛️ ${target}: Record Transfers`;
                 statusLine = won 
                     ? `🏆 ALL ${maxScore} TRANSFERS FOUND! · ❤️ ${lives} left`
-                    : `🎯 ${score}/${maxScore} transfers found · ❤️ ${lives} left`;
+                    : (isPartial
+                        ? `🎖️ BOARD CLEARED! · ${score}/${maxScore} transfers found · ❤️ ${lives} left`
+                        : `🎯 ${score}/${maxScore} transfers found · ❤️ ${lives} left`);
                 break;
             }
             case 'transfer_destination': {
@@ -818,7 +879,9 @@
                 subLine = `🧭 Mystery Player Career Path (${maxScore} Transfers)`;
                 statusLine = won
                     ? `🌟 CAREER PATH COMPLETED! · ❤️ ${lives} left`
-                    : `🎯 ${score}/${maxScore} clubs guessed backwards · ❤️ ${lives} left`;
+                    : (isPartial
+                        ? `🎖️ CAREER SURVIVED! · ${score}/${maxScore} clubs guessed backwards · ❤️ ${lives} left`
+                        : `🎯 ${score}/${maxScore} clubs guessed backwards · ❤️ ${lives} left`);
                 break;
             }
             case 'club_connect': {
@@ -837,7 +900,9 @@
                 } else {
                     statusLine = won
                         ? `✅ PERFECT CHAIN! · ❤️ ${lives} left`
-                        : `🎯 ${score}/${maxScore} steps solved · ❤️ ${lives} left`;
+                        : (isPartial
+                            ? `🎖️ CHAIN SURVIVED! · ${score}/${maxScore} steps solved · ❤️ ${lives} left`
+                            : `🎯 ${score}/${maxScore} steps solved · ❤️ ${lives} left`);
                 }
                 break;
             }
@@ -847,7 +912,9 @@
                 subLine = `🏆 ${target} Golden Boot`;
                 statusLine = won
                     ? `👑 ALL ${maxScore} TOP SCORERS FOUND! · ❤️ ${lives} left`
-                    : `🎯 ${score}/${maxScore} top scorers guessed · ❤️ ${lives} left`;
+                    : (isPartial
+                        ? `🎖️ BOARD CLEARED! · ${score}/${maxScore} top scorers guessed · ❤️ ${lives} left`
+                        : `🎯 ${score}/${maxScore} top scorers guessed · ❤️ ${lives} left`);
                 break;
             }
             case 'passport_fc': {
@@ -856,12 +923,18 @@
                 subLine = `✈️ Club Passport: ${club}`;
                 statusLine = won
                     ? `🌟 PASSPORT COMPLETED! · ❤️ ${lives} left`
-                    : `🎯 ${score}/${maxScore} stamps collected · ❤️ ${lives} left`;
+                    : (isPartial
+                        ? `🎖️ LADDER SURVIVED! · ${score}/${maxScore} stamps collected · ❤️ ${lives} left`
+                        : `🎯 ${score}/${maxScore} stamps collected · ❤️ ${lives} left`);
                 break;
             }
             default: {
                 titleLine = `⚽ Playmaker: ${opts.gameName || 'Daily Quiz'} #${puzzleNum}`;
-                statusLine = `${won ? '✅' : '❌'} ${score}/${maxScore} correct · ❤️ ${lives} left`;
+                statusLine = won 
+                    ? `✅ ${score}/${maxScore} correct · ❤️ ${lives} left` 
+                    : (isPartial
+                        ? `🎖️ ${score}/${maxScore} correct · ❤️ ${lives} left`
+                        : `❌ ${score}/${maxScore} correct · ❤️ ${lives} left`);
                 break;
             }
         }
@@ -899,6 +972,7 @@
             extraDetails: `source: ${shareSource}`,
             gameId: opts.gameId || getActiveGameMetadata().gameId,
             won: opts.won,
+            outcome: opts.outcome || (opts.won ? 'win' : (opts.isPartial ? 'partial' : 'loss')),
             score: opts.score,
             maxScore: opts.maxScore,
             lives: opts.lives
@@ -934,6 +1008,7 @@
             extraDetails: `source: ${shareSource}`,
             gameId: opts.gameId || getActiveGameMetadata().gameId,
             won: opts.won,
+            outcome: opts.outcome || (opts.won ? 'win' : (opts.isPartial ? 'partial' : 'loss')),
             score: opts.score,
             maxScore: opts.maxScore,
             lives: opts.lives
@@ -943,10 +1018,16 @@
         window.open(waUrl, '_blank', 'noopener,noreferrer');
     }
 
-    function buildEmojiGrid(score, maxScore, won) {
+    function buildEmojiGrid(score, maxScore, won, isPartial = false) {
         const cells = [];
         for (let i = 0; i < maxScore; i++) {
-            cells.push(i < score ? '🟩' : '⬛');
+            if (i < score) {
+                cells.push('🟩');
+            } else if (isPartial) {
+                cells.push('🟨');
+            } else {
+                cells.push('⬛');
+            }
         }
         // Group into rows of 5
         const rows = [];
@@ -1491,21 +1572,31 @@
         };
 
         /** Record a completed game result */
-        this.recordResult = (puzzleNum, won, score, maxScore, isBackInTime = false) => {
+        this.recordResult = (puzzleNum, won, score, maxScore, isBackInTime = false, outcome = null) => {
             const d = load();
             const histKey = isBackInTime ? `bit_${puzzleNum}` : String(puzzleNum);
             if (d.history[histKey]) {
                 return d;
             }
+            const resolvedOutcome = outcome || (won ? 'win' : 'loss');
+            const isPartial = resolvedOutcome === 'partial';
+
             if (!isBackInTime) {
                 d.played++;
-                if (won) { d.won++; d.streak++; } else { d.streak = 0; }
+                if (won) {
+                    d.won++;
+                    d.streak++;
+                } else if (isPartial) {
+                    // Partial success preserves streak without resetting to 0 (hard-fought draw / survival)
+                } else {
+                    d.streak = 0;
+                }
                 d.bestStreak = Math.max(d.bestStreak, d.streak);
                 d.lastPlayedDate = todayStr();
                 d.lastPuzzleNum = puzzleNum;
             }
             // Always record in history (even back-in-time, separately keyed)
-            d.history[histKey] = { won, score, maxScore, date: todayStr() };
+            d.history[histKey] = { won, outcome: resolvedOutcome, score, maxScore, date: todayStr() };
             save(d);
             return d;
         };

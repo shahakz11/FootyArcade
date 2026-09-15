@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-09-15T00:55:24.427305",
+  "timestamp": "2026-09-15T16:57:20.559253",
   "targetDate": "2026-09-15",
   "offset": 0,
-  "status": "FAIL",
+  "status": "FIXED",
   "puzzles": {
     "top_transfers": 51,
     "transfer_destination": 51,
@@ -11,36 +11,13 @@
     "player_chain": 5,
     "passport_fc": 2
   },
-  "issues": [
-    {
-      "game_id": "club_connect",
-      "puzzle_num": 47,
-      "severity": "ERROR",
-      "message": "AI Consensus Discrepancy confirmed by openai/gpt-oss-20b & openai/gpt-oss-20b: Both openai/gpt-oss-20b and openai/gpt-oss-20b agree on discrepancy!",
-      "entity_type": null,
-      "entity_val": null
-    },
-    {
-      "game_id": "passport_fc",
-      "puzzle_num": 2,
-      "severity": "ERROR",
-      "message": "Player 'Alexis Alejandro Sánchez Sánchez' missing from all_players.json",
-      "entity_type": "player",
-      "entity_val": "Alexis Alejandro Sánchez Sánchez"
-    }
-  ],
+  "issues": [],
   "fixes": [
     {
       "game_id": "passport_fc",
       "puzzle_num": 2,
       "action": "expand_pool",
       "detail": "Added verified player 'Johan Djourou' to Step 3"
-    },
-    {
-      "game_id": "passport_fc",
-      "puzzle_num": 2,
-      "action": "expand_pool",
-      "detail": "Added verified player 'Alexis Alejandro Sánchez Sánchez' to Step 4"
     }
   ],
   "ai_checks": [
@@ -49,10 +26,10 @@
       "puzzle_num": 51,
       "result": {
         "consensus": false,
-        "all_factual": false,
+        "all_factual": true,
         "primary_model": "openai/gpt-oss-120b",
-        "secondary_model": "Unavailable",
-        "notes": "Model 1 flagged issues: ['Cristiano Ronaldo fee listed as €117,000,000 – Transfermarkt records €100,000,000 (plus bonuses)', 'Arthur Melo fee listed as €80,600,000 – Transfermarkt records €72,000,000', 'Dušan Vlahović fee listed as €85,400,000 – Transfermarkt records €70,000,000'], but Model 2 was unreachable."
+        "secondary_model": "qwen/qwen3.8-27b",
+        "notes": "Model 1 flagged an issue, but Model 2 rejected it as a false alarm. Maintained original puzzle."
       }
     },
     {
@@ -60,10 +37,10 @@
       "puzzle_num": 51,
       "result": {
         "consensus": false,
-        "all_factual": false,
+        "all_factual": true,
         "primary_model": "openai/gpt-oss-120b",
-        "secondary_model": "Unavailable",
-        "notes": "Model 1 flagged issues: ['The entries showing transfers from Sporting CP to Sporting CP are not actual transfers and should not be listed.', 'The fee for the Lille→AC\\u202fMilan move is recorded as €49,500,000, but Transfermarkt lists the fee at around €45,000,000 (plus possible add‑ons).'], but Model 2 was unreachable."
+        "secondary_model": "qwen/qwen3.8-27b",
+        "notes": "Model 1 flagged an issue, but Model 2 rejected it as a false alarm. Maintained original puzzle."
       }
     },
     {
@@ -73,62 +50,35 @@
         "consensus": true,
         "all_factual": true,
         "primary_model": "openai/gpt-oss-120b",
-        "notes": "The list accurately reflects the Bundesliga 2017/18 top‑scorer rankings and stats."
+        "notes": "All listed scorers, goals, and appearances match the official Bundesliga 2017/18 records."
       }
     },
     {
       "game_id": "club_connect",
       "puzzle_num": 47,
       "result": {
-        "consensus": true,
-        "all_factual": false,
-        "confirmed_discrepancy": true,
-        "primary_model": "openai/gpt-oss-20b",
-        "secondary_model": "openai/gpt-oss-20b",
-        "model1_discrepancies": [
-          "Filippo Inzaghi never signed for AC Milan",
-          "Christopher Nkunku never signed for AC Milan"
-        ],
-        "model2_discrepancies": [
-          "Ardon Jashari never signed for AC Milan",
-          "Filippo Inzaghi did not transfer from Juventus to AC Milan for €36,150,000",
-          "Christopher Nkunku never signed for AC Milan",
-          "Charles De Ketelaere never signed for AC Milan",
-          "Mattia Caldara did not transfer from Juventus to AC Milan for €37,740,000"
-        ],
-        "suggested_corrections": [
-          {
-            "field": "player",
-            "current": "Filippo Inzaghi",
-            "correct": "Did not sign for AC Milan; played for Juventus, Inter, etc.",
-            "reason": "Transfermarkt shows no AC Milan contract for Inzaghi"
-          },
-          {
-            "field": "player",
-            "current": "Christopher Nkunku",
-            "correct": "Did not sign for AC Milan; played for RB Leipzig, Chelsea.",
-            "reason": "Transfermarkt shows no AC Milan contract for Nkunku"
-          }
-        ],
-        "notes": "Both openai/gpt-oss-20b and openai/gpt-oss-20b agree on discrepancy!"
+        "consensus": false,
+        "all_factual": true,
+        "primary_model": "openai/gpt-oss-120b",
+        "secondary_model": "qwen/qwen3.8-27b",
+        "notes": "Model 1 flagged an issue, but Model 2 rejected it as a false alarm. Maintained original puzzle."
       }
     },
     {
       "game": "player_chain",
       "step": 2,
       "result": {
-        "status": "success",
-        "missing_added": [],
-        "primary_model": "openai/gpt-oss-120b",
-        "notes": "Added 0 missing qualifying player(s) confirmed by 2 models."
+        "status": "skipped",
+        "reason": "All Groq model attempts failed"
       }
     },
     {
       "game": "player_chain",
       "step": 3,
       "result": {
-        "status": "skipped",
-        "reason": "All Groq model attempts failed"
+        "status": "complete",
+        "missing_added": [],
+        "notes": "All qualifying players identified by openai/gpt-oss-120b already exist in pool."
       }
     },
     {
@@ -165,14 +115,10 @@
       "game": "passport_fc",
       "step": 4,
       "result": {
-        "status": "success",
-        "missing_added": [
-          "Alexis Alejandro Sánchez Sánchez"
-        ],
-        "primary_model": "openai/gpt-oss-120b",
-        "notes": "Added 1 missing qualifying player(s) confirmed by 2 models."
+        "status": "skipped",
+        "reason": "All Groq model attempts failed"
       }
     }
   ],
-  "execTimeSec": 77.35
+  "execTimeSec": 67.8
 }

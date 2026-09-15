@@ -498,15 +498,22 @@
         // Show result modal
         const stats = storage.getStats();
         const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage, puzzleNum);
+        const total = activeGameData.transfers.length;
+        const isPartial = result.outcome === 'partial' || (!result.won && result.score > 0 && result.score < total);
+        const outcome = result.outcome || (result.won ? 'win' : (isPartial ? 'partial' : 'loss'));
 
         modal.show({
             won: result.won,
-            title: result.won ? 'CAREER SOLVED!' : 'GAME OVER',
+            outcome,
+            isPartial,
+            title: result.won ? 'CAREER SOLVED!' : (isPartial ? 'CAREER SURVIVED!' : 'GAME OVER'),
             message: result.won
                 ? 'You have already completed this puzzle.'
-                : `You already played this puzzle. Final score: ${result.score} / ${activeGameData.transfers.length}.`,
+                : (isPartial
+                    ? `You already played this puzzle. Final score: ${result.score} / ${total}.`
+                    : `You already played this puzzle. Final score: ${result.score} / ${total}.`),
             score: result.score,
-            maxScore: activeGameData.transfers.length,
+            maxScore: total,
             streak: stats.streak,
             targetName: activeGameData.player_name,
             targetType: 'player',
@@ -717,7 +724,13 @@
     }
 
     function checkWinLoss() {
-        if (activeStep >= activeGameData.transfers.length) endGame(score >= activeGameData.transfers.length);
+        if (livesCtrl.isDead()) {
+            endGame(false);
+            return;
+        }
+        if (activeStep >= activeGameData.transfers.length) {
+            endGame(score >= activeGameData.transfers.length);
+        }
     }
 
     function endGame(won) {
@@ -751,20 +764,31 @@
 
         document.getElementById('fa-guess-panel').style.display = 'none';
 
-        const stats = storage.recordResult(puzzleNum, won, score, activeGameData.transfers.length, isBackInTime);
+        const total = activeGameData.transfers.length;
+        const isPartial = !won && (score >= (total / 2));
+        const outcome = won ? 'win' : (isPartial ? 'partial' : 'loss');
+
+        const stats = storage.recordResult(puzzleNum, won, score, total, isBackInTime, outcome);
         document.getElementById('modal-best').textContent = stats.bestStreak;
 
         const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage);
 
+        const modalTitle = won ? 'CAREER SOLVED!' : (isPartial ? 'CAREER SURVIVED!' : 'GAME OVER');
+        const modalMsg = won
+            ? 'Brilliant! You predicted the complete transfer trajectory.'
+            : (isPartial
+                ? `Resilient finish! You navigated the full career timeline, scoring ${score} of ${total} clubs.`
+                : 'You couldn\'t predict the entire career path.');
+
         modal.show({
             gameId:      GAME_ID,
             won,
-            title:   won ? 'CAREER SOLVED!' : 'GAME OVER',
-            message: won
-                ? 'Brilliant! You predicted the complete transfer trajectory.'
-                : 'You couldn\'t predict the entire career path.',
+            outcome,
+            isPartial,
+            title:   modalTitle,
+            message: modalMsg,
             score,
-            maxScore:    activeGameData.transfers.length,
+            maxScore:    total,
             lives:       livesCtrl.get(),
             initialLives: INITIAL_LIVES,
             streak:      stats.streak,

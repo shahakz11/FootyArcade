@@ -70,8 +70,25 @@ def check_connection(silent=False):
     except Exception as e:
         raise RuntimeError(f"Could not connect to Instagram: {e}")
 
-def build_instagram_caption(game_id="top_transfers", target_name=""):
+def load_matchday_context_for_date(date_str=None):
+    """Loads matchday context for the given date (default today) from the schedule ledger."""
+    if not date_str:
+        date_str = datetime.date.today().strftime("%Y-%m-%d")
+    ledger_path = os.path.join(BASE_DIR, "data", "puzzle_schedule_ledger.json")
+    if os.path.exists(ledger_path):
+        try:
+            with open(ledger_path, "r", encoding="utf-8") as f:
+                ledger = json.load(f)
+                return ledger.get(date_str, {}).get("matchday_context")
+        except Exception:
+            pass
+    return None
+
+def build_instagram_caption(game_id="top_transfers", target_name="", matchday_context=None, date_str=None):
     """Generates an engaging, high-converting caption with hashtags for Instagram Reels."""
+    if matchday_context is None:
+        matchday_context = load_matchday_context_for_date(date_str)
+
     game_hooks = {
         "top_transfers": f"Can you guess {target_name or 'the club'}'s record transfers? ⚽",
         "transfer_destination": "Guess the mystery player's career path backwards! ⚽",
@@ -80,13 +97,22 @@ def build_instagram_caption(game_id="top_transfers", target_name=""):
         "top_scorers": f"Who scored the most goals in {target_name or 'this season'}? ⚽",
         "passport_fc": f"Can you complete {target_name or 'today'}'s club passport? ✈️"
     }
-    hook = game_hooks.get(game_id, "Daily Football Quiz Challenge! ⚽")
-    
+    base_hook = game_hooks.get(game_id, "Daily Football Quiz Challenge! ⚽")
+
+    hook_line = base_hook
+    matchday_tags_str = ""
+    if matchday_context:
+        hook_badge = matchday_context.get("hook", "⚔️ MATCHDAY SPECIAL!")
+        hook_line = f"{hook_badge}\n{base_hook}"
+        raw_tags = matchday_context.get("hashtags", [])
+        if raw_tags:
+            matchday_tags_str = " ".join(raw_tags) + " "
+
     caption = (
-        f"{hook}\n\n"
+        f"{hook_line}\n\n"
         f"Comment your score below! 👇\n\n"
         f"🎮 Play today's free daily puzzles at: playmaker.best (link in bio!)\n\n"
-        f"#reels #football #soccer #footballquiz #soccerquiz #premierleague #realmadrid "
+        f"{matchday_tags_str}#reels #football #soccer #footballquiz #soccerquiz #premierleague #realmadrid "
         f"#championsleague #footballtrivia #playmaker #footy"
     )
     return caption

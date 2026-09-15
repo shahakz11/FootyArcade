@@ -466,12 +466,17 @@ class PuzzleVerifier:
         else:
             self.ensure_player_exists(p_name, "transfer_destination", puzzle_num, nationality=game_data.get("nationality", ""), position=game_data.get("position", ""))
 
+        if len(transfers) < 2:
+            self.log_issue("transfer_destination", puzzle_num, "ERROR", f"Transfer Destination puzzle has fewer than 2 transfers ({len(transfers)})")
+
         summary_lines = []
         for tr in transfers:
             fc = tr.get("from_club_name", "")
             tc = tr.get("to_club_name", "")
             dt = tr.get("transfer_date", "")
             fee = float(tr.get("transfer_fee", 0) or 0)
+            if fc and tc and fc.strip().lower() == tc.strip().lower():
+                self.log_issue("transfer_destination", puzzle_num, "ERROR", f"Same club transfer detected: '{fc}' -> '{tc}'")
             if fc:
                 self.ensure_club_exists(fc, "transfer_destination", puzzle_num)
             if tc:

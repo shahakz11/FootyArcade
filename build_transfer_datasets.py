@@ -4,6 +4,7 @@ import pandas as pd
 import random
 import kagglehub
 from datetime import datetime
+from scripts.alias_utils import load_aliases_config, get_club_alias_map, get_hidden_clubs
 
 def main():
     print("Loading davidcariboo/player-scores dataset...")
@@ -114,7 +115,11 @@ def main():
     prefix_pattern = re.compile(r'^(1\.\s*FC|1\.\s*FSV|1\.\s*|FC|CF|AC|AS|SS|SV|SC|SD|CD|UD|RC|RCD|FK|SK|BK|IF|IFK|OGC|US|USM|GC|AFC|SAD|CA|CE|CS|CP|VfB|VfL|TSG|BSC|FSV|SSV|SpVgg|Club)\s+', re.I)
     suffix_pattern = re.compile(r'\s+(Football Club|Association Football Club|Club de Fútbol|Club de Futbol|Fútbol Club|Futbol Club|Soccer Club|Sports Club|Sport Club|Athletic Club|Club|FC|CF|SC|CSC|S\.A\.D\.|R\.C\.D\.|C\.D\.|F\.C\.|C\.F\.|AF|FK|SK|BK|SV|EV|e\.V\.|eV|AC|SD|UD|RC|SAD|Res|Reserves|Youth|Yth|Academy|Junioren|Castilla|II|B|U-?\d+|Sub-?\d+|Sub\s*\d+|Under-?\d+|Under\s*\d+)\b', re.I)
 
-    aliases = {
+    # Load aliases from private/aliases_config.json if available
+    alias_cfg = load_aliases_config()
+    loaded_aliases = get_club_alias_map(alias_cfg)
+
+    default_aliases = {
         # Germany
         'Leipzig': 'RB Leipzig', 'RB Leipzig': 'RB Leipzig', 'RB Leipzig.': 'RB Leipzig', 'S. Leipzig': 'RB Leipzig', 'RasenBallsport Leipzig': 'RB Leipzig', 'Rasenballsport Leipzig': 'RB Leipzig',
         'Bor. Dortmund': 'Borussia Dortmund', 'B. Dortmund': 'Borussia Dortmund', 'Dortmund': 'Borussia Dortmund',
@@ -213,6 +218,10 @@ def main():
         'Al-Okhdood': 'Al-Okhdood', 'Al Okhdood': 'Al-Okhdood',
         'Al-Qadsiah': 'Al-Qadsiah', 'Al Qadsiah': 'Al-Qadsiah',
     }
+
+    # Merge: loaded aliases from config override default_aliases
+    aliases = {**default_aliases, **loaded_aliases}
+    hidden_clubs = get_hidden_clubs(alias_cfg)
 
     def clean_club_name(val):
         if not isinstance(val, str):
@@ -430,8 +439,11 @@ def main():
         (~df_dest_merged['to_club_name'].str.contains(youth_patterns, na=False))
     ].copy()
     
-    # Filter age >= 17
-    df_dest_clean = df_dest_clean[df_dest_clean['age_at_transfer'] >= 17]
+    # Filter age >= 17 and exclude transfers between the same club/aliases
+    df_dest_clean = df_dest_clean[
+        (df_dest_clean['age_at_transfer'] >= 17) &
+        (df_dest_clean['from_club_name'].str.strip().str.lower() != df_dest_clean['to_club_name'].str.strip().str.lower())
+    ].copy()
 
     # Find players with at least one transfer >= 15m
     players_with_big_tr = df_dest_clean[df_dest_clean['transfer_fee'] >= 15_000_000]['player_id'].unique()
@@ -461,7 +473,8 @@ def main():
     df_dc_dest_clean = df_dc_dest_merged[
         (~df_dc_dest_merged['from_club_name'].str.contains(youth_patterns, na=False)) &
         (~df_dc_dest_merged['to_club_name'].str.contains(youth_patterns, na=False)) &
-        (df_dc_dest_merged['age_at_transfer'] >= 17)
+        (df_dc_dest_merged['age_at_transfer'] >= 17) &
+        (df_dc_dest_merged['from_club_name'].str.strip().str.lower() != df_dc_dest_merged['to_club_name'].str.strip().str.lower())
     ].copy()
 
     df_dc_dest_clean['transfer_fee'] = pd.to_numeric(df_dc_dest_clean['transfer_fee'], errors='coerce')

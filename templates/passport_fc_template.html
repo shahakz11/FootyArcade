@@ -1364,9 +1364,12 @@
 
             const score = stepRecords.filter(r => r && r.won).length;
             const total = activeGameData.total_steps;
+            const isFullWin = won && score === total;
+            const isPartial = !isFullWin && (score >= (total / 2));
+            const outcome = isFullWin ? 'win' : (isPartial ? 'partial' : 'loss');
 
             // Save to FootyStorage and step history
-            storage.recordResult(puzzleNum, won, score, total, isBackInTime);
+            storage.recordResult(puzzleNum, isFullWin, score, total, isBackInTime, outcome);
             try {
                 const stepKey = `passport_fc_steps_${isBackInTime ? 'bit_' : ''}${puzzleNum}`;
                 localStorage.setItem(stepKey, JSON.stringify(stepRecords));
@@ -1378,19 +1381,26 @@
 
             // Modal Display
             const stats = storage.getStats();
-            const shareText = generateShareText(won, score, total);
-            const customEmojiGrid = generateEmojiGrid(won, score, total);
+            const shareText = generateShareText(isFullWin, score, total);
+            const customEmojiGrid = generateEmojiGrid(isFullWin, score, total);
 
             modal.show({
-                won: won,
+                gameId: GAME_ID,
+                won: isFullWin,
+                outcome,
+                isPartial,
                 score: score,
                 maxScore: total,
                 streak: stats.streak || 0,
-                title: won ? 'LADDER CONQUERED!' : 'OUT OF LIVES!',
-                message: won
+                title: isFullWin ? 'LADDER CONQUERED!' : (isPartial ? 'LADDER SURVIVED!' : 'OUT OF LIVES!'),
+                message: isFullWin
                     ? `Outstanding! You mastered the nationality ladder for ${activeGameData.club}.`
-                    : `Tough break! You completed ${score} of ${total} steps for ${activeGameData.club}.`,
+                    : (isPartial
+                        ? `Ladder survived! You completed ${score} of ${total} passport steps for ${activeGameData.club}.`
+                        : `Tough break! You completed ${score} of ${total} steps for ${activeGameData.club}.`),
                 extraText: activeGameData.club,
+                targetName: activeGameData.club,
+                targetType: 'club',
                 customEmojiGrid: customEmojiGrid,
                 shareText: shareText
             });

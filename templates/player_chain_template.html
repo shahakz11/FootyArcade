@@ -766,12 +766,17 @@
             const bestEl = document.getElementById('modal-best');
             if (bestEl) bestEl.textContent = stats.bestStreak || 0;
 
+            const isPartial = result.outcome === 'partial' || (!result.won && result.score > 0 && result.score < activeGameData.total_steps);
+            const outcome = result.outcome || (result.won ? 'win' : (isPartial ? 'partial' : 'loss'));
+
             modal.show({
                 won: result.won,
-                title: didInstantWin ? 'INSTANT WIN!' : (result.won ? 'CHAIN COMPLETED!' : 'GAME OVER'),
+                outcome,
+                isPartial,
+                title: didInstantWin ? 'INSTANT WIN!' : (result.won ? 'CHAIN COMPLETED!' : (isPartial ? 'CHAIN SURVIVED!' : 'GAME OVER')),
                 message: result.won 
                     ? (didInstantWin ? `Incredible football IQ! You identified ${activeGameData.target_player} directly and cracked the chain.` : `Masterclass! You connected every club in the chain to reveal ${activeGameData.target_player}.`)
-                    : `Tough luck! Today's mystery player was ${activeGameData.target_player}. Review the full chain below!`,
+                    : (isPartial ? `You navigated the teammate chain to ${activeGameData.target_player}! Solved ${result.score} of ${activeGameData.total_steps} links.` : `Tough luck! Today's mystery player was ${activeGameData.target_player}. Review the full chain below!`),
                 score: result.score,
                 maxScore: activeGameData.total_steps,
                 streak: stats.streak,
@@ -1182,8 +1187,13 @@
             showEndGameSummary(won);
 
             // Record session in FootyStorage
-            const finalScore = didInstantWin ? activeGameData.total_steps : getCompletedScore();
-            storage.recordResult(puzzleNum, won, finalScore, activeGameData.total_steps, isBackInTime);
+            const totalSteps = activeGameData.total_steps;
+            const finalScore = didInstantWin ? totalSteps : getCompletedScore();
+            const isFullWin = didInstantWin || (finalScore === totalSteps);
+            const isPartial = !isFullWin && (finalScore >= (totalSteps / 2));
+            const outcome = isFullWin ? 'win' : (isPartial ? 'partial' : 'loss');
+
+            storage.recordResult(puzzleNum, isFullWin, finalScore, totalSteps, isBackInTime, outcome);
 
             const stats = storage.getStats();
             const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage, puzzleNum);
@@ -1198,7 +1208,10 @@
             if (didInstantWin) {
                 modalTitle = 'INSTANT WIN!';
                 modalMsg   = `Incredible football IQ! You identified ${activeGameData.target_player} directly and cracked the chain.`;
-            } else if (!won) {
+            } else if (isPartial) {
+                modalTitle = 'CHAIN SURVIVED!';
+                modalMsg   = `You navigated the teammate chain to ${activeGameData.target_player}! Solved ${finalScore} of ${totalSteps} links.`;
+            } else if (!isFullWin) {
                 modalTitle = 'GAME OVER';
                 modalMsg   = `Tough luck! Today's mystery player was ${activeGameData.target_player}. Review the full chain below!`;
             }
@@ -1212,11 +1225,13 @@
 
             modal.show({
                 gameId: GAME_ID,
-                won: won,
+                won: isFullWin,
+                outcome: outcome,
+                isPartial: isPartial,
                 title: modalTitle,
                 message: modalMsg,
                 score: finalScore,
-                maxScore: activeGameData.total_steps,
+                maxScore: totalSteps,
                 lives: livesCtrl.get(),
                 initialLives: INITIAL_LIVES,
                 customEmojiGrid: emojis,
