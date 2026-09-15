@@ -10,6 +10,7 @@ import cv2
 import numpy as np
 from playwright.async_api import async_playwright
 from audio_sfx import build_audio_track, mux_audio_to_video
+from narration_tts import get_game_voice_script, generate_narration_audio_track
 
 def load_games_metadata():
     games_file = "games.json"
@@ -24,7 +25,7 @@ def sanitize_filename(name):
     s = str(name).strip().replace(" ", "_")
     return re.sub(r'[^\w\-]', '', s)
 
-async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=False, port=8080):
+async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=False, port=8080, force=False):
     url = f"http://127.0.0.1:{port}/games/{game_id}.html"
     
     WIDTH, HEIGHT = 1080, 1920
@@ -206,6 +207,7 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
 
         frames = []
         audio_events = []
+        voice_events = []
         
         def add_frame(png_bytes):
             nparr = np.frombuffer(png_bytes, np.uint8)
@@ -320,12 +322,16 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
         print(f"🎯 Target Theme: {target_name} ({target_date})")
         print(f"📁 Output File: {output_mp4}")
 
-        if os.path.exists(output_mp4) and os.path.getsize(output_mp4) > 1000000:
+        if not force and os.path.exists(output_mp4) and os.path.getsize(output_mp4) > 1000000:
             print(f"⚡ Video file already exists and is complete: {output_mp4}. Skipping re-render!")
             await browser.close()
             return output_mp4, target_name
         
         await capture_hold(15)
+        
+        voice_script = get_game_voice_script(game_id, target_name)
+        if voice_script.get("intro"):
+            voice_events.append((voice_script.get("intro"), 0.2))
         
         async def make_guess(name, is_correct=True, do_countdown=True):
             if do_countdown:
@@ -391,7 +397,12 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
             
             for idx, wrong_club in enumerate(wrong_guesses, 1):
                 print(f"  ➜ Wrong Guess {idx}/2 (unlocking next player): {wrong_club}")
+                clue_cue = voice_script.get(f"clue_{idx}")
+                if clue_cue:
+                    voice_events.append((clue_cue, len(frames) / FPS))
                 await make_guess(wrong_club, is_correct=False, do_countdown=True)
+            if voice_script.get("cliffhanger"):
+                voice_events.append((voice_script.get("cliffhanger"), len(frames) / FPS))
                 
         elif game_id == "top_transfers":
             # Baseline first guess (always has 3s countdown)
@@ -400,10 +411,14 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
             players_data.sort(key=lambda x: float(x.get('transfer_fee', 0)), reverse=True)
             top5 = players_data[:5]
             reveal_indices = [4, 3, 1]
+            cue_map = {4: "guess_5", 3: "guess_4", 1: "guess_2"}
             for idx in reveal_indices:
                 if idx < len(top5):
                     p_name = top5[idx]['player_name']
                     print(f"  ➜ Guessing #{idx+1}: {p_name}")
+                    cue_key = cue_map.get(idx)
+                    if cue_key and voice_script.get(cue_key):
+                        voice_events.append((voice_script.get(cue_key), len(frames) / FPS))
                     await make_guess(p_name, is_correct=True, do_countdown=True)
                     
             await page.evaluate("""
@@ -415,6 +430,8 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                     tbody.children[2].style.opacity = "0.4";
                 }
             """)
+            if voice_script.get("cliffhanger"):
+                voice_events.append((voice_script.get("cliffhanger"), len(frames) / FPS))
             
         elif game_id == "transfer_destination":
             transfers = await page.evaluate("DAILY_DESTINATION_GAME.transfers")
@@ -424,12 +441,19 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
 
             # Baseline first guess (shows lives deduction & tension)
             print(f"  ➜ Step 1 Wrong Guess: {wrong_club}")
+            if voice_script.get("wrong_1"):
+                voice_events.append((voice_script.get("wrong_1"), len(frames) / FPS))
             await make_guess(wrong_club, is_correct=False, do_countdown=True)
             
             for idx in range(min(2, len(transfers))):
                 prev_club = transfers[idx]['from_club_name']
                 print(f"  ➜ Guessing Step {idx+1} Previous Club: {prev_club}")
+                step_cue = voice_script.get(f"step_{idx+1}")
+                if step_cue:
+                    voice_events.append((step_cue, len(frames) / FPS))
                 await make_guess(prev_club, is_correct=True, do_countdown=True)
+            if voice_script.get("cliffhanger"):
+                voice_events.append((voice_script.get("cliffhanger"), len(frames) / FPS))
                 
         elif game_id == "top_scorers":
             # Baseline first guess (always has 3s countdown)
@@ -438,11 +462,17 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
             scorers_data.sort(key=lambda x: int(x.get('goals', 0)), reverse=True)
             top5 = scorers_data[:5]
             reveal_indices = [4, 3, 1]
+            cue_map = {4: "guess_5", 3: "guess_4", 1: "guess_2"}
             for idx in reveal_indices:
                 if idx < len(top5):
                     p_name = top5[idx]['player_name']
                     print(f"  ➜ Guessing #{idx+1}: {p_name}")
+                    cue_key = cue_map.get(idx)
+                    if cue_key and voice_script.get(cue_key):
+                        voice_events.append((voice_script.get(cue_key), len(frames) / FPS))
                     await make_guess(p_name, is_correct=True, do_countdown=True)
+            if voice_script.get("cliffhanger"):
+                voice_events.append((voice_script.get("cliffhanger"), len(frames) / FPS))
 
         elif game_id == "player_chain":
             chain_data = await page.evaluate("DAILY_CHAIN_GAME")
@@ -456,6 +486,8 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                 step1_players = [p for p in step1.get("valid_players", []) if p.lower() != target_player.lower()]
                 step1_guess = step1_players[0] if step1_players else "Andrea Pirlo"
                 print(f"  ➜ Step 1 Guess ({step1.get('club')}): {step1_guess}")
+                if voice_script.get("step_1"):
+                    voice_events.append((voice_script.get("step_1"), len(frames) / FPS))
                 await make_guess(step1_guess, is_correct=True, do_countdown=True)
                 
             # Step 2: Make a wrong guess first to show lives deduction & build tension, then solve Step 2
@@ -467,12 +499,18 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                 wrong_candidates = [p for p in wrong_pool if p.lower() not in step2_valid]
                 wrong_guess = wrong_candidates[0] if wrong_candidates else "Paolo Maldini"
                 print(f"  ➜ Step 2 Wrong Guess (shows lives deduction): {wrong_guess}")
+                if voice_script.get("wrong_1"):
+                    voice_events.append((voice_script.get("wrong_1"), len(frames) / FPS))
                 await make_guess(wrong_guess, is_correct=False, do_countdown=True)
                 
                 step2_players = [p for p in step2.get("valid_players", []) if p.lower() != target_player.lower()]
                 step2_guess = step2_players[0] if step2_players else "Clarence Seedorf"
                 print(f"  ➜ Step 2 Correct Guess ({step2_clubs}): {step2_guess}")
+                if voice_script.get("step_2"):
+                    voice_events.append((voice_script.get("step_2"), len(frames) / FPS))
                 await make_guess(step2_guess, is_correct=True, do_countdown=True)
+            if voice_script.get("cliffhanger"):
+                voice_events.append((voice_script.get("cliffhanger"), len(frames) / FPS))
 
         elif game_id == "passport_fc":
             passport_data = await page.evaluate("DAILY_PASSPORT_GAME")
@@ -486,6 +524,8 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                 step1_players = step1.get("sample_players", []) or step1.get("valid_players", [])
                 step1_guess = step1_players[0] if step1_players else "Thierry Henry"
                 print(f"  ➜ Step 1 Guess ({step1.get('nationality')}): {step1_guess}")
+                if voice_script.get("step_1"):
+                    voice_events.append((voice_script.get("step_1"), len(frames) / FPS))
                 await make_guess(step1_guess, is_correct=True, do_countdown=True)
                 
             # Step 2: Make a wrong guess first to show lives deduction & tension, then solve Step 2
@@ -495,14 +535,22 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
                 wrong_candidates = ["Cristiano Ronaldo", "Zlatan Ibrahimovic", "Erling Haaland", "Kylian Mbappe"]
                 wrong_guess = next((c for c in wrong_candidates if c.lower() not in step2_valid), "Cristiano Ronaldo")
                 print(f"  ➜ Step 2 Wrong Guess (shows lives deduction): {wrong_guess}")
+                if voice_script.get("wrong_1"):
+                    voice_events.append((voice_script.get("wrong_1"), len(frames) / FPS))
                 await make_guess(wrong_guess, is_correct=False, do_countdown=True)
                 
                 step2_players = step2.get("sample_players", []) or step2.get("valid_players", [])
                 step2_guess = step2_players[0] if step2_players else "Lionel Messi"
                 print(f"  ➜ Step 2 Correct Guess ({step2.get('nationality')}): {step2_guess}")
+                if voice_script.get("step_2"):
+                    voice_events.append((voice_script.get("step_2"), len(frames) / FPS))
                 await make_guess(step2_guess, is_correct=True, do_countdown=True)
+            if voice_script.get("cliffhanger"):
+                voice_events.append((voice_script.get("cliffhanger"), len(frames) / FPS))
 
         # Final hold on full screen with CTA (~4.5s)
+        if voice_script.get("outro"):
+            voice_events.append((voice_script.get("outro"), len(frames) / FPS))
         await capture_hold(135)
 
         print(f"📹 Writing {len(frames)} raw video frames...")
@@ -518,8 +566,25 @@ async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=Fa
         # Audio track synthesis & FFmpeg muxing
         total_dur = len(frames) / FPS
         wav_track_path = output_mp4 + ".wav"
+        voice_wav_path = output_mp4 + ".voice.wav"
+
+        print(f"🎙️ Synthesizing neural voiceover narration ({len(voice_events)} voice cues)...")
+        synthesized_voice = None
+        try:
+            synthesized_voice = await generate_narration_audio_track(voice_events, total_dur, voice_wav_path)
+            if synthesized_voice:
+                print(f"✅ Voiceover track ready: {synthesized_voice}")
+        except Exception as e:
+            print(f"⚠️ Voiceover synthesis error: {e}. Falling back to pure SFX.")
+
         print(f"🔊 Synthesizing audio track ({len(audio_events)} SFX events)...")
-        build_audio_track(audio_events, total_dur, wav_track_path)
+        build_audio_track(audio_events, total_dur, wav_track_path, voice_wav_path=synthesized_voice)
+
+        if synthesized_voice and os.path.exists(synthesized_voice):
+            try:
+                os.remove(synthesized_voice)
+            except Exception:
+                pass
         
         print("🎬 Muxing audio track with video via FFmpeg...")
         final_mp4 = mux_audio_to_video(temp_raw_mp4, wav_track_path, output_mp4)
@@ -555,13 +620,14 @@ if __name__ == "__main__":
     parser.add_argument("--day", type=int, default=0, help="Day offset: -1 for yesterday, 0 for today, 1 for tomorrow")
     parser.add_argument("--port", type=int, default=8080, help="Local server port (default: 8080)")
     parser.add_argument("--fast", action="store_true", help="Fast mode for quick rendering tests")
+    parser.add_argument("--force", action="store_true", help="Force re-rendering even if output video already exists")
     parser.add_argument("--upload", action="store_true", help="Upload generated video directly to YouTube Shorts")
     parser.add_argument("--privacy", default="public", choices=["public", "private", "unlisted"], help="YouTube Shorts privacy status")
     args = parser.parse_args()
     
     server_proc = ensure_server_running(args.port)
     try:
-        video_path, target_name = asyncio.run(record_short_video(game_id=args.game, day_offset=args.day, fast_mode=args.fast, port=args.port))
+        video_path, target_name = asyncio.run(record_short_video(game_id=args.game, day_offset=args.day, fast_mode=args.fast, port=args.port, force=args.force))
     finally:
         if server_proc:
             server_proc.terminate()

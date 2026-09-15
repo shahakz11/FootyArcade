@@ -797,6 +797,7 @@ def main():
     parser.add_argument("--no-ai-guard", dest="ai_guard", action="store_false", help="Disable LLM fact-checking.")
     parser.add_argument("--report-sheet", action="store_true", default=True, help="Post audit summary to Google Sheet (default: True).")
     parser.add_argument("--no-report-sheet", dest="report_sheet", action="store_false", help="Skip Google Sheet webhook reporting.")
+    parser.add_argument("--exit-zero", action="store_true", default=False, help="Always exit with status code 0 even if issues are flagged.")
     args = parser.parse_args()
 
     with open(GAMES_JSON, "r", encoding="utf-8") as f:
@@ -1014,6 +1015,7 @@ def main():
                         "reason": "; ".join(discrepancies[:2]) if discrepancies else res.get("notes", "")
                     })
 
+        sample_pnum = next(iter(puzzles_verified.values())) if puzzles_verified else 0
         send_webhook_report(
             target_date=target_date_str,
             puzzle_num=sample_pnum,
@@ -1026,7 +1028,7 @@ def main():
             flagged_reviews=flagged_reviews
         )
 
-    if overall_status == "FAIL":
+    if overall_status == "FAIL" and not args.exit_zero:
         sys.exit(1)
 
 
