@@ -11,10 +11,12 @@ import googleapiclient.errors
 from googleapiclient.http import MediaFileUpload
 from google.auth.transport.requests import Request
 
-# Scopes required for uploading YouTube videos and managing metadata
+# Scopes required for uploading YouTube videos, managing metadata, and reading analytics
 SCOPES = [
     "https://www.googleapis.com/auth/youtube.upload",
-    "https://www.googleapis.com/auth/youtube.force-ssl"
+    "https://www.googleapis.com/auth/youtube.force-ssl",
+    "https://www.googleapis.com/auth/yt-analytics.readonly",
+    "https://www.googleapis.com/auth/youtube.readonly"
 ]
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

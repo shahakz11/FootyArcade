@@ -1,11 +1,14 @@
 {
-  "name": "Playmaker",
+  "name": "Playmaker | Daily Football Trivia Arcade",
   "short_name": "Playmaker",
-  "description": "Daily football transfer challenges and trivia.",
+  "description": "Daily football transfer challenges, player career chains, and trivia.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#0e0e0e",
   "theme_color": "#39ff14",
+  "categories": ["games", "sports", "trivia"],
   "icons": [
     {
       "src": "assets/favicon-192.png",

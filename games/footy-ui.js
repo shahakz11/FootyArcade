@@ -2135,15 +2135,204 @@
     document.addEventListener('keydown', detectGameStart, true);
 
     // Run initialization
+    // ────────────────────────────────────────────────────────
+    // PWA Service Worker & Install Prompt System
+    // ────────────────────────────────────────────────────────
+    let deferredInstallPrompt = null;
+
+    function isAppInstalled() {
+        if (typeof window === 'undefined') return false;
+        return window.matchMedia('(display-mode: standalone)').matches ||
+               window.navigator.standalone === true ||
+               document.referrer.includes('android-app://');
+    }
+
+    function isIOSDevice() {
+        if (typeof navigator === 'undefined') return false;
+        const ua = navigator.userAgent.toLowerCase();
+        return /iphone|ipad|ipod/.test(ua) && !ua.includes('crios') && !ua.includes('fxios');
+    }
+
+    function isPWADismissedRecently() {
+        try {
+            const dismissedAt = localStorage.getItem('playmaker_pwa_dismissed');
+            if (!dismissedAt) return false;
+            const daysSince = (Date.now() - parseInt(dismissedAt, 10)) / (1000 * 60 * 60 * 24);
+            return daysSince < 7; // Cooldown for 7 days
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function dismissPWAPrompt() {
+        try {
+            localStorage.setItem('playmaker_pwa_dismissed', Date.now().toString());
+        } catch (e) {}
+        const el = document.getElementById('fa-pwa-banner-wrap');
+        if (el) el.remove();
+        trackEvent('pwa_prompt_dismissed');
+    }
+
+    function showIOSInstallSheet() {
+        if (document.getElementById('fa-pwa-ios-modal')) return;
+
+        const overlay = document.createElement('div');
+        overlay.id = 'fa-pwa-ios-modal';
+        overlay.className = 'fa-pwa-ios-modal-overlay';
+        overlay.innerHTML = `
+            <div class="fa-pwa-ios-sheet">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span class="material-symbols-outlined" style="color:#39ff14; font-size:24px;">install_mobile</span>
+                        <h3 style="font-family:'Space Grotesk',system-ui,sans-serif; font-size:1.1rem; font-weight:700; margin:0;">Install Playmaker</h3>
+                    </div>
+                    <button id="fa-pwa-ios-close" class="fa-pwa-btn-close" aria-label="Close">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <p style="font-size:0.85rem; color:rgba(255,255,255,0.7); margin-bottom:16px;">
+                    Install this app on your iPhone or iPad for the best fullscreen arcade experience:
+                </p>
+                <div class="fa-pwa-ios-step">
+                    <span class="fa-pwa-ios-step-num">1</span>
+                    <span>Tap the <strong>Share</strong> button <span class="material-symbols-outlined" style="font-size:16px; vertical-align:middle; color:#39ff14;">ios_share</span> in Safari's toolbar</span>
+                </div>
+                <div class="fa-pwa-ios-step">
+                    <span class="fa-pwa-ios-step-num">2</span>
+                    <span>Scroll down and tap <strong>Add to Home Screen</strong> <span class="material-symbols-outlined" style="font-size:16px; vertical-align:middle; color:#39ff14;">add_box</span></span>
+                </div>
+                <button id="fa-pwa-ios-done" class="fa-pwa-btn-install" style="width:100%; justify-content:center; margin-top:16px; padding:12px;">
+                    Got It!
+                </button>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        const closeBtn = document.getElementById('fa-pwa-ios-close');
+        const doneBtn = document.getElementById('fa-pwa-ios-done');
+        const closeSheet = () => {
+            overlay.remove();
+            dismissPWAPrompt();
+        };
+
+        if (closeBtn) closeBtn.addEventListener('click', closeSheet);
+        if (doneBtn) doneBtn.addEventListener('click', closeSheet);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeSheet();
+        });
+    }
+
+    function renderPWABanner() {
+        if (isAppInstalled() || isPWADismissedRecently() || document.getElementById('fa-pwa-banner-wrap')) {
+            return;
+        }
+
+        const isGamesSubdir = window.location.pathname.includes('/games/');
+        const iconPath = isGamesSubdir ? '../assets/favicon.png' : 'assets/favicon.png';
+
+        const wrap = document.createElement('div');
+        wrap.id = 'fa-pwa-banner-wrap';
+        wrap.className = 'fa-pwa-banner-wrap';
+        wrap.innerHTML = `
+            <div class="fa-pwa-banner">
+                <img src="${iconPath}" alt="Playmaker Icon" class="fa-pwa-icon" onerror="this.src='https://playmaker.best/assets/favicon.png'" />
+                <div class="fa-pwa-content">
+                    <div class="fa-pwa-title">
+                        Playmaker <span class="fa-pwa-badge">App</span>
+                    </div>
+                    <div class="fa-pwa-desc">
+                        Install for instant daily quizzes & streak tracking!
+                    </div>
+                </div>
+                <div class="fa-pwa-actions">
+                    <button id="fa-pwa-btn-install" class="fa-pwa-btn-install" aria-label="Install App">
+                        <span class="material-symbols-outlined" style="font-size:16px;">download</span> Install
+                    </button>
+                    <button id="fa-pwa-btn-close" class="fa-pwa-btn-close" aria-label="Dismiss banner">
+                        <span class="material-symbols-outlined" style="font-size:18px;">close</span>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(wrap);
+        trackEvent('pwa_banner_shown');
+
+        const installBtn = document.getElementById('fa-pwa-btn-install');
+        const closeBtn = document.getElementById('fa-pwa-btn-close');
+
+        if (installBtn) {
+            installBtn.addEventListener('click', async () => {
+                trackEvent('pwa_install_click');
+                if (deferredInstallPrompt) {
+                    deferredInstallPrompt.prompt();
+                    const { outcome } = await deferredInstallPrompt.userChoice;
+                    trackEvent('pwa_prompt_outcome', { outcome });
+                    if (outcome === 'accepted') {
+                        wrap.remove();
+                    }
+                    deferredInstallPrompt = null;
+                } else if (isIOSDevice()) {
+                    showIOSInstallSheet();
+                } else {
+                    // Fallback guidance for desktop / general browsers without prompt
+                    toast('Tap your browser settings menu (⋮) and select "Install App" or "Add to Home Screen".');
+                    dismissPWAPrompt();
+                }
+            });
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', dismissPWAPrompt);
+        }
+    }
+
+    function initPWAInstall() {
+        if (typeof window === 'undefined') return;
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swUrl = window.location.pathname.includes('/games/') ? '../sw.js' : './sw.js';
+                navigator.serviceWorker.register(swUrl).catch((err) => {
+                    console.debug('[FootyUI] SW registration note:', err);
+                });
+            });
+        }
+
+        // Catch native install prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredInstallPrompt = e;
+            renderPWABanner();
+        });
+
+        // For iOS devices or standalone check
+        if (isIOSDevice() && !isAppInstalled() && !isPWADismissedRecently()) {
+            // Delay slightly so it does not interfere with initial page rendering
+            setTimeout(renderPWABanner, 2500);
+        }
+
+        window.addEventListener('appinstalled', () => {
+            trackEvent('pwa_installed_success');
+            const wrap = document.getElementById('fa-pwa-banner-wrap');
+            if (wrap) wrap.remove();
+        });
+    }
+
+    // Auto-init on DOM ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             initAnalyticsAndConsent();
             initFeedbackSystem();
+            initPWAInstall();
             trackEvent('page_view');
         });
     } else {
         initAnalyticsAndConsent();
         initFeedbackSystem();
+        initPWAInstall();
         trackEvent('page_view');
     }
 
@@ -2179,6 +2368,9 @@
         normalizeStr,
         canonicalClub,
         isClubMatch,
+        initPWAInstall,
+        showIOSInstallSheet,
+        renderPWABanner
     };
 
 })(window);
