@@ -44,32 +44,68 @@ ALL_AVAILABLE_GAMES = [
 
 DEFAULT_PEAK_SLOTS = [12, 20]  # 12:00 PM UTC and 8:00 PM UTC peak football engagement windows
 
-def compute_scheduled_slots(num_videos, start_dt=None, slot_hours=None, immediate_first=False):
+def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_hour=None):
     """
-    Computes scheduled publishing datetime slots targeting prime engagement windows (e.g. 12:00 UTC and 20:00 UTC).
-    Returns list of dicts: [{"dt": datetime, "iso": str or None, "label": str}]
+    Selects which game(s) to process:
+    - If all_games is True: returns ALL_AVAILABLE_GAMES (all 6)
+    - If selected_game is provided: returns the matching game from ALL_AVAILABLE_GAMES
+    - If mode in ('midday', 'morning'): returns [Top Transfers]
+    - If mode in ('evening', 'night'): returns [Transfer Destination]
+    - If mode == 'both': returns [Top Transfers, Transfer Destination]
+    - If mode == 'auto' (default):
+        - If current hour < 16 (before 4 PM): returns [Top Transfers] (Midday Peak Run)
+        - If current hour >= 16 (4 PM onwards): returns [Transfer Destination] (Evening Peak Run)
+    """
+    if all_games:
+        return ALL_AVAILABLE_GAMES
+    if selected_game:
+        matched = [g for g in ALL_AVAILABLE_GAMES if g["id"] == selected_game]
+        if matched:
+            return matched
+        raise ValueError(f"Unknown game ID '{selected_game}'. Available: {[g['id'] for g in ALL_AVAILABLE_GAMES]}")
+    
+    mode_lower = (mode or "auto").lower()
+    if mode_lower in ("midday", "morning"):
+        return [DAILY_GAMES[0]]  # Top Transfers
+    elif mode_lower in ("evening", "night"):
+        return [DAILY_GAMES[1]]  # Transfer Destination
+    elif mode_lower == "both":
+        return DAILY_GAMES
+
+    # Auto mode: check hour
+    if curr_hour is None:
+        curr_hour = datetime.datetime.now().hour
+    if curr_hour < 16:
+        return [DAILY_GAMES[0]]  # Top Transfers
+    else:
+        return [DAILY_GAMES[1]]  # Transfer Destination
+
+def compute_scheduled_slots(num_videos, start_dt=None, slot_hours=None, immediate_first=True):
+    """
+    Computes scheduled publishing datetime slots.
+    By default (immediate_first=True), publishes immediately live upon run.
     """
     if start_dt is None:
         start_dt = datetime.datetime.now(datetime.timezone.utc)
     if slot_hours is None:
         slot_hours = DEFAULT_PEAK_SLOTS
     
-    sorted_hours = sorted(slot_hours)
     slots = []
-    
     if immediate_first and num_videos > 0:
-        slots.append({
-            "dt": start_dt,
-            "iso": None,
-            "label": "NOW (Immediate Public)"
-        })
-    
+        for _ in range(num_videos):
+            slots.append({
+                "dt": start_dt,
+                "iso": None,
+                "label": "NOW (Immediate Live Public)"
+            })
+        return slots
+
+    sorted_hours = sorted(slot_hours)
     curr_date = start_dt.date()
-    for day_offset in range(14):  # search up to 14 days ahead
+    for day_offset in range(14):
         d = curr_date + datetime.timedelta(days=day_offset)
         for h in sorted_hours:
             candidate_dt = datetime.datetime(d.year, d.month, d.day, h, 0, 0, tzinfo=datetime.timezone.utc)
-            # Must be at least 5 minutes into the future for API scheduled publish
             if candidate_dt > start_dt + datetime.timedelta(minutes=5):
                 if len(slots) < num_videos:
                     slots.append({
@@ -115,6 +151,7 @@ def get_target_name_from_game(game_id):
     return ""
 
 async def process_all_games(
+    mode="auto",
     slot_hours=None,
     fast_mode=False,
     port=8080,
@@ -123,13 +160,13 @@ async def process_all_games(
     all_games=False,
     no_youtube=False,
     no_instagram=False,
-    instant_reels=False,
-    immediate_first=False,
+    instant_reels=True,
+    immediate_first=True,
     wait_queue=False,
     force=False
 ):
     print("\n" + "=" * 68)
-    print("   ⚽  PLAYMAKER — DAILY SHORTS & REELS BATCH RENDER & UPLOADER")
+    print("   ⚽  PLAYMAKER — DAILY SHORTS & REELS UPLOADER (LIVE IMMEDIATE)")
     print("=" * 68)
 
     today_str = datetime.date.today().strftime("%Y-%m-%d")
@@ -171,8 +208,7 @@ async def process_all_games(
         print(f"   Tags: {' '.join(matchday_context.get('hashtags', []))}")
         print("🔥" * 34 + "\n")
 
-    print("\n💡 Publishing Cadence: 1 Short every 12 hours (12:00 PM UTC & 8:00 PM UTC peak windows).")
-    print("   (YouTube scheduled via API, Instagram queued via background scheduler).\n")
+    print("\n💡 Publishing Mode: Direct Live Upload (Public YouTube Short & Instagram Reel immediately).")
 
     # 3. Compile today's latest daily puzzles
     print("🔄 Ensuring today's HTML game files are fully compiled and up to date...")
@@ -181,12 +217,11 @@ async def process_all_games(
     server_proc = ensure_server_running(port)
     results = []
     
-    if all_games:
-        games_to_run = ALL_AVAILABLE_GAMES
-    elif selected_game:
-        games_to_run = [g for g in ALL_AVAILABLE_GAMES if g["id"] == selected_game]
-    else:
-        games_to_run = DAILY_GAMES
+    games_to_run = select_games_for_mode(
+        mode=mode,
+        selected_game=selected_game,
+        all_games=all_games
+    )
 
     has_queued_reels = False
 
@@ -394,37 +429,54 @@ async def process_all_games(
 
 def main():
     parser = argparse.ArgumentParser(description="Render and upload daily Playmaker games to YouTube Shorts & Instagram Reels.")
-    parser.add_argument("--slots", type=str, default="12,20", help="Comma-separated UTC peak hours (default: '12,20' for 12:00 PM & 8:00 PM UTC)")
-    parser.add_argument("--immediate-first", action="store_true", help="Publish the first video immediately instead of waiting for next peak slot")
-    parser.add_argument("--all-games", action="store_true", help="Render all 6 games instead of default 2 (Top Transfers & Transfer Destination)")
+    parser.add_argument("--mode", type=str, default="auto", choices=["auto", "midday", "morning", "evening", "night", "both", "all"], help="Publishing mode: auto (time-based), midday (Top Transfers), evening (Transfer Destination), or both")
+    parser.add_argument("--midday", "--morning", dest="midday_flag", action="store_true", help="Shortcut for --mode midday (renders & uploads Top Transfers immediately)")
+    parser.add_argument("--evening", "--night", dest="evening_flag", action="store_true", help="Shortcut for --mode evening (renders & uploads Transfer Destination immediately)")
+    parser.add_argument("--both", action="store_true", help="Shortcut for --mode both (renders & uploads both Top Transfers & Transfer Destination)")
+    parser.add_argument("--all-games", action="store_true", help="Render all 6 games instead of default 2")
+    parser.add_argument("--game", type=str, default="", help="Run a specific game ID only (e.g. top_transfers, transfer_destination)")
+    parser.add_argument("--slots", type=str, default="12,20", help="Comma-separated UTC peak hours (default: '12,20')")
+    parser.add_argument("--schedule-future", action="store_true", help="Schedule uploads for future peak hours instead of uploading live immediately")
     parser.add_argument("--port", type=int, default=8080, help="Local server port (default: 8080)")
     parser.add_argument("--fast", action="store_true", help="Fast mode for testing")
     parser.add_argument("--dry-run", action="store_true", help="Render videos only without uploading")
-    parser.add_argument("--game", type=str, default="", help="Run a specific game ID only")
     parser.add_argument("--no-youtube", action="store_true", help="Skip YouTube upload")
     parser.add_argument("--no-instagram", action="store_true", help="Skip Instagram upload")
-    parser.add_argument("--instant-reels", action="store_true", help="Publish all Instagram Reels immediately without queue delay")
     parser.add_argument("--wait-queue", action="store_true", help="Wait in foreground for all queued reels to finish (ideal for GitHub Actions)")
     parser.add_argument("--force", action="store_true", help="Bypass deduplication checks and re-render/re-upload")
 
     args = parser.parse_args()
     
+    mode = args.mode
+    if args.midday_flag:
+        mode = "midday"
+    elif args.evening_flag:
+        mode = "evening"
+    elif args.both:
+        mode = "both"
+    elif args.all_games:
+        mode = "all"
+
     try:
         slot_hours = [int(h.strip()) for h in args.slots.split(",") if h.strip()]
     except Exception:
         slot_hours = DEFAULT_PEAK_SLOTS
 
+    # By default, upload live immediately (immediate_first=True unless --schedule-future is passed)
+    immediate_first = not args.schedule_future
+
     asyncio.run(process_all_games(
+        mode=mode,
         slot_hours=slot_hours,
         fast_mode=args.fast,
         port=args.port,
         dry_run=args.dry_run,
         selected_game=args.game,
-        all_games=args.all_games,
+        all_games=args.all_games or (mode == "all"),
         no_youtube=args.no_youtube,
         no_instagram=args.no_instagram,
-        instant_reels=args.instant_reels,
-        immediate_first=args.immediate_first,
+        instant_reels=True,
+        immediate_first=immediate_first,
         wait_queue=args.wait_queue,
         force=args.force
     ))

@@ -1,7 +1,7 @@
 #!/bin/bash
 # ==============================================================================
-# UploadTodayShorts.command
-# Double-clickable macOS launcher: Renders & schedules today's Shorts & Reels
+# UploadEveningShort.command
+# Double-clickable macOS launcher: Renders & immediately uploads Transfer Destination
 # ==============================================================================
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -11,17 +11,15 @@ export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PAT
 [ -f "$HOME/.zshrc" ] && source "$HOME/.zshrc" > /dev/null 2>&1
 
 echo "=========================================================="
-echo "    ⚽  PLAYMAKER — DAILY SHORTS & REELS LIVE PIPELINE"
+echo "   ⚽  PLAYMAKER — EVENING SHORT UPLOAD (TRANSFER DESTINATION)"
 echo "=========================================================="
-echo "1. Checks YouTube Channel & Instagram Business Account"
-echo "2. Renders 9:16 vertical videos with high-energy audio"
-echo "3. Uploads LIVE IMMEDIATELY (no queue delays / no sample pool starvation)"
-echo "   • Midday: Top Transfers"
-echo "   • Evening: Transfer Destination"
+echo "1. Checks YouTube Channel & Instagram Account"
+echo "2. Renders 9:16 vertical video with commentary & SFX"
+echo "3. Uploads LIVE IMMEDIATELY to YouTube Shorts & Instagram Reels"
 echo "=========================================================="
 echo ""
 
-# 1. Verify YouTube authentication / channel
+# 1. Verify YouTube authentication
 echo "🔍 Checking YouTube authentication..."
 python3 scripts/youtube_uploader.py --channel
 YT_STATUS=$?
@@ -42,10 +40,10 @@ if [ $IG_STATUS -ne 0 ]; then
 fi
 
 echo ""
-read -p "Press [Enter] to start batch render & upload (or Ctrl+C to cancel)..."
+read -p "Press [Enter] to render & upload Transfer Destination LIVE now (or Ctrl+C to cancel)..."
 echo ""
 
-python3 scripts/upload_daily_shorts.py
+python3 scripts/upload_daily_shorts.py --evening
 
 echo ""
 echo "Finished! Press any key to close this window..."

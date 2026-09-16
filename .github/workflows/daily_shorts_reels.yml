@@ -2,14 +2,25 @@ name: Daily Shorts & Reels Auto-Publisher
 
 on:
   schedule:
-    # Primary trigger: 07:45 UTC (10:45 AM local time) - off-peak minute avoids top-of-hour congestion
-    - cron: '45 7 * * *'
-    # Fallback trigger: 08:35 UTC (11:35 AM local time) - if earlier run was delayed or missed
-    - cron: '35 8 * * *'
+    # Midday Run (Top Transfers): 08:00 UTC (11:00 AM local time UTC+3) - advanced 1 hour
+    - cron: '0 8 * * *'
+    # Evening Run (Transfer Destination): 17:00 UTC (20:00 / 8:00 PM local time UTC+3)
+    - cron: '0 17 * * *'
   workflow_dispatch:
     inputs:
+      mode:
+        description: 'Publishing mode'
+        required: false
+        default: 'auto'
+        type: choice
+        options:
+          - auto
+          - midday
+          - evening
+          - both
+          - all
       game:
-        description: 'Specific game ID (leave blank for all 6 games)'
+        description: 'Specific game ID (optional override, e.g. top_transfers)'
         required: false
         default: ''
         type: string
@@ -28,14 +39,8 @@ on:
         required: false
         default: false
         type: boolean
-      instant_reels:
-        description: 'Publish all Instagram Reels immediately without 1-hour delays'
-        required: false
-        default: false
-        type: boolean
 
-# Prevent concurrent runs: If the primary run is currently executing (uploading queued reels),
-# any second run will wait in queue rather than running in parallel.
+# Prevent concurrent runs
 concurrency:
   group: daily-shorts-reels
   cancel-in-progress: false
@@ -43,7 +48,7 @@ concurrency:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 360 # Allows up to 6 hours for staggered 1-hr interval publishing
+    timeout-minutes: 15 # Fast, lean execution (<3 minutes per run)
 
     steps:
       - name: Check out repository
@@ -96,15 +101,18 @@ jobs:
           python3 scripts/youtube_uploader.py --channel
           python3 scripts/instagram_uploader.py --check
 
-      - name: Run Daily Batch Pipeline (Shorts & Reels)
+      - name: Run Shorts & Reels Publisher
         env:
+          INPUT_MODE: ${{ github.event.inputs.mode }}
           INPUT_GAME: ${{ github.event.inputs.game }}
           INPUT_DRY_RUN: ${{ github.event.inputs.dry_run }}
           INPUT_FAST: ${{ github.event.inputs.fast }}
           INPUT_FORCE: ${{ github.event.inputs.force }}
-          INPUT_INSTANT_REELS: ${{ github.event.inputs.instant_reels }}
         run: |
-          CMD="python3 -u scripts/upload_daily_shorts.py --wait-queue"
+          CMD="python3 -u scripts/upload_daily_shorts.py"
+          if [ -n "$INPUT_MODE" ]; then
+            CMD="$CMD --mode $INPUT_MODE"
+          fi
           if [ -n "$INPUT_GAME" ]; then
             CMD="$CMD --game $INPUT_GAME"
           fi
@@ -117,8 +125,6 @@ jobs:
           if [ "$INPUT_FORCE" = "true" ]; then
             CMD="$CMD --force"
           fi
-          if [ "$INPUT_INSTANT_REELS" = "true" ]; then
-            CMD="$CMD --instant-reels"
-          fi
           echo "Executing: $CMD"
           $CMD
+

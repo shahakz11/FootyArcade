@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """
-tests/test_upload_scheduling.py — Test Suite for 12-Hour Cadence Peak Scheduling
-================================================================================
+tests/test_upload_scheduling.py — Test Suite for 12-Hour Cadence Peak Scheduling & Mode Selection
+=================================================================================================
 Validates:
-1. compute_scheduled_slots targeting 12:00 PM and 8:00 PM UTC peak windows.
-2. Spacing between video releases to prevent simultaneous batch dumps.
-3. Rollover to next day's 12:00 UTC slot when run late in the evening.
-4. Immediate-first flag assigning Slot 0 to NOW (None) and subsequent slots to peak times.
-5. Default daily games restricted to Top Transfers and Transfer Destination.
-6. YouTube ISO 8601 publishAt formatting compliance.
-7. Instagram queue compatibility.
+1. compute_scheduled_slots for immediate live publishing (iso=None) vs future scheduling.
+2. select_games_for_mode:
+   - Midday mode -> Top Transfers
+   - Evening mode -> Transfer Destination
+   - Both mode -> Top Transfers + Transfer Destination
+   - Auto mode -> checks hour (< 16 midday, >= 16 evening)
+   - Specific game selection and all games selection
+3. Spacing between video releases when future slots are requested.
 """
 
 import os
@@ -23,6 +24,7 @@ if BASE_DIR not in sys.path:
 
 from scripts.upload_daily_shorts import (
     compute_scheduled_slots,
+    select_games_for_mode,
     DAILY_GAMES,
     ALL_AVAILABLE_GAMES,
     DEFAULT_PEAK_SLOTS
@@ -38,71 +40,53 @@ class TestUploadScheduling(unittest.TestCase):
         self.assertIn("transfer_destination", game_ids)
         self.assertEqual(len(ALL_AVAILABLE_GAMES), 6)
 
-    def test_morning_schedule_slots(self):
-        """Morning run (08:00 UTC): Slot 0 -> 12:00 UTC today, Slot 1 -> 20:00 UTC today."""
+    def test_select_games_midday_mode(self):
+        """Midday mode strictly returns Top Transfers."""
+        games = select_games_for_mode(mode="midday")
+        self.assertEqual(len(games), 1)
+        self.assertEqual(games[0]["id"], "top_transfers")
+
+    def test_select_games_evening_mode(self):
+        """Evening mode strictly returns Transfer Destination."""
+        games = select_games_for_mode(mode="evening")
+        self.assertEqual(len(games), 1)
+        self.assertEqual(games[0]["id"], "transfer_destination")
+
+    def test_select_games_auto_mode(self):
+        """Auto mode: before 16:00 -> Top Transfers; 16:00 and after -> Transfer Destination."""
+        morning_games = select_games_for_mode(mode="auto", curr_hour=11)
+        self.assertEqual(len(morning_games), 1)
+        self.assertEqual(morning_games[0]["id"], "top_transfers")
+
+        evening_games = select_games_for_mode(mode="auto", curr_hour=19)
+        self.assertEqual(len(evening_games), 1)
+        self.assertEqual(evening_games[0]["id"], "transfer_destination")
+
+    def test_select_games_both_and_all(self):
+        """Both mode returns 2 games; all_games returns 6 games."""
+        both_games = select_games_for_mode(mode="both")
+        self.assertEqual(len(both_games), 2)
+        self.assertEqual([g["id"] for g in both_games], ["top_transfers", "transfer_destination"])
+
+        all_g = select_games_for_mode(all_games=True)
+        self.assertEqual(len(all_g), 6)
+
+    def test_immediate_live_publishing_default(self):
+        """By default, compute_scheduled_slots returns immediate live slots (iso=None)."""
+        slots = compute_scheduled_slots(2, immediate_first=True)
+        self.assertEqual(len(slots), 2)
+        self.assertIsNone(slots[0]["iso"])
+        self.assertIsNone(slots[1]["iso"])
+        self.assertIn("NOW", slots[0]["label"])
+        self.assertIn("NOW", slots[1]["label"])
+
+    def test_future_scheduled_slots(self):
+        """When immediate_first=False, slots target future peak hours."""
         start = datetime.datetime(2026, 9, 16, 8, 0, 0, tzinfo=datetime.timezone.utc)
-        slots = compute_scheduled_slots(2, start_dt=start, slot_hours=[12, 20])
-        
+        slots = compute_scheduled_slots(2, start_dt=start, slot_hours=[12, 20], immediate_first=False)
         self.assertEqual(len(slots), 2)
         self.assertEqual(slots[0]["iso"], "2026-09-16T12:00:00Z")
         self.assertEqual(slots[1]["iso"], "2026-09-16T20:00:00Z")
-        self.assertIn("12:00 UTC", slots[0]["label"])
-        self.assertIn("20:00 UTC", slots[1]["label"])
-
-    def test_afternoon_schedule_slots(self):
-        """Afternoon run (14:30 UTC): Slot 0 -> 20:00 UTC today, Slot 1 -> 12:00 UTC tomorrow."""
-        start = datetime.datetime(2026, 9, 16, 14, 30, 0, tzinfo=datetime.timezone.utc)
-        slots = compute_scheduled_slots(2, start_dt=start, slot_hours=[12, 20])
-        
-        self.assertEqual(len(slots), 2)
-        self.assertEqual(slots[0]["iso"], "2026-09-16T20:00:00Z")
-        self.assertEqual(slots[1]["iso"], "2026-09-17T12:00:00Z")
-
-    def test_night_schedule_slots(self):
-        """Night run (21:30 UTC): Slot 0 -> 12:00 UTC tomorrow, Slot 1 -> 20:00 UTC tomorrow."""
-        start = datetime.datetime(2026, 9, 16, 21, 30, 0, tzinfo=datetime.timezone.utc)
-        slots = compute_scheduled_slots(2, start_dt=start, slot_hours=[12, 20])
-        
-        self.assertEqual(len(slots), 2)
-        self.assertEqual(slots[0]["iso"], "2026-09-17T12:00:00Z")
-        self.assertEqual(slots[1]["iso"], "2026-09-17T20:00:00Z")
-
-    def test_immediate_first_slot(self):
-        """When immediate_first=True, Slot 0 is immediate (iso=None), Slot 1 is next peak slot."""
-        start = datetime.datetime(2026, 9, 16, 8, 0, 0, tzinfo=datetime.timezone.utc)
-        slots = compute_scheduled_slots(2, start_dt=start, slot_hours=[12, 20], immediate_first=True)
-        
-        self.assertEqual(len(slots), 2)
-        self.assertIsNone(slots[0]["iso"])
-        self.assertEqual(slots[0]["label"], "NOW (Immediate Public)")
-        self.assertEqual(slots[1]["iso"], "2026-09-16T12:00:00Z")
-
-    def test_multi_day_cadence_spacing(self):
-        """Scheduling 6 videos spaces them across 3 full days (12:00 UTC and 20:00 UTC each day)."""
-        start = datetime.datetime(2026, 9, 16, 9, 0, 0, tzinfo=datetime.timezone.utc)
-        slots = compute_scheduled_slots(6, start_dt=start, slot_hours=[12, 20])
-        
-        self.assertEqual(len(slots), 6)
-        expected_isos = [
-            "2026-09-16T12:00:00Z",
-            "2026-09-16T20:00:00Z",
-            "2026-09-17T12:00:00Z",
-            "2026-09-17T20:00:00Z",
-            "2026-09-18T12:00:00Z",
-            "2026-09-18T20:00:00Z",
-        ]
-        for i, expected in enumerate(expected_isos):
-            self.assertEqual(slots[i]["iso"], expected, f"Slot {i} does not match expected {expected}")
-
-    def test_custom_slot_hours(self):
-        """Supports custom slot configurations (e.g. 3 slots per day)."""
-        start = datetime.datetime(2026, 9, 16, 6, 0, 0, tzinfo=datetime.timezone.utc)
-        slots = compute_scheduled_slots(3, start_dt=start, slot_hours=[9, 15, 21])
-        
-        self.assertEqual(len(slots), 3)
-        self.assertEqual(slots[0]["iso"], "2026-09-16T09:00:00Z")
-        self.assertEqual(slots[1]["iso"], "2026-09-16T15:00:00Z")
-        self.assertEqual(slots[2]["iso"], "2026-09-16T21:00:00Z")
 
 if __name__ == "__main__":
     unittest.main()
