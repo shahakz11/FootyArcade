@@ -473,9 +473,11 @@
         if (!result) return;
 
         gameOver = true;
-        score = result.score;
-        activeStep = activeGameData.transfers.length;
+        const total = activeGameData.transfers.length;
+        score = Math.min(result.score, total);
+        activeStep = total;
         document.getElementById('progress-counter').textContent = score;
+        document.getElementById('total-steps-counter').textContent = total;
 
         // Reveal all steps
         activeGameData.transfers.forEach((tr, i) => {
@@ -498,8 +500,7 @@
         // Show result modal
         const stats = storage.getStats();
         const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage, puzzleNum);
-        const total = activeGameData.transfers.length;
-        const isPartial = result.outcome === 'partial' || (!result.won && result.score > 0 && result.score < total);
+        const isPartial = result.outcome === 'partial' || (!result.won && score > 0 && score < total);
         const outcome = result.outcome || (result.won ? 'win' : (isPartial ? 'partial' : 'loss'));
 
         modal.show({
@@ -510,9 +511,9 @@
             message: result.won
                 ? 'You have already completed this puzzle.'
                 : (isPartial
-                    ? `You already played this puzzle. Final score: ${result.score} / ${total}.`
-                    : `You already played this puzzle. Final score: ${result.score} / ${total}.`),
-            score: result.score,
+                    ? `You already played this puzzle. Final score: ${score} / ${total}.`
+                    : `You already played this puzzle. Final score: ${score} / ${total}.`),
+            score: score,
             maxScore: total,
             streak: stats.streak,
             targetName: activeGameData.player_name,
