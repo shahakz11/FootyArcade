@@ -2,10 +2,12 @@ name: Daily Shorts & Reels Auto-Publisher
 
 on:
   schedule:
-    # Midday Run (Top Transfers): 08:00 UTC (11:00 AM local time UTC+3) - advanced 1 hour
-    - cron: '0 8 * * *'
-    # Evening Run (Transfer Destination): 17:00 UTC (20:00 / 8:00 PM local time UTC+3)
-    - cron: '0 17 * * *'
+    # Midday Run (Top Transfers): 08:14 UTC (11:14 AM local time UTC+3) & Fallback: 08:43 UTC (11:43 AM local)
+    - cron: '14 8 * * *'
+    - cron: '43 8 * * *'
+    # Evening Run (Transfer Destination): 17:14 UTC (20:14 / 8:14 PM local time UTC+3) & Fallback: 17:43 UTC (20:43 / 8:43 PM local)
+    - cron: '14 17 * * *'
+    - cron: '43 17 * * *'
   workflow_dispatch:
     inputs:
       mode:
