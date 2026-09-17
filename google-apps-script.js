@@ -70,10 +70,14 @@ function buildEventsRow(headers, payload, timestamp) {
     if (h.indexOf('event') !== -1) return payload.eventName || '';
     if (h.indexOf('game') !== -1) return payload.gameId || '';
     if (h.indexOf('puzzle') !== -1) return payload.puzzleNum !== undefined ? payload.puzzleNum : 0;
-    if (h === 'score') return payload.score !== undefined ? payload.score : '';
     if (h.indexOf('max') !== -1) return payload.maxScore !== undefined ? payload.maxScore : '';
-    if (h.indexOf('live') !== -1) return payload.lives !== undefined ? payload.lives : '';
+    if (h === 'score') return payload.score !== undefined ? payload.score : '';
+    if (h.indexOf('live') !== -1) return payload.lives !== undefined ? payload.lives : (payload.livesLeft !== undefined ? payload.livesLeft : '');
     if (h === 'won') return payload.won !== undefined ? payload.won : '';
+    if (h.indexOf('correct') !== -1) return payload.isCorrect !== undefined ? payload.isCorrect : (payload.correct !== undefined ? payload.correct : '');
+    if (h.indexOf('guess') !== -1) return payload.guess !== undefined ? payload.guess : '';
+    if (h.indexOf('step') !== -1 || h.indexOf('slot') !== -1) return payload.step !== undefined ? payload.step : (payload.slot !== undefined ? payload.slot : '');
+    if (h.indexOf('target') !== -1) return payload.target !== undefined ? payload.target : '';
     if (h.indexOf('back') !== -1) return payload.isBackInTime !== undefined ? payload.isBackInTime : '';
     if (h.indexOf('detail') !== -1 || h.indexOf('extra') !== -1) return payload.extraDetails || '';
     if (h.indexOf('source') !== -1) return payload.urlSource || payload.source || '';
@@ -82,6 +86,68 @@ function buildEventsRow(headers, payload, timestamp) {
     if (h === 'url' || h.indexOf('page') !== -1) return payload.url || '';
     return '';
   });
+}
+
+/**
+ * Ensures Events sheet headers include all standard and extended event columns without shifting data.
+ */
+function ensureEventsHeaders(sheet) {
+  var lastCol = sheet.getLastColumn();
+  var defaultEventsHeaders = [
+    'Timestamp',
+    'Event Name',
+    'Game ID',
+    'Puzzle Number',
+    'Score',
+    'Max Score',
+    'Lives Left',
+    'Won',
+    'Is Correct',
+    'Guess',
+    'Step',
+    'Target',
+    'Extra Details',
+    'URL',
+    'Visitor ID',
+    'Session ID',
+    'URL Source'
+  ];
+
+  if (lastCol === 0) {
+    sheet.appendRow(defaultEventsHeaders);
+    sheet.getRange(1, 1, 1, defaultEventsHeaders.length)
+      .setFontWeight('bold')
+      .setBackground('#1c1b1b')
+      .setFontColor('#ffffff');
+    return defaultEventsHeaders;
+  }
+
+  var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+  var norm = headers.map(function(h) { return (h || '').toString().trim().toLowerCase(); });
+
+  var expectedCols = [
+    { name: 'Is Correct', check: function(n) { return n.some(function(h) { return h.indexOf('correct') !== -1; }); } },
+    { name: 'Guess', check: function(n) { return n.some(function(h) { return h.indexOf('guess') !== -1; }); } },
+    { name: 'Step', check: function(n) { return n.some(function(h) { return h.indexOf('step') !== -1 || h.indexOf('slot') !== -1; }); } },
+    { name: 'Target', check: function(n) { return n.some(function(h) { return h.indexOf('target') !== -1; }); } },
+    { name: 'Visitor ID', check: function(n) { return n.some(function(h) { return h.indexOf('visitor') !== -1; }); } },
+    { name: 'Session ID', check: function(n) { return n.some(function(h) { return h.indexOf('session') !== -1; }); } },
+    { name: 'URL Source', check: function(n) { return n.some(function(h) { return h.indexOf('source') !== -1; }); } }
+  ];
+
+  for (var i = 0; i < expectedCols.length; i++) {
+    if (!expectedCols[i].check(norm)) {
+      var nextCol = sheet.getLastColumn() + 1;
+      sheet.getRange(1, nextCol).setValue(expectedCols[i].name)
+        .setFontWeight('bold')
+        .setBackground('#1c1b1b')
+        .setFontColor('#ffffff');
+      headers.push(expectedCols[i].name);
+      norm.push(expectedCols[i].name.toLowerCase());
+    }
+  }
+
+  return headers;
 }
 
 /**
@@ -174,42 +240,10 @@ function doPost(e) {
       var feedbackRow = buildFeedbackRow(feedbackHeaders, payload, timestamp);
       sheet.appendRow(feedbackRow);
     } else {
-      // Auto-create Events sheet and write headers if it does not exist
       if (!sheet) {
         sheet = doc.insertSheet(sheetName);
-        var defaultEventsHeaders = [
-          'Timestamp',
-          'Event Name',
-          'Game ID',
-          'Puzzle Number',
-          'Score',
-          'Max Score',
-          'Lives Left',
-          'Won',
-          'Is Back In Time',
-          'Extra Details',
-          'URL',
-          'Visitor ID',
-          'Session ID',
-          'URL Source'
-        ];
-        sheet.appendRow(defaultEventsHeaders);
-        sheet.getRange(1, 1, 1, defaultEventsHeaders.length)
-          .setFontWeight('bold')
-          .setBackground('#1c1b1b')
-          .setFontColor('#ffffff');
-      } else {
-        // Auto-migrate: check if column 14 header needs to be added for URL Source
-        var lastCol = sheet.getLastColumn();
-        if (lastCol === 13) {
-          sheet.getRange(1, 14).setValue('URL Source')
-            .setFontWeight('bold')
-            .setBackground('#1c1b1b')
-            .setFontColor('#ffffff');
-        }
       }
-
-      var eventHeaders = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+      var eventHeaders = ensureEventsHeaders(sheet);
       var eventRow = buildEventsRow(eventHeaders, payload, timestamp);
       sheet.appendRow(eventRow);
     }

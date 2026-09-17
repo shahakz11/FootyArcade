@@ -7,6 +7,9 @@
     <meta name="description" content="Five players were all signed by the same mystery club. Guess the club before all five players are revealed. A daily football transfer connection puzzle. Play free at Playmaker!"/>
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
     <link rel="canonical" href="https://playmaker.best/games/club_connect.html" />
+    <link rel="alternate" hreflang="en" href="https://playmaker.best/games/club_connect.html" />
+    <link rel="alternate" hreflang="es" href="https://playmaker.best/es/games/club_connect.html" />
+    <link rel="alternate" hreflang="x-default" href="https://playmaker.best/games/club_connect.html" />
 
     <!-- PWA Web Manifest & Favicons -->
     <link rel="manifest" href="../manifest.json"/>
@@ -241,6 +244,11 @@
             <span class="material-symbols-outlined text-xl sm:text-2xl">arrow_back</span>
             <img src="../assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-7 md:h-8 w-auto object-contain" />
         </a>
+        <div id="lang-switcher" class="flex items-center bg-white/5 border border-white/10 rounded-lg p-0.5 font-mono text-xs select-none mr-1">
+            <a href="/games/club_connect.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('en')" class="px-2 py-0.5 rounded transition-all bg-accent/20 text-accent font-bold shadow-sm" title="Switch to English">EN</a>
+            <span class="text-white/20 text-[10px] select-none">|</span>
+            <a href="/es/games/club_connect.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('es')" class="px-2 py-0.5 rounded transition-all text-on-surface-variant hover:text-white" title="Cambiar a Español">ES</a>
+        </div>
         <div class="flex items-center gap-2 text-on-surface-variant">
             <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on Instagram" title="Instagram">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -420,6 +428,7 @@
     </div>
 
     <!-- Shared Playmaker JS library -->
+    <script src="../games/footy-i18n.js"></script>
     <script src="../games/footy-ui.js?v=2"></script>
 
 <!-- Micro-interaction Script -->
@@ -512,7 +521,16 @@
                 message:     'Are you sure you want to give up and reveal the answer?',
                 confirmText: 'GIVE UP',
                 cancelText:  'KEEP PLAYING',
-                onConfirm:   () => endGame(false),
+                onConfirm:   () => {
+                    FootyUI.trackGiveUp({
+                        step: revealedCount,
+                        score: revealedCount,
+                        maxScore: totalPlayers,
+                        lives: livesCtrl.get(),
+                        target: activeGameData.club
+                    });
+                    endGame(false);
+                },
             });
         });
         document.getElementById('add-life-btn').addEventListener('click', () => {
@@ -582,6 +600,9 @@
     function renderCards() {
         const grid = document.getElementById('cards-grid');
         grid.innerHTML = '';
+        const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang() === 'es');
+        const playerLabel = isEs ? 'Jugador' : 'Player';
+        const hintBtnText = isEs ? 'PISTA' : 'HINT';
         activeGameData.players.forEach((_, i) => {
             const wrapper = document.createElement('div');
             wrapper.className = 'player-card' + (i === 0 ? ' card-current' : '');
@@ -591,7 +612,7 @@
                     <!-- Front: locked -->
                     <div class="card-face card-locked card-front flex flex-col items-center justify-center gap-1 p-2 text-center">
                         <span class="material-symbols-outlined lock-icon">lock</span>
-                        <span class="text-[10px] font-mono uppercase tracking-widest text-on-surface-variant/50 text-center w-full block">Player ${i + 1}</span>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-on-surface-variant/50 text-center w-full block">${playerLabel} ${i + 1}</span>
                     </div>
                     <!-- Back: revealed -->
                     <div class="card-face card-back card-revealed p-1.5 sm:p-3 flex flex-col items-center justify-between text-center" id="card-revealed-${i}">
@@ -602,7 +623,7 @@
                         
                         <div class="flex flex-col items-center justify-center w-full my-1">
                             <button onclick="revealCardHint(${i})" id="btn-hint-${i}" class="card-hint-btn">
-                                <span class="material-symbols-outlined" style="font-size:10px">lightbulb</span> HINT
+                                <span class="material-symbols-outlined" style="font-size:10px">lightbulb</span> ${hintBtnText}
                             </button>
                             <div id="hint-details-${i}" class="hidden flex flex-col items-center gap-0.5 w-full">
                                 <span class="hint-cell hint-blur text-[8.5px] sm:text-[10px] font-mono text-on-surface-variant/80 leading-tight block break-words text-center w-full" id="card-from-${i}"></span>
@@ -621,11 +642,12 @@
         const wrapper = document.getElementById(`card-wrapper-${index}`);
         if (!p || !inner || inner.classList.contains('flipped')) return;
 
+        const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang() === 'es');
         // Populate back face data
         document.getElementById(`card-name-${index}`).textContent = p.player_name;
-        document.getElementById(`card-from-${index}`).textContent = `from ${p.from_club_name}`;
+        document.getElementById(`card-from-${index}`).textContent = isEs ? `desde ${p.from_club_name}` : `from ${p.from_club_name}`;
         document.getElementById(`card-fee-${index}`).textContent  =
-            p.transfer_fee > 0 ? `€${(p.transfer_fee / 1e6).toFixed(1)}m` : 'Free/Undisclosed';
+            p.transfer_fee > 0 ? `€${(p.transfer_fee / 1e6).toFixed(1)}m` : (isEs ? 'Libre / No revelado' : 'Free/Undisclosed');
 
         // Flip card
         setTimeout(() => {
@@ -643,6 +665,13 @@
         const fromEl  = document.getElementById(`card-from-${index}`);
         const feeEl   = document.getElementById(`card-fee-${index}`);
         if (!btn || !details) return;
+
+        FootyUI.trackHint({
+            step: index + 1,
+            hintType: 'card_details',
+            hintText: activeGameData.players[index]?.player_name || '',
+            lives: livesCtrl.get()
+        });
 
         btn.classList.add('hidden');
         details.classList.remove('hidden');
@@ -688,6 +717,17 @@
 
         const guessedName = typeof matched === 'string' ? matched : matched.name;
         if (wrongGuesses.has(guessedName)) {
+            FootyUI.trackGuess({
+                guess: guessedName,
+                isCorrect: false,
+                isDuplicate: true,
+                step: revealedCount,
+                target: activeGameData.club,
+                lives: livesCtrl.get(),
+                score: revealedCount,
+                maxScore: totalPlayers,
+                extraDetails: 'duplicate guess'
+            });
             FootyUI.toast(`"${guessedName}" was already guessed!`, 'error');
             return;
         }
@@ -699,11 +739,29 @@
 
         if (isMatch) {
             // ✅ Correct!
+            FootyUI.trackGuess({
+                guess: guessedName,
+                isCorrect: true,
+                step: revealedCount,
+                target: activeGameData.club,
+                lives: livesCtrl.get(),
+                score: revealedCount,
+                maxScore: totalPlayers
+            });
             endGame(true);
         } else {
             // ❌ Wrong — lose a life and reveal next card
             wrongGuesses.add(guessedName);
             livesCtrl.lose();
+            FootyUI.trackGuess({
+                guess: guessedName,
+                isCorrect: false,
+                step: revealedCount,
+                target: activeGameData.club,
+                lives: livesCtrl.get(),
+                score: revealedCount,
+                maxScore: totalPlayers
+            });
             if (!livesCtrl.isDead()) {
                 // Reveal the next player card
                 revealCard(revealedCount);

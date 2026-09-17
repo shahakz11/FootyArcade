@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Playmaker | Juegos de Trivia de Fútbol y Quizzes de Fichajes Diarios Gratis</title>
+    <meta name="description" content="Juega gratis a los mejores juegos diarios de trivia de fútbol en español: adivina fichajes récord, trayectorias de futbolistas, cadenas de compañeros y máximos goleadores. Nuevos retos cada día con racha y resultados compartibles."/>
+    <meta name="keywords" content="trivia de futbol, quiz de futbol, adivinar jugador de futbol, juegos de futbol diarios, fichajes de futbol, wordle de futbol, maximos goleadores, trayectoria futbolistas, playmaker"/>
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+    <link rel="canonical" href="https://playmaker.best/es/" />
+    <link rel="alternate" hreflang="en" href="https://playmaker.best/" />
+    <link rel="alternate" hreflang="es" href="https://playmaker.best/es/" />
+    <link rel="alternate" hreflang="x-default" href="https://playmaker.best/" />
+    
+    <!-- PWA Web Manifest & Favicons for Browsers & Google Search -->
+    <link rel="manifest" href="../manifest.json"/>
+    <link rel="shortcut icon" href="../favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png"/>
+    <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon-192.png"/>
+    <link rel="icon" type="image/png" sizes="512x512" href="../assets/favicon.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/apple-touch-icon.png"/>
+    
+    <!-- Social Share Preview (OpenGraph / Twitter / WhatsApp) -->
+    <meta property="og:title" content="Playmaker | Juegos de Trivia de Fútbol y Quizzes de Fichajes Diarios"/>
+    <meta property="og:description" content="Juega gratis a los mejores juegos diarios de trivia de fútbol en español: adivina fichajes récord, trayectorias de futbolistas, cadenas de compañeros y máximos goleadores. Nuevos retos cada día."/>
+    <meta property="og:url" content="https://playmaker.best/es/" />
+    <meta property="og:image" content="https://playmaker.best/assets/social_share.png"/>
+    <meta property="og:image:secure_url" content="https://playmaker.best/assets/social_share.png"/>
+    <meta property="og:image:type" content="image/png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta property="og:image:alt" content="Playmaker — Trivia Diaria de Fútbol"/>
+    <meta property="og:type" content="website"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Playmaker | Juegos de Trivia de Fútbol y Quizzes de Fichajes Diarios"/>
+    <meta name="twitter:description" content="Juega gratis a los mejores juegos diarios de trivia de fútbol en español: adivina fichajes récord, trayectorias de futbolistas, cadenas de compañeros y máximos goleadores. Nuevos retos cada día."/>
+    <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
+
+    <!-- Google Analytics Measurement ID Placeholder -->
+    <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Archivo+Narrow:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="../games/footy-ui.css"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background:                  "#0e0e0e",
+                        surface:                     "#131313",
+                        "surface-container-low":     "#1c1b1b",
+                        "surface-container":         "#201f1f",
+                        "surface-container-high":    "#2a2a2a",
+                        "surface-container-highest": "#353534",
+                        "primary-container":         "#39ff14",
+                        "on-background":             "#e5e2e1",
+                        "on-surface-variant":        "#a3a3a3",
+                        primary:                     "#efffe3",
+                        accent:                      "#39ff14",
+                        error:                       "#ff4d4d",
+                    },
+                    fontFamily: {
+                        headline: ["Anton"],
+                        title:    ["Space Grotesk"],
+                        body:     ["Archivo Narrow"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root { --fa-accent-rgb: 57,255,20; }
+        .neon-text-glow { text-shadow: 0 0 10px rgba(57,255,20,0.4); }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "Playmaker",
+          "url": "https://playmaker.best/es/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://playmaker.best/assets/logo.png",
+            "width": 512,
+            "height": 512
+          },
+          "sameAs": [
+            "https://www.instagram.com/playmaker.best1",
+            "https://www.tiktok.com/@playmaker.best",
+            "https://www.youtube.com/@best.playmaker"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "name": "Playmaker Español",
+          "url": "https://playmaker.best/es/",
+          "description": "Juegos diarios de trivia de fútbol — adivina fichajes, trayectorias, cadenas de compañeros y máximos goleadores.",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Playmaker",
+            "logo": "https://playmaker.best/assets/logo.png"
+          }
+        },
+        {
+          "@type": "WebApplication",
+          "name": "Playmaker",
+          "url": "https://playmaker.best/es/",
+          "applicationCategory": "GameApplication",
+          "operatingSystem": "Web",
+          "image": "https://playmaker.best/assets/logo.png",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "¿Qué es Playmaker?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Playmaker es un arcade diario y gratuito de trivia de fútbol. Cada día, nuevos retos ponen a prueba tu conocimiento sobre fichajes, trayectorias, cadenas de compañeros y máximos goleadores de las mejores ligas del mundo."
+              }
+            },
+            {
+              "@type": "¿Cómo se juega a Playmaker?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Elige un reto diario, escribe nombres de jugadores o clubes en el buscador y acierta antes de que se te acaben las vidas. Guarda tu racha y comparte tus resultados con amigos."
+              }
+            },
+            {
+              "@type": "¿Es Playmaker gratuito?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sí, Playmaker es 100% gratuito. No requiere registro ni descargas. Tu progreso se guarda automáticamente en tu navegador."
+              }
+            },
+            {
+              "@type": "¿Con qué frecuencia se actualizan los puzzles?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Cada día a medianoche UTC se publica un nuevo puzzle para cada modo de juego. También puedes jugar los últimos 7 días de retos pasados."
+              }
+            },
+            {
+              "@type": "¿Cuál es el Wordle del fútbol?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Playmaker es el arcade estilo Wordle definitivo para fanáticos del fútbol, con resultados en cuadrícula de emojis, seguimiento de rachas y múltiples modos de juego diarios."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body turf-pattern min-h-screen pb-24">
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-16 flex items-center justify-between px-6 shadow-[0_4px_30px_rgba(0,0,0,0.8)]">
+        <a href="index.html" class="flex items-center group">
+            <img src="../assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-8 md:h-9 w-auto object-contain transition-transform group-hover:scale-105" />
+            <h1 class="sr-only">PLAYMAKER — Juegos Diarios de Trivia de Fútbol</h1>
+        </a>
+        <div class="flex items-center gap-3 sm:gap-4">
+            <div id="lang-switcher" class="flex items-center bg-white/5 border border-white/10 rounded-lg p-0.5 font-mono text-xs select-none">
+                <a href="/" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('en')" class="px-2 py-0.5 rounded transition-all text-on-surface-variant hover:text-white" title="Switch to English">EN</a>
+                <span class="text-white/20 text-[10px] select-none">|</span>
+                <a href="/es/" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('es')" class="px-2 py-0.5 rounded transition-all bg-accent/20 text-accent font-bold shadow-sm" title="Cambiar a Español">ES</a>
+            </div>
+            <div class="flex items-center gap-1 sm:gap-2 text-on-surface-variant">
+                <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker en Instagram" title="Instagram">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                </a>
+                <a href="https://www.tiktok.com/@playmaker.best" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker en TikTok" title="TikTok">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.87-4.49V8.69a8.18 8.18 0 0 0 4.9 1.6V6.84a4.85 4.85 0 0 1-1-.15z"/></svg>
+                </a>
+                <a href="https://www.youtube.com/@best.playmaker" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker en YouTube" title="YouTube">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+            </div>
+            <span class="hidden sm:inline font-label-sm text-xs font-mono bg-primary-container/10 border border-primary-container/20 text-primary-container px-3 py-1.5 rounded-full uppercase tracking-widest">ARCADE DIARIO</span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="pt-28 px-6 max-w-4xl mx-auto space-y-12">
+
+        <!-- Hero Section -->
+        <section class="text-center space-y-4">
+            <h2 class="font-headline text-5xl md:text-6xl tracking-tight uppercase italic text-on-background">
+                JUEGOS DIARIOS DE <span class="text-primary-container neon-text-glow">TRIVIA DE FÚTBOL</span>
+            </h2>
+            <p class="font-title text-lg text-on-surface-variant max-w-lg mx-auto">
+                Desafíos diarios de fútbol y transferencias. Nuevos puzzles cada día.
+            </p>
+        </section>
+
+        <!-- SEO Body Text (crawlable by search engines) -->
+        <section class="max-w-2xl mx-auto text-center">
+            <p class="font-body text-on-surface-variant text-sm leading-relaxed">
+                Playmaker es tu destino diario de trivia de fútbol en español. Cada día presentamos nuevos retos para poner a prueba tu conocimiento sobre fichajes millonarios, trayectorias de estrellas de fútbol y máximos goleadores históricos de La Liga, Premier League, Serie A, Champions League y fútbol internacional. Elige tu juego favorito, mantén tu racha diaria y comparte tus resultados al estilo Wordle con tus amigos.
+            </p>
+        </section>
+
+        <!-- Games Grid -->
+        <section>
+            <h3 class="font-title text-sm font-bold uppercase tracking-widest text-on-surface-variant border-b border-white/10 pb-2 mb-6">SELECCIONA UN RETO</h3>
+            <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="col-span-2 text-center py-12 text-on-surface-variant" id="games-loading">Cargando retos...</div>
+                <noscript>
+                    <div class="col-span-2 space-y-4">
+                        <a href="games/top_transfers.html" class="glass-card rounded-2xl p-6 block hover:border-[#00f0ff]/30 transition-colors">
+                            <h4 class="font-headline text-2xl uppercase italic" style="color:#00f0ff">TOP FICHAJES</h4>
+                            <p class="text-on-surface-variant text-sm mt-2">Adivina los fichajes récord para un club y nacionalidad específica antes de quedarte sin vidas.</p>
+                        </a>
+                        <a href="games/transfer_destination.html" class="glass-card rounded-2xl p-6 block hover:border-[#39ff14]/30 transition-colors">
+                            <h4 class="font-headline text-2xl uppercase italic" style="color:#39ff14">DESTINO DE FICHAJE</h4>
+                            <p class="text-on-surface-variant text-sm mt-2">Adivina la trayectoria de un futbolista estrella paso a paso en orden cronológico inverso.</p>
+                        </a>
+                        <a href="games/top_scorers.html" class="glass-card rounded-2xl p-6 block hover:border-[#f59e0b]/30 transition-colors">
+                            <h4 class="font-headline text-2xl uppercase italic" style="color:#f59e0b">MÁXIMOS GOLEADORES</h4>
+                            <p class="text-on-surface-variant text-sm mt-2">Adivina los máximos goleadores históricos para un club, liga o selección nacional.</p>
+                        </a>
+                        <a href="games/club_connect.html" class="glass-card rounded-2xl p-6 block hover:border-[#e879f9]/30 transition-colors">
+                            <h4 class="font-headline text-2xl uppercase italic" style="color:#e879f9">CONEXIÓN DE CLUBES</h4>
+                            <p class="text-on-surface-variant text-sm mt-2">5 jugadores. 1 club los fichó a todos. Adivina el club misterioso antes de revelar todas las pistas.</p>
+                        </a>
+                        <a href="games/player_chain.html" class="glass-card rounded-2xl p-6 block hover:border-[#38bdf8]/30 transition-colors">
+                            <h4 class="font-headline text-2xl uppercase italic" style="color:#38bdf8">CADENA DE JUGADORES</h4>
+                            <p class="text-on-surface-variant text-sm mt-2">Adivina al Jugador Misterioso del Día nombrando futbolistas que conecten la cadena de clubes.</p>
+                        </a>
+                        <a href="games/passport_fc.html" class="glass-card rounded-2xl p-6 block hover:border-[#10b981]/30 transition-colors">
+                            <h4 class="font-headline text-2xl uppercase italic" style="color:#10b981">PASAPORTE FC</h4>
+                            <p class="text-on-surface-variant text-sm mt-2">Completa el pasaporte del club desbloqueando 4 sellos progresivos de nacionalidades.</p>
+                        </a>
+                    </div>
+                </noscript>
+            </div>
+        </section>
+
+        <!-- Arcade Standings -->
+        <section class="glass-card rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 border-primary-container/10">
+            <div class="space-y-2 text-center md:text-left">
+                <h4 class="font-headline text-2xl text-accent uppercase italic">TABLA DE POSICIONES</h4>
+                <p class="font-body text-on-surface-variant max-w-md">Tus rachas y resultados se guardan de forma local y privada en tu navegador. Juega todos los días para aumentar tu racha.</p>
+            </div>
+            <div class="flex gap-4">
+                <div class="bg-black/40 border border-white/5 px-6 py-3 rounded-xl text-center min-w-[90px]">
+                    <span id="global-played" class="block font-headline text-3xl text-accent">0</span>
+                    <span class="text-[10px] uppercase text-on-surface-variant font-mono tracking-wider">Jugadas</span>
+                </div>
+                <div class="bg-black/40 border border-white/5 px-6 py-3 rounded-xl text-center min-w-[90px]">
+                    <span id="global-wins" class="block font-headline text-3xl text-accent">0</span>
+                    <span class="text-[10px] uppercase text-on-surface-variant font-mono tracking-wider">Victorias</span>
+                </div>
+                <div class="bg-black/40 border border-white/5 px-6 py-3 rounded-xl text-center min-w-[90px]">
+                    <span id="global-streak" class="block font-headline text-3xl text-accent">0</span>
+                    <span class="text-[10px] uppercase text-on-surface-variant font-mono tracking-wider">Racha</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="space-y-4">
+            <h3 class="font-title text-sm font-bold uppercase tracking-widest text-on-surface-variant border-b border-white/10 pb-2">PREGUNTAS FRECUENTES</h3>
+            <div class="space-y-3">
+                <details class="glass-card rounded-xl p-4 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary class="font-title text-sm font-bold text-on-background cursor-pointer group-open:text-accent transition-colors" itemprop="name">¿Cómo se juega a Playmaker?</summary>
+                    <div class="mt-3 text-on-surface-variant text-sm leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Elige un reto diario, escribe nombres de jugadores o clubes en el buscador y selecciona la opción correcta antes de que se acaben tus vidas. Sigue tu racha y comparte tus resultados con amigos.</p>
+                    </div>
+                </details>
+                <details class="glass-card rounded-xl p-4 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary class="font-title text-sm font-bold text-on-background cursor-pointer group-open:text-accent transition-colors" itemprop="name">¿Qué es Cadena de Jugadores (Player Chain)?</summary>
+                    <div class="mt-3 text-on-surface-variant text-sm leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Es un puzzle de trayectoria donde descubres al Jugador del Día nombrando futbolistas que conecten paso a paso los clubes de su carrera, o puedes ganar de forma instantánea si identificas al jugador desde el inicio.</p>
+                    </div>
+                </details>
+                <details class="glass-card rounded-xl p-4 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary class="font-title text-sm font-bold text-on-background cursor-pointer group-open:text-accent transition-colors" itemprop="name">¿Es Playmaker gratis?</summary>
+                    <div class="mt-3 text-on-surface-variant text-sm leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Sí, Playmaker es 100% gratuito. No requiere crear cuenta ni registrarte. Todo tu progreso se almacena localmente en tu navegador.</p>
+                    </div>
+                </details>
+                <details class="glass-card rounded-xl p-4 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary class="font-title text-sm font-bold text-on-background cursor-pointer group-open:text-accent transition-colors" itemprop="name">¿Cuándo salen nuevos retos?</summary>
+                    <div class="mt-3 text-on-surface-variant text-sm leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Cada día a medianoche UTC todos los modos de juego se actualizan con nuevos desafíos. También puedes jugar los últimos 7 días de retos pasados.</p>
+                    </div>
+                </details>
+                <details class="glass-card rounded-xl p-4 group" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary class="font-title text-sm font-bold text-on-background cursor-pointer group-open:text-accent transition-colors" itemprop="name">¿De dónde provienen los datos?</summary>
+                    <div class="mt-3 text-on-surface-variant text-sm leading-relaxed" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Playmaker utiliza datos verificados de fichajes, apariciones y goles de Transfermarkt actualizados a septiembre de 2026.</p>
+                    </div>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 text-center text-xs text-on-surface-variant/40 pb-12 font-mono space-y-4">
+        <div class="flex items-center justify-center gap-6 text-on-surface-variant">
+            <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker en Instagram">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@playmaker.best" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker en TikTok">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.87-4.49V8.69a8.18 8.18 0 0 0 4.9 1.6V6.84a4.85 4.85 0 0 1-1-.15z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@best.playmaker" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker en YouTube">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+        </div>
+        <div>PLAYMAKER &copy; 2026. TODOS LOS DERECHOS RESERVADOS.</div>
+        <div class="space-x-4">
+            <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
+            <span>·</span>
+            <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <span>·</span>
+            <a href="../marketing.html" class="hover:underline hover:text-accent transition-colors">Kit de Marketing</a>
+        </div>
+        <div class="space-x-4 mt-2">
+            <a href="games/top_transfers.html" class="hover:underline hover:text-accent transition-colors">Top Fichajes</a>
+            <span>·</span>
+            <a href="games/transfer_destination.html" class="hover:underline hover:text-accent transition-colors">Destino de Fichaje</a>
+            <span>·</span>
+            <a href="games/top_scorers.html" class="hover:underline hover:text-accent transition-colors">Máximos Goleadores</a>
+            <span>·</span>
+            <a href="games/club_connect.html" class="hover:underline hover:text-accent transition-colors">Conexión de Clubes</a>
+            <span>·</span>
+            <a href="games/player_chain.html" class="hover:underline hover:text-accent transition-colors">Cadena de Jugadores</a>
+            <span>·</span>
+            <a href="games/passport_fc.html" class="hover:underline hover:text-accent transition-colors">Pasaporte FC</a>
+        </div>
+    </footer>
+
+    <script src="../games/footy-i18n.js"></script>
+    <script src="../games/footy-ui.js"></script>
+    <script>
+        FootyI18n.setLang('es');
+        FootyUI.initAccentColor('#39ff14');
+
+        const FALLBACK_GAMES = [
+            {
+                id: "top_transfers", name: "Top Fichajes",
+                description: "Adivina los fichajes récord para un club o nacionalidad antes de quedarte sin vidas.",
+                link: "games/top_transfers.html", icon: "payments", accentHex: "#00f0ff"
+            },
+            {
+                id: "transfer_destination", name: "Destino de Fichaje",
+                description: "Adivina la trayectoria de un futbolista estrella paso a paso en orden cronológico inverso.",
+                link: "games/transfer_destination.html", icon: "alt_route", accentHex: "#39ff14"
+            },
+            {
+                id: "top_scorers", name: "Máximos Goleadores",
+                description: "Adivina los máximos goleadores históricos de un club, liga o selección nacional.",
+                link: "games/top_scorers.html", icon: "sports_soccer", accentHex: "#f59e0b"
+            },
+            {
+                id: "club_connect", name: "Conexión de Clubes",
+                description: "5 jugadores. 1 club los fichó a todos. Adivina el club misterioso antes de revelar las pistas.",
+                link: "games/club_connect.html", icon: "hub", accentHex: "#e879f9"
+            },
+            {
+                id: "player_chain", name: "Cadena de Jugadores",
+                description: "Adivina al Jugador Misterioso del Día nombrando futbolistas que conecten la cadena de clubes.",
+                link: "games/player_chain.html", icon: "link", accentHex: "#38bdf8"
+            },
+            {
+                id: "passport_fc", name: "Pasaporte FC",
+                description: "Completa el pasaporte del club desbloqueando 4 sellos progresivos de nacionalidades.",
+                link: "games/passport_fc.html", icon: "public", accentHex: "#10b981"
+            },
+            {
+                id: "this_and_that", name: "Esto y Aquello",
+                description: "Nombra todos los jugadores que cumplen AMBAS condiciones simultáneamente.",
+                link: "games/this_and_that.html", icon: "join_inner", accentHex: "#a855f7", status: "coming_soon"
+            },
+            {
+                id: "anyone_but", name: "Cualquiera Menos",
+                description: "Adivina futbolistas que cumplen los criterios excepto para el jugador clave.",
+                link: "games/anyone_but.html", icon: "person_off", accentHex: "#ff0055", status: "coming_soon"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadGames();
+            calculateGlobalStats();
+        });
+
+        async function loadGames() {
+            const grid = document.getElementById('games-grid');
+            let games  = FALLBACK_GAMES;
+
+            try {
+                const res = await fetch('../games.json?t=' + Date.now());
+                if (res.ok) {
+                    const rawGames = await res.json();
+                    games = rawGames.map(g => ({
+                        ...g,
+                        name: g.name_es || g.name,
+                        description: g.description_es || g.description,
+                        link: g.link_es ? g.link_es.replace(/^es\//, '') : g.link
+                    }));
+                }
+            } catch (e) {
+                console.log('Using fallback Spanish games:', e);
+            }
+
+            const liveGames   = games.filter(g => g.status !== 'coming_soon');
+            const futureGames = games.filter(g => g.status === 'coming_soon');
+            const orderedGames = [...liveGames, ...futureGames];
+
+            grid.innerHTML = '';
+            orderedGames.forEach(game => {
+                const hex = game.accentHex || '#39ff14';
+                const r   = parseInt(hex.slice(1,3),16);
+                const g   = parseInt(hex.slice(3,5),16);
+                const b   = parseInt(hex.slice(5,7),16);
+                const rgb = `${r},${g},${b}`;
+
+                const isComingSoon = game.status === 'coming_soon';
+                const storage     = new FootyUI.FootyStorage(game.id);
+                const playedToday = !isComingSoon && storage.hasPlayedToday();
+                const stats       = !isComingSoon ? storage.getStats() : { streak: 0 };
+
+                const card = document.createElement(isComingSoon ? 'div' : 'a');
+                if (!isComingSoon) card.href = game.link;
+                card.className = `glass-card rounded-2xl p-6 flex flex-col justify-between min-h-[220px] ${isComingSoon ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer group'} block`;
+                card.style.cssText = `--fa-accent-rgb:${rgb};`;
+                if (isComingSoon) card.title = 'Próximamente disponible';
+
+                card.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="material-symbols-outlined text-4xl p-2 bg-black/30 rounded-xl" style="color:rgb(${rgb})">${game.icon}</span>
+                            <div class="flex items-center gap-2">
+                                ${isComingSoon
+                                    ? `<span class="font-mono text-[10px] font-bold bg-white/5 border border-white/10 text-on-surface-variant/60 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
+                                        <span class="material-symbols-outlined" style="font-size:11px">schedule</span> Próximamente
+                                       </span>`
+                                    : playedToday
+                                        ? `<span class="font-mono text-[10px] font-bold bg-white/5 border border-white/10 text-on-surface-variant px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
+                                            <span class="material-symbols-outlined" style="font-size:11px">check_circle</span> Jugado
+                                           </span>`
+                                        : `<span class="font-mono text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider" style="background:rgba(${rgb},0.15);color:rgb(${rgb});border:1px solid rgba(${rgb},0.3)">Activo</span>`
+                                }
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-headline text-2xl uppercase italic tracking-wide ${isComingSoon ? '' : 'group-hover:transition-colors'}" style="color:rgb(${rgb})">${game.name}</h4>
+                            <p class="text-on-surface-variant text-sm line-clamp-3">${game.description}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-white/5 pt-4 mt-4">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-mono uppercase tracking-wider font-bold" style="color:rgb(${rgb})">${isComingSoon ? 'EN DESARROLLO' : playedToday ? 'VER RESULTADO' : 'JUGAR RETO'}</span>
+                            ${stats.streak > 0 ? `<span class="text-[10px] font-mono text-on-surface-variant">🔥 racha de ${stats.streak}</span>` : ''}
+                        </div>
+                        <span class="material-symbols-outlined text-on-surface-variant ${isComingSoon ? '' : 'group-hover:translate-x-1 transition-transform'}">${isComingSoon ? 'lock' : 'arrow_forward'}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function calculateGlobalStats() {
+            let totalPlayed = 0, totalWins = 0, bestStreak = 0;
+            try {
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (!key?.startsWith('footy_v2_')) continue;
+                    const data = JSON.parse(localStorage.getItem(key) || '{}');
+                    totalPlayed += data.played    || 0;
+                    totalWins   += data.won       || 0;
+                    bestStreak   = Math.max(bestStreak, data.bestStreak || 0);
+                }
+            } catch (e) {
+                console.error('Stats error:', e);
+            }
+
+            document.getElementById('global-played').textContent = totalPlayed;
+            document.getElementById('global-wins').textContent   = totalWins;
+            document.getElementById('global-streak').textContent = bestStreak;
+        }
+    </script>
+</body>
+</html>

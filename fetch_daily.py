@@ -48,7 +48,502 @@ TOTAL_DAYS   = 180   # puzzle cycle length
 GAMES_JSON   = "games.json"
 TEMPLATES_DIR = "templates"
 OUTPUT_DIR   = "games"
+ES_OUTPUT_DIR = os.path.join("es", "games")
 LEDGER_FILE  = os.path.join("data", "puzzle_schedule_ledger.json")
+
+
+def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
+    """
+    Transforms English compiled HTML into a fully localized Spanish game page:
+    - lang="es"
+    - Updated hreflang and canonical URLs pointing to /es/games/
+    - Assets and scripts mapped to ../../ relative depth
+    - Localized game headers, rules, instructions, placeholders, and buttons
+    - Localized table headers, player positions, dynamic JS strings, and bottom cards
+    - Sets active state on the ES switcher button
+    - Injects Spanish game note and FootyI18n language trigger
+    """
+    game_id = game_cfg["id"]
+    es_html = html
+
+    # 1. Update lang attribute and canonical/og URLs
+    es_html = re.sub(r'<html\b([^>]*?)\blang="en"([^>]*?)>', r'<html\1lang="es"\2>', es_html)
+    es_html = es_html.replace(
+        f'<link rel="canonical" href="https://playmaker.best/games/{game_id}.html"',
+        f'<link rel="canonical" href="https://playmaker.best/es/games/{game_id}.html"'
+    )
+    es_html = es_html.replace(
+        f'<meta property="og:url" content="https://playmaker.best/games/{game_id}.html"',
+        f'<meta property="og:url" content="https://playmaker.best/es/games/{game_id}.html"'
+    )
+
+    # 2. Update relative asset paths for 2-level depth (es/games/)
+    es_html = es_html.replace('href="../assets/', 'href="../../assets/')
+    es_html = es_html.replace('src="../assets/', 'src="../../assets/')
+    es_html = es_html.replace('href="../games/', 'href="../../games/')
+    es_html = es_html.replace('src="../games/', 'src="../../games/')
+    es_html = es_html.replace('href="../manifest.json"', 'href="../../manifest.json"')
+    es_html = es_html.replace('href="../favicon.ico"', 'href="../../favicon.ico"')
+    es_html = es_html.replace('href="../index.html"', 'href="../index.html"')
+
+    # 3. Swap active switcher button state
+    es_html = es_html.replace(
+        'class="px-2 py-0.5 rounded transition-all bg-accent/20 text-accent font-bold shadow-sm" title="Switch to English">EN</a>',
+        'class="px-2 py-0.5 rounded transition-all text-on-surface-variant hover:text-white" title="Switch to English">EN</a>'
+    ).replace(
+        'class="px-2 py-0.5 rounded transition-all text-on-surface-variant hover:text-white" title="Cambiar a Español">ES</a>',
+        'class="px-2 py-0.5 rounded transition-all bg-accent/20 text-accent font-bold shadow-sm" title="Cambiar a Español">ES</a>'
+    )
+
+    # 4. Global UI, Navigation, Counter, and Button replacements
+    global_replacements = [
+        # Navigation & Badges
+        ('>Prev<', '>Ant.<'),
+        ('>Next<', '>Sig.<'),
+        ('`PUZZLE #${puzzleNum} — PAST`', '`PUZZLE #${puzzleNum} — ANTERIOR`'),
+        ('title="Play previous puzzle (back in time)"', 'title="Jugar puzzle anterior (modo retro)"'),
+        ('title="Play newer/today\'s puzzle"', 'title="Jugar puzzle más reciente / de hoy"'),
+        ('title="Daily puzzle number. Use arrows to play past puzzles!"', 'title="Número de puzzle diario. ¡Usa las flechas para jugar retos anteriores!"'),
+
+        # Lives & Progress
+        ('Lives:&nbsp;', 'Vidas:&nbsp;'),
+        ('Lives:', 'Vidas:'),
+        ('Guessed:&nbsp;', 'Adivinados:&nbsp;'),
+        ('Guessed:', 'Adivinados:'),
+        ('Progress:', 'Progreso:'),
+        ('Progress: ', 'Progreso: '),
+        ('Step:', 'Paso:'),
+        ('Stamp:', 'Sello:'),
+        ('+1 Life', '+1 Vida'),
+        ('Give Up', 'Rendirse'),
+        ('>GUESS<', '>ADIVINAR<'),
+        ('>SUBMIT<', '>ENVIAR<'),
+        ('>SKIP<', '>SALTAR<'),
+        ('Skip</span>', 'Saltar</span>'),
+        ('title="Skip this step if stuck"', 'title="Saltar este paso si te quedas atascado"'),
+        ('title="Skip this nationality stamp"', 'title="Saltar este sello de nacionalidad"'),
+        ('title="Reveal this step (costs 1 life)"', 'title="Revelar este paso (cuesta 1 vida)"'),
+        ('title="Reveal this player"', 'title="Revelar este jugador"'),
+        ('title="Reveal all hints for this row"', 'title="Revelar todas las pistas de esta fila"'),
+
+        # Table Headers (Top Transfers & Top Scorers)
+        ('<th class="py-3 px-3">Player</th>', '<th class="py-3 px-3">Jugador</th>'),
+        ('<th id="th-club-header" class="py-3 px-3 hidden sm:table-cell">From Club</th>', '<th id="th-club-header" class="py-3 px-3 hidden sm:table-cell">Traspaso</th>'),
+        ('<th class="py-3 px-3 text-right">Fee</th>', '<th class="py-3 px-3 text-right">Coste</th>'),
+        ('<th class="py-3 px-3 text-center hidden md:table-cell">Year</th>', '<th class="py-3 px-3 text-center hidden md:table-cell">Año</th>'),
+        ('<th class="py-3 px-3 text-right">Goals</th>', '<th class="py-3 px-3 text-right">Goles</th>'),
+        ('<th class="py-3 px-3 hidden sm:table-cell">Club</th>', '<th class="py-3 px-3 hidden sm:table-cell">Club</th>'),
+        ('<th class="py-3 px-3 text-center hidden md:table-cell">Apps</th>', '<th class="py-3 px-3 text-center hidden md:table-cell">Partidos</th>'),
+        ('<th class="py-3 px-3 hidden lg:table-cell">Nationality</th>', '<th class="py-3 px-3 hidden lg:table-cell">Nacionalidad</th>'),
+        ('<th class="py-3 px-3 w-24 text-center">Actions</th>', '<th class="py-3 px-3 w-24 text-center">Acciones</th>'),
+
+        # Hero Banners & Section Labels (Static substrings)
+        ('>RECORD SIGNINGS FOR<', '>FICHAJES RÉCORD DE<'),
+        ('>MOST EXPENSIVE TRANSFERS FOR<', '>LOS FICHAJES MÁS CAROS DE<'),
+        ('>TOP 10 SCORERS IN<', '>TOP 10 GOLEADORES DE<'),
+        ('>ALL-TIME GOALSCORERS FOR<', '>MÁXIMOS GOLEADORES DE<'),
+        ('>Player of the Day<', '>Jugador del Día<'),
+        ('>Player of the Day</span>', '>Jugador del Día</span>'),
+        ('>Mystery Player of the Day<', '>Jugador Misterioso del Día<'),
+        ('>Mystery Player of the Day</span>', '>Jugador Misterioso del Día</span>'),
+        ('>TODAY\'S CLUB PASSPORT<', '>PASAPORTE DEL CLUB DE HOY<'),
+        ('>TODAY\'S CLUB PASSPORT</span>', '>PASAPORTE DEL CLUB DE HOY</span>'),
+        ('>MYSTERY CLUB CONNECTION<', '>CONEXIÓN DE CLUB MISTERIOSO<'),
+        ('>REVEAL NEXT CLUE<', '>REVELAR SIGUIENTE PISTA<'),
+        ('>TEAMMATE CHAIN<', '>CADENA DE COMPAÑEROS<'),
+        ('>STARTING PLAYER<', '>JUGADOR INICIAL<'),
+        ('>TARGET PLAYER<', '>JUGADOR OBJETIVO<'),
+        ('>CLUB PASSPORT<', '>PASAPORTE DE CLUB<'),
+        ('>CAREER TIMELINE<', '>TRAYECTORIA DEPORTIVA<'),
+        ('>INCORRECT GUESSES<', '>INTENTOS INCORRECTOS<'),
+        ('>Career Chain Progression<', '>Progresión de la Cadena de Clubes<'),
+        ('>No Repeat Guesses<', '>Sin Repetir Jugadores<'),
+        ('>The Nationality Ladder<', '>La Escalera de Nacionalidades<'),
+        ('>Large Pool &rarr; Rare Unicorn<', '>Gran Potencia &rarr; Unicornio Raro<'),
+        ('>CAREER RECAP<', '>RESUMEN DE TRAYECTORIA<'),
+        ('>Explore the complete club chain and all eligible footballers for each step.<', '>Explora la cadena completa de clubes y todos los futbolistas válidos de cada paso.<'),
+        ('>Step-by-Step Breakdown<', '>Desglose Paso a Paso<'),
+        ('>Click any step to view valid answers<', '>Haz clic en cualquier paso para ver las respuestas válidas<'),
+        ('>View Results<', '>Ver Resultados<'),
+        ('>GAME COMPLETED<', '>JUEGO COMPLETADO<'),
+        ('>Explore all eligible footballers who played for the anchor club for each nation.<', '>Explora todos los futbolistas válidos que jugaron en el club ancla para cada país.<'),
+
+        # Clues & Hints
+        ('<span>Hint: Nationality</span>', '<span>Pista: Nacionalidad</span>'),
+        ('<span>Hint: Position</span>', '<span>Pista: Posición</span>'),
+        ('title="Reveal player nationality"', 'title="Revelar nacionalidad del jugador"'),
+        ('title="Reveal player position"', 'title="Revelar posición del jugador"'),
+        ('<span id="hint-btn-text">Hint</span>', '<span id="hint-btn-text">Pista</span>'),
+        ('>Instant Win:</strong>', '>Victoria Directa:</strong>'),
+        ('Guess this mystery player at <em>any</em> stage to win instantly!', '¡Adivina al jugador misterioso en <em>cualquier</em> paso para ganar directamente!'),
+
+        # Placeholders
+        ('placeholder="Type and select player name..."', 'placeholder="Escribe y selecciona el nombre del jugador..."'),
+        ('placeholder="Type and select club name..."', 'placeholder="Escribe y selecciona el nombre del club..."'),
+        ('placeholder="Type and select club..."', 'placeholder="Escribe y selecciona el club..."'),
+        ('placeholder="Type club name..."', 'placeholder="Escribe el nombre del club..."'),
+        ('placeholder="Type a footballer\'s name..."', 'placeholder="Escribe el nombre de un futbolista..."'),
+        ('placeholder="Search player or guess direct win..."', 'placeholder="Buscar jugador o ganar directamente..."'),
+        ('placeholder="Search eligible player..."', 'placeholder="Buscar jugador elegible..."'),
+
+        # Error & Alert Messages
+        ('Please select a player name from the dropdown.', 'Por favor selecciona un jugador de la lista desplegable.'),
+        ('Please select a club from the autocomplete list.', 'Por favor selecciona un club de la lista desplegable.'),
+        ('Please select a club from the dropdown.', 'Por favor selecciona un club de la lista desplegable.'),
+        ('Please pick a footballer from the dropdown.', 'Por favor selecciona un futbolista de la lista desplegable.'),
+
+        # Modal End-Game Strings
+        ('>Guessed</span>', '>Adivinados</span>'),
+        ('>Streak</span>', '>Racha</span>'),
+        ('>Best</span>', '>Récord</span>'),
+        ('>Score</span>', '>Puntuación</span>'),
+        ('>Stamps</span>', '>Sellos</span>'),
+        ('>Steps</span>', '>Pasos</span>'),
+        ('>Step</span>', '>Paso</span>'),
+        ('>Play Past Puzzles</p>', '>Jugar Puzzles Anteriores</p>'),
+        ('>Play Past Puzzles<', '>Jugar Puzzles Anteriores<'),
+        ('>SHARE</button>', '>COMPARTIR</button>'),
+        ('>CLOSE</button>', '>CERRAR</button>'),
+        ('>GOT IT</button>', '>ENTENDIDO</button>'),
+        ('>THE MYSTERY PLAYER WAS<', '>EL JUGADOR MISTERIOSO ERA<'),
+        ('>MYSTERY PLAYER OF THE DAY<', '>JUGADOR MISTERIOSO DEL DÍA<'),
+        ('>THE MYSTERY CLUB WAS<', '>EL CLUB MISTERIOSO ERA<'),
+        ('>THE MYSTERY CLUB<', '>EL CLUB MISTERIOSO<'),
+        ('>COMPLETED</h3>', '>¡COMPLETADO!</h3>'),
+        ('>COMPLETED<', '>¡COMPLETADO!<'),
+
+        # SEO / Footer Section
+        ('>HOW TO PLAY</h2>', '>CÓMO JUGAR</h2>'),
+        ('>HOW TO PLAY</h3>', '>CÓMO JUGAR</h3>'),
+        ('What is Passport FC?', '¿Qué es Pasaporte FC?'),
+        ('>What is Passport FC?</h2>', '>¿Qué es Pasaporte FC?</h2>'),
+        ('<strong>Database Coverage:</strong>', '<strong>Cobertura de la Base de Datos:</strong>'),
+        ('Official senior appearances and transfers since 1990 plus verified historic legends throughout club history (updated to September 2026).', 'Partidos oficiales y fichajes del primer equipo desde 1990 más leyendas históricas verificadas (actualizado a 2026).'),
+        ('<strong>VAR Verification:</strong>', '<strong>Verificación VAR:</strong>'),
+        ('Players can submit any disputed answer to the automated VAR engine to appeal real-world transfer and appearance records.', 'Los jugadores pueden enviar cualquier respuesta disputada al motor automatizado del VAR para apelar registros reales de fichajes y partidos.'),
+        ('>MORE DAILY CHALLENGES</h3>', '>MÁS RETOS DIARIOS</h3>'),
+        ('>MORE DAILY CHALLENGES</h2>', '>MÁS RETOS DIARIOS</h2>'),
+        ('>Transfer Destination</span>', '>Destino de Fichaje</span>'),
+        ('<p class="text-on-surface-variant text-xs">Guess a player\'s career path</p>', '<p class="text-on-surface-variant text-xs">Adivina la trayectoria de un jugador</p>'),
+        ('>Top Scorers</span>', '>Máximos Goleadores</span>'),
+        ('<p class="text-on-surface-variant text-xs">Name the top goalscorers</p>', '<p class="text-on-surface-variant text-xs">Nombra a los máximos goleadores</p>'),
+        ('<p class="text-on-surface-variant text-xs">Guess the top goalscorers</p>', '<p class="text-on-surface-variant text-xs">Nombra a los máximos goleadores</p>'),
+        ('>Club Connect</span>', '>Conexión de Clubes</span>'),
+        ('<p class="text-on-surface-variant text-xs">5 players, 1 club signed them all — spot the mystery connection</p>', '<p class="text-on-surface-variant text-xs">5 jugadores, 1 club los fichó a todos — descubre la conexión misteriosa</p>'),
+        ('<p class="text-on-surface-variant text-xs">5 players, 1 club signed them all</p>', '<p class="text-on-surface-variant text-xs">5 jugadores, 1 club los fichó a todos</p>'),
+        ('>Top Transfers</span>', '>Top Fichajes</span>'),
+        ('<p class="text-on-surface-variant text-xs">Guess the record transfer signings</p>', '<p class="text-on-surface-variant text-xs">Adivina los fichajes récord de clubes y países</p>'),
+        ('<p class="text-on-surface-variant text-xs">Guess the record signings</p>', '<p class="text-on-surface-variant text-xs">Adivina los fichajes récord de clubes y países</p>'),
+        ('>Player Chain</span>', '>Cadena de Jugadores</span>'),
+        ('<p class="text-on-surface-variant text-xs">Connect players across an expanding club chain</p>', '<p class="text-on-surface-variant text-xs">Conecta jugadores a lo largo de una cadena de clubes</p>'),
+        ('<p class="text-on-surface-variant text-xs">Connect consecutive clubs through shared teammates</p>', '<p class="text-on-surface-variant text-xs">Conecta clubes consecutivos mediante compañeros de equipo</p>'),
+        ('>Passport FC</span>', '>Pasaporte FC</span>'),
+        ('<p class="text-on-surface-variant text-xs">Collect nationality stamps from major pools to unicorns</p>', '<p class="text-on-surface-variant text-xs">Consigue sellos de nacionalidad de potencias a unicornios</p>'),
+        ('← Back to Playmaker Lobby', '← Volver al Lobby de Playmaker'),
+        ('← BACK TO PLAYMAKER LOBBY', '← VOLVER AL LOBBY DE PLAYMAKER'),
+        ('Back to Playmaker Lobby', 'Volver al Lobby de Playmaker'),
+        ('BACK TO PLAYMAKER LOBBY', 'VOLVER AL LOBBY DE PLAYMAKER'),
+        ('Playmaker Lobby', 'Lobby de Playmaker'),
+        ('← Back to Playmaker', '← Volver a Playmaker'),
+        ('← BACK TO PLAYMAKER', '← VOLVER A PLAYMAKER'),
+        ('Privacy Policy', 'Política de Privacidad'),
+        ('Terms & Conditions', 'Términos y Condiciones'),
+        ('Terms &amp; Conditions', 'Términos y Condiciones'),
+        ('All Games', 'Todos los Juegos'),
+        ('Arcade Lobby', 'Lobby Arcade'),
+        ('STEP 1 &mdash; NAME A FRENCH PLAYER FOR BARCELONA:', 'PASO 1 &mdash; NOMBRA A UN JUGADOR FRANCÉS DEL BARCELONA:'),
+        ('STEP 1 — NAME A FRENCH PLAYER FOR BARCELONA:', 'PASO 1 — NOMBRA A UN JUGADOR FRANCÉS DEL BARCELONA:'),
+        ('Type any French footballer who played for Barcelona...', 'Escribe un futbolista francés que haya jugado en el Barcelona...'),
+        ('>GUESS</button>', '>ADIVINAR</button>'),
+        ('>GUESS\n                </button>', '>ADIVINAR\n                </button>'),
+        ('Transfer data sourced from Transfermarkt. Updated to July 2026.', 'Datos de transferencias de Transfermarkt. Actualizados a 2026.'),
+        ('Transfer data sourced from Transfermarkt. Updated to September 2026.', 'Datos de transferencias de Transfermarkt. Actualizados a 2026.'),
+        # How to Play Modal content (Passport FC)
+        ('<p><strong class="text-on-background font-title">Goal:</strong> Fill today\'s club passport by collecting all 4 nationality stamps for the featured <strong class="text-on-background font-title">Anchor Club</strong>.</p>',
+         '<p><strong class="text-on-background font-title">Objetivo:</strong> Completa el pasaporte del club reuniendo los 4 sellos de nacionalidad para el <strong class="text-on-background font-title">Club Ancla</strong> destacado.</p>'),
+        ('<p><strong class="text-on-background font-title">1. Progressive Stamps:</strong> Name any qualifying footballer who played for today\'s anchor club and represented the designated nationality. Each destination unlocks once you solve the previous one!</p>',
+         '<p><strong class="text-on-background font-title">1. Sellos Progresivos:</strong> Nombra a cualquier futbolista válido que haya jugado en el club ancla representando a la nacionalidad indicada. ¡Cada país se desbloquea al acertar el anterior!</p>'),
+        ('<p><strong class="text-on-background font-title">2. Escalating Difficulty:</strong> The passport starts with major footballing nations (large talent pool) and ascends to <em>The Unicorn</em> — a rare nation with only 1 or 2 eligible legends in club history.</p>',
+         '<p><strong class="text-on-background font-title">2. Dificultad Creciente:</strong> El pasaporte empieza con grandes potencias futbolísticas y asciende hasta <em>El Unicornio</em> — un país insólito con solo 1 o 2 leyendas en la historia del club.</p>'),
+        ('<p><strong class="text-on-background font-title">3. Any Valid Player Works:</strong> If Barcelona &amp; France is active, you can name any French player who wore the Blaugrana shirt (e.g. Henry, Griezmann, Dembélé, Thuram, Umtiti, or Koundé).</p>',
+         '<p><strong class="text-on-background font-title">3. Cualquier Jugador Válido Sirve:</strong> Si el reto es Barcelona y Francia, puedes nombrar a cualquier francés que haya vestido la camiseta blaugrana (ej. Henry, Griezmann, Dembélé, Thuram, Umtiti o Koundé).</p>'),
+        ('<p><strong class="text-on-background font-title">4. Lives &amp; VAR:</strong> Incorrect guesses deduct 1 life. If you believe your player qualifies, appeal the decision via official VAR review.</p>',
+         '<p><strong class="text-on-background font-title">4. Vidas y VAR:</strong> Los fallos restan 1 vida. Si crees que tu jugador es válido, apela la decisión mediante la revisión oficial del VAR.</p>'),
+        ('<p><strong class="text-on-background font-title">5. Hints &amp; Skip:</strong> Reveal position clues if you need guidance, or skip ahead to the next destination without losing a life.</p>',
+         '<p><strong class="text-on-background font-title">5. Pistas y Saltar:</strong> Revela pistas de posición si necesitas ayuda, o salta al siguiente país sin perder vidas.</p>'),
+        ('<p><strong class="text-on-background font-title">6. Database Scope:</strong> Includes official senior club appearances and transfers since 1990 alongside verified historic legends throughout club history (updated to September 2026).</p>',
+         '<p><strong class="text-on-background font-title">6. Base de Datos:</strong> Incluye partidos y fichajes oficiales del primer equipo desde 1990 más leyendas históricas verificadas (actualizado a 2026).</p>'),
+        # How to Play Modal content (Player Chain)
+        ('<p><strong class="text-on-background font-title">Goal:</strong> Unmask the mystery <strong class="text-on-background font-title">Player of the Day</strong> by identifying players who match an expanding chain of career clubs.</p>',
+         '<p><strong class="text-on-background font-title">Objetivo:</strong> Descubre al <strong class="text-on-background font-title">Jugador del Día</strong> identificando futbolistas que coincidan con la cadena de clubes.</p>'),
+        ('<p><strong class="text-on-background font-title">1. Sequential Progression:</strong> Start with 1 club constraint. Each step unlocks one at a time, adding another club to the chain.</p>',
+         '<p><strong class="text-on-background font-title">1. Progresión Secuencial:</strong> Empieza con 1 club. Cada paso se desbloquea uno a uno, añadiendo otro club a la cadena.</p>'),
+        ('<p><strong class="text-on-background font-title">2. 🎯 Instant Win:</strong> If you guess the Player of the Day at <em>any</em> stage, the game ends immediately in victory!</p>',
+         '<p><strong class="text-on-background font-title">2. 🎯 Victoria Directa:</strong> ¡Si adivinas al Jugador del Día en <em>cualquier</em> paso, el juego termina inmediatamente con victoria!</p>'),
+        ('<p><strong class="text-on-background font-title">3. Hints:</strong> Click the Hint buttons on the mystery player card to reveal their Nationality or Position.</p>',
+         '<p><strong class="text-on-background font-title">3. Pistas:</strong> Pulsa los botones de pista en la tarjeta misteriosa para revelar su Nacionalidad o Posición.</p>'),
+        ('<p><strong class="text-on-background font-title">4. No Repeat Guesses:</strong> Once you submit a player, they cannot be used again in that session.</p>',
+         '<p><strong class="text-on-background font-title">4. Sin Repetir Jugadores:</strong> Una vez enviado un jugador, no se puede volver a usar en la misma partida.</p>'),
+        ('<p><strong class="text-on-background font-title">5. Skipping:</strong> Stuck on a tricky club combination? Click <em>Skip</em> to unlock the next step and keep playing.</p>',
+         '<p><strong class="text-on-background font-title">5. Saltar:</strong> ¿Atascado en una combinación difícil? Pulsa <em>Saltar</em> para desbloquear el siguiente paso.</p>'),
+        ('<p><strong class="text-on-background font-title">6. Lives:</strong> Guessing an invalid player who does not meet all active constraints costs 1 life.</p>',
+         '<p><strong class="text-on-background font-title">6. Vidas:</strong> Proponer un jugador que no cumpla todos los clubes activos cuesta 1 vida.</p>'),
+    ]
+
+    for orig, rep in global_replacements:
+        es_html = es_html.replace(orig, rep)
+
+    # Multiline / Flexible whitespace heading replacements
+    regex_headings = [
+        (r'>\s*The Career Path Puzzle\s*<', '>El Puzzle de Trayectoria<'),
+        (r'>\s*Stamp The Club Passport\s*<', '>Sella el Pasaporte del Club<'),
+        (r'>\s*Which Club Signed All 5 Players\?\s*<', '>¿Qué Club Fichó a los 5 Jugadores?<'),
+        (r'>\s*Career Path Challenge\s*<', '>Reto de Trayectoria Deportiva<'),
+        (r'>\s*Full Career Path &amp; Answers\s*<', '>Trayectoria Completa y Respuestas<'),
+        (r'>\s*Full Career Path & Answers\s*<', '>Trayectoria Completa y Respuestas<'),
+        (r'>\s*Complete Ladder &amp; Answers\s*<', '>Escalera Completa y Respuestas<'),
+        (r'>\s*Complete Ladder & Answers\s*<', '>Escalera Completa y Respuestas<'),
+        (r'>\s*Top Modern Era Signings \(2012–Present\)\s*<', '>Fichajes Récord de la Era Moderna (2012–Presente)<'),
+        (r'>\s*Top Scorers per League &amp; Season\s*<', '>Máximos Goleadores por Liga y Temporada<'),
+        (r'>\s*Top Scorers per League & Season\s*<', '>Máximos Goleadores por Liga y Temporada<'),
+        (r'>\s*All-Time Top Goalscorers\s*<', '>Máximos Goleadores Históricos<'),
+        (r'>\s*Nationality Transfer Records\s*<', '>Récords de Fichajes por Nacionalidad<'),
+        (r'>\s*Club Record Signings\s*<', '>Fichajes Récord del Club<'),
+        (r'>\s*MORE DAILY CHALLENGES\s*<', '>MÁS RETOS DIARIOS<'),
+        (r'>\s*GUESS\s*</button>', '>ADIVINAR</button>'),
+        (r'>\s*SUBMIT\s*</button>', '>ENVIAR</button>'),
+        (r'>\s*What is Passport FC\?\s*<', '>¿Qué es Pasaporte FC?<'),
+        (r'>\s*CLOSE\s*</button>', '>CERRAR</button>'),
+        (r'>\s*SHARE\s*</button>', '>COMPARTIR</button>'),
+        (r'>\s*GOT IT\s*</button>', '>ENTENDIDO</button>'),
+        (r'>\s*THE MYSTERY PLAYER WAS\s*<', '>EL JUGADOR MISTERIOSO ERA<'),
+        (r'>\s*MYSTERY PLAYER OF THE DAY\s*<', '>JUGADOR MISTERIOSO DEL DÍA<'),
+        (r'<span class="material-symbols-outlined text-md">share</span>\s*SHARE', '<span class="material-symbols-outlined text-md">share</span> COMPARTIR'),
+    ]
+    for pattern, rep in regex_headings:
+        es_html = re.sub(pattern, rep, es_html)
+
+    # 5. JavaScript Dynamic Logic Replacements
+    js_replacements = [
+        # Top Transfers JS dynamic labels
+        ("document.getElementById('game-title').textContent    = 'Club Record Signings';", "document.getElementById('game-title').textContent = 'Fichajes Récord del Club';"),
+        ("document.getElementById('target-label').textContent  = 'RECORD SIGNINGS FOR';", "document.getElementById('target-label').textContent = 'FICHAJES RÉCORD DE';"),
+        ("document.getElementById('game-title').textContent    = 'Nationality Transfer Records';", "document.getElementById('game-title').textContent = 'Récords de Fichajes por Nacionalidad';"),
+        ("document.getElementById('target-label').textContent  = 'MOST EXPENSIVE TRANSFERS FOR';", "document.getElementById('target-label').textContent = 'LOS FICHAJES MÁS CAROS DE';"),
+        ("document.getElementById('th-club-header').textContent = 'Transfer';", "document.getElementById('th-club-header').textContent = 'Fichaje';"),
+        ("title: 'REVEAL PLAYER?'", "title: '¿REVELAR JUGADOR?'"),
+        ("message: 'Are you sure you want to reveal this player?'", "message: '¿Estás seguro de que quieres revelar este jugador?'"),
+        ("confirmText: 'REVEAL'", "confirmText: 'REVELAR'"),
+        ("cancelText: 'CANCEL'", "cancelText: 'CANCELAR'"),
+        ("title: 'CORRECT!'", "title: '¡CORRECTO!'"),
+        ("title: 'INCORRECT!'", "title: '¡INCORRECTO!'"),
+        ("was already guessed!", "ya fue adivinado!"),
+        ("is on the list!", "está en la lista!"),
+        ("is not on the list. Lost 1 life.", "no está en la lista. Pierdes 1 vida."),
+
+        # Transfer Destination JS dynamic labels
+        ("document.getElementById('active-step-label').textContent =\n                    `GUESS CLUB BEFORE ${activeGameData.transfers[i].to_club_name.toUpperCase()}`;",
+         "document.getElementById('active-step-label').textContent =\n                    `ADIVINA EL CLUB ANTES DE ${activeGameData.transfers[i].to_club_name.toUpperCase()}`;"),
+        ("`GUESS CLUB BEFORE ${activeGameData.transfers[i].to_club_name.toUpperCase()}`",
+         "`ADIVINA EL CLUB ANTES DE ${activeGameData.transfers[i].to_club_name.toUpperCase()}`"),
+        ("<span>Season: ${year}</span>", "<span>Temporada: ${year}</span>"),
+        ("title: won ? 'CAREER SOLVED!' : (isPartial ? 'CAREER SURVIVED!' : 'GAME OVER')",
+         "title: won ? '¡TRAYECTORIA COMPLETADA!' : (isPartial ? '¡TRAYECTORIA SUPERADA!' : 'FIN DE LA PARTIDA')"),
+        ("'Brilliant! You predicted the complete transfer trajectory.'",
+         "'¡Excelente! Has acertado toda la trayectoria de fichajes.'"),
+        ("`Resilient finish! You navigated the full career timeline, scoring ${score} of ${total} clubs.`",
+         "`¡Gran resistencia! Completaste la trayectoria con ${score} de ${total} clubes.`"),
+        ("'You couldn\\'t predict the entire career path.'",
+         "'No pudiste predecir toda la trayectoria deportiva.'"),
+        ("is not the previous club. Lost 1 life.", "no es el club anterior. Pierdes 1 vida."),
+        ("is correct!", "es correcto!"),
+
+        # Top Scorers JS dynamic labels
+        ("document.getElementById('game-title').textContent    = 'All-Time Top Goalscorers';", "document.getElementById('game-title').textContent = 'Máximos Goleadores Históricos';"),
+        ("document.getElementById('target-label').textContent  = 'ALL-TIME GOALSCORERS FOR';", "document.getElementById('target-label').textContent = 'MÁXIMOS GOLEADORES DE';"),
+        ("document.getElementById('game-title').textContent    = 'Top Scorers per League & Season';", "document.getElementById('game-title').textContent = 'Máximos Goleadores por Liga y Temporada';"),
+        ("document.getElementById('target-label').textContent  = 'TOP 10 SCORERS IN';", "document.getElementById('target-label').textContent = 'TOP 10 GOLEADORES DE';"),
+
+        # Club Connect JS dynamic labels
+        ("answerLabel.textContent = won ? 'THE MYSTERY CLUB' : 'THE MYSTERY CLUB WAS';",
+         "answerLabel.textContent = won ? 'EL CLUB MISTERIOSO' : 'EL CLUB MISTERIOSO ERA';"),
+        ("title:           won ? 'CONNECTED!' : 'GAME OVER',",
+         "title: won ? '¡CONECTADO!' : 'FIN DE LA PARTIDA',"),
+        ("title:     'WRONG CLUB!',", "title: '¡CLUB INCORRECTO!',"),
+        ("`Not ${guessedName}. Here's another player hint.`", "`No es el ${guessedName}. Aquí tienes otra pista.`"),
+        ("`Unbelievable! You spotted ${activeGameData.club} from just one player!`", "`¡Increíble! ¡Descubriste al ${activeGameData.club} con un solo jugador!`"),
+        ("`Clutch! You connected all players to ${activeGameData.club} on the final reveal!`", "`¡En el último momento! Conectaste a todos los jugadores con el ${activeGameData.club} en la última pista.`"),
+        ("`Brilliant! You connected all players to ${activeGameData.club} after ${score} reveals!`", "`¡Excelente! Conectaste a todos los jugadores con el ${activeGameData.club} tras ${score} pistas.`"),
+        ("`Today's mystery club was ${activeGameData.club}. Better luck tomorrow!`", "`El club misterioso de hoy era el ${activeGameData.club}. ¡Mejor suerte mañana!`"),
+        ("score === 1 ? '1 card' : `${score} cards`", "score === 1 ? '1 pista' : `${score} pistas`"),
+
+        # Player Chain JS dynamic labels & step progression
+        ("`STEP ${i + 1} — NAME ANY PLAYER WHO PLAYED FOR:`", "`PASO ${i + 1} — NOMBRA A UN JUGADOR QUE HAYA JUGADO EN:`"),
+        ("STEP 1 — NAME ANY PLAYER WHO PLAYED FOR:", "PASO 1 — NOMBRA A UN JUGADOR QUE HAYA JUGADO EN:"),
+        ("<span>Nationality: <strong id=\"revealed-target-nat\"", "<span>Nacionalidad: <strong id=\"revealed-target-nat\""),
+        ("<span>Position: <strong id=\"revealed-target-pos\"", "<span>Posición: <strong id=\"revealed-target-pos\""),
+        ("CURRENT STEP ${step.step_number}", "PASO ACTUAL ${step.step_number}"),
+        ("<span class=\"text-[10px] sm:text-[11px] font-mono text-accent font-bold px-2 py-1 bg-accent/10 rounded-md border border-accent/20\">ACTIVE</span>",
+         "<span class=\"text-[10px] sm:text-[11px] font-mono text-accent font-bold px-2 py-1 bg-accent/10 rounded-md border border-accent/20\">ACTIVO</span>"),
+        ("<span>Must have played for all ${step.active_clubs.length} clubs:</span>",
+         "<span>Debe haber jugado en los ${step.active_clubs.length} clubes:</span>"),
+        ("badgeText   = 'SOLVED';", "badgeText = 'COMPLETADO';"),
+        ("badgeText   = 'INSTANT WIN ⭐️';", "badgeText = 'VICTORIA DIRECTA ⭐️';"),
+        ("badgeText   = 'SKIPPED';", "badgeText = 'SALTADO';"),
+        ("Step ${step.step_number}: + ${step.club}", "Paso ${step.step_number}: + ${step.club}"),
+        ("Step ${step.step_number} — Locked", "Paso ${step.step_number} — Bloqueado"),
+        ("Complete Step ${step.step_number - 1} to reveal next constraint",
+         "Completa el Paso ${step.step_number - 1} para desbloquear la siguiente pista"),
+        ("<span class=\"text-[10px] font-mono uppercase text-on-surface-variant/60 mr-1\">Clubs:</span>",
+         "<span class=\"text-[10px] font-mono uppercase text-on-surface-variant/60 mr-1\">Clubes:</span>"),
+        ("Your pick: <strong class=\"font-bold\">${rec.guessed}</strong>",
+         "Tu elección: <strong class=\"font-bold\">${rec.guessed}</strong>"),
+        ("<span class=\"text-xs font-mono px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/25\">Skipped</span>",
+         "<span class=\"text-xs font-mono px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/25\">Saltado</span>"),
+        ("STEP ${step.step_number} · ${step.club}", "PASO ${step.step_number} · ${step.club}"),
+        ("Played for: <span class=\"text-accent\">${constraintsStr}</span>",
+         "Jugó en: <span class=\"text-accent\">${constraintsStr}</span>"),
+        ("<span class=\"font-medium\">Show all ${validList.length} valid footballers</span>",
+         "<span class=\"font-medium\">Mostrar los ${validList.length} futbolistas válidos</span>"),
+        ("title: didInstantWin ? 'INSTANT WIN!' : (result.won ? 'CHAIN COMPLETED!' : (isPartial ? 'CHAIN SURVIVED!' : 'GAME OVER'))",
+         "title: didInstantWin ? '¡VICTORIA DIRECTA!' : (result.won ? '¡CADENA COMPLETADA!' : (isPartial ? '¡CADENA SUPERADA!' : 'FIN DE LA PARTIDA'))"),
+        ("let modalTitle = 'CHAIN COMPLETED!';", "let modalTitle = '¡CADENA COMPLETADA!';"),
+        ("modalTitle = 'INSTANT WIN!';", "modalTitle = '¡VICTORIA DIRECTA!';"),
+        ("modalTitle = 'CHAIN SURVIVED!';", "modalTitle = '¡CADENA SUPERADA!';"),
+        ("modalTitle = 'GAME OVER';", "modalTitle = 'FIN DE LA PARTIDA';"),
+        ("`Incredible football IQ! You identified ${activeGameData.target_player} directly and cracked the chain.`",
+         "`¡Increíble IQ futbolístico! Identificaste a ${activeGameData.target_player} directamente y completaste la cadena.`"),
+        ("`Masterclass! You connected every club in the chain to reveal ${activeGameData.target_player}.`",
+         "`¡Magistral! Conectaste todos los clubes de la cadena para descubrir a ${activeGameData.target_player}.`"),
+        ("`You navigated the teammate chain to ${activeGameData.target_player}! Solved ${result.score} of ${activeGameData.total_steps} links.`",
+         "`¡Superaste la cadena de compañeros hasta ${activeGameData.target_player}! Acertaste ${result.score} de ${activeGameData.total_steps} enlaces.`"),
+        ("`You navigated the teammate chain to ${activeGameData.target_player}! Solved ${finalScore} of ${totalSteps} links.`",
+         "`¡Superaste la cadena de compañeros hasta ${activeGameData.target_player}! Acertaste ${finalScore} de ${totalSteps} enlaces.`"),
+        ("`Tough luck! Today's mystery player was ${activeGameData.target_player}. Review the full chain below!`",
+         "`¡Mala suerte! El jugador misterioso de hoy era ${activeGameData.target_player}. ¡Revisa la cadena completa abajo!`"),
+        ("`STEP ${currStep.step_number} CRITERIA — NAME ANY PLAYER WHO PLAYED FOR:`",
+         "`CRITERIO PASO ${currStep.step_number} — NOMBRA A UN JUGADOR QUE HAYA JUGADO EN:`"),
+
+        # Passport FC JS dynamic labels
+        ("Collect all 4 nationality stamps for", "¡Consigue los 4 sellos de nacionalidad de"),
+        ("Position: Forward", "Posición: Delantero"),
+        ("Position: Midfield", "Posición: Centrocampista"),
+        ("Position: Defender", "Posición: Defensa"),
+        ("Position: Goalkeeper", "Posición: Portero"),
+        ("STAMP #${idx + 1}", "SELLO #${idx + 1}"),
+        (">LOCKED</span>", ">BLOQUEADO</span>"),
+        ("Complete Stamp #${idx} to reveal destination", "Completa el Sello #${idx} para revelar el destino"),
+        ("<span class=\"material-symbols-outlined text-sm\">lock</span> Locked</span>",
+         "<span class=\"material-symbols-outlined text-sm\">lock</span> Bloqueado</span>"),
+        ("Only 1 Qualifying Unicorn!", "¡Solo 1 Unicornio Elegible!"),
+        ("${poolCount} Qualifying Players", "${poolCount} Futbolistas Elegibles"),
+        ("<span class=\"material-symbols-outlined text-sm\">cancel</span> Skipped</span>",
+         "<span class=\"material-symbols-outlined text-sm\">cancel</span> Saltado</span>"),
+        ("<span class=\"material-symbols-outlined text-sm\">check_circle</span> Solved</span>",
+         "<span class=\"material-symbols-outlined text-sm\">check_circle</span> Completado</span>"),
+        ("<span class=\"material-symbols-outlined text-sm animate-spin\">sync</span> In Progress</span>",
+         "<span class=\"material-symbols-outlined text-sm animate-spin\">sync</span> En Curso</span>"),
+        ("Your answer: <strong class=\"text-white font-bold\">${rec.guessed}</strong>",
+         "Tu respuesta: <strong class=\"text-white font-bold\">${rec.guessed}</strong>"),
+        ("${poolCount} total qualifying", "${poolCount} total elegibles"),
+        ("Valid: <strong class=\"text-white\">", "Válidos: <strong class=\"text-white\">"),
+    ]
+
+    for orig, rep in js_replacements:
+        es_html = es_html.replace(orig, rep)
+
+    # 6. Game Specific Titles, Descriptions & SEO Meta Tags
+    game_titles = {
+        "top_transfers": ("TOP TRANSFERS", "TOP FICHAJES"),
+        "transfer_destination": ("TRANSFER DESTINATION", "DESTINO DE FICHAJE"),
+        "top_scorers": ("TOP SCORERS", "MÁXIMOS GOLEADORES"),
+        "club_connect": ("CLUB CONNECT", "CONEXIÓN DE CLUBES"),
+        "player_chain": ("PLAYER CHAIN", "CADENA DE JUGADORES"),
+        "passport_fc": ("PASSPORT FC", "PASAPORTE FC"),
+    }
+    if game_id in game_titles:
+        en_t, es_t = game_titles[game_id]
+        es_html = re.sub(rf'>\s*{re.escape(en_t)}\s*<', f'>{es_t}<', es_html)
+
+    meta_titles = {
+        "top_transfers": ("Top Transfers — Daily Football Transfer Quiz | Playmaker", "Top Fichajes — Quiz Diario de Fichajes de Fútbol | Playmaker"),
+        "transfer_destination": ("Transfer Destination — Daily Football Career Quiz | Playmaker", "Destino de Fichaje — Quiz Diario de Trayectorias de Fútbol | Playmaker"),
+        "top_scorers": ("Top Scorers — Daily Football Goalscorer Quiz | Playmaker", "Máximos Goleadores — Quiz Diario de Goleadores de Fútbol | Playmaker"),
+        "club_connect": ("Club Connect — Daily Football Teammates Quiz | Playmaker", "Conexión de Clubes — Quiz Diario de Compañeros de Fútbol | Playmaker"),
+        "player_chain": ("Player Chain — Daily Football Career Puzzle | Playmaker", "Cadena de Jugadores — Puzzle Diario de Trayectorias de Fútbol | Playmaker"),
+        "passport_fc": ("Passport FC — Daily Football Nationality Puzzle | Playmaker", "Pasaporte FC — Puzzle Diario de Nacionalidades de Fútbol | Playmaker"),
+    }
+    if game_id in meta_titles:
+        en_m, es_m = meta_titles[game_id]
+        es_html = es_html.replace(en_m, es_m)
+
+    game_descriptions = {
+        "top_transfers": (
+            "Fill the transfers table below for the given club or nationality. Use the search bar to guess players. Only players from the search dropdown can be guessed. Use the hints (<span class=\"material-symbols-outlined text-xs inline-block align-middle text-accent\">lightbulb</span>) or reveal individual players if you are stuck!",
+            "Completa la tabla de fichajes para el club o nacionalidad indicada. Usa el buscador para adivinar los jugadores. Solo los jugadores de la lista desplegable son válidos. ¡Usa las pistas (<span class=\"material-symbols-outlined text-xs inline-block align-middle text-accent\">lightbulb</span>) o revela jugadores si te quedas atascado!"
+        ),
+        "transfer_destination": (
+            "Guess each previous club in the player's career, starting from their most recent destination back to where it all began!",
+            "¡Adivina cada club anterior en la carrera del jugador, empezando desde su destino más reciente hasta sus inicios!"
+        ),
+        "top_scorers": (
+            "Fill the scorers table below for the given league and season. Use the search bar to guess players. Only players from the search dropdown can be guessed. Use the hints (<span class=\"material-symbols-outlined text-xs inline-block align-middle text-accent\">lightbulb</span>) or reveal individual players if you are stuck!",
+            "Completa la tabla de goleadores para la liga o competición indicada. Usa el buscador para adivinar los jugadores. Solo los jugadores de la lista desplegable son válidos. ¡Usa las pistas (<span class=\"material-symbols-outlined text-xs inline-block align-middle text-accent\">lightbulb</span>) o revela jugadores si te quedas atascado!"
+        ),
+        "club_connect": (
+            "Players are revealed one by one — cheapest signing first. Guess the mystery club after each reveal. Wrong answer = next player unlocks &amp; 1 life lost.",
+            "Los jugadores se revelan uno a uno, del fichaje más barato al más caro. Adivina el club misterioso tras cada pista. Fallo = se desbloquea el siguiente jugador y pierdes 1 vida."
+        ),
+        "player_chain": (
+            "Guess the mystery Player of the Day by identifying footballers across an expanding chain of career clubs.",
+            "Adivina al Jugador Misterioso del Día identificando futbolistas a lo largo de una cadena de clubes."
+        ),
+        "passport_fc": (
+            "Name qualifying footballers across 4 progressive nationality tiers to fill today's club passport — from major talent pools down to rare 1-player unicorns.",
+            "Nombra futbolistas elegibles en 4 niveles progresivos de nacionalidad para completar el pasaporte del club de hoy — desde grandes potencias hasta unicornios de un solo jugador."
+        ),
+    }
+    if game_id in game_descriptions:
+        en_d, es_d = game_descriptions[game_id]
+        es_html = es_html.replace(en_d, es_d)
+
+    # SEO How to play paragraph replacements
+    how_to_play_paragraphs = {
+        "top_transfers": (
+            "Guess the top 10 record signings for a specific club and nationality before your 5 lives run out. Each correct guess reveals the player's name and transfer fee. Use free hints to reveal partial information. Play daily to build your streak and share Wordle-style results.",
+            "Adivina los 10 fichajes récord de un club o nacionalidad antes de quedarte sin vidas. Cada acierto revela el nombre del jugador y su coste. Usa las pistas gratuitas para revelar información. ¡Juega a diario y comparte tus resultados estilo Wordle!"
+        ),
+        "transfer_destination": (
+            "Guess each club a mystery footballer transferred to in chronological order. Each correct guess reveals the next step in their career path. Use hints to see transfer years or nationalities. 5 lives to complete. Play every day to build your streak.",
+            "Adivina cada club por el que pasó el futbolista en orden cronológico inverso. Cada acierto revela el siguiente paso de su carrera. Usa las pistas de años o nacionalidades. 5 vidas para completar el reto. ¡Juega a diario!"
+        ),
+        "top_scorers": (
+            "Guess the all-time top scorers for a club, league, or national team before your 6 lives run out. Each correct guess reveals the player and their goal tally. Complete the full list to win. Play daily to build your streak.",
+            "Adivina los máximos goleadores históricos para un club, liga o selección nacional antes de que se agoten tus 6 vidas. Cada acierto revela el jugador y sus goles. ¡Juega a diario y mantén tu racha!"
+        ),
+        "club_connect": (
+            "Five footballers were all signed by the same mystery club. Players are revealed one by one — cheapest signing first. After each reveal, guess which club bought them all. A wrong guess costs one life and unlocks the next player. Can you spot the connection early?",
+            "Cinco futbolistas fueron fichados por el mismo club misterioso. Los jugadores se revelan uno a uno, del fichaje más barato al más caro. Tras cada pista, adivina qué club los fichó a todos. Un fallo cuesta una vida y desbloquea al siguiente jugador. ¿Podrás descubrir la conexión a tiempo?"
+        ),
+        "passport_fc": (
+            'Passport FC is a daily football trivia puzzle by Playmaker where fans collect nationality stamps for a featured anchor club. Each day highlights one world-famous club alongside four progressive nationality tiers. Players must name any qualifying footballer who made senior appearances or signed for that club while representing the designated nation. The puzzle begins with major footballing countries that have extensive talent pools before ascending to "The Unicorn" — an unexpected country with only one or two eligible players across the club\'s entire transfer history.',
+            'Pasaporte FC es un puzzle diario de trivia de fútbol de Playmaker donde los fanáticos consiguen sellos de nacionalidad para un club ancla destacado. Cada día se presenta un club de renombre mundial junto a cuatro niveles progresivos de nacionalidad. Los jugadores deben nombrar a cualquier futbolista elegible que haya jugado en el primer equipo o fichado por dicho club representando a la nación indicada. El reto comienza con grandes potencias futbolísticas antes de ascender a "El Unicornio", un país insólito con solo uno o dos jugadores en toda la historia del club.'
+        ),
+    }
+    for gid, (en_h, es_h) in how_to_play_paragraphs.items():
+        es_html = es_html.replace(en_h, es_h)
+
+    # 7. Inject Spanish game note and language setter in JS data
+    safe_note_es = game_cfg.get("note_es", "").replace('\\', '\\\\').replace('"', '\\"')
+    if safe_note_es:
+        es_html = re.sub(r'const GAME_NOTE = ".*";', f'const GAME_NOTE = "{safe_note_es}";', es_html)
+    
+    es_html = es_html.replace(
+        'const MAX_BACK_DAYS',
+        "if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');\n        const MAX_BACK_DAYS"
+    )
+
+    return es_html
 
 
 def load_schedule_ledger(ledger_path=LEDGER_FILE):
@@ -530,13 +1025,21 @@ def compile_game(game_cfg, puzzle_num, day_offset=0, max_back_days=7, content_pu
     else:
         out_name = f"{game_id}_d{day_offset}.html"
 
+    # Write English version
     out_path = os.path.join(OUTPUT_DIR, out_name)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(compiled)
 
+    # Write Spanish version
+    es_compiled = localize_for_spanish(compiled, game_cfg, puzzle_num, is_back_in_time)
+    es_out_path = os.path.join(ES_OUTPUT_DIR, out_name)
+    os.makedirs(ES_OUTPUT_DIR, exist_ok=True)
+    with open(es_out_path, "w", encoding="utf-8") as f:
+        f.write(es_compiled)
+
     back_label = f" (back-in-time d{day_offset})" if is_back_in_time else ""
-    print(f"  ✓ {out_path}  [puzzle #{puzzle_num}{back_label}]")
+    print(f"  ✓ {out_path} & {es_out_path}  [puzzle #{puzzle_num}{back_label}]")
     return True
 
 
@@ -634,6 +1137,9 @@ def main():
                 out_path = os.path.join(OUTPUT_DIR, out_name)
                 if os.path.exists(out_path):
                     os.remove(out_path)
+                es_out_path = os.path.join(ES_OUTPUT_DIR, out_name)
+                if os.path.exists(es_out_path):
+                    os.remove(es_out_path)
                 continue
             compile_game(game_cfg, pnum_past, day_offset=d, max_back_days=max_back, content_puzzle_id=content_past)
 

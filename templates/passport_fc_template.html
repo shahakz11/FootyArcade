@@ -9,6 +9,9 @@
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
     <meta name="theme-color" content="#0e0e0e"/>
     <link rel="canonical" href="https://playmaker.best/games/passport_fc.html"/>
+    <link rel="alternate" hreflang="en" href="https://playmaker.best/games/passport_fc.html" />
+    <link rel="alternate" hreflang="es" href="https://playmaker.best/es/games/passport_fc.html" />
+    <link rel="alternate" hreflang="x-default" href="https://playmaker.best/games/passport_fc.html" />
 
     <!-- PWA Web Manifest & Favicons -->
     <link rel="manifest" href="../manifest.json"/>
@@ -216,6 +219,11 @@
             <span class="material-symbols-outlined text-xl sm:text-2xl">arrow_back</span>
             <img src="../assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-7 md:h-8 w-auto object-contain" />
         </a>
+        <div id="lang-switcher" class="flex items-center bg-white/5 border border-white/10 rounded-lg p-0.5 font-mono text-xs select-none mr-1">
+            <a href="/games/passport_fc.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('en')" class="px-2 py-0.5 rounded transition-all bg-accent/20 text-accent font-bold shadow-sm" title="Switch to English">EN</a>
+            <span class="text-white/20 text-[10px] select-none">|</span>
+            <a href="/es/games/passport_fc.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('es')" class="px-2 py-0.5 rounded transition-all text-on-surface-variant hover:text-white" title="Cambiar a Español">ES</a>
+        </div>
         <div class="flex items-center gap-2 text-on-surface-variant">
             <button id="how-to-play-btn" class="text-on-surface-variant hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="How to play instructions" title="How to play">
                 <span class="material-symbols-outlined text-xl">help_outline</span>
@@ -577,6 +585,7 @@
     </footer>
 
     <!-- Shared component library -->
+    <script src="../games/footy-i18n.js"></script>
     <script src="../games/footy-ui.js?v=4"></script>
 
     <!-- Micro-interaction Script -->
@@ -921,7 +930,17 @@
                     message: 'Are you sure you want to give up? The full ladder answers will be revealed.',
                     confirmText: 'GIVE UP',
                     cancelText: 'KEEP PLAYING',
-                    onConfirm: () => endGame(false)
+                    onConfirm: () => {
+                        const score = stepRecords.filter(r => r && r.won).length;
+                        FootyUI.trackGiveUp({
+                            step: activeStepIndex + 1,
+                            score: score,
+                            maxScore: activeGameData.total_steps,
+                            lives: livesCtrl.get(),
+                            target: activeGameData.club
+                        });
+                        endGame(false);
+                    }
                 });
             });
 
@@ -1121,10 +1140,17 @@
 
             document.getElementById('progress-step').textContent = activeStepIndex + 1;
             const flag = getFlag(step.nationality);
-            const demonym = getDemonym(step.nationality);
-            const article = getArticle(demonym);
-            document.getElementById('active-step-label').textContent = 
-                `STEP ${activeStepIndex + 1} — NAME ${article} ${demonym.toUpperCase()} PLAYER FOR ${activeGameData.club.toUpperCase()}:`;
+            const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang() === 'es');
+            if (isEs) {
+                const demonymEs = (typeof FootyI18n !== 'undefined' ? FootyI18n.translateDemonym(step.nationality) : step.nationality);
+                document.getElementById('active-step-label').textContent = 
+                    `PASO ${activeStepIndex + 1} — NOMBRA A UN JUGADOR ${demonymEs.toUpperCase()} DE ${activeGameData.club.toUpperCase()}:`;
+            } else {
+                const demonym = getDemonym(step.nationality);
+                const article = getArticle(demonym);
+                document.getElementById('active-step-label').textContent = 
+                    `STEP ${activeStepIndex + 1} — NAME ${article} ${demonym.toUpperCase()} PLAYER FOR ${activeGameData.club.toUpperCase()}:`;
+            }
 
             // Reset hint box
             const hintBox = document.getElementById('hint-display-box');
@@ -1137,7 +1163,13 @@
             // Clear input & dropdown state
             const input = document.getElementById('guess-input');
             input.value = '';
-            input.placeholder = `Type any ${demonym} footballer who played for ${activeGameData.club}...`;
+            if (isEs) {
+                const demonymEs = (typeof FootyI18n !== 'undefined' ? FootyI18n.translateDemonym(step.nationality) : step.nationality);
+                input.placeholder = `Escribe un futbolista ${demonymEs} que haya jugado en ${activeGameData.club}...`;
+            } else {
+                const demonym = getDemonym(step.nationality);
+                input.placeholder = `Type any ${demonym} footballer who played for ${activeGameData.club}...`;
+            }
             if (dropdown && typeof dropdown.clearSelection === 'function') {
                 dropdown.clearSelection();
             }
@@ -1169,6 +1201,14 @@
             const hintText = document.getElementById('hint-display-text');
             hintText.innerHTML = `Position: <strong class="text-white">${pos}</strong> &bull; Star initials: <strong class="text-white">${masked}</strong>`;
             hintBox.classList.remove('hidden');
+
+            const currentStep = activeGameData.steps[activeStepIndex];
+            FootyUI.trackHint({
+                step: activeStepIndex + 1,
+                hintType: 'passport_initials',
+                hintText: `${currentStep ? currentStep.nationality : ''} | ${pos}`,
+                lives: livesCtrl.get()
+            });
 
             FootyUI.toast('Hint revealed!', 'info');
         }
@@ -1209,17 +1249,29 @@
 
             const playerName = matchedPlayer.Name;
             const normPlayerName = FootyUI.normalizeStr(playerName);
+            const currentStep = activeGameData.steps[activeStepIndex];
+            const currentScore = stepRecords.filter(r => r && r.won).length;
 
             // Check if player was already guessed in an earlier step
             if (guessedPlayers.some(p => {
                 const normP = FootyUI.normalizeStr(p);
                 return normP === normVal || normP === normPlayerName;
             })) {
+                FootyUI.trackGuess({
+                    guess: playerName,
+                    isCorrect: false,
+                    isDuplicate: true,
+                    step: activeStepIndex + 1,
+                    target: currentStep.nationality,
+                    lives: livesCtrl.get(),
+                    score: currentScore,
+                    maxScore: activeGameData.total_steps,
+                    extraDetails: 'duplicate guess'
+                });
                 showError('You already used this player in an earlier step!');
                 return;
             }
 
-            const currentStep = activeGameData.steps[activeStepIndex];
             const validNorms = new Set(currentStep.valid_players.map(vp => FootyUI.normalizeStr(vp)));
 
             if (validNorms.has(normVal) || validNorms.has(normPlayerName)) {
@@ -1231,6 +1283,16 @@
                     guessed: playerName,
                     skipped: false
                 };
+
+                FootyUI.trackGuess({
+                    guess: playerName,
+                    isCorrect: true,
+                    step: activeStepIndex + 1,
+                    target: currentStep.nationality,
+                    lives: livesCtrl.get(),
+                    score: currentScore + 1,
+                    maxScore: activeGameData.total_steps
+                });
 
                 FootyUI.showFeedback({
                     isCorrect: true,
@@ -1251,6 +1313,16 @@
                 livesCtrl.lose(1);
                 wrongGuesses.add(playerName);
                 shakeInput();
+
+                FootyUI.trackGuess({
+                    guess: playerName,
+                    isCorrect: false,
+                    step: activeStepIndex + 1,
+                    target: currentStep.nationality,
+                    lives: livesCtrl.get(),
+                    score: currentScore,
+                    maxScore: activeGameData.total_steps
+                });
 
                 FootyUI.showFeedback({
                     isCorrect: false,
@@ -1305,6 +1377,15 @@
                 confirmText: 'SKIP STAMP',
                 cancelText: 'KEEP TRYING',
                 onConfirm: () => {
+                    const currentStep = activeGameData.steps[activeStepIndex];
+                    const currentScore = stepRecords.filter(r => r && r.won).length;
+                    FootyUI.trackSkip({
+                        step: activeStepIndex + 1,
+                        target: currentStep ? currentStep.nationality : '',
+                        score: currentScore,
+                        lives: livesCtrl.get()
+                    });
+
                     stepRecords[activeStepIndex] = {
                         step: activeStepIndex,
                         won: false,

@@ -11,7 +11,11 @@
     "templateFile": "top_transfers_template.html",
     "dataVariable": "DAILY_TRANSFER_GAME",
     "storageKey": "footy_v2_top_transfers",
-    "note": "Transfer data updated to September 2026 . Does not include loan moves."
+    "note": "Transfer data updated to September 2026 . Does not include loan moves.",
+    "name_es": "Top Fichajes",
+    "description_es": "Adivina los fichajes récord para un club o nacionalidad antes de quedarte sin vidas.",
+    "link_es": "es/games/top_transfers.html",
+    "note_es": "Datos de transferencias actualizados a septiembre de 2026. No incluye cesiones."
   },
   {
     "id": "transfer_destination",
@@ -25,7 +29,11 @@
     "templateFile": "transfer_destination_template.html",
     "dataVariable": "DAILY_DESTINATION_GAME",
     "storageKey": "footy_v2_transfer_destination",
-    "note": "Transfer data updated to September 2026 . Only transfers worth €1M+ are included."
+    "note": "Transfer data updated to September 2026 . Only transfers worth €1M+ are included.",
+    "name_es": "Destino de Fichaje",
+    "description_es": "Adivina la trayectoria de un futbolista paso a paso en orden cronológico inverso.",
+    "link_es": "es/games/transfer_destination.html",
+    "note_es": "Datos actualizados a septiembre de 2026. Solo transferencias de €1M+."
   },
   {
     "id": "top_scorers",
@@ -39,7 +47,11 @@
     "templateFile": "top_scorers_template.html",
     "dataVariable": "DAILY_SCORERS_GAME",
     "storageKey": "footy_v2_top_scorers",
-    "note": "Goals data updated to September 2026."
+    "note": "Goals data updated to September 2026.",
+    "name_es": "Máximos Goleadores",
+    "description_es": "Adivina los máximos goleadores históricos de un club, liga o selección nacional.",
+    "link_es": "es/games/top_scorers.html",
+    "note_es": "Datos de goles actualizados a septiembre de 2026."
   },
   {
     "id": "club_connect",
@@ -54,7 +66,11 @@
     "templateFile": "club_connect_template.html",
     "dataVariable": "DAILY_CLUBCONNECT_GAME",
     "storageKey": "footy_v2_club_connect",
-    "note": "Transfer data updated to September 2026 . Players ordered from least to most expensive signing."
+    "note": "Transfer data updated to September 2026 . Players ordered from least to most expensive signing.",
+    "name_es": "Conexión de Clubes",
+    "description_es": "5 jugadores. 1 club los fichó a todos. Adivina el club antes de revelar a todos los futbolistas.",
+    "link_es": "es/games/club_connect.html",
+    "note_es": "Datos de fichajes actualizados a septiembre de 2026. Jugadores ordenados por costo de traspaso."
   },
   {
     "id": "player_chain",
@@ -69,7 +85,11 @@
     "templateFile": "player_chain_template.html",
     "dataVariable": "DAILY_CHAIN_GAME",
     "storageKey": "footy_v2_player_chain",
-    "note": "Transfer and career data updated to September 2026 ."
+    "note": "Transfer and career data updated to September 2026 .",
+    "name_es": "Cadena de Jugadores",
+    "description_es": "Adivina al Jugador Misterioso del Día nombrando futbolistas que conecten la cadena de clubes.",
+    "link_es": "es/games/player_chain.html",
+    "note_es": "Datos de trayectoria y fichajes actualizados a septiembre de 2026."
   },
   {
     "id": "this_and_that",
@@ -84,7 +104,11 @@
     "dataVariable": "DAILY_THISANDTHAT_GAME",
     "storageKey": "footy_v2_this_and_that",
     "note": "Data updated to September 2026.",
-    "status": "coming_soon"
+    "status": "coming_soon",
+    "name_es": "Esto y Aquello",
+    "description_es": "Nombra todos los jugadores que cumplen AMBAS condiciones simultáneamente.",
+    "link_es": "es/games/this_and_that.html",
+    "note_es": "Datos actualizados a septiembre de 2026."
   },
   {
     "id": "anyone_but",
@@ -99,7 +123,11 @@
     "dataVariable": "DAILY_ANYONEBUT_GAME",
     "storageKey": "footy_v2_anyone_but",
     "note": "Data updated to September 2026.",
-    "status": "coming_soon"
+    "status": "coming_soon",
+    "name_es": "Cualquiera Menos",
+    "description_es": "Adivina futbolistas que cumplen los criterios excepto para el jugador clave.",
+    "link_es": "es/games/anyone_but.html",
+    "note_es": "Datos actualizados a septiembre de 2026."
   },
   {
     "id": "passport_fc",
@@ -114,6 +142,10 @@
     "templateFile": "passport_fc_template.html",
     "dataVariable": "DAILY_PASSPORT_GAME",
     "storageKey": "footy_v2_passport_fc",
-    "note": "Includes official transfers and appearances since 1990 + verified historical legends throughout club history (updated to September 2026)."
+    "note": "Includes official transfers and appearances since 1990 + verified historical legends throughout club history (updated to September 2026).",
+    "name_es": "Pasaporte FC",
+    "description_es": "Completa el pasaporte del club desbloqueando 4 sellos progresivos de nacionalidades.",
+    "link_es": "es/games/passport_fc.html",
+    "note_es": "Fichajes y partidos oficiales desde 1990 + leyendas históricas verificadas (septiembre 2026)."
   }
 ]

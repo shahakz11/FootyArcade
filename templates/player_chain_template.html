@@ -9,6 +9,9 @@
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
     <meta name="theme-color" content="#0e0e0e"/>
     <link rel="canonical" href="https://playmaker.best/games/player_chain.html"/>
+    <link rel="alternate" hreflang="en" href="https://playmaker.best/games/player_chain.html" />
+    <link rel="alternate" hreflang="es" href="https://playmaker.best/es/games/player_chain.html" />
+    <link rel="alternate" hreflang="x-default" href="https://playmaker.best/games/player_chain.html" />
 
     <!-- PWA Web Manifest & Favicons -->
     <link rel="manifest" href="../manifest.json"/>
@@ -173,6 +176,11 @@
             <span class="material-symbols-outlined text-xl sm:text-2xl">arrow_back</span>
             <img src="../assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-7 md:h-8 w-auto object-contain" />
         </a>
+        <div id="lang-switcher" class="flex items-center bg-white/5 border border-white/10 rounded-lg p-0.5 font-mono text-xs select-none mr-1">
+            <a href="/games/player_chain.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('en')" class="px-2 py-0.5 rounded transition-all bg-accent/20 text-accent font-bold shadow-sm" title="Switch to English">EN</a>
+            <span class="text-white/20 text-[10px] select-none">|</span>
+            <a href="/es/games/player_chain.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('es')" class="px-2 py-0.5 rounded transition-all text-on-surface-variant hover:text-white" title="Cambiar a Español">ES</a>
+        </div>
         <div class="flex items-center gap-2 text-on-surface-variant">
             <button id="how-to-play-btn" class="text-on-surface-variant hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="How to play instructions" title="How to play">
                 <span class="material-symbols-outlined text-xl">help_outline</span>
@@ -516,6 +524,7 @@
     </footer>
 
     <!-- Shared component library -->
+    <script src="../games/footy-i18n.js"></script>
     <script src="../games/footy-ui.js"></script>
 
     <!-- Micro-interaction Script -->
@@ -599,8 +608,13 @@
 
             wrongGuesses = new FootyUI.FootyWrongGuesses('wrong-guesses-section', 'wrong-guesses-container');
 
-            livesCtrl = new FootyUI.FootyLives(INITIAL_LIVES, () => {
-                endGame(false, false);
+            livesCtrl = new FootyUI.FootyLives({
+                initial: INITIAL_LIVES,
+                counterId: 'lives-counter',
+                heartId: 'fa-heart-icon',
+                onDead: () => {
+                    endGame(false, false);
+                }
             });
 
             // Unified autocomplete component with proper data, labelFn, and badgeFn
@@ -648,12 +662,24 @@
 
             // Triggerable Hints: Nationality & Position
             document.getElementById('hint-nat-btn').addEventListener('click', () => {
+                FootyUI.trackHint({
+                    hintType: 'nationality',
+                    hintText: activeGameData.target_nationality,
+                    step: activeStepIndex + 1,
+                    lives: livesCtrl.get()
+                });
                 document.getElementById('hint-nat-btn').classList.add('hidden');
                 document.getElementById('player-nat-badge').classList.remove('hidden');
                 FootyUI.toast(`Nationality revealed: ${activeGameData.target_nationality}`, 'info');
             });
 
             document.getElementById('hint-pos-btn').addEventListener('click', () => {
+                FootyUI.trackHint({
+                    hintType: 'position',
+                    hintText: activeGameData.target_position,
+                    step: activeStepIndex + 1,
+                    lives: livesCtrl.get()
+                });
                 document.getElementById('hint-pos-btn').classList.add('hidden');
                 document.getElementById('player-pos-badge').classList.remove('hidden');
                 FootyUI.toast(`Position revealed: ${activeGameData.target_position}`, 'info');
@@ -666,7 +692,16 @@
                     message: 'Are you sure you want to give up? The mystery player and full chain will be revealed.',
                     confirmText: 'GIVE UP',
                     cancelText: 'KEEP PLAYING',
-                    onConfirm: () => endGame(false, false)
+                    onConfirm: () => {
+                        FootyUI.trackGiveUp({
+                            step: activeStepIndex + 1,
+                            score: getCompletedScore(),
+                            maxScore: activeGameData.steps.length,
+                            lives: livesCtrl.get(),
+                            target: activeGameData.target_player
+                        });
+                        endGame(false, false);
+                    }
                 });
             });
 
@@ -702,8 +737,15 @@
             document.getElementById('total-steps').textContent = activeGameData.total_steps;
 
             // Populate hint text (remains hidden until user triggers)
-            document.getElementById('mystery-nat-text').textContent = activeGameData.target_nationality || 'Unknown';
-            document.getElementById('mystery-pos-text').textContent = activeGameData.target_position || 'Forward';
+            const natVal = (typeof FootyI18n !== 'undefined' && FootyI18n.translateNationality)
+                ? FootyI18n.translateNationality(activeGameData.target_nationality)
+                : (activeGameData.target_nationality || 'Unknown');
+            const posVal = (typeof FootyI18n !== 'undefined' && FootyI18n.translatePosition)
+                ? FootyI18n.translatePosition(activeGameData.target_position)
+                : (activeGameData.target_position || 'Forward');
+
+            document.getElementById('mystery-nat-text').textContent = natVal;
+            document.getElementById('mystery-pos-text').textContent = posVal;
 
             // Show game note if available
             if (gameNote) {
@@ -1021,6 +1063,17 @@
             const alreadyCorrect = guessedPlayers.some(p => FootyUI.normalizeStr(p) === normMatched);
             const alreadyWrong   = wrongGuesses && wrongGuesses.has(matched);
             if (alreadyCorrect || alreadyWrong) {
+                FootyUI.trackGuess({
+                    guess: matched,
+                    isCorrect: false,
+                    isDuplicate: true,
+                    step: activeStepIndex + 1,
+                    target: activeGameData.target_player,
+                    lives: livesCtrl.get(),
+                    score: getCompletedScore(),
+                    maxScore: activeGameData.steps.length,
+                    extraDetails: 'duplicate guess'
+                });
                 FootyUI.toast(`"${matched}" was already guessed!`, 'error');
                 return;
             }
@@ -1038,6 +1091,17 @@
                     status: 'instant_win',
                     guessed: matched
                 };
+
+                FootyUI.trackGuess({
+                    guess: matched,
+                    isCorrect: true,
+                    step: activeStepIndex + 1,
+                    target: activeGameData.target_player,
+                    lives: livesCtrl.get(),
+                    score: getCompletedScore() + 1,
+                    maxScore: activeGameData.steps.length,
+                    extraDetails: 'instant_win'
+                });
 
                 FootyUI.showFeedback({
                     isCorrect: true,
@@ -1061,6 +1125,16 @@
                     guessed: matched
                 };
 
+                FootyUI.trackGuess({
+                    guess: matched,
+                    isCorrect: true,
+                    step: activeStepIndex + 1,
+                    target: activeGameData.target_player,
+                    lives: livesCtrl.get(),
+                    score: getCompletedScore() + 1,
+                    maxScore: activeGameData.steps.length
+                });
+
                 FootyUI.showFeedback({
                     isCorrect: true,
                     title: 'STEP SOLVED!',
@@ -1080,6 +1154,15 @@
                 // Invalid Guess -> Lose life
                 wrongGuesses.add(matched);
                 livesCtrl.lose(1);
+                FootyUI.trackGuess({
+                    guess: matched,
+                    isCorrect: false,
+                    step: activeStepIndex + 1,
+                    target: activeGameData.target_player,
+                    lives: livesCtrl.get(),
+                    score: getCompletedScore(),
+                    maxScore: activeGameData.steps.length
+                });
 
                 const wrongEl = document.getElementById('wrong-count');
                 if (wrongEl) wrongEl.textContent = document.querySelectorAll('#wrong-guesses-container > *').length;
@@ -1135,6 +1218,12 @@
             if (gameOver) return;
 
             const currStep = activeGameData.steps[activeStepIndex];
+            FootyUI.trackSkip({
+                step: currStep.step_number,
+                target: activeGameData.target_player,
+                score: getCompletedScore(),
+                lives: livesCtrl.get()
+            });
             stepRecords[activeStepIndex] = {
                 step_number: currStep.step_number,
                 status: 'skipped',
@@ -1252,8 +1341,12 @@
             summarySec.classList.remove('hidden');
 
             document.getElementById('revealed-target-name').textContent = activeGameData.target_player;
-            document.getElementById('revealed-target-nat').textContent  = activeGameData.target_nationality || 'Unknown';
-            document.getElementById('revealed-target-pos').textContent  = activeGameData.target_position || 'Forward';
+            document.getElementById('revealed-target-nat').textContent  = (typeof FootyI18n !== 'undefined' && FootyI18n.translateNationality)
+                ? FootyI18n.translateNationality(activeGameData.target_nationality)
+                : (activeGameData.target_nationality || 'Unknown');
+            document.getElementById('revealed-target-pos').textContent  = (typeof FootyI18n !== 'undefined' && FootyI18n.translatePosition)
+                ? FootyI18n.translatePosition(activeGameData.target_position)
+                : (activeGameData.target_position || 'Forward');
 
             const container = document.getElementById('summary-steps-container');
             container.innerHTML = '';

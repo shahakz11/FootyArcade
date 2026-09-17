@@ -412,10 +412,13 @@
      * @param {Function} [cfg.onDead]   — Called when lives reach 0
      * @param {Function} [cfg.onChange] — Called whenever lives change (newVal)
      */
-    function FootyLives(cfg) {
-        let lives = cfg.initial;
-        const counterEl = document.getElementById(cfg.counterId);
-        const heartEl = cfg.heartId ? document.getElementById(cfg.heartId) : null;
+    function FootyLives(cfg, onDeadCb) {
+        const options = (typeof cfg === 'number')
+            ? { initial: cfg, counterId: 'lives-counter', heartId: 'fa-heart-icon', onDead: onDeadCb }
+            : (cfg || {});
+        let lives = options.initial !== undefined ? options.initial : 5;
+        const counterEl = options.counterId ? document.getElementById(options.counterId) : document.getElementById('lives-counter');
+        const heartEl = options.heartId ? document.getElementById(options.heartId) : null;
 
         function update() {
             if (counterEl) counterEl.textContent = lives;
@@ -435,7 +438,15 @@
 
         this.get = () => lives;
         this.set = (n) => { lives = n; update(); };
-        this.add = (n = 1) => { lives += n; update(); };
+        this.add = (n = 1, reason = 'bonus') => {
+            const before = lives;
+            lives += n;
+            update();
+            trackEvent('extra_life', {
+                lives: lives,
+                extraDetails: `before: ${before} | after: ${lives} | added: ${n} | reason: ${reason}`
+            });
+        };
         this.lose = (n = 1) => { lives = Math.max(0, lives - n); update(); };
         this.isDead = () => lives <= 0;
 
@@ -582,12 +593,20 @@
                 }
             }
             if (titleEl) {
-                const defaultTitle = isWin ? 'COMPLETED!' : (isPartial ? 'GRITTY FINISH!' : 'GAME OVER');
+                const defaultTitle = isWin
+                    ? (typeof FootyI18n !== 'undefined' ? FootyI18n.t('outcome_win_title') : 'COMPLETED!')
+                    : (isPartial
+                        ? (typeof FootyI18n !== 'undefined' ? FootyI18n.t('outcome_partial_title') : 'GRITTY FINISH!')
+                        : (typeof FootyI18n !== 'undefined' ? FootyI18n.t('outcome_loss_title') : 'GAME OVER'));
                 titleEl.textContent = opts.title || defaultTitle;
                 titleEl.className = `font-headline text-3xl sm:text-4xl uppercase italic tracking-wide ${isWin ? 'text-accent' : (isPartial ? 'text-amber-400' : 'text-error')}`;
             }
             if (msgEl) {
-                const defaultMsg = isWin ? '' : (isPartial ? `You reached the final whistle! Score: ${opts.score}/${opts.maxScore}. Not a clean sheet, but a resilient shift.` : '');
+                const defaultMsg = isWin ? '' : (isPartial
+                    ? (typeof FootyI18n !== 'undefined'
+                        ? FootyI18n.t('outcome_partial_default_msg', { score: opts.score, maxScore: opts.maxScore })
+                        : `You reached the final whistle! Score: ${opts.score}/${opts.maxScore}. Not a clean sheet, but a resilient shift.`)
+                    : (typeof FootyI18n !== 'undefined' ? FootyI18n.t('outcome_loss_default_msg') : ''));
                 msgEl.textContent = opts.message || defaultMsg;
             }
             if (scoreEl) {
@@ -688,11 +707,14 @@
             }
 
             if (emojiPreviewEl) {
+                const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang() === 'es');
+                const cardLabel = isEs ? 'Tu Tarjeta para Compartir' : 'Your Share Card';
+                const cardTitle = isEs ? 'Clic para copiar resultado' : 'Click to copy result';
                 emojiPreviewEl.innerHTML = `
-                    <div class="text-[10px] uppercase font-mono tracking-widest text-on-surface-variant mb-0.5">Your Share Card</div>
+                    <div class="text-[10px] uppercase font-mono tracking-widest text-on-surface-variant mb-0.5">${cardLabel}</div>
                     <div class="whitespace-pre-line font-medium">${emojiGrid}</div>
                 `;
-                emojiPreviewEl.title = 'Click to copy result';
+                emojiPreviewEl.title = cardTitle;
                 emojiPreviewEl.onclick = () => share(opts);
             }
 
@@ -852,11 +874,18 @@
         const shareSource = source || opts.shareSource || opts.source || 'share';
         const url = buildShareUrl(opts.url, shareSource);
 
-        let titleLine = `⚽ Playmaker: ${opts.gameName || 'Daily Football Quiz'} #${puzzleNum}`;
+        const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang() === 'es') ||
+                     (typeof window !== 'undefined' && window.location && window.location.pathname.includes('/es/'));
+
+        let titleLine = isEs
+            ? `⚽ Playmaker: ${opts.gameName || (typeof FootyI18n !== 'undefined' ? FootyI18n.t('game_' + gameId) : 'Trivia de Fútbol')} #${puzzleNum}`
+            : `⚽ Playmaker: ${opts.gameName || 'Daily Football Quiz'} #${puzzleNum}`;
         let subLine = '';
         let emojiGrid = opts.customEmojiGrid || '';
         let statusLine = '';
-        const challengeLine = 'Can you beat my score?';
+        const challengeLine = isEs
+            ? (typeof FootyI18n !== 'undefined' ? FootyI18n.t('share_challenge') : '¿Puedes superar mi puntuación?')
+            : 'Can you beat my score?';
 
         if (!emojiGrid) {
             emojiGrid = buildEmojiGrid(score, maxScore, won, isPartial);
@@ -864,77 +893,135 @@
 
         switch (gameId) {
             case 'top_transfers': {
-                titleLine = `⚽ Playmaker: Top Transfers #${puzzleNum}`;
-                const target = opts.targetName || (typeof DAILY_TRANSFER_GAME !== 'undefined' ? DAILY_TRANSFER_GAME.name : 'Record Transfers');
-                subLine = `🏛️ ${target}: Record Transfers`;
-                statusLine = won 
-                    ? `🏆 ALL ${maxScore} TRANSFERS FOUND! · ❤️ ${lives} left`
-                    : (isPartial
-                        ? `🎖️ BOARD CLEARED! · ${score}/${maxScore} transfers found · ❤️ ${lives} left`
-                        : `🎯 ${score}/${maxScore} transfers found · ❤️ ${lives} left`);
+                titleLine = isEs ? `⚽ Playmaker: Top Fichajes #${puzzleNum}` : `⚽ Playmaker: Top Transfers #${puzzleNum}`;
+                const target = opts.targetName || (typeof DAILY_TRANSFER_GAME !== 'undefined' ? DAILY_TRANSFER_GAME.name : (isEs ? 'Fichajes Récord' : 'Record Transfers'));
+                subLine = isEs ? `🏛️ ${target}: Fichajes Récord` : `🏛️ ${target}: Record Transfers`;
+                if (isEs) {
+                    statusLine = won 
+                        ? `🏆 ¡TODOS LOS ${maxScore} FICHAJES ENCONTRADOS! · ❤️ ${lives} vidas`
+                        : (isPartial
+                            ? `🎖️ ¡TABLERO COMPLETADO! · ${score}/${maxScore} fichajes encontrados · ❤️ ${lives} vidas`
+                            : `🎯 ${score}/${maxScore} fichajes encontrados · ❤️ ${lives} vidas`);
+                } else {
+                    statusLine = won 
+                        ? `🏆 ALL ${maxScore} TRANSFERS FOUND! · ❤️ ${lives} left`
+                        : (isPartial
+                            ? `🎖️ BOARD CLEARED! · ${score}/${maxScore} transfers found · ❤️ ${lives} left`
+                            : `🎯 ${score}/${maxScore} transfers found · ❤️ ${lives} left`);
+                }
                 break;
             }
             case 'transfer_destination': {
-                titleLine = `⚽ Playmaker: Transfer Destination #${puzzleNum}`;
-                subLine = `🧭 Mystery Player Career Path (${maxScore} Transfers)`;
-                statusLine = won
-                    ? `🌟 CAREER PATH COMPLETED! · ❤️ ${lives} left`
-                    : (isPartial
-                        ? `🎖️ CAREER SURVIVED! · ${score}/${maxScore} clubs guessed backwards · ❤️ ${lives} left`
-                        : `🎯 ${score}/${maxScore} clubs guessed backwards · ❤️ ${lives} left`);
+                titleLine = isEs ? `⚽ Playmaker: Destino de Fichaje #${puzzleNum}` : `⚽ Playmaker: Transfer Destination #${puzzleNum}`;
+                subLine = isEs ? `🧭 Trayectoria del Jugador (${maxScore} Fichajes)` : `🧭 Mystery Player Career Path (${maxScore} Transfers)`;
+                if (isEs) {
+                    statusLine = won
+                        ? `🌟 ¡TRAYECTORIA COMPLETADA! · ❤️ ${lives} vidas`
+                        : (isPartial
+                            ? `🎖️ ¡TRAYECTORIA SUPERADA! · ${score}/${maxScore} clubes adivinados · ❤️ ${lives} vidas`
+                            : `🎯 ${score}/${maxScore} clubes adivinados · ❤️ ${lives} vidas`);
+                } else {
+                    statusLine = won
+                        ? `🌟 CAREER PATH COMPLETED! · ❤️ ${lives} left`
+                        : (isPartial
+                            ? `🎖️ CAREER SURVIVED! · ${score}/${maxScore} clubs guessed backwards · ❤️ ${lives} left`
+                            : `🎯 ${score}/${maxScore} clubs guessed backwards · ❤️ ${lives} left`);
+                }
                 break;
             }
             case 'club_connect': {
-                titleLine = `⚽ Playmaker: Club Connect #${puzzleNum}`;
-                subLine = `🔍 Mystery Club Connection`;
-                statusLine = won
-                    ? `✨ CONNECTED IN ${score} REVEAL${score > 1 ? 'S' : ''}! · ❤️ ${lives} left`
-                    : `❌ Connection Missed · 💔 Out of lives`;
+                titleLine = isEs ? `⚽ Playmaker: Conexión de Clubes #${puzzleNum}` : `⚽ Playmaker: Club Connect #${puzzleNum}`;
+                subLine = isEs ? `🔍 Conexión de Club Misterioso` : `🔍 Mystery Club Connection`;
+                if (isEs) {
+                    statusLine = won
+                        ? `✨ ¡CONECTADO EN ${score} PISTA${score > 1 ? 'S' : ''}! · ❤️ ${lives} vidas`
+                        : `❌ Conexión Fallida · 💔 Sin vidas`;
+                } else {
+                    statusLine = won
+                        ? `✨ CONNECTED IN ${score} REVEAL${score > 1 ? 'S' : ''}! · ❤️ ${lives} left`
+                        : `❌ Connection Missed · 💔 Out of lives`;
+                }
                 break;
             }
             case 'player_chain': {
-                titleLine = `⚽ Playmaker: Player Chain #${puzzleNum}`;
-                subLine = `🔗 Teammate Chain (${maxScore} Steps)`;
+                titleLine = isEs ? `⚽ Playmaker: Cadena de Jugadores #${puzzleNum}` : `⚽ Playmaker: Player Chain #${puzzleNum}`;
+                subLine = isEs ? `🔗 Cadena de Compañeros (${maxScore} Pasos)` : `🔗 Teammate Chain (${maxScore} Steps)`;
                 if (opts.didInstantWin) {
-                    statusLine = `⭐️ INSTANT WIN! · 🎯 1-step direct teammate connection!`;
+                    statusLine = isEs
+                        ? `⭐️ ¡VICTORIA DIRECTA! · 🎯 ¡Conexión en 1 solo paso!`
+                        : `⭐️ INSTANT WIN! · 🎯 1-step direct teammate connection!`;
                 } else {
-                    statusLine = won
-                        ? `✅ PERFECT CHAIN! · ❤️ ${lives} left`
-                        : (isPartial
-                            ? `🎖️ CHAIN SURVIVED! · ${score}/${maxScore} steps solved · ❤️ ${lives} left`
-                            : `🎯 ${score}/${maxScore} steps solved · ❤️ ${lives} left`);
+                    if (isEs) {
+                        statusLine = won
+                            ? `✅ ¡CADENA PERFECTA! · ❤️ ${lives} vidas`
+                            : (isPartial
+                                ? `🎖️ ¡CADENA SUPERADA! · ${score}/${maxScore} pasos resueltos · ❤️ ${lives} vidas`
+                                : `🎯 ${score}/${maxScore} pasos resueltos · ❤️ ${lives} vidas`);
+                    } else {
+                        statusLine = won
+                            ? `✅ PERFECT CHAIN! · ❤️ ${lives} left`
+                            : (isPartial
+                                ? `🎖️ CHAIN SURVIVED! · ${score}/${maxScore} steps solved · ❤️ ${lives} left`
+                                : `🎯 ${score}/${maxScore} steps solved · ❤️ ${lives} left`);
+                    }
                 }
                 break;
             }
             case 'top_scorers': {
-                titleLine = `⚽ Playmaker: Top Scorers #${puzzleNum}`;
-                const target = opts.targetName || (typeof DAILY_SCORERS_GAME !== 'undefined' ? `${DAILY_SCORERS_GAME.league} ${DAILY_SCORERS_GAME.season}` : 'Golden Boot');
-                subLine = `🏆 ${target} Golden Boot`;
-                statusLine = won
-                    ? `👑 ALL ${maxScore} TOP SCORERS FOUND! · ❤️ ${lives} left`
-                    : (isPartial
-                        ? `🎖️ BOARD CLEARED! · ${score}/${maxScore} top scorers guessed · ❤️ ${lives} left`
-                        : `🎯 ${score}/${maxScore} top scorers guessed · ❤️ ${lives} left`);
+                titleLine = isEs ? `⚽ Playmaker: Máximos Goleadores #${puzzleNum}` : `⚽ Playmaker: Top Scorers #${puzzleNum}`;
+                const target = opts.targetName || (typeof DAILY_SCORERS_GAME !== 'undefined' ? `${DAILY_SCORERS_GAME.league} ${DAILY_SCORERS_GAME.season}` : (isEs ? 'Bota de Oro' : 'Golden Boot'));
+                subLine = isEs ? `🏆 ${target} Bota de Oro` : `🏆 ${target} Golden Boot`;
+                if (isEs) {
+                    statusLine = won
+                        ? `👑 ¡TODOS LOS ${maxScore} GOLEADORES ENCONTRADOS! · ❤️ ${lives} vidas`
+                        : (isPartial
+                            ? `🎖️ ¡TABLERO COMPLETADO! · ${score}/${maxScore} goleadores adivinados · ❤️ ${lives} vidas`
+                            : `🎯 ${score}/${maxScore} goleadores adivinados · ❤️ ${lives} vidas`);
+                } else {
+                    statusLine = won
+                        ? `👑 ALL ${maxScore} TOP SCORERS FOUND! · ❤️ ${lives} left`
+                        : (isPartial
+                            ? `🎖️ BOARD CLEARED! · ${score}/${maxScore} top scorers guessed · ❤️ ${lives} left`
+                            : `🎯 ${score}/${maxScore} top scorers guessed · ❤️ ${lives} left`);
+                }
                 break;
             }
             case 'passport_fc': {
-                titleLine = `⚽ Playmaker: Passport FC #${puzzleNum}`;
-                const club = opts.targetName || (typeof DAILY_PASSPORT_GAME !== 'undefined' ? DAILY_PASSPORT_GAME.club : 'Club Passport');
-                subLine = `✈️ Club Passport: ${club}`;
-                statusLine = won
-                    ? `🌟 PASSPORT COMPLETED! · ❤️ ${lives} left`
-                    : (isPartial
-                        ? `🎖️ LADDER SURVIVED! · ${score}/${maxScore} stamps collected · ❤️ ${lives} left`
-                        : `🎯 ${score}/${maxScore} stamps collected · ❤️ ${lives} left`);
+                titleLine = isEs ? `⚽ Playmaker: Pasaporte FC #${puzzleNum}` : `⚽ Playmaker: Passport FC #${puzzleNum}`;
+                const club = opts.targetName || (typeof DAILY_PASSPORT_GAME !== 'undefined' ? DAILY_PASSPORT_GAME.club : (isEs ? 'Pasaporte de Club' : 'Club Passport'));
+                subLine = isEs ? `✈️ Pasaporte de Club: ${club}` : `✈️ Club Passport: ${club}`;
+                if (isEs) {
+                    statusLine = won
+                        ? `🌟 ¡PASAPORTE COMPLETADO! · ❤️ ${lives} vidas`
+                        : (isPartial
+                            ? `🎖️ ¡PASAPORTE SUPERADO! · ${score}/${maxScore} sellos obtenidos · ❤️ ${lives} vidas`
+                            : `🎯 ${score}/${maxScore} sellos obtenidos · ❤️ ${lives} vidas`);
+                } else {
+                    statusLine = won
+                        ? `🌟 PASSPORT COMPLETED! · ❤️ ${lives} left`
+                        : (isPartial
+                            ? `🎖️ LADDER SURVIVED! · ${score}/${maxScore} stamps collected · ❤️ ${lives} left`
+                            : `🎯 ${score}/${maxScore} stamps collected · ❤️ ${lives} left`);
+                }
                 break;
             }
             default: {
-                titleLine = `⚽ Playmaker: ${opts.gameName || 'Daily Quiz'} #${puzzleNum}`;
-                statusLine = won 
-                    ? `✅ ${score}/${maxScore} correct · ❤️ ${lives} left` 
-                    : (isPartial
-                        ? `🎖️ ${score}/${maxScore} correct · ❤️ ${lives} left`
-                        : `❌ ${score}/${maxScore} correct · ❤️ ${lives} left`);
+                titleLine = isEs
+                    ? `⚽ Playmaker: ${opts.gameName || 'Trivia de Fútbol'} #${puzzleNum}`
+                    : `⚽ Playmaker: ${opts.gameName || 'Daily Quiz'} #${puzzleNum}`;
+                if (isEs) {
+                    statusLine = won 
+                        ? `✅ ${score}/${maxScore} correctos · ❤️ ${lives} vidas` 
+                        : (isPartial
+                            ? `🎖️ ${score}/${maxScore} correctos · ❤️ ${lives} vidas`
+                            : `❌ ${score}/${maxScore} correctos · ❤️ ${lives} vidas`);
+                } else {
+                    statusLine = won 
+                        ? `✅ ${score}/${maxScore} correct · ❤️ ${lives} left` 
+                        : (isPartial
+                            ? `🎖️ ${score}/${maxScore} correct · ❤️ ${lives} left`
+                            : `❌ ${score}/${maxScore} correct · ❤️ ${lives} left`);
+                }
                 break;
             }
         }
@@ -1086,6 +1173,10 @@
      * @param {Function} [opts.onCancel]
      */
     function confirmModal(opts) {
+        const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang() === 'es');
+        const defaultCancel = isEs ? 'CANCELAR' : 'CANCEL';
+        const defaultConfirm = isEs ? 'CONFIRMAR' : 'CONFIRM';
+
         const backdrop = document.createElement('div');
         backdrop.className = 'fa-confirm-backdrop';
 
@@ -1097,10 +1188,10 @@
             <p class="text-on-surface-variant text-sm mb-6">${opts.message}</p>
             <div class="flex gap-3 justify-center">
                 <button id="fa-confirm-cancel" class="flex-1 py-2.5 bg-surface-container-high border border-white/10 text-white font-headline text-md uppercase italic rounded-xl hover:bg-surface-container-highest transition-all">
-                    ${opts.cancelText || 'CANCEL'}
+                    ${opts.cancelText || defaultCancel}
                 </button>
                 <button id="fa-confirm-ok" class="flex-1 py-2.5 bg-accent text-black font-headline text-md uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all">
-                    ${opts.confirmText || 'CONFIRM'}
+                    ${opts.confirmText || defaultConfirm}
                 </button>
             </div>
         `;
@@ -1356,6 +1447,13 @@
             url: window.location.href
         };
 
+        trackEvent('var_appeal', {
+            gameId: gameId,
+            puzzleNum: puzzleNum,
+            guess: opts.guess,
+            extraDetails: `theme: ${opts.theme || ''} | context: ${opts.context || ''}`
+        });
+
         fetch(FEEDBACK_WEBHOOK_URL, {
             method: 'POST',
             headers: {
@@ -1366,11 +1464,25 @@
         .then(res => res.json())
         .then(data => {
             clearInterval(msgInterval);
+            trackEvent('var_decision', {
+                gameId: gameId,
+                puzzleNum: puzzleNum,
+                guess: opts.guess,
+                isCorrect: data.accepted === true,
+                extraDetails: `accepted: ${data.accepted} | reason: ${data.reason || ''} | stat: ${data.stat || ''}`
+            });
             renderDecision(data);
         })
         .catch(err => {
             console.error('[FootyUI] VAR check request failed:', err);
             clearInterval(msgInterval);
+            trackEvent('var_decision', {
+                gameId: gameId,
+                puzzleNum: puzzleNum,
+                guess: opts.guess,
+                isCorrect: false,
+                extraDetails: 'error: unable to reach VAR review server'
+            });
             renderDecision({
                 accepted: false,
                 reason: 'Unable to reach VAR review server. Please check connection.'
@@ -1688,15 +1800,21 @@
      */
     function buildBackInTimeLinks(gameId, maxDays, storage, currentPuzzleNum) {
         maxDays = maxDays || 7;
-        const labels = ['Yesterday', '2 days ago', '3 days ago', '4 days ago',
+        const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang() === 'es');
+        const enLabels = ['Yesterday', '2 days ago', '3 days ago', '4 days ago',
             '5 days ago', '6 days ago', '7 days ago',
             '8 days ago', '9 days ago', '10 days ago'];
+        const esLabels = ['Ayer', 'Hace 2 días', 'Hace 3 días', 'Hace 4 días',
+            'Hace 5 días', 'Hace 6 días', 'Hace 7 días',
+            'Hace 8 días', 'Hace 9 días', 'Hace 10 días'];
+        const labels = isEs ? esLabels : enLabels;
+
         const links = [];
         for (let d = 1; d <= maxDays; d++) {
             if (typeof currentPuzzleNum === 'number' && (currentPuzzleNum - d) < 1) {
                 break;
             }
-            const label = labels[d - 1] || `${d} days ago`;
+            const label = labels[d - 1] || (isEs ? `Hace ${d} días` : `${d} days ago`);
             links.push({
                 label,
                 href: `${gameId}_d${d}.html`
@@ -1728,11 +1846,12 @@
     // 9. Utility helpers
     // ────────────────────────────────────────────────────────
     function formatFee(val) {
+        const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang() === 'es');
         const fee = parseFloat(val);
-        if (isNaN(fee) || fee === 0) return 'Free / Loan';
+        if (isNaN(fee) || fee === 0) return isEs ? 'Libre / Cesión' : 'Free / Loan';
         if (fee >= 1000000) return `€${(fee / 1000000).toFixed(1)}M`;
         if (fee >= 1000) return `€${(fee / 1000).toFixed(0)}K`;
-        return 'Free';
+        return isEs ? 'Gratis' : 'Free';
     }
 
     function todayStr() {
@@ -1801,24 +1920,30 @@
         const isGame = window.location.pathname.includes('/games/');
         const privacyPath = isGame ? '../privacy.html' : 'privacy.html';
         const termsPath = isGame ? '../terms.html' : 'terms.html';
+        const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang() === 'es');
+
+        const title = isEs ? 'Uso de Cookies' : 'Cookie Consent';
+        const bodyText = isEs
+            ? `Utilizamos cookies para analizar el tráfico, registrar errores y mejorar tu experiencia de juego. Al pulsar "ACEPTAR TODO", aceptas nuestra <a href="${privacyPath}" class="text-accent underline hover:brightness-110">Política de Privacidad</a> y nuestros <a href="${termsPath}" class="text-accent underline hover:brightness-110">Términos y Condiciones</a>.`
+            : `We use cookies to analyze traffic, track errors, and improve your trivia experience. By clicking "ACCEPT ALL", you agree to our <a href="${privacyPath}" class="text-accent underline hover:brightness-110">Privacy Policy</a> and <a href="${termsPath}" class="text-accent underline hover:brightness-110">Terms & Conditions</a>.`;
+        const declineText = isEs ? 'RECHAZAR' : 'DECLINE';
+        const acceptText = isEs ? 'ACEPTAR TODO' : 'ACCEPT ALL';
 
         banner.innerHTML = `
             <div class="fa-consent-content">
                 <span class="material-symbols-outlined text-accent text-2xl shrink-0">cookie</span>
                 <div class="space-y-1 text-left flex-grow">
-                    <h5 class="font-title text-sm font-bold text-white uppercase tracking-wider">Cookie Consent</h5>
+                    <h5 class="font-title text-sm font-bold text-white uppercase tracking-wider">${title}</h5>
                     <p class="text-on-surface-variant text-xs leading-relaxed max-w-lg">
-                        We use cookies to analyze traffic, track errors, and improve your trivia experience. By clicking "ACCEPT ALL", you agree to our 
-                        <a href="${privacyPath}" class="text-accent underline hover:brightness-110">Privacy Policy</a> and 
-                        <a href="${termsPath}" class="text-accent underline hover:brightness-110">Terms & Conditions</a>.
+                        ${bodyText}
                     </p>
                 </div>
                 <div class="flex gap-2 shrink-0 w-full sm:w-auto justify-end">
                     <button id="fa-consent-decline" class="px-4 py-2 bg-surface border border-white/10 text-on-surface-variant hover:text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all">
-                        DECLINE
+                        ${declineText}
                     </button>
                     <button id="fa-consent-accept" class="px-4 py-2 bg-accent text-black hover:brightness-110 active:scale-95 rounded-xl text-xs font-bold uppercase tracking-wider transition-all">
-                        ACCEPT ALL
+                        ${acceptText}
                     </button>
                 </div>
             </div>
@@ -1918,8 +2043,12 @@
             puzzleNum: params.puzzleNum !== undefined ? params.puzzleNum : meta.puzzleNum,
             score: params.score,
             maxScore: params.maxScore,
-            lives: params.lives,
+            lives: params.lives !== undefined ? params.lives : params.livesLeft,
             won: params.won,
+            isCorrect: params.isCorrect !== undefined ? params.isCorrect : (params.correct !== undefined ? params.correct : undefined),
+            guess: params.guess !== undefined ? params.guess : undefined,
+            step: params.step !== undefined ? params.step : (params.slot !== undefined ? params.slot : undefined),
+            target: params.target !== undefined ? params.target : undefined,
             isBackInTime: params.isBackInTime !== undefined ? params.isBackInTime : meta.isBackInTime,
             extraDetails: extraDetails,
             url: window.location.href,
@@ -1983,13 +2112,14 @@
     }
 
     function initFeedbackSystem() {
+        const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang() === 'es');
         // Create floating button
         const trigger = document.createElement('button');
         trigger.className = 'fa-feedback-trigger';
         trigger.id = 'fa-feedback-btn';
         trigger.innerHTML = `
             <span class="material-symbols-outlined" style="font-size: 18px">rate_review</span>
-            <span>Feedback</span>
+            <span>${isEs ? 'Comentarios' : 'Feedback'}</span>
         `;
         document.body.appendChild(trigger);
 
@@ -2002,33 +2132,33 @@
                 <button id="fa-feedback-close" class="absolute top-4 right-4 text-on-surface-variant hover:text-white transition-colors" type="button">
                     <span class="material-symbols-outlined text-2xl">close</span>
                 </button>
-                <h4 class="font-headline text-2xl text-accent uppercase italic tracking-wide mb-2">SEND FEEDBACK</h4>
-                <p class="text-on-surface-variant text-xs mb-4">Have a bug report or a suggestion? Let us know!</p>
+                <h4 class="font-headline text-2xl text-accent uppercase italic tracking-wide mb-2">${isEs ? 'ENVIAR COMENTARIOS' : 'SEND FEEDBACK'}</h4>
+                <p class="text-on-surface-variant text-xs mb-4">${isEs ? '¿Tienes una sugerencia o encontraste un error? ¡Cuéntanos!' : 'Have a bug report or a suggestion? Let us know!'}</p>
                 
                 <form id="fa-feedback-form" class="space-y-4 text-left">
                     <div>
-                        <label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-1.5">Category</label>
+                        <label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-1.5">${isEs ? 'Categoría' : 'Category'}</label>
                         <select id="fa-feedback-category" class="fa-feedback-input" style="color-scheme: dark;" required>
-                            <option value="Suggestion">Suggestion</option>
-                            <option value="Bug Report">Bug Report</option>
-                            <option value="Question">Question</option>
-                            <option value="Other">Other</option>
+                            <option value="Suggestion">${isEs ? 'Sugerencia' : 'Suggestion'}</option>
+                            <option value="Bug Report">${isEs ? 'Reporte de Error' : 'Bug Report'}</option>
+                            <option value="Question">${isEs ? 'Pregunta' : 'Question'}</option>
+                            <option value="Other">${isEs ? 'Otro' : 'Other'}</option>
                         </select>
                     </div>
                     
                     <div>
-                        <label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-1.5">Your Message</label>
-                        <textarea id="fa-feedback-message" rows="4" class="fa-feedback-input" placeholder="What's on your mind?..." required></textarea>
+                        <label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-1.5">${isEs ? 'Tu Mensaje' : 'Your Message'}</label>
+                        <textarea id="fa-feedback-message" rows="4" class="fa-feedback-input" placeholder="${isEs ? '¿Qué te gustaría decirnos?...' : "What's on your mind?..."}" required></textarea>
                     </div>
                     
                     <div>
-                        <label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-1.5">Email (Optional)</label>
+                        <label class="block text-[10px] font-mono uppercase tracking-widest text-on-surface-variant mb-1.5">${isEs ? 'Correo Electrónico (Opcional)' : 'Email (Optional)'}</label>
                         <input type="email" id="fa-feedback-email" class="fa-feedback-input" placeholder="your@email.com">
                     </div>
                     
                     <div class="pt-2">
                         <button type="submit" id="fa-feedback-submit" class="w-full py-3 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2">
-                            SUBMIT FEEDBACK
+                            ${isEs ? 'ENVIAR COMENTARIOS' : 'SUBMIT FEEDBACK'}
                         </button>
                     </div>
                 </form>
@@ -2064,7 +2194,7 @@
             const host = window.location.hostname;
             const path = window.location.pathname;
             if (host !== 'playmaker.best' && host !== 'www.playmaker.best') {
-                toast('Feedback is only submitted on the live site.', 'info');
+                toast(isEs ? 'Los comentarios solo se envían en el sitio oficial.' : 'Feedback is only submitted on the live site.', 'info');
                 return;
             }
             if (path.includes('/templates/') || path.endsWith('_template.html')) {
@@ -2076,7 +2206,7 @@
             const email = modal.querySelector('#fa-feedback-email').value;
 
             submitBtn.disabled = true;
-            submitBtn.textContent = 'SUBMITTING...';
+            submitBtn.textContent = isEs ? 'ENVIANDO...' : 'SUBMITTING...';
 
             const payload = {
                 type: 'feedback',
@@ -2103,17 +2233,17 @@
                     body: JSON.stringify(payload)
                 });
 
-                toast('Feedback submitted! Thank you.', 'success');
+                toast(isEs ? '¡Comentarios enviados! Muchas gracias.' : 'Feedback submitted! Thank you.', 'success');
                 trackEvent('feedback_submit', { extraDetails: category });
                 modal.querySelector('#fa-feedback-message').value = '';
                 modal.querySelector('#fa-feedback-email').value = '';
                 closeModal();
             } catch (err) {
                 console.error('[FootyUI] Feedback submission error:', err);
-                toast('Error submitting feedback. Please try again.', 'error');
+                toast(isEs ? 'Error al enviar comentarios. Por favor intenta de nuevo.' : 'Error submitting feedback. Please try again.', 'error');
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'SUBMIT FEEDBACK';
+                submitBtn.textContent = isEs ? 'ENVIAR COMENTARIOS' : 'SUBMIT FEEDBACK';
             }
         });
     }
@@ -2321,18 +2451,34 @@
         });
     }
 
+    // ── Language Switcher Integration ────────────────────────
+    function initLanguageSwitcher(containerId = 'lang-switcher') {
+        if (typeof FootyI18n === 'undefined') return;
+        const container = document.getElementById(containerId);
+        if (container) {
+            const isEs = FootyI18n.getLang() === 'es';
+            container.innerHTML = `
+                <a href="${FootyI18n.getCounterpartUrl('en')}" onclick="FootyI18n.setLang('en')" class="px-2 py-0.5 rounded transition-all ${!isEs ? 'bg-accent/20 text-accent font-bold shadow-sm' : 'text-on-surface-variant hover:text-white'}" title="Switch to English">EN</a>
+                <span class="text-white/20 text-[10px] select-none">|</span>
+                <a href="${FootyI18n.getCounterpartUrl('es')}" onclick="FootyI18n.setLang('es')" class="px-2 py-0.5 rounded transition-all ${isEs ? 'bg-accent/20 text-accent font-bold shadow-sm' : 'text-on-surface-variant hover:text-white'}" title="Cambiar a Español">ES</a>
+            `;
+        }
+    }
+
     // Auto-init on DOM ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             initAnalyticsAndConsent();
             initFeedbackSystem();
             initPWAInstall();
+            initLanguageSwitcher();
             trackEvent('page_view');
         });
     } else {
         initAnalyticsAndConsent();
         initFeedbackSystem();
         initPWAInstall();
+        initLanguageSwitcher();
         trackEvent('page_view');
     }
 
@@ -2362,6 +2508,13 @@
         startVarReview,
         getVarState: () => varState,
         trackEvent,
+        trackGuess: (params) => trackEvent('guess', params),
+        trackHint: (params) => trackEvent('hint', params),
+        trackSkip: (params) => trackEvent('skip', params),
+        trackGiveUp: (params) => trackEvent('give_up', params),
+        trackExtraLife: (params) => trackEvent('extra_life', params),
+        trackVarAppeal: (params) => trackEvent('var_appeal', params),
+        trackVarDecision: (params) => trackEvent('var_decision', params),
         syncPuzzleOverrides,
         getVisitorId,
         getSessionId,
@@ -2370,7 +2523,8 @@
         isClubMatch,
         initPWAInstall,
         showIOSInstallSheet,
-        renderPWABanner
+        renderPWABanner,
+        initLanguageSwitcher
     };
 
 })(window);
