@@ -355,6 +355,8 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         ('Transfer data sourced from Transfermarkt. Updated to June 2026.', 'Datos de transferencias de Transfermarkt. Actualizados a junio de 2026.'),
         ('Transfer data sourced from Transfermarkt. Updated to July 2026.', 'Datos de transferencias de Transfermarkt. Actualizados a junio de 2026.'),
         ('Transfer data sourced from Transfermarkt. Updated to September 2026.', 'Datos de transferencias de Transfermarkt. Actualizados a junio de 2026.'),
+        ('Connect consecutive clubs through shared teammates to uncover the mystery player of the day. Each step adds a new club or national team constraint. Guess an eligible teammate to advance, or identify the mystery player directly for an instant win!', 'Conecta clubes consecutivos mediante compañeros de equipo para descubrir al jugador misterioso del día. Cada paso añade una restricción de club o selección. ¡Adivina un compañero válido para avanzar o identifica al jugador misterioso directamente para ganar!'),
+        ('Career & transfer data sourced from Transfermarkt. Updated to June 2026.', 'Datos de trayectoria y traspasos de Transfermarkt. Actualizados a junio de 2026.'),
         # Accessibility & Button titles
         ('aria-label="How to play instructions"', 'aria-label="Instrucciones de cómo jugar"'),
         ('title="How to play"', 'title="Cómo jugar"'),

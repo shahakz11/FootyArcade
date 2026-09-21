@@ -41,7 +41,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Archivo+Narrow:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <!-- Shared Playmaker styles -->
-    <link rel="stylesheet" href="../../games/footy-ui.css?v=2"/>
+    <link rel="stylesheet" href="../../games/footy-ui.css?v=6"/>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -259,6 +259,16 @@
             <div id="wrong-guesses-container" class="flex flex-wrap gap-2 justify-center"></div>
         </section>
 
+        <!-- SEO: How to Play + More Daily Challenges -->
+        <section class="max-w-4xl mx-auto space-y-8 mt-12 pt-8 border-t border-white/5">
+            <div class="glass-card rounded-2xl p-6 space-y-3">
+                <h2 class="font-headline text-xl uppercase italic text-accent">CÓMO JUGAR</h2>
+                <p class="font-body text-on-surface-variant text-sm leading-relaxed">Adivina los 10 fichajes récord de un club o nacionalidad antes de quedarte sin vidas. Cada acierto revela el nombre del jugador y su coste. Usa las pistas gratuitas para revelar información. ¡Juega a diario y comparte tus resultados estilo Wordle!</p>
+                <p class="font-body text-on-surface-variant/60 text-xs">Datos de transferencias de Transfermarkt. Actualizados a junio de 2026.</p>
+            </div>
+            <div id="fa-game-suggestions" data-current-game="top_transfers"></div>
+        </section>
+
     </main>
 
     <!-- Footer -->
@@ -358,8 +368,8 @@
     </div>
 
     <!-- Shared Playmaker JS library -->
-    <script src="../../games/footy-i18n.js"></script>
-    <script src="../../games/footy-ui.js?v=2"></script>
+    <script src="../../games/footy-i18n.js?v=6"></script>
+    <script src="../../games/footy-ui.js?v=6"></script>
 
 
     <script id="daily-game-data">
@@ -1103,42 +1113,5 @@
         });
     }
 </script>
-<!-- SEO: How to Play + Cross-Game Links (static, crawlable) -->
-<section class="max-w-4xl mx-auto px-6 mt-12 space-y-8 pb-8">
-    <div class="glass-card rounded-2xl p-6 space-y-3">
-        <h2 class="font-headline text-xl uppercase italic text-accent">CÓMO JUGAR</h2>
-        <p class="font-body text-on-surface-variant text-sm leading-relaxed">Adivina los 10 fichajes récord de un club o nacionalidad antes de quedarte sin vidas. Cada acierto revela el nombre del jugador y su coste. Usa las pistas gratuitas para revelar información. ¡Juega a diario y comparte tus resultados estilo Wordle!</p>
-        <p class="font-body text-on-surface-variant/60 text-xs">Datos de transferencias de Transfermarkt. Actualizados a junio de 2026.</p>
-    </div>
-    <div class="space-y-3">
-        <h3 class="font-title text-xs font-bold uppercase tracking-widest text-on-surface-variant">MÁS RETOS DIARIOS</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <a href="transfer_destination.html" class="glass-card rounded-xl p-4 flex items-center gap-3 group">
-                <span class="material-symbols-outlined text-2xl" style="color:#39ff14">alt_route</span>
-                <div>
-                    <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#39ff14">Destino de Fichaje</span>
-                    <p class="text-on-surface-variant text-xs">Adivina la trayectoria de un jugador</p>
-                </div>
-            </a>
-            <a href="top_scorers.html" class="glass-card rounded-xl p-4 flex items-center gap-3 group">
-                <span class="material-symbols-outlined text-2xl" style="color:#f59e0b">sports_soccer</span>
-                <div>
-                    <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#f59e0b">Máximos Goleadores</span>
-                    <p class="text-on-surface-variant text-xs">Nombra a los máximos goleadores</p>
-                </div>
-            </a>
-            <a href="club_connect.html" class="glass-card rounded-xl p-4 flex items-center gap-3 group sm:col-span-2">
-                <span class="material-symbols-outlined text-2xl" style="color:#e879f9">hub</span>
-                <div>
-                    <span class="font-headline text-sm uppercase italic group-hover:text-accent transition-colors" style="color:#e879f9">Conexión de Clubes</span>
-                    <p class="text-on-surface-variant text-xs">5 jugadores, 1 club los fichó a todos — descubre la conexión misteriosa</p>
-                </div>
-            </a>
-        </div>
-        <div class="text-center mt-4">
-            <a href="../index.html" class="font-mono text-xs uppercase tracking-wider text-on-surface-variant hover:text-accent transition-colors">← Volver a Playmaker</a>
-        </div>
-    </div>
-</section>
 </body>
 </html>

@@ -686,7 +686,13 @@ def main():
     with open('all_clubs.json', 'w', encoding='utf-8') as f_clubs:
         json.dump(all_autocomplete_clubs, f_clubs, ensure_ascii=False, indent=2)
     print(f"Successfully generated autocomplete club list with {len(all_autocomplete_clubs)} clubs in 'all_clubs.json'")
+    try:
+        from scripts.enrich_club_market_values import main as enrich_club_market_values
+        enrich_club_market_values()
+    except Exception as e:
+        print(f"Warning: Could not enrich club market values: {e}")
 
 if __name__ == '__main__':
     main()
+
 

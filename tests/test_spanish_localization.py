@@ -155,8 +155,7 @@ class TestSpanishLocalization(unittest.TestCase):
         self.assertIn("Adivinados:", tt_content)
         self.assertIn(">ADIVINAR<", tt_content)
         self.assertIn(">CÓMO JUGAR<", tt_content)
-        self.assertIn(">MÁS RETOS DIARIOS<", tt_content)
-        self.assertIn("Volver a Playmaker", tt_content)
+        self.assertIn('id="fa-game-suggestions"', tt_content)
 
         self.assertIn("Adivina los 10 fichajes récord", tt_content)
         self.assertIn("COMPARTIR", tt_content)
@@ -172,6 +171,7 @@ class TestSpanishLocalization(unittest.TestCase):
         self.assertIn(">ENVIAR<", td_content)
         self.assertIn("Escribe y selecciona el club...", td_content)
         self.assertIn(">CÓMO JUGAR<", td_content)
+        self.assertIn('id="fa-game-suggestions"', td_content)
         self.assertIn("COMPARTIR", td_content)
         self.assertIn("CERRAR", td_content)
 
@@ -183,7 +183,7 @@ class TestSpanishLocalization(unittest.TestCase):
         self.assertIn(">Partidos<", ts_content)
         self.assertIn(">Nacionalidad<", ts_content)
         self.assertIn("Adivina los máximos goleadores históricos", ts_content)
-        self.assertIn("Adivina los fichajes récord de clubes y países", ts_content)
+        self.assertIn('id="fa-game-suggestions"', ts_content)
 
         # Check club_connect
         cc_es = os.path.join(self.root_dir, "es", "games", "club_connect.html")
@@ -193,6 +193,7 @@ class TestSpanishLocalization(unittest.TestCase):
         self.assertIn("Escribe el nombre del club...", cc_content)
         self.assertIn("EL CLUB MISTERIOSO", cc_content)
         self.assertIn("¡CONECTADO!", cc_content)
+        self.assertIn('id="fa-game-suggestions"', cc_content)
 
         # Check player_chain
         pc_es = os.path.join(self.root_dir, "es", "games", "player_chain.html")
@@ -210,6 +211,7 @@ class TestSpanishLocalization(unittest.TestCase):
         self.assertIn("Tu elección:", pc_content)
         self.assertIn("Jugó en:", pc_content)
         self.assertIn("Mostrar los ${validList.length} futbolistas válidos", pc_content)
+        self.assertIn('id="fa-game-suggestions"', pc_content)
 
         # Check passport_fc
         pfc_es = os.path.join(self.root_dir, "es", "games", "passport_fc.html")
@@ -224,8 +226,7 @@ class TestSpanishLocalization(unittest.TestCase):
         self.assertIn("¿Qué es Pasaporte FC?", pfc_content)
         self.assertIn("Cobertura de la Base de Datos:", pfc_content)
         self.assertIn("Verificación VAR:", pfc_content)
-        self.assertIn("MÁS RETOS DIARIOS", pfc_content)
-        self.assertIn("Volver al Lobby de Playmaker", pfc_content)
+        self.assertIn('id="fa-game-suggestions"', pfc_content)
         self.assertIn("Política de Privacidad", pfc_content)
         self.assertIn("Términos y Condiciones", pfc_content)
         self.assertIn("ADIVINAR", pfc_content)

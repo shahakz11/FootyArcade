@@ -48,6 +48,19 @@
             game_this_and_that: 'This & That',
             game_anyone_but: 'Anyone But',
 
+            // More Daily Challenges suggestions
+            more_daily_challenges: 'MORE DAILY CHALLENGES',
+            tagline_top_transfers: 'Guess the record signings',
+            tagline_transfer_destination: "Guess a player's career path",
+            tagline_top_scorers: 'Name the top goalscorers',
+            tagline_club_connect: '5 players, 1 club signed them all',
+            tagline_player_chain: 'Connect consecutive clubs through shared teammates',
+            tagline_passport_fc: 'Collect nationality stamps for a mystery club',
+            badge_solved: 'SOLVED ✅',
+            badge_failed: 'FAILED ❌',
+            badge_played: 'FAILED ❌',
+            back_to_playmaker: '← Back to Playmaker',
+
             // Common Gameplay
             lives: 'Lives',
             guessed: 'Guessed',
@@ -148,6 +161,19 @@
             game_passport_fc: 'Pasaporte FC',
             game_this_and_that: 'Esto y Aquello',
             game_anyone_but: 'Cualquiera Menos',
+
+            // More Daily Challenges suggestions
+            more_daily_challenges: 'MÁS DESAFÍOS DIARIOS',
+            tagline_top_transfers: 'Adivina los fichajes récord',
+            tagline_transfer_destination: 'Adivina la trayectoria de un jugador',
+            tagline_top_scorers: 'Nombra a los máximos goleadores',
+            tagline_club_connect: '5 jugadores, 1 club los fichó a todos',
+            tagline_player_chain: 'Conecta clubes consecutivos mediante compañeros',
+            tagline_passport_fc: 'Colecciona sellos de nacionalidad para un club',
+            badge_solved: 'RESUELTO ✅',
+            badge_failed: 'FALLIDO ❌',
+            badge_played: 'FALLIDO ❌',
+            back_to_playmaker: '← Volver a Playmaker',
 
             // Common Gameplay
             lives: 'Vidas',

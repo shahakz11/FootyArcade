@@ -593,9 +593,9 @@ def api_search_clubs():
     sub_matches = []
     
     for c in clubs:
-        if not isinstance(c, str):
+        c_clean = (c.get("name") or c.get("Name") or "").strip() if isinstance(c, dict) else (c.strip() if isinstance(c, str) else "")
+        if not c_clean:
             continue
-        c_clean = c.strip()
         c_norm = normalize_search_text(c_clean)
         if c_norm.startswith(norm_q):
             prefix_matches.append(c_clean)

@@ -251,11 +251,11 @@ def get_hidden_players(config):
 
 def filter_and_canonicalize_clubs(club_list, config, as_objects=False):
     """
-    Takes a raw list of club names (strings):
+    Takes a raw list of club names (strings or dicts):
       1. Translates names to canonical display names using alias map.
-      2. Deduplicates while preserving order.
+      2. Deduplicates while preserving order or descending market value.
       3. Removes any club in the hidden set.
-      4. If as_objects=True, returns list of dicts: {'name': canonical, 'aliases': [...]}.
+      4. If as_objects=True, returns list of dicts: {'name': canonical, 'aliases': [...], 'market_value': ...}.
     Returns: cleaned list of strings or objects.
     """
     alias_map = get_club_alias_map(config)
@@ -264,11 +264,13 @@ def filter_and_canonicalize_clubs(club_list, config, as_objects=False):
     hidden_lower = {h.lower() for h in hidden_clubs}
 
     result = []
-    seen = set()
-
+    seen = {} # canonical.lower() -> index in result
+    
     for item in club_list:
+        val = 0
         if isinstance(item, dict):
             c = (item.get("name") or item.get("Name") or "").strip()
+            val = int(item.get("market_value") or item.get("MarketValue") or 0)
         elif isinstance(item, str):
             c = item.strip()
         else:
@@ -281,17 +283,41 @@ def filter_and_canonicalize_clubs(club_list, config, as_objects=False):
         if canonical.lower() in hidden_lower:
             continue
 
-        if canonical.lower() not in seen:
-            seen.add(canonical.lower())
+        c_lower = canonical.lower()
+        if c_lower not in seen:
+            seen[c_lower] = len(result)
             if as_objects:
                 result.append({
                     "name": canonical,
-                    "aliases": club_groups.get(canonical, [])
+                    "aliases": club_groups.get(canonical, []),
+                    "market_value": val
                 })
             else:
                 result.append(canonical)
+        else:
+            # If already seen as object and this instance has a higher market value, update it
+            if as_objects:
+                idx = seen[c_lower]
+                if val > result[idx].get("market_value", 0):
+                    result[idx]["market_value"] = val
+
+    # 5. Guarantee any configured club group is included if not already present
+    c_groups_list = config.get("clubs", {}).get("groups", [])
+    for g in c_groups_list:
+        d_name = g.get("display_name", "").strip()
+        if d_name and d_name.lower() not in seen and d_name.lower() not in hidden_lower:
+            seen[d_name.lower()] = len(result)
+            if as_objects:
+                result.append({
+                    "name": d_name,
+                    "aliases": g.get("aliases", []),
+                    "market_value": int(g.get("market_value", 0))
+                })
+            else:
+                result.append(d_name)
 
     return result
+
 
 
 def filter_and_canonicalize_players(player_list, config):

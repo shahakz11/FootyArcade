@@ -1783,7 +1783,30 @@
         /** Returns true if the user has already completed today's puzzle */
         this.hasPlayedToday = () => {
             const d = load();
-            return d.lastPlayedDate === todayStr();
+            if (d.lastPlayedDate === todayStr()) return true;
+            const today = todayStr();
+            for (const k in (d.history || {})) {
+                if (d.history[k] && d.history[k].date === today) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        /** Returns today's completed result if present */
+        this.getTodayResult = () => {
+            const d = load();
+            const today = todayStr();
+            if (d.lastPlayedDate === today && d.lastPuzzleNum !== null) {
+                const res = d.history[String(d.lastPuzzleNum)];
+                if (res) return res;
+            }
+            for (const k in (d.history || {})) {
+                if (d.history[k] && d.history[k].date === today) {
+                    return d.history[k];
+                }
+            }
+            return null;
         };
 
         /** Returns true if this specific puzzleNum is already in history */
@@ -2661,6 +2684,174 @@
         });
     }
 
+    // ────────────────────────────────────────────────────────
+    // More Daily Challenges Suggestions Component
+    // ────────────────────────────────────────────────────────
+    const GAMES_REGISTRY = [
+        {
+            id: 'top_transfers',
+            icon: 'payments',
+            color: '#00f0ff',
+            nameKey: 'game_top_transfers',
+            taglineKey: 'tagline_top_transfers',
+            defaultName: 'Top Transfers',
+            defaultTagline: 'Guess the record signings',
+            file: 'top_transfers.html'
+        },
+        {
+            id: 'transfer_destination',
+            icon: 'alt_route',
+            color: '#39ff14',
+            nameKey: 'game_transfer_destination',
+            taglineKey: 'tagline_transfer_destination',
+            defaultName: 'Transfer Destination',
+            defaultTagline: "Guess a player's career path",
+            file: 'transfer_destination.html'
+        },
+        {
+            id: 'top_scorers',
+            icon: 'sports_soccer',
+            color: '#f59e0b',
+            nameKey: 'game_top_scorers',
+            taglineKey: 'tagline_top_scorers',
+            defaultName: 'Top Scorers',
+            defaultTagline: 'Name the top goalscorers',
+            file: 'top_scorers.html'
+        },
+        {
+            id: 'club_connect',
+            icon: 'hub',
+            color: '#e879f9',
+            nameKey: 'game_club_connect',
+            taglineKey: 'tagline_club_connect',
+            defaultName: 'Club Connect',
+            defaultTagline: '5 players, 1 club signed them all',
+            file: 'club_connect.html'
+        },
+        {
+            id: 'player_chain',
+            icon: 'link',
+            color: '#38bdf8',
+            nameKey: 'game_player_chain',
+            taglineKey: 'tagline_player_chain',
+            defaultName: 'Player Chain',
+            defaultTagline: 'Connect consecutive clubs through shared teammates',
+            file: 'player_chain.html'
+        },
+        {
+            id: 'passport_fc',
+            icon: 'public',
+            color: '#fbbf24',
+            nameKey: 'game_passport_fc',
+            taglineKey: 'tagline_passport_fc',
+            defaultName: 'Passport FC',
+            defaultTagline: 'Collect nationality stamps for a mystery club',
+            file: 'passport_fc.html'
+        }
+    ];
+
+    function initGameSuggestions(opts = {}) {
+        const container = document.getElementById(opts.containerId || 'fa-game-suggestions');
+        if (!container) return;
+
+        const currentGame = opts.currentGame || container.getAttribute('data-current-game') || (typeof window !== 'undefined' ? window.GAME_ID : '') || '';
+        const otherGames = GAMES_REGISTRY.filter(g => g.id !== currentGame);
+
+        const isI18n = typeof FootyI18n !== 'undefined';
+        const t = (k, fb) => isI18n ? FootyI18n.t(k) : fb;
+        const currentLang = isI18n ? FootyI18n.getLang() : 'en';
+
+        const isSpanishPath = typeof window !== 'undefined' && window.location && (
+            window.location.pathname.includes('/es/') || currentLang === 'es'
+        );
+
+        const homeUrl = isSpanishPath ? '../../es/' : '../index.html';
+        const sectionTitle = t('more_daily_challenges', 'MORE DAILY CHALLENGES');
+        const solvedText = t('badge_solved', 'SOLVED ✅');
+        const backText = t('back_to_playmaker', '← Back to Playmaker');
+
+        let cardsHtml = '';
+        otherGames.forEach(game => {
+            const gameTitle = t(game.nameKey, game.defaultName);
+            const gameTagline = t(game.taglineKey, game.defaultTagline);
+
+            let isSolved = false;
+            let isPlayed = false;
+            try {
+                const storage = new FootyStorage(game.id);
+                const todayRes = storage.getTodayResult();
+                if (todayRes) {
+                    isPlayed = true;
+                    if (todayRes.won) {
+                        isSolved = true;
+                    }
+                } else if (storage.hasPlayedToday()) {
+                    isPlayed = true;
+                    const stats = storage.getStats();
+                    if (stats && stats.won > 0 && stats.streak > 0) {
+                        isSolved = true;
+                    }
+                }
+            } catch (e) {}
+
+            const solvedText = t('badge_solved', 'SOLVED ✅');
+            const failedText = t('badge_failed', 'FAILED ❌');
+
+            const statusBadge = isSolved
+                ? `<span class="fa-suggestion-badge-solved">${solvedText}</span>`
+                : (isPlayed ? `<span class="fa-suggestion-badge-failed">${failedText}</span>` : '');
+
+            cardsHtml += `
+                <a href="${game.file}" class="fa-suggestion-card" data-game-id="${game.id}">
+                    <div class="fa-suggestion-icon-wrap" style="color: ${game.color}">
+                        <span class="material-symbols-outlined fa-suggestion-icon">${game.icon}</span>
+                    </div>
+                    <div class="fa-suggestion-content">
+                        <div class="fa-suggestion-title-row">
+                            <span class="fa-suggestion-title" style="color: ${game.color}">${gameTitle}</span>
+                            ${statusBadge}
+                        </div>
+                        <p class="fa-suggestion-tagline">${gameTagline}</p>
+                    </div>
+                </a>
+            `;
+        });
+
+        container.innerHTML = `
+            <section class="fa-suggestions-wrapper">
+                <h3 class="fa-suggestions-header">
+                    <span class="material-symbols-outlined text-sm text-accent">grid_view</span>
+                    ${sectionTitle}
+                </h3>
+                <div class="fa-suggestions-grid">
+                    ${cardsHtml}
+                </div>
+                <div class="fa-suggestions-back">
+                    <a href="${homeUrl}">${backText}</a>
+                </div>
+            </section>
+        `;
+
+        const cardLinks = container.querySelectorAll('.fa-suggestion-card');
+        cardLinks.forEach(card => {
+            card.addEventListener('click', () => {
+                const targetGame = card.getAttribute('data-game-id');
+                trackEvent('game_suggestion_click', {
+                    from_game: currentGame,
+                    to_game: targetGame,
+                    locale: currentLang
+                });
+            });
+        });
+    }
+
+    function autoInitSuggestions() {
+        const el = document.getElementById('fa-game-suggestions');
+        if (el) {
+            initGameSuggestions({ containerId: 'fa-game-suggestions' });
+        }
+    }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             initAnalyticsAndConsent();
@@ -2668,6 +2859,7 @@
             initPWAInstall();
             initLanguageSwitcher();
             initHowToPlay();
+            autoInitSuggestions();
             trackEvent('page_view');
         });
     } else {
@@ -2676,6 +2868,7 @@
         initPWAInstall();
         initLanguageSwitcher();
         initHowToPlay();
+        autoInitSuggestions();
         trackEvent('page_view');
     }
 
@@ -2722,7 +2915,9 @@
         initPWAInstall,
         showIOSInstallSheet,
         renderPWABanner,
-        initLanguageSwitcher
+        initLanguageSwitcher,
+        initGameSuggestions,
+        GAMES_REGISTRY
     };
 
 })(window);
