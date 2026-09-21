@@ -595,7 +595,7 @@
         const stats    = storage.getStats();
         const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage, puzzleNum);
 
-        showResultModal(result.won, result.score, stats, bitLinks);
+        showResultModal(result.won, result.score, stats, bitLinks, true);
         if (bitLinks.length) document.getElementById('bit-wrapper')?.classList.remove('hidden');
     }
 
@@ -846,7 +846,7 @@
         }, 750);
     }
 
-    function showResultModal(won, score, stats, bitLinks) {
+    function showResultModal(won, score, stats, bitLinks, isRestore = false) {
         // Populate the answer block (mystery club name)
         const answerBlock = document.getElementById('modal-answer-block');
         if (answerBlock) answerBlock.classList.remove('hidden');
@@ -898,6 +898,7 @@
         }
 
         modal.show({
+            isRestore,
             gameId:          GAME_ID,
             won,
             title: won ? '¡CONECTADO!' : 'FIN DE LA PARTIDA',

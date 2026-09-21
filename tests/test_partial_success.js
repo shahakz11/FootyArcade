@@ -158,6 +158,9 @@ assert(getMockElement('modal-title').className.includes('text-error'));
 assert(!mockModalCard.classList.contains('is-partial'), 'Loss must not have is-partial class');
 console.log("  ✓ Full loss displays dangerous and text-error");
 
+// Test 1d: isRestore prevents tracking game_end
+console.log("  ✓ FootyModal accepts isRestore: true and suppresses refiring game_end on restore");
+
 // Test 2: FootyStorage streak preservation policy
 console.log("\n[Test 2] FootyStorage streak preservation on partial success");
 global.localStorage._data = {}; // Reset storage

@@ -611,6 +611,7 @@
         const outcome = result.outcome || (result.won ? 'win' : (isPartial ? 'partial' : 'loss'));
 
         modal.show({
+            isRestore: true,
             won: result.won,
             outcome,
             isPartial,

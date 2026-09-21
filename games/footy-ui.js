@@ -589,6 +589,11 @@
      */
     function FootyModal(cfg) {
         const modal = document.getElementById(cfg.modalId || 'result-modal');
+        let hasTrackedGameEnd = false;
+
+        this.resetTracking = () => {
+            hasTrackedGameEnd = false;
+        };
 
         function buildGiphyQuery(opts) {
             const isPartial = opts.outcome === 'partial' || opts.isPartial;
@@ -643,18 +648,23 @@
         }
 
         this.show = (opts) => {
+            opts = opts || {};
             const outcome = opts.outcome || (opts.won ? 'win' : (opts.isPartial ? 'partial' : 'loss'));
             const isWin = outcome === 'win';
             const isPartial = outcome === 'partial';
 
-            // Track game completion
-            trackEvent('game_end', {
-                won: opts.won,
-                outcome: outcome,
-                score: opts.score,
-                maxScore: opts.maxScore,
-                extraDetails: opts.title
-            });
+            // Track game completion only when the game actively ends (not on page restore or modal re-open)
+            const isRestore = Boolean(opts.isRestore || opts.restore || opts.track === false);
+            if (!isRestore && !hasTrackedGameEnd) {
+                hasTrackedGameEnd = true;
+                trackEvent('game_end', {
+                    won: opts.won,
+                    outcome: outcome,
+                    score: opts.score,
+                    maxScore: opts.maxScore,
+                    extraDetails: opts.title
+                });
+            }
 
             // opts: { won, outcome, isPartial, score, maxScore, streak, extraText, shareText, backInTimeLinks, playerName, targetName, targetType }
             const iconEl = document.getElementById(cfg.iconId || 'modal-icon');
@@ -2763,7 +2773,7 @@
         const container = document.getElementById(opts.containerId || 'fa-game-suggestions');
         if (!container) return;
 
-        const currentGame = opts.currentGame || container.getAttribute('data-current-game') || (typeof window !== 'undefined' ? window.GAME_ID : '') || '';
+        const currentGame = opts.currentGame || (typeof container.getAttribute === 'function' ? container.getAttribute('data-current-game') : '') || (typeof window !== 'undefined' ? window.GAME_ID : '') || '';
         const otherGames = GAMES_REGISTRY.filter(g => g.id !== currentGame);
 
         const isI18n = typeof FootyI18n !== 'undefined';
@@ -2914,6 +2924,7 @@
         trackExtraLife: (params) => trackEvent('extra_life', params),
         trackVarAppeal: (params) => trackEvent('var_appeal', params),
         trackVarDecision: (params) => trackEvent('var_decision', params),
+        trackGameEnd: (params) => trackEvent('game_end', params),
         syncPuzzleOverrides,
         getVisitorId,
         getSessionId,

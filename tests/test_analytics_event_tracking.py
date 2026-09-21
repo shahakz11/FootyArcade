@@ -62,11 +62,15 @@ class TestAnalyticsEventTracking(unittest.TestCase):
             "trackExtraLife",
             "trackVarAppeal",
             "trackVarDecision",
+            "trackGameEnd",
         ]
 
         for helper in required_helpers:
             self.assertIn(helper, ui_content, f"Missing '{helper}' in games/footy-ui.js")
 
+        # Verify FootyModal handles isRestore and prevents duplicate game_end refires
+        self.assertIn("isRestore", ui_content)
+        self.assertIn("hasTrackedGameEnd", ui_content)
         # Verify FootyVAR triggers var_appeal and var_decision
         self.assertTrue("'var_appeal'" in ui_content or '"var_appeal"' in ui_content)
         self.assertTrue("'var_decision'" in ui_content or '"var_decision"' in ui_content)
@@ -161,6 +165,23 @@ class TestAnalyticsEventTracking(unittest.TestCase):
                 "FootyUI.trackGuess" in content or "FootyUI.trackGiveUp" in content,
                 f"{rel_path} is missing compiled event tracking hooks",
             )
+
+    def test_restore_game_prevents_duplicate_game_end_event(self):
+        """Verify templates and compiled games set isRestore flag to prevent refiring game_end on landing."""
+        templates_to_check = [
+            "templates/top_transfers_template.html",
+            "templates/top_scorers_template.html",
+            "templates/transfer_destination_template.html",
+            "templates/club_connect_template.html",
+            "templates/player_chain_template.html",
+        ]
+
+        for tmpl_rel in templates_to_check:
+            full_path = os.path.join(REPO_ROOT, tmpl_rel)
+            with open(full_path, "r", encoding="utf-8") as f:
+                content = f.read()
+            self.assertIn("function checkAlreadyPlayed", content, f"Missing checkAlreadyPlayed in {tmpl_rel}")
+            self.assertIn("isRestore", content, f"Missing isRestore in {tmpl_rel}")
 
 
 if __name__ == "__main__":
