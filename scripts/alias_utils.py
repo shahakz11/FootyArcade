@@ -14,7 +14,8 @@ import json
 import re
 import unicodedata
 
-CONFIG_RELATIVE_PATH = os.path.join("private", "aliases_config.json")
+CONFIG_RELATIVE_PATH = os.path.join("data", "aliases_config.json")
+LEGACY_CONFIG_RELATIVE_PATH = os.path.join("private", "aliases_config.json")
 
 
 def normalize_search_text(text):
@@ -46,17 +47,33 @@ def normalize_search_text(text):
     return s.strip()
 
 
-def get_config_path(root_dir=None):
-    """Return the absolute path to private/aliases_config.json."""
+def get_config_path(root_dir=None, for_writing=False):
+    """
+    Return the path to aliases_config.json.
+    Prioritizes data/aliases_config.json (tracked in git for production deployment).
+    Falls back to legacy private/aliases_config.json if data/ does not exist during reads.
+    """
     if not root_dir:
         cur_dir = os.path.dirname(os.path.abspath(__file__))
         root_dir = os.path.abspath(os.path.join(cur_dir, ".."))
-    return os.path.join(root_dir, CONFIG_RELATIVE_PATH)
+    
+    primary_path = os.path.join(root_dir, CONFIG_RELATIVE_PATH)
+    if for_writing:
+        return primary_path
+
+    if os.path.exists(primary_path):
+        return primary_path
+    
+    legacy_path = os.path.join(root_dir, LEGACY_CONFIG_RELATIVE_PATH)
+    if os.path.exists(legacy_path):
+        return legacy_path
+
+    return primary_path
 
 
 def load_aliases_config(root_dir=None):
     """
-    Load aliases_config.json from private/ folder.
+    Load aliases_config.json from data/ (or legacy private/) folder.
     If missing or invalid, returns an empty default schema.
     """
     path = get_config_path(root_dir)
@@ -100,9 +117,9 @@ def load_aliases_config(root_dir=None):
 
 def save_aliases_config(config, root_dir=None):
     """
-    Atomically save aliases_config.json to private/.
+    Atomically save aliases_config.json to data/aliases_config.json.
     """
-    path = get_config_path(root_dir)
+    path = get_config_path(root_dir, for_writing=True)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     tmp_path = path + ".tmp"
     with open(tmp_path, "w", encoding="utf-8") as f:

@@ -669,7 +669,14 @@
                 });
                 document.getElementById('hint-nat-btn').classList.add('hidden');
                 document.getElementById('player-nat-badge').classList.remove('hidden');
-                FootyUI.toast(`Nationality revealed: ${activeGameData.target_nationality}`, 'info');
+                const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang && FootyI18n.getLang() === 'es') ||
+                             (typeof document !== 'undefined' && document.documentElement.lang === 'es') ||
+                             (typeof location !== 'undefined' && location.pathname.includes('/es/'));
+                const natVal = (typeof FootyI18n !== 'undefined' && FootyI18n.translateNationality)
+                    ? FootyI18n.translateNationality(activeGameData.target_nationality)
+                    : activeGameData.target_nationality;
+                const msg = isEs ? `¡Nacionalidad revelada: ${natVal}! 💡` : `Nationality revealed: ${natVal} 💡`;
+                FootyUI.toast(msg, 'info');
             });
 
             document.getElementById('hint-pos-btn').addEventListener('click', () => {
@@ -681,7 +688,14 @@
                 });
                 document.getElementById('hint-pos-btn').classList.add('hidden');
                 document.getElementById('player-pos-badge').classList.remove('hidden');
-                FootyUI.toast(`Position revealed: ${activeGameData.target_position}`, 'info');
+                const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang && FootyI18n.getLang() === 'es') ||
+                             (typeof document !== 'undefined' && document.documentElement.lang === 'es') ||
+                             (typeof location !== 'undefined' && location.pathname.includes('/es/'));
+                const posVal = (typeof FootyI18n !== 'undefined' && FootyI18n.translatePosition)
+                    ? FootyI18n.translatePosition(activeGameData.target_position)
+                    : activeGameData.target_position;
+                const msg = isEs ? `¡Posición revelada: ${posVal}! 💡` : `Position revealed: ${posVal} 💡`;
+                FootyUI.toast(msg, 'info');
             });
 
             document.getElementById('give-up-btn').addEventListener('click', () => {

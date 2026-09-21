@@ -698,7 +698,7 @@
         }, index === 0 ? 200 : 0);
     }
 
-    function revealCardHint(index) {
+    function revealCardHint(index, silent = false) {
         const btn     = document.getElementById(`btn-hint-${index}`);
         const details = document.getElementById(`hint-details-${index}`);
         const fromEl  = document.getElementById(`card-from-${index}`);
@@ -716,6 +716,13 @@
         details.classList.remove('hidden');
         if (fromEl) fromEl.classList.add('hint-revealed');
         if (feeEl) feeEl.classList.add('hint-revealed');
+
+        if (!silent && !gameOver) {
+            const hintToastMsg = (typeof FootyI18n !== 'undefined' && FootyI18n.t)
+                ? FootyI18n.t('toast_hint_revealed')
+                : ((document.documentElement.lang === 'es' || location.pathname.includes('/es/')) ? '¡Pista revelada! 💡' : 'Hint revealed! 💡');
+            FootyUI.toast(hintToastMsg, 'info');
+        }
     }
 
     function markAnswerCards(outcome) {
@@ -723,7 +730,7 @@
             const revealedEl = document.getElementById(`card-revealed-${i}`);
             if (!revealedEl) continue;
             // Reveal any unrevealed hints automatically at end of game
-            revealCardHint(i);
+            revealCardHint(i, true);
 
             if (outcome === 'won') {
                 revealedEl.classList.add('answer-revealed');

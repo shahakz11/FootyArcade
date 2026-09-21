@@ -303,10 +303,10 @@
                     <span>PASAPORTE DEL CLUB DE HOY</span>
                 </div>
                 <h3 id="anchor-club-name" class="font-headline text-3xl sm:text-5xl text-on-background uppercase italic tracking-wide py-1 neon-text-glow">
-                    BARCELONA
+                    ...
                 </h3>
                 <p class="text-xs sm:text-sm text-on-surface-variant font-mono">
-                    ¡Consigue los 4 sellos de nacionalidad de <strong id="anchor-club-subtext" class="text-white">Barcelona</strong>!
+                    ¡Consigue los 4 sellos de nacionalidad de <strong id="anchor-club-subtext" class="text-white">...</strong>!
                 </p>
             </div>
         </section>
@@ -315,7 +315,7 @@
         <section id="fa-guess-panel" class="bg-surface-container border border-white/10 rounded-2xl p-4 sm:p-5 shadow-2xl relative z-30 space-y-3">
             <div class="flex items-center justify-between">
                 <label id="active-step-label" class="block text-[11px] font-mono uppercase tracking-widest text-on-surface-variant">
-                    PASO 1 — NOMBRA A UN JUGADOR FRANCÉS DEL BARCELONA:
+                    PASO 1 — NOMBRA A UN JUGADOR VÁLIDO:
                 </label>
                 <!-- Triggerable Hint Button -->
                 <button id="hint-btn" type="button" class="px-2.5 py-1 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 hover:border-accent/40 text-on-surface-variant hover:text-accent font-mono text-[11px] transition-all flex items-center gap-1 cursor-pointer">
@@ -335,7 +335,7 @@
                     <input
                         id="guess-input"
                         class="w-full bg-background border border-white/10 rounded-xl h-12 px-4 text-base font-bold text-on-background focus:outline-none focus:border-accent focus:ring-0 transition-all placeholder:text-white/20"
-                        placeholder="Escribe un futbolista francés que haya jugado en el Barcelona..."
+                        placeholder="Escribe el nombre del jugador..."
                         type="text"
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text"
                     />
@@ -442,7 +442,7 @@
             <!-- Anchor Club Card in Modal -->
             <div class="bg-background/50 border border-white/5 rounded-2xl p-3 sm:p-4 text-center">
                 <span class="text-[10px] font-mono uppercase tracking-widest text-on-surface-variant block">ANCHOR CLUB</span>
-                <span id="modal-club-name" class="font-headline text-xl sm:text-2xl text-accent uppercase italic tracking-wider block mt-1 neon-text-glow">BARCELONA</span>
+                <span id="modal-club-name" class="font-headline text-xl sm:text-2xl text-accent uppercase italic tracking-wider block mt-1 neon-text-glow">...</span>
             </div>
 
             <!-- Giphy GIF Element -->
@@ -901,7 +901,7 @@
                 : `PUZZLE #${puzzleNum}`;
 
             // Initialize anchor club text
-            const clubName = activeGameData.club || 'BARCELONA';
+            const clubName = activeGameData.club || '...';
             document.getElementById('anchor-club-name').textContent = clubName;
             document.getElementById('anchor-club-subtext').textContent = clubName;
             document.getElementById('total-steps').textContent = activeGameData.total_steps || 4;
@@ -1142,7 +1142,10 @@
                 lives: livesCtrl.get()
             });
 
-            FootyUI.toast('Hint revealed!', 'info');
+            const hintToastMsg = (typeof FootyI18n !== 'undefined' && FootyI18n.t)
+                ? FootyI18n.t('toast_hint_revealed')
+                : ((document.documentElement.lang === 'es' || location.pathname.includes('/es/')) ? '¡Pista revelada! 💡' : 'Hint revealed! 💡');
+            FootyUI.toast(hintToastMsg, 'info');
         }
 
         function submitGuess() {

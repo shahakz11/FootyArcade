@@ -92,6 +92,8 @@
             toast_wrong_guess: 'Wrong guess! -1 Life',
             toast_correct_guess: 'Correct! {name}',
             toast_life_lost: '-1 Life',
+            toast_life_added: '+1 Life! ❤️',
+            toast_hint_revealed: 'Hint revealed! 💡',
             toast_out_of_lives: 'Out of lives! Final score recorded.',
 
             // Modal & Outcomes
@@ -206,6 +208,8 @@
             toast_wrong_guess: '¡Incorrecto! -1 Vida',
             toast_correct_guess: '¡Correcto! {name}',
             toast_life_lost: '-1 Vida',
+            toast_life_added: '¡+1 Vida! ❤️',
+            toast_hint_revealed: '¡Pista revelada! 💡',
             toast_out_of_lives: '¡Te quedaste sin vidas! Puntuación final guardada.',
 
             // Modal & Outcomes

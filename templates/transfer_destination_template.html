@@ -519,6 +519,10 @@
                     activeStep++;
                     wrongGuesses.clear();
                     updateStepState();
+                    const hintToastMsg = (typeof FootyI18n !== 'undefined' && FootyI18n.t)
+                        ? FootyI18n.t('toast_hint_revealed')
+                        : ((document.documentElement.lang === 'es' || location.pathname.includes('/es/')) ? '¡Pista revelada! 💡' : 'Hint revealed! 💡');
+                    FootyUI.toast(hintToastMsg, 'info');
                     checkWinLoss();
                 }
             });

@@ -523,7 +523,7 @@
 
         this.get = () => lives;
         this.set = (n) => { lives = n; update(); };
-        this.add = (n = 1, reason = 'bonus') => {
+        this.add = (n = 1, reason = 'bonus', opts = {}) => {
             const before = lives;
             lives += n;
             update();
@@ -531,6 +531,15 @@
                 lives: lives,
                 extraDetails: `before: ${before} | after: ${lives} | added: ${n} | reason: ${reason}`
             });
+            if (!opts?.silent && reason !== 'var' && reason !== 'var_overrule') {
+                const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang && FootyI18n.getLang() === 'es') ||
+                             (typeof document !== 'undefined' && document.documentElement.lang === 'es') ||
+                             (typeof location !== 'undefined' && location.pathname.includes('/es/'));
+                const toastMsg = (typeof FootyI18n !== 'undefined' && FootyI18n.t)
+                    ? FootyI18n.t('toast_life_added')
+                    : (isEs ? '¡+1 Vida! ❤️' : '+1 Life! ❤️');
+                toast(toastMsg, 'success');
+            }
         };
         this.lose = (n = 1) => { lives = Math.max(0, lives - n); update(); };
         this.isDead = () => lives <= 0;

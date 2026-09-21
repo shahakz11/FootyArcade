@@ -398,6 +398,11 @@
     box-shadow: 0 0 15px rgba(255, 77, 77, 0.3) !important;
     color: #ff4d4d !important;
 }
+.fa-toast-info {
+    border-color: #ffd700 !important;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3) !important;
+    color: #ffd700 !important;
+}
 @keyframes fa-toast-in {
     0% { transform: translateY(20px); opacity: 0; }
     100% { transform: translateY(0); opacity: 1; }

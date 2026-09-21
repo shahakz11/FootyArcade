@@ -847,7 +847,7 @@ PORTAL_HTML = r"""<!DOCTYPE html>
 
             <div class="flex items-center gap-2 text-xs text-slate-400">
                 <span>Config Path:</span>
-                <code id="config-path" class="bg-slate-900 px-2 py-1 rounded text-slate-300 border border-slate-800 font-mono">private/aliases_config.json</code>
+                <code id="config-path" class="bg-slate-900 px-2 py-1 rounded text-slate-300 border border-slate-800 font-mono">data/aliases_config.json</code>
             </div>
         </div>
 
