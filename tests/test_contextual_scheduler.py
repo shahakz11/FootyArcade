@@ -29,7 +29,7 @@ from scripts.contextual_puzzle_scheduler import (
     FREEZE_DAYS
 )
 from fetch_daily import load_schedule_ledger
-from scripts.youtube_uploader import build_default_metadata
+from scripts.youtube_uploader import build_default_metadata, is_puzzle_context_matched
 from scripts.instagram_uploader import build_instagram_caption
 
 class TestContextualScheduler(unittest.TestCase):
@@ -106,9 +106,48 @@ class TestContextualScheduler(unittest.TestCase):
         self.assertIn("top_scorers", puzzles)
         self.assertTrue(1 <= puzzles["top_scorers"] <= 180)
 
-    def test_social_metadata_matchday_injection(self):
-        """Tests that YouTube and Instagram metadata functions inject matchday hooks and tags on derbies."""
-        # 1. Derby Date (El Clásico on 2026-10-25)
+    def test_is_puzzle_context_matched(self):
+        """Tests the logic that determines if a puzzle is relevant to the active matchday context."""
+        ctx = {
+            "clash_name": "El Clásico",
+            "competition": "La Liga",
+            "home_club": "Real Madrid",
+            "away_club": "Barcelona",
+            "featured_club": "Real Madrid",
+            "hook": "⚔️ EL CLÁSICO SPECIAL!",
+            "hashtags": ["#ElClasico", "#RealMadrid", "#FCBarcelona"]
+        }
+
+        # 1. Direct and alias club matches
+        self.assertTrue(is_puzzle_context_matched("top_transfers", "Real Madrid", ctx))
+        self.assertTrue(is_puzzle_context_matched("top_transfers", "Barcelona", ctx))
+        self.assertTrue(is_puzzle_context_matched("top_transfers", "FC Barcelona", ctx))
+        self.assertTrue(is_puzzle_context_matched("top_transfers", "Barca", ctx))
+        self.assertTrue(is_puzzle_context_matched("club_connect", "Real Madrid", ctx))
+        self.assertTrue(is_puzzle_context_matched("club_connect", "Barcelona", ctx))
+
+        # 2. Unmatched clubs on derby day
+        self.assertFalse(is_puzzle_context_matched("top_transfers", "Bayern Munich", ctx))
+        self.assertFalse(is_puzzle_context_matched("top_transfers", "Arsenal", ctx))
+        self.assertFalse(is_puzzle_context_matched("club_connect", "Chelsea", ctx))
+
+        # 3. Top Scorers competition matching
+        self.assertTrue(is_puzzle_context_matched("top_scorers", "La Liga 2023/24", ctx))
+        self.assertFalse(is_puzzle_context_matched("top_scorers", "Premier League 2023/24", ctx))
+        self.assertFalse(is_puzzle_context_matched("top_scorers", "Serie A 2022/23", ctx))
+
+        # 4. Standard player journey games should return False (evergreen fallback)
+        self.assertFalse(is_puzzle_context_matched("transfer_destination", "Erling Haaland", ctx))
+        self.assertFalse(is_puzzle_context_matched("player_chain", "Mystery Chain", ctx))
+        self.assertFalse(is_puzzle_context_matched("passport_fc", "Spain", ctx))
+
+        # 5. Empty or missing context
+        self.assertFalse(is_puzzle_context_matched("top_transfers", "Real Madrid", None))
+        self.assertFalse(is_puzzle_context_matched("top_transfers", "", ctx))
+
+    def test_social_metadata_matchday_injection_and_relevance_gating(self):
+        """Tests that YouTube and Instagram metadata inject matchday hooks ONLY for relevant puzzles."""
+        # 1. Matched Puzzle on Derby Date (El Clásico on 2026-10-25 -> Real Madrid Top Transfers)
         yt_title, yt_desc, yt_tags = build_default_metadata("top_transfers", "Real Madrid", date_str="2026-10-25")
         self.assertIn("EL CLÁSICO SPECIAL", yt_title)
         self.assertIn("ElClasico", yt_tags)
@@ -121,7 +160,34 @@ class TestContextualScheduler(unittest.TestCase):
         self.assertIn("#ElClasico", ig_caption)
         self.assertIn("#RealMadrid", ig_caption)
 
-        # 2. Non-Matchday Date (2026-08-01)
+        # 2. Unmatched Puzzle on Derby Date (El Clásico on 2026-10-25 -> Transfer Destination / Erling Haaland)
+        # MUST strictly receive regular evergreen title and caption with NO clash hooks or tags
+        yt_title_td, yt_desc_td, yt_tags_td = build_default_metadata("transfer_destination", "Erling Haaland", date_str="2026-10-25")
+        self.assertNotIn("SPECIAL", yt_title_td)
+        self.assertNotIn("ElClasico", yt_tags_td)
+        self.assertNotIn("RealMadrid", yt_tags_td)
+        self.assertNotIn("Today's Matchday Special", yt_desc_td)
+        self.assertEqual(yt_title_td, "Guess the mystery player's career path backwards! ⚽ #Shorts")
+
+        ig_caption_td = build_instagram_caption("transfer_destination", "Erling Haaland", date_str="2026-10-25")
+        self.assertNotIn("SPECIAL", ig_caption_td)
+        self.assertNotIn("#ElClasico", ig_caption_td)
+        self.assertNotIn("#RealMadrid", ig_caption_td)
+        self.assertIn("Guess the mystery player's career path backwards! ⚽", ig_caption_td)
+
+        # 3. Mismatched Club on Derby Date (El Clásico on 2026-10-25 -> Top Transfers for Bayern Munich)
+        yt_title_mismatch, yt_desc_mismatch, yt_tags_mismatch = build_default_metadata("top_transfers", "Bayern Munich", date_str="2026-10-25")
+        self.assertNotIn("SPECIAL", yt_title_mismatch)
+        self.assertNotIn("ElClasico", yt_tags_mismatch)
+        self.assertNotIn("RealMadrid", yt_tags_mismatch)
+        self.assertNotIn("Today's Matchday Special", yt_desc_mismatch)
+        self.assertIn("Can you guess Bayern Munich's record transfers?", yt_title_mismatch)
+
+        ig_caption_mismatch = build_instagram_caption("top_transfers", "Bayern Munich", date_str="2026-10-25")
+        self.assertNotIn("SPECIAL", ig_caption_mismatch)
+        self.assertNotIn("#ElClasico", ig_caption_mismatch)
+
+        # 4. Non-Matchday Date (2026-08-01)
         yt_title_clean, yt_desc_clean, yt_tags_clean = build_default_metadata("top_transfers", "Arsenal", date_str="2026-08-01")
         self.assertNotIn("SPECIAL!", yt_title_clean)
         self.assertNotIn("ElClasico", yt_tags_clean)

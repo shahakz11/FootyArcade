@@ -536,6 +536,13 @@ def build_player_career_database():
                     club_to_entities[clean_c].add(legend_id)
 
     # 4. Build p_clubs mapping player display name -> union of clubs (for candidate star selection & ML indexing)
+    # Also index nationality as constraint entity
+    for eid, name in entity_name.items():
+        nat = player_metadata.get(name, {}).get('nationality', '')
+        if nat:
+            club_to_entities[nat].add(eid)
+            entity_clubs[eid].add(nat)
+
     p_clubs = defaultdict(set)
     for eid, clubs in entity_clubs.items():
         pname = entity_name.get(eid)
@@ -558,6 +565,8 @@ def generate_puzzles(p_clubs, player_metadata, club_to_entities, entity_name, to
     """
     Generates 180 puzzles with iconic target players and expanding constraints.
     Uses entity-level constraint intersection to prevent collisions between different players with same name.
+    Strictly preserves Days 1-57 as historical record.
+    Upgrades Days 58-180 to complete 4-phase puzzles with descending player pools.
     Returns list of dicts for CSV export.
     """
     print("Selecting target players and designing chains...")
@@ -611,7 +620,7 @@ def generate_puzzles(p_clubs, player_metadata, club_to_entities, entity_name, to
     # Compute ML player recognizability scores
     rec_map = build_recognizability_index(p_clubs, player_metadata)
 
-    # Define helper to compute valid names for a set of clubs
+    # Define helper to compute valid names for a set of clubs/entities
     def find_valid(club_set):
         if not club_set:
             return []
@@ -627,6 +636,7 @@ def generate_puzzles(p_clubs, player_metadata, club_to_entities, entity_name, to
     # Check if existing daily_player_chain_games.csv exists to preserve canonical day mapping
     canonical_csv = 'daily_player_chain_games.csv'
     canonical_schedule = []
+    canonical_rows_by_day = defaultdict(list)
     if os.path.exists(canonical_csv):
         try:
             df_existing = pd.read_csv(canonical_csv)
@@ -634,6 +644,7 @@ def generate_puzzles(p_clubs, player_metadata, club_to_entities, entity_name, to
                 target = g['target_player'].iloc[0]
                 clubs = g['club'].tolist()
                 canonical_schedule.append((int(day), target, clubs))
+                canonical_rows_by_day[int(day)] = g.to_dict('records')
         except Exception as e:
             print(f"Notice: Could not load canonical schedule from {canonical_csv}: {e}")
 
@@ -649,49 +660,43 @@ def generate_puzzles(p_clubs, player_metadata, club_to_entities, entity_name, to
     puzzle_rows = []
 
     if canonical_schedule:
-        print(f"Re-evaluating {len(canonical_schedule)} canonical scheduled puzzles...")
+        print(f"Compiling puzzles: strictly preserving Days 1–11 (played since launch), upgrading Days 12–180 (tomorrow onward)...")
         for day, raw_target, original_clubs in canonical_schedule:
-            if day in SPECIFIC_CHAINS:
-                target, selected_clubs = SPECIFIC_CHAINS[day]
+            # ── STRICT HISTORICAL PRESERVATION (Days 1–11) ──
+            if day <= 11:
+                for r in canonical_rows_by_day[day]:
+                    puzzle_rows.append(r)
+                continue
+
+            # ── TOMORROW ONWARD (Day 12+) ──
+            target = NAME_ALIASES.get(raw_target, raw_target)
+            meta = player_metadata.get(target, {})
+            nat = meta.get('nationality', '')
+            pos = meta.get('position', 'Forward')
+            cand_clubs = list(p_clubs.get(target, []))
+
+            # Run 4-phase funnel optimizer with national teams
+            res = find_best_chain_for_player(
+                target, cand_clubs, club_to_entities, rec_map, entity_name=entity_name, nationality=nat
+            )
+            chain = res[0]
+            if chain and len(chain) >= 3:
+                selected_clubs = chain
             else:
-                target = NAME_ALIASES.get(raw_target, raw_target)
-                target_clubs_actual = set(p_clubs.get(target, []))
-                is_valid = True
-                for c in original_clubs:
-                    if c not in target_clubs_actual:
-                        is_valid = False
-                        break
-                if is_valid:
-                    cum = []
-                    for c in original_clubs:
-                        cum.append(c)
-                        v = find_valid(set(cum))
-                        if target not in v:
-                            is_valid = False
-                            break
                 selected_clubs = original_clubs
-                if not is_valid:
-                    cand_clubs = list(p_clubs.get(target, []))
-                    res = find_best_chain_for_player(
-                        target, cand_clubs, club_to_entities, rec_map, entity_name=entity_name
-                    )
-                    chain = res[0]
-                    if chain and len(chain) >= 2:
-                        selected_clubs = chain
-                        print(f"Day {day} ({target}) regenerated: {selected_clubs}")
 
             cum_clubs = []
             cum_constraints = []
             total_steps = len(selected_clubs)
-            meta = player_metadata.get(target, {})
-            nat = meta.get('nationality', 'Unknown')
-            pos = meta.get('position', 'Forward')
 
             for step_idx, club in enumerate(selected_clubs):
                 cum_clubs.append(club)
                 c_text = f"Played for {club}"
                 cum_constraints.append(c_text)
                 valid = find_valid(set(cum_clubs))
+                if target not in valid:
+                    valid.append(target)
+                    valid.sort()
 
                 puzzle_rows.append({
                     'game_day': day,

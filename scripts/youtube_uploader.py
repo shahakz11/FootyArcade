@@ -109,16 +109,126 @@ def load_matchday_context_for_date(date_str=None):
             pass
     return None
 
+CLUB_ALIASES = {
+    "manchester united": ["man utd", "manchester utd", "man united", "united"],
+    "manchester city": ["man city", "mancity", "city"],
+    "barcelona": ["fc barcelona", "barca", "barça"],
+    "real madrid": ["real", "real madrid cf", "los blancos"],
+    "tottenham hotspur": ["tottenham", "spurs"],
+    "bayern munich": ["bayern", "fc bayern", "bayern münchen", "bayern munchen"],
+    "paris saint-germain": ["psg", "paris sg", "paris saint germain"],
+    "inter": ["inter milan", "internazionale", "fc inter", "fc internazionale"],
+    "ac milan": ["milan", "acmilan"],
+    "atletico madrid": ["atleti", "atlético madrid", "atletico"],
+    "borussia dortmund": ["dortmund", "bvb"],
+    "arsenal": ["the gunners"],
+    "chelsea": ["the blues"],
+    "liverpool": ["the reds"],
+    "juventus": ["juve"],
+    "roma": ["as roma"],
+    "lazio": ["ss lazio"],
+    "newcastle united": ["newcastle"],
+    "aston villa": ["villa"],
+    "west ham united": ["west ham"],
+    "wolverhampton wanderers": ["wolves"]
+}
+
+def _normalize_name(name):
+    """Normalizes club or team names for fuzzy alias comparison."""
+    if not name:
+        return ""
+    import unicodedata, re
+    # Remove accents/diacritics
+    n = unicodedata.normalize('NFKD', str(name)).encode('ASCII', 'ignore').decode('utf-8')
+    n = n.lower().strip()
+    # Remove punctuation
+    n = re.sub(r'[^a-z0-9\s]', ' ', n)
+    return ' '.join(n.split())
+
+def _club_names_match(name1, name2):
+    """Returns True if two club names match directly or through known aliases."""
+    norm1 = _normalize_name(name1)
+    norm2 = _normalize_name(name2)
+    if not norm1 or not norm2:
+        return False
+    if norm1 == norm2:
+        return True
+
+    # Check known aliases
+    for canon, aliases in CLUB_ALIASES.items():
+        norm_canon = _normalize_name(canon)
+        norm_aliases = [_normalize_name(a) for a in aliases]
+        all_variants = {norm_canon} | set(norm_aliases)
+        if norm1 in all_variants and norm2 in all_variants:
+            return True
+
+    # Word boundary containment for extended names (e.g. "barcelona" vs "fc barcelona")
+    if (len(norm1) >= 4 and norm1 in norm2) or (len(norm2) >= 4 and norm2 in norm1):
+        return True
+
+    return False
+
+def is_puzzle_context_matched(game_id, target_name="", matchday_context=None):
+    """
+    Determines whether a specific puzzle/game matches the active matchday context.
+    Prevents attaching irrelevant matchday clash hooks or rival hashtags to unrelated puzzles.
+    """
+    if not matchday_context or not isinstance(matchday_context, dict):
+        return False
+
+    target = (target_name or "").strip()
+    if not target:
+        return False
+
+    home = matchday_context.get("home_club", "")
+    away = matchday_context.get("away_club", "")
+    featured = matchday_context.get("featured_club", "")
+    comp = matchday_context.get("competition", "")
+
+    # 1. Top Transfers & Club Connect: Target club/nation must match one of the clash teams
+    if game_id in ["top_transfers", "club_connect"]:
+        clash_teams = [c for c in [featured, home, away] if c]
+        for team in clash_teams:
+            if _club_names_match(target, team):
+                return True
+        return False
+
+    # 2. Top Scorers: Target competition must match the matchday competition
+    if game_id == "top_scorers":
+        if not comp:
+            return False
+        norm_target = _normalize_name(target)
+        norm_comp = _normalize_name(comp)
+        if norm_comp in norm_target:
+            return True
+        # Handle Champions League abbreviations (UCL) / Europa League
+        if "champions league" in norm_comp and ("champions league" in norm_target or "ucl" in norm_target):
+            return True
+        if "europa league" in norm_comp and ("europa league" in norm_target or "uel" in norm_target):
+            return True
+        if "premier league" in norm_comp and ("premier league" in norm_target or "epl" in norm_target):
+            return True
+        return False
+
+    # 3. Player-based or other games: strictly False unless explicitly flagged in context
+    explicit_games = matchday_context.get("context_matched_games", [])
+    if game_id in explicit_games:
+        return True
+
+    return False
+
 def build_default_metadata(game_id="top_transfers", target_name="", matchday_context=None, date_str=None):
-    """Generates high-converting title, description, and tags for Shorts, with contextual matchday injection."""
+    """Generates high-converting title, description, and tags for Shorts, gating matchday context on relevance."""
     if matchday_context is None:
         matchday_context = load_matchday_context_for_date(date_str)
+
+    is_matched = is_puzzle_context_matched(game_id, target_name, matchday_context)
 
     hook_prefix = ""
     extra_desc = ""
     extra_tags = []
 
-    if matchday_context:
+    if is_matched and matchday_context:
         hook_prefix = f"{matchday_context.get('hook', '⚔️ MATCHDAY SPECIAL!')} "
         clash_name = matchday_context.get("clash_name", "")
         comp = matchday_context.get("competition", "")

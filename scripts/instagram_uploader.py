@@ -85,9 +85,15 @@ def load_matchday_context_for_date(date_str=None):
     return None
 
 def build_instagram_caption(game_id="top_transfers", target_name="", matchday_context=None, date_str=None):
-    """Generates an engaging, high-converting caption with hashtags for Instagram Reels."""
+    """Generates an engaging, high-converting caption with hashtags for Instagram Reels, gating matchday context on relevance."""
     if matchday_context is None:
         matchday_context = load_matchday_context_for_date(date_str)
+
+    try:
+        from scripts.youtube_uploader import is_puzzle_context_matched
+        is_matched = is_puzzle_context_matched(game_id, target_name, matchday_context)
+    except Exception:
+        is_matched = bool(matchday_context)
 
     game_hooks = {
         "top_transfers": f"Can you guess {target_name or 'the club'}'s record transfers? ⚽",
@@ -101,7 +107,7 @@ def build_instagram_caption(game_id="top_transfers", target_name="", matchday_co
 
     hook_line = base_hook
     matchday_tags_str = ""
-    if matchday_context:
+    if is_matched and matchday_context:
         hook_badge = matchday_context.get("hook", "⚔️ MATCHDAY SPECIAL!")
         hook_line = f"{hook_badge}\n{base_hook}"
         raw_tags = matchday_context.get("hashtags", [])

@@ -27,6 +27,12 @@ TIER_2_CLUBS = {
     'Monaco', 'Sporting CP', 'PSV Eindhoven', 'Newcastle United', 'Aston Villa'
 }
 
+# Major football nations that are universally recognized
+TIER_1_NATIONS = {
+    'Brazil', 'Argentina', 'France', 'Germany', 'Italy', 'Spain',
+    'England', 'Netherlands', 'Portugal', 'Belgium', 'Croatia', 'Uruguay'
+}
+
 
 def build_recognizability_index(p_clubs, p_meta):
     """
@@ -175,18 +181,19 @@ def effective_capacity(player_set, rec_map):
 
 def evaluate_funnel_chain(chain, target_player, club_to_players, rec_map, entity_name=None):
     """
-    Evaluates a candidate club chain using an Information-Theoretic Funnel Loss.
-    Supports both entity-level and name-level club mapping.
+    Evaluates a candidate constraint chain (clubs + national team) using an Information-Theoretic Funnel Loss.
+    Enforces strict monotonic descent of qualifying player pools (N_1 > N_2 > N_3 > N_4 >= 1)
+    and eliminates artificial bottlenecks or flat/redundant steps.
     """
-    cumulative_clubs = []
+    cumulative_constraints = []
     active_set = None
     step_stats = []
 
     k = len(chain)
 
-    for step_idx, club in enumerate(chain):
-        cumulative_clubs.append(club)
-        c_players = club_to_players.get(club, set())
+    for step_idx, constraint in enumerate(chain):
+        cumulative_constraints.append(constraint)
+        c_players = club_to_players.get(constraint, set())
 
         if step_idx == 0:
             active_set = set(c_players)
@@ -206,16 +213,20 @@ def evaluate_funnel_chain(chain, target_player, club_to_players, rec_map, entity
         c_eff = effective_capacity(active_names, rec_map)
 
         # ── ZERO-TOLERANCE RULES ──
-        # If raw count is <= 1 BEFORE the final step, strict disqualification!
+        # 1. Monotonic Descent: each step MUST strictly narrow down the pool!
+        if step_idx > 0 and raw_count >= step_stats[step_idx - 1]['raw_count']:
+            return -float('inf'), []
+
+        # 2. Premature Bottleneck: if raw count is <= 1 BEFORE the final step, strict disqualification!
         if step_idx < k - 1 and raw_count <= 1:
             return -float('inf'), []
 
-        # If step 2 has fewer than 4 players, it's an extreme trivia choke point
-        if step_idx == 1 and raw_count < 4:
+        # 3. Step 2 accessibility: must have >= 3 players (preferably >= 4)
+        if step_idx == 1 and raw_count < 3:
             return -float('inf'), []
 
         step_stats.append({
-            'club': club,
+            'club': constraint,
             'raw_count': raw_count,
             'c_eff': c_eff,
             'players': active_names
@@ -224,13 +235,15 @@ def evaluate_funnel_chain(chain, target_player, club_to_players, rec_map, entity
     # ── COMPUTE GAMEPLAY UTILITY ──
     # Target capacities for 4-step vs 3-step
     if k == 4:
-        target_c_eff = [80.0, 12.0, 3.0, 1.0]
-        weights = [1.0, 3.0, 4.0, 5.0]
+        target_c_eff = [80.0, 15.0, 4.0, 1.0]
+        weights = [1.0, 3.0, 4.0, 6.0]
+        base_bonus = 40.0  # Strong bonus prioritizing complete 4-phase puzzles
     else:
         target_c_eff = [80.0, 6.0, 1.0]
         weights = [1.0, 3.5, 5.0]
+        base_bonus = 0.0
 
-    utility = 0.0
+    utility = base_bonus
 
     for idx, stat in enumerate(step_stats):
         c_e = max(0.5, stat['c_eff'])
@@ -241,35 +254,35 @@ def evaluate_funnel_chain(chain, target_player, club_to_players, rec_map, entity
         diff = math.log(c_e) - math.log(t_e)
         utility -= w * (diff ** 2)
 
-    # Step 1 accessibility bonus: Starting with a world-famous club makes the game immediately welcoming
-    if chain[0] in TIER_1_CLUBS:
-        utility += 6.0
+    # Step 1 accessibility bonus: Starting with a world-famous club or top nation makes the game immediately welcoming
+    if chain[0] in TIER_1_CLUBS or chain[0] in TIER_1_NATIONS:
+        utility += 8.0
     elif chain[0] in TIER_2_CLUBS:
-        utility += 3.0
+        utility += 4.0
 
     # Reward Step 2 & 3 having famous recognizable players
     for idx in range(1, k - 1):
         famous_count = sum(1 for p in step_stats[idx]['players'] if rec_map.get(p, 0) >= 0.50)
-        utility += 2.0 * min(5, famous_count)
+        utility += 2.5 * min(5, famous_count)
 
     # Climax Reward: Final step uniquely isolates target player
     final_raw = step_stats[-1]['raw_count']
     if final_raw == 1:
-        utility += 25.0
+        utility += 30.0
     elif final_raw == 2:
-        utility += 10.0
+        utility += 15.0
     else:
         # If final step has > 2 players, penalize ambiguity
-        utility -= (final_raw - 2) * 5.0
+        utility -= (final_raw - 2) * 6.0
 
     return utility, step_stats
 
 
-def find_best_chain_for_player(target_player, cand_clubs, club_to_players, rec_map, entity_name=None):
+def find_best_chain_for_player(target_player, cand_clubs, club_to_players, rec_map, entity_name=None, nationality=None):
     """
-    Searches club permutations to find the globally optimal chain for target_player.
-    Evaluates 4-step chains first; falls back to 3-step chains if a 4-step chain
-    would cause an artificial bottleneck.
+    Searches constraint permutations (senior clubs + national team) to find the globally optimal chain for target_player.
+    Evaluates 4-step chains first; falls back to 3-step chains only if a 4-step chain
+    is mathematically impossible or causes an artificial bottleneck.
     """
     import itertools
 
@@ -277,34 +290,40 @@ def find_best_chain_for_player(target_player, cand_clubs, club_to_players, rec_m
     best_score = -float('inf')
     best_stats = None
 
-    cand_clubs = list(cand_clubs)
-    # Filter out youth/amateur clubs with < 30 players
-    meaningful_clubs = [c for c in cand_clubs if len(club_to_players.get(c, set())) >= 30]
-    if len(meaningful_clubs) < 2:
-        meaningful_clubs = list(cand_clubs)
+    cand_entities = list(cand_clubs)
+    if nationality and nationality in club_to_players and nationality not in cand_entities:
+        cand_entities.append(nationality)
 
-    # Sort clubs by prominence so Tier 1 & major clubs are prioritized
-    meaningful_clubs.sort(key=lambda c: (
-        c in TIER_1_CLUBS,
+    # Filter out obscure entities with < 15 players (unless it's the player's national team)
+    meaningful_entities = [
+        c for c in cand_entities
+        if c == nationality or len(club_to_players.get(c, set())) >= 15
+    ]
+    if len(meaningful_entities) < 2:
+        meaningful_entities = list(cand_entities)
+
+    # Sort entities by prominence so Tier 1 clubs & nations are prioritized
+    meaningful_entities.sort(key=lambda c: (
+        c in TIER_1_CLUBS or c in TIER_1_NATIONS,
         c in TIER_2_CLUBS,
         len(club_to_players.get(c, set()))
     ), reverse=True)
 
-    # Consider top 7 candidate clubs to keep permutation search fast
-    clubs_subset = meaningful_clubs[:7]
+    # Consider top 8-9 candidate entities to keep permutation search fast and rich
+    entities_subset = meaningful_entities[:9]
 
-    # Try 4-step permutations first if player has >= 4 clubs
-    if len(clubs_subset) >= 4:
-        for perm in itertools.permutations(clubs_subset, 4):
+    # Try 4-step permutations first if player has >= 4 candidate entities
+    if len(entities_subset) >= 4:
+        for perm in itertools.permutations(entities_subset, 4):
             score, stats = evaluate_funnel_chain(perm, target_player, club_to_players, rec_map, entity_name=entity_name)
             if score > best_score:
                 best_score = score
                 best_chain = list(perm)
                 best_stats = stats
 
-    # If no valid 4-step chain was found with zero premature bottlenecks, try 3-step
-    if best_score == -float('inf') and len(clubs_subset) >= 3:
-        for perm in itertools.permutations(clubs_subset, 3):
+    # If no valid 4-step chain was found with zero premature bottlenecks, try 3-step fallback
+    if best_score == -float('inf') and len(entities_subset) >= 3:
+        for perm in itertools.permutations(entities_subset, 3):
             score, stats = evaluate_funnel_chain(perm, target_player, club_to_players, rec_map, entity_name=entity_name)
             if score > best_score:
                 best_score = score

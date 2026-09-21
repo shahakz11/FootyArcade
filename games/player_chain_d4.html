@@ -602,6 +602,16 @@
                 heartId: 'fa-heart-icon',
                 onDead: () => {
                     endGame(false, false);
+                },
+                onChange: (val) => {
+                    const addLifeBtn = document.getElementById('add-life-btn');
+                    if (addLifeBtn) {
+                        if (val < INITIAL_LIVES && !gameOver) {
+                            addLifeBtn.classList.remove('hidden');
+                        } else {
+                            addLifeBtn.classList.add('hidden');
+                        }
+                    }
                 }
             });
 
@@ -710,6 +720,14 @@
             });
             document.getElementById('modal-share-btn').addEventListener('click', doShare);
 
+            // Add Life button
+            const addLifeBtn = document.getElementById('add-life-btn');
+            if (addLifeBtn) {
+                addLifeBtn.addEventListener('click', () => {
+                    if (!gameOver) livesCtrl.add();
+                });
+            }
+
             // Reopen Modal from summary
             document.getElementById('reopen-modal-btn').addEventListener('click', () => {
                 document.getElementById('result-modal').classList.remove('hidden');
@@ -814,6 +832,8 @@
             // Hide guess panel
             const guessPanel = document.getElementById('fa-guess-panel');
             if (guessPanel) guessPanel.style.display = 'none';
+            const addLifeBtn = document.getElementById('add-life-btn');
+            if (addLifeBtn) addLifeBtn.classList.add('hidden');
 
             const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage, puzzleNum);
             const stats = storage.getStats();
@@ -858,6 +878,22 @@
             document.getElementById('player-pos-badge')?.classList.remove('hidden');
         }
 
+        function isCountryConstraint(name) {
+            if (!name) return false;
+            if (typeof FootyI18n !== 'undefined' && typeof FootyI18n.translateNationality === 'function') {
+                const tr = FootyI18n.translateNationality(name);
+                if (tr && tr !== name) return true;
+            }
+            const KNOWN_NATIONS = new Set([
+                'Argentina', 'Brazil', 'France', 'Germany', 'Italy', 'Spain', 'England', 'Netherlands',
+                'Portugal', 'Belgium', 'Croatia', 'Uruguay', 'Algeria', 'Wales', 'Norway', 'Poland',
+                'Denmark', 'Sweden', 'Senegal', 'Morocco', 'Nigeria', 'Ghana', 'Egypt', 'Ivory Coast',
+                'Colombia', 'Chile', 'Mexico', 'United States', 'Japan', 'South Korea', 'Turkey', 'Türkiye',
+                'Austria', 'Switzerland', 'Czech Republic', 'Serbia', 'Scotland', 'Northern Ireland', 'Republic of Ireland'
+            ]);
+            return KNOWN_NATIONS.has(name);
+        }
+
         /**
          * Renders the chain steps.
          * KEY REQUIREMENT: Display steps ONE AT A TIME!
@@ -886,6 +922,7 @@
 
                     const clubChipsHtml = step.active_clubs.map((c, cIdx) => {
                         const isNewest = cIdx === step.active_clubs.length - 1;
+                        const iconName = isCountryConstraint(c) ? 'flag' : 'shield';
                         if (isNewest) {
                             return `
                                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-accent/15 border border-accent/40 text-xs font-title font-bold text-accent shadow-sm">
@@ -896,7 +933,7 @@
                         }
                         return `
                             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-xs font-title font-bold text-on-background shadow-sm">
-                                <span class="material-symbols-outlined text-xs text-accent/70">shield</span>
+                                <span class="material-symbols-outlined text-xs text-accent/70">${iconName}</span>
                                 <span>${c}</span>
                             </span>
                         `;
@@ -926,7 +963,7 @@
                             <div class="pt-2 border-t border-white/5">
                                 <div class="text-[10px] uppercase font-mono tracking-wider text-on-surface-variant/80 mb-1.5 flex items-center gap-1">
                                     <span class="material-symbols-outlined text-xs text-accent">link</span>
-                                    <span>Must have played for all ${step.active_clubs.length} clubs:</span>
+                                    <span>Must have played for all ${step.active_clubs.length} clubs / teams:</span>
                                 </div>
                                 <div class="flex flex-wrap items-center gap-1.5">
                                     ${clubChipsHtml}
@@ -1037,13 +1074,14 @@
 
             currStep.active_clubs.forEach((club, idx) => {
                 const isNewest = idx === currStep.active_clubs.length - 1;
+                const iconName = isCountryConstraint(club) ? 'flag' : 'shield';
                 const tag = document.createElement('span');
                 tag.className = `px-3 py-1 rounded-xl text-xs sm:text-sm font-title font-bold flex items-center gap-1.5 border shadow-sm ${
                     isNewest
                     ? 'bg-accent/15 border-accent text-accent'
                     : 'bg-surface-container-high border-white/10 text-on-background'
                 }`;
-                tag.innerHTML = `<span class="material-symbols-outlined text-xs">shield</span>${club}`;
+                tag.innerHTML = `<span class="material-symbols-outlined text-xs">${iconName}</span>${club}`;
                 tagsContainer.appendChild(tag);
             });
         }
@@ -1282,6 +1320,8 @@
             // Hide active guess panel
             const guessPanel = document.getElementById('fa-guess-panel');
             if (guessPanel) guessPanel.style.display = 'none';
+            const addLifeBtn = document.getElementById('add-life-btn');
+            if (addLifeBtn) addLifeBtn.classList.add('hidden');
 
             // Reveal player identity & all hints
             revealMysteryPlayerCard();

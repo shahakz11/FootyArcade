@@ -429,6 +429,7 @@ class PuzzleVerifier:
         self.fix_mode = fix_mode
         self.dry_run = dry_run
         self.all_clubs, self.all_players, self.club_set, self.player_set = load_master_entities()
+        self.nationality_set = {normalize_str(p.get("Nationality", "")) for p in self.all_players if p.get("Nationality")}
         self.issues = []
         self.fixes = []
         self.ai_checks = []
@@ -453,11 +454,14 @@ class PuzzleVerifier:
             "detail": detail
         }
         self.fixes.append(fix)
+        return fix
 
     def ensure_club_exists(self, club_name, game_id, puzzle_num):
         if not club_name:
             return
         norm = normalize_str(club_name)
+        if norm in self.nationality_set:
+            return
         if norm not in self.club_set:
             self.log_issue(game_id, puzzle_num, "ERROR", f"Club '{club_name}' missing from all_clubs.json", "club", club_name)
             if self.fix_mode and not self.dry_run:

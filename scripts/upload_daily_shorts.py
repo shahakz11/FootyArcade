@@ -15,7 +15,8 @@ from scripts.youtube_uploader import (
     build_default_metadata,
     get_channel_info,
     is_youtube_already_uploaded,
-    load_matchday_context_for_date
+    load_matchday_context_for_date,
+    is_puzzle_context_matched
 )
 from scripts.instagram_uploader import (
     check_connection as check_ig_connection,
@@ -331,6 +332,15 @@ async def process_all_games(
                     "ig_status": "Rendered (Dry Run)", "ig_url": video_path
                 })
                 continue
+
+            # Log metadata relevance status
+            matched = is_puzzle_context_matched(game_id, target_name, matchday_context)
+            if matchday_context:
+                if matched:
+                    clash = matchday_context.get("clash_name", "Matchday Special")
+                    print(f"🎯 [Metadata] Context Matched: Applying '⚔️ {clash} SPECIAL!' for {game_name} ({target_name})")
+                else:
+                    print(f"ℹ️ [Metadata] Context Unmatched: Target '{target_name}' not in matchday clash. Using standard evergreen caption.")
 
             # ── A. Upload to YouTube Shorts ───────────────────────────────────
             yt_status, yt_url = "Skipped", "—"

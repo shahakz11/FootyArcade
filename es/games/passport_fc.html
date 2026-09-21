@@ -757,20 +757,21 @@
         for (const p of rawPlayers) {
             if (!p || !p.Name) continue;
             const norm = FootyUI.normalizeStr(p.Name);
-            const nat = FootyUI.normalizeStr(p.Nationality || '');
-            const pos = FootyUI.normalizeStr(p.Position || '');
-            const key = `${norm}|${nat}|${pos}`;
-            if (!playerMap.has(key)) {
-                playerMap.set(key, p);
+            if (!playerMap.has(norm)) {
+                playerMap.set(norm, p);
             } else {
-                const existing = playerMap.get(key);
+                const existing = playerMap.get(norm);
                 const higherValue = Math.max(Number(p.MarketValue || 0), Number(existing.MarketValue || 0));
-                // Prefer canonical name with accents / non-ASCII characters
-                if (/[^\x00-\x7F]/.test(p.Name) && !/[^\x00-\x7F]/.test(existing.Name)) {
-                    playerMap.set(key, { ...p, MarketValue: higherValue });
-                } else {
-                    existing.MarketValue = higherValue;
-                }
+                const nationality = existing.Nationality || p.Nationality || '';
+                const position = (existing.Position && existing.Position !== 'Player') ? existing.Position : (p.Position || 'Player');
+                const name = (/[^\x00-\x7F]/.test(p.Name) && !/[^\x00-\x7F]/.test(existing.Name)) ? p.Name : existing.Name;
+                playerMap.set(norm, {
+                    ...existing,
+                    Name: name,
+                    Nationality: nationality,
+                    Position: position,
+                    MarketValue: higherValue
+                });
             }
         }
 
@@ -822,6 +823,16 @@
                 initial: INITIAL_LIVES,
                 onDead: () => {
                     endGame(false);
+                },
+                onChange: (val) => {
+                    const addLifeBtn = document.getElementById('add-life-btn');
+                    if (addLifeBtn) {
+                        if (val < INITIAL_LIVES && !gameOver) {
+                            addLifeBtn.classList.remove('hidden');
+                        } else {
+                            addLifeBtn.classList.add('hidden');
+                        }
+                    }
                 }
             });
 
@@ -911,6 +922,14 @@
                 if (sum) sum.scrollIntoView({ behavior: 'smooth' });
             });
             document.getElementById('modal-share-btn').addEventListener('click', doShare);
+
+            // Add Life button
+            const addLifeBtn = document.getElementById('add-life-btn');
+            if (addLifeBtn) {
+                addLifeBtn.addEventListener('click', () => {
+                    if (!gameOver) livesCtrl.add();
+                });
+            }
 
             // Reopen Modal from summary
             document.getElementById('reopen-modal-btn').addEventListener('click', () => {
@@ -1024,8 +1043,12 @@
 
                 const canonicalPool = dedupeCanonicalNames(st.valid_players);
                 const poolCount = canonicalPool.length || st.pool_size;
-                let poolText = `${poolCount} Futbolistas Elegibles`;
-                if (poolCount === 1) poolText = '¡Solo 1 Unicornio Elegible!';
+                let poolText = '';
+                if (gameOver) {
+                    poolText = poolCount === 1 ? '¡Solo 1 Unicornio Elegible!' : `${poolCount} Futbolistas Elegibles`;
+                } else {
+                    poolText = isUnicorn ? 'El Sello Unicornio' : `Sello #${idx + 1}`;
+                }
 
                 let statusBadge = '';
                 if (isPassed) {
@@ -1043,10 +1066,11 @@
                 // Answer reveal section for passed or game over
                 let answerDetail = '';
                 if (isPassed && rec && !isSkipped) {
+                    const poolBadge = gameOver ? `<span class="text-[11px] font-mono text-accent/80">${poolCount} total elegibles</span>` : '';
                     answerDetail = `
                         <div class="mt-2 pt-2 border-t border-white/5 flex items-center justify-between">
                             <span class="text-xs font-mono text-on-surface-variant">Tu respuesta: <strong class="text-white font-bold">${rec.guessed}</strong></span>
-                            <span class="text-[11px] font-mono text-accent/80">${poolCount} total elegibles</span>
+                            ${poolBadge}
                         </div>
                     `;
                 } else if (gameOver) {
@@ -1393,6 +1417,8 @@
         function endGame(won) {
             gameOver = true;
             document.getElementById('fa-guess-panel').classList.add('hidden');
+            const addLifeBtn = document.getElementById('add-life-btn');
+            if (addLifeBtn) addLifeBtn.classList.add('hidden');
 
             const score = stepRecords.filter(r => r && r.won).length;
             const total = activeGameData.total_steps;
@@ -1506,6 +1532,8 @@
             populateSummaryBreakdown();
             document.getElementById('endgame-summary-section').classList.remove('hidden');
             document.getElementById('fa-guess-panel').classList.add('hidden');
+            const addLifeBtn = document.getElementById('add-life-btn');
+            if (addLifeBtn) addLifeBtn.classList.add('hidden');
         }
 
         function doShare() {
