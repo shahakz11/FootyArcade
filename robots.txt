@@ -5,6 +5,8 @@ Allow: /
 Allow: /manifest.json
 Allow: /games.json
 Allow: /games.json?*
+Allow: /games/*.html$
+Allow: /es/games/*.html$
 
 # Block data files and build artifacts from crawling
 Disallow: /templates/
@@ -14,6 +16,18 @@ Disallow: /*.py$
 Disallow: /*.ipynb$
 
 # Block back-in-time variant pages (canonicalized to main game pages)
-Disallow: /games/*_d*.html
+Disallow: /games/club_connect_d*.html
+Disallow: /games/passport_fc_d*.html
+Disallow: /games/player_chain_d*.html
+Disallow: /games/top_scorers_d*.html
+Disallow: /games/top_transfers_d*.html
+Disallow: /games/transfer_destination_d*.html
+
+Disallow: /es/games/club_connect_d*.html
+Disallow: /es/games/passport_fc_d*.html
+Disallow: /es/games/player_chain_d*.html
+Disallow: /es/games/top_scorers_d*.html
+Disallow: /es/games/top_transfers_d*.html
+Disallow: /es/games/transfer_destination_d*.html
 
 Sitemap: https://playmaker.best/sitemap.xml

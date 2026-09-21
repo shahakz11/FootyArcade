@@ -182,7 +182,7 @@
             <a href="/es/games/player_chain.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('es')" class="px-2 py-0.5 rounded transition-all text-on-surface-variant hover:text-white" title="Cambiar a Español">ES</a>
         </div>
         <div class="flex items-center gap-2 text-on-surface-variant">
-            <button id="how-to-play-btn" class="text-on-surface-variant hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="How to play instructions" title="How to play">
+            <button id="how-to-play-btn" class="text-on-surface-variant hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5 cursor-pointer" aria-label="How to play instructions" title="How to play">
                 <span class="material-symbols-outlined text-xl">help_outline</span>
             </button>
             <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on Instagram" title="Instagram">
@@ -420,20 +420,20 @@
     <!-- How To Play Modal -->
     <div id="how-to-play-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
         <div class="bg-surface border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
-            <button id="close-how-to-play-btn" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-background transition-colors" aria-label="Close how to play modal">
+            <button id="close-how-to-play-btn" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-background transition-colors cursor-pointer" aria-label="Close how to play modal">
                 <span class="material-symbols-outlined text-xl">close</span>
             </button>
             <h3 class="font-headline text-2xl text-accent uppercase italic tracking-wide">HOW TO PLAY</h3>
             <div class="space-y-3 text-sm text-on-surface-variant leading-relaxed font-body">
-                <p><strong class="text-on-background font-title">Goal:</strong> Unmask the mystery <strong class="text-on-background font-title">Player of the Day</strong> by identifying players who match an expanding chain of career clubs.</p>
-                <p><strong class="text-on-background font-title">1. Sequential Progression:</strong> Start with 1 club constraint. Each step unlocks one at a time, adding another club to the chain.</p>
-                <p><strong class="text-on-background font-title">2. 🎯 Instant Win:</strong> If you guess the Player of the Day at <em>any</em> stage, the game ends immediately in victory!</p>
-                <p><strong class="text-on-background font-title">3. Hints:</strong> Click the Hint buttons on the mystery player card to reveal their Nationality or Position.</p>
-                <p><strong class="text-on-background font-title">4. No Repeat Guesses:</strong> Once you submit a player, they cannot be used again in that session.</p>
-                <p><strong class="text-on-background font-title">5. Skipping:</strong> Stuck on a tricky club combination? Click <em>Skip</em> to unlock the next step and keep playing.</p>
-                <p><strong class="text-on-background font-title">6. Lives:</strong> Guessing an invalid player who does not meet all active constraints costs 1 life.</p>
+                <p><strong class="text-on-background font-title">Goal:</strong> Unmask the mystery <strong class="text-on-background font-title">Player of the Day</strong> by identifying footballers across an expanding chain of career clubs.</p>
+                <p><strong class="text-on-background font-title">1. Chain Progression:</strong> Start with 1 club. Each step adds another club to the chain—name any player who represented all active clubs in the chain to advance.</p>
+                <p><strong class="text-on-background font-title">2. 🎯 Instant Win:</strong> Guess the Player of the Day at <em>any</em> stage to end the game immediately in victory!</p>
+                <p><strong class="text-on-background font-title">3. Clues &amp; Skip:</strong> Reveal Nationality or Position hints for the mystery player, or skip a tricky club combination without penalty.</p>
+                <p><strong class="text-on-background font-title">4. Lives &amp; VAR:</strong> Guessing an invalid player who does not match all active clubs deducts 1 life. Appeal disputed answers via official VAR review.</p>
+                <p><strong class="text-on-background font-title">5. No Repeat Guesses:</strong> Once a footballer is submitted, they cannot be reused in that session.</p>
+                <p><strong class="text-on-background font-title">6. Database Scope:</strong> Includes official senior club appearances and transfers since 1990 alongside verified historic legends throughout football history.</p>
             </div>
-            <button id="close-how-to-play-btn2" class="w-full py-3 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all">
+            <button id="close-how-to-play-btn2" class="w-full py-3 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all cursor-pointer">
                 GOT IT
             </button>
         </div>
@@ -557,7 +557,7 @@
         const PUZZLE_NUMBER = 1;
         const IS_BACK_IN_TIME = false;
         const MAX_BACK_DAYS = 7;
-        const GAME_NOTE = "Transfer and career data updated to July 2026.";
+        const GAME_NOTE = "Transfer and career data updated to June 2026.";
     </script>
 
     <script>
@@ -623,7 +623,10 @@
                 listId:   'autocomplete-list',
                 data:     allPlayersList,
                 labelFn:  p => p.Name,
-                badgeFn:  p => `${p.Nationality || ''}${p.Position ? ' · ' + p.Position : ''}`
+                badgeFn:  p => {
+                    if (!p || (p.Name && /\(all\)$/i.test(p.Name))) return '';
+                    return `${p.Nationality || ''}${p.Position ? ' · ' + p.Position : ''}`;
+                }
             });
 
             // Standard FootyModal with Giphy GIF & player reveal
@@ -725,6 +728,15 @@
             });
         }
 
+        function saveSessionProgress() {
+            try {
+                const stepKey = `player_chain_steps_${isBackInTime ? 'bit_' : ''}${puzzleNum}`;
+                const guessKey = `player_chain_guessed_${isBackInTime ? 'bit_' : ''}${puzzleNum}`;
+                localStorage.setItem(stepKey, JSON.stringify(stepRecords));
+                localStorage.setItem(guessKey, JSON.stringify(guessedPlayers));
+            } catch (_) {}
+        }
+
         function initUI() {
             if (!activeGameData) return;
 
@@ -787,9 +799,23 @@
         function checkAlreadyPlayed() {
             const result = storage.getPuzzleResult(puzzleNum, isBackInTime);
             if (!result) return;
+            // Strict date verification: daily puzzle is only played if recorded today
+            if (!isBackInTime && result.date && result.date !== new Date().toISOString().slice(0, 10)) {
+                return;
+            }
 
             gameOver = true;
             didInstantWin = result.won && result.score === activeGameData.total_steps;
+
+            // Load saved step records if available
+            try {
+                const stepKey = `player_chain_steps_${isBackInTime ? 'bit_' : ''}${puzzleNum}`;
+                const raw = localStorage.getItem(stepKey);
+                if (raw) stepRecords = JSON.parse(raw) || [];
+                const guessKey = `player_chain_guessed_${isBackInTime ? 'bit_' : ''}${puzzleNum}`;
+                const rawGuess = localStorage.getItem(guessKey);
+                if (rawGuess) guessedPlayers = JSON.parse(rawGuess) || [];
+            } catch (_) {}
 
             // Reveal player identity and hints
             revealMysteryPlayerCard();
@@ -1060,7 +1086,7 @@
             const normMatched = FootyUI.normalizeStr(matched);
 
             // 1. Check No Repeat Guesses Rule (both correct & wrong)
-            const alreadyCorrect = guessedPlayers.some(p => FootyUI.normalizeStr(p) === normMatched);
+            const alreadyCorrect = guessedPlayers.some(p => FootyUI.isPlayerMatch(p, matched));
             const alreadyWrong   = wrongGuesses && wrongGuesses.has(matched);
             if (alreadyCorrect || alreadyWrong) {
                 FootyUI.trackGuess({
@@ -1081,8 +1107,7 @@
             const currStep = activeGameData.steps[activeStepIndex];
 
             // 2. Check Instant Win Rule (Guessing Mystery Player of the Day)
-            const normTarget = FootyUI.normalizeStr(activeGameData.target_player);
-            if (normMatched === normTarget) {
+            if (FootyUI.isPlayerMatch(matched, activeGameData.target_player)) {
                 // INSTANT WIN!
                 didInstantWin = true;
                 guessedPlayers.push(matched);
@@ -1091,6 +1116,7 @@
                     status: 'instant_win',
                     guessed: matched
                 };
+                saveSessionProgress();
 
                 FootyUI.trackGuess({
                     guess: matched,
@@ -1114,8 +1140,7 @@
             }
 
             // 3. Check Valid Player for this Step
-            const validSet = new Set(currStep.valid_players.map(p => FootyUI.normalizeStr(p)));
-            const isStepValid = validSet.has(normMatched);
+            const isStepValid = currStep.valid_players.some(p => FootyUI.isPlayerMatch(matched, p));
 
             if (isStepValid) {
                 guessedPlayers.push(matched);
@@ -1124,6 +1149,7 @@
                     status: 'correct',
                     guessed: matched
                 };
+                saveSessionProgress();
 
                 FootyUI.trackGuess({
                     guess: matched,
@@ -1202,6 +1228,7 @@
                 guessed: matched,
                 isVar: true
             };
+            saveSessionProgress();
 
             FootyUI.toast(`VAR Overruled: Step ${currStep.step_number} solved with "${matched}"!`, 'success');
 
@@ -1229,6 +1256,7 @@
                 status: 'skipped',
                 guessed: null
             };
+            saveSessionProgress();
 
             FootyUI.toast(`Skipped Step ${currStep.step_number}. Next constraint unlocked!`, 'info');
 
@@ -1261,6 +1289,7 @@
                     };
                 }
             }
+            saveSessionProgress();
 
             // Hide active guess panel
             const guessPanel = document.getElementById('fa-guess-panel');

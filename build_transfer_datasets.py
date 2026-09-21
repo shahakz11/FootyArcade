@@ -4,7 +4,7 @@ import pandas as pd
 import random
 import kagglehub
 from datetime import datetime
-from scripts.alias_utils import load_aliases_config, get_club_alias_map, get_hidden_clubs
+from scripts.alias_utils import load_aliases_config, get_club_alias_map, get_hidden_clubs, clean_career_transfers
 
 def main():
     print("Loading davidcariboo/player-scores dataset...")
@@ -89,7 +89,8 @@ def main():
 
     df_transfers = pd.concat([df_dc_transfers, salimt_t_mapped], ignore_index=True)
     df_transfers.dropna(subset=['transfer_fee'], inplace=True)
-    df_transfers['player_name'] = df_transfers['player_name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True)
+    df_transfers['player_name'] = df_transfers['player_name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True).str.strip()
+    df_transfers = df_transfers[df_transfers['player_name'] != ''].copy()
 
     # Manual additions for famous missing historical transfers
     manual_transfers = pd.DataFrame([
@@ -157,7 +158,7 @@ def main():
         'Athletic Bilbao': 'Athletic Bilbao', 'Athletic Club': 'Athletic Bilbao',
         'Sevilla FC': 'Sevilla', 'Sevilla': 'Sevilla',
         'Real Betis': 'Real Betis', 'Betis': 'Real Betis',
-        'Real Sociedad': 'Real Sociedad',
+        'Real Sociedad': 'Real Sociedad', 'R. Sociedad': 'Real Sociedad', 'Real Sociedad B': 'Real Sociedad',
         'Villarreal CF': 'Villarreal', 'Villarreal': 'Villarreal',
         'Valencia CF': 'Valencia', 'Valencia': 'Valencia',
         'UD Almería': 'Almería', 'Almería': 'Almería', 'Almeria': 'Almería',
@@ -504,23 +505,25 @@ def main():
     
     for day, pid in enumerate(selected_pids):
         p_transfers = df_dest_eligible[df_dest_eligible['player_id'] == pid].copy()
-
-        # Sort chronologically
-        p_transfers = p_transfers.sort_values(by='transfer_date')
-        p_transfers['game_day'] = day + 1
+        raw_recs = p_transfers.to_dict('records')
+        cleaned_recs = clean_career_transfers(raw_recs, aliases)
+        if len(cleaned_recs) < 2:
+            continue
+        cleaned_df = pd.DataFrame(cleaned_recs)
+        cleaned_df['game_day'] = day + 1
         
         # Keep track of clubs for autocomplete
-        for _, row in p_transfers.iterrows():
+        for _, row in cleaned_df.iterrows():
             if pd.notna(row['from_club_name']):
                 clubs_in_careers.add(row['from_club_name'])
             if pd.notna(row['to_club_name']):
                 clubs_in_careers.add(row['to_club_name'])
             
-        dest_games_list.append(p_transfers)
+        dest_games_list.append(cleaned_df)
         
     dest_games_df = pd.concat(dest_games_list, ignore_index=True)
-    # Format transfer_date back to string for easier frontend parsing
-    dest_games_df['transfer_date_str'] = dest_games_df['transfer_date'].dt.strftime('%Y-%m-%d')
+    if 'transfer_date_str' not in dest_games_df.columns:
+        dest_games_df['transfer_date_str'] = dest_games_df['transfer_date'].astype(str)
     
     # Fill NaN columns with appropriate empty strings/values
     dest_games_df['from_club_name'] = dest_games_df['from_club_name'].fillna('')

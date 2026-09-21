@@ -18,7 +18,7 @@ These were discussed and locked in on 2026-07-10.
 | Share format | **Standardized emoji grid** (Wordle-style) across all games — clean and recognizable |
 | SEO / publishing | All templates must include proper `<meta>` tags, OG tags, and Twitter card tags. The site is intended for public indexing on Google |
 | footy-ui.js loading | Loaded as a static `<script src="../games/footy-ui.js">` tag — works on any static host (GitHub Pages, Firebase Hosting, Netlify, etc.) |
-| Game note/disclaimer | Every game has a `note` field in `games.json` — e.g. "Data updated to July 2026" or "Doesn't include dual nationalities". Injected at compile time as `GAME_NOTE` and shown as an info bar |
+| Game note/disclaimer | Every game has a `note` field in `games.json` — e.g. "Data updated to June 2026" or "Doesn't include dual nationalities". Injected at compile time as `GAME_NOTE` and shown as an info bar |
 
 ---
 
@@ -266,7 +266,7 @@ Each game writes to key `footy_v2_{gameId}`.
   "templateFile": "my_new_game_template.html", // in templates/
   "dataVariable": "DAILY_MY_NEW_GAME",         // JS const name injected by compiler
   "storageKey":   "footy_v2_my_new_game",      // localStorage key (auto-derived, FYI)
-  "note":         "Data updated to July 2026.", // shown as info bar in the game
+  "note":         "Data updated to June 2026.", // shown as info bar in the game
   "status":       "active"                     // "active" or "coming_soon"
 }
 ```

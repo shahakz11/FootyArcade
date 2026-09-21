@@ -35,7 +35,9 @@ from scripts.alias_utils import (
     load_aliases_config,
     get_club_alias_map,
     filter_and_canonicalize_clubs,
-    filter_hidden_players
+    filter_and_canonicalize_players,
+    filter_hidden_players,
+    clean_career_transfers
 )
 
 # Increase CSV field size limit for large JSON arrays
@@ -97,6 +99,99 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
 
     # 4. Global UI, Navigation, Counter, and Button replacements
     global_replacements = [
+        # How to Play Modal content (Placed first to avoid single-token collisions like 'Lives:' -> 'Vidas:')
+        # Passport FC
+        ('<p><strong class="text-on-background font-title">Goal:</strong> Fill today\'s club passport by collecting all 4 nationality stamps for the featured <strong class="text-on-background font-title">Anchor Club</strong>.</p>',
+         '<p><strong class="text-on-background font-title">Objetivo:</strong> Completa el pasaporte del club reuniendo los 4 sellos de nacionalidad para el <strong class="text-on-background font-title">Club Ancla</strong> destacado.</p>'),
+        ('<p><strong class="text-on-background font-title">1. Progressive Stamps:</strong> Name any qualifying footballer who played for today\'s anchor club and represented the designated nationality. Each destination unlocks once you solve the previous one!</p>',
+         '<p><strong class="text-on-background font-title">1. Sellos Progresivos:</strong> Nombra a cualquier futbolista válido que haya jugado en el club ancla representando a la nacionalidad indicada. ¡Cada país se desbloquea al acertar el anterior!</p>'),
+        ('<p><strong class="text-on-background font-title">2. Escalating Difficulty:</strong> The passport starts with major footballing nations (large talent pool) and ascends to <em>The Unicorn</em> — a rare nation with only 1 or 2 eligible legends in club history.</p>',
+         '<p><strong class="text-on-background font-title">2. Dificultad Creciente:</strong> El pasaporte empieza con grandes potencias futbolísticas y asciende hasta <em>El Unicornio</em> — un país insólito con solo 1 o 2 leyendas en la historia del club.</p>'),
+        ('<p><strong class="text-on-background font-title">3. Any Valid Player Works:</strong> If Barcelona &amp; France is active, you can name any French player who wore the Blaugrana shirt (e.g. Henry, Griezmann, Dembélé, Thuram, Umtiti, or Koundé).</p>',
+         '<p><strong class="text-on-background font-title">3. Cualquier Jugador Válido Sirve:</strong> Si el reto es Barcelona y Francia, puedes nombrar a cualquier francés que haya vestido la camiseta blaugrana (ej. Henry, Griezmann, Dembélé, Thuram, Umtiti o Koundé).</p>'),
+        ('<p><strong class="text-on-background font-title">4. Lives &amp; VAR:</strong> Incorrect guesses deduct 1 life. If you believe your player qualifies, appeal the decision via official VAR review.</p>',
+         '<p><strong class="text-on-background font-title">4. Vidas y VAR:</strong> Los fallos restan 1 vida. Si crees que tu jugador es válido, apela la decisión mediante la revisión oficial del VAR.</p>'),
+        ('<p><strong class="text-on-background font-title">5. Hints &amp; Skip:</strong> Reveal position clues if you need guidance, or skip ahead to the next destination without losing a life.</p>',
+         '<p><strong class="text-on-background font-title">5. Pistas y Saltar:</strong> Revela pistas de posición si necesitas ayuda, o salta al siguiente país sin perder vidas.</p>'),
+        ('<p><strong class="text-on-background font-title">6. Database Scope:</strong> Includes official senior club appearances and transfers since 1990 alongside verified historic legends throughout club history (updated to June 2026).</p>',
+         '<p><strong class="text-on-background font-title">6. Base de Datos:</strong> Incluye partidos y fichajes oficiales del primer equipo desde 1990 más leyendas históricas verificadas (actualizado a junio de 2026).</p>'),
+
+        # Top Transfers
+        ('<p><strong class="text-on-background font-title">Goal:</strong> Uncover the top 10 most expensive transfer signings for today\'s featured club or nationality.</p>',
+         '<p><strong class="text-on-background font-title">Objetivo:</strong> Descubre el top 10 de fichajes más caros del club o país destacado de hoy.</p>'),
+        ('<p><strong class="text-on-background font-title">1. Search &amp; Guess:</strong> Type and select any footballer from the search bar. If they are among the top 10 record signings, their row is revealed and your score increases!</p>',
+         '<p><strong class="text-on-background font-title">1. Buscar y Adivinar:</strong> Escribe y selecciona cualquier futbolista en el buscador. Si está entre los 10 fichajes récord, ¡su fila se revelará y sumará a tu puntuación!</p>'),
+        ('<p><strong class="text-on-background font-title">2. Free Clues &amp; Reveals:</strong> Click the lightbulb icon on any row to reveal transfer fee, year, and previous club clues. Click the eye icon to reveal the player if you are stuck.</p>',
+         '<p><strong class="text-on-background font-title">2. Pistas y Revelaciones:</strong> Pulsa la bombilla en cualquier fila para ver el coste, año y club de origen. Pulsa el icono del ojo si quieres revelar directamente al jugador.</p>'),
+        ('<p><strong class="text-on-background font-title">3. Lives &amp; VAR:</strong> Incorrect guesses deduct 1 life. If you believe your player belongs in the top 10 rankings, submit a VAR appeal for automated review.</p>',
+         '<p><strong class="text-on-background font-title">3. Vidas y VAR:</strong> Los fallos restan 1 vida. Si crees que tu jugador pertenece al top 10, envía una apelación al VAR para su revisión automática.</p>'),
+        ('<p><strong class="text-on-background font-title">4. Winning:</strong> Discover all 10 record signings before running out of lives to achieve a Mastermind victory!</p>',
+         '<p><strong class="text-on-background font-title">4. Victoria:</strong> ¡Descubre los 10 fichajes récord antes de quedarte sin vidas para lograr la victoria!</p>'),
+        ('<p><strong class="text-on-background font-title">5. Database Scope:</strong> Covers confirmed senior incoming transfers in the modern era (2012–Present) sourced from official transfer records.</p>',
+         '<p><strong class="text-on-background font-title">5. Base de Datos:</strong> Incluye transferencias oficiales confirmadas del primer equipo en la era moderna (2012–Presente).</p>'),
+
+        # Top Scorers
+        ('<p><strong class="text-on-background font-title">Goal:</strong> Name the top 10 goalscorers for today\'s featured league and season.</p>',
+         '<p><strong class="text-on-background font-title">Objetivo:</strong> Nombra al top 10 de máximos goleadores de la liga y temporada destacada de hoy.</p>'),
+        ('<p><strong class="text-on-background font-title">1. Search &amp; Guess:</strong> Type and select players from the search bar. Any correct player in the top 10 rankings instantly populates their leaderboard row!</p>',
+         '<p><strong class="text-on-background font-title">1. Buscar y Adivinar:</strong> Escribe y selecciona futbolistas en el buscador. ¡Cualquier acierto en el top 10 completará al instante su fila en la tabla!</p>'),
+        ('<p><strong class="text-on-background font-title">2. Free Clues &amp; Reveals:</strong> Click the lightbulb icon on any row to uncover nationality, club, and appearance hints. Click the eye icon to reveal the player if you are stuck.</p>',
+         '<p><strong class="text-on-background font-title">2. Pistas y Revelaciones:</strong> Pulsa la bombilla en cualquier fila para desbloquear pistas de país, club y partidos. Pulsa el icono del ojo si quieres revelar directamente al jugador.</p>'),
+        ('<p><strong class="text-on-background font-title">3. Lives &amp; VAR:</strong> Incorrect guesses deduct 1 life. If your player scored enough goals to qualify, appeal the decision via official VAR review.</p>',
+         '<p><strong class="text-on-background font-title">3. Vidas y VAR:</strong> Los fallos restan 1 vida. Si tu jugador marcó suficientes goles para calificar, apela la decisión mediante el VAR.</p>'),
+        ('<p><strong class="text-on-background font-title">4. Winning:</strong> Identify all 10 top goalscorers before running out of lives to clear the board!</p>',
+         '<p><strong class="text-on-background font-title">4. Victoria:</strong> ¡Identifica a los 10 máximos goleadores antes de quedarte sin vidas para completar la tabla!</p>'),
+        ('<p><strong class="text-on-background font-title">5. Database Scope:</strong> Includes official league goals scored across the designated season or tournament.</p>',
+         '<p><strong class="text-on-background font-title">5. Base de Datos:</strong> Incluye goles oficiales anotados en liga durante la temporada o torneo designado.</p>'),
+
+        # Transfer Destination
+        ('<p><strong class="text-on-background font-title">Goal:</strong> Retrace the featured footballer\'s career path club-by-club back to where it all began!</p>',
+         '<p><strong class="text-on-background font-title">Objetivo:</strong> ¡Recorre la trayectoria del futbolista destacado club a club hasta sus orígenes!</p>'),
+        ('<p><strong class="text-on-background font-title">1. Reverse Chronology:</strong> Start at the player\'s most recent club and work backwards. For each step, identify the previous club they transferred from.</p>',
+         '<p><strong class="text-on-background font-title">1. Orden Cronológico Inverso:</strong> Empieza en el club más reciente y retrocede en el tiempo. En cada paso, identifica el club de procedencia del traspaso.</p>'),
+        ('<p><strong class="text-on-background font-title">2. Timeline Clues:</strong> Each card displays the transfer year and fee. The destination club is visible—your mission is to name the originating club.</p>',
+         '<p><strong class="text-on-background font-title">2. Pistas de la Línea Temporal:</strong> Cada tarjeta muestra el año y coste del fichaje. El club de destino es visible: tu misión es acertar el club de origen.</p>'),
+        ('<p><strong class="text-on-background font-title">3. Step Reveals:</strong> Stuck on a difficult club? Click the reveal icon to uncover the step and keep moving back in time.</p>',
+         '<p><strong class="text-on-background font-title">3. Revelar Pasos:</strong> ¿Atascado en un club difícil? Pulsa el icono de revelar para desbloquear el paso y seguir retrocediendo en su carrera.</p>'),
+        ('<p><strong class="text-on-background font-title">4. Lives:</strong> Incorrect club guesses deduct 1 life. The game ends if your lives reach 0.</p>',
+         '<p><strong class="text-on-background font-title">4. Vidas:</strong> Los intentos erróneos de club restan 1 vida. La partida termina si las vidas llegan a 0.</p>'),
+        ('<p><strong class="text-on-background font-title">5. Winning:</strong> Successfully navigate the player\'s entire career history from start to finish!</p>',
+         '<p><strong class="text-on-background font-title">5. Victoria:</strong> ¡Recorre con éxito toda la trayectoria deportiva del jugador de principio a fin!</p>'),
+        ('<p><strong class="text-on-background font-title">6. Database Scope:</strong> Includes all official senior transfers, loans, and career moves up to 2026.</p>',
+         '<p><strong class="text-on-background font-title">6. Base de Datos:</strong> Incluye todos los traspasos oficiales, cesiones y movimientos del primer equipo hasta 2026.</p>'),
+
+        # Player Chain
+        ('<p><strong class="text-on-background font-title">Goal:</strong> Unmask the mystery <strong class="text-on-background font-title">Player of the Day</strong> by identifying footballers across an expanding chain of career clubs.</p>',
+         '<p><strong class="text-on-background font-title">Objetivo:</strong> Descubre al misterioso <strong class="text-on-background font-title">Jugador del Día</strong> identificando futbolistas a lo largo de una cadena creciente de clubes.</p>'),
+        ('<p><strong class="text-on-background font-title">1. Chain Progression:</strong> Start with 1 club. Each step adds another club to the chain—name any player who represented all active clubs in the chain to advance.</p>',
+         '<p><strong class="text-on-background font-title">1. Progresión de la Cadena:</strong> Empieza con 1 club. Cada paso añade otro club a la cadena: nombra a cualquier jugador que haya vestido la camiseta de todos los clubes activos para avanzar.</p>'),
+        ('<p><strong class="text-on-background font-title">2. 🎯 Instant Win:</strong> Guess the Player of the Day at <em>any</em> stage to end the game immediately in victory!</p>',
+         '<p><strong class="text-on-background font-title">2. 🎯 Victoria Directa:</strong> ¡Adivina al Jugador del Día en <em>cualquier</em> paso para ganar la partida de inmediato!</p>'),
+        ('<p><strong class="text-on-background font-title">3. Clues &amp; Skip:</strong> Reveal Nationality or Position hints for the mystery player, or skip a tricky club combination without penalty.</p>',
+         '<p><strong class="text-on-background font-title">3. Pistas y Saltar:</strong> Revela pistas de Nacionalidad o Posición del jugador misterioso, o salta una combinación difícil sin penalización.</p>'),
+        ('<p><strong class="text-on-background font-title">4. Lives &amp; VAR:</strong> Guessing an invalid player who does not match all active clubs deducts 1 life. Appeal disputed answers via official VAR review.</p>',
+         '<p><strong class="text-on-background font-title">4. Vidas y VAR:</strong> Proponer un jugador no válido que no coincida con todos los clubes activos resta 1 vida. Apela decisiones dudosas mediante el VAR oficial.</p>'),
+        ('<p><strong class="text-on-background font-title">5. No Repeat Guesses:</strong> Once a footballer is submitted, they cannot be reused in that session.</p>',
+         '<p><strong class="text-on-background font-title">5. Sin Repetir Jugadores:</strong> Una vez enviado un futbolista, no se puede volver a utilizar en la misma partida.</p>'),
+        ('<p><strong class="text-on-background font-title">6. Database Scope:</strong> Includes official senior club appearances and transfers since 1990 alongside verified historic legends throughout football history.</p>',
+         '<p><strong class="text-on-background font-title">6. Base de Datos:</strong> Incluye partidos y traspasos oficiales del primer equipo desde 1990 junto a leyendas históricas verificadas de toda la historia del fútbol.</p>'),
+
+        # Club Connect
+        ('<p><strong class="text-on-background font-title">Goal:</strong> Identify the single mystery club that signed all 5 featured footballers.</p>',
+         '<p><strong class="text-on-background font-title">Objetivo:</strong> Identifica el club misterioso que fichó a los 5 futbolistas destacados.</p>'),
+        ('<p><strong class="text-on-background font-title">1. Sequential Clues:</strong> Players are revealed one by one in order of transfer fee, from the bargain signing up to the record transfer.</p>',
+         '<p><strong class="text-on-background font-title">1. Pistas Secuenciales:</strong> Los jugadores se revelan uno a uno por orden de coste de traspaso, desde el fichaje más barato hasta el traspaso récord.</p>'),
+        ('<p><strong class="text-on-background font-title">2. Guessing the Club:</strong> After each reveal, type and submit the club you believe signed all currently visible players.</p>',
+         '<p><strong class="text-on-background font-title">2. Adivinar el Club:</strong> Tras cada pista, escribe y envía el club que crees que fichó a todos los jugadores actualmente visibles.</p>'),
+        ('<p><strong class="text-on-background font-title">3. Card Hints:</strong> Click the lightbulb on any revealed player card to uncover the club they were signed from and their transfer fee.</p>',
+         '<p><strong class="text-on-background font-title">3. Pistas de Tarjeta:</strong> Pulsa la bombilla en cualquier tarjeta visible para descubrir el club de origen y el coste de su traspaso.</p>'),
+        ('<p><strong class="text-on-background font-title">4. Lives &amp; Penalties:</strong> Incorrect guesses deduct 1 life and automatically unlock the next player clue to help you connect the dots.</p>',
+         '<p><strong class="text-on-background font-title">4. Vidas y Penalizaciones:</strong> Cada fallo resta 1 vida y desbloquea automáticamente la siguiente pista para ayudarte a conectar los puntos.</p>'),
+        ('<p><strong class="text-on-background font-title">5. Winning:</strong> Correctly identify the mystery club at any stage before lives run out to claim victory!</p>',
+         '<p><strong class="text-on-background font-title">5. Victoria:</strong> ¡Identifica correctamente el club misterioso en cualquier momento antes de quedarte sin vidas para ganar!</p>'),
+        ('<p><strong class="text-on-background font-title">6. Database Scope:</strong> Covers official senior transfers and signings across European and international football.</p>',
+         '<p><strong class="text-on-background font-title">6. Base de Datos:</strong> Cubre traspasos oficiales y fichajes del primer equipo en el fútbol europeo e internacional.</p>'),
+
         # Navigation & Badges
         ('>Prev<', '>Ant.<'),
         ('>Next<', '>Sig.<'),
@@ -218,7 +313,8 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         ('What is Passport FC?', '¿Qué es Pasaporte FC?'),
         ('>What is Passport FC?</h2>', '>¿Qué es Pasaporte FC?</h2>'),
         ('<strong>Database Coverage:</strong>', '<strong>Cobertura de la Base de Datos:</strong>'),
-        ('Official senior appearances and transfers since 1990 plus verified historic legends throughout club history (updated to September 2026).', 'Partidos oficiales y fichajes del primer equipo desde 1990 más leyendas históricas verificadas (actualizado a 2026).'),
+        ('Official senior appearances and transfers since 1990 plus verified historic legends throughout club history (updated to June 2026).', 'Partidos oficiales y fichajes del primer equipo desde 1990 más leyendas históricas verificadas (actualizado a junio de 2026).'),
+        ('Official senior appearances and transfers since 1990 plus verified historic legends throughout club history (updated to September 2026).', 'Partidos oficiales y fichajes del primer equipo desde 1990 más leyendas históricas verificadas (actualizado a junio de 2026).'),
         ('<strong>VAR Verification:</strong>', '<strong>Verificación VAR:</strong>'),
         ('Players can submit any disputed answer to the automated VAR engine to appeal real-world transfer and appearance records.', 'Los jugadores pueden enviar cualquier respuesta disputada al motor automatizado del VAR para apelar registros reales de fichajes y partidos.'),
         ('>MORE DAILY CHALLENGES</h3>', '>MÁS RETOS DIARIOS</h3>'),
@@ -256,38 +352,13 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         ('Type any French footballer who played for Barcelona...', 'Escribe un futbolista francés que haya jugado en el Barcelona...'),
         ('>GUESS</button>', '>ADIVINAR</button>'),
         ('>GUESS\n                </button>', '>ADIVINAR\n                </button>'),
-        ('Transfer data sourced from Transfermarkt. Updated to July 2026.', 'Datos de transferencias de Transfermarkt. Actualizados a 2026.'),
-        ('Transfer data sourced from Transfermarkt. Updated to September 2026.', 'Datos de transferencias de Transfermarkt. Actualizados a 2026.'),
-        # How to Play Modal content (Passport FC)
-        ('<p><strong class="text-on-background font-title">Goal:</strong> Fill today\'s club passport by collecting all 4 nationality stamps for the featured <strong class="text-on-background font-title">Anchor Club</strong>.</p>',
-         '<p><strong class="text-on-background font-title">Objetivo:</strong> Completa el pasaporte del club reuniendo los 4 sellos de nacionalidad para el <strong class="text-on-background font-title">Club Ancla</strong> destacado.</p>'),
-        ('<p><strong class="text-on-background font-title">1. Progressive Stamps:</strong> Name any qualifying footballer who played for today\'s anchor club and represented the designated nationality. Each destination unlocks once you solve the previous one!</p>',
-         '<p><strong class="text-on-background font-title">1. Sellos Progresivos:</strong> Nombra a cualquier futbolista válido que haya jugado en el club ancla representando a la nacionalidad indicada. ¡Cada país se desbloquea al acertar el anterior!</p>'),
-        ('<p><strong class="text-on-background font-title">2. Escalating Difficulty:</strong> The passport starts with major footballing nations (large talent pool) and ascends to <em>The Unicorn</em> — a rare nation with only 1 or 2 eligible legends in club history.</p>',
-         '<p><strong class="text-on-background font-title">2. Dificultad Creciente:</strong> El pasaporte empieza con grandes potencias futbolísticas y asciende hasta <em>El Unicornio</em> — un país insólito con solo 1 o 2 leyendas en la historia del club.</p>'),
-        ('<p><strong class="text-on-background font-title">3. Any Valid Player Works:</strong> If Barcelona &amp; France is active, you can name any French player who wore the Blaugrana shirt (e.g. Henry, Griezmann, Dembélé, Thuram, Umtiti, or Koundé).</p>',
-         '<p><strong class="text-on-background font-title">3. Cualquier Jugador Válido Sirve:</strong> Si el reto es Barcelona y Francia, puedes nombrar a cualquier francés que haya vestido la camiseta blaugrana (ej. Henry, Griezmann, Dembélé, Thuram, Umtiti o Koundé).</p>'),
-        ('<p><strong class="text-on-background font-title">4. Lives &amp; VAR:</strong> Incorrect guesses deduct 1 life. If you believe your player qualifies, appeal the decision via official VAR review.</p>',
-         '<p><strong class="text-on-background font-title">4. Vidas y VAR:</strong> Los fallos restan 1 vida. Si crees que tu jugador es válido, apela la decisión mediante la revisión oficial del VAR.</p>'),
-        ('<p><strong class="text-on-background font-title">5. Hints &amp; Skip:</strong> Reveal position clues if you need guidance, or skip ahead to the next destination without losing a life.</p>',
-         '<p><strong class="text-on-background font-title">5. Pistas y Saltar:</strong> Revela pistas de posición si necesitas ayuda, o salta al siguiente país sin perder vidas.</p>'),
-        ('<p><strong class="text-on-background font-title">6. Database Scope:</strong> Includes official senior club appearances and transfers since 1990 alongside verified historic legends throughout club history (updated to September 2026).</p>',
-         '<p><strong class="text-on-background font-title">6. Base de Datos:</strong> Incluye partidos y fichajes oficiales del primer equipo desde 1990 más leyendas históricas verificadas (actualizado a 2026).</p>'),
-        # How to Play Modal content (Player Chain)
-        ('<p><strong class="text-on-background font-title">Goal:</strong> Unmask the mystery <strong class="text-on-background font-title">Player of the Day</strong> by identifying players who match an expanding chain of career clubs.</p>',
-         '<p><strong class="text-on-background font-title">Objetivo:</strong> Descubre al <strong class="text-on-background font-title">Jugador del Día</strong> identificando futbolistas que coincidan con la cadena de clubes.</p>'),
-        ('<p><strong class="text-on-background font-title">1. Sequential Progression:</strong> Start with 1 club constraint. Each step unlocks one at a time, adding another club to the chain.</p>',
-         '<p><strong class="text-on-background font-title">1. Progresión Secuencial:</strong> Empieza con 1 club. Cada paso se desbloquea uno a uno, añadiendo otro club a la cadena.</p>'),
-        ('<p><strong class="text-on-background font-title">2. 🎯 Instant Win:</strong> If you guess the Player of the Day at <em>any</em> stage, the game ends immediately in victory!</p>',
-         '<p><strong class="text-on-background font-title">2. 🎯 Victoria Directa:</strong> ¡Si adivinas al Jugador del Día en <em>cualquier</em> paso, el juego termina inmediatamente con victoria!</p>'),
-        ('<p><strong class="text-on-background font-title">3. Hints:</strong> Click the Hint buttons on the mystery player card to reveal their Nationality or Position.</p>',
-         '<p><strong class="text-on-background font-title">3. Pistas:</strong> Pulsa los botones de pista en la tarjeta misteriosa para revelar su Nacionalidad o Posición.</p>'),
-        ('<p><strong class="text-on-background font-title">4. No Repeat Guesses:</strong> Once you submit a player, they cannot be used again in that session.</p>',
-         '<p><strong class="text-on-background font-title">4. Sin Repetir Jugadores:</strong> Una vez enviado un jugador, no se puede volver a usar en la misma partida.</p>'),
-        ('<p><strong class="text-on-background font-title">5. Skipping:</strong> Stuck on a tricky club combination? Click <em>Skip</em> to unlock the next step and keep playing.</p>',
-         '<p><strong class="text-on-background font-title">5. Saltar:</strong> ¿Atascado en una combinación difícil? Pulsa <em>Saltar</em> para desbloquear el siguiente paso.</p>'),
-        ('<p><strong class="text-on-background font-title">6. Lives:</strong> Guessing an invalid player who does not meet all active constraints costs 1 life.</p>',
-         '<p><strong class="text-on-background font-title">6. Vidas:</strong> Proponer un jugador que no cumpla todos los clubes activos cuesta 1 vida.</p>'),
+        ('Transfer data sourced from Transfermarkt. Updated to June 2026.', 'Datos de transferencias de Transfermarkt. Actualizados a junio de 2026.'),
+        ('Transfer data sourced from Transfermarkt. Updated to July 2026.', 'Datos de transferencias de Transfermarkt. Actualizados a junio de 2026.'),
+        ('Transfer data sourced from Transfermarkt. Updated to September 2026.', 'Datos de transferencias de Transfermarkt. Actualizados a junio de 2026.'),
+        # Accessibility & Button titles
+        ('aria-label="How to play instructions"', 'aria-label="Instrucciones de cómo jugar"'),
+        ('title="How to play"', 'title="Cómo jugar"'),
+        ('aria-label="Close how to play modal"', 'aria-label="Cerrar ventana de cómo jugar"'),
     ]
 
     for orig, rep in global_replacements:
@@ -572,7 +643,7 @@ def get_processed_all_clubs():
         with open("all_clubs.json", "r", encoding="utf-8") as f:
             raw_clubs = json.load(f)
         alias_cfg = load_aliases_config()
-        filtered = filter_and_canonicalize_clubs(raw_clubs, alias_cfg)
+        filtered = filter_and_canonicalize_clubs(raw_clubs, alias_cfg, as_objects=True)
         _CACHED_PROCESSED_CLUBS = json.dumps(filtered, ensure_ascii=False)
     except Exception as e:
         print(f"  WARNING: Error processing all_clubs.json: {e}")
@@ -592,7 +663,7 @@ def get_processed_all_players():
         with open("all_players.json", "r", encoding="utf-8") as f:
             raw_players = json.load(f)
         alias_cfg = load_aliases_config()
-        filtered = filter_hidden_players(raw_players, alias_cfg)
+        filtered = filter_and_canonicalize_players(raw_players, alias_cfg)
         _CACHED_PROCESSED_PLAYERS = json.dumps(filtered, ensure_ascii=False)
     except Exception as e:
         print(f"  WARNING: Error processing all_players.json: {e}")
@@ -662,30 +733,32 @@ def load_transfer_destination(puzzle_num):
         print(f"  WARNING: {csv_path} not found.")
         return None, None
 
+    alias_map = get_club_alias_map(load_aliases_config())
+    day_rows = []
+
     with open(csv_path, "r", encoding="utf-8") as f:
         for r in csv.DictReader(f):
             if int(r.get("game_day", 1)) == puzzle_num:
-                from_c = r.get("from_club_name", "").strip()
-                to_c = r.get("to_club_name", "").strip()
-                # Exclude internal transfers between same club/aliases (e.g. youth/B team to senior)
-                if from_c and to_c and from_c.lower() == to_c.lower():
-                    continue
-
                 if not game_data["player_name"]:
                     game_data["player_name"] = r.get("player_name", "")
                     game_data["nationality"]  = r.get("country_of_citizenship", "")
                     game_data["position"]     = r.get("position", "")
-                game_data["transfers"].append({
-                    "transfer_date":      r.get("transfer_date_str", r.get("transfer_date", "")),
-                    "from_club_name":     from_c,
-                    "to_club_name":       to_c,
-                    "transfer_fee":       float(r.get("transfer_fee", "0.0") or 0.0),
-                    "market_value_in_eur": float(r.get("market_value_in_eur", "0.0") or 0.0),
-                })
+                day_rows.append(r)
 
-    if not game_data["player_name"]:
+    if not day_rows or not game_data["player_name"]:
         print(f"  WARNING: No transfer_destination data for puzzle #{puzzle_num}")
         return None, None
+
+    cleaned_transfers = clean_career_transfers(day_rows, alias_map)
+    for tr in cleaned_transfers:
+        game_data["transfers"].append({
+            "transfer_date":       tr.get("transfer_date_str", tr.get("transfer_date", "")),
+            "from_club_name":      tr.get("from_club_name", ""),
+            "to_club_name":        tr.get("to_club_name", ""),
+            "transfer_fee":        float(tr.get("transfer_fee", 0.0) or 0.0),
+            "market_value_in_eur": float(tr.get("market_value_in_eur", 0.0) or 0.0),
+            "transfer_type":       tr.get("transfer_type", ""),
+        })
 
     # Reverse transfers so the game runs from most recent club/transfer back to the first
     game_data["transfers"].reverse()

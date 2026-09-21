@@ -173,8 +173,19 @@ def clean_club_name(val):
 def build_player_career_database():
     """
     Combines Davidcariboo and Salimt datasets with all_players.json
-    Returns (p_clubs, player_metadata)
+    Returns (p_clubs, player_metadata, club_to_entities, entity_name, entity_clubs)
     """
+    cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.player_career_db.pkl')
+    if os.path.exists(cache_path):
+        try:
+            import pickle
+            with open(cache_path, 'rb') as f:
+                data = pickle.load(f)
+                print(f"[build_player_career_database] ⚡ Loaded career database from disk cache ({cache_path})")
+                return data
+        except Exception as e:
+            print(f"[build_player_career_database] Note: Cache load error, rebuilding: {e}")
+
     print("Loading all_players.json...")
     with open('all_players.json', 'r', encoding='utf-8') as f:
         all_players = json.load(f)
@@ -187,7 +198,15 @@ def build_player_career_database():
             'position': p.get('Position', '')
         }
 
-    p_clubs = defaultdict(set)
+    # Entity-level tracking to prevent collisions between different players with same name (e.g. Rafinha b. 1985 vs b. 1993)
+    entity_clubs = defaultdict(set)
+    entity_name = {}
+    club_to_entities = defaultdict(set)
+
+    KNOWN_HOMONYM_ENTITIES = {
+        129473: "Rafael Alcântara",
+        33947: "Rafinha",
+    }
 
     # 1. Davidcariboo transfers
     today_str = datetime.now().strftime('%Y-%m-%d')
@@ -206,19 +225,25 @@ def build_player_career_database():
 
         df_dc_t = pd.read_csv(
             os.path.join(dc_path, 'transfers.csv'),
-            usecols=['player_name', 'from_club_name', 'to_club_name', 'transfer_date'],
+            usecols=['player_id', 'player_name', 'from_club_name', 'to_club_name', 'transfer_date'],
             low_memory=False
         )
         df_dc_t['parsed_date'] = pd.to_datetime(df_dc_t['transfer_date'], errors='coerce')
         df_dc_t = df_dc_t[(df_dc_t['parsed_date'].isna()) | (df_dc_t['parsed_date'] <= today_str)]
 
         for row in df_dc_t.itertuples(index=False):
-            name = str(row.player_name).strip()
-            if name and name != 'nan' and name in player_metadata:
+            pid = int(row.player_id) if pd.notna(row.player_id) else None
+            name = (KNOWN_HOMONYM_ENTITIES.get(pid) or dc_id_map.get(pid) or str(row.player_name)).strip()
+            if pid is not None and name and name != 'nan' and name in player_metadata:
+                entity_name[pid] = name
                 c1 = clean_club_name(str(row.from_club_name))
                 c2 = clean_club_name(str(row.to_club_name))
-                if c1: p_clubs[name].add(c1)
-                if c2: p_clubs[name].add(c2)
+                if c1:
+                    entity_clubs[pid].add(c1)
+                    club_to_entities[c1].add(pid)
+                if c2:
+                    entity_clubs[pid].add(c2)
+                    club_to_entities[c2].add(pid)
 
     # 2. Salimt transfers (using unified ID map so players like Chivu are mapped)
     salimt_dir = os.path.expanduser('~/.cache/kagglehub/datasets/xfkzujqjvx97n/football-datasets/versions')
@@ -250,13 +275,18 @@ def build_player_career_database():
         salimt_tr = salimt_tr[(salimt_tr['parsed_date'].isna()) | (salimt_tr['parsed_date'] <= today_str)]
 
         for row in salimt_tr.itertuples(index=False):
-            pid = row.player_id
-            name = unified_id_map.get(pid, '').strip()
-            if name and name != 'nan' and name in player_metadata:
+            pid = int(row.player_id) if pd.notna(row.player_id) else None
+            name = (KNOWN_HOMONYM_ENTITIES.get(pid) or unified_id_map.get(pid, '')).strip()
+            if pid is not None and name and name != 'nan' and name in player_metadata:
+                entity_name[pid] = name
                 c1 = clean_club_name(str(row.from_team_name))
                 c2 = clean_club_name(str(row.to_team_name))
-                if c1: p_clubs[name].add(c1)
-                if c2: p_clubs[name].add(c2)
+                if c1:
+                    entity_clubs[pid].add(c1)
+                    club_to_entities[c1].add(pid)
+                if c2:
+                    entity_clubs[pid].add(c2)
+                    club_to_entities[c2].add(pid)
 
     # 3. Manual legendary career enrichments (for historical legends)
     manual_legends = {
@@ -470,10 +500,13 @@ def build_player_career_database():
             if data.get('position'):
                 player_metadata[name]['position'] = data['position']
 
+        legend_id = f"manual_{name.lower().replace(' ', '_')}"
+        entity_name[legend_id] = name
         for c in data.get('clubs', []):
             clean_c = clean_club_name(c)
             if clean_c:
-                p_clubs[name].add(clean_c)
+                entity_clubs[legend_id].add(clean_c)
+                club_to_entities[clean_c].add(legend_id)
 
     # 4. Offline historical careers enrichment (covers Sneijder, Bergkamp, Kluivert, etc.)
     hist_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'historical_careers.json')
@@ -494,18 +527,37 @@ def build_player_career_database():
                 if data.get('position') and not player_metadata[name].get('position'):
                     player_metadata[name]['position'] = data['position']
 
+            legend_id = f"legend_{name.lower().replace(' ', '_')}"
+            entity_name[legend_id] = name
             for c in data.get('clubs', []):
                 clean_c = clean_club_name(c)
                 if clean_c:
-                    p_clubs[name].add(clean_c)
+                    entity_clubs[legend_id].add(clean_c)
+                    club_to_entities[clean_c].add(legend_id)
 
-    print(f"Total mapped players: {len(p_clubs)}")
-    return p_clubs, player_metadata
+    # 4. Build p_clubs mapping player display name -> union of clubs (for candidate star selection & ML indexing)
+    p_clubs = defaultdict(set)
+    for eid, clubs in entity_clubs.items():
+        pname = entity_name.get(eid)
+        if pname:
+            p_clubs[pname].update(clubs)
+
+    print(f"Total mapped players: {len(p_clubs)} ({len(entity_clubs)} distinct entities)")
+    result = (p_clubs, player_metadata, club_to_entities, entity_name, entity_clubs)
+    try:
+        import pickle
+        with open(cache_path, 'wb') as f:
+            pickle.dump(result, f)
+        print(f"[build_player_career_database] ✅ Cached career database to {cache_path}")
+    except Exception as e:
+        print(f"[build_player_career_database] Note: Failed to cache career database: {e}")
+    return result
 
 
-def generate_puzzles(p_clubs, player_metadata, total_puzzles=180):
+def generate_puzzles(p_clubs, player_metadata, club_to_entities, entity_name, total_puzzles=180):
     """
     Generates 180 puzzles with iconic target players and expanding constraints.
+    Uses entity-level constraint intersection to prevent collisions between different players with same name.
     Returns list of dicts for CSV export.
     """
     print("Selecting target players and designing chains...")
@@ -556,28 +608,109 @@ def generate_puzzles(p_clubs, player_metadata, total_puzzles=180):
         'Gonzalo Higuaín',
     ]
 
-    # Inverted index for O(1) set-intersection lookups instead of scanning 90,000+ players
-    club_to_players = defaultdict(set)
-    for p_name, p_clubset in p_clubs.items():
-        if p_name and p_name != 'nan':
-            for c in p_clubset:
-                club_to_players[c].add(p_name)
-
     # Compute ML player recognizability scores
     rec_map = build_recognizability_index(p_clubs, player_metadata)
 
+    # Define helper to compute valid names for a set of clubs
     def find_valid(club_set):
         if not club_set:
             return []
         club_list = list(club_set)
-        valid_set = club_to_players.get(club_list[0], set()).copy()
+        valid_entities = club_to_entities.get(club_list[0], set()).copy()
         for c in club_list[1:]:
-            valid_set &= club_to_players.get(c, set())
-            if not valid_set:
+            valid_entities &= club_to_entities.get(c, set())
+            if not valid_entities:
                 break
-        return sorted(list(valid_set))
+        valid_names = {entity_name[eid] for eid in valid_entities if eid in entity_name}
+        return sorted(list(valid_names))
 
-    # Build candidate pool: start with priority stars, then add destination stars and top recognized players
+    # Check if existing daily_player_chain_games.csv exists to preserve canonical day mapping
+    canonical_csv = 'daily_player_chain_games.csv'
+    canonical_schedule = []
+    if os.path.exists(canonical_csv):
+        try:
+            df_existing = pd.read_csv(canonical_csv)
+            for day, g in df_existing.groupby('game_day'):
+                target = g['target_player'].iloc[0]
+                clubs = g['club'].tolist()
+                canonical_schedule.append((int(day), target, clubs))
+        except Exception as e:
+            print(f"Notice: Could not load canonical schedule from {canonical_csv}: {e}")
+
+    SPECIFIC_CHAINS = {
+        53: ("Ederson", ["Manchester City", "Benfica", "Rio Ave"]),
+        83: ("João Pedro", ["Chelsea", "Watford", "Brighton & Hove Albion"]),
+        127: ("Edin Džeko", ["Manchester City", "Inter", "Roma", "Wolfsburg"]),
+    }
+    NAME_ALIASES = {
+        "Edin Dzeko": "Edin Džeko",
+    }
+
+    puzzle_rows = []
+
+    if canonical_schedule:
+        print(f"Re-evaluating {len(canonical_schedule)} canonical scheduled puzzles...")
+        for day, raw_target, original_clubs in canonical_schedule:
+            if day in SPECIFIC_CHAINS:
+                target, selected_clubs = SPECIFIC_CHAINS[day]
+            else:
+                target = NAME_ALIASES.get(raw_target, raw_target)
+                target_clubs_actual = set(p_clubs.get(target, []))
+                is_valid = True
+                for c in original_clubs:
+                    if c not in target_clubs_actual:
+                        is_valid = False
+                        break
+                if is_valid:
+                    cum = []
+                    for c in original_clubs:
+                        cum.append(c)
+                        v = find_valid(set(cum))
+                        if target not in v:
+                            is_valid = False
+                            break
+                selected_clubs = original_clubs
+                if not is_valid:
+                    cand_clubs = list(p_clubs.get(target, []))
+                    res = find_best_chain_for_player(
+                        target, cand_clubs, club_to_entities, rec_map, entity_name=entity_name
+                    )
+                    chain = res[0]
+                    if chain and len(chain) >= 2:
+                        selected_clubs = chain
+                        print(f"Day {day} ({target}) regenerated: {selected_clubs}")
+
+            cum_clubs = []
+            cum_constraints = []
+            total_steps = len(selected_clubs)
+            meta = player_metadata.get(target, {})
+            nat = meta.get('nationality', 'Unknown')
+            pos = meta.get('position', 'Forward')
+
+            for step_idx, club in enumerate(selected_clubs):
+                cum_clubs.append(club)
+                c_text = f"Played for {club}"
+                cum_constraints.append(c_text)
+                valid = find_valid(set(cum_clubs))
+
+                puzzle_rows.append({
+                    'game_day': day,
+                    'target_player': target,
+                    'target_nationality': nat,
+                    'target_position': pos,
+                    'total_steps': total_steps,
+                    'step_number': step_idx + 1,
+                    'new_constraint': c_text,
+                    'club': club,
+                    'active_constraints': json.dumps(cum_constraints, ensure_ascii=False),
+                    'active_clubs': json.dumps(cum_clubs, ensure_ascii=False),
+                    'valid_players': json.dumps(valid, ensure_ascii=False),
+                })
+
+        print(f"Successfully compiled {len(canonical_schedule)} canonical puzzles with {len(puzzle_rows)} total step records.")
+        return puzzle_rows
+
+    # Fallback to generating new puzzles if no canonical file exists
     all_candidates = []
     seen = set()
     for s in priority_stars:
@@ -590,7 +723,6 @@ def generate_puzzles(p_clubs, player_metadata, total_puzzles=180):
             all_candidates.append(s)
             seen.add(s)
 
-    # Add remaining high-profile players ranked by ML recognizability * club depth
     remaining_candidates = []
     for p, clubs in p_clubs.items():
         if p not in seen and len(clubs) >= 3:
@@ -604,10 +736,7 @@ def generate_puzzles(p_clubs, player_metadata, total_puzzles=180):
         all_candidates.append(p)
         seen.add(p)
 
-    print(f"Candidate star pool size: {len(all_candidates)}")
-
     all_puzzles = []
-
     for candidate in all_candidates:
         if len(all_puzzles) >= total_puzzles:
             break
@@ -616,15 +745,15 @@ def generate_puzzles(p_clubs, player_metadata, total_puzzles=180):
         if len(cand_clubs) < 2:
             continue
 
-        # ML-driven combinatorial search for the optimal funnel
-        selected_chain, score, stats = find_best_chain_for_player(
-            candidate, cand_clubs, club_to_players, rec_map
+        res = find_best_chain_for_player(
+            candidate, cand_clubs, club_to_entities, rec_map, entity_name=entity_name
         )
+        selected_chain = res[0]
+        score = res[1]
 
         if not selected_chain or score == -float('inf') or len(selected_chain) < 2:
             continue
 
-        # Verify each step has valid players and candidate is present
         steps_data = []
         cumulative_clubs = []
         cumulative_constraints = []
@@ -673,23 +802,19 @@ def generate_puzzles(p_clubs, player_metadata, total_puzzles=180):
             })
         all_puzzles.append(puzzle_steps)
 
-    # Randomly shuffle all generated puzzles for variety
-    rng = random.Random(42)
-    rng.shuffle(all_puzzles)
-
     puzzle_rows = []
     for day_idx, p_steps in enumerate(all_puzzles[:total_puzzles], 1):
         for step in p_steps:
             step['game_day'] = day_idx
             puzzle_rows.append(step)
 
-    print(f"Successfully generated and shuffled {len(all_puzzles)} puzzles with {len(puzzle_rows)} total step records.")
+    print(f"Successfully generated {len(all_puzzles)} puzzles with {len(puzzle_rows)} total step records.")
     return puzzle_rows
 
 
 def main():
-    p_clubs, player_metadata = build_player_career_database()
-    puzzle_rows = generate_puzzles(p_clubs, player_metadata, total_puzzles=180)
+    p_clubs, player_metadata, club_to_entities, entity_name, entity_clubs = build_player_career_database()
+    puzzle_rows = generate_puzzles(p_clubs, player_metadata, club_to_entities, entity_name, total_puzzles=180)
 
     out_file = 'daily_player_chain_games.csv'
     fieldnames = [

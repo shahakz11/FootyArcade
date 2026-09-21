@@ -68,16 +68,24 @@ from fetch_daily import (
 FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxEG3jA0QduSlh3ZmMR-98lTK1i4AbO-FgmFpymlJTof_8DZpZdmODSto0Q4NTyX7_7OA/exec'
 DEFAULT_LAUNCH_DATE = datetime(2026, 7, 27)
 
-PRIMARY_GROQ_MODELS = [
-    "openai/gpt-oss-120b",
-    "openai/gpt-oss-20b"
+PRIMARY_AI_MODELS = [
+    {"provider": "gemini", "model": "gemini-2.5-flash", "use_search": True},
+    {"provider": "gemini", "model": "gemini-2.5-flash-lite", "use_search": True},
+    {"provider": "gemini", "model": "gemini-3.5-flash-lite", "use_search": False},
+    {"provider": "gemini", "model": "gemini-3.1-flash-lite", "use_search": False},
+    {"provider": "groq", "model": "openai/gpt-oss-120b", "use_search": False},
+    {"provider": "groq", "model": "openai/gpt-oss-20b", "use_search": False}
 ]
 
-CONSENSUS_GROQ_MODELS = [
-    "qwen/qwen3.8-27b",
-    "qwen/qwen3.6-27b",
-    "openai/gpt-oss-20b"
+CONSENSUS_AI_MODELS = [
+    {"provider": "gemini", "model": "gemini-3.7-flash", "use_search": False},
+    {"provider": "gemini", "model": "gemini-3.6-flash", "use_search": False},
+    {"provider": "gemini", "model": "gemini-3.5-flash", "use_search": False},
+    {"provider": "groq", "model": "qwen/qwen3.8-27b", "use_search": False},
+    {"provider": "groq", "model": "meta-llama/llama-3.3-70b-versatile", "use_search": False},
+    {"provider": "groq", "model": "openai/gpt-oss-20b", "use_search": False}
 ]
+
 
 
 def normalize_str(s):
@@ -130,61 +138,126 @@ def calculate_puzzle_num(offset_days, launch_date_str=""):
     return (days_diff % TOTAL_DAYS) + 1
 
 
-def call_groq_api(models_to_try, system_prompt, user_prompt):
+def parse_json_from_llm(text):
+    """Safely extract JSON object from LLM response text."""
+    if not text or not isinstance(text, str):
+        return None
+    clean = text.strip()
+    clean = re.sub(r'^```(?:json)?\s*', '', clean, flags=re.IGNORECASE)
+    clean = re.sub(r'\s*```$', '', clean)
+    clean = clean.strip()
+    try:
+        return json.loads(clean)
+    except Exception:
+        first_open = clean.find('{')
+        last_close = clean.rfind('}')
+        if first_open != -1 and last_close != -1 and last_close > first_open:
+            try:
+                return json.loads(clean[first_open:last_close + 1])
+            except Exception:
+                return None
+        return None
+
+
+def call_ai_api(models_to_try, system_prompt, user_prompt):
     """
-    Query Groq LLM API with fallback models and retry backoff for rate limits.
+    Query AI API with multi-tier waterfall:
+    - Gemini with Search Grounding / Direct Generation
+    - Groq LLM API with fallback models
     """
-    api_key = os.environ.get("GROQ_API_KEY", "")
-    if not api_key and os.path.exists("config.json"):
+    gemini_key = os.environ.get("GEMINI_API_KEY", "")
+    groq_key = os.environ.get("GROQ_API_KEY", "")
+    if (not gemini_key or not groq_key) and os.path.exists("config.json"):
         try:
             with open("config.json", "r", encoding="utf-8") as f:
                 cfg = json.load(f)
-                api_key = cfg.get("GROQ_API_KEY", "")
+                if not gemini_key:
+                    gemini_key = cfg.get("GEMINI_API_KEY", "")
+                if not groq_key:
+                    groq_key = cfg.get("GROQ_API_KEY", "")
         except Exception:
             pass
 
-    if not api_key:
-        return {"status": "skipped", "reason": "No GROQ_API_KEY configured"}
+    if not gemini_key and not groq_key:
+        return {"status": "skipped", "reason": "Neither GEMINI_API_KEY nor GROQ_API_KEY configured"}
 
-    for model in models_to_try:
-        # Retry up to 2 times per model if rate-limited (HTTP 429)
+    for step in models_to_try:
+        provider = step.get("provider", "groq") if isinstance(step, dict) else "groq"
+        model = step.get("model", step) if isinstance(step, dict) else step
+        use_search = step.get("use_search", False) if isinstance(step, dict) else False
+
+        if provider == "gemini" and not gemini_key:
+            continue
+        if provider == "groq" and not groq_key:
+            continue
+
         for attempt in range(2):
             try:
-                req_data = json.dumps({
-                    "model": model,
-                    "messages": [
-                        {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": user_prompt}
-                    ],
-                    "response_format": {"type": "json_object"},
-                    "temperature": 0.0
-                }).encode("utf-8")
-
-                req = urllib.request.Request(
-                    "https://api.groq.com/openai/v1/chat/completions",
-                    data=req_data,
-                    headers={
-                        "Authorization": f"Bearer {api_key}",
-                        "Content-Type": "application/json",
-                        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)"
+                if provider == "gemini":
+                    gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gemini_key}"
+                    combined_text = f"SYSTEM INSTRUCTIONS: {system_prompt}\n\nUSER PROMPT: {user_prompt}"
+                    gemini_body = {
+                        "contents": [{"role": "user", "parts": [{"text": combined_text}]}],
+                        "generationConfig": {"temperature": 0.0}
                     }
-                )
-                with urllib.request.urlopen(req, timeout=20) as resp:
-                    if resp.status == 200:
-                        data = json.loads(resp.read().decode("utf-8"))
-                        content = data["choices"][0]["message"]["content"]
-                        parsed = json.loads(content)
-                        parsed["model_used"] = model
-                        return parsed
+                    if use_search:
+                        gemini_body["tools"] = [{"googleSearch": {}}]
+                    else:
+                        gemini_body["generationConfig"]["responseMimeType"] = "application/json"
+
+                    req_data = json.dumps(gemini_body).encode("utf-8")
+                    req = urllib.request.Request(
+                        gemini_url,
+                        data=req_data,
+                        headers={"Content-Type": "application/json"}
+                    )
+                    with urllib.request.urlopen(req, timeout=25) as resp:
+                        if resp.status == 200:
+                            data = json.loads(resp.read().decode("utf-8"))
+                            candidate = data.get("candidates", [{}])[0]
+                            parts = candidate.get("content", {}).get("parts", [])
+                            part_text = "".join([p.get("text", "") for p in parts if "text" in p])
+                            parsed = parse_json_from_llm(part_text)
+                            if parsed and isinstance(parsed, dict):
+                                parsed["model_used"] = f"{model}{' (Search Grounded)' if use_search else ''}"
+                                return parsed
+                elif provider == "groq":
+                    req_data = json.dumps({
+                        "model": model,
+                        "messages": [
+                            {"role": "system", "content": system_prompt},
+                            {"role": "user", "content": user_prompt}
+                        ],
+                        "response_format": {"type": "json_object"},
+                        "temperature": 0.0
+                    }).encode("utf-8")
+
+                    req = urllib.request.Request(
+                        "https://api.groq.com/openai/v1/chat/completions",
+                        data=req_data,
+                        headers={
+                            "Authorization": f"Bearer {groq_key}",
+                            "Content-Type": "application/json",
+                            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko)"
+                        }
+                    )
+                    with urllib.request.urlopen(req, timeout=20) as resp:
+                        if resp.status == 200:
+                            data = json.loads(resp.read().decode("utf-8"))
+                            content = data["choices"][0]["message"]["content"]
+                            parsed = parse_json_from_llm(content)
+                            if parsed and isinstance(parsed, dict):
+                                parsed["model_used"] = model
+                                return parsed
             except urllib.error.HTTPError as e:
                 if e.code == 429 and attempt == 0:
-                    time.sleep(2.5)
+                    time.sleep(2.0)
                     continue
                 break
             except Exception:
                 break
 
-    return {"status": "error", "reason": "All Groq model attempts failed"}
+    return {"status": "error", "reason": "All AI model waterfall attempts failed"}
 
 
 def cross_examine_fact_with_ai(game_id, puzzle_num, question, current_data_summary):
@@ -219,7 +292,7 @@ def cross_examine_fact_with_ai(game_id, puzzle_num, question, current_data_summa
         f"If there is a definite mistake, flag it."
     )
 
-    res1 = call_groq_api(PRIMARY_GROQ_MODELS, system_prompt, user_prompt)
+    res1 = call_ai_api(PRIMARY_AI_MODELS, system_prompt, user_prompt)
     if res1.get("status") in ("skipped", "error"):
         return res1
 
@@ -234,7 +307,7 @@ def cross_examine_fact_with_ai(game_id, puzzle_num, question, current_data_summa
     # Step 2: Discrepancy detected by Model 1! Trigger Model 2 for verification consensus
     time.sleep(1.0)
     print(f"  🤖 Model 1 ({res1.get('model_used')}) flagged an issue. Cross-checking with Model 2...")
-    res2 = call_groq_api(CONSENSUS_GROQ_MODELS, system_prompt, user_prompt)
+    res2 = call_ai_api(CONSENSUS_AI_MODELS, system_prompt, user_prompt)
     if res2.get("status") in ("skipped", "error"):
         return {
             "consensus": False,
@@ -298,7 +371,7 @@ def cross_examine_pool_with_ai(game_id, puzzle_num, step_num, criteria_desc, exi
         f"Do not guess or hallucinate. Return official common full names in JSON format."
     )
 
-    res1 = call_groq_api(PRIMARY_GROQ_MODELS, system_prompt, user_prompt)
+    res1 = call_ai_api(PRIMARY_AI_MODELS, system_prompt, user_prompt)
     if res1.get("status") in ("skipped", "error"):
         return {"status": "skipped", "reason": res1.get("reason", "Model query failed")}
 
@@ -336,7 +409,7 @@ def cross_examine_pool_with_ai(game_id, puzzle_num, step_num, criteria_desc, exi
             "Answer ONLY in valid JSON matching this format:\n"
             '{"verified": true/false, "reason": "1-sentence explanation"}'
         )
-        res2 = call_groq_api(CONSENSUS_GROQ_MODELS, verify_sys, verify_prompt)
+        res2 = call_ai_api(CONSENSUS_AI_MODELS, verify_sys, verify_prompt)
         if res2.get("verified") is True:
             confirmed_additions.append(candidate)
             print(f"    ✓ Confirmed by Model 2 ({res2.get('model_used')}): {candidate}")
@@ -470,13 +543,18 @@ class PuzzleVerifier:
             self.log_issue("transfer_destination", puzzle_num, "ERROR", f"Transfer Destination puzzle has fewer than 2 transfers ({len(transfers)})")
 
         summary_lines = []
-        for tr in transfers:
+        for i in range(len(transfers)):
+            tr = transfers[i]
             fc = tr.get("from_club_name", "")
             tc = tr.get("to_club_name", "")
             dt = tr.get("transfer_date", "")
             fee = float(tr.get("transfer_fee", 0) or 0)
             if fc and tc and fc.strip().lower() == tc.strip().lower():
                 self.log_issue("transfer_destination", puzzle_num, "ERROR", f"Same club transfer detected: '{fc}' -> '{tc}'")
+            if i < len(transfers) - 1:
+                next_fc = transfers[i + 1].get("from_club_name", "")
+                if fc and next_fc and fc.strip().lower() == next_fc.strip().lower():
+                    self.log_issue("transfer_destination", puzzle_num, "ERROR", f"Consecutive duplicate guessing target detected: '{fc}'")
             if fc:
                 self.ensure_club_exists(fc, "transfer_destination", puzzle_num)
             if tc:

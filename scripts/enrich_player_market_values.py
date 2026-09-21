@@ -27,15 +27,17 @@ def main():
 
     # 1. Ingest davidcariboo players
     dc_dir = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions')
-    player_files = glob.glob(dc_dir + '/**/players.csv', recursive=True)
-    transfer_files = glob.glob(dc_dir + '/**/transfers.csv', recursive=True)
+    player_files = sorted(glob.glob(dc_dir + '/**/players.csv', recursive=True))
+    transfer_files = sorted(glob.glob(dc_dir + '/**/transfers.csv', recursive=True))
 
     market_val_by_name = {}  # norm_name -> max_val
     market_val_by_exact = {} # exact_name -> max_val
+    market_val_by_tuple = {} # (norm_name, norm_nat, norm_pos) -> max_val
 
     if player_files:
-        print(f"Loading players from {player_files[0]}...")
-        df_players = pd.read_csv(player_files[0], low_memory=False)
+        latest_player_file = player_files[-1]
+        print(f"Loading players from {latest_player_file}...")
+        df_players = pd.read_csv(latest_player_file, low_memory=False)
         for _, row in df_players.iterrows():
             raw_name = str(row['name']) if pd.notna(row['name']) else ""
             if not raw_name:
@@ -47,6 +49,11 @@ def main():
             val = max(val1, val2)
 
             norm = normalize_name(raw_name)
+            nat = normalize_name(str(row['country_of_citizenship'])) if pd.notna(row['country_of_citizenship']) else ""
+            pos = normalize_name(str(row['position'])) if pd.notna(row['position']) else ""
+            key_tuple = (norm, nat, pos)
+            if val > market_val_by_tuple.get(key_tuple, 0):
+                market_val_by_tuple[key_tuple] = val
             if val > market_val_by_name.get(norm, 0):
                 market_val_by_name[norm] = val
             if val > market_val_by_exact.get(raw_name, 0):
@@ -54,8 +61,9 @@ def main():
 
     # 2. Ingest davidcariboo transfers (transfer_fee as valuation floor)
     if transfer_files:
-        print(f"Loading transfer fees from {transfer_files[0]}...")
-        df_transfers = pd.read_csv(transfer_files[0], low_memory=False)
+        latest_transfer_file = transfer_files[-1]
+        print(f"Loading transfer fees from {latest_transfer_file}...")
+        df_transfers = pd.read_csv(latest_transfer_file, low_memory=False)
         df_transfers['transfer_fee'] = pd.to_numeric(df_transfers['transfer_fee'], errors='coerce').fillna(0.0)
         for _, row in df_transfers.iterrows():
             t_name = str(row['player_name']) if pd.notna(row['player_name']) else ""
@@ -160,6 +168,7 @@ def main():
         
         nationality = str(p.get('Nationality', ''))
         position = str(p.get('Position', ''))
+        val = None
 
         # Fix specific historical mismatches
         if raw_name == 'Pelé' and nationality == 'Portugal':
@@ -171,9 +180,26 @@ def main():
             position = 'Attack - Second Striker'
 
         norm = normalize_name(raw_name)
-        val = market_val_by_exact.get(raw_name)
+        # Check exact icon override first (e.g. Cristiano Ronaldo 180m, Lionel Messi 180m)
+        if raw_name in top_tier_icons:
+            if raw_name == 'Ronaldo':
+                if nationality == 'Brazil' and ('centre-forward' in position.lower() or 'attack' in position.lower()):
+                    val = top_tier_icons['Ronaldo']
+            elif raw_name == 'Fernando':
+                # Preserve Fernando Reges or Fernando historical benchmarks if applicable
+                pass
+            else:
+                val = top_tier_icons[raw_name]
+
         if val is None:
-            val = market_val_by_name.get(norm, 0)
+            val = market_val_by_tuple.get((norm, normalize_name(nationality), normalize_name(position)))
+        if val is None:
+            val = market_val_by_exact.get(raw_name)
+        if val is None:
+            if norm not in ('ronaldo', 'fernando', 'rafinha', 'danilo', 'adriano'):
+                val = market_val_by_name.get(norm, 0)
+            else:
+                val = 0
 
         p_copy = {
             "Name": raw_name,
@@ -190,6 +216,8 @@ def main():
     # Ensure missing iconic all-time legends are included
     guaranteed_legends = [
         {"Name": "Pelé", "Nationality": "Brazil", "Position": "Attack", "MarketValue": 180000000},
+        {"Name": "Diego Maradona", "Nationality": "Argentina", "Position": "Attack", "MarketValue": 180000000},
+        {"Name": "Johan Cruyff", "Nationality": "Netherlands", "Position": "Attack", "MarketValue": 160000000},
         {"Name": "Ronaldo Nazário", "Nationality": "Brazil", "Position": "Attack", "MarketValue": 170000000},
         {"Name": "Garrincha", "Nationality": "Brazil", "Position": "Attack", "MarketValue": 130000000},
         {"Name": "Lev Yashin", "Nationality": "Russia", "Position": "Goalkeeper", "MarketValue": 120000000},
@@ -205,6 +233,21 @@ def main():
             seen.add(g['Name'].lower())
             clean_players.append(g)
             enriched_count += 1
+
+    # Ensure all legends from historical_careers.json are included
+    if os.path.exists(historical_path):
+        with open(historical_path, 'r', encoding='utf-8') as f:
+            hist_careers = json.load(f)
+        for legend_name, info in hist_careers.items():
+            if legend_name.lower() not in seen:
+                seen.add(legend_name.lower())
+                clean_players.append({
+                    "Name": legend_name,
+                    "Nationality": info.get("nationality", ""),
+                    "Position": info.get("position", "Player"),
+                    "MarketValue": 80000000
+                })
+                enriched_count += 1
 
     # Pre-sort descending by MarketValue, then alphabetical by Name
     clean_players.sort(key=lambda x: (-x['MarketValue'], x['Name'].lower()))

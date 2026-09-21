@@ -35,6 +35,25 @@ def main():
                 club = str(row[col]).strip()
                 if club:
                     player_clubs[p_id].add(club)
+
+    # 2b. Add Salimt transfers if available
+    salimt_dir = os.path.expanduser('~/.cache/kagglehub/datasets/xfkzujqjvx97n/football-datasets/versions')
+    if os.path.exists(salimt_dir):
+        versions = sorted([v for v in os.listdir(salimt_dir) if v.isdigit()], key=int)
+        salimt_path = os.path.join(salimt_dir, versions[-1]) if versions else os.path.join(salimt_dir, '2')
+        salimt_tr_file = os.path.join(salimt_path, 'transfer_history', 'transfer_history.csv')
+        if os.path.exists(salimt_tr_file):
+            df_salimt_tr = pd.read_csv(salimt_tr_file, usecols=['player_id', 'from_team_name', 'to_team_name'], low_memory=False)
+            for idx, row in df_salimt_tr.iterrows():
+                try:
+                    p_id = int(row['player_id'])
+                except (ValueError, TypeError):
+                    continue
+                for col in ['from_team_name', 'to_team_name']:
+                    if pd.notna(row[col]):
+                        club = re.sub(r'\s*\(\d+\)$', '', str(row[col])).strip()
+                        if club:
+                            player_clubs[p_id].add(club)
                     
     # 3. Aggregate career goals & appearances per player
     player_goals = defaultdict(int)

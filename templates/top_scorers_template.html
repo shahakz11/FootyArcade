@@ -138,6 +138,9 @@
             <a href="/es/games/top_scorers.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('es')" class="px-2 py-0.5 rounded transition-all text-on-surface-variant hover:text-white" title="Cambiar a Español">ES</a>
         </div>
         <div class="flex items-center gap-2 text-on-surface-variant">
+            <button id="how-to-play-btn" class="text-on-surface-variant hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5 cursor-pointer" aria-label="How to play instructions" title="How to play">
+                <span class="material-symbols-outlined text-xl">help_outline</span>
+            </button>
             <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on Instagram" title="Instagram">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </a>
@@ -283,6 +286,27 @@
         </div>
     </footer>
 
+    <!-- How To Play Modal -->
+    <div id="how-to-play-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-surface border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
+            <button id="close-how-to-play-btn" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-background transition-colors cursor-pointer" aria-label="Close how to play modal">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+            <h3 class="font-headline text-2xl text-accent uppercase italic tracking-wide">HOW TO PLAY</h3>
+            <div class="space-y-3 text-sm text-on-surface-variant leading-relaxed font-body">
+                <p><strong class="text-on-background font-title">Goal:</strong> Name the top 10 goalscorers for today's featured league and season.</p>
+                <p><strong class="text-on-background font-title">1. Search &amp; Guess:</strong> Type and select players from the search bar. Any correct player in the top 10 rankings instantly populates their leaderboard row!</p>
+                <p><strong class="text-on-background font-title">2. Free Clues &amp; Reveals:</strong> Click the lightbulb icon on any row to uncover nationality, club, and appearance hints. Click the eye icon to reveal the player if you are stuck.</p>
+                <p><strong class="text-on-background font-title">3. Lives &amp; VAR:</strong> Incorrect guesses deduct 1 life. If your player scored enough goals to qualify, appeal the decision via official VAR review.</p>
+                <p><strong class="text-on-background font-title">4. Winning:</strong> Identify all 10 top goalscorers before running out of lives to clear the board!</p>
+                <p><strong class="text-on-background font-title">5. Database Scope:</strong> Includes official league goals scored across the designated season or tournament.</p>
+            </div>
+            <button id="close-how-to-play-btn2" class="w-full py-3 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all cursor-pointer">
+                GOT IT
+            </button>
+        </div>
+    </div>
+
     <!-- End Game Modal -->
     <div id="result-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-start sm:justify-center p-3 sm:p-6 py-6 z-50 overflow-y-auto hidden">
         <div class="fa-modal-card bg-surface border border-accent/20 w-full max-w-md rounded-3xl p-5 sm:p-7 text-center space-y-4 sm:space-y-5 shadow-2xl relative max-h-[85vh] sm:max-h-[90vh] overflow-y-auto my-auto">
@@ -422,7 +446,10 @@
             listId:   'autocomplete-list',
             data:     allPlayersPool,
             labelFn:  p => p.Name,
-            badgeFn:  p => p.Nationality || ''
+            badgeFn:  p => {
+                if (!p || (p.Name && /\(all\)$/i.test(p.Name))) return '';
+                return `${p.Nationality || ''}${p.Position ? ' · ' + p.Position : ''}`;
+            }
         });
 
         // Modal
@@ -759,7 +786,7 @@
         dropdown.clearSelection();
 
         const normMatchedName = FootyUI.normalizeStr(matched.Name);
-        const alreadyCorrect = Array.from(guessedPlayers).some(p => FootyUI.normalizeStr(p) === normMatchedName);
+        const alreadyCorrect = Array.from(guessedPlayers).some(p => FootyUI.isPlayerMatch(p, matched.Name));
         const alreadyWrong = wrongGuesses.has(matched.Name);
 
         if (alreadyCorrect || alreadyWrong) {
@@ -778,7 +805,7 @@
 
         let found = false;
         activeGameData.scorers.forEach((scorer, idx) => {
-            if (FootyUI.normalizeStr(scorer.player_name) === normMatchedName && !guessedPlayers.has(scorer.player_name)) {
+            if (FootyUI.isPlayerMatch(matched.Name, scorer.player_name) && !guessedPlayers.has(scorer.player_name)) {
                 guessedPlayers.add(scorer.player_name);
                 revealRow(idx, scorer.player_name, false);
                 score++;
@@ -822,7 +849,7 @@
                 gameId: 'top_scorers',
                 puzzleNum: activeGameData.puzzle_num,
                 theme: compName,
-                context: `Top goalscorers for ${compName}. 10th-place cutoff is ${lowestGoals} goals. CRITICAL: The goals field MUST be strictly the goals scored in ${compName} ONLY (never domestic league or total goals). For example, in UEFA Champions League 2020/21, Lionel Messi scored 5 goals in the Champions League (NOT 30). If ${matched.Name} scored at least ${lowestGoals} goals in ${compName}, approve the appeal and return the exact competition goals in the goals field.`,
+                context: `Top goalscorers for ${compName}. 10th-place cutoff is ${lowestGoals} goals. The goals field MUST be strictly the goals scored in ${compName} ONLY (never domestic league or all-competition totals). Verify if ${matched.Name} scored at least ${lowestGoals} goals in this exact competition and season.`,
                 onVarAccepted: (res) => {
                     handleVarApproved(matched.Name, res);
                 }
@@ -1050,7 +1077,7 @@
     <div class="glass-card rounded-2xl p-6 space-y-3">
         <h2 class="font-headline text-xl uppercase italic text-accent">HOW TO PLAY</h2>
         <p class="font-body text-on-surface-variant text-sm leading-relaxed">Guess the all-time top scorers for a club, league, or national team before your 6 lives run out. Each correct guess reveals the player and their goal tally. Complete the full list to win. Play daily to build your streak.</p>
-        <p class="font-body text-on-surface-variant/60 text-xs">Transfer data sourced from Transfermarkt. Updated to July 2026.</p>
+        <p class="font-body text-on-surface-variant/60 text-xs">Transfer data sourced from Transfermarkt. Updated to June 2026.</p>
     </div>
     <div class="space-y-3">
         <h3 class="font-title text-xs font-bold uppercase tracking-widest text-on-surface-variant">MORE DAILY CHALLENGES</h3>

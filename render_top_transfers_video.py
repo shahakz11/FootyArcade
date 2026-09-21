@@ -146,7 +146,7 @@ def generate_video(csv_path, game_day, output_path="top_transfers_short.mp4", se
 
         draw.text((540, 205), title_entity.upper(), font=font_title, fill=(255, 255, 255), anchor="mm")
         
-        timeframe_str = "Transfers 2000 – July 2026 | Non-Loan Moves"
+        timeframe_str = "Transfers 2000 – June 2026 | Non-Loan Moves"
         draw.text((540, 260), timeframe_str, font=font_row_sub, fill=(180, 190, 210), anchor="mm")
         
         # --- LEADERBOARD BOARD ---

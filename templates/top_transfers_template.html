@@ -138,6 +138,9 @@
             <a href="/es/games/top_transfers.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('es')" class="px-2 py-0.5 rounded transition-all text-on-surface-variant hover:text-white" title="Cambiar a Español">ES</a>
         </div>
         <div class="flex items-center gap-2 text-on-surface-variant">
+            <button id="how-to-play-btn" class="text-on-surface-variant hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5 cursor-pointer" aria-label="How to play instructions" title="How to play">
+                <span class="material-symbols-outlined text-xl">help_outline</span>
+            </button>
             <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on Instagram" title="Instagram">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </a>
@@ -282,6 +285,27 @@
         </div>
     </footer>
 
+    <!-- How To Play Modal -->
+    <div id="how-to-play-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-surface border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
+            <button id="close-how-to-play-btn" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-background transition-colors cursor-pointer" aria-label="Close how to play modal">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+            <h3 class="font-headline text-2xl text-accent uppercase italic tracking-wide">HOW TO PLAY</h3>
+            <div class="space-y-3 text-sm text-on-surface-variant leading-relaxed font-body">
+                <p><strong class="text-on-background font-title">Goal:</strong> Uncover the top 10 most expensive transfer signings for today's featured club or nationality.</p>
+                <p><strong class="text-on-background font-title">1. Search &amp; Guess:</strong> Type and select any footballer from the search bar. If they are among the top 10 record signings, their row is revealed and your score increases!</p>
+                <p><strong class="text-on-background font-title">2. Free Clues &amp; Reveals:</strong> Click the lightbulb icon on any row to reveal transfer fee, year, and previous club clues. Click the eye icon to reveal the player if you are stuck.</p>
+                <p><strong class="text-on-background font-title">3. Lives &amp; VAR:</strong> Incorrect guesses deduct 1 life. If you believe your player belongs in the top 10 rankings, submit a VAR appeal for automated review.</p>
+                <p><strong class="text-on-background font-title">4. Winning:</strong> Discover all 10 record signings before running out of lives to achieve a Mastermind victory!</p>
+                <p><strong class="text-on-background font-title">5. Database Scope:</strong> Covers confirmed senior incoming transfers in the modern era (2012–Present) sourced from official transfer records.</p>
+            </div>
+            <button id="close-how-to-play-btn2" class="w-full py-3 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all cursor-pointer">
+                GOT IT
+            </button>
+        </div>
+    </div>
+
     <!-- End Game Modal -->
     <div id="result-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-start sm:justify-center p-3 sm:p-6 py-6 z-50 overflow-y-auto hidden">
         <div class="fa-modal-card bg-surface border border-accent/20 w-full max-w-md rounded-3xl p-5 sm:p-7 text-center space-y-4 sm:space-y-5 shadow-2xl relative max-h-[85vh] sm:max-h-[90vh] overflow-y-auto my-auto">
@@ -421,7 +445,10 @@
             listId:   'autocomplete-list',
             data:     allPlayersPool,
             labelFn:  p => p.Name,
-            badgeFn:  p => p.Nationality || ''
+            badgeFn:  p => {
+                if (!p || (p.Name && /\(all\)$/i.test(p.Name))) return '';
+                return `${p.Nationality || ''}${p.Position ? ' · ' + p.Position : ''}`;
+            }
         });
 
         // Modal
@@ -768,7 +795,7 @@
         dropdown.clearSelection();
 
         const normMatchedName = FootyUI.normalizeStr(matched.Name);
-        const alreadyCorrect = Array.from(guessedPlayers).some(p => FootyUI.normalizeStr(p) === normMatchedName);
+        const alreadyCorrect = Array.from(guessedPlayers).some(p => FootyUI.isPlayerMatch(p, matched.Name));
         const alreadyWrong = wrongGuesses.has(matched.Name);
 
         if (alreadyCorrect || alreadyWrong) {
@@ -787,7 +814,7 @@
 
         let found = false;
         activeGameData.transfers.forEach((tr, idx) => {
-            if (FootyUI.normalizeStr(tr.player_name) === normMatchedName && !guessedPlayers.has(tr.player_name)) {
+            if (FootyUI.isPlayerMatch(matched.Name, tr.player_name) && !guessedPlayers.has(tr.player_name)) {
                 guessedPlayers.add(tr.player_name);
                 revealRow(idx, tr.player_name, false);
                 score++;
@@ -831,7 +858,7 @@
                 gameId: 'top_transfers',
                 puzzleNum: activeGameData.puzzle_num,
                 theme: activeGameData.name,
-                context: `Top transfers for ${activeGameData.name} (${activeGameData.mode} mode). 10th-place cutoff fee is ${formattedCutoff}. If ${matched.Name} transferred to/from ${activeGameData.name} with a fee equal to or exceeding ${formattedCutoff} (e.g. Klaas-Jan Huntelaar transferred to Schalke 04 in 2010 for ~€14M, which is higher than ${formattedCutoff}), you MUST set accepted=true. Return numeric fee in fee_amount (e.g. 14000000) and stat (e.g. '€14.0M Transfer').`,
+                context: `Top transfers for ${activeGameData.name} (${activeGameData.mode} mode). 10th-place cutoff fee is ${formattedCutoff}. Verify if ${matched.Name} has a legitimate transfer meeting or exceeding this cutoff according to official Transfermarkt records. Return exact fee_amount, year, from_club, and to_club.`,
                 onVarAccepted: (res) => {
                     handleVarApproved(matched.Name, res);
                 }
@@ -864,28 +891,46 @@
         const lastTr = activeGameData.transfers[activeGameData.transfers.length - 1];
         const minCutoff = parseFloat(lastTr?.transfer_fee || 8000000);
         if (!feeNum || feeNum < minCutoff) {
-            if (playerName.toLowerCase().includes('huntelaar')) {
-                feeNum = 14000000;
-            } else {
-                feeNum = minCutoff + 1000000;
-            }
+            feeNum = minCutoff;
         }
 
         // 2. Determine year
-        let yearDisplay = '2010';
-        const yearMatch = (res.reason || '').match(/\b(19\d\d|20\d\d)\b/);
-        if (res.year) yearDisplay = res.year;
-        else if (yearMatch) yearDisplay = yearMatch[1];
-        else if (playerName.toLowerCase().includes('huntelaar')) yearDisplay = '2010';
+        let yearDisplay = '2020';
+        const yearMatch = (res.year || res.reason || '').toString().match(/\b(19\d\d|20\d\d)\b/);
+        if (yearMatch) {
+            yearDisplay = yearMatch[1];
+        }
 
-        // 3. Determine from_club
-        let fromClub = '—';
-        const fromMatch = (res.reason || '').match(/from\s+([A-Za-z0-9\s.]+?)(?:\s+in|\s+for|\s+to|\s*,|\s*\.|\s*\(|$)/i);
-        if (res.from_club) fromClub = res.from_club;
-        else if (fromMatch && fromMatch[1]) fromClub = fromMatch[1].trim();
-        else if (playerName.toLowerCase().includes('huntelaar')) fromClub = 'AC Milan';
+        // 3. Determine from_club and to_club
+        let fromClub = (res.from_club || '').trim();
+        let toClub = (res.to_club || '').trim();
 
-        const toClub = activeGameData.mode === 'club' ? activeGameData.name : (res.to_club || 'Schalke');
+        if (activeGameData.mode === 'club') {
+            const anchorClub = activeGameData.name;
+            if (!toClub && !fromClub) {
+                toClub = anchorClub;
+                fromClub = '—';
+            } else if (!toClub) {
+                toClub = anchorClub;
+            } else if (!fromClub) {
+                fromClub = anchorClub;
+            }
+        } else {
+            // Nationality mode: both clubs should be verified
+            if (!fromClub && !toClub) {
+                const parseMatch = (res.reason || '').match(/from\s+([A-Za-z0-9\s.]+?)\s+to\s+([A-Za-z0-9\s.]+?)(?:\s+in|\s+for|\s*,|\s*\.|\s*\(|$)/i);
+                if (parseMatch) {
+                    fromClub = parseMatch[1].trim();
+                    toClub = parseMatch[2].trim();
+                } else {
+                    fromClub = res.from_club || '—';
+                    toClub = res.to_club || '—';
+                }
+            } else {
+                if (!fromClub) fromClub = '—';
+                if (!toClub) toClub = '—';
+            }
+        }
 
         // 4. Create new transfer record
         const newTransfer = {
@@ -1057,7 +1102,7 @@
     <div class="glass-card rounded-2xl p-6 space-y-3">
         <h2 class="font-headline text-xl uppercase italic text-accent">HOW TO PLAY</h2>
         <p class="font-body text-on-surface-variant text-sm leading-relaxed">Guess the top 10 record signings for a specific club and nationality before your 5 lives run out. Each correct guess reveals the player's name and transfer fee. Use free hints to reveal partial information. Play daily to build your streak and share Wordle-style results.</p>
-        <p class="font-body text-on-surface-variant/60 text-xs">Transfer data sourced from Transfermarkt. Updated to July 2026.</p>
+        <p class="font-body text-on-surface-variant/60 text-xs">Transfer data sourced from Transfermarkt. Updated to June 2026.</p>
     </div>
     <div class="space-y-3">
         <h3 class="font-title text-xs font-bold uppercase tracking-widest text-on-surface-variant">MORE DAILY CHALLENGES</h3>

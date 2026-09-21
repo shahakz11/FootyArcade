@@ -8,6 +8,84 @@ import os, json
 
 OUTPUT_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'historical_careers.json')
 BASE_CAREERS = {
+  "Rafael Alcântara": {
+    "nationality": "Brazil",
+    "position": "Midfield",
+    "clubs": [
+      "Barcelona",
+      "Celta Vigo",
+      "Inter",
+      "Paris Saint-Germain",
+      "Real Sociedad",
+      "Al-Arabi"
+    ]
+  },
+  "Rafinha": {
+    "nationality": "Brazil",
+    "position": "Defender",
+    "clubs": [
+      "Coritiba",
+      "Schalke",
+      "Genoa",
+      "Bayern Munich",
+      "Flamengo",
+      "Olympiacos",
+      "Grêmio",
+      "São Paulo"
+    ]
+  },
+  "Diego Lugano": {
+    "nationality": "Uruguay",
+    "position": "Defender",
+    "clubs": [
+      "Plaza Colonia",
+      "Nacional",
+      "São Paulo",
+      "Fenerbahçe",
+      "Paris Saint-Germain",
+      "Málaga",
+      "West Bromwich Albion",
+      "BK Häcken",
+      "Cerro Porteño"
+    ]
+  },
+  "Cristian Rodríguez": {
+    "nationality": "Uruguay",
+    "position": "Midfield",
+    "clubs": [
+      "Peñarol",
+      "Paris Saint-Germain",
+      "Benfica",
+      "Porto",
+      "Atletico Madrid",
+      "Parma",
+      "Grêmio",
+      "Independiente",
+      "Plaza Colonia"
+    ]
+  },
+  "Carlos Bueno": {
+    "nationality": "Uruguay",
+    "position": "Attack",
+    "clubs": [
+      "Peñarol",
+      "Paris Saint-Germain",
+      "Sporting CP",
+      "Boca Juniors",
+      "Real Sociedad",
+      "Universidad de Chile",
+      "Querétaro",
+      "San Lorenzo",
+      "Universidad Católica",
+      "Belgrano",
+      "San Martín de San Juan",
+      "Sarmiento",
+      "Argentinos Juniors",
+      "Liverpool Montevideo",
+      "Santa Tecla",
+      "Cerro Largo"
+    ]
+  },
   "Wesley Sneijder": {
     "nationality": "Netherlands",
     "position": "Midfield",

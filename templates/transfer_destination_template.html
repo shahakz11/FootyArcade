@@ -148,6 +148,9 @@
             <a href="/es/games/transfer_destination.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('es')" class="px-2 py-0.5 rounded transition-all text-on-surface-variant hover:text-white" title="Cambiar a Español">ES</a>
         </div>
         <div class="flex items-center gap-2 text-on-surface-variant">
+            <button id="how-to-play-btn" class="text-on-surface-variant hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5 cursor-pointer" aria-label="How to play instructions" title="How to play">
+                <span class="material-symbols-outlined text-xl">help_outline</span>
+            </button>
             <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on Instagram" title="Instagram">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </a>
@@ -289,6 +292,28 @@
         </div>
     </footer>
 
+    <!-- How To Play Modal -->
+    <div id="how-to-play-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-surface border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
+            <button id="close-how-to-play-btn" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-background transition-colors cursor-pointer" aria-label="Close how to play modal">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+            <h3 class="font-headline text-2xl text-accent uppercase italic tracking-wide">HOW TO PLAY</h3>
+            <div class="space-y-3 text-sm text-on-surface-variant leading-relaxed font-body">
+                <p><strong class="text-on-background font-title">Goal:</strong> Retrace the featured footballer's career path club-by-club back to where it all began!</p>
+                <p><strong class="text-on-background font-title">1. Reverse Chronology:</strong> Start at the player's most recent club and work backwards. For each step, identify the previous club they transferred from.</p>
+                <p><strong class="text-on-background font-title">2. Timeline Clues:</strong> Each card displays the transfer year and fee. The destination club is visible—your mission is to name the originating club.</p>
+                <p><strong class="text-on-background font-title">3. Step Reveals:</strong> Stuck on a difficult club? Click the reveal icon to uncover the step and keep moving back in time.</p>
+                <p><strong class="text-on-background font-title">4. Lives:</strong> Incorrect club guesses deduct 1 life. The game ends if your lives reach 0.</p>
+                <p><strong class="text-on-background font-title">5. Winning:</strong> Successfully navigate the player's entire career history from start to finish!</p>
+                <p><strong class="text-on-background font-title">6. Database Scope:</strong> Includes all official senior transfers, loans, and career moves up to 2026.</p>
+            </div>
+            <button id="close-how-to-play-btn2" class="w-full py-3 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all cursor-pointer">
+                GOT IT
+            </button>
+        </div>
+    </div>
+
     <!-- End Game Modal -->
     <div id="result-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-start sm:justify-center p-3 sm:p-6 py-6 z-50 overflow-y-auto hidden">
         <div class="fa-modal-card bg-surface border border-accent/20 w-full max-w-md rounded-3xl p-5 sm:p-7 text-center space-y-4 sm:space-y-5 shadow-2xl relative max-h-[85vh] sm:max-h-[90vh] overflow-y-auto my-auto">
@@ -365,15 +390,16 @@
     const activeGameData = typeof DAILY_DESTINATION_GAME !== 'undefined'
         ? DAILY_DESTINATION_GAME
         : { player_name: "Cristiano Ronaldo", nationality: "Portugal", position: "Attack", transfers: [] };
-    const allClubs      = typeof ALL_CLUBS !== 'undefined' ? [...ALL_CLUBS] : [];
+    const rawClubs      = typeof ALL_CLUBS !== 'undefined' ? ALL_CLUBS : [];
+    const allClubs      = rawClubs.map(c => (typeof c === 'object' && c ? c : { name: c, aliases: [] }));
     // Ensure all clubs from the active puzzle are guaranteed to be in allClubs
     if (activeGameData && Array.isArray(activeGameData.transfers)) {
         activeGameData.transfers.forEach(tr => {
-            if (tr.from_club_name && !allClubs.includes(tr.from_club_name)) {
-                allClubs.push(tr.from_club_name);
+            if (tr.from_club_name && !allClubs.some(c => c.name === tr.from_club_name)) {
+                allClubs.push({ name: tr.from_club_name, aliases: [] });
             }
-            if (tr.to_club_name && !allClubs.includes(tr.to_club_name)) {
-                allClubs.push(tr.to_club_name);
+            if (tr.to_club_name && !allClubs.some(c => c.name === tr.to_club_name)) {
+                allClubs.push({ name: tr.to_club_name, aliases: [] });
             }
         });
     }
@@ -417,7 +443,7 @@
             inputId:  'guess-input',
             listId:   'autocomplete-list',
             data:     allClubs,
-            labelFn:  c => c
+            labelFn:  c => (typeof c === 'object' && c ? c.name : c)
         });
 
         modal = new FootyUI.FootyModal({
@@ -610,7 +636,7 @@
                 <div class="flex-grow bg-surface border border-white/5 rounded-2xl p-4 space-y-2 relative overflow-hidden transition-all" id="step-content-${i}">
                     <div class="flex justify-between items-center text-[10px] text-on-surface-variant font-mono">
                         <span>Season: ${year}</span>
-                        <span class="text-accent font-bold">${FootyUI.formatFee(tr.transfer_fee)}</span>
+                        <span class="text-accent font-bold">${FootyUI.formatFee(tr.transfer_fee, tr.transfer_type)}</span>
                     </div>
                     <div class="grid grid-cols-5 gap-2 items-center">
                         <div class="col-span-2">
@@ -693,7 +719,10 @@
 
         const normRaw = FootyUI.normalizeStr(rawGuess);
         const selected = dropdown.getSelected();
-        const matched = selected || allClubs.find(c => FootyUI.normalizeStr(c) === normRaw);
+        const matched = selected || allClubs.find(c => {
+            const name = typeof c === 'object' && c ? c.name : c;
+            return FootyUI.normalizeStr(name) === normRaw;
+        });
         if (!matched) { errEl.classList.remove('hidden'); return; }
         errEl.classList.add('hidden');
 
@@ -701,10 +730,12 @@
         document.getElementById('autocomplete-list').classList.add('hidden');
         dropdown.clearSelection();
 
-        const alreadyWrong = wrongGuesses.has(matched);
+        const guessedName = typeof matched === 'object' && matched ? matched.name : matched;
+
+        const alreadyWrong = wrongGuesses.has(guessedName);
         if (alreadyWrong) {
             FootyUI.trackGuess({
-                guess: matched,
+                guess: guessedName,
                 isCorrect: false,
                 isDuplicate: true,
                 step: activeStep + 1,
@@ -714,18 +745,18 @@
                 maxScore: activeGameData.transfers.length,
                 extraDetails: 'duplicate guess'
             });
-            FootyUI.toast(`"${matched}" was already guessed!`, 'error');
+            FootyUI.toast(`"${guessedName}" was already guessed!`, 'error');
             return;
         }
 
         const targetClub = activeGameData.transfers[activeStep].from_club_name;
         const isMatch = FootyUI.isClubMatch
-            ? FootyUI.isClubMatch(matched, targetClub)
-            : (FootyUI.normalizeStr(matched) === FootyUI.normalizeStr(targetClub));
+            ? FootyUI.isClubMatch(guessedName, targetClub)
+            : (FootyUI.normalizeStr(guessedName) === FootyUI.normalizeStr(targetClub));
 
         if (isMatch) {
             FootyUI.trackGuess({
-                guess: matched,
+                guess: guessedName,
                 isCorrect: true,
                 step: activeStep + 1,
                 target: targetClub,
@@ -741,7 +772,7 @@
             FootyUI.showFeedback({
                 isCorrect: true,
                 title: 'CORRECT!',
-                message: `${matched} is correct!`
+                message: `${guessedName} is correct!`
             });
 
             // Flash correct glow on the just-completed card
@@ -754,10 +785,10 @@
             updateStepState();
             checkWinLoss();
         } else {
-            wrongGuesses.add(matched);
+            wrongGuesses.add(guessedName);
             livesCtrl.lose();
             FootyUI.trackGuess({
-                guess: matched,
+                guess: guessedName,
                 isCorrect: false,
                 step: activeStep + 1,
                 target: targetClub,
@@ -769,7 +800,7 @@
             FootyUI.showFeedback({
                 isCorrect: false,
                 title: 'INCORRECT!',
-                message: `${matched} is not the previous club. Lost 1 life.`
+                message: `${guessedName} is not the previous club. Lost 1 life.`
             });
 
             // livesCtrl.onDead fires endGame if at 0
@@ -874,7 +905,7 @@
     <div class="glass-card rounded-2xl p-6 space-y-3">
         <h2 class="font-headline text-xl uppercase italic text-accent">HOW TO PLAY</h2>
         <p class="font-body text-on-surface-variant text-sm leading-relaxed">Guess each club a mystery footballer transferred to in chronological order. Each correct guess reveals the next step in their career path. Use hints to see transfer years or nationalities. 5 lives to complete. Play every day to build your streak.</p>
-        <p class="font-body text-on-surface-variant/60 text-xs">Transfer data sourced from Transfermarkt. Updated to July 2026.</p>
+        <p class="font-body text-on-surface-variant/60 text-xs">Transfer data sourced from Transfermarkt. Updated to June 2026.</p>
     </div>
     <div class="space-y-3">
         <h3 class="font-title text-xs font-bold uppercase tracking-widest text-on-surface-variant">MORE DAILY CHALLENGES</h3>

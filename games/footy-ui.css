@@ -321,49 +321,58 @@
 /* ── Transient Feedback Popups (Correct / Incorrect) ─────── */
 .fa-feedback-backdrop {
     position: fixed;
-    top: 24px;
+    top: calc(env(safe-area-inset-top, 0px) + 76px);
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000;
+    z-index: 100000;
     pointer-events: none;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    max-width: 480px;
+    padding: 0 16px;
+    box-sizing: border-box;
 }
 .fa-feedback-card {
-    background: rgba(19, 19, 19, 0.9);
-    backdrop-filter: blur(12px);
+    background: rgba(19, 19, 19, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-radius: 16px;
     padding: 14px 20px;
     display: flex;
     align-items: center;
     gap: 14px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px var(--feedback-glow, rgba(57, 255, 20, 0.25));
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 25px var(--feedback-glow, rgba(57, 255, 20, 0.25));
     border: 1.5px solid var(--feedback-color, #39ff14);
     animation: fa-feedback-pop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    min-width: 280px;
-    max-width: 90vw;
+    width: 100%;
+    max-width: 440px;
     pointer-events: auto;
 }
 @keyframes fa-feedback-pop {
-    0% { transform: translateY(-30px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+    0% { transform: translateY(-20px) scale(0.95); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
 /* ── Custom Toasts ────────────────────────────────────────── */
 #fa-toast-container {
     position: fixed;
-    bottom: 24px;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10000;
+    z-index: 100001;
     display: flex;
     flex-direction: column;
     gap: 8px;
     pointer-events: none;
+    max-width: 92vw;
+    width: max-content;
 }
 .fa-toast-item {
     background: rgba(20, 20, 20, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: #e5e2e1;
     padding: 12px 24px;
@@ -376,16 +385,17 @@
     transition: all 0.3s ease;
     animation: fa-toast-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     text-align: center;
-    white-space: nowrap;
+    white-space: normal;
+    word-break: break-word;
 }
 .fa-toast-success {
     border-color: #39ff14 !important;
-    box-shadow: 0 0 15px rgba(57, 255, 20, 0.2) !important;
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.3) !important;
     color: #39ff14 !important;
 }
 .fa-toast-error {
     border-color: #ff4d4d !important;
-    box-shadow: 0 0 15px rgba(255, 77, 77, 0.2) !important;
+    box-shadow: 0 0 15px rgba(255, 77, 77, 0.3) !important;
     color: #ff4d4d !important;
 }
 @keyframes fa-toast-in {

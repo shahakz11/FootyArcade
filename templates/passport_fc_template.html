@@ -202,7 +202,7 @@
               "name": "What years does the database cover?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Our database includes official club appearances and senior transfers since 1990 alongside verified historical legends throughout club history, updated to September 2026."
+                "text": "Our database includes official club appearances and senior transfers since 1990 alongside verified historical legends throughout club history, updated to June 2026."
               }
             }
           ]
@@ -225,7 +225,7 @@
             <a href="/es/games/passport_fc.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('es')" class="px-2 py-0.5 rounded transition-all text-on-surface-variant hover:text-white" title="Cambiar a Español">ES</a>
         </div>
         <div class="flex items-center gap-2 text-on-surface-variant">
-            <button id="how-to-play-btn" class="text-on-surface-variant hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="How to play instructions" title="How to play">
+            <button id="how-to-play-btn" class="text-on-surface-variant hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5 cursor-pointer" aria-label="How to play instructions" title="How to play">
                 <span class="material-symbols-outlined text-xl">help_outline</span>
             </button>
             <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on Instagram" title="Instagram">
@@ -425,7 +425,7 @@
                 <p><strong class="text-on-background font-title">3. Any Valid Player Works:</strong> If Barcelona &amp; France is active, you can name any French player who wore the Blaugrana shirt (e.g. Henry, Griezmann, Dembélé, Thuram, Umtiti, or Koundé).</p>
                 <p><strong class="text-on-background font-title">4. Lives &amp; VAR:</strong> Incorrect guesses deduct 1 life. If you believe your player qualifies, appeal the decision via official VAR review.</p>
                 <p><strong class="text-on-background font-title">5. Hints &amp; Skip:</strong> Reveal position clues if you need guidance, or skip ahead to the next destination without losing a life.</p>
-                <p><strong class="text-on-background font-title">6. Database Scope:</strong> Includes official senior club appearances and transfers since 1990 alongside verified historic legends throughout club history (updated to September 2026).</p>
+                <p><strong class="text-on-background font-title">6. Database Scope:</strong> Includes official senior club appearances and transfers since 1990 alongside verified historic legends throughout club history (updated to June 2026).</p>
             </div>
             <button id="close-how-to-play-btn2" class="w-full py-3 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all cursor-pointer">
                 GOT IT
@@ -505,7 +505,7 @@
                 Passport FC is a daily football trivia puzzle by Playmaker where fans collect nationality stamps for a featured anchor club. Each day highlights one world-famous club alongside four progressive nationality tiers. Players must name any qualifying footballer who made senior appearances or signed for that club while representing the designated nation. The puzzle begins with major footballing countries that have extensive talent pools before ascending to "The Unicorn" — an unexpected country with only one or two eligible players across the club's entire transfer history.
             </p>
             <div class="border-t border-white/5 pt-3 space-y-2 text-xs font-mono text-on-surface-variant/70">
-                <p><strong>Database Coverage:</strong> Official senior appearances and transfers since 1990 plus verified historic legends throughout club history (updated to September 2026).</p>
+                <p><strong>Database Coverage:</strong> Official senior appearances and transfers since 1990 plus verified historic legends throughout club history (updated to June 2026).</p>
                 <p><strong>VAR Verification:</strong> Players can submit any disputed answer to the automated VAR engine to appeal real-world transfer and appearance records.</p>
             </div>
         </article>
@@ -645,7 +645,7 @@
         const PUZZLE_NUMBER = 1;
         const IS_BACK_IN_TIME = false;
         const MAX_BACK_DAYS = 7;
-        const GAME_NOTE = "Transfer and appearance data updated to September 2026.";
+        const GAME_NOTE = "Transfer and appearance data updated to June 2026.";
     </script>
 
     <script>
@@ -810,14 +810,17 @@
         for (const p of rawPlayers) {
             if (!p || !p.Name) continue;
             const norm = FootyUI.normalizeStr(p.Name);
-            if (!playerMap.has(norm)) {
-                playerMap.set(norm, p);
+            const nat = FootyUI.normalizeStr(p.Nationality || '');
+            const pos = FootyUI.normalizeStr(p.Position || '');
+            const key = `${norm}|${nat}|${pos}`;
+            if (!playerMap.has(key)) {
+                playerMap.set(key, p);
             } else {
-                const existing = playerMap.get(norm);
+                const existing = playerMap.get(key);
                 const higherValue = Math.max(Number(p.MarketValue || 0), Number(existing.MarketValue || 0));
                 // Prefer canonical name with accents / non-ASCII characters
                 if (/[^\x00-\x7F]/.test(p.Name) && !/[^\x00-\x7F]/.test(existing.Name)) {
-                    playerMap.set(norm, { ...p, MarketValue: higherValue });
+                    playerMap.set(key, { ...p, MarketValue: higherValue });
                 } else {
                     existing.MarketValue = higherValue;
                 }
@@ -881,7 +884,10 @@
                 listId:   'autocomplete-list',
                 data:     allPlayersList,
                 labelFn:  p => p.Name,
-                badgeFn:  p => `${p.Nationality || ''}${p.Position ? ' · ' + p.Position : ''}`
+                badgeFn:  p => {
+                    if (!p || (p.Name && /\(all\)$/i.test(p.Name))) return '';
+                    return `${p.Nationality || ''}${p.Position ? ' · ' + p.Position : ''}`;
+                }
             });
 
             // End-game modal setup
@@ -1253,10 +1259,7 @@
             const currentScore = stepRecords.filter(r => r && r.won).length;
 
             // Check if player was already guessed in an earlier step
-            if (guessedPlayers.some(p => {
-                const normP = FootyUI.normalizeStr(p);
-                return normP === normVal || normP === normPlayerName;
-            })) {
+            if (guessedPlayers.some(p => FootyUI.isPlayerMatch(p, playerName) || FootyUI.isPlayerMatch(p, rawVal))) {
                 FootyUI.trackGuess({
                     guess: playerName,
                     isCorrect: false,
@@ -1272,9 +1275,9 @@
                 return;
             }
 
-            const validNorms = new Set(currentStep.valid_players.map(vp => FootyUI.normalizeStr(vp)));
+            const isStepValid = currentStep.valid_players.some(vp => FootyUI.isPlayerMatch(playerName, vp) || FootyUI.isPlayerMatch(rawVal, vp));
 
-            if (validNorms.has(normVal) || validNorms.has(normPlayerName)) {
+            if (isStepValid) {
                 // Correct!
                 guessedPlayers.push(playerName);
                 stepRecords[activeStepIndex] = {
@@ -1299,6 +1302,7 @@
                     title: 'STAMP COLLECTED!',
                     message: `${playerName} played for ${activeGameData.club} & ${currentStep.nationality}!`
                 });
+
                 activeStepIndex++;
 
                 if (activeStepIndex >= activeGameData.total_steps) {

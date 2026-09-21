@@ -21,6 +21,8 @@ import re
 import unicodedata
 from collections import defaultdict, Counter
 import pandas as pd
+import kagglehub
+from build_player_chain_datasets import clean_club_name
 
 NATION_ALIASES = {
     "Cote d'Ivoire": "Ivory Coast",
@@ -147,9 +149,18 @@ def load_data():
                 }
                 player_by_norm[norm] = actual
 
-    # 3. Load Davidcariboo dataset with VECTORIZED filtering
-    dc_dir = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions/679')
-    df_players = pd.read_csv(os.path.join(dc_dir, 'players.csv'), low_memory=False)
+    # 3. Load Davidcariboo dataset with dynamic path resolution
+    try:
+        dc_path = kagglehub.dataset_download("davidcariboo/player-scores")
+    except Exception:
+        dc_dir = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions')
+        if os.path.exists(dc_dir):
+            versions = sorted([v for v in os.listdir(dc_dir) if v.isdigit()], key=int)
+            dc_path = os.path.join(dc_dir, versions[-1]) if versions else os.path.join(dc_dir, '679')
+        else:
+            dc_path = os.path.join(dc_dir, '679')
+
+    df_players = pd.read_csv(os.path.join(dc_path, 'players.csv'), low_memory=False)
     
     # Map prominence
     player_prominence = defaultdict(float)
@@ -169,10 +180,11 @@ def load_data():
 
     club_players = defaultdict(set)
     club_id_to_name = {c['club_id']: c['name'] for c in MAJOR_CLUBS}
+    major_club_names = {c['name'] for c in MAJOR_CLUBS}
     target_cids = set(club_id_to_name.keys())
 
     # Appearances (vectorized filter)
-    df_app = pd.read_csv(os.path.join(dc_dir, 'appearances.csv'), usecols=['player_id', 'player_club_id'], low_memory=False)
+    df_app = pd.read_csv(os.path.join(dc_path, 'appearances.csv'), usecols=['player_id', 'player_club_id'], low_memory=False)
     df_app_filtered = df_app[df_app['player_club_id'].isin(target_cids)]
     for r in df_app_filtered.itertuples(index=False):
         cname = club_id_to_name.get(r.player_club_id)
@@ -181,7 +193,7 @@ def load_data():
             club_players[cname].add(player_by_norm[norm])
 
     # Transfers (vectorized filter, senior relevance)
-    df_tr = pd.read_csv(os.path.join(dc_dir, 'transfers.csv'), low_memory=False)
+    df_tr = pd.read_csv(os.path.join(dc_path, 'transfers.csv'), low_memory=False)
     df_tr['parsed_date'] = pd.to_datetime(df_tr['transfer_date'], errors='coerce')
     df_tr = df_tr[df_tr['parsed_date'] <= '2026-09-13']
     df_tr_filtered = df_tr[(df_tr['from_club_id'].isin(target_cids)) | (df_tr['to_club_id'].isin(target_cids))]
@@ -198,7 +210,57 @@ def load_data():
                 if r.to_club_id in club_id_to_name:
                     club_players[club_id_to_name[r.to_club_id]].add(actual)
 
-    # Historical careers
+    # 4. Load Salimt dataset for comprehensive transfer & career coverage
+    try:
+        salimt_path = kagglehub.dataset_download("xfkzujqjvx97n/football-datasets")
+    except Exception:
+        salimt_dir = os.path.expanduser('~/.cache/kagglehub/datasets/xfkzujqjvx97n/football-datasets/versions')
+        if os.path.exists(salimt_dir):
+            versions = sorted([v for v in os.listdir(salimt_dir) if v.isdigit()], key=int)
+            salimt_path = os.path.join(salimt_dir, versions[-1]) if versions else os.path.join(salimt_dir, '2')
+        else:
+            salimt_path = os.path.join(salimt_dir, '2')
+
+    if os.path.exists(salimt_path):
+        prof_file = os.path.join(salimt_path, 'player_profiles', 'player_profiles.csv')
+        trans_file = os.path.join(salimt_path, 'transfer_history', 'transfer_history.csv')
+        if os.path.exists(prof_file) and os.path.exists(trans_file):
+            df_salimt_p = pd.read_csv(prof_file, usecols=['player_id', 'player_name', 'citizenship', 'position'], low_memory=False)
+            df_salimt_p['clean_name'] = df_salimt_p['player_name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True)
+            salimt_id_to_name = dict(zip(df_salimt_p['player_id'], df_salimt_p['clean_name']))
+
+            for r in df_salimt_p.itertuples(index=False):
+                pname = r.clean_name
+                if not pname: continue
+                norm = normalize_name(pname).lower()
+                if norm not in player_by_norm:
+                    nat = clean_nation_name(str(r.citizenship)) if pd.notna(r.citizenship) else ''
+                    pos = str(r.position) if pd.notna(r.position) else ''
+                    if nat:
+                        player_canonical[pname] = {
+                            'name': pname,
+                            'nationality': nat,
+                            'position': pos
+                        }
+                        player_by_norm[norm] = pname
+
+            df_salimt_t = pd.read_csv(trans_file, usecols=['player_id', 'from_team_name', 'to_team_name', 'transfer_date'], low_memory=False)
+            df_salimt_t['parsed_date'] = pd.to_datetime(df_salimt_t['transfer_date'], errors='coerce')
+            df_salimt_t = df_salimt_t[(df_salimt_t['parsed_date'].isna()) | (df_salimt_t['parsed_date'] <= '2026-09-13')]
+
+            for r in df_salimt_t.itertuples(index=False):
+                pname = salimt_id_to_name.get(r.player_id)
+                if not pname: continue
+                norm = normalize_name(pname).lower()
+                actual = player_by_norm.get(norm, pname)
+                c1 = clean_club_name(str(r.from_team_name))
+                c2 = clean_club_name(str(r.to_team_name))
+                if c1 in major_club_names:
+                    club_players[c1].add(actual)
+                if c2 in major_club_names:
+                    club_players[c2].add(actual)
+
+    # 5. Historical careers
     for h_name, d in hist_careers.items():
         norm = normalize_name(h_name).lower()
         actual = player_by_norm.get(norm, h_name)
@@ -502,13 +564,66 @@ def build_puzzles(club_players, player_canonical, player_prominence, total_days=
     print(f"\nSuccessfully generated {len(df_out)} steps ({total_days} puzzles) to {out_csv}")
     return df_out
 
+def enrich_existing_puzzles(club_players, player_canonical, player_prominence):
+    out_csv = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'daily_passport_fc_games.csv')
+    if not os.path.exists(out_csv):
+        return None
+    print(f"Enriching existing puzzle schedule in {out_csv}...")
+    df = pd.read_csv(out_csv)
+    updated_rows = []
+    for idx, row in df.iterrows():
+        cname = row['club']
+        nat = row['nationality']
+        c_players = club_players.get(cname, set())
+        matching = []
+        for p in c_players:
+            meta = player_canonical.get(p, {})
+            if meta.get('nationality') == nat:
+                matching.append(p)
+        dedup = deduplicate_canonical_names(matching)
+        sorted_players = sorted(dedup, key=lambda x: player_prominence.get(normalize_name(x).lower(), 0), reverse=True)
+        if sorted_players:
+            valid_json = json.dumps(sorted_players, ensure_ascii=False)
+            sample_json = json.dumps(sorted_players[:3], ensure_ascii=False)
+            pool_sz = len(sorted_players)
+        else:
+            valid_json = row['valid_players']
+            sample_json = row['sample_players']
+            pool_sz = row['pool_size']
+        updated_rows.append({
+            'game_day': row['game_day'],
+            'club': row['club'],
+            'step_number': row['step_number'],
+            'total_steps': row['total_steps'],
+            'difficulty': row['difficulty'],
+            'nationality': row['nationality'],
+            'pool_size': pool_sz,
+            'sample_players': sample_json,
+            'valid_players': valid_json
+        })
+    df_out = pd.DataFrame(updated_rows)
+    df_out.to_csv(out_csv, index=False, encoding='utf-8')
+    print(f"Successfully enriched {len(df_out)} steps across {len(df_out['game_day'].unique())} puzzles in-place!")
+    return df_out
+
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Passport FC Dataset Builder & Enricher")
+    parser.add_argument('--regenerate-all', action='store_true', help="Re-generate all 180 puzzle combinations from scratch")
+    args = parser.parse_args()
+
     club_players, player_canonical, player_prominence = load_data()
-    df_puzzles = build_puzzles(club_players, player_canonical, player_prominence, total_days=180)
+    out_csv = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'daily_passport_fc_games.csv')
+
+    if args.regenerate_all or not os.path.exists(out_csv):
+        df_puzzles = build_puzzles(club_players, player_canonical, player_prominence, total_days=180)
+    else:
+        df_puzzles = enrich_existing_puzzles(club_players, player_canonical, player_prominence)
 
     print("\n--- SAMPLE DAILY PUZZLES ---")
     for day in range(1, 8):
         day_rows = df_puzzles[df_puzzles['game_day'] == day]
+        if day_rows.empty: continue
         club = day_rows.iloc[0]['club']
         print(f"\n==========================================")
         print(f"DAY {day}: Club of the Day = {club.upper()}")

@@ -16,6 +16,9 @@
 (function (global) {
     'use strict';
 
+    // ── Global Configuration ──────────────────────────────────
+    const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxEG3jA0QduSlh3ZmMR-98lTK1i4AbO-FgmFpymlJTof_8DZpZdmODSto0Q4NTyX7_7OA/exec';
+
     // ── Canonical Domain & Route Enforcement ─────────────────
     if (typeof window !== 'undefined' && window.location) {
         const host = window.location.hostname;
@@ -153,12 +156,25 @@
 
     function isClubMatch(guess, target) {
         if (!guess || !target) return false;
-        const normG = normalizeStr(guess);
-        const normT = normalizeStr(target);
+        const strG = typeof guess === 'object' && guess ? (guess.name || guess.Name || '') : String(guess);
+        const strT = typeof target === 'object' && target ? (target.name || target.Name || '') : String(target);
+        if (!strG || !strT) return false;
+        const normG = normalizeStr(strG);
+        const normT = normalizeStr(strT);
         if (normG === normT) return true;
         const canonG = canonicalClub(normG);
         const canonT = canonicalClub(normT);
         return Boolean(canonG && canonT && canonG === canonT);
+    }
+
+    function isPlayerMatch(guess, target) {
+        if (!guess || !target) return false;
+        const strG = typeof guess === 'object' ? (guess.Name || guess.name || guess.player_name || '') : String(guess);
+        const strT = typeof target === 'object' ? (target.Name || target.name || target.player_name || '') : String(target);
+        if (!strG || !strT) return false;
+        const normG = normalizeStr(strG).replace(/\s+all$/, '');
+        const normT = normalizeStr(strT).replace(/\s+all$/, '');
+        return normG === normT;
     }
 
     // ────────────────────────────────────────────────────────
@@ -183,6 +199,19 @@
             return;
         }
 
+        function getItemLabel(item) {
+            if (cfg.labelFn) {
+                try {
+                    const res = cfg.labelFn(item);
+                    if (typeof res === 'string' && res !== '[object Object]') return res;
+                } catch (e) {}
+            }
+            if (item && typeof item === 'object') {
+                return item.name || item.Name || item.player_name || item.club_name || '';
+            }
+            return String(item || '');
+        }
+
         const maxResults = cfg.maxResults || 200;
         let activeIndex = -1;
         let currentItems = [];
@@ -195,10 +224,35 @@
             const results = [];
             for (let i = 0; i < data.length; i++) {
                 const item = data[i];
-                const rawLabel = cfg.labelFn(item);
+                const rawLabel = getItemLabel(item);
                 const normLabel = normalizeStr(rawLabel);
 
                 let matches = normLabel.includes(normQ);
+                let matchedAlias = null;
+                let aliasTier = 99;
+
+                // Check item aliases if present (item.Aliases, item.aliases, item.AltNames)
+                const aliases = (item && typeof item === 'object' && (item.Aliases || item.aliases || item.AltNames || item.alt_names)) || [];
+                if (Array.isArray(aliases)) {
+                    for (let a of aliases) {
+                        const normA = normalizeStr(a);
+                        if (!normA) continue;
+                        if (normA === normQ || normA.split(/\s+/).some(w => w === normQ)) {
+                            matches = true;
+                            matchedAlias = a;
+                            aliasTier = Math.min(aliasTier, 1);
+                        } else if (normA.startsWith(normQ) || normA.split(/\s+/).some(w => w.startsWith(normQ))) {
+                            matches = true;
+                            matchedAlias = a;
+                            aliasTier = Math.min(aliasTier, 2);
+                        } else if (normA.includes(normQ)) {
+                            matches = true;
+                            matchedAlias = a;
+                            aliasTier = Math.min(aliasTier, 3);
+                        }
+                    }
+                }
+
                 if (!matches && cfg.filterFn) {
                     matches = cfg.filterFn(item, query);
                 }
@@ -211,8 +265,10 @@
                     tier = 1;
                 } else if (normLabel.startsWith(normQ) || words.some(w => w.startsWith(normQ))) {
                     tier = 2;
-                } else {
+                } else if (normLabel.includes(normQ)) {
                     tier = 3;
+                } else if (matchedAlias) {
+                    tier = aliasTier <= 2 ? 2 : 3;
                 }
 
                 let value = 0;
@@ -227,7 +283,8 @@
                     tier,
                     value,
                     len: normLabel.length,
-                    label: rawLabel
+                    label: rawLabel,
+                    matchedAlias
                 });
             }
 
@@ -238,34 +295,49 @@
                 return a.label.localeCompare(b.label);
             });
 
-            // Deduplicate by normalized label so spelling variations show only 1 entry
+            // Deduplicate identical items or spelling variations, while preserving distinct players (homonyms)
             const uniqueResults = [];
-            const seenNorms = new Map();
+            const seenKeys = new Map();
             for (const r of results) {
                 const norm = normalizeStr(r.label);
-                if (!seenNorms.has(norm)) {
-                    seenNorms.set(norm, r);
+                let dedupeKey = norm;
+                if (r.item && typeof r.item === 'object') {
+                    const nat = normalizeStr(r.item.Nationality || r.item.country || r.item.country_of_citizenship || '');
+                    const pos = normalizeStr(r.item.Position || r.item.position || '');
+                    if (nat || pos) {
+                        dedupeKey = `${norm}|${nat}|${pos}`;
+                    } else if (r.item.id || r.item.player_id) {
+                        dedupeKey = `${norm}|${r.item.id || r.item.player_id}`;
+                    }
+                }
+                if (!seenKeys.has(dedupeKey)) {
+                    seenKeys.set(dedupeKey, r);
                     uniqueResults.push(r);
                 } else {
-                    const existing = seenNorms.get(norm);
+                    const existing = seenKeys.get(dedupeKey);
                     if (r.value > existing.value) {
                         const idx = uniqueResults.indexOf(existing);
                         if (idx !== -1) {
                             uniqueResults[idx] = r;
-                            seenNorms.set(norm, r);
+                            seenKeys.set(dedupeKey, r);
                         }
                     } else if (r.value === existing.value && /[^\x00-\x7F]/.test(r.label) && !/[^\x00-\x7F]/.test(existing.label)) {
                         // Prefer version with accents or special characters if equal value
                         const idx = uniqueResults.indexOf(existing);
                         if (idx !== -1) {
                             uniqueResults[idx] = r;
-                            seenNorms.set(norm, r);
+                            seenKeys.set(dedupeKey, r);
                         }
                     }
                 }
             }
 
-            return uniqueResults.map(r => r.item);
+            return uniqueResults.map(r => {
+                if (r.item && typeof r.item === 'object') {
+                    r.item._matchedAlias = r.matchedAlias;
+                }
+                return r.item;
+            });
         }
 
         function renderList(items) {
@@ -283,20 +355,33 @@
                 row.className = 'fa-dropdown-row';
                 row.id = `${cfg.listId}-row-${idx}`;
 
+                const itemLabel = getItemLabel(item);
                 const label = document.createElement('span');
-                label.textContent = cfg.labelFn(item);
+                label.textContent = itemLabel;
                 row.appendChild(label);
 
+                if (item && item._matchedAlias && normalizeStr(item._matchedAlias) !== normalizeStr(itemLabel)) {
+                    const aliasHint = document.createElement('span');
+                    aliasHint.className = 'text-xs text-amber-400/80 ml-2 font-mono opacity-80';
+                    aliasHint.textContent = `(${item._matchedAlias})`;
+                    row.appendChild(aliasHint);
+                }
+
                 if (cfg.badgeFn) {
-                    const badge = document.createElement('span');
-                    badge.className = 'fa-row-badge';
-                    badge.textContent = cfg.badgeFn(item);
-                    row.appendChild(badge);
+                    const badgeText = cfg.badgeFn(item);
+                    const isAllAlias = item && (/\(all\)$/i.test(itemLabel) || (typeof item === 'object' && /\(all\)$/i.test(item.Name || item.name || '')));
+                    if (badgeText && !isAllAlias) {
+                        const badge = document.createElement('span');
+                        badge.className = 'fa-row-badge';
+                        badge.textContent = badgeText;
+                        row.appendChild(badge);
+                    }
                 }
 
                 row.addEventListener('click', () => select(item));
                 list.appendChild(row);
             });
+
 
             list.classList.remove('hidden');
         }
@@ -312,7 +397,7 @@
 
         function select(item) {
             selectedItem = item;
-            input.value = cfg.labelFn(item);
+            input.value = getItemLabel(item);
             list.classList.add('hidden');
             document.getElementById('error-message')?.classList.add('hidden');
             input.focus();
@@ -1232,6 +1317,13 @@
      * @param {Function} [opts.onVarRejected]
      */
     function showFeedback(opts) {
+        // Clean up any existing feedback cards to avoid stacking
+        document.querySelectorAll('.fa-feedback-backdrop').forEach(el => el.remove());
+
+        // Dispatch bottom toast for high visibility across mobile & desktop viewports
+        const toastMsg = opts.title ? `${opts.title} ${opts.message ? '— ' + opts.message : ''}` : (opts.message || (opts.isCorrect ? 'Correct!' : 'Incorrect!'));
+        toast(toastMsg, opts.isCorrect ? 'success' : 'error');
+
         const meta = getActiveGameMetadata();
         const gameId = opts.gameId || meta.gameId;
         const isVarSupportedGame = ['top_scorers', 'top_transfers', 'player_chain', 'passport_fc'].includes(gameId);
@@ -1454,16 +1546,36 @@
             extraDetails: `theme: ${opts.theme || ''} | context: ${opts.context || ''}`
         });
 
+        const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+        const timeoutId = setTimeout(() => {
+            if (controller) controller.abort();
+        }, 20000);
+
         fetch(FEEDBACK_WEBHOOK_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain;charset=utf-8'
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
+            signal: controller ? controller.signal : undefined
         })
-        .then(res => res.json())
-        .then(data => {
+        .then(res => {
+            clearTimeout(timeoutId);
+            return res.text();
+        })
+        .then(text => {
             clearInterval(msgInterval);
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (jsonErr) {
+                console.warn('[FootyUI] VAR returned non-JSON response:', text);
+                data = {
+                    accepted: false,
+                    isError: true,
+                    reason: 'VAR service returned an invalid response. Token restored for retry.'
+                };
+            }
             trackEvent('var_decision', {
                 gameId: gameId,
                 puzzleNum: puzzleNum,
@@ -1474,18 +1586,23 @@
             renderDecision(data);
         })
         .catch(err => {
+            clearTimeout(timeoutId);
             console.error('[FootyUI] VAR check request failed:', err);
             clearInterval(msgInterval);
+            const isTimeout = err && err.name === 'AbortError';
             trackEvent('var_decision', {
                 gameId: gameId,
                 puzzleNum: puzzleNum,
                 guess: opts.guess,
                 isCorrect: false,
-                extraDetails: 'error: unable to reach VAR review server'
+                extraDetails: isTimeout ? 'error: timeout' : 'error: unable to reach VAR review server'
             });
             renderDecision({
                 accepted: false,
-                reason: 'Unable to reach VAR review server. Please check connection.'
+                isError: true,
+                reason: isTimeout
+                    ? 'VAR review server timed out. Token restored for retry.'
+                    : 'Unable to reach VAR review server. Please check connection. Token restored.'
             });
         });
 
@@ -1673,21 +1790,48 @@
         this.hasPlayedPuzzle = (puzzleNum, isBackInTime = false) => {
             const d = load();
             const histKey = isBackInTime ? `bit_${puzzleNum}` : String(puzzleNum);
-            return !!d.history[histKey];
+            const res = d.history[histKey];
+            if (!res) return false;
+            // Strict date verification: today's puzzle is only already played if recorded today
+            if (!isBackInTime && res.date !== todayStr()) {
+                return false;
+            }
+            return true;
         };
 
         /** Get stored puzzle result or null */
         this.getPuzzleResult = (puzzleNum, isBackInTime = false) => {
             const d = load();
             const histKey = isBackInTime ? `bit_${puzzleNum}` : String(puzzleNum);
-            return d.history[histKey] || null;
+            const res = d.history[histKey] || null;
+            // Strict date verification: ignore stale results from previous calendar dates or missing dates
+            if (res && !isBackInTime && res.date !== todayStr()) {
+                return null;
+            }
+            return res;
+        };
+
+        /** Reset a specific puzzle from history (e.g. for replay / practice mode or recovering corrupt state) */
+        this.resetPuzzle = (puzzleNum, isBackInTime = false) => {
+            const d = load();
+            const histKey = isBackInTime ? `bit_${puzzleNum}` : String(puzzleNum);
+            if (d.history[histKey]) {
+                delete d.history[histKey];
+                if (!isBackInTime && String(d.lastPuzzleNum) === String(puzzleNum)) {
+                    d.lastPlayedDate = null;
+                    d.lastPuzzleNum = null;
+                }
+                save(d);
+            }
+            return d;
         };
 
         /** Record a completed game result */
         this.recordResult = (puzzleNum, won, score, maxScore, isBackInTime = false, outcome = null) => {
             const d = load();
             const histKey = isBackInTime ? `bit_${puzzleNum}` : String(puzzleNum);
-            if (d.history[histKey]) {
+            const existing = d.history[histKey];
+            if (existing && (isBackInTime || existing.date === todayStr())) {
                 return d;
             }
             const resolvedOutcome = outcome || (won ? 'win' : 'loss');
@@ -1845,13 +1989,33 @@
     // ────────────────────────────────────────────────────────
     // 9. Utility helpers
     // ────────────────────────────────────────────────────────
-    function formatFee(val) {
+    function formatFee(val, transferType) {
         const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang() === 'es');
         const fee = parseFloat(val);
-        if (isNaN(fee) || fee === 0) return isEs ? 'Libre / Cesión' : 'Free / Loan';
-        if (fee >= 1000000) return `€${(fee / 1000000).toFixed(1)}M`;
-        if (fee >= 1000) return `€${(fee / 1000).toFixed(0)}K`;
-        return isEs ? 'Gratis' : 'Free';
+        const typeStr = (transferType || '').toString().trim().toLowerCase();
+
+        if (!isNaN(fee) && fee > 0) {
+            const formatted = fee >= 1000000 ? `€${(fee / 1000000).toFixed(1)}M` : (fee >= 1000 ? `€${(fee / 1000).toFixed(0)}K` : `€${fee}`);
+            if (typeStr === 'loan') {
+                return isEs ? `${formatted} (Cesión)` : `${formatted} (Loan)`;
+            }
+            return formatted;
+        }
+
+        if (typeStr === 'loan') {
+            return isEs ? 'Cesión' : 'Loan';
+        }
+        if (typeStr === 'return from loan' || typeStr === 'loan return') {
+            return isEs ? 'Fin de Cesión' : 'Loan Return';
+        }
+        if (typeStr === 'transfer' || typeStr === 'free' || typeStr === 'free transfer') {
+            return isEs ? 'Traspaso Libre' : 'Free Transfer';
+        }
+        if (typeStr === 'draft') {
+            return isEs ? 'Draft' : 'Draft';
+        }
+
+        return isEs ? 'Libre / Cesión' : 'Free / Loan';
     }
 
     function todayStr() {
@@ -1983,8 +2147,6 @@
     }
 
     // ── Feedback System ──────────────────────────────────────
-    const FEEDBACK_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxEG3jA0QduSlh3ZmMR-98lTK1i4AbO-FgmFpymlJTof_8DZpZdmODSto0Q4NTyX7_7OA/exec';
-
     function getActiveGameMetadata() {
         const path = window.location.pathname;
         const gameIdMatch = path.match(/\/games\/([a-zA-Z0-9_-]+?)(?:_d\d+)?\.html/);
@@ -2466,12 +2628,46 @@
     }
 
     // Auto-init on DOM ready
+    function initHowToPlay() {
+        const htpBtn = document.getElementById('how-to-play-btn');
+        const htpModal = document.getElementById('how-to-play-modal');
+        if (!htpModal) return;
+
+        const openModal = () => {
+            htpModal.classList.remove('hidden');
+            trackEvent('how_to_play_open');
+        };
+        const closeModal = () => {
+            htpModal.classList.add('hidden');
+        };
+
+        if (htpBtn) {
+            htpBtn.addEventListener('click', openModal);
+        }
+
+        const closeBtn = document.getElementById('close-how-to-play-btn');
+        const closeBtn2 = document.getElementById('close-how-to-play-btn2');
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (closeBtn2) closeBtn2.addEventListener('click', closeModal);
+
+        htpModal.addEventListener('click', (e) => {
+            if (e.target === htpModal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !htpModal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
             initAnalyticsAndConsent();
             initFeedbackSystem();
             initPWAInstall();
             initLanguageSwitcher();
+            initHowToPlay();
             trackEvent('page_view');
         });
     } else {
@@ -2479,6 +2675,7 @@
         initFeedbackSystem();
         initPWAInstall();
         initLanguageSwitcher();
+        initHowToPlay();
         trackEvent('page_view');
     }
 
@@ -2521,6 +2718,7 @@
         normalizeStr,
         canonicalClub,
         isClubMatch,
+        isPlayerMatch,
         initPWAInstall,
         showIOSInstallSheet,
         renderPWABanner,

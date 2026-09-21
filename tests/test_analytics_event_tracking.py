@@ -125,7 +125,7 @@ class TestAnalyticsEventTracking(unittest.TestCase):
         self.assertIn("FootyUI.trackGiveUp", content)
 
     def test_passport_fc_template_event_instrumentation(self):
-        """Verify passport_fc_template.html tracks guess, hint, skip, and give up."""
+        """Verify passport_fc_template.html tracks guess, hint, skip, and give up, and triggers both success and failure feedback toasts."""
         path = os.path.join(REPO_ROOT, "templates", "passport_fc_template.html")
         with open(path, "r", encoding="utf-8") as f:
             content = f.read()
@@ -134,6 +134,10 @@ class TestAnalyticsEventTracking(unittest.TestCase):
         self.assertIn("FootyUI.trackHint", content)
         self.assertIn("FootyUI.trackSkip", content)
         self.assertIn("FootyUI.trackGiveUp", content)
+        # Verify success feedback toast on right answer (Task #35)
+        self.assertIn("STAMP COLLECTED!", content)
+        # Verify incorrect guess feedback and VAR remain intact
+        self.assertIn("INCORRECT GUESS", content)
 
     def test_compiled_games_contain_event_tracking(self):
         """Verify compiled games in games/ and es/games/ include the updated tracking calls."""

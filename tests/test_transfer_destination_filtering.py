@@ -54,6 +54,103 @@ class TestTransferDestinationFiltering(unittest.TestCase):
         self.assertEqual(transfers[1]["from_club_name"], "Sporting CP")
         self.assertEqual(transfers[1]["to_club_name"], "Lille")
 
+    def test_edin_dzeko_day_55_clean_and_no_duplicates(self):
+        """Verify that Day 55 (Edin Džeko) has clean sequential career progression without duplicate Fenerbahce/Fiorentina moves."""
+        game_data, _ = load_transfer_destination(55)
+        self.assertIsNotNone(game_data)
+        self.assertIn("Edin Dzeko", game_data["player_name"])
+
+        transfers = game_data["transfers"]
+        self.assertGreaterEqual(len(transfers), 6)
+
+        # In destination game, transfers are reversed (recent moves first)
+        from_clubs = [t["from_club_name"] for t in transfers]
+        to_clubs = [t["to_club_name"] for t in transfers]
+
+        # Ensure no identical consecutive from_clubs
+        for i in range(len(transfers) - 1):
+            self.assertNotEqual(
+                from_clubs[i].lower(),
+                from_clubs[i + 1].lower(),
+                f"Found consecutive duplicate guessing target '{from_clubs[i]}' in Day 55: {transfers}"
+            )
+            self.assertNotEqual(
+                (from_clubs[i].lower(), to_clubs[i].lower()),
+                (from_clubs[i + 1].lower(), to_clubs[i + 1].lower()),
+                f"Found consecutive duplicate move in Day 55: {transfers[i]} vs {transfers[i+1]}"
+            )
+
+        # Verify key career clubs are present in sequence
+        self.assertEqual(transfers[0]["to_club_name"], "FC Schalke 04")
+        self.assertEqual(transfers[0]["from_club_name"], "Fiorentina")
+        self.assertEqual(transfers[1]["to_club_name"], "Fiorentina")
+        self.assertEqual(transfers[1]["from_club_name"], "Fenerbahce")
+        self.assertEqual(transfers[2]["to_club_name"], "Fenerbahce")
+        self.assertEqual(transfers[2]["from_club_name"], "Inter")
+
+    def test_all_180_days_have_no_consecutive_duplicate_targets(self):
+        """Verify that all 180 days have no consecutive duplicate target clubs or identical moves."""
+        for day in range(1, 181):
+            game_data, _ = load_transfer_destination(day)
+            self.assertIsNotNone(game_data, f"Day {day} game data should not be None")
+            transfers = game_data["transfers"]
+            self.assertGreaterEqual(len(transfers), 2, f"Day {day} ({game_data['player_name']}) has < 2 transfers")
+
+            for i in range(len(transfers)):
+                tr = transfers[i]
+                self.assertNotEqual(
+                    tr["from_club_name"].strip().lower(),
+                    tr["to_club_name"].strip().lower(),
+                    f"Day {day} ({game_data['player_name']}) has same-club transfer: {tr}"
+                )
+                if i < len(transfers) - 1:
+                    next_tr = transfers[i + 1]
+                    # No duplicate consecutive from_clubs (targets)
+                    self.assertNotEqual(
+                        tr["from_club_name"].strip().lower(),
+                        next_tr["from_club_name"].strip().lower(),
+                        f"Day {day} ({game_data['player_name']}) has consecutive duplicate target '{tr['from_club_name']}'"
+                    )
+
+    def test_antoine_griezmann_day_57_multi_spell_career_preserved(self):
+        """Verify that Day 57 (Antoine Griezmann) preserves his multi-spell career across Barcelona and Atletico Madrid."""
+        game_data, _ = load_transfer_destination(57)
+        self.assertIsNotNone(game_data)
+        self.assertIn("Antoine Griezmann", game_data["player_name"])
+
+        transfers = game_data["transfers"]
+        self.assertGreaterEqual(len(transfers), 6, f"Expected at least 6 career transfers, found {len(transfers)}")
+
+        from_clubs = [t["from_club_name"] for t in transfers]
+        to_clubs = [t["to_club_name"] for t in transfers]
+
+        # Barcelona and Atletico Madrid must be present
+        self.assertIn("Barcelona", from_clubs + to_clubs)
+        self.assertIn("Atletico Madrid", from_clubs + to_clubs)
+
+        # No self-transfers
+        for tr in transfers:
+            self.assertNotEqual(
+                tr["from_club_name"].strip().lower(),
+                tr["to_club_name"].strip().lower(),
+                f"Found same-club move in Day 57: {tr}"
+            )
+
+    def test_same_date_duplicate_deduplication(self):
+        """Verify clean_career_transfers deduplicates exact identical moves and same-date duplicates without deleting multi-year spells."""
+        from scripts.alias_utils import clean_career_transfers
+        mock_raw = [
+            {"from_club_name": "Inter", "to_club_name": "Fenerbahce", "transfer_date": "2023-07-01", "transfer_fee": 0, "transfer_type": "Transfer"},
+            {"from_club_name": "Inter", "to_club_name": "Fenerbahçe", "transfer_date": "2023-07-01", "transfer_fee": 0, "transfer_type": ""},
+            {"from_club_name": "Fenerbahce", "to_club_name": "Fiorentina", "transfer_date": "2024-07-01", "transfer_fee": 5000000, "transfer_type": "Transfer"},
+        ]
+        cleaned = clean_career_transfers(mock_raw)
+        self.assertEqual(len(cleaned), 2)
+        self.assertEqual(cleaned[0]["from_club_name"], "Inter")
+        self.assertEqual(cleaned[0]["to_club_name"], "Fenerbahce")
+        self.assertEqual(cleaned[1]["from_club_name"], "Fenerbahce")
+        self.assertEqual(cleaned[1]["to_club_name"], "Fiorentina")
+
     def test_fetch_daily_defensively_filters_same_club(self):
         """Verify that load_transfer_destination skips identical from/to clubs even if present in CSV."""
         with tempfile.TemporaryDirectory() as tmp_dir:

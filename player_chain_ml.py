@@ -173,18 +173,10 @@ def effective_capacity(player_set, rec_map):
     return sum(rec_map.get(p, 0.02) for p in player_set)
 
 
-def evaluate_funnel_chain(chain, target_player, club_to_players, rec_map):
+def evaluate_funnel_chain(chain, target_player, club_to_players, rec_map, entity_name=None):
     """
     Evaluates a candidate club chain using an Information-Theoretic Funnel Loss.
-    
-    Ideal funnel properties:
-      1. Step 1: Wide accessible pool (C_eff >= 40, raw >= 100)
-      2. Step 2: Engaging trivia crossover (C_eff in [5, 30], raw >= 8, NEVER <= 1)
-      3. Step 3: Tight recognizable squeeze (C_eff in [1.5, 8], raw >= 2, NEVER <= 1)
-      4. Step 4 (if 4-step): Resolves uniquely to target player (raw == 1 or C_eff <= 1.2)
-      
-    Returns:
-      (utility_score, step_stats)
+    Supports both entity-level and name-level club mapping.
     """
     cumulative_clubs = []
     active_set = None
@@ -201,12 +193,17 @@ def evaluate_funnel_chain(chain, target_player, club_to_players, rec_map):
         else:
             active_set = active_set & c_players
 
+        if entity_name:
+            active_names = {entity_name[e] for e in active_set if e in entity_name}
+        else:
+            active_names = active_set
+
         # Target player MUST be valid at all steps
-        if target_player not in active_set:
+        if target_player not in active_names:
             return -float('inf'), []
 
-        raw_count = len(active_set)
-        c_eff = effective_capacity(active_set, rec_map)
+        raw_count = len(active_names)
+        c_eff = effective_capacity(active_names, rec_map)
 
         # ── ZERO-TOLERANCE RULES ──
         # If raw count is <= 1 BEFORE the final step, strict disqualification!
@@ -221,7 +218,7 @@ def evaluate_funnel_chain(chain, target_player, club_to_players, rec_map):
             'club': club,
             'raw_count': raw_count,
             'c_eff': c_eff,
-            'players': active_set
+            'players': active_names
         })
 
     # ── COMPUTE GAMEPLAY UTILITY ──
@@ -252,7 +249,6 @@ def evaluate_funnel_chain(chain, target_player, club_to_players, rec_map):
 
     # Reward Step 2 & 3 having famous recognizable players
     for idx in range(1, k - 1):
-        # Count players with R(p) >= 0.50 (well known players)
         famous_count = sum(1 for p in step_stats[idx]['players'] if rec_map.get(p, 0) >= 0.50)
         utility += 2.0 * min(5, famous_count)
 
@@ -269,7 +265,7 @@ def evaluate_funnel_chain(chain, target_player, club_to_players, rec_map):
     return utility, step_stats
 
 
-def find_best_chain_for_player(target_player, cand_clubs, club_to_players, rec_map):
+def find_best_chain_for_player(target_player, cand_clubs, club_to_players, rec_map, entity_name=None):
     """
     Searches club permutations to find the globally optimal chain for target_player.
     Evaluates 4-step chains first; falls back to 3-step chains if a 4-step chain
@@ -281,10 +277,11 @@ def find_best_chain_for_player(target_player, cand_clubs, club_to_players, rec_m
     best_score = -float('inf')
     best_stats = None
 
+    cand_clubs = list(cand_clubs)
     # Filter out youth/amateur clubs with < 30 players
     meaningful_clubs = [c for c in cand_clubs if len(club_to_players.get(c, set())) >= 30]
     if len(meaningful_clubs) < 2:
-        meaningful_clubs = cand_clubs
+        meaningful_clubs = list(cand_clubs)
 
     # Sort clubs by prominence so Tier 1 & major clubs are prioritized
     meaningful_clubs.sort(key=lambda c: (
@@ -299,7 +296,7 @@ def find_best_chain_for_player(target_player, cand_clubs, club_to_players, rec_m
     # Try 4-step permutations first if player has >= 4 clubs
     if len(clubs_subset) >= 4:
         for perm in itertools.permutations(clubs_subset, 4):
-            score, stats = evaluate_funnel_chain(perm, target_player, club_to_players, rec_map)
+            score, stats = evaluate_funnel_chain(perm, target_player, club_to_players, rec_map, entity_name=entity_name)
             if score > best_score:
                 best_score = score
                 best_chain = list(perm)
@@ -308,7 +305,7 @@ def find_best_chain_for_player(target_player, cand_clubs, club_to_players, rec_m
     # If no valid 4-step chain was found with zero premature bottlenecks, try 3-step
     if best_score == -float('inf') and len(clubs_subset) >= 3:
         for perm in itertools.permutations(clubs_subset, 3):
-            score, stats = evaluate_funnel_chain(perm, target_player, club_to_players, rec_map)
+            score, stats = evaluate_funnel_chain(perm, target_player, club_to_players, rec_map, entity_name=entity_name)
             if score > best_score:
                 best_score = score
                 best_chain = list(perm)

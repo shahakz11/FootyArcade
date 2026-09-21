@@ -250,6 +250,9 @@
             <a href="/es/games/club_connect.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('es')" class="px-2 py-0.5 rounded transition-all text-on-surface-variant hover:text-white" title="Cambiar a Español">ES</a>
         </div>
         <div class="flex items-center gap-2 text-on-surface-variant">
+            <button id="how-to-play-btn" class="text-on-surface-variant hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5 cursor-pointer" aria-label="How to play instructions" title="How to play">
+                <span class="material-symbols-outlined text-xl">help_outline</span>
+            </button>
             <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on Instagram" title="Instagram">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </a>
@@ -370,6 +373,28 @@
         </div>
     </footer>
 
+    <!-- How To Play Modal -->
+    <div id="how-to-play-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-surface border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
+            <button id="close-how-to-play-btn" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-background transition-colors cursor-pointer" aria-label="Close how to play modal">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+            <h3 class="font-headline text-2xl text-accent uppercase italic tracking-wide">HOW TO PLAY</h3>
+            <div class="space-y-3 text-sm text-on-surface-variant leading-relaxed font-body">
+                <p><strong class="text-on-background font-title">Goal:</strong> Identify the single mystery club that signed all 5 featured footballers.</p>
+                <p><strong class="text-on-background font-title">1. Sequential Clues:</strong> Players are revealed one by one in order of transfer fee, from the bargain signing up to the record transfer.</p>
+                <p><strong class="text-on-background font-title">2. Guessing the Club:</strong> After each reveal, type and submit the club you believe signed all currently visible players.</p>
+                <p><strong class="text-on-background font-title">3. Card Hints:</strong> Click the lightbulb on any revealed player card to uncover the club they were signed from and their transfer fee.</p>
+                <p><strong class="text-on-background font-title">4. Lives &amp; Penalties:</strong> Incorrect guesses deduct 1 life and automatically unlock the next player clue to help you connect the dots.</p>
+                <p><strong class="text-on-background font-title">5. Winning:</strong> Correctly identify the mystery club at any stage before lives run out to claim victory!</p>
+                <p><strong class="text-on-background font-title">6. Database Scope:</strong> Covers official senior transfers and signings across European and international football.</p>
+            </div>
+            <button id="close-how-to-play-btn2" class="w-full py-3 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all cursor-pointer">
+                GOT IT
+            </button>
+        </div>
+    </div>
+
     <!-- End Game Modal -->
     <div id="result-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-start sm:justify-center p-3 sm:p-6 py-6 z-50 overflow-y-auto hidden">
         <div class="fa-modal-card bg-surface border border-accent/20 w-full max-w-md rounded-3xl p-5 sm:p-7 text-center space-y-4 sm:space-y-5 shadow-2xl relative max-h-[85vh] sm:max-h-[90vh] overflow-y-auto my-auto">
@@ -442,9 +467,10 @@
     const activeGameData   = typeof DAILY_CLUBCONNECT_GAME !== 'undefined'
         ? DAILY_CLUBCONNECT_GAME
         : { club: "Bayern Munich", players: [] };
-    const activeClubs      = typeof ALL_CLUBS !== 'undefined' && ALL_CLUBS.length > 0 ? [...ALL_CLUBS] : (typeof ANSWER_CLUBS !== 'undefined' ? [...ANSWER_CLUBS] : []);
-    if (activeGameData && activeGameData.club && !activeClubs.includes(activeGameData.club)) {
-        activeClubs.push(activeGameData.club);
+    const rawClubs         = typeof ALL_CLUBS !== 'undefined' && ALL_CLUBS.length > 0 ? ALL_CLUBS : (typeof ANSWER_CLUBS !== 'undefined' ? ANSWER_CLUBS : []);
+    const activeClubs      = rawClubs.map(c => (typeof c === 'object' && c ? c : { name: c, aliases: [] }));
+    if (activeGameData && activeGameData.club && !activeClubs.some(c => c.name === activeGameData.club)) {
+        activeClubs.push({ name: activeGameData.club, aliases: [] });
     }
     const puzzleNum        = typeof PUZZLE_NUMBER !== 'undefined' ? PUZZLE_NUMBER : 0;
     const isBackInTime     = typeof IS_BACK_IN_TIME !== 'undefined' ? IS_BACK_IN_TIME : false;
@@ -465,9 +491,6 @@
 
     // ── Init ──────────────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', () => {
-        // Build club data objects for the dropdown
-        const clubObjects = activeClubs.map(name => ({ name }));
-
         livesCtrl = new FootyUI.FootyLives({
             counterId: 'lives-counter',
             heartId:   'fa-heart-icon',
@@ -484,9 +507,8 @@
         dropdown = new FootyUI.FootyDropdown({
             inputId:   'guess-input',
             listId:    'autocomplete-list',
-            data:      clubObjects,
-            labelFn:   c => c.name,
-            filterFn:  (c, q) => FootyUI.normalizeStr(c.name).includes(FootyUI.normalizeStr(q)),
+            data:      activeClubs,
+            labelFn:   c => (typeof c === 'object' && c ? c.name : c),
             maxResults: 7,
         });
 
@@ -706,7 +728,10 @@
 
         const normRaw  = FootyUI.normalizeStr(raw);
         const selected = dropdown.getSelected();
-        const matched  = selected || activeClubs.find(c => FootyUI.normalizeStr(c) === normRaw);
+        const matched  = selected || activeClubs.find(c => {
+            const name = typeof c === 'object' && c ? c.name : c;
+            return FootyUI.normalizeStr(name) === normRaw;
+        });
 
         if (!matched) { errEl.classList.remove('hidden'); return; }
         errEl.classList.add('hidden');
@@ -715,7 +740,7 @@
         document.getElementById('autocomplete-list').classList.add('hidden');
         dropdown.clearSelection();
 
-        const guessedName = typeof matched === 'string' ? matched : matched.name;
+        const guessedName = typeof matched === 'string' ? matched : (matched.name || '');
         if (wrongGuesses.has(guessedName)) {
             FootyUI.trackGuess({
                 guess: guessedName,
@@ -902,7 +927,7 @@
     <div class="glass-card rounded-2xl p-6 space-y-3">
         <h2 class="font-headline text-xl uppercase italic text-accent">HOW TO PLAY</h2>
         <p class="font-body text-on-surface-variant text-sm leading-relaxed">Five footballers were all signed by the same mystery club. Players are revealed one by one — cheapest signing first. After each reveal, guess which club bought them all. A wrong guess costs one life and unlocks the next player. Can you spot the connection early?</p>
-        <p class="font-body text-on-surface-variant/60 text-xs">Transfer data sourced from Transfermarkt. Updated to July 2026.</p>
+        <p class="font-body text-on-surface-variant/60 text-xs">Transfer data sourced from Transfermarkt. Updated to June 2026.</p>
     </div>
     <div class="space-y-3">
         <h3 class="font-title text-xs font-bold uppercase tracking-widest text-on-surface-variant">MORE DAILY CHALLENGES</h3>

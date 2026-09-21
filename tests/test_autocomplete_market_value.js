@@ -76,25 +76,35 @@ function searchAndRank(data, query, labelFn, filterFn, valueFn) {
     });
 
     const uniqueResults = [];
-    const seenNorms = new Map();
+    const seenKeys = new Map();
     for (const r of results) {
         const norm = normalizeStr(r.label);
-        if (!seenNorms.has(norm)) {
-            seenNorms.set(norm, r);
+        let dedupeKey = norm;
+        if (r.item && typeof r.item === 'object') {
+            const nat = normalizeStr(r.item.Nationality || r.item.country || r.item.country_of_citizenship || '');
+            const pos = normalizeStr(r.item.Position || r.item.position || '');
+            if (nat || pos) {
+                dedupeKey = `${norm}|${nat}|${pos}`;
+            } else if (r.item.id || r.item.player_id) {
+                dedupeKey = `${norm}|${r.item.id || r.item.player_id}`;
+            }
+        }
+        if (!seenKeys.has(dedupeKey)) {
+            seenKeys.set(dedupeKey, r);
             uniqueResults.push(r);
         } else {
-            const existing = seenNorms.get(norm);
+            const existing = seenKeys.get(dedupeKey);
             if (r.value > existing.value) {
                 const idx = uniqueResults.indexOf(existing);
                 if (idx !== -1) {
                     uniqueResults[idx] = r;
-                    seenNorms.set(norm, r);
+                    seenKeys.set(dedupeKey, r);
                 }
             } else if (r.value === existing.value && /[^\x00-\x7F]/.test(r.label) && !/[^\x00-\x7F]/.test(existing.label)) {
                 const idx = uniqueResults.indexOf(existing);
                 if (idx !== -1) {
                     uniqueResults[idx] = r;
-                    seenNorms.set(norm, r);
+                    seenKeys.set(dedupeKey, r);
                 }
             }
         }

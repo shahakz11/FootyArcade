@@ -156,18 +156,30 @@ def is_already_posted(game_id, date_str, target_name=""):
         req = urllib.request.Request(url)
         with urllib.request.urlopen(req, timeout=12) as resp:
             data = json.loads(resp.read().decode("utf-8"))
-            expected_caption = build_instagram_caption(game_id, target_name)
-            hook = expected_caption.splitlines()[0].strip().lower()
-            
+
+            game_patterns = {
+                "top_transfers": ["record transfers"],
+                "transfer_destination": ["career path backwards", "mystery player"],
+                "player_chain": ["teammate chain"],
+                "club_connect": ["transferred to", "played for both clubs"],
+                "top_scorers": ["scored the most goals"],
+                "passport_fc": ["club passport"]
+            }
+            patterns = game_patterns.get(game_id, [])
+
             for item in data.get("data", []):
                 pub_date = item.get("timestamp", "")[:10]
-                caption = item.get("caption", "")
+                caption = (item.get("caption") or "").lower()
                 permalink = item.get("permalink", f"https://www.instagram.com/reel/{item.get('id')}/")
-                first_line = caption.splitlines()[0].strip().lower() if caption else ""
-                
-                # Check if published on the given date and hook or target_name matches
+
+                # Check if published on the given date
                 if pub_date == date_str:
-                    if hook in first_line or first_line in hook or (target_name and target_name.lower() in caption.lower()):
+                    # Match game-specific pattern
+                    if any(p in caption for p in patterns):
+                        mark_as_posted(game_id, date_str, permalink, item.get("id"))
+                        return True, permalink
+                    # Match target name if specific enough
+                    if target_name and len(target_name.strip()) > 3 and target_name.lower() in caption:
                         mark_as_posted(game_id, date_str, permalink, item.get("id"))
                         return True, permalink
     except Exception as e:
