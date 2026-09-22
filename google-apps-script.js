@@ -496,8 +496,14 @@ function handleVarCheck(payload) {
 
       var success = false;
       var lastError = "";
+      var startTime = new Date().getTime();
 
       for (var s = 0; s < waterfallSteps.length; s++) {
+        // Guard against total Apps Script execution exceeding gateway limits (22s max)
+        if (new Date().getTime() - startTime > 22000) {
+          lastError = "VAR evaluation reached 22s deadline limit before completing waterfall.";
+          break;
+        }
         var step = waterfallSteps[s];
         try {
           if (step.provider === 'gemini') {

@@ -1568,7 +1568,7 @@
         const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
         const timeoutId = setTimeout(() => {
             if (controller) controller.abort();
-        }, 20000);
+        }, 35000);
 
         fetch(FEEDBACK_WEBHOOK_URL, {
             method: 'POST',
