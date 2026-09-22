@@ -465,33 +465,27 @@ function handleVarCheck(payload) {
         '  "nationality": "Country Name"\n' +
         "}";
 
-      // Build Multi-Tier Waterfall Pipeline
+      // Build Ultra-Fast Multi-Tier Waterfall Pipeline (< 2.0s target latency)
       var waterfallSteps = [];
 
       if (geminiApiKey) {
-        // Tier 1: Search Grounded Models (Live Web Grounding for breaking & recent transfers)
-        waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.5-flash', useSearch: true });
-        waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.5-flash-lite', useSearch: true });
-
-        // Tier 2: High-Quota Gemini Direct Text Models (500 RPD) & Frontier Flash models
-        waterfallSteps.push({ provider: 'gemini', model: 'gemini-3.5-flash-lite', useSearch: false });
-        waterfallSteps.push({ provider: 'gemini', model: 'gemini-3.1-flash-lite', useSearch: false });
-        waterfallSteps.push({ provider: 'gemini', model: 'gemini-3.7-flash', useSearch: false });
-        waterfallSteps.push({ provider: 'gemini', model: 'gemini-3.6-flash', useSearch: false });
-        waterfallSteps.push({ provider: 'gemini', model: 'gemini-3.5-flash', useSearch: false });
+        // Tier 1: Direct High-Speed Gemini Text Models with native JSON mode (< 1.5s latency)
         waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.5-flash', useSearch: false });
         waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.5-flash-lite', useSearch: false });
-        waterfallSteps.push({ provider: 'gemini', model: 'gemini-flash-latest', useSearch: false });
-        waterfallSteps.push({ provider: 'gemini', model: 'gemma-4-31b-it', useSearch: false });
-        waterfallSteps.push({ provider: 'gemini', model: 'gemma-4-26b-a4b-it', useSearch: false });
+        waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.0-flash', useSearch: false });
+        waterfallSteps.push({ provider: 'gemini', model: 'gemini-1.5-flash', useSearch: false });
+        // Optional Search-Grounded fallback only if direct text fails
+        waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.5-flash', useSearch: true });
+        waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.5-flash-lite', useSearch: true });
       }
 
       if (groqApiKey) {
-        // Tier 3: Groq High-Speed LPU Failover
-        waterfallSteps.push({ provider: 'groq', model: 'openai/gpt-oss-120b', useSearch: false });
-        waterfallSteps.push({ provider: 'groq', model: 'qwen/qwen3.8-27b', useSearch: false });
+        // Tier 2: Groq Ultra-Low Latency LPU Failover (< 0.6s latency)
         waterfallSteps.push({ provider: 'groq', model: 'meta-llama/llama-3.3-70b-versatile', useSearch: false });
-        waterfallSteps.push({ provider: 'groq', model: 'openai/gpt-oss-20b', useSearch: false });
+        waterfallSteps.push({ provider: 'groq', model: 'llama-3.3-70b-versatile', useSearch: false });
+        waterfallSteps.push({ provider: 'groq', model: 'llama-3.1-8b-instant', useSearch: false });
+        waterfallSteps.push({ provider: 'groq', model: 'qwen/qwen3.8-27b', useSearch: false });
+        waterfallSteps.push({ provider: 'groq', model: 'openai/gpt-oss-120b', useSearch: false });
       }
 
       var success = false;

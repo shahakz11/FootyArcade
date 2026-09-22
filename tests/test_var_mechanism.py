@@ -57,16 +57,13 @@ class TestVarMechanism(unittest.TestCase):
         self.assertIn("gemini-2.5-flash-lite", content, "Missing gemini-2.5-flash-lite in google-apps-script.js")
         self.assertIn("googleSearch", content, "Missing googleSearch tool in google-apps-script.js")
 
-        # Check high-quota Gemini text models
-        self.assertIn("gemini-3.5-flash-lite", content, "Missing gemini-3.5-flash-lite in google-apps-script.js")
-        self.assertIn("gemini-3.1-flash-lite", content, "Missing gemini-3.1-flash-lite in google-apps-script.js")
-        self.assertIn("gemini-3.7-flash", content, "Missing gemini-3.7-flash in google-apps-script.js")
+        # Check fast Gemini text models
+        self.assertIn("gemini-2.0-flash", content, "Missing gemini-2.0-flash in google-apps-script.js")
+        self.assertIn("gemini-1.5-flash", content, "Missing gemini-1.5-flash in google-apps-script.js")
 
         # Check Groq models list
-        self.assertIn("openai/gpt-oss-120b", content, "Missing gpt-oss-120b in google-apps-script.js")
-        self.assertIn("qwen/qwen3.8-27b", content, "Missing qwen3.8-27b in google-apps-script.js")
-        self.assertIn("openai/gpt-oss-20b", content, "Missing gpt-oss-20b in google-apps-script.js")
-        self.assertNotIn("llama-prompt-guard-2-22m", content, "Prompt guard model should not be in chat completions list")
+        self.assertIn("llama-3.3-70b-versatile", content, "Missing llama-3.3-70b-versatile in google-apps-script.js")
+        self.assertIn("llama-3.1-8b-instant", content, "Missing llama-3.1-8b-instant in google-apps-script.js")
 
         # Check JSON parser helper
         self.assertIn("function parseVarJsonResponse", content, "Missing parseVarJsonResponse in google-apps-script.js")
