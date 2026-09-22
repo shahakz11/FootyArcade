@@ -427,7 +427,7 @@ function handleVarCheck(payload) {
         "- Extra Context / Cutoff: " + context + "\n\n" +
         "STRICT FACT-CHECKING RULES (You must be strict, impartial, and skeptical):\n" +
         "1. DEFAULT TO REJECT (accepted=false): Most appeals are invalid guesses. Overturn the pitch ruling (accepted=true) ONLY if you can verify with 100% historical accuracy against official football databases (Transfermarkt, FIFA, UEFA) that the guess meets all requirements.\n" +
-        "2. ZERO HALLUCINATION POLICY: NEVER invent fake transfers, imaginary clubs, unverified transfer fees, or fictitious player records. If the player never played for the club, is not of that nationality, or the transfer fee is below the cutoff, you MUST set accepted=false.\n" +
+        "2. ZERO HALLUCINATION POLICY & PLAYER DISAMBIGUATION: NEVER invent fake transfers, imaginary clubs, unverified transfer fees, or fictitious player records. Verify recent and historical transfers up through 2026. Search specifically for the exact first name and last name of '" + guess + "' to avoid confusing with different players sharing the same surname (e.g. Yan Diomande to Real Madrid in 2026 is distinct from Mohamed Diomande or Ousmane Diomande). If the player never played for the club, is not of that nationality, or the transfer fee is below the cutoff, you MUST set accepted=false.\n" +
         "3. STRICT NUMERIC THRESHOLD ENFORCEMENT (Compare fees/goals mathematically):\n" +
         "   * For 'top_transfers': You MUST compare the official transfer fee mathematically against the cutoff fee provided in Extra Context. If the transfer fee is even €1 below the cutoff fee (for example, a fee of €17.5M when the cutoff is €23.0M), the transfer is NOT a top record signing and you MUST set accepted=false with a reason stating the fee is below the cutoff.\n" +
         "   * For 'top_scorers': You MUST compare the goals scored in that competition mathematically against the cutoff goals. If goals < cutoff, you MUST set accepted=false.\n\n" +
@@ -465,18 +465,18 @@ function handleVarCheck(payload) {
         '  "nationality": "Country Name"\n' +
         "}";
 
-      // Build Ultra-Fast Multi-Tier Waterfall Pipeline (< 2.0s target latency)
+      // Build Multi-Tier Waterfall Pipeline
       var waterfallSteps = [];
 
       if (geminiApiKey) {
-        // Tier 1: Direct High-Speed Gemini Text Models with native JSON mode (< 1.5s latency)
+        // Tier 1: Search-Grounded Gemini (Live 2024–2026 ground-truth verification)
+        waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.5-flash', useSearch: true });
+        waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.5-flash-lite', useSearch: true });
+        // Tier 2: Direct High-Speed Gemini Text Models with native JSON mode
         waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.5-flash', useSearch: false });
         waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.5-flash-lite', useSearch: false });
         waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.0-flash', useSearch: false });
         waterfallSteps.push({ provider: 'gemini', model: 'gemini-1.5-flash', useSearch: false });
-        // Optional Search-Grounded fallback only if direct text fails
-        waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.5-flash', useSearch: true });
-        waterfallSteps.push({ provider: 'gemini', model: 'gemini-2.5-flash-lite', useSearch: true });
       }
 
       if (groqApiKey) {

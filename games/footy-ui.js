@@ -1735,7 +1735,7 @@
                                 <span style="color: #ff4d4d; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">VAR CHALLENGE FAILED</span>
                             </div>
                             <p style="margin: 0; color: #e5e2e1; font-size: 0.88rem; line-height: 1.4; font-family: system-ui, sans-serif;">
-                                The VAR challenge failed and the decision stands.
+                                ${result.reason || 'The VAR challenge failed and the decision stands.'}
                             </p>
                         </div>
                     `;
