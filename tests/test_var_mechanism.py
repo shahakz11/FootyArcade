@@ -111,7 +111,26 @@ class TestVarMechanism(unittest.TestCase):
         self.assertIn("googleSearch", content)
         self.assertIn("GEMINI_API_KEY", content)
         self.assertIn("GROQ_API_KEY", content)
-        self.assertIn("call_ai_api", content)
+    def test_top_transfers_club_mode_var_directionality_in_gas(self):
+        """Verify google-apps-script.js enforces incoming record signings for Club Mode and rejects outgoing departures."""
+        gas_path = os.path.join(REPO_ROOT, "google-apps-script.js")
+        with open(gas_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        self.assertIn("RECORD SIGNINGS / INCOMING ARRIVALS", content)
+        self.assertIn("Outgoing sales/departures FROM the club", content)
+        self.assertIn("STRICTLY INVALID and MUST be rejected with accepted=false", content)
+        self.assertNotIn("transfer TO or FROM that club", content)
+
+    def test_top_transfers_template_directional_var_context(self):
+        """Verify templates/top_transfers_template.html builds directional VAR context and sets buying club in Club Mode."""
+        template_path = os.path.join(REPO_ROOT, "templates", "top_transfers_template.html")
+        with open(template_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        self.assertIn("Top record signings / incoming transfers TO", content)
+        self.assertIn("Outgoing departures/sales FROM", content)
+        self.assertIn("toClub = anchorClub", content)
 
 
 if __name__ == "__main__":

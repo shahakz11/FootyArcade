@@ -171,6 +171,7 @@ class TestSeoRobotsAndSitemap(unittest.TestCase):
             "https://playmaker.best/es/games/top_scorers.html",
             "https://playmaker.best/es/games/player_chain.html",
             "https://playmaker.best/es/games/passport_fc.html",
+            "https://playmaker.best/marketing.html",
             "https://playmaker.best/privacy.html",
             "https://playmaker.best/terms.html",
         ]
@@ -188,6 +189,86 @@ class TestSeoRobotsAndSitemap(unittest.TestCase):
 
             self.assertTrue(os.path.exists(local_file), f"Target file for sitemap URL must exist: {local_file}")
 
+    def test_custom_404_seo_and_navigation(self):
+        """Verify 404.html contains noindex, follow directive and back-to-arcade links."""
+        four_o_four = os.path.join(self.root_dir, "404.html")
+        self.assertTrue(os.path.exists(four_o_four), "404.html must exist")
+        with open(four_o_four, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        self.assertIn('content="noindex, follow"', content, "404 page must have noindex, follow")
+        self.assertIn("dark", content, "404 page must match site dark theme")
+        self.assertIn("games/top_transfers.html", content, "404 page should provide links to top game modes")
+
+    def test_viewports_allow_user_zoom(self):
+        """Verify no HTML templates or game modes disable accessibility zoom."""
+        import glob
+        html_files = glob.glob(os.path.join(self.root_dir, "templates", "*.html")) + [
+            os.path.join(self.root_dir, "index.html"),
+            os.path.join(self.root_dir, "es", "index.html"),
+        ]
+
+        for fpath in html_files:
+            with open(fpath, "r", encoding="utf-8") as f:
+                content = f.read()
+            self.assertNotIn(
+                "user-scalable=no",
+                content,
+                f"File {fpath} must not disable user-scalable for mobile SEO accessibility"
+            )
+            self.assertNotIn(
+                "maximum-scale=1.0",
+                content,
+                f"File {fpath} must not restrict maximum-scale for mobile SEO accessibility"
+            )
+
+    def test_google_fonts_preconnect_hints(self):
+        """Verify Google fonts preconnect tags are present on primary pages and templates."""
+        import glob
+        check_files = [
+            os.path.join(self.root_dir, "index.html"),
+            os.path.join(self.root_dir, "es", "index.html"),
+            os.path.join(self.root_dir, "marketing.html"),
+            os.path.join(self.root_dir, "privacy.html"),
+            os.path.join(self.root_dir, "terms.html"),
+        ] + glob.glob(os.path.join(self.root_dir, "templates", "*.html"))
+
+        for fpath in check_files:
+            with open(fpath, "r", encoding="utf-8") as f:
+                content = f.read()
+            self.assertIn(
+                'rel="preconnect" href="https://fonts.googleapis.com"',
+                content,
+                f"File {fpath} missing preconnect for fonts.googleapis.com"
+            )
+            self.assertIn(
+                'rel="preconnect" href="https://fonts.gstatic.com"',
+                content,
+                f"File {fpath} missing preconnect for fonts.gstatic.com"
+            )
+
+    def test_spanish_faq_schema_validity(self):
+        """Verify es/index.html FAQPage schema has valid @type: Question entries."""
+        import json
+        es_index = os.path.join(self.root_dir, "es", "index.html")
+        with open(es_index, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        match = re.search(r'<script type="application/ld\+json">([\s\S]*?)</script>', content)
+        self.assertIsNotNone(match, "JSON-LD script must exist in es/index.html")
+        data = json.loads(match.group(1))
+
+        faq_nodes = [item for item in data.get("@graph", []) if item.get("@type") == "FAQPage"]
+        self.assertEqual(len(faq_nodes), 1, "Must contain exactly one FAQPage node")
+
+        main_entities = faq_nodes[0].get("mainEntity", [])
+        self.assertGreater(len(main_entities), 3, "FAQPage must contain question entities")
+        for q in main_entities:
+            self.assertEqual(q.get("@type"), "Question", f"Every FAQ entry must have @type: Question, got {q.get('@type')}")
+            self.assertTrue(bool(q.get("name")), "Question name must not be empty")
+            self.assertTrue(bool(q.get("acceptedAnswer", {}).get("text")), "Question acceptedAnswer must have text")
+
 
 if __name__ == "__main__":
     unittest.main()
+

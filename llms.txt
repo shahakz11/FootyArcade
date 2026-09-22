@@ -1,16 +1,21 @@
 # Playmaker — Daily Football Trivia & Transfer Arcade
 > Playmaker (https://playmaker.best) is a free web-based football trivia and arcade platform featuring daily browser puzzles based on official senior club transfers, career paths, and appearances.
 
-## Daily Games
-- `Passport FC -> https://playmaker.best/games/passport_fc.html`: Complete the daily club passport by naming qualifying footballers who played for the anchor club across 4 progressive nationality tiers, from large talent pools down to rare 1-player unicorns.
-- `Club Connect -> https://playmaker.best/games/club_connect.html`: Spot the secret club connection that bought all five mystery footballers revealed one-by-one by transfer fee.
-- `Player Chain -> https://playmaker.best/games/player_chain.html`: Climb the sequential teammate chain linking football clubs through shared squad members to reveal the mystery Player of the Day.
-- `Top Transfers -> https://playmaker.best/games/top_transfers.html`: Name the top 10 all-time record transfer signings for a specific club and nationality before running out of lives.
-- `Transfer Destination -> https://playmaker.best/games/transfer_destination.html`: Deduce a footballer's career trajectory and identity in reverse chronologically through their club transfers.
-- `Top Scorers -> https://playmaker.best/games/top_scorers.html`: Guess the most prolific goalscorers across memorable league seasons and tournaments.
+## Daily Game Modes
 
-## Key Facts & Verification
-- Database scope covers official senior club appearances and transfers since 1990 alongside verified historic footballing legends.
-- Data updated to September 2026.
-- Interactive VAR (Video Assistant Referee) mechanism allows real-time appeals for disputed football transfers and appearances.
-- No account, download, or payment required. All games reset daily at 00:00 UTC.
+| Game Mode | Primary Objective | Lives | Difficulty Progression | Direct URL |
+|---|---|:---:|---|---|
+| **Passport FC** | Collect 4 nationality stamps for the anchor club by naming senior players | 5 Lives | Tier 1 (Common) to Tier 4 (The Unicorn: 1-player rare legend) | https://playmaker.best/games/passport_fc.html |
+| **Club Connect** | Identify the mystery club that signed all 5 revealed footballers | 3 Lives | Cards reveal one-by-one sorted by transfer fee | https://playmaker.best/games/club_connect.html |
+| **Player Chain** | Deduce the Mystery Player of the Day through sequential teammate career links | 5 Lives | Ascending club ladder with instant-win guess option | https://playmaker.best/games/player_chain.html |
+| **Top Transfers** | Name the top 10 all-time record transfer signings for a club or nation | 5 Lives | Top 10 transfer fee leaderboard with fee/year hints | https://playmaker.best/games/top_transfers.html |
+| **Transfer Destination** | Guess the star footballer's identity from reverse chronological club transfers | 5 Lives | Reverse career timeline revealed step-by-step | https://playmaker.best/games/transfer_destination.html |
+| **Top Scorers** | Name top goalscorers for iconic club seasons, leagues, or tournaments | 6 Lives | Golden boot leaderboards with goal count clues | https://playmaker.best/games/top_scorers.html |
+
+## Key Facts & Database Verification
+- **Data Scope:** Official senior club appearances and transfers since 1990 alongside verified historic footballing legends worldwide (Premier League, La Liga, Serie A, Bundesliga, Ligue 1, UEFA competitions).
+- **Data Freshness:** Sourced from Transfermarkt and verified through official league archives, updated to September 2026.
+- **VAR Appeal Mechanism:** Built-in Video Assistant Referee (VAR) validation system allows users to submit real-time appeals for disputed football transfers and appearances.
+- **Access & Privacy:** 100% free with no sign-up, download, or payments. All stats and streaks are stored locally in the browser (localStorage).
+- **Reset Time:** All daily puzzles update simultaneously at 00:00 UTC every day with 7-day back-in-time archives.
+- **Language Support:** Full English (https://playmaker.best/) and Spanish (https://playmaker.best/es/) localization.

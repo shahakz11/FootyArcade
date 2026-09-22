@@ -2,7 +2,7 @@
 <html class="dark" lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Top Scorers — Daily Goalscorer Trivia Quiz | Playmaker</title>
     <meta name="description" content="Name the all-time top scorers for a club, league, or national team. A daily football scoring trivia challenge with 6 lives. Play free at Playmaker!"/>
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
@@ -39,6 +39,8 @@
     <!-- Google Analytics Measurement ID Placeholder -->
     <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Archivo+Narrow:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <!-- Shared Playmaker styles -->
     <link rel="stylesheet" href="../games/footy-ui.css?v=6"/>
@@ -85,6 +87,7 @@
           "@type": "VideoGame",
           "name": "Top Scorers — Daily Football Goalscorer Quiz",
           "description": "Name the all-time top scorers for a club, league, or national team. A daily football scoring trivia challenge with 6 lives. Play free at Playmaker!",
+          "inLanguage": "en",
           "url": "https://playmaker.best/games/top_scorers.html",
           "image": "https://playmaker.best/assets/logo.png",
           "genre": ["Trivia", "Sports"],
@@ -117,6 +120,60 @@
               "position": 2,
               "name": "Top Scorers",
               "item": "https://playmaker.best/games/top_scorers.html"
+            }
+          ]
+        },
+        {
+          "@type": "HowTo",
+          "name": "How to Play Top Scorers",
+          "description": "Step-by-step guide to guessing the top all-time goalscorers in Top Scorers.",
+          "step": [
+            {
+              "@type": "HowToStep",
+              "position": 1,
+              "name": "Check the Scoring Category",
+              "text": "Identify the featured club, league season, or international tournament category."
+            },
+            {
+              "@type": "HowToStep",
+              "position": 2,
+              "name": "Name Top Goalscorers",
+              "text": "Type player names to unlock and reveal their official goal tally."
+            },
+            {
+              "@type": "HowToStep",
+              "position": 3,
+              "name": "Complete the Board",
+              "text": "Use hints for goal totals or nationalities to finish the leaderboard before 6 lives run out."
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is Top Scorers?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Top Scorers is a daily football goalscoring quiz where players guess the all-time top scorers for a club, league, or tournament before lives run out."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which competitions and goals are counted?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "All senior competitive league, cup, and international goals are verified via Transfermarkt and official league archives."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How many lives do I get?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Players get 6 lives. Correct guesses remain locked on the leaderboard."
+              }
             }
           ]
         }
@@ -260,13 +317,23 @@
             <div id="wrong-guesses-container" class="flex flex-wrap gap-2 justify-center"></div>
         </section>
 
-        <!-- SEO: How to Play + More Daily Challenges -->
-        <section class="max-w-4xl mx-auto space-y-8 mt-12 pt-8 border-t border-white/5">
-            <div class="glass-card rounded-2xl p-6 space-y-3">
-                <h2 class="font-headline text-xl uppercase italic text-accent">HOW TO PLAY</h2>
-                <p class="font-body text-on-surface-variant text-sm leading-relaxed">Guess the all-time top scorers for a club, league, or national team before your 6 lives run out. Each correct guess reveals the player and their goal tally. Complete the full list to win. Play daily to build your streak.</p>
-                <p class="font-body text-on-surface-variant/60 text-xs">Transfer data sourced from Transfermarkt. Updated to June 2026.</p>
-            </div>
+        <!-- Static Crawlable SEO/GEO Section & Cross-Game Directory -->
+        <section class="max-w-2xl mx-auto px-4 mt-16 space-y-8" aria-label="Game Guide and More Challenges">
+            <!-- Static Game Guide (134-167 words self-contained answer block for AI search engines & crawlers) -->
+            <article class="bg-surface/60 border border-white/10 rounded-2xl p-5 sm:p-6 space-y-4">
+                <h2 class="font-headline text-xl uppercase italic text-accent tracking-wide">
+                    What is Top Scorers?
+                </h2>
+                <p class="font-body text-on-surface-variant text-sm leading-relaxed">
+                    Top Scorers is a daily football goalscoring trivia puzzle by Playmaker celebrating the most prolific strikers and golden boot winners across football history. Each day presents a specific goalscoring category — such as all-time top scorers for a club, a single Champions League season, or a World Cup tournament. Players must name qualifying goalscorers to uncover the top leaderboard positions before running out of lives. Correct guesses display official goal tallies, season years, and player nationalities. Players can trigger hints to reveal goal totals or national flags. The database covers verified senior official goal records across the Premier League, La Liga, Serie A, Bundesliga, Champions League, and international tournaments. New challenges launch every day at 00:00 UTC with full streak statistics.
+                </p>
+                <div class="border-t border-white/5 pt-3 space-y-2 text-xs font-mono text-on-surface-variant/70">
+                    <p><strong>Database Coverage:</strong> Official senior appearances and transfers since 1990 plus verified historic legends throughout club history (updated to September 2026).</p>
+                    <p><strong>VAR Verification:</strong> Players can submit any disputed answer to the automated VAR engine to appeal real-world transfer and appearance records.</p>
+                </div>
+            </article>
+
+            <!-- More Daily Challenges (Directory linking all Playmaker games) -->
             <div id="fa-game-suggestions" data-current-game="top_scorers"></div>
         </section>
 
@@ -476,6 +543,9 @@
         initUI();
         renderTable();
         checkAlreadyPlayed();
+        if (!gameOver && !isBackInTime) {
+            restoreInProgressState();
+        }
 
         // Real-time Cloud Synchronization of Community VAR Overrides
         if (FootyUI.syncPuzzleOverrides) {
@@ -577,7 +647,7 @@
 
         // Reveal all rows
         activeGameData.scorers.forEach((scorer, i) => {
-            revealHint(i);
+            revealHint(i, true);
             const row    = document.getElementById(`row-${i}`);
             const textEl = row?.querySelector('.player-name');
             const rEl    = row?.querySelector('.redacted-box');
@@ -622,6 +692,58 @@
         });
 
         if (bitLinks.length) document.getElementById('bit-wrapper')?.classList.remove('hidden');
+    }
+
+    function saveCurrentProgress() {
+        if (gameOver || isBackInTime) return;
+        storage.saveInProgress(puzzleNum, {
+            score: score,
+            lives: livesCtrl ? livesCtrl.get() : INITIAL_LIVES,
+            guessedPlayers: Array.from(guessedPlayers),
+            manuallyRevealed: Array.from(manuallyRevealed),
+            revealedHints: Array.from(revealedHints),
+            wrongGuesses: wrongGuesses ? wrongGuesses.getAll() : []
+        }, isBackInTime);
+    }
+
+    function restoreInProgressState() {
+        const saved = storage.getInProgress(puzzleNum, isBackInTime);
+        if (!saved) return;
+
+        if (typeof saved.score === 'number') {
+            score = saved.score;
+            const scoreEl = document.getElementById('score-counter');
+            if (scoreEl) scoreEl.textContent = score;
+        }
+        if (typeof saved.lives === 'number' && livesCtrl) {
+            livesCtrl.set(saved.lives);
+        }
+        if (Array.isArray(saved.guessedPlayers)) {
+            saved.guessedPlayers.forEach(p => guessedPlayers.add(p));
+        }
+        if (Array.isArray(saved.manuallyRevealed)) {
+            saved.manuallyRevealed.forEach(p => manuallyRevealed.add(p));
+        }
+        if (Array.isArray(saved.revealedHints)) {
+            saved.revealedHints.forEach(p => revealedHints.add(p));
+        }
+        if (Array.isArray(saved.wrongGuesses) && wrongGuesses) {
+            wrongGuesses.restore(saved.wrongGuesses);
+        }
+
+        // Apply visual updates to rows
+        activeGameData.scorers.forEach((scorer, i) => {
+            const isGuessed = guessedPlayers.has(scorer.player_name);
+            const isManual = manuallyRevealed.has(scorer.player_name);
+            const hasHints = isGuessed || isManual || revealedHints.has(scorer.player_name);
+
+            if (hasHints) {
+                revealHint(i, true);
+            }
+            if (isGuessed) {
+                revealRow(i, scorer.player_name, isManual);
+            }
+        });
     }
 
     function initUI() {
@@ -732,15 +854,17 @@
         });
     }
 
-    function revealHint(index) {
+    function revealHint(index, silent = false) {
         const scorer = activeGameData.scorers[index];
         if (scorer) revealedHints.add(scorer.player_name);
-        FootyUI.trackHint({
-            step: index + 1,
-            hintType: 'row_hints',
-            hintText: scorer ? scorer.player_name : '',
-            lives: livesCtrl.get()
-        });
+        if (!silent) {
+            FootyUI.trackHint({
+                step: index + 1,
+                hintType: 'row_hints',
+                hintText: scorer ? scorer.player_name : '',
+                lives: livesCtrl.get()
+            });
+        }
         document.getElementById(`hint-goals-${index}`)?.classList.add('hint-revealed');
         document.getElementById(`hint-goals-mob-${index}`)?.classList.add('hint-revealed');
         document.getElementById(`hint-club-${index}`)?.classList.add('hint-revealed');
@@ -752,10 +876,13 @@
             btn.disabled = true;
             btn.innerHTML = '<span class="material-symbols-outlined text-lg text-correct/40">check_circle</span>';
         }
-        const hintToastMsg = (typeof FootyI18n !== 'undefined' && FootyI18n.t)
-            ? FootyI18n.t('toast_hint_revealed')
-            : ((document.documentElement.lang === 'es' || location.pathname.includes('/es/')) ? '¡Pista revelada! 💡' : 'Hint revealed! 💡');
-        FootyUI.toast(hintToastMsg, 'info');
+        if (!silent && !gameOver) {
+            const hintToastMsg = (typeof FootyI18n !== 'undefined' && FootyI18n.t)
+                ? FootyI18n.t('toast_hint_revealed')
+                : ((document.documentElement.lang === 'es' || location.pathname.includes('/es/')) ? '¡Pista revelada! 💡' : 'Hint revealed! 💡');
+            FootyUI.toast(hintToastMsg, 'info');
+            saveCurrentProgress();
+        }
     }
 
     function revealPlayerRow(index) {
@@ -779,6 +906,7 @@
                 guessedPlayers.add(scorer.player_name);
                 revealRow(index, scorer.player_name, true);
                 checkWinLoss();
+                saveCurrentProgress();
             }
         });
     }
@@ -843,9 +971,11 @@
                 message: `${matched.Name} is on the list!`
             });
             checkWinLoss();
+            saveCurrentProgress();
         } else {
             wrongGuesses.add(matched.Name);
             livesCtrl.lose();
+            saveCurrentProgress();
             FootyUI.trackGuess({
                 guess: matched.Name,
                 isCorrect: false,
@@ -981,6 +1111,7 @@
         } catch (e) {}
 
         checkWinLoss();
+        saveCurrentProgress();
     }
 
     function revealRow(index, name, isManual) {
@@ -993,7 +1124,7 @@
         textEl.classList.remove('hidden');
         if (redactEl) redactEl.classList.add('hidden');
 
-        revealHint(index);
+        revealHint(index, true);
         document.getElementById(`hint-btn-${index}`)?.style.setProperty('display','none');
         document.getElementById(`reveal-btn-${index}`)?.style.setProperty('display','none');
 
@@ -1017,7 +1148,7 @@
 
         // Reveal all remaining
         activeGameData.scorers.forEach((scorer, i) => {
-            revealHint(i);
+            revealHint(i, true);
             if (!guessedPlayers.has(scorer.player_name)) {
                 const row    = document.getElementById(`row-${i}`);
                 const textEl = row?.querySelector('.player-name');

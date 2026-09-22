@@ -79,6 +79,22 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         f'<meta property="og:url" content="https://playmaker.best/es/games/{game_id}.html"'
     )
 
+    # 1b. Localize JSON-LD Schema (inLanguage, URLs, Breadcrumbs)
+    es_html = es_html.replace('"inLanguage": "en"', '"inLanguage": "es"')
+    es_html = es_html.replace(
+        f'"url": "https://playmaker.best/games/{game_id}.html"',
+        f'"url": "https://playmaker.best/es/games/{game_id}.html"'
+    )
+    es_html = es_html.replace(
+        '"item": "https://playmaker.best/"',
+        '"item": "https://playmaker.best/es/"'
+    )
+    es_html = es_html.replace(
+        f'"item": "https://playmaker.best/games/{game_id}.html"',
+        f'"item": "https://playmaker.best/es/games/{game_id}.html"'
+    )
+    es_html = re.sub(r'("name":\s*"Home",\s*"item":\s*"https://playmaker.best/es/")', r'"name": "Inicio",\n              "item": "https://playmaker.best/es/"', es_html)
+
     # 2. Update relative asset paths for 2-level depth (es/games/)
     es_html = es_html.replace('href="../assets/', 'href="../../assets/')
     es_html = es_html.replace('src="../assets/', 'src="../../assets/')
@@ -588,20 +604,24 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
     # SEO How to play paragraph replacements
     how_to_play_paragraphs = {
         "top_transfers": (
-            "Guess the top 10 record signings for a specific club and nationality before your 5 lives run out. Each correct guess reveals the player's name and transfer fee. Use free hints to reveal partial information. Play daily to build your streak and share Wordle-style results.",
-            "Adivina los 10 fichajes récord de un club o nacionalidad antes de quedarte sin vidas. Cada acierto revela el nombre del jugador y su coste. Usa las pistas gratuitas para revelar información. ¡Juega a diario y comparte tus resultados estilo Wordle!"
+            "Top Transfers is a daily football transfer leaderboard quiz by Playmaker where fans guess the top 10 all-time record signings for a featured club or nationality. Each daily challenge presents ten hidden leaderboard slots ordered from the most expensive record transfer down to the tenth largest fee. Players input football player names to fill the transfer board before accumulating three strikes. Correct answers lock onto the board with their transfer fee in Euros, buying club, selling club, and signing year. Players can activate hints to reveal transfer fee amounts or signing years for locked slots. Top Transfers covers verified senior transfer records across global football from 1990 to present, with streak tracking, VAR appeals, and daily puzzle refreshes at midnight UTC.",
+            "Top Transfers es un quiz diario de fichajes de fútbol de Playmaker donde los aficionados adivinan los 10 fichajes récord de un club o nacionalidad destacada. Cada reto diario presenta diez posiciones ocultas ordenadas desde el fichaje récord más caro hasta el décimo más alto. Los jugadores ingresan nombres de futbolistas para completar la tabla antes de acumular tres fallos. Las respuestas correctas se fijan en el tablero con su coste en euros, club comprador, club vendedor y año del fichaje. Los jugadores pueden activar pistas para revelar importes o años en las casillas bloqueadas. Adivina los 10 fichajes récord con seguimiento de racha, revisiones de VAR y nuevos retos diarios a medianoche UTC."
         ),
         "transfer_destination": (
-            "Guess each club a mystery footballer transferred to in chronological order. Each correct guess reveals the next step in their career path. Use hints to see transfer years or nationalities. 5 lives to complete. Play every day to build your streak.",
-            "Adivina cada club por el que pasó el futbolista en orden cronológico inverso. Cada acierto revela el siguiente paso de su carrera. Usa las pistas de años o nacionalidades. 5 vidas para completar el reto. ¡Juega a diario!"
+            "Transfer Destination is a daily football career deduction game by Playmaker where players identify a star footballer from their career transfer trajectory in reverse chronological order. The puzzle begins with the player's most recent or current club. Each incorrect guess costs one life and unlocks the preceding club in the footballer's transfer history along with years active and transfer fee details. Players aim to deduce the footballer's identity with as few transfer clues as possible. Clues span senior club debuts, marquee European transfers, loan spells, and international caps. The game features interactive VAR review for contested career records, local streak tracking, and shareable Wordle-style results. Puzzles update every day at midnight UTC with a 7-day playable archive.",
+            "Reto de Trayectoria Deportiva es un juego diario de deducción de carreras futbolísticas de Playmaker donde los jugadores identifican a un futbolista estrella a partir de su trayectoria de traspasos en orden cronológico inverso. El reto comienza con el club más reciente o actual del jugador. Cada fallo cuesta una vida y desbloquea el club anterior en la carrera del futbolista junto con los años y detalles del traspaso. Los jugadores intentan deducir la identidad del futbolista con la menor cantidad de pistas posible. ¡Juega a diario y mantén tu racha!"
         ),
         "top_scorers": (
-            "Guess the all-time top scorers for a club, league, or national team before your 6 lives run out. Each correct guess reveals the player and their goal tally. Complete the full list to win. Play daily to build your streak.",
-            "Adivina los máximos goleadores históricos para un club, liga o selección nacional antes de que se agoten tus 6 vidas. Cada acierto revela el jugador y sus goles. ¡Juega a diario y mantén tu racha!"
+            "Top Scorers is a daily football goalscoring trivia puzzle by Playmaker celebrating the most prolific strikers and golden boot winners across football history. Each day presents a specific goalscoring category — such as all-time top scorers for a club, a single Champions League season, or a World Cup tournament. Players must name qualifying goalscorers to uncover the top leaderboard positions before running out of lives. Correct guesses display official goal tallies, season years, and player nationalities. Players can trigger hints to reveal goal totals or national flags. The database covers verified senior official goal records across the Premier League, La Liga, Serie A, Bundesliga, Champions League, and international tournaments. New challenges launch every day at 00:00 UTC with full streak statistics.",
+            "Máximos Goleadores es un juego diario de trivia de fútbol de Playmaker que rinde homenaje a los goleadores más prolíficos y botas de oro de la historia del fútbol. Cada día se presenta una categoría goleadora específica, como los máximos goleadores históricos de un club, una temporada de Champions League o un torneo de Copa del Mundo. Los jugadores deben nombrar a los goleadores para descubrir las posiciones del ranking antes de quedarse sin vidas. Adivina los máximos goleadores históricos con seguimiento de rachas y nuevos retos a las 00:00 UTC."
         ),
         "club_connect": (
-            "Five footballers were all signed by the same mystery club. Players are revealed one by one — cheapest signing first. After each reveal, guess which club bought them all. A wrong guess costs one life and unlocks the next player. Can you spot the connection early?",
-            "Cinco futbolistas fueron fichados por el mismo club misterioso. Los jugadores se revelan uno a uno, del fichaje más barato al más caro. Tras cada pista, adivina qué club los fichó a todos. Un fallo cuesta una vida y desbloquea al siguiente jugador. ¿Podrás descubrir la conexión a tiempo?"
+            "Club Connect is a daily football connection puzzle by Playmaker that challenges fans to deduce the secret club linking five mystery footballer signings. At the start of each daily game, five player cards are presented face-down, ranked in order of their transfer fee. One initial player is revealed immediately as a starting clue. Players submit club guesses to identify the mystery buyer before running out of lives. Every incorrect guess flips over the next player card to reveal additional transfer history, nationality, and position hints. Once the connection is discovered, players earn an efficiency score based on how few player clues they needed to crack the puzzle. Club Connect covers senior domestic and international transfers from 1990 to present, resetting daily at midnight UTC with streak tracking and shareable emoji summaries.",
+            "Conexión de Clubes es un puzzle diario de conexiones de fútbol de Playmaker donde los jugadores descubren el club misterioso que fichó a cinco estrellas del fútbol. En cada paso se revela un nuevo futbolista fichado por el club secreto con su coste, año y posición. Los jugadores deducen el club de destino común utilizando el menor número posible de compañeros revelados. ¿Qué Club Fichó a los 5 Jugadores? Un fallo cuesta una vida y revela al siguiente compañero. ¡Descubre el club misterioso antes de quedarte sin vidas!"
+        ),
+        "player_chain": (
+            "Player Chain is a daily football teammate connection challenge by Playmaker where players deduce a mystery Player of the Day through a sequential career chain. Starting from an anchor club, players advance through the chain by naming footballers who shared senior squad appearances across consecutive clubs. Each validated teammate guess confirms a transfer link and reveals progressive clues regarding the mystery player's nationality, primary position, and shirt number. Players can methodically climb each link in the ladder or attempt an instant-win guess if they recognize the final footballer early. The game features interactive VAR review for contested teammate rosters, comprehensive hint options, and local streak tracking across the Premier League, La Liga, Serie A, Bundesliga, and UEFA competitions. New career chains release daily at midnight UTC with full back-in-time archives.",
+            "Cadena de Jugadores es un reto diario de conexiones entre compañeros de fútbol de Playmaker donde los jugadores deducen al Jugador Misterioso del Día a través de una cadena secuencial de clubes. Empezando por un club ancla, los jugadores avanzan nombrando futbolistas que compartieron vestuario en clubes consecutivos. ¡Juega a diario y mantén tu racha!"
         ),
         "passport_fc": (
             'Passport FC is a daily football trivia puzzle by Playmaker where fans collect nationality stamps for a featured anchor club. Each day highlights one world-famous club alongside four progressive nationality tiers. Players must name any qualifying footballer who made senior appearances or signed for that club while representing the designated nation. The puzzle begins with major footballing countries that have extensive talent pools before ascending to "The Unicorn" — an unexpected country with only one or two eligible players across the club\'s entire transfer history.',
@@ -610,6 +630,17 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
     }
     for gid, (en_h, es_h) in how_to_play_paragraphs.items():
         es_html = es_html.replace(en_h, es_h)
+
+    what_is_replacements = {
+        "What is Top Transfers?": "¿Qué es Top Transfers?",
+        "What is Transfer Destination?": "¿Qué es Reto de Trayectoria Deportiva?",
+        "What is Top Scorers?": "¿Qué es Máximos Goleadores?",
+        "What is Club Connect?": "¿Qué es Conexión de Clubes?",
+        "What is Player Chain?": "¿Qué es Cadena de Jugadores?",
+        "What is Passport FC?": "¿Qué es Pasaporte FC?",
+    }
+    for en_w, es_w in what_is_replacements.items():
+        es_html = es_html.replace(en_w, es_w)
 
     # 7. Inject Spanish game note and language setter in JS data
     safe_note_es = game_cfg.get("note_es", "").replace('\\', '\\\\').replace('"', '\\"')

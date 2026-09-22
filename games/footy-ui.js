@@ -1868,8 +1868,52 @@
             return d;
         };
 
+        /** Clear any mid-game in-progress state */
+        this.clearInProgress = () => {
+            try {
+                const inprogressKey = `footy_v2_${gameId}_inprogress`;
+                localStorage.removeItem(inprogressKey);
+            } catch (_) {}
+        };
+
+        /** Save mid-game in-progress state (today's puzzle only, not back-in-time) */
+        this.saveInProgress = (puzzleNum, state, isBackInTime = false) => {
+            if (isBackInTime) return;
+            if (this.hasPlayedPuzzle(puzzleNum, false)) return;
+            try {
+                const inprogressKey = `footy_v2_${gameId}_inprogress`;
+                const payload = {
+                    puzzleNum: Number(puzzleNum),
+                    date: todayStr(),
+                    state: state
+                };
+                localStorage.setItem(inprogressKey, JSON.stringify(payload));
+            } catch (_) {}
+        };
+
+        /** Retrieve in-progress state for current puzzle, discarding if stale/mismatched */
+        this.getInProgress = (puzzleNum, isBackInTime = false) => {
+            if (isBackInTime) return null;
+            if (this.hasPlayedPuzzle(puzzleNum, false)) return null;
+            try {
+                const inprogressKey = `footy_v2_${gameId}_inprogress`;
+                const raw = localStorage.getItem(inprogressKey);
+                if (!raw) return null;
+                const data = JSON.parse(raw);
+                if (!data || data.date !== todayStr() || Number(data.puzzleNum) !== Number(puzzleNum)) {
+                    // Stale or different day / different puzzle -> clean up to prevent spoilers
+                    this.clearInProgress();
+                    return null;
+                }
+                return data.state || null;
+            } catch (_) {
+                return null;
+            }
+        };
+
         /** Record a completed game result */
         this.recordResult = (puzzleNum, won, score, maxScore, isBackInTime = false, outcome = null) => {
+            this.clearInProgress();
             const d = load();
             const histKey = isBackInTime ? `bit_${puzzleNum}` : String(puzzleNum);
             const existing = d.history[histKey];
@@ -1931,6 +1975,16 @@
         this.has = (text) => {
             if (!text) return false;
             return shown.has(FootyUI.normalizeStr(text));
+        };
+
+        this.getAll = () => Array.from(shown);
+
+        this.restore = (list) => {
+            if (Array.isArray(list)) {
+                list.forEach(item => {
+                    if (item) this.add(item);
+                });
+            }
         };
 
         this.add = (text) => {

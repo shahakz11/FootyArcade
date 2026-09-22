@@ -2,7 +2,7 @@
 <html class="dark" lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Club Connect — Daily Football Puzzle | Playmaker</title>
     <meta name="description" content="Five players were all signed by the same mystery club. Guess the club before all five players are revealed. A daily football transfer connection puzzle. Play free at Playmaker!"/>
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
@@ -39,6 +39,8 @@
     <!-- Google Analytics Measurement ID Placeholder -->
     <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Archivo+Narrow:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <!-- Shared Playmaker styles -->
     <link rel="stylesheet" href="../games/footy-ui.css?v=6"/>
@@ -197,6 +199,7 @@
           "@type": "VideoGame",
           "name": "Club Connect — Daily Football Puzzle",
           "description": "Five players were all signed by the same mystery club. Guess the club before all players are revealed. Play free at Playmaker!",
+          "inLanguage": "en",
           "url": "https://playmaker.best/games/club_connect.html",
           "image": "https://playmaker.best/assets/logo.png",
           "genre": ["Trivia", "Sports"],
@@ -229,6 +232,60 @@
               "position": 2,
               "name": "Club Connect",
               "item": "https://playmaker.best/games/club_connect.html"
+            }
+          ]
+        },
+        {
+          "@type": "HowTo",
+          "name": "How to Play Club Connect",
+          "description": "Step-by-step instructions for solving the daily Club Connect football transfer puzzle.",
+          "step": [
+            {
+              "@type": "HowToStep",
+              "position": 1,
+              "name": "Inspect the Starting Player",
+              "text": "Review the first revealed footballer card, including transfer fee, nationality, and position clues."
+            },
+            {
+              "@type": "HowToStep",
+              "position": 2,
+              "name": "Guess the Mystery Club",
+              "text": "Type and select the football club you believe signed all five mystery players."
+            },
+            {
+              "@type": "HowToStep",
+              "position": 3,
+              "name": "Unlock Progressive Clues",
+              "text": "Each incorrect guess deducts 1 life and flips over the next player signing to help you connect the club."
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is Club Connect?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Club Connect is a daily football trivia puzzle where players deduce the mystery club that signed five mystery footballers revealed one-by-one by transfer fee."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How do lives and clues work in Club Connect?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You start with 3 lives. Each wrong guess deducts one life and automatically reveals the next footballer card as an additional clue."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What transfer years are included?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The puzzle database spans official senior club transfers from 1990 to present across major European leagues and international competitions."
+              }
             }
           ]
         }
@@ -347,13 +404,23 @@
             <div id="wrong-guesses-container" class="flex flex-wrap gap-2 justify-center"></div>
         </section>
 
-        <!-- SEO: How to Play + More Daily Challenges -->
-        <section class="max-w-4xl mx-auto space-y-8 mt-12 pt-8 border-t border-white/5">
-            <div class="glass-card rounded-2xl p-6 space-y-3">
-                <h2 class="font-headline text-xl uppercase italic text-accent">HOW TO PLAY</h2>
-                <p class="font-body text-on-surface-variant text-sm leading-relaxed">Five footballers were all signed by the same mystery club. Players are revealed one by one — cheapest signing first. After each reveal, guess which club bought them all. A wrong guess costs one life and unlocks the next player. Can you spot the connection early?</p>
-                <p class="font-body text-on-surface-variant/60 text-xs">Transfer data sourced from Transfermarkt. Updated to June 2026.</p>
-            </div>
+        <!-- Static Crawlable SEO/GEO Section & Cross-Game Directory -->
+        <section class="max-w-2xl mx-auto px-4 mt-16 space-y-8" aria-label="Game Guide and More Challenges">
+            <!-- Static Game Guide (134-167 words self-contained answer block for AI search engines & crawlers) -->
+            <article class="bg-surface/60 border border-white/10 rounded-2xl p-5 sm:p-6 space-y-4">
+                <h2 class="font-headline text-xl uppercase italic text-accent tracking-wide">
+                    What is Club Connect?
+                </h2>
+                <p class="font-body text-on-surface-variant text-sm leading-relaxed">
+                    Club Connect is a daily football connection puzzle by Playmaker that challenges fans to deduce the secret club linking five mystery footballer signings. At the start of each daily game, five player cards are presented face-down, ranked in order of their transfer fee. One initial player is revealed immediately as a starting clue. Players submit club guesses to identify the mystery buyer before running out of lives. Every incorrect guess flips over the next player card to reveal additional transfer history, nationality, and position hints. Once the connection is discovered, players earn an efficiency score based on how few player clues they needed to crack the puzzle. Club Connect covers senior domestic and international transfers from 1990 to present, resetting daily at midnight UTC with streak tracking and shareable emoji summaries.
+                </p>
+                <div class="border-t border-white/5 pt-3 space-y-2 text-xs font-mono text-on-surface-variant/70">
+                    <p><strong>Database Coverage:</strong> Official senior appearances and transfers since 1990 plus verified historic legends throughout club history (updated to September 2026).</p>
+                    <p><strong>VAR Verification:</strong> Players can submit any disputed answer to the automated VAR engine to appeal real-world transfer and appearance records.</p>
+                </div>
+            </article>
+
+            <!-- More Daily Challenges (Directory linking all Playmaker games) -->
             <div id="fa-game-suggestions" data-current-game="club_connect"></div>
         </section>
 
@@ -538,6 +605,9 @@
         // Reveal first card immediately (free clue)
         revealCard(0);
         checkAlreadyPlayed();
+        if (!gameOver && !isBackInTime) {
+            restoreInProgressState();
+        }
 
         document.getElementById('submit-btn').addEventListener('click', submitGuess);
         document.getElementById('guess-input').addEventListener('keydown', e => {
@@ -590,6 +660,52 @@
 
         showResultModal(result.won, result.score, stats, bitLinks, true);
         if (bitLinks.length) document.getElementById('bit-wrapper')?.classList.remove('hidden');
+    }
+
+    function saveCurrentProgress() {
+        if (gameOver || isBackInTime) return;
+        const hints = [];
+        for (let i = 0; i < totalPlayers; i++) {
+            const details = document.getElementById(`hint-details-${i}`);
+            if (details && !details.classList.contains('hidden')) {
+                hints.push(i);
+            }
+        }
+        storage.saveInProgress(puzzleNum, {
+            revealedCount: revealedCount,
+            guessCount: guessCount,
+            lives: livesCtrl ? livesCtrl.get() : INITIAL_LIVES,
+            revealedHints: hints,
+            wrongGuesses: wrongGuesses ? wrongGuesses.getAll() : []
+        }, isBackInTime);
+    }
+
+    function restoreInProgressState() {
+        const saved = storage.getInProgress(puzzleNum, isBackInTime);
+        if (!saved) return;
+
+        if (typeof saved.guessCount === 'number') {
+            guessCount = saved.guessCount;
+        }
+        if (typeof saved.lives === 'number' && livesCtrl) {
+            livesCtrl.set(saved.lives);
+        }
+        if (Array.isArray(saved.wrongGuesses) && wrongGuesses) {
+            wrongGuesses.restore(saved.wrongGuesses);
+        }
+
+        // Restore revealed player cards
+        const targetRevealed = typeof saved.revealedCount === 'number' ? Math.min(saved.revealedCount, totalPlayers) : 1;
+        for (let i = 1; i < targetRevealed; i++) {
+            revealCard(i);
+        }
+
+        // Restore card hints
+        if (Array.isArray(saved.revealedHints)) {
+            saved.revealedHints.forEach(idx => {
+                revealCardHint(idx, true);
+            });
+        }
     }
 
     function initUI() {
@@ -698,12 +814,14 @@
         const feeEl   = document.getElementById(`card-fee-${index}`);
         if (!btn || !details) return;
 
-        FootyUI.trackHint({
-            step: index + 1,
-            hintType: 'card_details',
-            hintText: activeGameData.players[index]?.player_name || '',
-            lives: livesCtrl.get()
-        });
+        if (!silent) {
+            FootyUI.trackHint({
+                step: index + 1,
+                hintType: 'card_details',
+                hintText: activeGameData.players[index]?.player_name || '',
+                lives: livesCtrl.get()
+            });
+        }
 
         btn.classList.add('hidden');
         details.classList.remove('hidden');
@@ -715,6 +833,7 @@
                 ? FootyI18n.t('toast_hint_revealed')
                 : ((document.documentElement.lang === 'es' || location.pathname.includes('/es/')) ? '¡Pista revelada! 💡' : 'Hint revealed! 💡');
             FootyUI.toast(hintToastMsg, 'info');
+            saveCurrentProgress();
         }
     }
 
@@ -807,6 +926,7 @@
             if (!livesCtrl.isDead()) {
                 // Reveal the next player card
                 revealCard(revealedCount);
+                saveCurrentProgress();
                 FootyUI.showFeedback({
                     isCorrect: false,
                     title:     'WRONG CLUB!',

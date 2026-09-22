@@ -48,27 +48,33 @@ class TestHintAndLifeToasts(unittest.TestCase):
         self.assertIn("toast(toastMsg, 'success')", js)
 
     def test_top_transfers_hint_toast(self):
-        """Verify revealHint in top_transfers_template.html dispatches FootyUI.toast with hint_revealed"""
+        """Verify revealHint in top_transfers_template.html supports silent mode and dispatches FootyUI.toast with hint_revealed"""
         template_path = os.path.join(self.templates_dir, 'top_transfers_template.html')
         with open(template_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
-        self.assertIn('function revealHint(index)', content)
+        self.assertIn('function revealHint(index, silent = false)', content)
         self.assertIn('FootyUI.toast(hintToastMsg, \'info\')', content)
         self.assertIn('toast_hint_revealed', content)
+        self.assertIn('if (!silent && !gameOver)', content)
+        self.assertIn('revealHint(i, true);', content)
+        self.assertIn('revealHint(index, true);', content)
 
     def test_top_scorers_hint_toast(self):
-        """Verify revealHint in top_scorers_template.html dispatches FootyUI.toast with hint_revealed"""
+        """Verify revealHint in top_scorers_template.html supports silent mode and dispatches FootyUI.toast with hint_revealed"""
         template_path = os.path.join(self.templates_dir, 'top_scorers_template.html')
         with open(template_path, 'r', encoding='utf-8') as f:
             content = f.read()
 
-        self.assertIn('function revealHint(index)', content)
+        self.assertIn('function revealHint(index, silent = false)', content)
         self.assertIn('FootyUI.toast(hintToastMsg, \'info\')', content)
         self.assertIn('toast_hint_revealed', content)
+        self.assertIn('if (!silent && !gameOver)', content)
+        self.assertIn('revealHint(i, true);', content)
+        self.assertIn('revealHint(index, true);', content)
 
     def test_club_connect_hint_toast(self):
-        """Verify revealCardHint in club_connect_template.html dispatches FootyUI.toast with hint_revealed"""
+        """Verify revealCardHint in club_connect_template.html dispatches FootyUI.toast with hint_revealed and guards trackHint"""
         template_path = os.path.join(self.templates_dir, 'club_connect_template.html')
         with open(template_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -76,6 +82,7 @@ class TestHintAndLifeToasts(unittest.TestCase):
         self.assertIn('function revealCardHint(index, silent = false)', content)
         self.assertIn('FootyUI.toast(hintToastMsg, \'info\')', content)
         self.assertIn('toast_hint_revealed', content)
+        self.assertIn('if (!silent)', content)
 
     def test_transfer_destination_hint_toast(self):
         """Verify reveal-btn in transfer_destination_template.html dispatches FootyUI.toast with hint_revealed"""
@@ -108,3 +115,4 @@ class TestHintAndLifeToasts(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+

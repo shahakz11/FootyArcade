@@ -40,6 +40,8 @@
     <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Archivo+Narrow:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="games/footy-ui.css"/>
     <script id="tailwind-config">
@@ -99,6 +101,7 @@
           "name": "Playmaker",
           "url": "https://playmaker.best/",
           "description": "Daily football trivia games — guess transfers, career paths, player chains, and top scorers.",
+          "inLanguage": "en",
           "publisher": {
             "@type": "Organization",
             "name": "Playmaker",
@@ -116,6 +119,7 @@
           "url": "https://playmaker.best/",
           "applicationCategory": "GameApplication",
           "operatingSystem": "Web",
+          "inLanguage": "en",
           "image": "https://playmaker.best/assets/logo.png",
           "offers": {
             "@type": "Offer",
@@ -292,6 +296,61 @@
                     <span id="global-streak" class="block font-headline text-3xl text-accent">0</span>
                     <span class="text-[10px] uppercase text-on-surface-variant font-mono tracking-wider">Best Streak</span>
                 </div>
+            </div>
+        </section>
+
+        <!-- Game Modes & Rules Overview (GEO Structured Data Table) -->
+        <section class="space-y-4">
+            <h2 class="font-title text-sm font-bold uppercase tracking-widest text-on-surface-variant border-b border-white/10 pb-2">DAILY GAME MODES &amp; RULES OVERVIEW</h2>
+            <div class="glass-card rounded-2xl p-4 sm:p-6 overflow-x-auto">
+                <table class="w-full text-left text-xs sm:text-sm font-mono text-on-surface-variant">
+                    <thead>
+                        <tr class="border-b border-white/10 text-on-background uppercase text-[11px] tracking-wider">
+                            <th class="py-2.5 pr-4">Game Mode</th>
+                            <th class="py-2.5 px-4">Core Objective</th>
+                            <th class="py-2.5 px-4 text-center">Lives</th>
+                            <th class="py-2.5 pl-4">Difficulty &amp; Format</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5">
+                        <tr>
+                            <td class="py-3 pr-4 font-bold text-[#10b981]"><a href="games/passport_fc.html" class="hover:underline">Passport FC</a></td>
+                            <td class="py-3 px-4">Collect 4 nationality stamps for the anchor club</td>
+                            <td class="py-3 px-4 text-center font-bold text-on-background">5 Lives</td>
+                            <td class="py-3 pl-4">4 tiers: Common nations to rare 1-player Unicorns</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 pr-4 font-bold text-[#e879f9]"><a href="games/club_connect.html" class="hover:underline">Club Connect</a></td>
+                            <td class="py-3 px-4">Deduce the mystery club that signed all 5 footballers</td>
+                            <td class="py-3 px-4 text-center font-bold text-on-background">3 Lives</td>
+                            <td class="py-3 pl-4">Cards reveal one-by-one sorted by transfer fee</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 pr-4 font-bold text-[#38bdf8]"><a href="games/player_chain.html" class="hover:underline">Player Chain</a></td>
+                            <td class="py-3 px-4">Find the mystery Player of the Day via teammate links</td>
+                            <td class="py-3 px-4 text-center font-bold text-on-background">5 Lives</td>
+                            <td class="py-3 pl-4">Ladder progression with instant-win option</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 pr-4 font-bold text-[#00f0ff]"><a href="games/top_transfers.html" class="hover:underline">Top Transfers</a></td>
+                            <td class="py-3 px-4">Name top 10 all-time record signings for club/country</td>
+                            <td class="py-3 px-4 text-center font-bold text-on-background">5 Lives</td>
+                            <td class="py-3 pl-4">Top 10 leaderboard with fee/year hints</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 pr-4 font-bold text-[#39ff14]"><a href="games/transfer_destination.html" class="hover:underline">Transfer Destination</a></td>
+                            <td class="py-3 px-4">Identify footballer from reverse transfer timeline</td>
+                            <td class="py-3 px-4 text-center font-bold text-on-background">5 Lives</td>
+                            <td class="py-3 pl-4">Reverse career clues step-by-step</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 pr-4 font-bold text-[#f59e0b]"><a href="games/top_scorers.html" class="hover:underline">Top Scorers</a></td>
+                            <td class="py-3 px-4">Name top goalscorers for iconic club seasons/leagues</td>
+                            <td class="py-3 px-4 text-center font-bold text-on-background">6 Lives</td>
+                            <td class="py-3 pl-4">Golden boot leaderboard with goal count clues</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
@@ -491,7 +550,7 @@
                                         ? `<span class="font-mono text-[10px] font-bold bg-white/5 border border-white/10 text-on-surface-variant px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
                                             <span class="material-symbols-outlined" style="font-size:11px">check_circle</span> Played
                                            </span>`
-                                        : `<span class="font-mono text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider" style="background:rgba(${rgb},0.15);color:rgb(${rgb});border:1px solid rgba(${rgb},0.3)">Active</span>`
+                                        : ''
                                 }
                             </div>
                         </div>
