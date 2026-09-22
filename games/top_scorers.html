@@ -144,7 +144,7 @@
               "@type": "HowToStep",
               "position": 3,
               "name": "Complete the Board",
-              "text": "Use hints for goal totals or nationalities to finish the leaderboard before running out of lives."
+              "text": "Use hints for goal totals or nationalities to finish the leaderboard before 6 lives run out."
             }
           ]
         },
@@ -169,10 +169,10 @@
             },
             {
               "@type": "Question",
-              "name": "How many lives do I get in Top Scorers?",
+              "name": "How many lives do I get?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Players get 6 lives. Incorrect guesses deduct 1 life, while correct guesses remain locked on the leaderboard without penalty."
+                "text": "Players get 6 lives. Correct guesses remain locked on the leaderboard."
               }
             }
           ]
@@ -1046,6 +1046,10 @@
 
         const lastScorer = activeGameData.scorers[activeGameData.scorers.length - 1];
         const minGoals = parseInt(lastScorer?.goals || 5, 10);
+        if (goalsNum > 0 && goalsNum < minGoals) {
+            console.warn(`[VAR Top Scorers] Goals ${goalsNum} is below cutoff ${minGoals}. Rejecting client approval.`);
+            return;
+        }
         if (!goalsNum || goalsNum < minGoals) {
             goalsNum = minGoals;
         }

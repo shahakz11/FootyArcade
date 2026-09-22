@@ -1048,6 +1048,10 @@
         }
         const lastTr = activeGameData.transfers[activeGameData.transfers.length - 1];
         const minCutoff = parseFloat(lastTr?.transfer_fee || 8000000);
+        if (feeNum > 0 && feeNum < minCutoff) {
+            console.warn(`[VAR Top Transfers] Fee €${(feeNum/1e6).toFixed(1)}M is below cutoff €${(minCutoff/1e6).toFixed(1)}M. Rejecting approval.`);
+            return;
+        }
         if (!feeNum || feeNum < minCutoff) {
             feeNum = minCutoff;
         }

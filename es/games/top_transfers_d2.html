@@ -144,7 +144,7 @@
               "@type": "HowToStep",
               "position": 3,
               "name": "Use Hints & Complete the Board",
-              "text": "Reveal transfer fees or years if stuck and fill all 10 positions before 5 lives run out."
+              "text": "Reveal transfer fees or years if stuck and fill all 10 positions before running out of lives."
             }
           ]
         },
@@ -161,10 +161,10 @@
             },
             {
               "@type": "Question",
-              "name": "How many lives do I get?",
+              "name": "How many lives do I get in Top Transfers?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Players receive 5 lives. Correct guesses unlock positions on the leaderboard without penalty."
+                "text": "Players receive 5 lives. Incorrect guesses deduct 1 life, while correct guesses unlock positions on the leaderboard without penalty."
               }
             },
             {
@@ -1044,6 +1044,10 @@
         }
         const lastTr = activeGameData.transfers[activeGameData.transfers.length - 1];
         const minCutoff = parseFloat(lastTr?.transfer_fee || 8000000);
+        if (feeNum > 0 && feeNum < minCutoff) {
+            console.warn(`[VAR Top Transfers] Fee €${(feeNum/1e6).toFixed(1)}M is below cutoff €${(minCutoff/1e6).toFixed(1)}M. Rejecting approval.`);
+            return;
+        }
         if (!feeNum || feeNum < minCutoff) {
             feeNum = minCutoff;
         }

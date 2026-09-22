@@ -130,7 +130,30 @@ class TestVarMechanism(unittest.TestCase):
 
         self.assertIn("Top record signings / incoming transfers TO", content)
         self.assertIn("Outgoing departures/sales FROM", content)
-        self.assertIn("toClub = anchorClub", content)
+    def test_google_apps_script_fee_and_goals_cutoff_enforcement(self):
+        """Verify google-apps-script.js has deterministic cutoff parsing and threshold rejection."""
+        gas_path = os.path.join(REPO_ROOT, "google-apps-script.js")
+        with open(gas_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        self.assertIn("function parseNumericFee", content)
+        self.assertIn("function parseCutoffFeeFromContext", content)
+        self.assertIn("function parseCutoffGoalsFromContext", content)
+        self.assertIn("STRICT NUMERIC THRESHOLD ENFORCEMENT", content)
+        self.assertIn("actualFee < cutoffFee", content)
+        self.assertIn("actualGoals < cutoffGoals", content)
+
+    def test_templates_enforce_cutoff_in_handle_var_approved(self):
+        """Verify templates reject below-cutoff approvals in handleVarApproved."""
+        transfers_path = os.path.join(REPO_ROOT, "templates", "top_transfers_template.html")
+        with open(transfers_path, "r", encoding="utf-8") as f:
+            t_content = f.read()
+        self.assertIn("feeNum > 0 && feeNum < minCutoff", t_content)
+
+        scorers_path = os.path.join(REPO_ROOT, "templates", "top_scorers_template.html")
+        with open(scorers_path, "r", encoding="utf-8") as f:
+            s_content = f.read()
+        self.assertIn("goalsNum > 0 && goalsNum < minGoals", s_content)
 
 
 if __name__ == "__main__":

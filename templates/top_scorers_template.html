@@ -1036,6 +1036,10 @@
 
         const lastScorer = activeGameData.scorers[activeGameData.scorers.length - 1];
         const minGoals = parseInt(lastScorer?.goals || 5, 10);
+        if (goalsNum > 0 && goalsNum < minGoals) {
+            console.warn(`[VAR Top Scorers] Goals ${goalsNum} is below cutoff ${minGoals}. Rejecting client approval.`);
+            return;
+        }
         if (!goalsNum || goalsNum < minGoals) {
             goalsNum = minGoals;
         }

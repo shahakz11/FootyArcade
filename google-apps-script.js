@@ -427,12 +427,15 @@ function handleVarCheck(payload) {
         "- Extra Context / Cutoff: " + context + "\n\n" +
         "STRICT FACT-CHECKING RULES (You must be strict, impartial, and skeptical):\n" +
         "1. DEFAULT TO REJECT (accepted=false): Most appeals are invalid guesses. Overturn the pitch ruling (accepted=true) ONLY if you can verify with 100% historical accuracy against official football databases (Transfermarkt, FIFA, UEFA) that the guess meets all requirements.\n" +
-        "2. ZERO HALLUCINATION POLICY: NEVER invent fake transfers, imaginary clubs, unverified transfer fees, or fictitious player records. If the player never played for the club, is not of that nationality, or the transfer fee is below the cutoff, you MUST set accepted=false.\n\n" +
+        "2. ZERO HALLUCINATION POLICY: NEVER invent fake transfers, imaginary clubs, unverified transfer fees, or fictitious player records. If the player never played for the club, is not of that nationality, or the transfer fee is below the cutoff, you MUST set accepted=false.\n" +
+        "3. STRICT NUMERIC THRESHOLD ENFORCEMENT (Compare fees/goals mathematically):\n" +
+        "   * For 'top_transfers': You MUST compare the official transfer fee mathematically against the cutoff fee provided in Extra Context. If the transfer fee is even €1 below the cutoff fee (for example, a fee of €17.5M when the cutoff is €23.0M), the transfer is NOT a top record signing and you MUST set accepted=false with a reason stating the fee is below the cutoff.\n" +
+        "   * For 'top_scorers': You MUST compare the goals scored in that competition mathematically against the cutoff goals. If goals < cutoff, you MUST set accepted=false.\n\n" +
         "GAME SPECIFIC VERIFICATION CRITERIA:\n" +
         "- For 'top_transfers':\n" +
         "   * Mode Check: Determine if the theme is a Club (e.g. 'Real Madrid', 'Arsenal', 'Wolverhampton Wanderers') or a Nationality (e.g. 'Ivory Coast', 'Brazil', 'France').\n" +
-        "   * If Club Mode: The puzzle is strictly for RECORD SIGNINGS / INCOMING ARRIVALS to that club. The guessed player (" + guess + ") MUST have completed a senior professional transfer TO that club (the target club MUST be the buying club / 'to_club') with an official fee meeting or exceeding the cutoff fee. Outgoing sales/departures FROM the club (where the target club was the selling club / 'from_club') are STRICTLY INVALID and MUST be rejected with accepted=false. Return exact 'from_club', 'to_club', 'year', and 'fee_amount'.\n" +
-        "   * If Nationality Mode: The guessed player (" + guess + ") MUST be an official international representative of that country in senior football AND must have had a senior club-to-club transfer with an official fee meeting or exceeding the cutoff fee. Return the exact selling club ('from_club'), buying club ('to_club'), 'year', 'fee_amount', and 'nationality'. If the player is NOT of that nationality or their record transfer fee is below the cutoff, set accepted=false.\n" +
+        "   * If Club Mode: The puzzle is strictly for RECORD SIGNINGS / INCOMING ARRIVALS to that club. The guessed player (" + guess + ") MUST have completed a senior professional transfer TO that club (the target club MUST be the buying club / 'to_club') with an official fee meeting or exceeding the cutoff fee. If the incoming fee is below the cutoff (e.g. €17.5M < €23.0M cutoff), or if it is an outgoing sale/departure FROM the club, set accepted=false. Outgoing sales/departures FROM the club (where the target club was the selling club / 'from_club') are STRICTLY INVALID and MUST be rejected with accepted=false. Return exact 'from_club', 'to_club', 'year', and 'fee_amount'.\n" +
+        "   * If Nationality Mode: The guessed player (" + guess + ") MUST be an official international representative of that country in senior football AND must have had a senior club-to-club transfer with an official fee meeting or exceeding the cutoff fee. If the fee is below the cutoff, set accepted=false. Return the exact selling club ('from_club'), buying club ('to_club'), 'year', 'fee_amount', and 'nationality'. If the player is NOT of that nationality or their record transfer fee is below the cutoff, set accepted=false.\n" +
         "- For 'top_scorers':\n" +
         "   * The guessed player (" + guess + ") MUST have scored goals in the EXACT competition and season specified in '" + theme + "'.\n" +
         "   * The 'goals' field MUST be strictly the goals scored ONLY in that competition and season (NEVER domestic league or all-competition totals). If their goals equal or exceed the 10th-place cutoff, set accepted=true, otherwise accepted=false.\n" +
@@ -626,6 +629,29 @@ function handleVarCheck(payload) {
       if (!success) {
         varResult.reason = 'VAR review service error: All waterfall models failed. Last error: ' + lastError;
         varResult.isError = true;
+      } else if (varResult.accepted && !varResult.isError) {
+        // Deterministic Programmatic Threshold & Anti-Hallucination Guards
+        if (gameId === 'top_transfers') {
+          var cutoffFee = parseCutoffFeeFromContext(context);
+          var actualFee = parseNumericFee(varResult.fee_amount, (varResult.stat || '') + ' ' + (varResult.reason || ''));
+          if (cutoffFee > 0 && actualFee > 0 && actualFee < cutoffFee) {
+            varResult.accepted = false;
+            var feeM = (actualFee / 1000000).toFixed(1);
+            var cutoffM = (cutoffFee / 1000000).toFixed(1);
+            varResult.reason = "Transfer fee of €" + feeM + "M for " + guess + " is below the 10th-place cutoff fee of €" + cutoffM + "M.";
+          }
+        } else if (gameId === 'top_scorers') {
+          var cutoffGoals = parseCutoffGoalsFromContext(context);
+          var actualGoals = parseInt(varResult.goals, 10) || 0;
+          if (!actualGoals && (varResult.stat || varResult.reason)) {
+            var gMatch = ((varResult.stat || '') + ' ' + (varResult.reason || '')).match(/(\d+)\s*goals?/i);
+            if (gMatch) actualGoals = parseInt(gMatch[1], 10);
+          }
+          if (cutoffGoals > 0 && actualGoals > 0 && actualGoals < cutoffGoals) {
+            varResult.accepted = false;
+            varResult.reason = guess + " scored " + actualGoals + " goals, which is below the 10th-place cutoff of " + cutoffGoals + " goals.";
+          }
+        }
       }
 
     } catch (apiErr) {
@@ -1069,5 +1095,69 @@ function parseVarJsonResponse(text) {
     }
     return null;
   }
+}
+
+/**
+ * Parses numeric transfer fee from number or string representation with units (e.g. 17500000, "€17.5M", "35m").
+ */
+function parseNumericFee(feeVal, textFallback) {
+  if (typeof feeVal === 'number' && feeVal > 0) return feeVal;
+  if (typeof feeVal === 'string' && feeVal.trim() !== '') {
+    var str = feeVal.trim().toLowerCase();
+    var m = str.match(/€?\s*([\d.]+)\s*(m(?:illion)?|k|b(?:illion)?)?/i);
+    if (m) {
+      var v = parseFloat(m[1]);
+      var u = (m[2] || '').toLowerCase();
+      if (u.startsWith('b')) v *= 1000000000;
+      else if (u.startsWith('m') || v < 1000) v *= 1000000;
+      else if (u.startsWith('k')) v *= 1000;
+      return v;
+    }
+    var cleanNum = parseFloat(str.replace(/[^0-9.]/g, ''));
+    if (!isNaN(cleanNum) && cleanNum > 0) {
+      return cleanNum < 1000 ? cleanNum * 1000000 : cleanNum;
+    }
+  }
+  if (textFallback && typeof textFallback === 'string') {
+    var mText = textFallback.match(/€\s*([\d.]+)\s*(m(?:illion)?|k|b(?:illion)?)?/i);
+    if (mText) {
+      var vT = parseFloat(mText[1]);
+      var uT = (mText[2] || '').toLowerCase();
+      if (uT.startsWith('b')) vT *= 1000000000;
+      else if (uT.startsWith('m') || vT < 1000) vT *= 1000000;
+      else if (uT.startsWith('k')) vT *= 1000;
+      return vT;
+    }
+  }
+  return 0;
+}
+
+/**
+ * Extracts 10th-place cutoff fee in euros from Extra Context string.
+ */
+function parseCutoffFeeFromContext(contextStr) {
+  if (!contextStr || typeof contextStr !== 'string') return 0;
+  var m = contextStr.match(/cutoff\s*(?:fee)?\s*(?:is)?\s*€?\s*([\d.]+)\s*(m(?:illion)?|k|b(?:illion)?)?/i);
+  if (m) {
+    var v = parseFloat(m[1]);
+    var u = (m[2] || 'm').toLowerCase();
+    if (u.startsWith('b')) v *= 1000000000;
+    else if (u.startsWith('m') || v < 1000) v *= 1000000;
+    else if (u.startsWith('k')) v *= 1000;
+    return v;
+  }
+  return 0;
+}
+
+/**
+ * Extracts 10th-place goals cutoff integer from Extra Context string.
+ */
+function parseCutoffGoalsFromContext(contextStr) {
+  if (!contextStr || typeof contextStr !== 'string') return 0;
+  var m = contextStr.match(/cutoff\s*(?:is)?\s*(\d+)\s*goals?/i);
+  if (m) {
+    return parseInt(m[1], 10);
+  }
+  return 0;
 }
 
