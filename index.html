@@ -526,10 +526,49 @@
 
                 const isComingSoon = game.status === 'coming_soon';
 
-                // Check if already played today (via FootyUI.FootyStorage)
+                // Check puzzle status today (via FootyUI.FootyStorage)
                 const storage     = new FootyUI.FootyStorage(game.id);
-                const playedToday = !isComingSoon && storage.hasPlayedToday();
+                const todayStatus = !isComingSoon ? storage.getTodayStatus() : { status: 'unplayed' };
                 const stats       = !isComingSoon ? storage.getStats() : { streak: 0 };
+
+                let badgeHtml = '';
+                let ctaText = 'PLAY CHALLENGE';
+                let ctaStyle = `color:rgb(${rgb});`;
+
+                if (isComingSoon) {
+                    badgeHtml = `
+                        <span class="font-mono text-[10px] font-bold bg-white/5 border border-white/10 text-on-surface-variant/60 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
+                            <span class="material-symbols-outlined" style="font-size:11px">schedule</span> Coming Soon
+                        </span>`;
+                    ctaText = 'IN DEVELOPMENT';
+                } else if (todayStatus.status === 'won') {
+                    const scoreStr = (todayStatus.score !== undefined && todayStatus.maxScore !== undefined) ? ` (${todayStatus.score}/${todayStatus.maxScore})` : '';
+                    badgeHtml = `
+                        <span class="font-mono text-[10px] font-bold bg-[#39ff14]/15 border border-[#39ff14]/30 text-[#39ff14] px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                            <span class="material-symbols-outlined text-[#39ff14]" style="font-size:11px">check_circle</span> Solved${scoreStr}
+                        </span>`;
+                    ctaText = 'VIEW RESULT';
+                } else if (todayStatus.status === 'partial') {
+                    const scoreStr = (todayStatus.score !== undefined && todayStatus.maxScore !== undefined) ? ` (${todayStatus.score}/${todayStatus.maxScore})` : '';
+                    badgeHtml = `
+                        <span class="font-mono text-[10px] font-bold bg-amber-500/15 border border-amber-500/30 text-amber-400 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                            <span class="material-symbols-outlined text-amber-400" style="font-size:11px">military_tech</span> Partial${scoreStr}
+                        </span>`;
+                    ctaText = 'VIEW RESULT';
+                } else if (todayStatus.status === 'loss') {
+                    badgeHtml = `
+                        <span class="font-mono text-[10px] font-bold bg-[#ff4d4d]/15 border border-[#ff4d4d]/30 text-[#ff4d4d] px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                            <span class="material-symbols-outlined text-[#ff4d4d]" style="font-size:11px">dangerous</span> Missed
+                        </span>`;
+                    ctaText = 'VIEW RESULT';
+                } else if (todayStatus.status === 'in_progress') {
+                    badgeHtml = `
+                        <span class="font-mono text-[10px] font-bold bg-orange-500/15 border border-orange-500/35 text-orange-400 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm animate-pulse">
+                            <span class="material-symbols-outlined text-orange-400" style="font-size:11px">timelapse</span> In Progress
+                        </span>`;
+                    ctaText = 'CONTINUE';
+                    ctaStyle = 'color:#fb923c;';
+                }
 
                 const card = document.createElement(isComingSoon ? 'div' : 'a');
                 if (!isComingSoon) card.href = game.link;
@@ -542,16 +581,7 @@
                         <div class="flex items-center justify-between">
                             <span class="material-symbols-outlined text-4xl p-2 bg-black/30 rounded-xl" style="color:rgb(${rgb})">${game.icon}</span>
                             <div class="flex items-center gap-2">
-                                ${isComingSoon
-                                    ? `<span class="font-mono text-[10px] font-bold bg-white/5 border border-white/10 text-on-surface-variant/60 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
-                                        <span class="material-symbols-outlined" style="font-size:11px">schedule</span> Coming Soon
-                                       </span>`
-                                    : playedToday
-                                        ? `<span class="font-mono text-[10px] font-bold bg-white/5 border border-white/10 text-on-surface-variant px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
-                                            <span class="material-symbols-outlined" style="font-size:11px">check_circle</span> Played
-                                           </span>`
-                                        : ''
-                                }
+                                ${badgeHtml}
                             </div>
                         </div>
                         <div class="space-y-1">
@@ -561,7 +591,7 @@
                     </div>
                     <div class="flex items-center justify-between border-t border-white/5 pt-4 mt-4">
                         <div class="flex items-center gap-3">
-                            <span class="text-xs font-mono uppercase tracking-wider font-bold" style="color:rgb(${rgb})">${isComingSoon ? 'IN DEVELOPMENT' : playedToday ? 'VIEW RESULT' : 'PLAY CHALLENGE'}</span>
+                            <span class="text-xs font-mono uppercase tracking-wider font-bold" style="${ctaStyle}">${ctaText}</span>
                             ${stats.streak > 0 ? `<span class="text-[10px] font-mono text-on-surface-variant">🔥 ${stats.streak} streak</span>` : ''}
                         </div>
                         <span class="material-symbols-outlined text-on-surface-variant ${isComingSoon ? '' : 'group-hover:translate-x-1 transition-transform'}">${isComingSoon ? 'lock' : 'arrow_forward'}</span>

@@ -1772,22 +1772,31 @@
     function FootyStorage(gameId) {
         const KEY = `footy_v2_${gameId}`;
 
-        const defaults = {
-            played: 0,
-            won: 0,
-            streak: 0,
-            bestStreak: 0,
-            lastPlayedDate: null,
-            lastPuzzleNum: null,
-            history: {}   // puzzleNum → { won, score, maxScore }
-        };
-
         function load() {
             try {
                 const raw = localStorage.getItem(KEY);
-                if (raw) return Object.assign({}, defaults, JSON.parse(raw));
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    return {
+                        played: parsed.played || 0,
+                        won: parsed.won || 0,
+                        streak: parsed.streak || 0,
+                        bestStreak: parsed.bestStreak || 0,
+                        lastPlayedDate: parsed.lastPlayedDate || null,
+                        lastPuzzleNum: parsed.lastPuzzleNum !== undefined ? parsed.lastPuzzleNum : null,
+                        history: parsed.history ? Object.assign({}, parsed.history) : {}
+                    };
+                }
             } catch (_) { }
-            return Object.assign({}, defaults);
+            return {
+                played: 0,
+                won: 0,
+                streak: 0,
+                bestStreak: 0,
+                lastPlayedDate: null,
+                lastPuzzleNum: null,
+                history: {}
+            };
         }
 
         function save(data) {
@@ -1909,6 +1918,47 @@
             } catch (_) {
                 return null;
             }
+        };
+
+        /** Returns true if there is an active mid-game in-progress session for today */
+        this.hasInProgressToday = () => {
+            if (this.hasPlayedToday()) return false;
+            try {
+                const inprogressKey = `footy_v2_${gameId}_inprogress`;
+                const raw = localStorage.getItem(inprogressKey);
+                if (!raw) return false;
+                const data = JSON.parse(raw);
+                return Boolean(data && data.date === todayStr() && data.state);
+            } catch (_) {
+                return false;
+            }
+        };
+
+        /** Returns comprehensive today status: 'won' | 'partial' | 'loss' | 'in_progress' | 'unplayed' */
+        this.getTodayStatus = () => {
+            const res = this.getTodayResult();
+            if (res) {
+                if (res.won || res.outcome === 'win') {
+                    return { status: 'won', score: res.score, maxScore: res.maxScore, outcome: 'win' };
+                }
+                if (res.outcome === 'partial') {
+                    return { status: 'partial', score: res.score, maxScore: res.maxScore, outcome: 'partial' };
+                }
+                return { status: 'loss', score: res.score, maxScore: res.maxScore, outcome: 'loss' };
+            }
+            if (this.hasInProgressToday()) {
+                try {
+                    const inprogressKey = `footy_v2_${gameId}_inprogress`;
+                    const raw = localStorage.getItem(inprogressKey);
+                    if (raw) {
+                        const data = JSON.parse(raw);
+                        if (data && data.date === todayStr() && data.state) {
+                            return { status: 'in_progress', state: data.state, puzzleNum: data.puzzleNum };
+                        }
+                    }
+                } catch (_) {}
+            }
+            return { status: 'unplayed' };
         };
 
         /** Record a completed game result */
