@@ -110,25 +110,51 @@ MAJOR_CLUBS = [
     {"name": "Fenerbahce", "club_id": 36, "country": "Turkey"},
 ]
 
+def deduplicate_canonical_names(names):
+    seen = {}
+    for p in names:
+        if not p or not isinstance(p, str):
+            continue
+        clean_p = re.sub(r'[\u200b-\u200f\u202a-\u202e\ufeff]', '', p).strip()
+        norm = normalize_name(clean_p).lower()
+        if norm not in seen:
+            seen[norm] = clean_p
+        else:
+            # Prefer version with accented letters if one exists
+            if any(ord(c) > 127 for c in clean_p) and not any(ord(c) > 127 for c in seen[norm]):
+                seen[norm] = clean_p
+    return list(seen.values())
+
+
 def load_data():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     
-    # 1. Load all_players.json
+    # 1. Load all_players.json and build (norm_name, nationality) -> best canonical spelling
     all_players_file = os.path.join(base_dir, 'all_players.json')
     with open(all_players_file, 'r', encoding='utf-8') as f:
         all_players_data = json.load(f)
 
-    player_canonical = {}
-    player_by_norm = {}
+    name_nat_canonical = {}
+    player_prominence = defaultdict(float)
+
     for p in all_players_data:
-        name = p['Name']
-        norm = normalize_name(name).lower()
-        player_canonical[name] = {
-            'name': name,
-            'nationality': clean_nation_name(p.get('Nationality', '')),
-            'position': p.get('Position', '')
-        }
-        player_by_norm[norm] = name
+        pname = p.get('Name', '')
+        if not pname:
+            continue
+        nat = clean_nation_name(p.get('Nationality', ''))
+        norm = normalize_name(pname).lower()
+        mv = float(p.get('MarketValue', 0)) if p.get('MarketValue') else 0.0
+        player_prominence[norm] = max(player_prominence[norm], mv)
+
+        if nat:
+            key = (norm, nat)
+            if key not in name_nat_canonical or mv > name_nat_canonical[key].get('mv', 0):
+                name_nat_canonical[key] = {
+                    'name': pname,
+                    'nationality': nat,
+                    'position': p.get('Position', ''),
+                    'mv': mv
+                }
 
     # 2. Load historical careers
     hist_file = os.path.join(base_dir, 'historical_careers.json')
@@ -138,16 +164,17 @@ def load_data():
             hist_careers = json.load(f)
         for h_name, d in hist_careers.items():
             norm = normalize_name(h_name).lower()
-            if norm in player_by_norm:
-                actual = player_by_norm[norm]
-            else:
-                actual = h_name
-                player_canonical[actual] = {
-                    'name': actual,
-                    'nationality': clean_nation_name(d.get('nationality', '')),
-                    'position': d.get('position', '')
-                }
-                player_by_norm[norm] = actual
+            h_nat = clean_nation_name(d.get('nationality', ''))
+            player_prominence[norm] = max(player_prominence[norm], 100_000_000.0)
+            if h_nat:
+                key = (norm, h_nat)
+                if key not in name_nat_canonical:
+                    name_nat_canonical[key] = {
+                        'name': h_name,
+                        'nationality': h_nat,
+                        'position': d.get('position', ''),
+                        'mv': 100_000_000.0
+                    }
 
     # 3. Load Davidcariboo dataset with dynamic path resolution
     try:
@@ -162,23 +189,29 @@ def load_data():
 
     df_players = pd.read_csv(os.path.join(dc_path, 'players.csv'), low_memory=False)
     
-    # Map prominence
-    player_prominence = defaultdict(float)
-    player_id_to_norm = {}
+    # Map player_id -> (canonical_name, nationality, prominence)
+    pid_meta = {}
     for r in df_players.itertuples(index=False):
         pid = r.player_id
-        pname = str(r.name)
-        norm = normalize_name(pname).lower()
-        player_id_to_norm[pid] = norm
+        pname = str(r.name) if pd.notna(r.name) else ''
+        if not pname or pname == 'nan':
+            continue
+        nat = clean_nation_name(str(r.country_of_citizenship)) if pd.notna(r.country_of_citizenship) else ''
         mv = float(r.highest_market_value_in_eur) if pd.notna(r.highest_market_value_in_eur) else 0.0
         caps = float(r.international_caps) if pd.notna(r.international_caps) else 0.0
-        player_prominence[norm] = mv + (caps * 1_000_000.0)
+        norm = normalize_name(pname).lower()
+        prom = mv + (caps * 1_000_000.0)
+        player_prominence[norm] = max(player_prominence[norm], prom)
 
-    for h_name in hist_careers:
-        norm = normalize_name(h_name).lower()
-        player_prominence[norm] = max(player_prominence[norm], 100_000_000.0)
+        # Resolve best canonical name for this player entity
+        canon = name_nat_canonical.get((norm, nat), {}).get('name', pname)
+        pid_meta[pid] = {
+            'name': canon,
+            'nationality': nat,
+            'prominence': prom
+        }
 
-    club_players = defaultdict(set)
+    club_nat_players = defaultdict(lambda: defaultdict(set))
     club_id_to_name = {c['club_id']: c['name'] for c in MAJOR_CLUBS}
     major_club_names = {c['name'] for c in MAJOR_CLUBS}
     target_cids = set(club_id_to_name.keys())
@@ -188,9 +221,9 @@ def load_data():
     df_app_filtered = df_app[df_app['player_club_id'].isin(target_cids)]
     for r in df_app_filtered.itertuples(index=False):
         cname = club_id_to_name.get(r.player_club_id)
-        norm = player_id_to_norm.get(r.player_id)
-        if cname and norm and norm in player_by_norm:
-            club_players[cname].add(player_by_norm[norm])
+        meta = pid_meta.get(r.player_id)
+        if cname and meta and meta['nationality'] and meta['name']:
+            club_nat_players[cname][meta['nationality']].add(meta['name'])
 
     # Transfers (vectorized filter, senior relevance)
     df_tr = pd.read_csv(os.path.join(dc_path, 'transfers.csv'), low_memory=False)
@@ -202,13 +235,14 @@ def load_data():
         fee = float(r.transfer_fee) if pd.notna(r.transfer_fee) else 0.0
         mv = float(r.market_value_in_eur) if pd.notna(r.market_value_in_eur) else 0.0
         if fee > 0 or mv >= 1_000_000:
-            norm = normalize_name(str(r.player_name)).lower()
-            if norm in player_by_norm:
-                actual = player_by_norm[norm]
+            meta = pid_meta.get(r.player_id)
+            if meta and meta['nationality'] and meta['name']:
+                p_canon = meta['name']
+                p_nat = meta['nationality']
                 if r.from_club_id in club_id_to_name:
-                    club_players[club_id_to_name[r.from_club_id]].add(actual)
+                    club_nat_players[club_id_to_name[r.from_club_id]][p_nat].add(p_canon)
                 if r.to_club_id in club_id_to_name:
-                    club_players[club_id_to_name[r.to_club_id]].add(actual)
+                    club_nat_players[club_id_to_name[r.to_club_id]][p_nat].add(p_canon)
 
     # 4. Load Salimt dataset for comprehensive transfer & career coverage
     try:
@@ -227,50 +261,49 @@ def load_data():
         if os.path.exists(prof_file) and os.path.exists(trans_file):
             df_salimt_p = pd.read_csv(prof_file, usecols=['player_id', 'player_name', 'citizenship', 'position'], low_memory=False)
             df_salimt_p['clean_name'] = df_salimt_p['player_name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True)
-            salimt_id_to_name = dict(zip(df_salimt_p['player_id'], df_salimt_p['clean_name']))
+            salimt_pid_meta = {}
 
             for r in df_salimt_p.itertuples(index=False):
                 pname = r.clean_name
                 if not pname: continue
+                nat = clean_nation_name(str(r.citizenship)) if pd.notna(r.citizenship) else ''
+                if not nat: continue
                 norm = normalize_name(pname).lower()
-                if norm not in player_by_norm:
-                    nat = clean_nation_name(str(r.citizenship)) if pd.notna(r.citizenship) else ''
-                    pos = str(r.position) if pd.notna(r.position) else ''
-                    if nat:
-                        player_canonical[pname] = {
-                            'name': pname,
-                            'nationality': nat,
-                            'position': pos
-                        }
-                        player_by_norm[norm] = pname
+                canon = name_nat_canonical.get((norm, nat), {}).get('name', pname)
+                salimt_pid_meta[r.player_id] = {
+                    'name': canon,
+                    'nationality': nat
+                }
 
             df_salimt_t = pd.read_csv(trans_file, usecols=['player_id', 'from_team_name', 'to_team_name', 'transfer_date'], low_memory=False)
             df_salimt_t['parsed_date'] = pd.to_datetime(df_salimt_t['transfer_date'], errors='coerce')
             df_salimt_t = df_salimt_t[(df_salimt_t['parsed_date'].isna()) | (df_salimt_t['parsed_date'] <= '2026-09-13')]
 
             for r in df_salimt_t.itertuples(index=False):
-                pname = salimt_id_to_name.get(r.player_id)
-                if not pname: continue
-                norm = normalize_name(pname).lower()
-                actual = player_by_norm.get(norm, pname)
+                meta = salimt_pid_meta.get(r.player_id) or pid_meta.get(r.player_id)
+                if not meta or not meta['nationality'] or not meta['name']:
+                    continue
+                p_canon = meta['name']
+                p_nat = meta['nationality']
                 c1 = clean_club_name(str(r.from_team_name))
                 c2 = clean_club_name(str(r.to_team_name))
                 if c1 in major_club_names:
-                    club_players[c1].add(actual)
+                    club_nat_players[c1][p_nat].add(p_canon)
                 if c2 in major_club_names:
-                    club_players[c2].add(actual)
+                    club_nat_players[c2][p_nat].add(p_canon)
 
     # 5. Historical careers
     for h_name, d in hist_careers.items():
-        norm = normalize_name(h_name).lower()
-        actual = player_by_norm.get(norm, h_name)
+        h_nat = clean_nation_name(d.get('nationality', ''))
+        if not h_nat:
+            continue
         for c in d.get('clubs', []):
             for mc in MAJOR_CLUBS:
                 cname = mc['name']
                 if cname.lower() in c.lower():
-                    club_players[cname].add(actual)
+                    club_nat_players[cname][h_nat].add(h_name)
 
-    # Manual specific historical enrichments
+    # 6. Manual specific historical enrichments
     manual_stars = [
         ("Eiður Guðjohnsen", "Barcelona", "Iceland"),
         ("Gary Lineker", "Barcelona", "England"),
@@ -331,92 +364,36 @@ def load_data():
 
     for s_name, s_club, s_nat in manual_stars:
         norm = normalize_name(s_name).lower()
-        actual = player_by_norm.get(norm, s_name)
-        if s_club in club_players:
-            club_players[s_club].add(actual)
-        if actual not in player_canonical:
-            player_canonical[actual] = {
-                'name': actual,
-                'nationality': clean_nation_name(s_nat),
-                'position': 'Attack'
-            }
+        clean_nat = clean_nation_name(s_nat)
+        if s_club in major_club_names and clean_nat:
+            club_nat_players[s_club][clean_nat].add(s_name)
         player_prominence[norm] = max(player_prominence[norm], 100_000_000.0)
 
-    print(f"Data loading complete! Mapped {len(club_players)} clubs.")
-    return club_players, player_canonical, player_prominence
-
-
-def build_puzzles(club_players, player_canonical, player_prominence, total_days=180):
-    print(f"Building {total_days} daily puzzles...")
-
-    # Group players by nationality for each club
-    club_nat_players = {}
+    # Sort each nation's players by prominence descending and deduplicate spelling variants
+    club_nat_sorted = {}
     club_nat_prominence = {}
 
     for mc in MAJOR_CLUBS:
         cname = mc['name']
-        players = club_players.get(cname, set())
-        by_nat = defaultdict(list)
-        for p in players:
-            meta = player_canonical.get(p, {})
-            nat = meta.get('nationality', '')
-            if nat:
-                by_nat[nat].append(p)
-
-        # Sort each nation's players by prominence descending
+        nats = club_nat_players.get(cname, {})
         nat_sorted = {}
         nat_prom = {}
-        for nat, plist in by_nat.items():
-            plist_sorted = sorted(plist, key=lambda x: player_prominence.get(normalize_name(x).lower(), 0), reverse=True)
-            nat_sorted[nat] = plist_sorted
-            nat_prom[nat] = player_prominence.get(normalize_name(plist_sorted[0]).lower(), 0)
-
-        club_nat_players[cname] = nat_sorted
-        club_nat_prominence[cname] = nat_prom
-
-def deduplicate_canonical_names(names):
-    seen = {}
-    for p in names:
-        if not p or not isinstance(p, str):
-            continue
-        clean_p = re.sub(r'[\u200b-\u200f\u202a-\u202e\ufeff]', '', p).strip()
-        norm = normalize_name(clean_p).lower()
-        if norm not in seen:
-            seen[norm] = clean_p
-        else:
-            # Prefer version with accented letters if one exists
-            if any(ord(c) > 127 for c in clean_p) and not any(ord(c) > 127 for c in seen[norm]):
-                seen[norm] = clean_p
-    return list(seen.values())
-
-def build_puzzles(club_players, player_canonical, player_prominence, total_days=180):
-    print(f"Building {total_days} daily puzzles...")
-
-    # Group players by nationality for each club, deduplicating spelling variants
-    club_nat_players = {}
-    club_nat_prominence = {}
-
-    for mc in MAJOR_CLUBS:
-        cname = mc['name']
-        players = club_players.get(cname, set())
-        by_nat = defaultdict(list)
-        for p in players:
-            meta = player_canonical.get(p, {})
-            nat = meta.get('nationality', '')
-            if nat:
-                by_nat[nat].append(p)
-
-        # Sort each nation's players by prominence descending, deduplicating spelling variants
-        nat_sorted = {}
-        nat_prom = {}
-        for nat, plist in by_nat.items():
+        for nat, plist in nats.items():
             plist_dedup = deduplicate_canonical_names(plist)
             plist_sorted = sorted(plist_dedup, key=lambda x: player_prominence.get(normalize_name(x).lower(), 0), reverse=True)
-            nat_sorted[nat] = plist_sorted
-            nat_prom[nat] = player_prominence.get(normalize_name(plist_sorted[0]).lower(), 0)
+            if plist_sorted:
+                nat_sorted[nat] = plist_sorted
+                nat_prom[nat] = player_prominence.get(normalize_name(plist_sorted[0]).lower(), 0)
 
-        club_nat_players[cname] = nat_sorted
+        club_nat_sorted[cname] = nat_sorted
         club_nat_prominence[cname] = nat_prom
+
+    print(f"Data loading complete! Mapped {len(club_nat_sorted)} clubs with entity-level nationality isolation.")
+    return club_nat_sorted, club_nat_prominence, player_prominence
+
+
+def build_puzzles(club_nat_players, club_nat_prominence, total_days=180):
+    print(f"Building {total_days} daily puzzles...")
 
     # Build balanced club schedule: each of the 45 clubs appears 4 times across 180 days
     leagues = ["Spain", "England", "Italy", "Germany", "France", "Netherlands", "Portugal", "Turkey", "Scotland"]
@@ -449,15 +426,15 @@ def build_puzzles(club_players, player_canonical, player_prominence, total_days=
     used_nats = defaultdict(Counter)
 
     # Day 1: Curated Barcelona puzzle
-    barca_nats = club_nat_players['Barcelona']
+    barca_nats = club_nat_players.get('Barcelona', {})
     day1_puzzle = {
         'game_day': 1,
         'club': 'Barcelona',
         'steps': [
-            {'step': 1, 'difficulty': 'Easy', 'nationality': 'France', 'count': len(barca_nats['France']), 'players': barca_nats['France']},
-            {'step': 2, 'difficulty': 'Medium', 'nationality': 'Argentina', 'count': len(barca_nats['Argentina']), 'players': barca_nats['Argentina']},
-            {'step': 3, 'difficulty': 'Hard', 'nationality': 'Ivory Coast', 'count': len(barca_nats['Ivory Coast']), 'players': barca_nats['Ivory Coast']},
-            {'step': 4, 'difficulty': 'The Unicorn', 'nationality': 'Iceland', 'count': len(barca_nats['Iceland']), 'players': barca_nats['Iceland']},
+            {'step': 1, 'difficulty': 'Easy', 'nationality': 'France', 'count': len(barca_nats.get('France', [])), 'players': barca_nats.get('France', [])},
+            {'step': 2, 'difficulty': 'Medium', 'nationality': 'Argentina', 'count': len(barca_nats.get('Argentina', [])), 'players': barca_nats.get('Argentina', [])},
+            {'step': 3, 'difficulty': 'Hard', 'nationality': 'Ivory Coast', 'count': len(barca_nats.get('Ivory Coast', [])), 'players': barca_nats.get('Ivory Coast', [])},
+            {'step': 4, 'difficulty': 'The Unicorn', 'nationality': 'Iceland', 'count': len(barca_nats.get('Iceland', [])), 'players': barca_nats.get('Iceland', [])},
         ]
     }
     puzzle_schedule.append(day1_puzzle)
@@ -468,29 +445,29 @@ def build_puzzles(club_players, player_canonical, player_prominence, total_days=
 
     for day in range(2, total_days + 1):
         chosen_club = all_cycles[day - 1]
-        nats = club_nat_players[chosen_club]
-        proms = club_nat_prominence[chosen_club]
+        nats = club_nat_players.get(chosen_club, {})
+        proms = club_nat_prominence.get(chosen_club, {})
         nat_counts = used_nats[chosen_club]
 
         # Easy candidates: pool >= 8, or maximum available
-        e_cands = [(n, len(pl), pl, proms[n]) for n, pl in nats.items() if len(pl) >= 8]
-        if not e_cands:
+        e_cands = [(n, len(pl), pl, proms.get(n, 0)) for n, pl in nats.items() if len(pl) >= 8]
+        if not e_cands and nats:
             max_len = max(len(pl) for pl in nats.values())
-            e_cands = [(n, len(pl), pl, proms[n]) for n, pl in nats.items() if len(pl) == max_len]
+            e_cands = [(n, len(pl), pl, proms.get(n, 0)) for n, pl in nats.items() if len(pl) == max_len]
         e_cands.sort(key=lambda x: (nat_counts[x[0]], -x[1], -x[3]))
 
         # Unicorn candidate: count 1 or 2
-        u_cands = [(n, len(pl), pl, proms[n]) for n, pl in nats.items() if len(pl) in (1, 2) and n not in used_unicorns[chosen_club]]
-        if not u_cands:
-            u_cands = [(n, len(pl), pl, proms[n]) for n, pl in nats.items() if len(pl) in (1, 2)]
+        u_cands = [(n, len(pl), pl, proms.get(n, 0)) for n, pl in nats.items() if len(pl) in (1, 2) and n not in used_unicorns[chosen_club]]
+        if not u_cands and nats:
+            u_cands = [(n, len(pl), pl, proms.get(n, 0)) for n, pl in nats.items() if len(pl) in (1, 2)]
         u_cands.sort(key=lambda x: (nat_counts[x[0]], -(x[1] == 1), -x[3]))
 
         found = False
         for u_pick in u_cands:
-            h_cands = [(n, len(pl), pl, proms[n]) for n, pl in nats.items() if n != u_pick[0] and u_pick[1] < len(pl) <= 5]
+            h_cands = [(n, len(pl), pl, proms.get(n, 0)) for n, pl in nats.items() if n != u_pick[0] and u_pick[1] < len(pl) <= 5]
             h_cands.sort(key=lambda x: (nat_counts[x[0]], -x[3]))
             for h_pick in h_cands:
-                m_cands = [(n, len(pl), pl, proms[n]) for n, pl in nats.items() if n not in (u_pick[0], h_pick[0]) and h_pick[1] < len(pl) <= 9]
+                m_cands = [(n, len(pl), pl, proms.get(n, 0)) for n, pl in nats.items() if n not in (u_pick[0], h_pick[0]) and h_pick[1] < len(pl) <= 9]
                 m_cands.sort(key=lambda x: (nat_counts[x[0]], -x[3]))
                 for m_pick in m_cands:
                     e_avail = [e for e in e_cands if e[0] not in (u_pick[0], h_pick[0], m_pick[0]) and e[1] > m_pick[1]]
@@ -519,13 +496,17 @@ def build_puzzles(club_players, player_canonical, player_prominence, total_days=
                 if found: break
             if found: break
 
-        if not found:
+        if not found and nats:
             print(f"Fallback for Day {day}: {chosen_club}")
             # Fallback if strict combo already used
-            u_pick = u_cands[0]
-            h_pick = [n for n in nats.items() if n[0] != u_pick[0] and len(n[1]) > u_pick[1]][0]
-            m_pick = [n for n in nats.items() if n[0] not in (u_pick[0], h_pick[0]) and len(n[1]) > len(h_pick[1])][0]
-            e_pick = [n for n in nats.items() if n[0] not in (u_pick[0], h_pick[0], m_pick[0]) and len(n[1]) > len(m_pick[1])][0]
+            u_pick = u_cands[0] if u_cands else (list(nats.keys())[0], len(list(nats.values())[0]), list(nats.values())[0], 0)
+            h_cands_fb = [n for n in nats.items() if n[0] != u_pick[0] and len(n[1]) > u_pick[1]]
+            h_pick = h_cands_fb[0] if h_cands_fb else (list(nats.keys())[0], list(nats.values())[0])
+            m_cands_fb = [n for n in nats.items() if n[0] not in (u_pick[0], h_pick[0]) and len(n[1]) > len(h_pick[1])]
+            m_pick = m_cands_fb[0] if m_cands_fb else (list(nats.keys())[0], list(nats.values())[0])
+            e_cands_fb = [n for n in nats.items() if n[0] not in (u_pick[0], h_pick[0], m_pick[0]) and len(n[1]) > len(m_pick[1])]
+            e_pick = e_cands_fb[0] if e_cands_fb else (list(nats.keys())[0], list(nats.values())[0])
+
             puzzle_schedule.append({
                 'game_day': day,
                 'club': chosen_club,
@@ -564,7 +545,8 @@ def build_puzzles(club_players, player_canonical, player_prominence, total_days=
     print(f"\nSuccessfully generated {len(df_out)} steps ({total_days} puzzles) to {out_csv}")
     return df_out
 
-def enrich_existing_puzzles(club_players, player_canonical, player_prominence):
+
+def enrich_existing_puzzles(club_nat_players, player_prominence):
     out_csv = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'daily_passport_fc_games.csv')
     if not os.path.exists(out_csv):
         return None
@@ -574,12 +556,7 @@ def enrich_existing_puzzles(club_players, player_canonical, player_prominence):
     for idx, row in df.iterrows():
         cname = row['club']
         nat = row['nationality']
-        c_players = club_players.get(cname, set())
-        matching = []
-        for p in c_players:
-            meta = player_canonical.get(p, {})
-            if meta.get('nationality') == nat:
-                matching.append(p)
+        matching = list(club_nat_players.get(cname, {}).get(nat, []))
         dedup = deduplicate_canonical_names(matching)
         sorted_players = sorted(dedup, key=lambda x: player_prominence.get(normalize_name(x).lower(), 0), reverse=True)
         if sorted_players:
@@ -606,22 +583,23 @@ def enrich_existing_puzzles(club_players, player_canonical, player_prominence):
     print(f"Successfully enriched {len(df_out)} steps across {len(df_out['game_day'].unique())} puzzles in-place!")
     return df_out
 
+
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="Passport FC Dataset Builder & Enricher")
     parser.add_argument('--regenerate-all', action='store_true', help="Re-generate all 180 puzzle combinations from scratch")
     args = parser.parse_args()
 
-    club_players, player_canonical, player_prominence = load_data()
+    club_nat_players, club_nat_prominence, player_prominence = load_data()
     out_csv = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'daily_passport_fc_games.csv')
 
     if args.regenerate_all or not os.path.exists(out_csv):
-        df_puzzles = build_puzzles(club_players, player_canonical, player_prominence, total_days=180)
+        df_puzzles = build_puzzles(club_nat_players, club_nat_prominence, total_days=180)
     else:
-        df_puzzles = enrich_existing_puzzles(club_players, player_canonical, player_prominence)
+        df_puzzles = enrich_existing_puzzles(club_nat_players, player_prominence)
 
     print("\n--- SAMPLE DAILY PUZZLES ---")
-    for day in range(1, 8):
+    for day in [1, 10, 89]:
         day_rows = df_puzzles[df_puzzles['game_day'] == day]
         if day_rows.empty: continue
         club = day_rows.iloc[0]['club']
@@ -631,6 +609,7 @@ def main():
         for _, r in day_rows.iterrows():
             samples = json.loads(r['sample_players'])
             print(f"  Step {r['step_number']} [{r['difficulty']:<11}] {club} & {r['nationality']:<18} ({r['pool_size']:>2} players) -> e.g. {samples}")
+
 
 if __name__ == '__main__':
     main()
