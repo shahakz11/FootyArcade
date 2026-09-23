@@ -41,6 +41,9 @@ if [ $IG_STATUS -ne 0 ]; then
     echo "⚠️ Instagram check failed. Please check private/instagram_config.json."
 fi
 
+# 3. Auto-sync valid tokens to GitHub Secrets
+python3 scripts/sync_secrets_to_github.py > /dev/null 2>&1
+
 echo ""
 read -p "Press [Enter] to start batch render & upload (or Ctrl+C to cancel)..."
 echo ""

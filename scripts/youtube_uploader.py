@@ -92,6 +92,12 @@ def get_authenticated_service():
             pass
         print(f"✅ Credentials saved to {TOKEN_FILE}")
 
+        try:
+            from scripts.sync_secrets_to_github import sync_secrets
+            sync_secrets()
+        except Exception:
+            pass
+
     return googleapiclient.discovery.build("youtube", "v3", credentials=credentials)
 
 def load_matchday_context_for_date(date_str=None):
