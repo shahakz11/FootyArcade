@@ -921,7 +921,7 @@
 
         const normRaw = FootyUI.normalizeStr(raw);
         const selected = dropdown.getSelected();
-        const matched = selected || allPlayersPool.find(p => FootyUI.normalizeStr(p.Name) === normRaw);
+        const matched = selected || allPlayersPool.find(p => FootyUI.isPlayerMatch(p, raw) || FootyUI.normalizeStr(p.Name) === normRaw) || (dropdown && typeof dropdown.getTopMatch === 'function' ? dropdown.getTopMatch(raw) : null);
         if (!matched) { errEl.classList.remove('hidden'); return; }
         errEl.classList.add('hidden');
 

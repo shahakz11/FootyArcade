@@ -61,6 +61,8 @@
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
             .toLowerCase()
+            .replace(/\s*\(\s*all\s*\)$/i, '')
+            .replace(/\s+all$/i, '')
             .replace(/[-._']/g, ' ')
             .replace(/\s+/g, ' ')
             .trim();
@@ -169,12 +171,25 @@
 
     function isPlayerMatch(guess, target) {
         if (!guess || !target) return false;
-        const strG = typeof guess === 'object' ? (guess.Name || guess.name || guess.player_name || '') : String(guess);
-        const strT = typeof target === 'object' ? (target.Name || target.name || target.player_name || '') : String(target);
+        const strG = typeof guess === 'object' && guess ? (guess.Name || guess.name || guess.player_name || '') : String(guess);
+        const strT = typeof target === 'object' && target ? (target.Name || target.name || target.player_name || '') : String(target);
         if (!strG || !strT) return false;
-        const normG = normalizeStr(strG).replace(/\s+all$/, '');
-        const normT = normalizeStr(strT).replace(/\s+all$/, '');
-        return normG === normT;
+        const normG = normalizeStr(strG);
+        const normT = normalizeStr(strT);
+        if (normG && normT && normG === normT) return true;
+
+        // Check Aliases if present on object
+        const aliasesG = (typeof guess === 'object' && guess && Array.isArray(guess.Aliases || guess.aliases)) ? (guess.Aliases || guess.aliases) : [];
+        const aliasesT = (typeof target === 'object' && target && Array.isArray(target.Aliases || target.aliases)) ? (target.Aliases || target.aliases) : [];
+        for (let a of aliasesG) {
+            const normA = normalizeStr(a);
+            if (normA && (normA === normT || normA === normG)) return true;
+        }
+        for (let a of aliasesT) {
+            const normA = normalizeStr(a);
+            if (normA && (normA === normG || normA === normT)) return true;
+        }
+        return false;
     }
 
     // ────────────────────────────────────────────────────────

@@ -1276,7 +1276,10 @@
 
             const normGuess = FootyUI.normalizeStr(rawGuess);
             const selected  = dropdown.getSelected();
-            const matched   = selected ? selected.Name : allPlayersList.find(p => FootyUI.normalizeStr(p.Name) === normGuess)?.Name;
+            const matched   = selected ? selected.Name : (
+                allPlayersList.find(p => FootyUI.isPlayerMatch(p, rawGuess) || FootyUI.normalizeStr(p.Name) === normGuess)?.Name
+                || (dropdown && typeof dropdown.getTopMatch === 'function' ? dropdown.getTopMatch(rawGuess)?.Name : null)
+            );
 
             if (!matched) {
                 errEl.classList.remove('hidden');
@@ -1291,8 +1294,8 @@
             const normMatched = FootyUI.normalizeStr(matched);
 
             // 1. Check No Repeat Guesses Rule (both correct & wrong)
-            const alreadyCorrect = guessedPlayers.some(p => FootyUI.isPlayerMatch(p, matched));
-            const alreadyWrong   = wrongGuesses && wrongGuesses.has(matched);
+            const alreadyCorrect = guessedPlayers.some(p => FootyUI.isPlayerMatch(p, matched) || FootyUI.isPlayerMatch(p, rawGuess));
+            const alreadyWrong   = wrongGuesses && (wrongGuesses.has(matched) || wrongGuesses.has(rawGuess));
             if (alreadyCorrect || alreadyWrong) {
                 FootyUI.trackGuess({
                     guess: matched,
@@ -1611,8 +1614,8 @@
 
                 // Format valid players pills (starring Roberto Baggio / target player)
                 const badgesHtml = validList.map(p => {
-                    const isTarget = FootyUI.normalizeStr(p) === normTarget;
-                    const isUserGuessed = guessedPlayers.some(g => FootyUI.normalizeStr(g) === FootyUI.normalizeStr(p));
+                    const isTarget = FootyUI.isPlayerMatch(p, activeGameData.target_player);
+                    const isUserGuessed = guessedPlayers.some(g => FootyUI.isPlayerMatch(g, p));
 
                     let cls = 'px-2.5 py-1 rounded-lg text-xs font-mono border transition-all ';
                     if (isTarget) {
