@@ -103,6 +103,10 @@ jobs:
           python3 scripts/youtube_uploader.py --channel
           python3 scripts/instagram_uploader.py --check
 
+      - name: Prepare B-Roll Library
+        run: |
+          python3 scripts/fetch_broll.py --auto-curate
+
       - name: Run Shorts & Reels Publisher
         env:
           INPUT_MODE: ${{ github.event.inputs.mode }}

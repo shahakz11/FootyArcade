@@ -10,6 +10,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 
 from record_real_ui_short import record_short_video, ensure_server_running
+from render_ugc_short import (
+    extract_puzzle_data as extract_ugc_data,
+    render_ugc_video,
+    generate_social_copy as generate_ugc_caption
+)
+from scripts.broll_manager import select_broll_clip
 from scripts.youtube_uploader import (
     upload_short,
     build_default_metadata,
@@ -30,17 +36,17 @@ from scripts.instagram_uploader import (
 )
 
 DAILY_GAMES = [
-    {"id": "top_transfers",        "name": "Top Transfers"},
-    {"id": "transfer_destination", "name": "Transfer Destination"}
+    {"id": "player_chain", "name": "Player Chain (Step 2)"},
+    {"id": "passport_fc",  "name": "Passport FC (Step 2)"}
 ]
 
 ALL_AVAILABLE_GAMES = [
+    {"id": "player_chain",         "name": "Player Chain"},
+    {"id": "passport_fc",          "name": "Passport FC"},
     {"id": "top_transfers",        "name": "Top Transfers"},
     {"id": "transfer_destination", "name": "Transfer Destination"},
     {"id": "club_connect",         "name": "Club Connect"},
-    {"id": "player_chain",         "name": "Player Chain"},
-    {"id": "top_scorers",          "name": "Top Scorers"},
-    {"id": "passport_fc",          "name": "Passport FC"}
+    {"id": "top_scorers",          "name": "Top Scorers"}
 ]
 
 DEFAULT_PEAK_SLOTS = [12, 20]  # 12:00 PM UTC and 8:00 PM UTC peak football engagement windows
@@ -235,6 +241,8 @@ async def process_all_games(
             immediate_first=immediate_first
         )
 
+        session_used_broll = []
+
         for i, game in enumerate(games_to_run):
             game_id = game["id"]
             game_name = game["name"]
@@ -303,12 +311,33 @@ async def process_all_games(
                     continue
 
             # Render video
+            custom_ig_caption = None
+            custom_yt_title = None
+
             try:
-                render_res = await record_short_video(game_id=game_id, day_offset=0, fast_mode=fast_mode, port=port, force=force)
-                if isinstance(render_res, tuple):
-                    video_path, target_name = render_res
+                if game_id in ("player_chain", "passport_fc"):
+                    ugc_data = extract_ugc_data(game_id, day=None)
+                    target_name = f"{ugc_data['entity_1']} & {ugc_data['entity_2']}"
+                    
+                    broll_clip = select_broll_clip(exclude_paths=session_used_broll, game_id=game_id)
+                    if broll_clip:
+                        session_used_broll.append(broll_clip)
+                        
+                    os.makedirs(os.path.join(BASE_DIR, "output_shorts"), exist_ok=True)
+                    video_path = os.path.join(BASE_DIR, "output_shorts", f"ugc_rarity_{game_id}_{today_str}.mp4")
+                    render_ugc_video(ugc_data, video_path, bg_video_path=broll_clip)
+                    custom_ig_caption = generate_ugc_caption(ugc_data)
+                    
+                    if ugc_data["mode"] == "passport_fc" or ugc_data.get("is_country"):
+                        custom_yt_title = f"Name ONE {ugc_data['entity_2']} player for {ugc_data['entity_1']} (No one else will say) ⚽️ #Shorts"
+                    else:
+                        custom_yt_title = f"Name ONE player for {ugc_data['entity_1']} & {ugc_data['entity_2']} (No one else will say) ⚽️ #Shorts"
                 else:
-                    video_path, target_name = render_res, ""
+                    render_res = await record_short_video(game_id=game_id, day_offset=0, fast_mode=fast_mode, port=port, force=force)
+                    if isinstance(render_res, tuple):
+                        video_path, target_name = render_res
+                    else:
+                        video_path, target_name = render_res, ""
             except Exception as e:
                 import traceback
                 print(f"❌ Video rendering exception for {game_name}: {e}")
@@ -348,7 +377,13 @@ async def process_all_games(
                 yt_status = "Already Uploaded"
                 yt_url = yt_existing_url
             elif not no_youtube:
-                title, desc, tags = build_default_metadata(game_id=game_id, target_name=target_name)
+                if custom_yt_title:
+                    title = custom_yt_title
+                    desc = f"{title}\n\nPlay live football puzzles daily at https://playmaker.football\n\n#Shorts #football #ballknowledge #trivia"
+                    tags = ["Shorts", "football", "soccer", "trivia", "quiz", "ball knowledge", "reels"]
+                else:
+                    title, desc, tags = build_default_metadata(game_id=game_id, target_name=target_name)
+                    
                 try:
                     vid, shorts_url = upload_short(
                         video_path=video_path,
@@ -371,7 +406,7 @@ async def process_all_games(
                 ig_status = "Already Uploaded"
                 ig_url = ig_existing_url
             elif not no_instagram and ig_id:
-                ig_caption = build_instagram_caption(game_id=game_id, target_name=target_name)
+                ig_caption = custom_ig_caption if custom_ig_caption else build_instagram_caption(game_id=game_id, target_name=target_name)
                 
                 if publish_at is None or instant_reels:
                     # Upload immediately
