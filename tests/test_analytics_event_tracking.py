@@ -19,6 +19,7 @@ class TestAnalyticsEventTracking(unittest.TestCase):
             "Event Name",
             "Game ID",
             "Puzzle Number",
+            "Puzzle ID",
             "Score",
             "Max Score",
             "Lives Left",
@@ -42,6 +43,7 @@ class TestAnalyticsEventTracking(unittest.TestCase):
 
         self.assertIn("ensureEventsHeaders", gas_content)
         self.assertIn("buildEventsRow", gas_content)
+        self.assertTrue("payload.puzzleId" in gas_content or "payload.puzzleNum" in gas_content)
         self.assertTrue("payload.isCorrect" in gas_content or "payload.correct" in gas_content)
         self.assertIn("payload.guess", gas_content)
         self.assertTrue("payload.step" in gas_content or "payload.slot" in gas_content)
@@ -52,6 +54,9 @@ class TestAnalyticsEventTracking(unittest.TestCase):
         footy_ui_path = os.path.join(REPO_ROOT, "games", "footy-ui.js")
         with open(footy_ui_path, "r", encoding="utf-8") as f:
             ui_content = f.read()
+
+        self.assertIn("puzzleId", ui_content)
+        self.assertIn("PUZZLE_ID", ui_content)
 
         required_helpers = [
             "trackEvent",
@@ -165,6 +170,29 @@ class TestAnalyticsEventTracking(unittest.TestCase):
                 "FootyUI.trackGuess" in content or "FootyUI.trackGiveUp" in content,
                 f"{rel_path} is missing compiled event tracking hooks",
             )
+
+    def test_puzzle_id_injection_and_template_definitions(self):
+        """Verify fetch_daily.py compiles PUZZLE_ID and all game templates define puzzleId."""
+        fetch_daily_path = os.path.join(REPO_ROOT, "fetch_daily.py")
+        with open(fetch_daily_path, "r", encoding="utf-8") as f:
+            fetch_content = f.read()
+        self.assertIn("const PUZZLE_ID", fetch_content)
+        self.assertIn("PUZZLE_ID", fetch_content)
+
+        templates_to_check = [
+            "templates/top_transfers_template.html",
+            "templates/top_scorers_template.html",
+            "templates/transfer_destination_template.html",
+            "templates/club_connect_template.html",
+            "templates/player_chain_template.html",
+            "templates/passport_fc_template.html",
+        ]
+
+        for tmpl_rel in templates_to_check:
+            full_path = os.path.join(REPO_ROOT, tmpl_rel)
+            with open(full_path, "r", encoding="utf-8") as f:
+                content = f.read()
+            self.assertIn("puzzleId", content, f"Missing puzzleId definition in {tmpl_rel}")
 
     def test_restore_game_prevents_duplicate_game_end_event(self):
         """Verify templates and compiled games set isRestore flag to prevent refiring game_end on landing."""

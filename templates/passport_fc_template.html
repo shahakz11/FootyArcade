@@ -832,6 +832,7 @@
         const allPlayersList = Array.from(playerMap.values());
 
         const puzzleNum      = typeof PUZZLE_NUMBER !== 'undefined' ? PUZZLE_NUMBER : 1;
+        const puzzleId       = typeof PUZZLE_ID !== 'undefined' ? PUZZLE_ID : (typeof activeGameData !== 'undefined' && activeGameData && (activeGameData.puzzle_id || activeGameData.puzzle_num) ? (activeGameData.puzzle_id || activeGameData.puzzle_num) : puzzleNum);
         const isBackInTime   = typeof IS_BACK_IN_TIME !== 'undefined' ? IS_BACK_IN_TIME : false;
         const maxBackDays    = typeof MAX_BACK_DAYS !== 'undefined' ? MAX_BACK_DAYS : 7;
         const gameNote       = typeof GAME_NOTE !== 'undefined' ? GAME_NOTE : '';

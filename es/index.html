@@ -481,8 +481,33 @@
                 console.log('Using fallback Spanish games:', e);
             }
 
-            const liveGames   = games.filter(g => g.status !== 'coming_soon');
-            const futureGames = games.filter(g => g.status === 'coming_soon');
+            const STATUS_PRIORITY = {
+                'unplayed': 1,
+                'in_progress': 2,
+                'won': 3,
+                'partial': 4,
+                'loss': 5
+            };
+
+            const rawLiveGames = games.filter(g => g.status !== 'coming_soon');
+            const futureGames  = games.filter(g => g.status === 'coming_soon');
+
+            const liveGames = rawLiveGames.map((game, originalIndex) => {
+                let todayStatus = { status: 'unplayed' };
+                try {
+                    const storage = new FootyUI.FootyStorage(game.id);
+                    todayStatus = storage.getTodayStatus();
+                } catch (_) {}
+                const rank = STATUS_PRIORITY[todayStatus.status] || 1;
+                return {
+                    ...game,
+                    todayStatus,
+                    rank,
+                    originalIndex
+                };
+            });
+
+            liveGames.sort((a, b) => (a.rank - b.rank) || (a.originalIndex - b.originalIndex));
             const orderedGames = [...liveGames, ...futureGames];
 
             grid.innerHTML = '';
@@ -495,7 +520,7 @@
 
                 const isComingSoon = game.status === 'coming_soon';
                 const storage     = new FootyUI.FootyStorage(game.id);
-                const todayStatus = !isComingSoon ? storage.getTodayStatus() : { status: 'unplayed' };
+                const todayStatus = isComingSoon ? { status: 'unplayed' } : (game.todayStatus || storage.getTodayStatus());
                 const stats       = !isComingSoon ? storage.getStats() : { streak: 0 };
 
                 let badgeHtml = '';

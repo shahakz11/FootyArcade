@@ -69,7 +69,12 @@ function buildEventsRow(headers, payload, timestamp) {
     if (h.indexOf('time') !== -1 || h.indexOf('date') !== -1) return timestamp;
     if (h.indexOf('event') !== -1) return payload.eventName || '';
     if (h.indexOf('game') !== -1) return payload.gameId || '';
-    if (h.indexOf('puzzle') !== -1) return payload.puzzleNum !== undefined ? payload.puzzleNum : 0;
+    if (h.indexOf('puzzle id') !== -1 || h === 'puzzle_id' || h === 'puzzle id') {
+      return payload.puzzleId !== undefined ? payload.puzzleId : (payload.puzzleNum !== undefined ? payload.puzzleNum : 0);
+    }
+    if (h.indexOf('puzzle') !== -1 || h.indexOf('puzzle num') !== -1 || h === 'puzzle number' || h === 'puzzle #') {
+      return payload.puzzleNum !== undefined ? payload.puzzleNum : (payload.puzzleId !== undefined ? payload.puzzleId : 0);
+    }
     if (h.indexOf('max') !== -1) return payload.maxScore !== undefined ? payload.maxScore : '';
     if (h === 'score') return payload.score !== undefined ? payload.score : '';
     if (h.indexOf('live') !== -1) return payload.lives !== undefined ? payload.lives : (payload.livesLeft !== undefined ? payload.livesLeft : '');
@@ -98,6 +103,7 @@ function ensureEventsHeaders(sheet) {
     'Event Name',
     'Game ID',
     'Puzzle Number',
+    'Puzzle ID',
     'Score',
     'Max Score',
     'Lives Left',
@@ -126,6 +132,7 @@ function ensureEventsHeaders(sheet) {
   var norm = headers.map(function(h) { return (h || '').toString().trim().toLowerCase(); });
 
   var expectedCols = [
+    { name: 'Puzzle ID', check: function(n) { return n.some(function(h) { return h.indexOf('puzzle id') !== -1 || h === 'puzzle_id'; }); } },
     { name: 'Is Correct', check: function(n) { return n.some(function(h) { return h.indexOf('correct') !== -1; }); } },
     { name: 'Guess', check: function(n) { return n.some(function(h) { return h.indexOf('guess') !== -1; }); } },
     { name: 'Step', check: function(n) { return n.some(function(h) { return h.indexOf('step') !== -1 || h.indexOf('slot') !== -1; }); } },
@@ -209,6 +216,7 @@ function ensureVarReviewsHeaders(sheet) {
     'Session ID',
     'Game ID',
     'Puzzle Number',
+    'Puzzle ID',
     'Theme',
     'Guessed Player',
     'Decision',
@@ -246,7 +254,8 @@ function ensureVarReviewsHeaders(sheet) {
     { name: 'Visitor ID', check: function(n) { return n.some(function(h) { return h.indexOf('visitor') !== -1; }); } },
     { name: 'Session ID', check: function(n) { return n.some(function(h) { return h.indexOf('session') !== -1; }); } },
     { name: 'Game ID', check: function(n) { return n.some(function(h) { return h.indexOf('game') !== -1; }); } },
-    { name: 'Puzzle Number', check: function(n) { return n.some(function(h) { return h.indexOf('puzzle') !== -1; }); } },
+    { name: 'Puzzle Number', check: function(n) { return n.some(function(h) { return (h.indexOf('puzzle') !== -1 && h.indexOf('id') === -1) || h.indexOf('puzzle num') !== -1; }); } },
+    { name: 'Puzzle ID', check: function(n) { return n.some(function(h) { return h.indexOf('puzzle id') !== -1 || h === 'puzzle_id'; }); } },
     { name: 'Theme', check: function(n) { return n.some(function(h) { return h.indexOf('theme') !== -1; }); } },
     { name: 'Guessed Player', check: function(n) { return n.some(function(h) { return h.indexOf('guess') !== -1 || h.indexOf('player') !== -1; }); } },
     { name: 'Decision', check: function(n) { return n.some(function(h) { return h.indexOf('decision') !== -1 || h.indexOf('status') !== -1; }); } },
@@ -292,7 +301,8 @@ function buildVarReviewsRow(headers, data) {
     if (h.indexOf('visitor') !== -1) return data.visitorId || '';
     if (h.indexOf('session') !== -1) return data.sessionId || '';
     if (h.indexOf('game') !== -1) return data.gameId || '';
-    if (h.indexOf('puzzle') !== -1) return data.puzzleNum !== undefined ? data.puzzleNum : 0;
+    if (h.indexOf('puzzle id') !== -1 || h === 'puzzle_id' || h === 'puzzle id') return data.puzzleId !== undefined ? data.puzzleId : (data.puzzleNum !== undefined ? data.puzzleNum : 0);
+    if (h.indexOf('puzzle') !== -1 || h.indexOf('puzzle num') !== -1 || h === 'puzzle number' || h === 'puzzle #') return data.puzzleNum !== undefined ? data.puzzleNum : (data.puzzleId !== undefined ? data.puzzleId : 0);
     if (h.indexOf('theme') !== -1) return data.theme || '';
     if (h.indexOf('guess') !== -1 || h.indexOf('player') !== -1) return data.guess || '';
     if (h.indexOf('decision') !== -1 || h.indexOf('status') !== -1) return data.decision || '';
@@ -385,6 +395,7 @@ function handleVarCheck(payload) {
 
   var gameId = payload.gameId || '';
   var puzzleNum = payload.puzzleNum || 0;
+  var puzzleId = payload.puzzleId !== undefined ? payload.puzzleId : (payload.contentPuzzleId !== undefined ? payload.contentPuzzleId : puzzleNum);
   var theme = payload.theme || '';
   var guess = payload.guess || '';
   var context = payload.context || '';
@@ -676,6 +687,7 @@ function handleVarCheck(payload) {
       sessionId: sessionId,
       gameId: gameId,
       puzzleNum: puzzleNum,
+      puzzleId: puzzleId,
       theme: theme,
       guess: guess,
       decision: varResult.isError ? 'ERROR' : (varResult.accepted ? 'ACCEPTED (OVERRULED)' : 'REJECTED (STANDS)'),

@@ -67,6 +67,66 @@ def generate_wrong_sound():
     audio = (sig1 + sig2) * 0.3 * envelope
     return audio
 
+def generate_whoosh_sound():
+    """Generates a dynamic 220ms whoosh card slide SFX."""
+    dur = 0.22
+    num_s = int(SAMPLE_RATE * dur)
+    t = np.linspace(0, dur, num_s, endpoint=False)
+    # Bandpassed swept noise
+    noise = np.random.randn(num_s)
+    env = np.sin(np.pi * (t / dur)) ** 2
+    f_center = 400 + 1800 * np.sin(np.pi * (t / dur))
+    mod = np.sin(2 * np.pi * f_center * t)
+    audio = (noise * 0.35 + mod * 0.25) * env * 0.6
+    return audio
+
+def generate_sub_drop_sound():
+    """Generates an impactful 0.6s sub-bass drop / heartbeat for mystery countdown suspense."""
+    dur = 0.65
+    num_s = int(SAMPLE_RATE * dur)
+    t = np.linspace(0, dur, num_s, endpoint=False)
+    # Pitch drop from 95Hz down to 38Hz
+    freq = 95.0 * np.exp(-t * 1.6)
+    phase = 2 * np.pi * np.cumsum(freq) / SAMPLE_RATE
+    env = np.exp(-t * 2.8)
+    sub = np.sin(phase) * env * 0.85
+    # Second harmonic punch
+    sub += np.sin(2 * phase) * env * 0.25
+    return sub
+
+def generate_background_rhythm_bed(total_duration, bpm=128):
+    """Generates a driving, subtle sports drum pulse bed at 128 BPM."""
+    total_samples = int(SAMPLE_RATE * total_duration)
+    bed = np.zeros(total_samples, dtype=np.float32)
+    beat_interval = 60.0 / bpm
+    step_samples = int(beat_interval * SAMPLE_RATE)
+    
+    # 4-on-the-floor subtle kick pulse
+    kick_dur = 0.08
+    kick_n = int(SAMPLE_RATE * kick_dur)
+    t_k = np.linspace(0, kick_dur, kick_n, endpoint=False)
+    kick_f = 110 * np.exp(-t_k * 45)
+    kick_sig = np.sin(2 * np.pi * np.cumsum(kick_f) / SAMPLE_RATE) * np.exp(-t_k * 35) * 0.18
+
+    # Hi-hat tick
+    hat_dur = 0.03
+    hat_n = int(SAMPLE_RATE * hat_dur)
+    t_h = np.linspace(0, hat_dur, hat_n, endpoint=False)
+    hat_sig = np.random.randn(hat_n) * np.exp(-t_h * 150) * 0.06
+
+    pos = 0
+    beat_count = 0
+    while pos + kick_n < total_samples:
+        bed[pos:pos + kick_n] += kick_sig
+        # Add hi-hat on off-beats
+        hat_pos = pos + int(step_samples * 0.5)
+        if hat_pos + hat_n < total_samples:
+            bed[hat_pos:hat_pos + hat_n] += hat_sig
+        pos += step_samples
+        beat_count += 1
+
+    return bed
+
 def build_audio_track(events, total_duration, output_wav_path, voice_wav_path=None):
     """
     Builds a composite audio track from timeline events and an optional voice narration track:
@@ -86,6 +146,11 @@ def build_audio_track(events, total_duration, output_wav_path, voice_wav_path=No
     tok_sound = generate_tick_sound(is_tok=True)
     correct_sound = generate_correct_sound()
     wrong_sound = generate_wrong_sound()
+    whoosh_sound = generate_whoosh_sound()
+    sub_drop_sound = generate_sub_drop_sound()
+    
+    # Layer in background rhythm bed
+    sfx_track += generate_background_rhythm_bed(total_duration + 0.5) * 0.35
     
     for ev_type, time_sec in events:
         start_idx = int(time_sec * SAMPLE_RATE)
@@ -100,6 +165,10 @@ def build_audio_track(events, total_duration, output_wav_path, voice_wav_path=No
             clip = correct_sound
         elif ev_type == 'wrong':
             clip = wrong_sound
+        elif ev_type == 'whoosh':
+            clip = whoosh_sound
+        elif ev_type == 'sub_drop':
+            clip = sub_drop_sound
         else:
             continue
             
@@ -150,7 +219,10 @@ def mux_audio_to_video(video_path, wav_path, final_output_path):
         "-y",
         "-i", video_path,
         "-i", wav_path,
-        "-c:v", "copy",
+        "-c:v", "libx264",
+        "-pix_fmt", "yuv420p",
+        "-preset", "fast",
+        "-crf", "20",
         "-c:a", "aac",
         "-b:a", "192k",
         "-shortest",

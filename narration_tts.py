@@ -103,14 +103,17 @@ def get_game_voice_script(game_id, target_name="", extra_data=None):
         t1_fee = format_fee_spoken(transfers[0].get("transfer_fee")) if len(transfers) > 0 else "record fee"
         t2_from = transfers[1].get("from_club_name", "another club") if len(transfers) > 1 else "another club"
         t2_fee = format_fee_spoken(transfers[1].get("transfer_fee")) if len(transfers) > 1 else "huge fee"
+        p2_name = transfers[1].get("player_name", "this superstar") if len(transfers) > 1 else "this superstar"
         t5_from = transfers[4].get("from_club_name", "another club") if len(transfers) > 4 else "another club"
         t5_fee = format_fee_spoken(transfers[4].get("transfer_fee")) if len(transfers) > 4 else "big fee"
+        p5_name = transfers[4].get("player_name", "this baller") if len(transfers) > 4 else "this baller"
 
         return {
-            "intro": f"{clean_target or 'Club'} top five transfers! Guess them!",
-            "guess_5": f"Number five! {t5_from}, {t5_fee}!",
-            "guess_2": f"Number two! {t2_from}, {t2_fee}!",
-            "cliffhanger": f"Who is number one for {t1_fee}? Comment before it loops!"
+            "intro": f"Can you guess {clean_target or 'this club'}'s record signings? Only real ballers know number one!",
+            "guess_5": f"Number five: from {t5_from} for {t5_fee}... {p5_name}!",
+            "guess_2": f"Number two: from {t2_from} for {t2_fee}... {p2_name}!",
+            "cliffhanger": f"Now the big one! Number one for {t1_fee}! Who is this superstar? You have three seconds!",
+            "outro": "Drop your guess in the comments right now! Check your answer on playmaker.best!"
         }
     elif game_id == "top_scorers":
         scorers = extra_data.get("scorers", [])
@@ -126,14 +129,17 @@ def get_game_voice_script(game_id, target_name="", extra_data=None):
         }
     elif game_id == "transfer_destination":
         transfers = extra_data.get("transfers", [])
-        step1_to = transfers[0].get("to_club_name", "his club") if transfers else "his club"
-        step1_from = transfers[0].get("from_club_name", "another club") if transfers else "another club"
+        step1_to = transfers[0].get("to_club_name", "his current club") if len(transfers) > 0 else "his current club"
+        step1_from = transfers[0].get("from_club_name", "his previous club") if len(transfers) > 0 else "his previous club"
+        step2_from = transfers[1].get("from_club_name", "his earlier club") if len(transfers) > 1 else "another club"
+        target_player = clean_target or "this mystery legend"
 
         return {
-            "intro": "Guess this career backwards!",
-            "step_1": f"Before {step1_to}, which club?",
-            "step_2": f"Before {step1_from}, where did he play?",
-            "cliffhanger": "Who is this player? Comment before it loops!"
+            "intro": f"Guess {target_player}'s career backwards! Let's test your ball knowledge!",
+            "step_1": f"He played for {step1_to}... before that, {step1_from}!",
+            "step_2": f"Before that, {step2_from}!",
+            "cliffhanger": "Before that... which club did he start his professional career at? You have three seconds!",
+            "outro": "Drop the mystery club in the comments! Check your score on playmaker.best!"
         }
     elif game_id == "club_connect":
         players = extra_data.get("players", [])

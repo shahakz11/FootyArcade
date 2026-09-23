@@ -225,30 +225,36 @@
             for (let i = 0; i < data.length; i++) {
                 const item = data[i];
                 const rawLabel = getItemLabel(item);
+                const cleanLabel = rawLabel.replace(/\s*\(\s*all\s*\)$/i, '').trim();
                 const normLabel = normalizeStr(rawLabel);
+                const normCleanLabel = normalizeStr(cleanLabel);
 
-                let matches = normLabel.includes(normQ);
+                let matches = normCleanLabel.includes(normQ) || normLabel.includes(normQ);
                 let matchedAlias = null;
-                let aliasTier = 99;
+                let bestAliasTier = 99;
 
                 // Check item aliases if present (item.Aliases, item.aliases, item.AltNames)
                 const aliases = (item && typeof item === 'object' && (item.Aliases || item.aliases || item.AltNames || item.alt_names)) || [];
                 if (Array.isArray(aliases)) {
                     for (let a of aliases) {
-                        const normA = normalizeStr(a);
+                        const cleanA = String(a).replace(/\s*\(\s*all\s*\)$/i, '').trim();
+                        const normA = normalizeStr(cleanA);
                         if (!normA) continue;
+                        let currentAliasTier = 99;
                         if (normA === normQ || normA.split(/\s+/).some(w => w === normQ)) {
-                            matches = true;
-                            matchedAlias = a;
-                            aliasTier = Math.min(aliasTier, 1);
+                            currentAliasTier = 1;
                         } else if (normA.startsWith(normQ) || normA.split(/\s+/).some(w => w.startsWith(normQ))) {
-                            matches = true;
-                            matchedAlias = a;
-                            aliasTier = Math.min(aliasTier, 2);
+                            currentAliasTier = 2;
                         } else if (normA.includes(normQ)) {
+                            currentAliasTier = 3;
+                        }
+
+                        if (currentAliasTier < 99) {
                             matches = true;
-                            matchedAlias = a;
-                            aliasTier = Math.min(aliasTier, 3);
+                            if (currentAliasTier < bestAliasTier) {
+                                bestAliasTier = currentAliasTier;
+                                matchedAlias = a;
+                            }
                         }
                     }
                 }
@@ -260,15 +266,17 @@
                 if (!matches) continue;
 
                 let tier = 4;
-                const words = normLabel.split(/\s+/);
-                if (normLabel === normQ || words.some(w => w === normQ)) {
+                const words = normCleanLabel.split(/\s+/);
+                if (normCleanLabel === normQ || words.some(w => w === normQ)) {
                     tier = 1;
-                } else if (normLabel.startsWith(normQ) || words.some(w => w.startsWith(normQ))) {
+                } else if (normCleanLabel.startsWith(normQ) || words.some(w => w.startsWith(normQ))) {
                     tier = 2;
-                } else if (normLabel.includes(normQ)) {
+                } else if (normCleanLabel.includes(normQ)) {
                     tier = 3;
-                } else if (matchedAlias) {
-                    tier = aliasTier <= 2 ? 2 : 3;
+                }
+
+                if (bestAliasTier < tier) {
+                    tier = bestAliasTier;
                 }
 
                 let value = 0;
@@ -282,7 +290,7 @@
                     item,
                     tier,
                     value,
-                    len: normLabel.length,
+                    len: normCleanLabel.length,
                     label: rawLabel,
                     matchedAlias
                 });
@@ -360,16 +368,18 @@
                 label.textContent = itemLabel;
                 row.appendChild(label);
 
-                if (item && item._matchedAlias && normalizeStr(item._matchedAlias) !== normalizeStr(itemLabel)) {
-                    const aliasHint = document.createElement('span');
-                    aliasHint.className = 'text-xs text-amber-400/80 ml-2 font-mono opacity-80';
-                    aliasHint.textContent = `(${item._matchedAlias})`;
-                    row.appendChild(aliasHint);
-                }
+                // Note: Secondary bracketed alias hints are suppressed for clean UI
 
                 if (cfg.badgeFn) {
                     const badgeText = cfg.badgeFn(item);
-                    const isAllAlias = item && (/\(all\)$/i.test(itemLabel) || (typeof item === 'object' && /\(all\)$/i.test(item.Name || item.name || '')));
+                    const isAllAlias = item && (
+                        /\(all\)$/i.test(itemLabel) ||
+                        (typeof item === 'object' && (
+                            /\(all\)$/i.test(item.Name || item.name || item.player_name || '') ||
+                            (Array.isArray(item.Aliases || item.aliases) && (item.Aliases || item.aliases).length > 0) ||
+                            (!item.Position && !item.position && !item.Nationality && !item.nationality)
+                        ))
+                    );
                     if (badgeText && !isAllAlias) {
                         const badge = document.createElement('span');
                         badge.className = 'fa-row-badge';
@@ -1423,6 +1433,7 @@
         const meta = getActiveGameMetadata();
         const gameId = opts.gameId || meta.gameId;
         const puzzleNum = opts.puzzleNum !== undefined ? opts.puzzleNum : meta.puzzleNum;
+        const puzzleId = opts.puzzleId !== undefined ? opts.puzzleId : (opts.contentPuzzleId !== undefined ? opts.contentPuzzleId : (meta.puzzleId !== undefined ? meta.puzzleId : puzzleNum));
         const normGuess = normalizeStr(opts.guess || '');
 
         if (!opts.guess) return;
@@ -1550,6 +1561,7 @@
             type: 'var_check',
             gameId: gameId,
             puzzleNum: puzzleNum,
+            puzzleId: puzzleId,
             theme: opts.theme || '',
             guess: opts.guess,
             context: opts.context || '',
@@ -1561,6 +1573,7 @@
         trackEvent('var_appeal', {
             gameId: gameId,
             puzzleNum: puzzleNum,
+            puzzleId: puzzleId,
             guess: opts.guess,
             extraDetails: `theme: ${opts.theme || ''} | context: ${opts.context || ''}`
         });
@@ -1598,6 +1611,7 @@
             trackEvent('var_decision', {
                 gameId: gameId,
                 puzzleNum: puzzleNum,
+                puzzleId: puzzleId,
                 guess: opts.guess,
                 isCorrect: data.accepted === true,
                 extraDetails: `accepted: ${data.accepted} | reason: ${data.reason || ''} | stat: ${data.stat || ''}`
@@ -1612,6 +1626,7 @@
             trackEvent('var_decision', {
                 gameId: gameId,
                 puzzleNum: puzzleNum,
+                puzzleId: puzzleId,
                 guess: opts.guess,
                 isCorrect: false,
                 extraDetails: isTimeout ? 'error: timeout' : 'error: unable to reach VAR review server'
@@ -2300,6 +2315,7 @@
         const isBackInTime = /_d\d+\.html$/.test(path);
         
         let puzzleNum = 0;
+        let puzzleId = 0;
         const badgeEl = document.getElementById('puzzle-badge');
         if (badgeEl) {
             const badgeText = badgeEl.textContent || '';
@@ -2308,7 +2324,22 @@
                 puzzleNum = parseInt(numMatch[1], 10);
             }
         }
-        return { gameId, isBackInTime, puzzleNum };
+        if (typeof window !== 'undefined') {
+            if (typeof window.PUZZLE_NUMBER !== 'undefined') {
+                puzzleNum = window.PUZZLE_NUMBER;
+            } else if (typeof PUZZLE_NUMBER !== 'undefined') {
+                puzzleNum = PUZZLE_NUMBER;
+            }
+            if (typeof window.PUZZLE_ID !== 'undefined') {
+                puzzleId = window.PUZZLE_ID;
+            } else if (typeof PUZZLE_ID !== 'undefined') {
+                puzzleId = PUZZLE_ID;
+            }
+        }
+        if (!puzzleId) {
+            puzzleId = puzzleNum;
+        }
+        return { gameId, isBackInTime, puzzleNum, puzzleId };
     }
 
     function trackEvent(eventName, params = {}) {
@@ -2342,13 +2373,17 @@
             extraDetails = extraDetails ? `${extraDetails} | method: ${params.method}` : `method: ${params.method}`;
         }
 
+        const puzzleNum = params.puzzleNum !== undefined ? params.puzzleNum : meta.puzzleNum;
+        const puzzleId = params.puzzleId !== undefined ? params.puzzleId : (params.contentPuzzleId !== undefined ? params.contentPuzzleId : (meta.puzzleId !== undefined ? meta.puzzleId : puzzleNum));
+
         const payload = {
             type: 'event',
             eventName: eventName,
             visitorId: getVisitorId(),
             sessionId: getSessionId(),
             gameId: params.gameId || meta.gameId,
-            puzzleNum: params.puzzleNum !== undefined ? params.puzzleNum : meta.puzzleNum,
+            puzzleNum: puzzleNum,
+            puzzleId: puzzleId,
             score: params.score,
             maxScore: params.maxScore,
             lives: params.lives !== undefined ? params.lives : params.livesLeft,
@@ -2878,7 +2913,7 @@
         if (!container) return;
 
         const currentGame = opts.currentGame || (typeof container.getAttribute === 'function' ? container.getAttribute('data-current-game') : '') || (typeof window !== 'undefined' ? window.GAME_ID : '') || '';
-        const otherGames = GAMES_REGISTRY.filter(g => g.id !== currentGame);
+        const rawOtherGames = GAMES_REGISTRY.filter(g => g.id !== currentGame);
 
         const isI18n = typeof FootyI18n !== 'undefined';
         const t = (k, fb) => isI18n ? FootyI18n.t(k) : fb;
@@ -2890,42 +2925,57 @@
 
         const homeUrl = isSpanishPath ? '../../es/' : '../index.html';
         const sectionTitle = t('more_daily_challenges', 'MORE DAILY CHALLENGES');
-        const solvedText = t('badge_solved', 'SOLVED ✅');
         const backText = t('back_to_playmaker', '← Back to Playmaker');
+
+        const solvedText = t('badge_solved', 'SOLVED ✅');
+        const partialText = t('badge_partial', 'PARTIAL ⚡');
+        const failedText = t('badge_failed', 'MISSED ❌');
+        const inProgressText = t('badge_in_progress', 'IN PROGRESS ⏳');
+
+        const STATUS_PRIORITY = {
+            'unplayed': 1,
+            'in_progress': 2,
+            'won': 3,
+            'partial': 4,
+            'loss': 5
+        };
+
+        const otherGames = rawOtherGames.map((game, originalIndex) => {
+            let todayStatus = { status: 'unplayed' };
+            try {
+                const storage = new FootyStorage(game.id);
+                todayStatus = storage.getTodayStatus();
+            } catch (_) {}
+            const rank = STATUS_PRIORITY[todayStatus.status] || 1;
+            return {
+                ...game,
+                todayStatus,
+                rank,
+                originalIndex
+            };
+        });
+
+        otherGames.sort((a, b) => (a.rank - b.rank) || (a.originalIndex - b.originalIndex));
 
         let cardsHtml = '';
         otherGames.forEach(game => {
             const gameTitle = t(game.nameKey, game.defaultName);
             const gameTagline = t(game.taglineKey, game.defaultTagline);
+            const statusKey = game.todayStatus ? game.todayStatus.status : 'unplayed';
 
-            let isSolved = false;
-            let isPlayed = false;
-            try {
-                const storage = new FootyStorage(game.id);
-                const todayRes = storage.getTodayResult();
-                if (todayRes) {
-                    isPlayed = true;
-                    if (todayRes.won) {
-                        isSolved = true;
-                    }
-                } else if (storage.hasPlayedToday()) {
-                    isPlayed = true;
-                    const stats = storage.getStats();
-                    if (stats && stats.won > 0 && stats.streak > 0) {
-                        isSolved = true;
-                    }
-                }
-            } catch (e) {}
-
-            const solvedText = t('badge_solved', 'SOLVED ✅');
-            const failedText = t('badge_failed', 'FAILED ❌');
-
-            const statusBadge = isSolved
-                ? `<span class="fa-suggestion-badge-solved">${solvedText}</span>`
-                : (isPlayed ? `<span class="fa-suggestion-badge-failed">${failedText}</span>` : '');
+            let statusBadge = '';
+            if (statusKey === 'won') {
+                statusBadge = `<span class="fa-suggestion-badge-solved">${solvedText}</span>`;
+            } else if (statusKey === 'partial') {
+                statusBadge = `<span class="fa-suggestion-badge-partial">${partialText}</span>`;
+            } else if (statusKey === 'loss') {
+                statusBadge = `<span class="fa-suggestion-badge-failed">${failedText}</span>`;
+            } else if (statusKey === 'in_progress') {
+                statusBadge = `<span class="fa-suggestion-badge-inprogress">${inProgressText}</span>`;
+            }
 
             cardsHtml += `
-                <a href="${game.file}" class="fa-suggestion-card" data-game-id="${game.id}">
+                <a href="${game.file}" class="fa-suggestion-card" data-game-id="${game.id}" data-status="${statusKey}">
                     <div class="fa-suggestion-icon-wrap" style="color: ${game.color}">
                         <span class="material-symbols-outlined fa-suggestion-icon">${game.icon}</span>
                     </div>
@@ -2956,12 +3006,15 @@
         `;
 
         const cardLinks = container.querySelectorAll('.fa-suggestion-card');
-        cardLinks.forEach(card => {
+        cardLinks.forEach((card, index) => {
             card.addEventListener('click', () => {
                 const targetGame = card.getAttribute('data-game-id');
+                const targetStatus = card.getAttribute('data-status') || 'unplayed';
                 trackEvent('game_suggestion_click', {
                     from_game: currentGame,
                     to_game: targetGame,
+                    target_status: targetStatus,
+                    sort_rank: index + 1,
                     locale: currentLang
                 });
             });

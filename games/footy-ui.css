@@ -1049,6 +1049,40 @@
     flex-shrink: 0;
 }
 
+.fa-suggestion-badge-partial {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-family: 'Space Grotesk', monospace, sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #fbbf24;
+    background: rgba(251, 191, 36, 0.12);
+    border: 1px solid rgba(251, 191, 36, 0.35);
+    border-radius: 9999px;
+    padding: 1px 7px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+}
+
+.fa-suggestion-badge-inprogress {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-family: 'Space Grotesk', monospace, sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #fb923c;
+    background: rgba(249, 115, 22, 0.12);
+    border: 1px solid rgba(249, 115, 22, 0.35);
+    border-radius: 9999px;
+    padding: 1px 7px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+}
+
 .fa-suggestion-badge-failed,
 .fa-suggestion-badge-played {
     display: inline-flex;

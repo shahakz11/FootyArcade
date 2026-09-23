@@ -96,8 +96,8 @@ def build_instagram_caption(game_id="top_transfers", target_name="", matchday_co
         is_matched = bool(matchday_context)
 
     game_hooks = {
-        "top_transfers": f"Can you guess {target_name or 'the club'}'s record transfers? ⚽",
-        "transfer_destination": "Guess the mystery player's career path backwards! ⚽",
+        "top_transfers": f"Can you guess {target_name or 'the club'}'s #1 record signing? Only 1% know! ⚽",
+        "transfer_destination": f"Guess {target_name or 'this superstar'}'s career path backwards! What was his youth club? ⚽",
         "player_chain": "Can you complete this teammate chain? ⚽",
         "club_connect": "Can you guess which team all of these players transferred to? ⚽",
         "top_scorers": f"Who scored the most goals in {target_name or 'this season'}? ⚽",
@@ -114,12 +114,17 @@ def build_instagram_caption(game_id="top_transfers", target_name="", matchday_co
         if raw_tags:
             matchday_tags_str = " ".join(raw_tags) + " "
 
+    comment_cta = {
+        "top_transfers": "👇 DROP YOUR GUESS FOR NUMBER ONE IN THE COMMENTS! (No Google allowed 😉)",
+        "transfer_destination": "👇 DROP THE MYSTERY CLUB IN THE COMMENTS BEFORE IT LOOPS!",
+    }.get(game_id, "👇 DROP YOUR ANSWER IN THE COMMENTS BEFORE IT LOOPS!")
+
     caption = (
         f"{hook_line}\n\n"
-        f"Comment your score below! 👇\n\n"
-        f"🎮 Play today's free daily puzzles at: playmaker.best (link in bio!)\n\n"
+        f"{comment_cta}\n\n"
+        f"🎮 Full answer & 6 free daily games live at: playmaker.best (link in bio!)\n\n"
         f"{matchday_tags_str}#reels #football #soccer #footballquiz #soccerquiz #premierleague #realmadrid "
-        f"#championsleague #footballtrivia #playmaker #footy"
+        f"#championsleague #footballtrivia #playmaker #ballknowledge"
     )
     return caption
 

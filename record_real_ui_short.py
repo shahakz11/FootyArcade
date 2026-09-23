@@ -64,6 +64,14 @@ def sanitize_filename(name):
 async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=False, port=8080, force=False):
     lock_fd = acquire_recording_lock()
     try:
+        if game_id in ["top_transfers", "transfer_destination"]:
+            from render_arcade_short import render_arcade_video, load_game_payload
+            payload = load_game_payload(game_id)
+            target_name = payload["target_name"]
+            print(f"🚀 Using Next-Gen Arcade Video Renderer for '{game_id}' ({target_name})...")
+            final_mp4 = await render_arcade_video(game_id=game_id, force=force)
+            return final_mp4, target_name
+
         url = f"http://127.0.0.1:{port}/games/{game_id}.html"
         WIDTH, HEIGHT = 1080, 1920
         FPS = 30

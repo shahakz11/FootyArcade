@@ -3,6 +3,175 @@
   "clubs": {
     "groups": [
       {
+        "display_name": "Bayern Munich",
+        "aliases": [
+          "Bayern",
+          "FC Bayern Munich"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Bayer Leverkusen",
+        "aliases": [
+          "Bayer 04 Leverkusen Fußball",
+          "Leverkusen"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Borussia Dortmund",
+        "aliases": [
+          "Dortmund",
+          "Bor. Dortmund"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Juventus",
+        "aliases": [
+          "Juventus FC"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Lazio",
+        "aliases": [
+          "SS Lazio",
+          "Società Sportiva Lazio S.p.A"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Villarreal",
+        "aliases": [
+          "Villarreal CF",
+          "Villarreal CF B"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Roma",
+        "aliases": [
+          "AS Roma"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Espanyol",
+        "aliases": [
+          "Espanyol Barcelona",
+          "Reial Deportiu Espanyol de Barcelona S.A.D"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Athletic Club",
+        "aliases": [
+          "Bilbao Athletic",
+          "Athletic Bilbao",
+          "Bilbao"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Real Sociedad",
+        "aliases": [
+          "R. Sociedad",
+          "Real Sociedad de Fútbol S.A.D",
+          "Real Sociedad C",
+          "Real Sociedad Y"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Sevilla",
+        "aliases": [
+          "Sevilla FC",
+          "Sevilla Atl",
+          "Sevilla C",
+          "Sevilla D",
+          "Sevilla S.A.D"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Newcastle United",
+        "aliases": [
+          "Newcastle",
+          "Newcastle United Jets"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Al-Hilal",
+        "aliases": [
+          "Al-Hilal Obeid",
+          "Al-Hilal Saudi"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Benfica",
+        "aliases": [
+          "Benfica B",
+          "Benfica S15",
+          "Benfica S17",
+          "SL Benfica"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Marseille",
+        "aliases": [
+          "Olympique Marseille"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Paris Saint-Germain",
+        "aliases": [
+          "Paris SG U19",
+          "Paris SG B",
+          "Paris",
+          "PSG"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Lyon",
+        "aliases": [
+          "Olympique Lyon",
+          "Olymp. Lyon B",
+          "Lyon Décines",
+          "Lyon La Duchère",
+          "Lyon-Duchère"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Manchester United",
+        "aliases": [
+          "Man Utd"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Manchester City",
+        "aliases": [
+          "Man City",
+          "Man City U21",
+          "Man City U23"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Arsenal",
+        "aliases": [
+          "Arsenal FC"
+        ],
+        "hidden": false
+      },
+      {
         "display_name": "Basel",
         "aliases": [
           "Basel 1893",
@@ -15,7 +184,8 @@
         "display_name": "Atletico Madrid",
         "aliases": [
           "Atlético de Madrid",
-          "Atlético"
+          "Atlético",
+          "Atléti"
         ],
         "hidden": false
       },
@@ -7136,7 +7306,8 @@
       {
         "display_name": "Ronaldo (All)",
         "aliases": [
-          "Ronaldo"
+          "Ronaldo",
+          "Ronaldo Nazário"
         ],
         "hidden": false
       },

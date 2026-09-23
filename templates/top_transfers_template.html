@@ -456,6 +456,7 @@
         : { mode: "club", name: "Juventus", transfers: [] };
     const activeAllPlayers = typeof ALL_PLAYERS !== 'undefined' ? ALL_PLAYERS : [];
     const puzzleNum        = typeof PUZZLE_NUMBER !== 'undefined' ? PUZZLE_NUMBER : 0;
+    const puzzleId         = typeof PUZZLE_ID !== 'undefined' ? PUZZLE_ID : (typeof activeGameData !== 'undefined' && activeGameData && (activeGameData.puzzle_id || activeGameData.puzzle_num) ? (activeGameData.puzzle_id || activeGameData.puzzle_num) : puzzleNum);
     const isBackInTime     = typeof IS_BACK_IN_TIME !== 'undefined' ? IS_BACK_IN_TIME : false;
     const maxBackDays      = typeof MAX_BACK_DAYS !== 'undefined' ? MAX_BACK_DAYS : 7;
     const gameNote         = typeof GAME_NOTE !== 'undefined' ? GAME_NOTE : '';
@@ -548,7 +549,7 @@
 
         // Real-time Cloud Synchronization of Community VAR Overrides
         if (FootyUI.syncPuzzleOverrides) {
-            FootyUI.syncPuzzleOverrides('top_transfers', activeGameData.puzzle_num, (overrides) => {
+            FootyUI.syncPuzzleOverrides('top_transfers', puzzleId, (overrides) => {
                 let changed = false;
                 overrides.forEach(ov => {
                     const playerName = ov.player_name;
@@ -1004,7 +1005,8 @@
                 message: `${matched.Name} is not on the list. Lost 1 life.`,
                 guess: matched.Name,
                 gameId: 'top_transfers',
-                puzzleNum: activeGameData.puzzle_num,
+                puzzleNum: puzzleNum,
+                puzzleId: puzzleId,
                 theme: activeGameData.name,
                 context: varContext,
                 onVarAccepted: (res) => {
@@ -1141,7 +1143,7 @@
 
         // 11. Save modified puzzle to sessionStorage
         try {
-            sessionStorage.setItem(`var_transfers_${GAME_ID}_${activeGameData.puzzle_num}`, JSON.stringify(activeGameData.transfers));
+            sessionStorage.setItem(`var_transfers_${GAME_ID}_${puzzleId}`, JSON.stringify(activeGameData.transfers));
         } catch (e) {}
 
         checkWinLoss();

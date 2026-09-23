@@ -57,8 +57,10 @@
             tagline_player_chain: 'Connect consecutive clubs through shared teammates',
             tagline_passport_fc: 'Collect nationality stamps for a mystery club',
             badge_solved: 'SOLVED ✅',
-            badge_failed: 'FAILED ❌',
-            badge_played: 'FAILED ❌',
+            badge_partial: 'PARTIAL ⚡',
+            badge_failed: 'MISSED ❌',
+            badge_played: 'MISSED ❌',
+            badge_in_progress: 'IN PROGRESS ⏳',
             back_to_playmaker: '← Back to Playmaker',
 
             // Common Gameplay
@@ -173,8 +175,10 @@
             tagline_player_chain: 'Conecta clubes consecutivos mediante compañeros',
             tagline_passport_fc: 'Colecciona sellos de nacionalidad para un club',
             badge_solved: 'RESUELTO ✅',
-            badge_failed: 'FALLIDO ❌',
-            badge_played: 'FALLIDO ❌',
+            badge_partial: 'PARCIAL ⚡',
+            badge_failed: 'NO SUPERADO ❌',
+            badge_played: 'NO SUPERADO ❌',
+            badge_in_progress: 'EN CURSO ⏳',
             back_to_playmaker: '← Volver a Playmaker',
 
             // Common Gameplay

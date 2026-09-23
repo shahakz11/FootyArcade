@@ -66,7 +66,9 @@ class TestGameSuggestions(unittest.TestCase):
             "tagline_player_chain",
             "tagline_passport_fc",
             "badge_solved",
+            "badge_partial",
             "badge_failed",
+            "badge_in_progress",
             "back_to_playmaker",
         ]
 

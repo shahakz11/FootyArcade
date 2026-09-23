@@ -416,7 +416,7 @@ def filter_and_canonicalize_players(player_list, config):
             result.append({
                 "Name": d_name,
                 "Nationality": "",
-                "Position": "" if is_all_alias else "Player",
+                "Position": "",
                 "MarketValue": 0,
                 "Aliases": g.get("aliases", [])
             })
