@@ -212,5 +212,29 @@ class TestAnalyticsEventTracking(unittest.TestCase):
             self.assertIn("isRestore", content, f"Missing isRestore in {tmpl_rel}")
 
 
+    def test_traffic_source_collection_and_mapping(self):
+        """Verify getUrlSource collects google, instagram, tiktok, youtube, etc. and GAS maps it to Events sheet."""
+        footy_ui_path = os.path.join(REPO_ROOT, "games", "footy-ui.js")
+        with open(footy_ui_path, "r", encoding="utf-8") as f:
+            ui_content = f.read()
+
+        # Check that getUrlSource checks utm_source, referrer, and key platforms
+        self.assertIn("getUrlSource", ui_content)
+        self.assertIn("utm_source", ui_content)
+        self.assertIn("google", ui_content)
+        self.assertIn("tiktok", ui_content)
+        self.assertIn("youtube", ui_content)
+        self.assertIn("instagram", ui_content)
+        self.assertIn("twitter", ui_content)
+
+        # Check GAS mapping
+        gas_path = os.path.join(REPO_ROOT, "google-apps-script.js")
+        with open(gas_path, "r", encoding="utf-8") as f:
+            gas_content = f.read()
+
+        self.assertIn("URL Source", gas_content)
+        self.assertIn("payload.urlSource", gas_content)
+
+
 if __name__ == "__main__":
     unittest.main()

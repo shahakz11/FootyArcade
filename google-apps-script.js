@@ -85,7 +85,9 @@ function buildEventsRow(headers, payload, timestamp) {
     if (h.indexOf('target') !== -1) return payload.target !== undefined ? payload.target : '';
     if (h.indexOf('back') !== -1) return payload.isBackInTime !== undefined ? payload.isBackInTime : '';
     if (h.indexOf('detail') !== -1 || h.indexOf('extra') !== -1) return payload.extraDetails || '';
-    if (h.indexOf('source') !== -1) return payload.urlSource || payload.source || '';
+    if (h.indexOf('source') !== -1 || h.indexOf('traffic') !== -1 || h.indexOf('referrer') !== -1) {
+      return payload.urlSource || payload.source || payload.trafficSource || payload.referrer || '';
+    }
     if (h.indexOf('visitor') !== -1) return payload.visitorId || '';
     if (h.indexOf('session') !== -1) return payload.sessionId || '';
     if (h === 'url' || h.indexOf('page') !== -1) return payload.url || '';
@@ -139,7 +141,7 @@ function ensureEventsHeaders(sheet) {
     { name: 'Target', check: function(n) { return n.some(function(h) { return h.indexOf('target') !== -1; }); } },
     { name: 'Visitor ID', check: function(n) { return n.some(function(h) { return h.indexOf('visitor') !== -1; }); } },
     { name: 'Session ID', check: function(n) { return n.some(function(h) { return h.indexOf('session') !== -1; }); } },
-    { name: 'URL Source', check: function(n) { return n.some(function(h) { return h.indexOf('source') !== -1; }); } }
+    { name: 'URL Source', check: function(n) { return n.some(function(h) { return h.indexOf('source') !== -1 || h.indexOf('traffic') !== -1 || h.indexOf('referrer') !== -1; }); } }
   ];
 
   for (var i = 0; i < expectedCols.length; i++) {

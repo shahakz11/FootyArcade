@@ -938,14 +938,14 @@
     }
 
     /**
-     * Detects incoming traffic source from URL query parameters (utm_source, ref, source)
-     * or session storage, or document.referrer.
+     * Detects incoming traffic source from URL query parameters (utm_source, ref, source, referrer, click IDs)
+     * or session storage, or document.referrer (google, instagram, tiktok, youtube, twitter, facebook, etc.).
      */
     function getUrlSource() {
         if (typeof window === 'undefined' || !window.location) return '';
         try {
             const params = new URLSearchParams(window.location.search);
-            const source = params.get('utm_source') || params.get('ref') || params.get('source');
+            const source = params.get('utm_source') || params.get('ref') || params.get('source') || params.get('referrer');
             if (source) {
                 const cleanSource = source.trim().toLowerCase();
                 try {
@@ -953,31 +953,125 @@
                 } catch (e) {}
                 return cleanSource;
             }
+
+            // Check ad platform click IDs
+            if (params.get('gclid')) {
+                try { sessionStorage.setItem('fa_url_source', 'google_ads'); } catch (e) {}
+                return 'google_ads';
+            }
+            if (params.get('fbclid')) {
+                try { sessionStorage.setItem('fa_url_source', 'facebook'); } catch (e) {}
+                return 'facebook';
+            }
+            if (params.get('ttclid')) {
+                try { sessionStorage.setItem('fa_url_source', 'tiktok'); } catch (e) {}
+                return 'tiktok';
+            }
+            if (params.get('twclid')) {
+                try { sessionStorage.setItem('fa_url_source', 'twitter'); } catch (e) {}
+                return 'twitter';
+            }
+            if (params.get('msclkid')) {
+                try { sessionStorage.setItem('fa_url_source', 'bing'); } catch (e) {}
+                return 'bing';
+            }
+
             const stored = sessionStorage.getItem('fa_url_source');
             if (stored) return stored;
 
             // Fallback to document.referrer if available
-            if (document.referrer) {
+            if (typeof document !== 'undefined' && document.referrer) {
                 const ref = document.referrer.toLowerCase();
-                if (ref.includes('whatsapp') || ref.includes('wa.me')) {
-                    try { sessionStorage.setItem('fa_url_source', 'whatsapp'); } catch (e) {}
-                    return 'whatsapp';
+                const currentHost = (window.location.hostname || '').toLowerCase();
+
+                let isInternal = false;
+                let refHost = '';
+                try {
+                    const refUrl = new URL(document.referrer);
+                    refHost = refUrl.hostname.toLowerCase();
+                    if (refHost === currentHost || refHost === 'playmaker.best' || refHost === 'www.playmaker.best') {
+                        isInternal = true;
+                    }
+                } catch (e) {
+                    if (currentHost && ref.startsWith(window.location.origin)) {
+                        isInternal = true;
+                    }
                 }
-                if (ref.includes('twitter.com') || ref.includes('t.co') || ref.includes('x.com')) {
-                    try { sessionStorage.setItem('fa_url_source', 'twitter'); } catch (e) {}
-                    return 'twitter';
-                }
-                if (ref.includes('instagram.com')) {
-                    try { sessionStorage.setItem('fa_url_source', 'instagram'); } catch (e) {}
-                    return 'instagram';
-                }
-                if (ref.includes('facebook.com')) {
-                    try { sessionStorage.setItem('fa_url_source', 'facebook'); } catch (e) {}
-                    return 'facebook';
-                }
-                if (ref.includes('reddit.com')) {
-                    try { sessionStorage.setItem('fa_url_source', 'reddit'); } catch (e) {}
-                    return 'reddit';
+
+                if (!isInternal) {
+                    if (refHost.includes('google.') || ref.includes('google.co') || ref.includes('google.com') || ref.includes('google.')) {
+                        try { sessionStorage.setItem('fa_url_source', 'google'); } catch (e) {}
+                        return 'google';
+                    }
+                    if (refHost.includes('instagram.com') || ref.includes('instagram.com') || ref.includes('instagr.am')) {
+                        try { sessionStorage.setItem('fa_url_source', 'instagram'); } catch (e) {}
+                        return 'instagram';
+                    }
+                    if (refHost.includes('tiktok.com') || ref.includes('tiktok.com')) {
+                        try { sessionStorage.setItem('fa_url_source', 'tiktok'); } catch (e) {}
+                        return 'tiktok';
+                    }
+                    if (refHost.includes('youtube.com') || refHost.includes('youtu.be') || ref.includes('youtube.com') || ref.includes('youtu.be')) {
+                        try { sessionStorage.setItem('fa_url_source', 'youtube'); } catch (e) {}
+                        return 'youtube';
+                    }
+                    if (refHost.includes('twitter.com') || refHost.includes('t.co') || refHost.includes('x.com') || ref.includes('twitter.com') || ref.includes('t.co') || ref.includes('x.com')) {
+                        try { sessionStorage.setItem('fa_url_source', 'twitter'); } catch (e) {}
+                        return 'twitter';
+                    }
+                    if (refHost.includes('facebook.com') || refHost.includes('fb.com') || refHost.includes('fb.me') || ref.includes('facebook.com') || ref.includes('fb.me')) {
+                        try { sessionStorage.setItem('fa_url_source', 'facebook'); } catch (e) {}
+                        return 'facebook';
+                    }
+                    if (refHost.includes('threads.net') || ref.includes('threads.net')) {
+                        try { sessionStorage.setItem('fa_url_source', 'threads'); } catch (e) {}
+                        return 'threads';
+                    }
+                    if (ref.includes('whatsapp') || ref.includes('wa.me')) {
+                        try { sessionStorage.setItem('fa_url_source', 'whatsapp'); } catch (e) {}
+                        return 'whatsapp';
+                    }
+                    if (refHost.includes('reddit.com') || refHost.includes('redd.it') || ref.includes('reddit.com')) {
+                        try { sessionStorage.setItem('fa_url_source', 'reddit'); } catch (e) {}
+                        return 'reddit';
+                    }
+                    if (refHost.includes('linkedin.com') || refHost.includes('lnkd.in') || ref.includes('linkedin.com')) {
+                        try { sessionStorage.setItem('fa_url_source', 'linkedin'); } catch (e) {}
+                        return 'linkedin';
+                    }
+                    if (refHost.includes('telegram.org') || refHost.includes('t.me') || ref.includes('telegram.org') || ref.includes('t.me')) {
+                        try { sessionStorage.setItem('fa_url_source', 'telegram'); } catch (e) {}
+                        return 'telegram';
+                    }
+                    if (refHost.includes('discord.com') || refHost.includes('discord.gg') || ref.includes('discord.com')) {
+                        try { sessionStorage.setItem('fa_url_source', 'discord'); } catch (e) {}
+                        return 'discord';
+                    }
+                    if (refHost.includes('bing.com') || ref.includes('bing.com')) {
+                        try { sessionStorage.setItem('fa_url_source', 'bing'); } catch (e) {}
+                        return 'bing';
+                    }
+                    if (refHost.includes('yahoo.com') || refHost.includes('yahoo.co') || ref.includes('yahoo.com')) {
+                        try { sessionStorage.setItem('fa_url_source', 'yahoo'); } catch (e) {}
+                        return 'yahoo';
+                    }
+                    if (refHost.includes('duckduckgo.com') || ref.includes('duckduckgo.com')) {
+                        try { sessionStorage.setItem('fa_url_source', 'duckduckgo'); } catch (e) {}
+                        return 'duckduckgo';
+                    }
+                    if (refHost.includes('pinterest.com') || refHost.includes('pin.it') || ref.includes('pinterest.com')) {
+                        try { sessionStorage.setItem('fa_url_source', 'pinterest'); } catch (e) {}
+                        return 'pinterest';
+                    }
+
+                    // Generic external domain fallback
+                    if (refHost) {
+                        const cleanDomain = refHost.replace(/^www\./, '');
+                        if (cleanDomain) {
+                            try { sessionStorage.setItem('fa_url_source', cleanDomain); } catch (e) {}
+                            return cleanDomain;
+                        }
+                    }
                 }
             }
         } catch (e) {}
@@ -2412,6 +2506,8 @@
             url: window.location.href,
             urlSource: urlSource,
             source: urlSource,
+            trafficSource: urlSource,
+            referrer: typeof document !== 'undefined' ? (document.referrer || '') : '',
             method: params.method || '',
             shareUrl: params.shareUrl || '',
             timestamp: new Date().toISOString()
