@@ -709,6 +709,23 @@ def get_processed_all_players():
     return _CACHED_PROCESSED_PLAYERS
 
 
+def export_static_libraries():
+    """Exports standalone cached JS files for ALL_PLAYERS and ALL_CLUBS to avoid payload bloat in HTML files."""
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    players_js_path = os.path.join(OUTPUT_DIR, "footy-players.js")
+    clubs_js_path = os.path.join(OUTPUT_DIR, "footy-clubs.js")
+
+    players_json = get_processed_all_players()
+    with open(players_js_path, "w", encoding="utf-8") as f:
+        f.write(f"var ALL_PLAYERS = {players_json};\n")
+    print(f"  ✓ Exported {players_js_path} ({len(players_json)} bytes)")
+
+    clubs_json = get_processed_all_clubs()
+    with open(clubs_js_path, "w", encoding="utf-8") as f:
+        f.write(f"var ALL_CLUBS = {clubs_json};\n")
+    print(f"  ✓ Exported {clubs_js_path} ({len(clubs_json)} bytes)")
+
+
 # ─────────────────────────────────────────────────────────────
 # Game data loaders  (one function per game id)
 # ─────────────────────────────────────────────────────────────
@@ -756,9 +773,7 @@ def load_top_transfers(puzzle_num):
         print(f"  WARNING: No top_transfers data for puzzle #{puzzle_num}")
         return None, None
 
-    extra = {
-        "ALL_PLAYERS": get_processed_all_players(),
-    }
+    extra = {}
     return game_data, extra
 
 
@@ -801,9 +816,7 @@ def load_transfer_destination(puzzle_num):
     # Reverse transfers so the game runs from most recent club/transfer back to the first
     game_data["transfers"].reverse()
 
-    extra = {
-        "ALL_CLUBS": get_processed_all_clubs(),
-    }
+    extra = {}
     return game_data, extra
 
 
@@ -833,9 +846,7 @@ def load_top_scorers(puzzle_num):
         print(f"  WARNING: No top_scorers data for puzzle #{puzzle_num}")
         return None, None
 
-    extra = {
-        "ALL_PLAYERS": get_processed_all_players(),
-    }
+    extra = {}
     return game_data, extra
 
 
@@ -872,7 +883,6 @@ def load_club_connect(puzzle_num):
     game_data = {"club": club, "players": players}
     sorted_clubs = sorted(answer_clubs - {""})
     extra = {
-        "ALL_CLUBS": get_processed_all_clubs(),
         "ANSWER_CLUBS": json.dumps(sorted_clubs, ensure_ascii=False),
     }
     return game_data, extra
@@ -916,10 +926,7 @@ def load_player_chain(puzzle_num):
             "valid_players":      json.loads(r.get("valid_players", "[]")),
         })
 
-    # Extra data: all players list for dropdown autocomplete
-    extra = {
-        "ALL_PLAYERS": get_processed_all_players(),
-    }
+    extra = {}
     return game_data, extra
 
 
@@ -983,9 +990,7 @@ def load_passport_fc(puzzle_num):
             "valid_players":  v_players,
         })
 
-    extra = {
-        "ALL_PLAYERS": get_processed_all_players(),
-    }
+    extra = {}
     return game_data, extra
 
 
@@ -1230,6 +1235,9 @@ def main():
 
     print(f"\n=== Playmaker Compiler — {datetime.today().strftime('%Y-%m-%d')} ===")
     print(f"Compiling {len(games)} game(s), today + {max_back} back-in-time days\n")
+
+    # Export standalone player and club libraries
+    export_static_libraries()
 
     for game_cfg in games:
         gid = game_cfg["id"]

@@ -2,7 +2,7 @@
 """
 Playmaker Organic UGC Short Video Generator (9:16 Vertical Video).
 Renders authentic, minimalist, human-feeling Instagram Reels / TikTok shorts:
-Clean bold white text over real casual B-roll footage (juggling, pitch drills, lifestyle).
+Clean bold white text with dark outline over real casual B-roll footage (freestyle skills, pitch drills).
 Directly extracts Step 2 from daily Player Chain & Passport FC puzzles.
 Guarantees unique, non-repeating B-roll videos across daily runs.
 """
@@ -48,7 +48,7 @@ COUNTRY_FLAGS = {
     "Algeria": "🇩🇿", "Japan": "🇯🇵", "South Korea": "🇰🇷", "Australia": "🇦🇺",
     "United States": "🇺🇸", "Mexico": "🇲🇽", "Chile": "🇨🇱", "Sweden": "🇸🇪",
     "Norway": "🇳🇴", "Denmark": "🇩🇰", "Poland": "🇵🇱", "Austria": "🇦🇹",
-    "Switzerland": "🇨🇭", "Turkey": "🇹🇷", "Greece": "🇬🇷", "Ukraine": "UKR",
+    "Switzerland": "SUI", "Turkey": "TUR", "Greece": "GRE", "Ukraine": "UKR",
     "Serbia": "SRB", "Czech Republic": "CZE", "Scotland": "SCO", "Wales": "WAL",
     "Iceland": "ISL", "Bosnia": "BIH", "Paraguay": "PAR", "Ecuador": "ECU"
 }
@@ -69,11 +69,11 @@ def get_font(size, bold=True):
                 continue
     return ImageFont.load_default()
 
-def draw_text_with_outline_and_shadow(draw, position, text, font, fill_color=(255, 255, 255, 255), stroke_color=(0, 0, 0, 240), stroke_width=5, anchor="mm"):
+def draw_text_with_outline_and_shadow(draw, position, text, font, fill_color=(255, 255, 255, 255), stroke_color=(0, 0, 0, 240), stroke_width=6, anchor="mm"):
     """Draws crisp white text with strong black outline and subtle drop shadow for perfect readability on any video background."""
     x, y = position
-    shadow_offset = stroke_width + 3
-    draw.text((x + shadow_offset, y + shadow_offset), text, font=font, fill=(0, 0, 0, 140), anchor=anchor)
+    shadow_offset = stroke_width + 4
+    draw.text((x + shadow_offset, y + shadow_offset), text, font=font, fill=(0, 0, 0, 150), anchor=anchor)
     draw.text((x, y), text, font=font, fill=fill_color, stroke_width=stroke_width, stroke_fill=stroke_color, anchor=anchor)
 
 def get_today_puzzle_day(game_id):
@@ -104,7 +104,6 @@ def extract_puzzle_data(game_type, day=None, custom_seed=None):
             day_rows = df[df["game_day"] == 1]
             day = 1
         
-        # Strictly Step 2
         step_row = day_rows[day_rows["step_number"] == 2]
         if step_row.empty:
             step_row = day_rows.iloc[1:2]
@@ -116,7 +115,6 @@ def extract_puzzle_data(game_type, day=None, custom_seed=None):
         valid_players = json.loads(row["valid_players"])
         target_player = row.get("target_player", "")
         
-        # Pick a random answer from the pool (excluding target player to preserve puzzle mystery)
         candidates = [p for p in valid_players if p != target_player]
         if not candidates:
             candidates = valid_players
@@ -141,7 +139,6 @@ def extract_puzzle_data(game_type, day=None, custom_seed=None):
             day_rows = df[df["game_day"] == 1]
             day = 1
             
-        # Strictly Step 2
         step_row = day_rows[day_rows["step_number"] == 2]
         if step_row.empty:
             step_row = day_rows.iloc[1:2]
@@ -164,23 +161,36 @@ def extract_puzzle_data(game_type, day=None, custom_seed=None):
             "game_day": int(day)
         }
 
+def center_crop_and_fill(frame, target_w=WIDTH, target_h=HEIGHT):
+    """Scales and center-crops a frame to perfectly fill target_w x target_h without stretching."""
+    fh, fw = frame.shape[:2]
+    scale = max(target_w / fw, target_h / fh)
+    nw, nh = int(round(fw * scale)), int(round(fh * scale))
+    resized = cv2.resize(frame, (nw, nh), interpolation=cv2.INTER_LANCZOS4)
+    x1 = (nw - target_w) // 2
+    y1 = (nh - target_h) // 2
+    return resized[y1:y1+target_h, x1:x1+target_w]
+
 def render_ugc_video(data, output_path, bg_video_path=None, duration=DURATION_SEC, fps=FPS):
     """Renders authentic clean white text over background video."""
     total_frames = int(duration * fps)
     
-    cap = None
-    if bg_video_path and os.path.exists(bg_video_path):
-        cap = cv2.VideoCapture(bg_video_path)
+    if not bg_video_path or not os.path.exists(bg_video_path):
+        raise FileNotFoundError(f"❌ Background video file not found: {bg_video_path}")
+
+    cap = cv2.VideoCapture(bg_video_path)
+    if not cap.isOpened():
+        raise IOError(f"❌ Could not open background video: {bg_video_path}")
 
     temp_raw = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False).name
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
     video_writer = cv2.VideoWriter(temp_raw, fourcc, fps, (WIDTH, HEIGHT))
 
-    font_header = get_font(58, bold=True)
-    font_main = get_font(56, bold=True)
-    font_highlight = get_font(60, bold=True)
-    font_seed = get_font(54, bold=True)
-    font_cta = get_font(40, bold=True)
+    font_header = get_font(60, bold=True)
+    font_main = get_font(58, bold=True)
+    font_highlight = get_font(64, bold=True)
+    font_seed = get_font(58, bold=True)
+    font_cta = get_font(42, bold=True)
 
     print(f"🎬 Rendering {total_frames} frames (UGC Minimalist Style) -> {output_path}")
 
@@ -188,61 +198,59 @@ def render_ugc_video(data, output_path, bg_video_path=None, duration=DURATION_SE
         if frame_idx % 45 == 0:
             print(f"  Frame {frame_idx}/{total_frames} ({frame_idx/total_frames*100:.1f}%)")
 
-        # 1. Grab Background Frame
-        if cap and cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
             ret, frame = cap.read()
-            if not ret:
-                cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
-                ret, frame = cap.read()
-            if ret:
-                frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                bg_img = Image.fromarray(frame_rgb).resize((WIDTH, HEIGHT), Image.Resampling.LANCZOS)
-            else:
-                bg_img = Image.new("RGBA", (WIDTH, HEIGHT), (22, 26, 32, 255))
-        else:
-            bg_img = Image.new("RGBA", (WIDTH, HEIGHT), (22, 26, 32, 255))
+            
+        if not ret:
+            raise IOError("❌ Failed to read frame from background video")
 
-        # 2. Subtle dimming overlay for perfect text contrast
-        dim = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 40))
+        # Smart center-crop to 1080x1920
+        cropped_bgr = center_crop_and_fill(frame, WIDTH, HEIGHT)
+        frame_rgb = cv2.cvtColor(cropped_bgr, cv2.COLOR_BGR2RGB)
+        bg_img = Image.fromarray(frame_rgb)
+
+        # Subtle 20% dark overlay for guaranteed text readability
+        dim = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 50))
         bg_img.paste(dim, (0, 0), dim)
 
         draw = ImageDraw.Draw(bg_img)
 
-        # 3. TOP HEADER
-        draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 520), "BALL KNOWLEDGE TEST", font_header, stroke_width=6)
+        # 1. TOP HEADER
+        draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 480), "BALL KNOWLEDGE TEST", font_header, stroke_width=6)
 
-        # 4. MAIN PROMPT
+        # 2. MAIN PROMPT
         if data["mode"] == "player_chain":
             if data.get("is_country"):
-                draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 700), f"Name ONE {data['entity_2']} player", font_main, stroke_width=5)
-                draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 785), f"who played for {data['entity_1']}", font_highlight, stroke_width=6)
+                draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 680), f"Name ONE {data['entity_2']} player", font_main, stroke_width=5)
+                draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 770), f"who played for {data['entity_1']}", font_highlight, stroke_width=6)
             else:
-                draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 700), "Name ONE player", font_main, stroke_width=5)
-                draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 780), "who played for BOTH", font_main, stroke_width=5)
+                draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 680), "Name ONE player", font_main, stroke_width=5)
+                draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 765), "who played for BOTH", font_main, stroke_width=5)
                 clubs_text = f"{data['entity_1']} & {data['entity_2']}"
-                draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 875), clubs_text, font_highlight, stroke_width=6)
+                draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 865), clubs_text, font_highlight, stroke_width=6)
             
-            draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 975), "no one else in the comments will say", font_main, stroke_width=5)
+            draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 970), "no one else in the comments will say", font_main, stroke_width=5)
             
             seed_text = f"I'll start... {data['seed_player']}"
             draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 1180), seed_text, font_seed, stroke_width=5)
         else:
-            draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 700), f"Name ONE {data['entity_2']} player", font_main, stroke_width=5)
-            draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 785), f"who played for {data['entity_1']}", font_highlight, stroke_width=6)
-            draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 885), "no one else in the comments will say", font_main, stroke_width=5)
+            draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 680), f"Name ONE {data['entity_2']} player", font_main, stroke_width=5)
+            draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 770), f"who played for {data['entity_1']}", font_highlight, stroke_width=6)
+            draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 875), "no one else in the comments will say", font_main, stroke_width=5)
             
             seed_text = f"I'll start... {data['seed_player']}"
             draw_text_with_outline_and_shadow(draw, (WIDTH // 2, 1120), seed_text, font_seed, stroke_width=5)
 
-        # 5. SUBTLE CTA FOOTER
+        # 3. SUBTLE CTA FOOTER
         draw_text_with_outline_and_shadow(draw, (WIDTH // 2, HEIGHT - 240), "Drop yours in the comments", font_cta, stroke_width=4)
 
         rgb_frame = bg_img.convert("RGB")
         bgr_frame = cv2.cvtColor(np.array(rgb_frame), cv2.COLOR_RGB2BGR)
         video_writer.write(bgr_frame)
 
-    if cap:
-        cap.release()
+    cap.release()
     video_writer.release()
 
     cmd = [
@@ -307,7 +315,6 @@ def main():
 
     data = extract_puzzle_data(args.game, day=args.day, custom_seed=args.seed)
     
-    # Select background clip with no-repeat guarantee
     if args.bg and os.path.exists(args.bg):
         bg_clip = args.bg
     else:
@@ -336,11 +343,10 @@ def main():
     if args.upload:
         print("🚀 Auto-upload enabled: Publishing to YouTube Shorts & Instagram Reels...")
         
-        # 1. YouTube Shorts
         if data["mode"] == "passport_fc" or data.get("is_country"):
             yt_title = f"Name ONE {data['entity_2']} player for {data['entity_1']} (No one else will say) ⚽️ #Shorts"
         else:
-            yt_title = f"Name ONE player for {data['entity_1']} & {data['entity_2']} ⚽️ #Shorts"
+            yt_title = f"Name ONE player for {data['entity_1']} & {data['entity_2']} (No one else will say) ⚽️ #Shorts"
             
         cmd_yt = [
             sys.executable, os.path.join(BASE_DIR, "scripts", "youtube_uploader.py"),
@@ -353,7 +359,6 @@ def main():
         except Exception as e:
             print(f"⚠️ YouTube upload error: {e}")
 
-        # 2. Instagram Reels
         cmd_ig = [
             sys.executable, os.path.join(BASE_DIR, "scripts", "instagram_uploader.py"),
             "--file", output_path,
