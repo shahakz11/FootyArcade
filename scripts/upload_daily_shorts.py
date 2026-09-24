@@ -73,9 +73,9 @@ def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_h
     
     mode_lower = (mode or "auto").lower()
     if mode_lower in ("midday", "morning"):
-        return [DAILY_GAMES[0]]  # Top Transfers
+        return [DAILY_GAMES[0]]  # Player Chain (Step 2)
     elif mode_lower in ("evening", "night"):
-        return [DAILY_GAMES[1]]  # Transfer Destination
+        return [DAILY_GAMES[1]]  # Passport FC (Step 2)
     elif mode_lower == "both":
         return DAILY_GAMES
 
@@ -83,9 +83,9 @@ def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_h
     if curr_hour is None:
         curr_hour = datetime.datetime.now().hour
     if curr_hour < 16:
-        return [DAILY_GAMES[0]]  # Top Transfers
+        return [DAILY_GAMES[0]]  # Player Chain (Step 2)
     else:
-        return [DAILY_GAMES[1]]  # Transfer Destination
+        return [DAILY_GAMES[1]]  # Passport FC (Step 2)
 
 def compute_scheduled_slots(num_videos, start_dt=None, slot_hours=None, immediate_first=True):
     """
