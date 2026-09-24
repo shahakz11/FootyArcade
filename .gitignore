@@ -18,7 +18,9 @@ config.json
 
 # Media generator outputs & frame captures
 *.mp4
-*.png
+!assets/broll/*.mp4
+!assets/broll/*.mov
+!assets/broll/*.webm
 !assets/*.png
 !assets/marketing/*.png
 output_*
