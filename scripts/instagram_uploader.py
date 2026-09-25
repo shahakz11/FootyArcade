@@ -169,12 +169,12 @@ def is_already_posted(game_id, date_str, target_name=""):
             data = json.loads(resp.read().decode("utf-8"))
 
             game_patterns = {
-                "top_transfers": ["record transfers"],
-                "transfer_destination": ["career path backwards", "mystery player"],
-                "player_chain": ["teammate chain"],
-                "club_connect": ["transferred to", "played for both clubs"],
-                "top_scorers": ["scored the most goals"],
-                "passport_fc": ["club passport"]
+                "top_transfers": ["record transfers", "top transfers"],
+                "transfer_destination": ["career path backwards", "mystery player", "transfer destination"],
+                "player_chain": ["teammate chain", "player chain", "played for both", "name one player"],
+                "club_connect": ["transferred to", "played for both clubs", "club connect"],
+                "top_scorers": ["scored the most goals", "top scorers"],
+                "passport_fc": ["club passport", "passport fc", "passport", "name one"]
             }
             patterns = game_patterns.get(game_id, [])
 
@@ -193,6 +193,12 @@ def is_already_posted(game_id, date_str, target_name=""):
                     if target_name and len(target_name.strip()) > 3 and target_name.lower() in caption:
                         mark_as_posted(game_id, date_str, permalink, item.get("id"))
                         return True, permalink
+                    # Check entity parts if target_name is composite (e.g. "Barcelona & Benfica")
+                    if target_name and " & " in target_name:
+                        parts = [p.strip().lower() for p in target_name.split(" & ")]
+                        if all(p in caption for p in parts if len(p) > 3):
+                            mark_as_posted(game_id, date_str, permalink, item.get("id"))
+                            return True, permalink
     except Exception as e:
         log_message(f"⚠️ Instagram live deduplication check warning: {e}")
 

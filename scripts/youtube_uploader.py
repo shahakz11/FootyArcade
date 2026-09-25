@@ -322,14 +322,14 @@ def is_youtube_already_uploaded(game_id, target_name="", date_str=None, youtube=
         
         # Game generic title prefixes for matching even if target name varies
         game_patterns = {
-            "top_transfers": "record transfers",
-            "transfer_destination": "career path backwards",
-            "player_chain": "teammate chain",
-            "club_connect": "which team all of these players transferred to",
-            "top_scorers": "scored the most goals",
-            "passport_fc": "club passport"
+            "top_transfers": ["record transfers", "top transfers"],
+            "transfer_destination": ["career path backwards", "mystery player", "transfer destination"],
+            "player_chain": ["teammate chain", "player chain", "played for both", "name one player"],
+            "club_connect": ["which team all of these players transferred to", "transferred to", "club connect"],
+            "top_scorers": ["scored the most goals", "top scorers"],
+            "passport_fc": ["club passport", "passport fc", "passport", "name one"]
         }
-        pattern = game_patterns.get(game_id, "").lower()
+        patterns = game_patterns.get(game_id, [])
 
         for v in vids:
             pub_date = v["snippet"].get("publishedAt", "")[:10]
@@ -346,8 +346,13 @@ def is_youtube_already_uploaded(game_id, target_name="", date_str=None, youtube=
                 # 2. Target name in title
                 if target_name and target_name.lower() in clean_vtitle:
                     return True, shorts_url
+                # Check entity parts if target_name is composite (e.g. "Barcelona & Benfica")
+                if target_name and " & " in target_name:
+                    parts = [p.strip().lower() for p in target_name.split(" & ")]
+                    if all(p in clean_vtitle for p in parts if len(p) > 3):
+                        return True, shorts_url
                 # 3. Game pattern match (each game only posts once per day)
-                if pattern and pattern in clean_vtitle:
+                if any(p in clean_vtitle for p in patterns):
                     return True, shorts_url
     except Exception as e:
         print(f"⚠️ YouTube deduplication check warning: {e}")

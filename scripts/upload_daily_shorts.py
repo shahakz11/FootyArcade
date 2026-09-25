@@ -129,9 +129,16 @@ def compute_scheduled_slots(num_videos, start_dt=None, slot_hours=None, immediat
 
 def get_target_name_from_game(game_id):
     """
-    Extracts the daily puzzle target name/theme directly from the compiled HTML.
+    Extracts the daily puzzle target name/theme directly from the compiled HTML or UGC puzzle dataset.
     Allows running live API deduplication BEFORE spending 2-3 minutes rendering video.
     """
+    if game_id in ("player_chain", "passport_fc"):
+        try:
+            ugc = extract_ugc_data(game_id, day=None)
+            return f"{ugc['entity_1']} & {ugc['entity_2']}"
+        except Exception:
+            pass
+
     import json, re
     html_path = os.path.join(BASE_DIR, "games", f"{game_id}.html")
     if not os.path.exists(html_path):
