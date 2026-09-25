@@ -56,6 +56,10 @@ COUNTRY_CODES = {
 def get_font(size, bold=False):
     """Loads system fonts with graceful fallback."""
     font_paths = [
+        os.path.join(BASE_DIR, "assets", "fonts", "Arial-Bold.ttf" if bold else "Arial.ttf"),
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf" if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf" if bold else "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+        "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf" if bold else "/usr/share/fonts/truetype/freefont/FreeSans.ttf",
         "/System/Library/Fonts/Supplemental/Arial Bold.ttf" if bold else "/System/Library/Fonts/Supplemental/Arial.ttf",
         "/System/Library/Fonts/Helvetica.ttc",
         "/System/Library/Fonts/SFNS.ttf",
@@ -67,6 +71,10 @@ def get_font(size, bold=False):
                 return ImageFont.truetype(p, size)
             except Exception:
                 continue
+    try:
+        return ImageFont.truetype("DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf", size)
+    except Exception:
+        pass
     return ImageFont.load_default()
 
 def draw_vector_flag(nationality, size=(160, 160)):
@@ -347,7 +355,7 @@ def render_rarity_frame(data, frame_idx, total_frames):
     font_brand = get_font(30, bold=True)
     draw.text((WIDTH // 2, HEIGHT - 180), f"PLAYMAKER ARCADE • PUZZLE #{data['game_day']}", fill=(0, 240, 255, 220), font=font_brand, anchor="mm")
     font_url = get_font(26, bold=False)
-    draw.text((WIDTH // 2, HEIGHT - 135), "Daily Live Games: playmaker.football", fill=(160, 175, 195, 200), font=font_url, anchor="mm")
+    draw.text((WIDTH // 2, HEIGHT - 135), "Daily Live Games: playmaker.best", fill=(160, 175, 195, 200), font=font_url, anchor="mm")
 
     return bg
 

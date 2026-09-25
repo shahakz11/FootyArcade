@@ -45,6 +45,10 @@ CARD_BORDER  = (255, 255, 255, 40)
 
 def get_font(size, bold=False):
     font_paths = [
+        os.path.join(BASE_DIR, "assets", "fonts", "Arial-Bold.ttf" if bold else "Arial.ttf"),
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf" if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf" if bold else "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+        "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf" if bold else "/usr/share/fonts/truetype/freefont/FreeSans.ttf",
         "/System/Library/Fonts/Supplemental/Arial Bold.ttf" if bold else "/System/Library/Fonts/Supplemental/Arial.ttf",
         "/System/Library/Fonts/Helvetica.ttc",
         "/System/Library/Fonts/SFNS.ttf",
@@ -56,6 +60,10 @@ def get_font(size, bold=False):
                 return ImageFont.truetype(p, size)
             except Exception:
                 continue
+    try:
+        return ImageFont.truetype("DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf", size)
+    except Exception:
+        pass
     return ImageFont.load_default()
 
 def format_fee(fee):

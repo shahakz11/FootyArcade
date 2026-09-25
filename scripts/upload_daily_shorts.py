@@ -379,7 +379,12 @@ async def process_all_games(
             elif not no_youtube:
                 if custom_yt_title:
                     title = custom_yt_title
-                    desc = f"{title}\n\nPlay live football puzzles daily at https://playmaker.football\n\n#Shorts #football #ballknowledge #trivia"
+                    desc = (
+                        f"{title}\n\n"
+                        f"🎮 Play today's free daily puzzle (no download, no sign up):\n"
+                        f"👉 https://playmaker.best/\n\n"
+                        f"#Shorts #football #soccer #ballknowledge #trivia #playmaker"
+                    )
                     tags = ["Shorts", "football", "soccer", "trivia", "quiz", "ball knowledge", "reels"]
                 else:
                     title, desc, tags = build_default_metadata(game_id=game_id, target_name=target_name)
