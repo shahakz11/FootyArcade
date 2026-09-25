@@ -171,10 +171,10 @@ def is_already_posted(game_id, date_str, target_name=""):
             game_patterns = {
                 "top_transfers": ["record transfers", "top transfers"],
                 "transfer_destination": ["career path backwards", "mystery player", "transfer destination"],
-                "player_chain": ["teammate chain", "player chain", "played for both", "name one player"],
+                "player_chain": ["teammate chain", "player chain", "played for both", "player for both"],
                 "club_connect": ["transferred to", "played for both clubs", "club connect"],
                 "top_scorers": ["scored the most goals", "top scorers"],
-                "passport_fc": ["club passport", "passport fc", "passport", "name one"]
+                "passport_fc": ["club passport", "passport fc", "passport", "player to play for"]
             }
             patterns = game_patterns.get(game_id, [])
 

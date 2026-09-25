@@ -324,10 +324,10 @@ def is_youtube_already_uploaded(game_id, target_name="", date_str=None, youtube=
         game_patterns = {
             "top_transfers": ["record transfers", "top transfers"],
             "transfer_destination": ["career path backwards", "mystery player", "transfer destination"],
-            "player_chain": ["teammate chain", "player chain", "played for both", "name one player"],
+            "player_chain": ["teammate chain", "player chain", "played for both", "player for both"],
             "club_connect": ["which team all of these players transferred to", "transferred to", "club connect"],
             "top_scorers": ["scored the most goals", "top scorers"],
-            "passport_fc": ["club passport", "passport fc", "passport", "name one"]
+            "passport_fc": ["club passport", "passport fc", "passport", "player to play for"]
         }
         patterns = game_patterns.get(game_id, [])
 
