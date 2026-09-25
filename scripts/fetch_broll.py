@@ -118,14 +118,20 @@ def search_and_download_broll(query, limit=2, max_duration_sec=10):
         "--no-warnings"
     ]
 
-    subprocess.run(cmd)
+    try:
+        subprocess.run(cmd, check=False)
+    except Exception as e:
+        print(f"⚠️ Search execution error: {e}")
 
     # Process all temp files
     temp_files = glob.glob(os.path.join(BROLL_DIR, "temp_search_*"))
     if not temp_files:
         print(f"ℹ️ No matching clips found for '{query}'. Trying direct query without 'shorts'...")
         cmd[1] = f"ytsearch{limit}:{query}"
-        subprocess.run(cmd)
+        try:
+            subprocess.run(cmd, check=False)
+        except Exception as e:
+            print(f"⚠️ Direct search error: {e}")
         temp_files = glob.glob(os.path.join(BROLL_DIR, "temp_search_*"))
 
     for temp_f in temp_files:
@@ -134,7 +140,10 @@ def search_and_download_broll(query, limit=2, max_duration_sec=10):
         final_path = os.path.join(BROLL_DIR, final_name)
 
         print(f"✂️ Processing clip -> {final_name}...")
-        trim_video_opencv(temp_f, final_path, max_duration_sec=max_duration_sec)
+        try:
+            trim_video_opencv(temp_f, final_path, max_duration_sec=max_duration_sec)
+        except Exception as e:
+            print(f"⚠️ Trim error: {e}")
         try:
             os.remove(temp_f)
         except OSError:
