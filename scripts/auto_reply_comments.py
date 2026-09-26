@@ -98,6 +98,14 @@ NICKNAMES = {
     "davids": "Edgar Davids",
     "ibrahimovic": "Zlatan Ibrahimović",
     "zlatan": "Zlatan Ibrahimović",
+    "valencia": "Antonio Valencia",
+    "antonio valencia": "Antonio Valencia",
+    "remy": "Loïc Rémy",
+    "loic remy": "Loïc Rémy",
+    "conde": "Jules Koundé",
+    "cristanval": "Philippe Christanval",
+    "philipe cristanval": "Philippe Christanval",
+    "philippe cristanval": "Philippe Christanval",
 
     # Portugal / Benfica / Croatia / Other
     "felix": "João Félix",
@@ -487,7 +495,7 @@ def run_instagram_auto_replies(dry_run=False, limit=15, my_username="playmaker.b
 
         m_id = m["id"]
         caption = m.get("caption", "")
-        comm_url = f"https://graph.facebook.com/v21.0/{m_id}/comments?fields=id,text,username,timestamp,from&limit=50&access_token={access_token}"
+        comm_url = f"https://graph.facebook.com/v21.0/{m_id}/comments?fields=id,text,username,timestamp,from,replies{{id,username,text,from}}&limit=50&access_token={access_token}"
         try:
             comm_req = urllib.request.Request(comm_url)
             with urllib.request.urlopen(comm_req, timeout=10) as comm_resp:
@@ -512,6 +520,19 @@ def run_instagram_auto_replies(dry_run=False, limit=15, my_username="playmaker.b
                 continue
 
             if c_id in ledger:
+                continue
+
+            # Live API check: verify if we already replied to this comment on Instagram
+            replies_data = c.get("replies", {}).get("data", [])
+            already_replied = any(
+                rep.get("username", "").lower() == my_username.lower()
+                or rep.get("from", {}).get("id") == ig_user_id
+                for rep in replies_data
+            )
+            if already_replied:
+                if not dry_run:
+                    ledger[c_id] = {"status": "already_replied_live"}
+                    save_ledger(IG_LEDGER_FILE, ledger)
                 continue
 
             matched_player = match_comment_to_pool(c_text, pool)
