@@ -33,3 +33,4 @@ correct_guesses_frame_*
 private/
 StartBacklog.command
 skills-lock.json.bak
+firebase-debug.log

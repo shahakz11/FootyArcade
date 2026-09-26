@@ -3,6 +3,124 @@
   "clubs": {
     "groups": [
       {
+        "display_name": "Beerschot",
+        "aliases": [
+          "Beerschot VA",
+          "Beerschot V.A",
+          "G. Beerschot",
+          "Germ. Beerschot",
+          "KFCO Beerschot",
+          "VAC Beerschot"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Brighton",
+        "aliases": [
+          "Brighton & Hove Albion"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Wolves",
+        "aliases": [
+          "Wolverhampton Wanderers"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Celta Vigo",
+        "aliases": [
+          "Celta de Vigo",
+          "Celta",
+          "Real Celta de Vigo S. A. D"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "PSV Eindhoven",
+        "aliases": [
+          "PSV",
+          "PSV '35",
+          "PSV Amateurs",
+          "Eindhoven",
+          "Eindhovense Voetbalvereniging Philips Sport Vereniging"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Ajax",
+        "aliases": [
+          "Ajax Amsterdam",
+          "Ajax Am. 2",
+          "Ajax Amateurs",
+          "AFC Ajax"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Everton",
+        "aliases": [
+          "Everton FC",
+          "Everton Moldes"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Liverpool",
+        "aliases": [
+          "Liverpool FC",
+          "Liverpool U23"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Valencia",
+        "aliases": [
+          "Valencia CF",
+          "Valencia S. A. D",
+          "Valencia You",
+          "Gran Valencia",
+          "FCM Valencia",
+          "IDA Valencia"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Real Betis",
+        "aliases": [
+          "Real Betis Balompié",
+          "Real Betis Balompié S.A.D",
+          "Betis C",
+          "Betis Deportivo"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Aston Villa",
+        "aliases": [
+          "Aston Villa U21"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Leicester City",
+        "aliases": [
+          "Leicester",
+          "Leicester U23",
+          "Leicester Road",
+          "Leicester SA"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Fulham",
+        "aliases": [
+          "Fulham FC"
+        ],
+        "hidden": false
+      },
+      {
         "display_name": "Bayern Munich",
         "aliases": [
           "Bayern",

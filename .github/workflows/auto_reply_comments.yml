@@ -1,0 +1,91 @@
+name: Social Media Auto-Reply Bot (YouTube & Instagram)
+
+on:
+  schedule:
+    # Runs every hour to reply to new comments across YouTube & Instagram
+    - cron: '30 * * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (preview matches without posting)'
+        required: false
+        default: false
+        type: boolean
+      platform:
+        description: 'Platform to scan (all, youtube, instagram)'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - youtube
+          - instagram
+      limit:
+        description: 'Number of recent posts/videos to scan'
+        required: false
+        default: '20'
+        type: string
+
+concurrency:
+  group: social-auto-replies
+  cancel-in-progress: false
+
+jobs:
+  auto-reply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Restore API Secrets & Credentials
+        env:
+          YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
+          YOUTUBE_TOKEN_BASE64: ${{ secrets.YOUTUBE_TOKEN_BASE64 }}
+          INSTAGRAM_CONFIG: ${{ secrets.INSTAGRAM_CONFIG }}
+        run: |
+          mkdir -p private
+          if [ -n "$YOUTUBE_TOKEN_JSON" ]; then
+            echo "$YOUTUBE_TOKEN_JSON" > private/youtube_token.json
+            echo "✅ Restored YouTube credentials."
+          elif [ -n "$YOUTUBE_TOKEN_BASE64" ]; then
+            echo "$YOUTUBE_TOKEN_BASE64" | base64 --decode > private/youtube_token.pickle
+            echo "✅ Restored YouTube credentials from Base64."
+          fi
+
+          if [ -n "$INSTAGRAM_CONFIG" ]; then
+            echo "$INSTAGRAM_CONFIG" > private/instagram_config.json
+            echo "✅ Restored Instagram credentials."
+          fi
+
+      - name: Run Auto-Reply Engine
+        env:
+          INPUT_DRY_RUN: ${{ github.event.inputs.dry_run }}
+          INPUT_PLATFORM: ${{ github.event.inputs.platform || 'all' }}
+          INPUT_LIMIT: ${{ github.event.inputs.limit || '20' }}
+        run: |
+          PLATFORM_FLAG=""
+          if [ "$INPUT_PLATFORM" = "youtube" ]; then
+            PLATFORM_FLAG="--youtube"
+          elif [ "$INPUT_PLATFORM" = "instagram" ]; then
+            PLATFORM_FLAG="--instagram"
+          fi
+
+          CMD="python3 -u scripts/auto_reply_comments.py --limit $INPUT_LIMIT $PLATFORM_FLAG"
+          if [ "$INPUT_DRY_RUN" = "true" ]; then
+            CMD="$CMD --dry-run"
+          fi
+          echo "Executing: $CMD"
+          $CMD

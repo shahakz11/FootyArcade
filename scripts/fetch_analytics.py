@@ -200,6 +200,30 @@ def analyze_youtube(force_reauth=False):
         print("💡 Run with `--reauth-youtube` to grant YouTube Analytics permissions in your browser.")
 
 
+def fetch_media_insights(media_id, media_product_type, access_token):
+    """Fetches insights for an individual IG Reel or Post."""
+    if media_product_type == "REELS":
+        metrics = "views,reach,saved,shares,total_interactions,ig_reels_avg_watch_time,reels_skip_rate"
+    else:
+        metrics = "reach,saved,shares,total_interactions"
+    
+    url = f"https://graph.facebook.com/v21.0/{media_id}/insights?metric={metrics}&access_token={access_token}"
+    try:
+        req = urllib.request.urlopen(url, timeout=5)
+        res = json.loads(req.read().decode("utf-8"))
+        insights_data = {}
+        for item in res.get("data", []):
+            name = item.get("name")
+            values = item.get("values", [{}])
+            val = values[0].get("value") if values else item.get("value", 0)
+            if name == "ig_reels_avg_watch_time" and isinstance(val, (int, float)) and val > 100:
+                val = round(val / 1000.0, 2)
+            insights_data[name] = val
+        return insights_data
+    except Exception:
+        return None
+
+
 def analyze_instagram():
     if not os.path.exists(IG_CONFIG_FILE):
         print("❌ private/instagram_config.json not found.")
@@ -247,13 +271,71 @@ def analyze_instagram():
     if media_items:
         print(f"Avg Likes per Post:      {total_likes / len(media_items):.2f}")
 
-    # Top liked posts
-    print("\n--- Top Engaged Posts ---")
-    for m in sorted(media_items, key=lambda x: x.get("like_count", 0), reverse=True)[:5]:
-        cap = (m.get("caption") or "").split("\n")[0][:45]
-        print(f"❤️ {m.get('like_count', 0):2d} likes | {m.get('comments_count', 0):2d} comments | {m.get('timestamp')[:10]} | {cap}")
+    # 3. Check for instagram_manage_insights by sampling the first media item
+    has_insights = False
+    enriched_items = []
+    if media_items:
+        first_insights = fetch_media_insights(media_items[0]["id"], media_items[0].get("media_product_type"), access_token)
+        if first_insights is not None:
+            has_insights = True
+            print("✅ Instagram Insights API connected successfully (`instagram_manage_insights` active)!")
+            print("Fetching metrics (reach, views, saves, shares, retention) concurrently...")
+            import concurrent.futures
 
-    print("\n💡 Note: For detailed reach/views/retention per Reel, add `instagram_manage_insights` to the Meta App.")
+            def get_enriched(m):
+                ins = fetch_media_insights(m["id"], m.get("media_product_type"), access_token) or {}
+                m_copy = dict(m)
+                m_copy.update(ins)
+                return m_copy
+
+            with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+                enriched_items = list(executor.map(get_enriched, media_items))
+
+    if has_insights and enriched_items:
+        total_views = sum(m.get("views", 0) for m in enriched_items)
+        total_reach = sum(m.get("reach", 0) for m in enriched_items)
+        total_saves = sum(m.get("saved", 0) for m in enriched_items)
+        total_shares = sum(m.get("shares", 0) for m in enriched_items)
+
+        print(f"\n--- Aggregated Video Reach & Engagement ---")
+        print(f"Total Views:             {total_views:,}")
+        print(f"Total Accounts Reached:  {total_reach:,}")
+        print(f"Total Saves:             {total_saves:,}")
+        print(f"Total Shares:            {total_shares:,}")
+
+        # Top Reels by Reach
+        print("\n--- Top Reels by Reach & Views ---")
+        top_by_reach = sorted(enriched_items, key=lambda x: x.get("reach", 0), reverse=True)[:7]
+        for m in top_by_reach:
+            cap = (m.get("caption") or "").split("\n")[0][:38]
+            reach = m.get("reach", 0)
+            views = m.get("views", 0)
+            saves = m.get("saved", 0)
+            shares = m.get("shares", 0)
+            likes = m.get("like_count", 0)
+            avg_wt = m.get("ig_reels_avg_watch_time", 0)
+            wt_str = f"avg {avg_wt:.1f}s" if avg_wt else ""
+            print(f"🔥 {reach:4d} reach | {views:4d} views | {likes:2d} likes | {saves:2d} saves | {shares:2d} shares | {wt_str:9s} | {cap}")
+
+        # Top Reels by Saves & Shares (Algorithmic Super-Signals)
+        print("\n--- Top Reels by Retention & Saves ---")
+        top_by_shares = sorted(enriched_items, key=lambda x: x.get("ig_reels_avg_watch_time", 0), reverse=True)[:7]
+        for m in top_by_shares:
+            cap = (m.get("caption") or "").split("\n")[0][:38]
+            saves = m.get("saved", 0)
+            shares = m.get("shares", 0)
+            avg_wt = m.get("ig_reels_avg_watch_time", 0)
+            skip = m.get("reels_skip_rate")
+            skip_str = f"skip {skip}%" if skip is not None else ""
+            wt_str = f"avg {avg_wt:.1f}s" if avg_wt else ""
+            print(f"💎 {wt_str:9s} | {skip_str:10s} | {saves:2d} saves | {shares:2d} shares | {m.get('timestamp')[:10]} | {cap}")
+
+    else:
+        # Fallback to standard post engagement
+        print("\n--- Top Engaged Posts ---")
+        for m in sorted(media_items, key=lambda x: x.get("like_count", 0), reverse=True)[:5]:
+            cap = (m.get("caption") or "").split("\n")[0][:45]
+            print(f"❤️ {m.get('like_count', 0):2d} likes | {m.get('comments_count', 0):2d} comments | {m.get('timestamp')[:10]} | {cap}")
 
 
 def main():

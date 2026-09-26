@@ -132,3 +132,7 @@ jobs:
           echo "Executing: $CMD"
           $CMD
 
+      - name: Auto-Reply to Correct Answers on Recent Reels
+        run: |
+          python3 -u scripts/auto_reply_comments.py --limit 20
+
