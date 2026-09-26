@@ -323,11 +323,11 @@ def is_youtube_already_uploaded(game_id, target_name="", date_str=None, youtube=
         # Game generic title prefixes for matching even if target name varies
         game_patterns = {
             "top_transfers": ["record transfers", "top transfers"],
-            "transfer_destination": ["career path backwards", "mystery player", "transfer destination"],
-            "player_chain": ["teammate chain", "player chain", "played for both", "player for both"],
-            "club_connect": ["which team all of these players transferred to", "transferred to", "club connect"],
+            "transfer_destination": ["career path backwards", "transfer destination"],
+            "player_chain": ["player chain", "teammate chain"],
+            "club_connect": ["which team all of these players transferred to", "club connect"],
             "top_scorers": ["scored the most goals", "top scorers"],
-            "passport_fc": ["club passport", "passport fc", "passport", "player to play for"]
+            "passport_fc": ["passport fc", "club passport"]
         }
         patterns = game_patterns.get(game_id, [])
 
@@ -343,17 +343,23 @@ def is_youtube_already_uploaded(game_id, target_name="", date_str=None, youtube=
                 # 1. Exact or near match
                 if clean_vtitle == clean_expected:
                     return True, shorts_url
-                # 2. Target name in title
-                if target_name and target_name.lower() in clean_vtitle:
-                    return True, shorts_url
-                # Check entity parts if target_name is composite (e.g. "Barcelona & Benfica")
-                if target_name and " & " in target_name:
-                    parts = [p.strip().lower() for p in target_name.split(" & ")]
-                    if all(p in clean_vtitle for p in parts if len(p) > 3):
+
+                # 2. Target name matching
+                if target_name and target_name.strip():
+                    target_matches = False
+                    if " & " in target_name:
+                        parts = [p.strip().lower() for p in target_name.split(" & ")]
+                        if parts and all(p in clean_vtitle for p in parts if len(p) > 2):
+                            target_matches = True
+                    elif len(target_name.strip()) > 2 and target_name.strip().lower() in clean_vtitle:
+                        target_matches = True
+
+                    if target_matches:
                         return True, shorts_url
-                # 3. Game pattern match (each game only posts once per day)
-                if any(p in clean_vtitle for p in patterns):
-                    return True, shorts_url
+                else:
+                    # 3. Game pattern match only if target_name was not provided
+                    if any(p in clean_vtitle for p in patterns):
+                        return True, shorts_url
     except Exception as e:
         print(f"⚠️ YouTube deduplication check warning: {e}")
 

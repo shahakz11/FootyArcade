@@ -170,11 +170,11 @@ def is_already_posted(game_id, date_str, target_name=""):
 
             game_patterns = {
                 "top_transfers": ["record transfers", "top transfers"],
-                "transfer_destination": ["career path backwards", "mystery player", "transfer destination"],
-                "player_chain": ["teammate chain", "player chain", "played for both", "player for both"],
-                "club_connect": ["transferred to", "played for both clubs", "club connect"],
+                "transfer_destination": ["career path backwards", "transfer destination"],
+                "player_chain": ["player chain", "teammate chain"],
+                "club_connect": ["club connect", "which team all of these players transferred to"],
                 "top_scorers": ["scored the most goals", "top scorers"],
-                "passport_fc": ["club passport", "passport fc", "passport", "player to play for"]
+                "passport_fc": ["passport fc", "club passport"]
             }
             patterns = game_patterns.get(game_id, [])
 
@@ -185,18 +185,22 @@ def is_already_posted(game_id, date_str, target_name=""):
 
                 # Check if published on the given date
                 if pub_date == date_str:
-                    # Match game-specific pattern
-                    if any(p in caption for p in patterns):
-                        mark_as_posted(game_id, date_str, permalink, item.get("id"))
-                        return True, permalink
-                    # Match target name if specific enough
-                    if target_name and len(target_name.strip()) > 3 and target_name.lower() in caption:
-                        mark_as_posted(game_id, date_str, permalink, item.get("id"))
-                        return True, permalink
-                    # Check entity parts if target_name is composite (e.g. "Barcelona & Benfica")
-                    if target_name and " & " in target_name:
-                        parts = [p.strip().lower() for p in target_name.split(" & ")]
-                        if all(p in caption for p in parts if len(p) > 3):
+                    # If target_name is specified, evaluate target matching
+                    if target_name and target_name.strip():
+                        target_matches = False
+                        if " & " in target_name:
+                            parts = [p.strip().lower() for p in target_name.split(" & ")]
+                            if parts and all(p in caption for p in parts if len(p) > 2):
+                                target_matches = True
+                        elif len(target_name.strip()) > 2 and target_name.strip().lower() in caption:
+                            target_matches = True
+
+                        if target_matches:
+                            mark_as_posted(game_id, date_str, permalink, item.get("id"))
+                            return True, permalink
+                    else:
+                        # Fall back to game-specific patterns only when target_name is not provided
+                        if any(p in caption for p in patterns):
                             mark_as_posted(game_id, date_str, permalink, item.get("id"))
                             return True, permalink
     except Exception as e:
