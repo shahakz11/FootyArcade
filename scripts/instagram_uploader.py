@@ -220,12 +220,42 @@ def mark_as_posted(game_id, date_str, permalink, ig_media_id):
     }
     _save_ledger(ledger)
 
+def fetch_trending_audio(audio_type="music", search_query=None):
+    """
+    Fetches trending audio tracks or original sounds directly from Instagram Audio API (GET /ig_audio).
+    Returns a list of available audio tracks with audio_id, title, and artist.
+    """
+    try:
+        config = load_config()
+        token = config.get("access_token")
+        ig_user_id = config.get("ig_user_id")
+        if not token or not ig_user_id:
+            return []
+
+        params = {
+            "audio_type": audio_type,
+            "ig_user_id": ig_user_id,
+            "access_token": token
+        }
+        if search_query:
+            params["search_query"] = search_query
+
+        url = f"https://graph.facebook.com/v21.0/ig_audio?{urllib.parse.urlencode(params)}"
+        req = urllib.request.Request(url)
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            return data.get("data", [])
+    except Exception as e:
+        log_message(f"⚠️ Could not fetch Instagram trending audio: {e}")
+        return []
+
 # ── Resumable Reel Upload ────────────────────────────────────────────────────
 
-def upload_reel_now(video_path, caption=None, share_to_feed=True, max_retries=3):
+def upload_reel_now(video_path, caption=None, share_to_feed=True, audio_name=None, use_trending_audio=False, max_retries=3):
     """
     Directly uploads and publishes an MP4 video as an Instagram Reel using
     Meta's official Resumable Upload protocol.
+    Optionally attaches trending Instagram audio directly via the Instagram Audio API.
     Returns (ig_media_id, permalink).
     """
     if not os.path.exists(video_path):
@@ -239,6 +269,15 @@ def upload_reel_now(video_path, caption=None, share_to_feed=True, max_retries=3)
     token = config["access_token"]
     ig_user_id = config["ig_user_id"]
 
+    # Check for trending audio if requested
+    selected_audio_name = audio_name
+    if use_trending_audio and not selected_audio_name:
+        trending = fetch_trending_audio(audio_type="music")
+        if trending:
+            first_track = trending[0]
+            selected_audio_name = first_track.get("title") or first_track.get("id")
+            log_message(f"🎵 [Instagram] Selected trending audio: '{first_track.get('title')}' by {first_track.get('artist_name', 'Unknown')}")
+
     log_message(f"🚀 [Instagram] Initializing Reels container for {os.path.basename(video_path)} ({file_size / (1024*1024):.2f} MB)...")
 
     # Step 1: Create media container
@@ -251,6 +290,8 @@ def upload_reel_now(video_path, caption=None, share_to_feed=True, max_retries=3)
     }
     if caption:
         container_data["caption"] = caption
+    if selected_audio_name:
+        container_data["audio_name"] = selected_audio_name
 
     encoded_data = urllib.parse.urlencode(container_data).encode("utf-8")
     req = urllib.request.Request(container_url, data=encoded_data, method="POST")
@@ -524,12 +565,25 @@ def main():
     parser.add_argument("--caption", help="Caption for the reel")
     parser.add_argument("--game", default="top_transfers", help="Game ID for caption generation")
     parser.add_argument("--target", default="", help="Target name for caption generation")
+    parser.add_argument("--trending-audio", action="store_true", help="Fetch and attach trending Instagram audio")
+    parser.add_argument("--audio-name", default=None, help="Specific audio name to attach to Reel")
+    parser.add_argument("--list-audio", action="store_true", help="Query and list top trending audios from Instagram API")
     parser.add_argument("--daemon", action="store_true", help="Run background queue processor loop")
     parser.add_argument("--process-now", action="store_true", help="Process all due queued reels now")
     parser.add_argument("--force-queue", action="store_true", help="Force publish all queued reels immediately")
     parser.add_argument("--queue-status", action="store_true", help="Print current queue status")
 
     args = parser.parse_args()
+
+    if args.list_audio:
+        tracks = fetch_trending_audio(audio_type="music")
+        if not tracks:
+            print("ℹ️ No tracks returned (or token expired).")
+        else:
+            print(f"🎵 Top Trending Audio Tracks ({len(tracks)}):")
+            for t in tracks:
+                print(f"  • {t.get('title', 'Unknown')} - {t.get('artist_name', 'Unknown')} (ID: {t.get('id')})")
+        return
 
     if args.check:
         try:
@@ -558,7 +612,12 @@ def main():
     if args.file:
         caption = args.caption or build_instagram_caption(args.game, args.target)
         try:
-            ig_id, permalink = upload_reel_now(args.file, caption)
+            ig_id, permalink = upload_reel_now(
+                args.file,
+                caption,
+                audio_name=args.audio_name,
+                use_trending_audio=args.trending_audio
+            )
             print(f"✅ Success! Reel URL: {permalink}")
         except Exception as e:
             print(f"❌ Upload failed: {e}")
