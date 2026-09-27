@@ -177,7 +177,8 @@ async def process_all_games(
     instant_reels=True,
     immediate_first=True,
     wait_queue=False,
-    force=False
+    force=False,
+    trending_audio=True
 ):
     print("\n" + "=" * 68)
     print("   ⚽  PLAYMAKER — DAILY SHORTS & REELS UPLOADER (LIVE IMMEDIATE)")
@@ -423,8 +424,8 @@ async def process_all_games(
                 if publish_at is None or instant_reels:
                     # Upload immediately
                     try:
-                        print(f"🚀 Uploading Reel immediately to Instagram...")
-                        ig_media_id, permalink = upload_reel_now(video_path, ig_caption)
+                        print(f"🚀 Uploading Reel immediately to Instagram (Trending Audio: {'ON' if trending_audio else 'OFF'})...")
+                        ig_media_id, permalink = upload_reel_now(video_path, ig_caption, use_trending_audio=trending_audio)
                         mark_ig_as_posted(game_id, today_str, permalink, ig_media_id)
                         ig_status = "Live Now"
                         ig_url = permalink
@@ -499,6 +500,7 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Render videos only without uploading")
     parser.add_argument("--no-youtube", action="store_true", help="Skip YouTube upload")
     parser.add_argument("--no-instagram", action="store_true", help="Skip Instagram upload")
+    parser.add_argument("--no-trending-audio", action="store_true", help="Disable automatic Instagram trending audio attachment")
     parser.add_argument("--wait-queue", action="store_true", help="Wait in foreground for all queued reels to finish (ideal for GitHub Actions)")
     parser.add_argument("--force", action="store_true", help="Bypass deduplication checks and re-render/re-upload")
 
@@ -535,7 +537,8 @@ def main():
         instant_reels=True,
         immediate_first=immediate_first,
         wait_queue=args.wait_queue,
-        force=args.force
+        force=args.force,
+        trending_audio=not args.no_trending_audio
     ))
 
 if __name__ == "__main__":
