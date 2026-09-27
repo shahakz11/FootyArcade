@@ -232,33 +232,78 @@
         let currentItems = [];
         let selectedItem = null;
 
+        function indexItem(item) {
+            if (item && item._faIndexed) return item;
+            const rawLabel = getItemLabel(item);
+            const cleanLabel = rawLabel.replace(/\s*\(\s*all\s*\)$/i, '').trim();
+            const normCleanLabel = normalizeStr(cleanLabel);
+            const normLabel = (cleanLabel === rawLabel) ? normCleanLabel : normalizeStr(rawLabel);
+            const words = normCleanLabel.split(/\s+/);
+
+            let aliasObjs = null;
+            const aliases = (item && typeof item === 'object' && (item.Aliases || item.aliases || item.AltNames || item.alt_names)) || [];
+            if (Array.isArray(aliases) && aliases.length > 0) {
+                aliasObjs = [];
+                for (let a of aliases) {
+                    const cleanA = String(a).replace(/\s*\(\s*all\s*\)$/i, '').trim();
+                    const normA = normalizeStr(cleanA);
+                    if (normA) {
+                        aliasObjs.push({ raw: a, norm: normA, words: normA.split(/\s+/) });
+                    }
+                }
+            }
+
+            let value = 0;
+            if (typeof cfg.valueFn === 'function') {
+                value = Number(cfg.valueFn(item)) || 0;
+            } else if (item && typeof item === 'object') {
+                value = Number(item.MarketValue || item.market_value || item.highest_market_value || item.value || 0) || 0;
+            }
+
+            if (item && typeof item === 'object') {
+                item._faIndexed = true;
+                item._rawLabel = rawLabel;
+                item._cleanLabel = cleanLabel;
+                item._normCleanLabel = normCleanLabel;
+                item._normLabel = normLabel;
+                item._words = words;
+                item._aliases = aliasObjs;
+                item._value = value;
+            }
+            return item;
+        }
+
         function searchAndRank(data, query) {
             const normQ = normalizeStr(query);
-            if (!normQ) return [];
+            const tier1 = [];
+            const tier2 = [];
+            const tier3 = [];
+            const dataLen = data.length;
 
-            const results = [];
-            for (let i = 0; i < data.length; i++) {
-                const item = data[i];
-                const rawLabel = getItemLabel(item);
-                const cleanLabel = rawLabel.replace(/\s*\(\s*all\s*\)$/i, '').trim();
-                const normLabel = normalizeStr(rawLabel);
-                const normCleanLabel = normalizeStr(cleanLabel);
+            for (let i = 0; i < dataLen; i++) {
+                let item = data[i];
+                if (!item._faIndexed) {
+                    item = indexItem(item);
+                }
+
+                const rawLabel = item._rawLabel;
+                const normCleanLabel = item._normCleanLabel;
+                const normLabel = item._normLabel;
 
                 let matches = normCleanLabel.includes(normQ) || normLabel.includes(normQ);
                 let matchedAlias = null;
                 let bestAliasTier = 99;
 
-                // Check item aliases if present (item.Aliases, item.aliases, item.AltNames)
-                const aliases = (item && typeof item === 'object' && (item.Aliases || item.aliases || item.AltNames || item.alt_names)) || [];
-                if (Array.isArray(aliases)) {
-                    for (let a of aliases) {
-                        const cleanA = String(a).replace(/\s*\(\s*all\s*\)$/i, '').trim();
-                        const normA = normalizeStr(cleanA);
-                        if (!normA) continue;
+                // Check item aliases if present
+                const aliases = item._aliases;
+                if (aliases) {
+                    for (let j = 0; j < aliases.length; j++) {
+                        const al = aliases[j];
+                        const normA = al.norm;
                         let currentAliasTier = 99;
-                        if (normA === normQ || normA.split(/\s+/).some(w => w === normQ)) {
+                        if (normA === normQ || al.words.some(w => w === normQ)) {
                             currentAliasTier = 1;
-                        } else if (normA.startsWith(normQ) || normA.split(/\s+/).some(w => w.startsWith(normQ))) {
+                        } else if (normA.startsWith(normQ) || al.words.some(w => w.startsWith(normQ))) {
                             currentAliasTier = 2;
                         } else if (normA.includes(normQ)) {
                             currentAliasTier = 3;
@@ -268,7 +313,7 @@
                             matches = true;
                             if (currentAliasTier < bestAliasTier) {
                                 bestAliasTier = currentAliasTier;
-                                matchedAlias = a;
+                                matchedAlias = al.raw;
                             }
                         }
                     }
@@ -281,7 +326,7 @@
                 if (!matches) continue;
 
                 let tier = 4;
-                const words = normCleanLabel.split(/\s+/);
+                const words = item._words;
                 if (normCleanLabel === normQ || words.some(w => w === normQ)) {
                     tier = 1;
                 } else if (normCleanLabel.startsWith(normQ) || words.some(w => w.startsWith(normQ))) {
@@ -294,34 +339,40 @@
                     tier = bestAliasTier;
                 }
 
-                let value = 0;
-                if (typeof cfg.valueFn === 'function') {
-                    value = Number(cfg.valueFn(item)) || 0;
-                } else if (item && typeof item === 'object') {
-                    value = Number(item.MarketValue || item.market_value || item.highest_market_value || item.value || 0) || 0;
-                }
-
-                results.push({
+                const entry = {
                     item,
                     tier,
-                    value,
+                    value: item._value,
                     len: normCleanLabel.length,
                     label: rawLabel,
                     matchedAlias
-                });
+                };
+
+                if (tier === 1) tier1.push(entry);
+                else if (tier === 2) tier2.push(entry);
+                else tier3.push(entry);
             }
 
-            results.sort((a, b) => {
-                if (a.tier !== b.tier) return a.tier - b.tier;
+            const sortFn = (a, b) => {
                 if (b.value !== a.value) return b.value - a.value;
                 if (a.len !== b.len) return a.len - b.len;
                 return a.label.localeCompare(b.label);
-            });
+            };
 
-            // Deduplicate identical items or spelling variations, while preserving distinct players (homonyms)
+            tier1.sort(sortFn);
+            tier2.sort(sortFn);
+            if (tier1.length + tier2.length < maxResults * 2) {
+                tier3.sort(sortFn);
+            }
+
+            const rawCandidates = [...tier1, ...tier2, ...tier3];
+            const candidateLimit = Math.min(rawCandidates.length, maxResults * 3);
+
+            // Deduplicate top candidate items or spelling variations, while preserving distinct players (homonyms)
             const uniqueResults = [];
             const seenKeys = new Map();
-            for (const r of results) {
+            for (let i = 0; i < candidateLimit; i++) {
+                const r = rawCandidates[i];
                 const norm = normalizeStr(r.label);
                 let dedupeKey = norm;
                 if (r.item && typeof r.item === 'object') {
@@ -336,6 +387,7 @@
                 if (!seenKeys.has(dedupeKey)) {
                     seenKeys.set(dedupeKey, r);
                     uniqueResults.push(r);
+                    if (uniqueResults.length >= maxResults) break;
                 } else {
                     const existing = seenKeys.get(dedupeKey);
                     if (r.value > existing.value) {
@@ -345,7 +397,6 @@
                             seenKeys.set(dedupeKey, r);
                         }
                     } else if (r.value === existing.value && /[^\x00-\x7F]/.test(r.label) && !/[^\x00-\x7F]/.test(existing.label)) {
-                        // Prefer version with accents or special characters if equal value
                         const idx = uniqueResults.indexOf(existing);
                         if (idx !== -1) {
                             uniqueResults[idx] = r;
@@ -455,7 +506,7 @@
                 if (!q) { list.classList.add('hidden'); currentItems = []; return; }
                 const matches = searchAndRank(cfg.data, q).slice(0, maxResults);
                 renderList(matches);
-            }, 60);
+            }, 20);
         });
 
         input.addEventListener('keydown', (e) => {

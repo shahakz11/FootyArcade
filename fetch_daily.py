@@ -208,6 +208,39 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         ('<p><strong class="text-on-background font-title">6. Database Scope:</strong> Covers official senior transfers and signings across European and international football.</p>',
          '<p><strong class="text-on-background font-title">6. Base de Datos:</strong> Cubre traspasos oficiales y fichajes del primer equipo en el fútbol europeo e internacional.</p>'),
 
+        # Played With
+        ('<p><strong class="text-white font-title">1. Goal:</strong> Deduce today\'s Mystery Player using 5 teammate clues revealed one by one.</p>',
+         '<p><strong class="text-white font-title">1. Objetivo:</strong> Deduce al Jugador Misterioso de hoy usando 5 pistas de compañeros reveladas una a una.</p>'),
+        ('<div>🔥 <strong>Clue 1:</strong> Least frequent teammate (fewest matches shared)</div>',
+         '<div>🔥 <strong>Pista 1:</strong> Compañero menos frecuente (menos partidos juntos)</div>'),
+        ('<div>🧠 <strong>Clue 2:</strong> Low-mid frequency teammate</div>',
+         '<div>🧠 <strong>Pista 2:</strong> Compañero de nivel medio-bajo</div>'),
+        ('<div>⚡ <strong>Clue 3:</strong> Mid-frequency teammate</div>',
+         '<div>⚡ <strong>Pista 3:</strong> Compañero de frecuencia media</div>'),
+        ('<div>🎯 <strong>Clue 4:</strong> 10th most frequent teammate</div>',
+         '<div>🎯 <strong>Pista 4:</strong> 10º compañero más frecuente</div>'),
+        ('<div>🎁 <strong>Clue 5:</strong> #1 all-time most frequent partner</div>',
+         '<div>🎁 <strong>Pista 5:</strong> Compañero #1 más frecuente de su carrera</div>'),
+        ('<p><strong class="text-white font-title">2. Lives & Guesses:</strong> You have 5 lives. An incorrect guess or clicking \'Skip\' deducts a life and reveals the next teammate card.</p>',
+         '<p><strong class="text-white font-title">2. Vidas e Intentos:</strong> Tienes 5 vidas. Un fallo o pulsar \'Saltar\' resta 1 vida y revela la siguiente tarjeta de compañero.</p>'),
+        ('<p><strong class="text-white font-title">3. Hints:</strong> Click the lightbulb on any revealed card to reveal the exact number of matches shared together.</p>',
+         '<p><strong class="text-white font-title">3. Pistas:</strong> Pulsa la bombilla en cualquier tarjeta visible para descubrir el número exacto de partidos juntos.</p>'),
+        ('<p><strong class="text-white font-title">4. Scoring:</strong> Solving on Clue 1 awards a perfect 5/5 score ⭐⭐⭐⭐⭐!</p>',
+         '<p><strong class="text-white font-title">4. Puntuación:</strong> ¡Acertar en la Pista 1 otorga una puntuación perfecta de 5/5 ⭐⭐⭐⭐⭐!</p>'),
+        ('Guess the Mystery Player', 'Adivina el Jugador Misterioso'),
+        ('5 teammates revealed by appearances together from least to most frequent. Deduce the mystery star!',
+         '5 compañeros revelados por partidos juntos de menor a mayor frecuencia. ¡Deduce la estrella misteriosa!'),
+        ('GUESS THE MYSTERY PLAYER:', 'ADIVINA EL JUGADOR MISTERIOSO:'),
+        ('Search footballer...', 'Buscar futbolista...'),
+        ('Reveal next teammate clue', 'Revelar siguiente pista de compañero'),
+        ('title="Reveal appearances together"', 'title="Revelar partidos jugados juntos"'),
+        ('<span>Matches</span>', '<span>Partidos</span>'),
+        ('Matches</span>', 'Partidos</span>'),
+        ('is not the mystery player of the day!', 'no es el jugador misterioso de hoy.'),
+        ("is today's mystery player!", 'es el jugador misterioso de hoy.'),
+        ('Reveals after incorrect guess or skip', 'Se revela tras un fallo o al saltar'),
+        ('THE MYSTERY PLAYER WAS', 'EL JUGADOR MISTERIOSO ERA'),
+
         # Navigation & Badges
         ('>Prev<', '>Ant.<'),
         ('>Next<', '>Sig.<'),
@@ -373,6 +406,57 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         ('Transfer data sourced from Transfermarkt. Updated to September 2026.', 'Datos de transferencias de Transfermarkt. Actualizados a junio de 2026.'),
         ('Connect consecutive clubs through shared teammates to uncover the mystery player of the day. Each step adds a new club or national team constraint. Guess an eligible teammate to advance, or identify the mystery player directly for an instant win!', 'Conecta clubes consecutivos mediante compañeros de equipo para descubrir al jugador misterioso del día. Cada paso añade una restricción de club o selección. ¡Adivina un compañero válido para avanzar o identifica al jugador misterioso directamente para ganar!'),
         ('Career & transfer data sourced from Transfermarkt. Updated to June 2026.', 'Datos de trayectoria y traspasos de Transfermarkt. Actualizados a junio de 2026.'),
+
+        # Played With HTML Elements & Labels
+        ('GUESS THE MYSTERY PLAYER:', 'ADIVINA AL JUGADOR MISTERIOSO:'),
+        ('>GUESS THE MYSTERY PLAYER:<', '>ADIVINA AL JUGADOR MISTERIOSO:<'),
+        ('placeholder="Search footballer..."', 'placeholder="Buscar futbolista..."'),
+        ('Please pick a footballer from the dropdown list.', 'Por favor selecciona un futbolista de la lista desplegable.'),
+        ('>Revealed: <span id="progress-step">', '>Revelados: <span id="progress-step">'),
+        ('>Revealed:&nbsp;', '>Revelados:&nbsp;'),
+        ('>Revealed:', '>Revelados:'),
+        ('title="Reveal next teammate clue"', 'title="Revelar siguiente compañero"'),
+        ('<span class="hidden sm:inline">Skip</span>', '<span class="hidden sm:inline">Saltar</span>'),
+        ('>Skip</button>', '>Saltar</button>'),
+        ('>Skip</span>', '>Saltar</span>'),
+        ('<span>Mystery Player of the Day</span>', '<span>Jugador Misterioso del Día</span>'),
+        ('Mystery Player of the Day', 'Jugador Misterioso del Día'),
+        ('<span>Reveal Matches</span>', '<span>Revelar Partidos</span>'),
+        ('title="Reveal matches together"', 'title="Revelar partidos jugados juntos"'),
+        ('title="Reveal appearances together"', 'title="Revelar partidos jugados juntos"'),
+        ('title="Reveal number of competitive matches played together"', 'title="Revelar partidos jugados juntos"'),
+        ('>Clues</span>', '>Pistas</span>'),
+
+        # Played With How To Play Modal
+        ('<p><strong class="text-white font-title">1. Goal:</strong> Deduce today\'s Mystery Player using 5 teammate clues revealed one by one.</p>',
+         '<p><strong class="text-white font-title">1. Objetivo:</strong> Deduce al Jugador Misterioso de hoy usando 5 pistas de compañeros revelados uno a uno.</p>'),
+        ('<div>🔥 <strong>Clue 1:</strong> Least frequent teammate (fewest matches shared)</div>',
+         '<div>🔥 <strong>Pista 1:</strong> Compañero menos frecuente (menor cantidad de partidos compartidos)</div>'),
+        ('<div>🧠 <strong>Clue 2:</strong> Low-mid frequency teammate</div>',
+         '<div>🧠 <strong>Pista 2:</strong> Compañero de frecuencia baja-media</div>'),
+        ('<div>⚡ <strong>Clue 3:</strong> Mid-frequency teammate</div>',
+         '<div>⚡ <strong>Pista 3:</strong> Compañero de frecuencia media</div>'),
+        ('<div>🎯 <strong>Clue 4:</strong> 10th most frequent teammate</div>',
+         '<div>🎯 <strong>Pista 4:</strong> 10º compañero más frecuente</div>'),
+        ('<div>🎁 <strong>Clue 5:</strong> #1 all-time most frequent partner</div>',
+         '<div>🎁 <strong>Pista 5:</strong> Compañero #1 más habitual de su carrera</div>'),
+        ('<p><strong class="text-white font-title">2. Lives & Guesses:</strong> You have 5 lives. An incorrect guess deducts 1 life and reveals the next teammate card. You can also skip to reveal the next clue without losing a life.</p>',
+         '<p><strong class="text-white font-title">2. Vidas e Intentos:</strong> Tienes 5 vidas. Un fallo resta 1 vida y revela la siguiente carta de compañero. También puedes saltar para revelar la siguiente pista sin perder vidas.</p>'),
+        ('<p><strong class="text-white font-title">2. Lives & Guesses:</strong> You have 5 lives. An incorrect guess or clicking \'Skip\' deducts a life and reveals the next teammate card.</p>',
+         '<p><strong class="text-white font-title">2. Vidas e Intentos:</strong> Tienes 5 vidas. Un fallo resta 1 vida y revela la siguiente carta de compañero. También puedes saltar para revelar la siguiente pista sin perder vidas.</p>'),
+        ('<p><strong class="text-white font-title">3. Hints:</strong> Click the lightbulb on any revealed card to reveal the exact number of matches shared together.</p>',
+         '<p><strong class="text-white font-title">3. Pistas:</strong> Haz clic en la bombilla de cualquier carta revelada para ver la cantidad exacta de partidos jugados juntos.</p>'),
+        ('<p><strong class="text-white font-title">4. Scoring:</strong> Solving on Clue 1 awards a perfect 5/5 score ⭐⭐⭐⭐⭐!</p>',
+         '<p><strong class="text-white font-title">4. Puntuación:</strong> ¡Acertar en la Pista 1 otorga una puntuación perfecta de 5/5 ⭐⭐⭐⭐⭐!</p>'),
+
+        # Played With SEO Article footer
+        ('Official senior competitive matches across top 5 European leagues, domestic cups, and UEFA competitions.',
+         'Partidos oficiales de primer equipo en las 5 grandes ligas europeas, copas nacionales y competiciones UEFA.'),
+        ('<strong>Database Coverage:</strong> Official senior competitive matches across top 5 European leagues, domestic cups, and UEFA competitions.',
+         '<strong>Cobertura de la Base de Datos:</strong> Partidos oficiales de primer equipo en las 5 grandes ligas europeas, copas nacionales y competiciones UEFA.'),
+        ('<strong>Daily Reset:</strong> A new puzzle unlocks every day at 00:00 UTC.',
+         '<strong>Reinicio Diario:</strong> Un nuevo puzzle se desbloquea cada día a las 00:00 UTC.'),
+
         # Accessibility & Button titles
         ('aria-label="How to play instructions"', 'aria-label="Instrucciones de cómo jugar"'),
         ('title="How to play"', 'title="Cómo jugar"'),
@@ -405,6 +489,11 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         (r'>\s*CLOSE\s*</button>', '>CERRAR</button>'),
         (r'>\s*SHARE\s*</button>', '>COMPARTIR</button>'),
         (r'>\s*GOT IT\s*</button>', '>ENTENDIDO</button>'),
+        (r'>\s*INCORRECT GUESSES\s*<', '>INTENTOS INCORRECTOS<'),
+        (r'>\s*GUESS THE MYSTERY PLAYER:\s*<', '>ADIVINA AL JUGADOR MISTERIOSO:<'),
+        (r'>\s*Revealed:\s*<span', '>Revelados: <span'),
+        (r'>\s*MAGNIFICENT!\s*<', '>¡MAGNÍFICO!<'),
+        (r'aria-label="Close modal"', 'aria-label="Cerrar ventana"'),
         (r'>\s*THE MYSTERY PLAYER WAS\s*<', '>EL JUGADOR MISTERIOSO ERA<'),
         (r'>\s*MYSTERY PLAYER OF THE DAY\s*<', '>JUGADOR MISTERIOSO DEL DÍA<'),
         (r'<span class="material-symbols-outlined text-md">share</span>\s*SHARE', '<span class="material-symbols-outlined text-md">share</span> COMPARTIR'),
@@ -541,6 +630,49 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
          "Tu respuesta: <strong class=\"text-white font-bold\">${rec.guessed}</strong>"),
         ("${poolCount} total qualifying", "${poolCount} total elegibles"),
         ("Valid: <strong class=\"text-white\">", "Válidos: <strong class=\"text-white\">"),
+
+        # Played With JS dynamic labels & strings
+        ("'CLUE 1 · LEAST FREQUENT TEAMMATE 🔥'", "'PISTA 1 · COMPAÑERO MENOS FRECUENTE 🔥'"),
+        ("'CLUE 2 · LOW-MID TIER 🧠'", "'PISTA 2 · FRECUENCIA BAJA-MEDIA 🧠'"),
+        ("'CLUE 3 · MID TIER ⚡'", "'PISTA 3 · FRECUENCIA MEDIA ⚡'"),
+        ("'CLUE 4 · 10TH MOST FREQUENT 🎯'", "'PISTA 4 · 10º MÁS FRECUENTE 🎯'"),
+        ("'CLUE 5 · MOST FREQUENT PARTNER 🎁'", "'PISTA 5 · COMPAÑERO MÁS FRECUENTE 🎁'"),
+        ("('CLUE ' + (idx + 1))", "('PISTA ' + (idx + 1))"),
+        ("Reveals after incorrect guess or skip", "Se desbloquea tras un fallo o al saltar"),
+        ('<span class="text-[9px] font-mono text-accent uppercase font-bold tracking-tight">Matches</span>',
+         '<span class="text-[9px] font-mono text-accent uppercase font-bold tracking-tight">Partidos</span>'),
+        ('<span>Reveal Matches</span>', '<span>Revelar Partidos</span>'),
+        ("title: 'SKIP CLUE?'", "title: '¿SALTAR PISTA?'"),
+        ("`Are you sure you want to reveal Clue ${nextClue + 1} without submitting a guess?`",
+         "`¿Estás seguro de que quieres revelar la Pista ${nextClue + 1} sin enviar un intento?`"),
+        ("confirmText: 'SKIP CLUE'", "confirmText: 'SALTAR PISTA'"),
+        ("cancelText: 'KEEP GUESSING'", "cancelText: 'SEGUIR JUGANDO'"),
+        ("title: 'GIVE UP?'", "title: '¿RENDIRSE?'"),
+        ("'Are you sure you want to give up? The mystery player will be revealed.'",
+         "'¿Estás seguro de que quieres rendirte? Se revelará el jugador misterioso.'"),
+        ("confirmText: 'GIVE UP'", "confirmText: 'RENDIRSE'"),
+        ("cancelText: 'KEEP PLAYING'", "cancelText: 'SEGUIR JUGANDO'"),
+        ("title: 'BRILLIANT!'", "title: '¡MAGNÍFICO!'"),
+        ("`${playerName} is today's mystery player!`", "`¡${playerName} es el jugador misterioso de hoy!`"),
+        ("title: 'INCORRECT GUESS'", "title: '¡INTENTO INCORRECTO!'"),
+        ("`${playerName} is not the mystery player of the day!`", "`¡${playerName} no es el jugador misterioso de hoy!`"),
+        ("title: won ? 'MAGNIFICENT!' : 'GAME OVER'", "title: won ? '¡MAGNÍFICO!' : 'FIN DE LA PARTIDA'"),
+        ("title: isWon ? 'MAGNIFICENT!' : 'GAME OVER'", "title: isWon ? '¡MAGNÍFICO!' : 'FIN DE LA PARTIDA'"),
+        ("`You deduced ${pName} in ${cluesNeeded} clue(s)!`", "`¡Dedujiste a ${pName} en ${cluesNeeded} pista(s)!`"),
+        ("`The mystery player was ${pName}. Better luck tomorrow!`", "`El jugador misterioso era ${pName}. ¡Mejor suerte mañana!`"),
+        ("`You deduced ${pName}!`", "`¡Dedujiste a ${pName}!`"),
+        ("`The mystery player was ${pName}.`", "`El jugador misterioso era ${pName}.`"),
+        ("`💡 ${step.teammate_name} played ${step.appearances_together} matches together!`",
+         "`💡 ¡${step.teammate_name} jugó ${step.appearances_together} partidos juntos!`"),
+        ("`You already guessed ${playerName}!`", "`¡Ya habías intentado con ${playerName}!`"),
+        ("`Clue ${nextClue + 1} revealed!`", "`¡Pista ${nextClue + 1} revelada!`"),
+        ("'All 5 teammate clues are already revealed!'", "'¡Las 5 pistas de compañeros ya están reveladas!'"),
+        ("'+1 Life restored!'", "'¡+1 Vida restaurada!'"),
+        ("'You already guessed this player!'", "'¡Ya habías intentado con este jugador!'"),
+        ("'Player not recognized. Please pick from the dropdown.'", "'Jugador no reconocido. Por favor elige de la lista desplegable.'"),
+        ("Peak: €", "Pico: €"),
+        ("`PLAYED WITH #${puzzleNum} ⚽\\n${grid} (${won ? score + '/5' : 'X/5'})\\nLives: ${hearts}\\nhttps://playmaker.best/games/played_with.html`",
+         "`JUGÓ CON #${puzzleNum} ⚽\\n${grid} (${won ? score + '/5' : 'X/5'})\\nVidas: ${hearts}\\nhttps://playmaker.best/es/games/played_with.html`"),
     ]
 
     for orig, rep in js_replacements:
@@ -554,6 +686,7 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         "club_connect": ("CLUB CONNECT", "CONEXIÓN DE CLUBES"),
         "player_chain": ("PLAYER CHAIN", "CADENA DE JUGADORES"),
         "passport_fc": ("PASSPORT FC", "PASAPORTE FC"),
+        "played_with": ("PLAYED WITH", "JUGÓ CON"),
     }
     if game_id in game_titles:
         en_t, es_t = game_titles[game_id]
@@ -566,6 +699,7 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         "club_connect": ("Club Connect — Daily Football Teammates Quiz | Playmaker", "Conexión de Clubes — Quiz Diario de Compañeros de Fútbol | Playmaker"),
         "player_chain": ("Player Chain — Daily Football Career Puzzle | Playmaker", "Cadena de Jugadores — Puzzle Diario de Trayectorias de Fútbol | Playmaker"),
         "passport_fc": ("Passport FC — Daily Football Nationality Puzzle | Playmaker", "Pasaporte FC — Puzzle Diario de Nacionalidades de Fútbol | Playmaker"),
+        "played_with": ("Played With — Daily Football Teammate Guessing Game | Playmaker", "Jugó Con — Juego Diario de Compañeros de Fútbol | Playmaker"),
     }
     if game_id in meta_titles:
         en_m, es_m = meta_titles[game_id]
@@ -595,6 +729,10 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         "passport_fc": (
             "Name qualifying footballers across 4 progressive nationality tiers to fill today's club passport — from major talent pools down to rare 1-player unicorns.",
             "Nombra futbolistas elegibles en 4 niveles progresivos de nacionalidad para completar el pasaporte del club de hoy — desde grandes potencias hasta unicornios de un solo jugador."
+        ),
+        "played_with": (
+            "5 teammates revealed by appearances together from least to most frequent. Deduce the mystery star!",
+            "5 compañeros revelados por partidos juntos de menor a mayor frecuencia. ¡Deduce la estrella misteriosa!"
         ),
     }
     if game_id in game_descriptions:
@@ -627,6 +765,10 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
             'Passport FC is a daily football trivia puzzle by Playmaker where fans collect nationality stamps for a featured anchor club. Each day highlights one world-famous club alongside four progressive nationality tiers. Players must name any qualifying footballer who made senior appearances or signed for that club while representing the designated nation. The puzzle begins with major footballing countries that have extensive talent pools before ascending to "The Unicorn" — an unexpected country with only one or two eligible players across the club\'s entire transfer history.',
             'Pasaporte FC es un puzzle diario de trivia de fútbol de Playmaker donde los fanáticos consiguen sellos de nacionalidad para un club ancla destacado. Cada día se presenta un club de renombre mundial junto a cuatro niveles progresivos de nacionalidad. Los jugadores deben nombrar a cualquier futbolista elegible que haya jugado en el primer equipo o fichado por dicho club representando a la nación indicada. El reto comienza con grandes potencias futbolísticas antes de ascender a "El Unicornio", un país insólito con solo uno o dos jugadores en toda la historia del club.'
         ),
+        "played_with": (
+            "Played With is a daily football deduction challenge by Playmaker where fans deduce a mystery star player (€30M+ peak valuation) through five teammates revealed in ascending order of competitive matches played together. Clue 1 unveils a rare teammate overlap (fewest matches), while Clue 5 reveals the mystery player's #1 most frequent career partner. Players submit guesses using a comprehensive player catalog with autocomplete. Submitting an incorrect guess deducts a life and unlocks the next teammate card. You can also skip to reveal the next clue. Solving the puzzle in the fewest possible clues earns a maximum efficiency score. New puzzles release daily at midnight UTC with full back-in-time archives.",
+            "Jugó Con es un reto diario de deducción futbolística de Playmaker donde los aficionados descubren a un jugador estrella misterioso (valor de mercado pico de +€30M) a través de cinco compañeros revelados en orden ascendente según los partidos competitivos jugados juntos. La Pista 1 muestra una coincidencia con pocos partidos compartidos, mientras que la Pista 5 revela a su compañero #1 más habitual de su carrera. Los jugadores envían sus intentos mediante un buscador con autocompletado. Un fallo resta una vida y desbloquea la siguiente carta de compañero. También puedes saltar para ver la siguiente pista sin perder vidas. ¡Resuelve el reto en la menor cantidad de pistas posible y mantén tu racha diaria!"
+        ),
     }
     for gid, (en_h, es_h) in how_to_play_paragraphs.items():
         es_html = es_html.replace(en_h, es_h)
@@ -638,6 +780,7 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         "What is Club Connect?": "¿Qué es Conexión de Clubes?",
         "What is Player Chain?": "¿Qué es Cadena de Jugadores?",
         "What is Passport FC?": "¿Qué es Pasaporte FC?",
+        "What is Played With?": "¿Qué es Jugó Con?",
     }
     for en_w, es_w in what_is_replacements.items():
         es_html = es_html.replace(en_w, es_w)
@@ -994,6 +1137,50 @@ def load_passport_fc(puzzle_num):
     return game_data, extra
 
 
+def load_played_with(puzzle_num):
+    """Returns (game_data_dict, extra_data_dict) for the played_with game."""
+    csv_path = "daily_played_with_games.csv"
+    if not os.path.exists(csv_path):
+        print(f"  ERROR: {csv_path} not found.")
+        return None, None
+
+    rows = []
+    with open(csv_path, "r", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            if int(r.get("game_day", 1)) == puzzle_num:
+                rows.append(r)
+
+    if not rows:
+        print(f"  WARNING: No played_with data for puzzle #{puzzle_num}")
+        return None, None
+
+    rows.sort(key=lambda x: int(x.get("step_number", 1)))
+    first = rows[0]
+
+    game_data = {
+        "mystery_player": first.get("mystery_player", ""),
+        "mystery_nationality": first.get("mystery_nationality", ""),
+        "mystery_position": first.get("mystery_position", ""),
+        "mystery_peak_value": int(first.get("mystery_peak_value", 0)),
+        "total_steps": int(first.get("total_steps", len(rows))),
+        "steps": []
+    }
+
+    for r in rows:
+        shared_c = json.loads(r.get("shared_clubs", "[]"))
+        game_data["steps"].append({
+            "step_number": int(r.get("step_number", 1)),
+            "clue_tier": r.get("clue_tier", ""),
+            "teammate_name": r.get("teammate_name", ""),
+            "teammate_nationality": r.get("teammate_nationality", ""),
+            "shared_clubs": shared_c,
+            "appearances_together": int(r.get("appearances_together", 0)),
+        })
+
+    extra = {}
+    return game_data, extra
+
+
 # Map game id → loader function
 GAME_LOADERS = {
     "top_transfers":        load_top_transfers,
@@ -1002,6 +1189,7 @@ GAME_LOADERS = {
     "club_connect":         load_club_connect,
     "player_chain":         load_player_chain,
     "passport_fc":          load_passport_fc,
+    "played_with":          load_played_with,
 }
 
 # Map game id → the JS variable name for the main data object
@@ -1012,6 +1200,7 @@ GAME_DATA_VAR = {
     "club_connect":         "DAILY_CLUBCONNECT_GAME",
     "player_chain":         "DAILY_CHAIN_GAME",
     "passport_fc":          "DAILY_PASSPORT_GAME",
+    "played_with":          "DAILY_PLAYEDWITH_GAME",
 }
 
 # Patterns to strip from a template before injecting fresh data
@@ -1064,6 +1253,15 @@ STRIP_PATTERNS = {
     ],
     "passport_fc": [
         r'const\s+DAILY_PASSPORT_GAME\s*=\s*\{[\s\S]*?\};',
+        r'const\s+ALL_PLAYERS\s*=\s*\[[\s\S]*?\];',
+        r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
+        r'const\s+PUZZLE_ID\s*=\s*\d+;',
+        r'const\s+IS_BACK_IN_TIME\s*=\s*(true|false);',
+        r'const\s+MAX_BACK_DAYS\s*=\s*\d+;',
+        r'const\s+GAME_NOTE\s*=\s*"[^"]*";',
+    ],
+    "played_with": [
+        r'const\s+DAILY_PLAYEDWITH_GAME\s*=\s*\{[\s\S]*?\};',
         r'const\s+ALL_PLAYERS\s*=\s*\[[\s\S]*?\];',
         r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
         r'const\s+PUZZLE_ID\s*=\s*\d+;',

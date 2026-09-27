@@ -272,6 +272,10 @@
                             <h4 class="font-headline text-2xl uppercase italic" style="color:#10b981">PASSPORT FC</h4>
                             <p class="text-on-surface-variant text-sm mt-2">Complete today's club passport by unlocking 4 progressive nationality stamps — from massive pools to rare 1-player unicorns.</p>
                         </a>
+                        <a href="games/played_with.html" class="glass-card rounded-2xl p-6 block hover:border-[#f97316]/30 transition-colors">
+                            <h4 class="font-headline text-2xl uppercase italic" style="color:#f97316">PLAYED WITH</h4>
+                            <p class="text-on-surface-variant text-sm mt-2">5 teammates revealed by appearances together from least to most frequent. Guess the mystery player!</p>
+                        </a>
                     </div>
                 </noscript>
             </div>
@@ -318,6 +322,12 @@
                             <td class="py-3 px-4">Collect 4 nationality stamps for the anchor club</td>
                             <td class="py-3 px-4 text-center font-bold text-on-background">5 Lives</td>
                             <td class="py-3 pl-4">4 tiers: Common nations to rare 1-player Unicorns</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 pr-4 font-bold text-[#f97316]"><a href="games/played_with.html" class="hover:underline">Played With</a></td>
+                            <td class="py-3 px-4">Deduce the mystery player from 5 teammates ordered by matches shared</td>
+                            <td class="py-3 px-4 text-center font-bold text-on-background">5 Lives</td>
+                            <td class="py-3 pl-4">Ascending co-appearances from 1 match to #1 frequent partner</td>
                         </tr>
                         <tr>
                             <td class="py-3 pr-4 font-bold text-[#e879f9]"><a href="games/club_connect.html" class="hover:underline">Club Connect</a></td>
@@ -440,6 +450,8 @@
             <span>·</span>
             <a href="games/player_chain.html" class="hover:underline hover:text-accent transition-colors">Player Chain</a>
             <span>·</span>
+            <a href="games/played_with.html" class="hover:underline hover:text-accent transition-colors">Played With</a>
+            <span>·</span>
             <a href="games/passport_fc.html" class="hover:underline hover:text-accent transition-colors">Passport FC</a>
         </div>
     </footer>
@@ -476,6 +488,11 @@
                 id: "player_chain", name: "Player Chain",
                 description: "Guess the Mystery Player of the Day by naming players who match an expanding chain of career clubs.",
                 link: "games/player_chain.html", icon: "link", accentHex: "#38bdf8"
+            },
+            {
+                id: "played_with", name: "Played With",
+                description: "5 teammates revealed by appearances together from least to most frequent. Guess the mystery player!",
+                link: "games/played_with.html", icon: "group", accentHex: "#f97316"
             },
             {
                 id: "passport_fc", name: "Passport FC",

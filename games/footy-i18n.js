@@ -44,6 +44,7 @@
             game_top_scorers: 'Top Scorers',
             game_club_connect: 'Club Connect',
             game_player_chain: 'Player Chain',
+            game_played_with: 'Played With',
             game_passport_fc: 'Passport FC',
             game_this_and_that: 'This & That',
             game_anyone_but: 'Anyone But',
@@ -55,6 +56,7 @@
             tagline_top_scorers: 'Name the top goalscorers',
             tagline_club_connect: '5 players, 1 club signed them all',
             tagline_player_chain: 'Connect consecutive clubs through shared teammates',
+            tagline_played_with: '5 teammates revealed by appearances together',
             tagline_passport_fc: 'Collect nationality stamps for a mystery club',
             badge_solved: 'SOLVED ✅',
             badge_partial: 'PARTIAL ⚡',
@@ -126,6 +128,8 @@
             share_passport_completed: '🛂 PASSPORT STAMPED! · 🏆 4/4 Nationalities Solved! · ❤️ {lives} left',
             share_passport_partial: '🎖️ IMMIGRATION PASSED! · {score}/4 Stamps Unlocked · ❤️ {lives} left',
             share_passport_loss: '⛔ VISA DENIED · {score}/4 Stamps Unlocked',
+            share_played_with_solved: '✨ SOLVED IN {score}/5 CLUES! · ❤️ {lives} left',
+            share_played_with_lost: '❌ Mystery Player Missed · 💔 Out of lives',
         },
         es: {
             locale_name: 'Español',
@@ -162,6 +166,7 @@
             game_top_scorers: 'Máximos Goleadores',
             game_club_connect: 'Conexión de Clubes',
             game_player_chain: 'Cadena de Jugadores',
+            game_played_with: 'Jugó Con',
             game_passport_fc: 'Pasaporte FC',
             game_this_and_that: 'Esto y Aquello',
             game_anyone_but: 'Cualquiera Menos',
@@ -173,6 +178,7 @@
             tagline_top_scorers: 'Nombra a los máximos goleadores',
             tagline_club_connect: '5 jugadores, 1 club los fichó a todos',
             tagline_player_chain: 'Conecta clubes consecutivos mediante compañeros',
+            tagline_played_with: '5 compañeros revelados por partidos juntos',
             tagline_passport_fc: 'Colecciona sellos de nacionalidad para un club',
             badge_solved: 'RESUELTO ✅',
             badge_partial: 'PARCIAL ⚡',
@@ -244,6 +250,8 @@
             share_passport_completed: '🛂 ¡PASAPORTE SELLADO! · 🏆 4/4 Nacionalidades Resueltas · ❤️ {lives} vidas',
             share_passport_partial: '🎖️ ¡CONTROL SUPERADO! · {score}/4 Sellos Desbloqueados · ❤️ {lives} vidas',
             share_passport_loss: '⛔ VISA DENEGADA · {score}/4 Sellos Desbloqueados',
+            share_played_with_solved: '✨ ¡RESUELTO EN {score}/5 PISTAS! · ❤️ {lives} vidas',
+            share_played_with_lost: '❌ Jugador Misterioso no adivinado · 💔 Sin vidas',
         }
     };
 

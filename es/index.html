@@ -252,6 +252,10 @@
                             <h4 class="font-headline text-2xl uppercase italic" style="color:#10b981">PASAPORTE FC</h4>
                             <p class="text-on-surface-variant text-sm mt-2">Completa el pasaporte del club desbloqueando 4 sellos progresivos de nacionalidades.</p>
                         </a>
+                        <a href="games/played_with.html" class="glass-card rounded-2xl p-6 block hover:border-[#f97316]/30 transition-colors">
+                            <h4 class="font-headline text-2xl uppercase italic" style="color:#f97316">JUGÓ CON</h4>
+                            <p class="text-on-surface-variant text-sm mt-2">5 compañeros revelados por partidos juntos de menor a mayor. ¡Adivina el jugador misterioso!</p>
+                        </a>
                     </div>
                 </noscript>
             </div>
@@ -298,6 +302,12 @@
                             <td class="py-3 px-4">Consigue 4 sellos de nacionalidad para el club anfitrión</td>
                             <td class="py-3 px-4 text-center font-bold text-on-background">5 Vidas</td>
                             <td class="py-3 pl-4">4 niveles: Naciones comunes hasta Unicornios únicos</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 pr-4 font-bold text-[#f97316]"><a href="games/played_with.html" class="hover:underline">Jugó Con</a></td>
+                            <td class="py-3 px-4">Adivina al futbolista misterioso por 5 compañeros de equipo</td>
+                            <td class="py-3 px-4 text-center font-bold text-on-background">5 Vidas</td>
+                            <td class="py-3 pl-4">Partidos juntos en orden ascendente de 1 partido al #1</td>
                         </tr>
                         <tr>
                             <td class="py-3 pr-4 font-bold text-[#e879f9]"><a href="games/club_connect.html" class="hover:underline">Club Connect</a></td>
@@ -404,6 +414,8 @@
             <span>·</span>
             <a href="games/player_chain.html" class="hover:underline hover:text-accent transition-colors">Cadena de Jugadores</a>
             <span>·</span>
+            <a href="games/played_with.html" class="hover:underline hover:text-accent transition-colors">Jugó Con</a>
+            <span>·</span>
             <a href="games/passport_fc.html" class="hover:underline hover:text-accent transition-colors">Pasaporte FC</a>
         </div>
     </footer>
@@ -439,6 +451,11 @@
                 id: "player_chain", name: "Cadena de Jugadores",
                 description: "Adivina al Jugador Misterioso del Día nombrando futbolistas que conecten la cadena de clubes.",
                 link: "games/player_chain.html", icon: "link", accentHex: "#38bdf8"
+            },
+            {
+                id: "played_with", name: "Jugó Con",
+                description: "5 compañeros revelados por partidos juntos de menor a mayor. ¡Adivina el jugador misterioso!",
+                link: "games/played_with.html", icon: "group", accentHex: "#f97316"
             },
             {
                 id: "passport_fc", name: "Pasaporte FC",
