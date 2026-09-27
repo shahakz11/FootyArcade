@@ -244,7 +244,7 @@ def fetch_trending_audio(audio_type="music", search_query=None):
         req = urllib.request.Request(url)
         with urllib.request.urlopen(req, timeout=15) as resp:
             data = json.loads(resp.read().decode("utf-8"))
-            return data.get("data", [])
+            return data.get("audio", data.get("data", []))
     except Exception as e:
         log_message(f"⚠️ Could not fetch Instagram trending audio: {e}")
         return []
@@ -275,8 +275,9 @@ def upload_reel_now(video_path, caption=None, share_to_feed=True, audio_name=Non
         trending = fetch_trending_audio(audio_type="music")
         if trending:
             first_track = trending[0]
-            selected_audio_name = first_track.get("title") or first_track.get("id")
-            log_message(f"🎵 [Instagram] Selected trending audio: '{first_track.get('title')}' by {first_track.get('artist_name', 'Unknown')}")
+            selected_audio_name = first_track.get("title") or first_track.get("audio_id") or first_track.get("id")
+            artist = first_track.get("display_artist", first_track.get("artist_name", "Unknown"))
+            log_message(f"🎵 [Instagram] Selected trending audio: '{first_track.get('title')}' by {artist}")
 
     log_message(f"🚀 [Instagram] Initializing Reels container for {os.path.basename(video_path)} ({file_size / (1024*1024):.2f} MB)...")
 
@@ -582,7 +583,9 @@ def main():
         else:
             print(f"🎵 Top Trending Audio Tracks ({len(tracks)}):")
             for t in tracks:
-                print(f"  • {t.get('title', 'Unknown')} - {t.get('artist_name', 'Unknown')} (ID: {t.get('id')})")
+                artist = t.get('display_artist', t.get('artist_name', 'Unknown'))
+                audio_id = t.get('audio_id', t.get('id', ''))
+                print(f"  • {t.get('title', 'Unknown')} - {artist} (Audio ID: {audio_id})")
         return
 
     if args.check:
