@@ -33,40 +33,40 @@ from scripts.upload_daily_shorts import (
 class TestUploadScheduling(unittest.TestCase):
 
     def test_default_games_selection(self):
-        """Validates that daily games default strictly to Top Transfers and Transfer Destination."""
+        """Validates that daily games default strictly to Player Chain and Passport FC."""
         self.assertEqual(len(DAILY_GAMES), 2)
         game_ids = [g["id"] for g in DAILY_GAMES]
-        self.assertIn("top_transfers", game_ids)
-        self.assertIn("transfer_destination", game_ids)
+        self.assertIn("player_chain", game_ids)
+        self.assertIn("passport_fc", game_ids)
         self.assertEqual(len(ALL_AVAILABLE_GAMES), 6)
 
     def test_select_games_midday_mode(self):
-        """Midday mode strictly returns Top Transfers."""
+        """Midday mode strictly returns Player Chain."""
         games = select_games_for_mode(mode="midday")
         self.assertEqual(len(games), 1)
-        self.assertEqual(games[0]["id"], "top_transfers")
+        self.assertEqual(games[0]["id"], "player_chain")
 
     def test_select_games_evening_mode(self):
-        """Evening mode strictly returns Transfer Destination."""
+        """Evening mode strictly returns Passport FC."""
         games = select_games_for_mode(mode="evening")
         self.assertEqual(len(games), 1)
-        self.assertEqual(games[0]["id"], "transfer_destination")
+        self.assertEqual(games[0]["id"], "passport_fc")
 
-    def test_select_games_auto_mode(self):
-        """Auto mode: before 16:00 -> Top Transfers; 16:00 and after -> Transfer Destination."""
-        morning_games = select_games_for_mode(mode="auto", curr_hour=11)
-        self.assertEqual(len(morning_games), 1)
-        self.assertEqual(morning_games[0]["id"], "top_transfers")
+    def test_select_games_daily_and_auto_mode(self):
+        """Daily/auto mode returns one daily game alternating between Player Chain and Passport FC."""
+        daily_games = select_games_for_mode(mode="daily")
+        self.assertEqual(len(daily_games), 1)
+        self.assertIn(daily_games[0]["id"], ["player_chain", "passport_fc"])
 
-        evening_games = select_games_for_mode(mode="auto", curr_hour=19)
-        self.assertEqual(len(evening_games), 1)
-        self.assertEqual(evening_games[0]["id"], "transfer_destination")
+        auto_games = select_games_for_mode(mode="auto")
+        self.assertEqual(len(auto_games), 1)
+        self.assertIn(auto_games[0]["id"], ["player_chain", "passport_fc"])
 
     def test_select_games_both_and_all(self):
         """Both mode returns 2 games; all_games returns 6 games."""
         both_games = select_games_for_mode(mode="both")
         self.assertEqual(len(both_games), 2)
-        self.assertEqual([g["id"] for g in both_games], ["top_transfers", "transfer_destination"])
+        self.assertEqual([g["id"] for g in both_games], ["player_chain", "passport_fc"])
 
         all_g = select_games_for_mode(all_games=True)
         self.assertEqual(len(all_g), 6)

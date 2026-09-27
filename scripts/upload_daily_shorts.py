@@ -78,14 +78,13 @@ def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_h
         return [DAILY_GAMES[1]]  # Passport FC (Step 2)
     elif mode_lower == "both":
         return DAILY_GAMES
+    elif mode_lower == "daily":
+        day_idx = datetime.date.today().toordinal() % len(DAILY_GAMES)
+        return [DAILY_GAMES[day_idx]]
 
-    # Auto mode: check hour
-    if curr_hour is None:
-        curr_hour = datetime.datetime.now().hour
-    if curr_hour < 16:
-        return [DAILY_GAMES[0]]  # Player Chain (Step 2)
-    else:
-        return [DAILY_GAMES[1]]  # Passport FC (Step 2)
+    # Auto mode: alternate daily between Player Chain and Passport FC
+    day_idx = datetime.date.today().toordinal() % len(DAILY_GAMES)
+    return [DAILY_GAMES[day_idx]]
 
 def compute_scheduled_slots(num_videos, start_dt=None, slot_hours=None, immediate_first=True):
     """
