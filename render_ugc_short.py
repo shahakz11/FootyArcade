@@ -20,7 +20,6 @@ import subprocess
 import numpy as np
 import cv2
 import pandas as pd
-import scipy.io.wavfile as wavfile
 from PIL import Image, ImageDraw, ImageFont
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -262,84 +261,23 @@ def render_ugc_video(data, output_path, bg_video_path=None, duration=DURATION_SE
     cap.release()
     video_writer.release()
 
-    # Generate upbeat royalty-free audio beat
-    temp_wav = tempfile.NamedTemporaryFile(suffix=".wav", delete=False).name
-    generate_ugc_audio(duration, temp_wav)
-
+    # Clean high-quality video encoding (silent so platform audio / Instagram music is 100% clear)
     cmd = [
         FFMPEG_EXE, "-y",
         "-i", temp_raw,
-        "-i", temp_wav,
         "-c:v", "libx264",
-        "-c:a", "aac",
-        "-b:a", "192k",
         "-pix_fmt", "yuv420p",
         "-preset", "fast",
         "-crf", "18",
         "-movflags", "+faststart",
-        "-shortest",
         output_path
     ]
     subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
     
     if os.path.exists(temp_raw):
         os.remove(temp_raw)
-    if os.path.exists(temp_wav):
-        os.remove(temp_wav)
 
-    print(f"🎉 Successfully generated UGC video with audio: {output_path}")
-
-def generate_ugc_audio(duration_sec, output_wav_path, sample_rate=44100):
-    """Generates an upbeat royalty-free electronic beat with opening chime and 120 BPM groove."""
-    total_samples = int(sample_rate * duration_sec)
-    audio = np.zeros(total_samples, dtype=np.float32)
-    t = np.linspace(0, duration_sec, total_samples, endpoint=False)
-
-    # 1. Opening 4-chord arcade chime (0.0s - 0.6s)
-    chime_freqs = [523.25, 659.25, 783.99, 1046.50]
-    for idx, freq in enumerate(chime_freqs):
-        start_t = idx * 0.12
-        end_t = start_t + 0.45
-        s_idx = int(start_t * sample_rate)
-        e_idx = min(int(end_t * sample_rate), total_samples)
-        sub_t = t[s_idx:e_idx] - start_t
-        chime_wave = np.sin(2 * np.pi * freq * sub_t) * np.exp(-sub_t * 9) * 0.35
-        audio[s_idx:e_idx] += chime_wave
-
-    # 2. 120 BPM Bass & Kick Pulse
-    bpm = 120
-    beat_dur = 60.0 / bpm
-    num_beats = int(duration_sec / beat_dur)
-    
-    for b in range(num_beats):
-        b_time = b * beat_dur
-        s_idx = int(b_time * sample_rate)
-        kick_dur = 0.18
-        e_idx = min(int((b_time + kick_dur) * sample_rate), total_samples)
-        sub_t = t[s_idx:e_idx] - b_time
-        
-        # Kick sweep (120Hz -> 45Hz)
-        freq_sweep = 45.0 + 80.0 * np.exp(-sub_t * 30)
-        kick = np.sin(2 * np.pi * freq_sweep * sub_t) * np.exp(-sub_t * 16) * 0.5
-        audio[s_idx:e_idx] += kick
-
-        # Subtle hi-hat on upbeat
-        hat_time = b_time + (beat_dur / 2.0)
-        h_s = int(hat_time * sample_rate)
-        h_e = min(int((hat_time + 0.04) * sample_rate), total_samples)
-        if h_s < total_samples:
-            hat_t = t[h_s:h_e] - hat_time
-            hat = (np.random.rand(len(hat_t)) * 2 - 1) * np.exp(-hat_t * 90) * 0.15
-            audio[h_s:h_e] += hat
-
-    # Normalize audio to -1 dB
-    max_val = np.max(np.abs(audio))
-    if max_val > 0.01:
-        audio = (audio / max_val) * 0.88
-        
-    audio_pcm = (audio * 32767).astype(np.int16)
-    wavfile.write(output_wav_path, sample_rate, audio_pcm)
-    return output_wav_path
+    print(f"🎉 Successfully generated UGC video (clean audio): {output_path}")
 
 def generate_social_copy(data):
     """Generates viral Instagram/TikTok captions."""
