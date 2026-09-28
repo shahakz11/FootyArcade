@@ -173,7 +173,7 @@ def generate_puzzles(p_info, target_pids, teammate_matrix, teammate_shared_clubs
 
     for pid in target_pids:
         tm_counter = teammate_matrix[pid]
-        if len(tm_counter) < 15:
+        if len(tm_counter) < 20:
             continue
         
         sorted_tm = sorted(tm_counter.items(), key=lambda x: x[1], reverse=True)
@@ -259,17 +259,17 @@ def generate_puzzles(p_info, target_pids, teammate_matrix, teammate_shared_clubs
         sorted_tm = cand['sorted_tm']
         n = len(sorted_tm)
 
-        # 5 Clue Steps:
-        # Clue 5: #1 Most frequent (highest apps together)
-        # Clue 4: 10th most frequent
-        # Clue 3: ~50th percentile (mid tier)
-        # Clue 2: ~75th percentile (low-mid tier)
-        # Clue 1: Least frequent (lowest apps together, e.g. 1 match)
+        # 5 Clue Steps based on teammate appearance rank:
+        # Clue 5: #1 Most frequent (Rank 1 -> index 0)
+        # Clue 4: 2nd most frequent (Rank 2 -> index 1)
+        # Clue 3: 5th most frequent (Rank 5 -> index 4)
+        # Clue 2: 10th most frequent (Rank 10 -> index 9)
+        # Clue 1: 20th most frequent (Rank 20 -> index 19)
         idx5 = 0
-        idx4 = min(9, n - 1)
-        idx3 = int(n * 0.50)
-        idx2 = int(n * 0.75)
-        idx1 = n - 1
+        idx4 = min(1, n - 1)
+        idx3 = min(4, n - 1)
+        idx2 = min(9, n - 1)
+        idx1 = min(19, n - 1)
 
         indices = [idx1, idx2, idx3, idx4, idx5]
         
@@ -280,7 +280,7 @@ def generate_puzzles(p_info, target_pids, teammate_matrix, teammate_shared_clubs
         for step_idx, tm_idx in enumerate(indices):
             # Pick teammate at or near tm_idx not yet used
             chosen = None
-            for offset in [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5]:
+            for offset in [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6, 7, -7]:
                 cur_idx = max(0, min(n - 1, tm_idx + offset))
                 tm_pid, tm_apps = sorted_tm[cur_idx]
                 if tm_pid not in used_pids:
@@ -295,10 +295,10 @@ def generate_puzzles(p_info, target_pids, teammate_matrix, teammate_shared_clubs
         selected_teammates.sort(key=lambda x: x[1])
 
         tier_labels = [
-            "Least Frequent",
-            "Low-Mid Tier",
-            "Mid Tier",
+            "20th Most Frequent",
             "10th Most Frequent",
+            "5th Most Frequent",
+            "2nd Most Frequent",
             "Most Frequent"
         ]
 

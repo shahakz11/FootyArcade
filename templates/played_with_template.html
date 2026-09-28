@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Played With — Daily Football Teammate Guessing Game | Playmaker</title>
     <meta name="description"
-        content="Guess the daily mystery football player through 5 teammates revealed in ascending order of competitive matches played together. Free daily football quiz at Playmaker!" />
+        content="Guess the daily mystery football player through 5 teammates: 20th, 10th, 5th, 2nd, and #1 most appearances together. Free daily football quiz at Playmaker!" />
     <meta name="keywords"
         content="played with, football trivia, teammates quiz, who played with who, soccer quiz, daily football puzzle, playmaker" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -28,7 +28,7 @@
     <!-- Social Share Preview (OpenGraph / Twitter) -->
     <meta property="og:title" content="Played With — Daily Football Teammate Guessing Game | Playmaker" />
     <meta property="og:description"
-        content="Five teammates revealed by matches shared together from least to most frequent. Can you deduce the mystery player?" />
+        content="Five teammates revealed: 20th, 10th, 5th, 2nd, and #1 most appearances together. Can you deduce the mystery player?" />
     <meta property="og:image" content="https://playmaker.best/assets/social_share.png" />
     <meta property="og:image:secure_url" content="https://playmaker.best/assets/social_share.png" />
     <meta property="og:image:type" content="image/png" />
@@ -137,7 +137,7 @@
         {
           "@type": "VideoGame",
           "name": "Played With — Daily Football Teammate Guessing Game",
-          "description": "Guess the daily mystery football player through five teammates revealed in order of appearances together from least to most frequent.",
+          "description": "Guess the daily mystery football player through five teammates revealed in ascending order: 20th, 10th, 5th, 2nd, and #1 most appearances together.",
           "inLanguage": "en",
           "url": "https://playmaker.best/games/played_with.html",
           "image": "https://playmaker.best/assets/logo.png",
@@ -341,6 +341,42 @@
                     class="font-headline text-3xl sm:text-4xl text-on-background uppercase italic tracking-wide py-1">
                     ???????
                 </h3>
+
+                <!-- Triggerable Hints: Position and Nationality (Hidden by default, triggered by user) -->
+                <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
+                    <!-- Nationality Hint -->
+                    <div id="hint-nat-container">
+                        <button id="hint-nat-btn" type="button"
+                            class="px-3 py-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-accent/40 text-on-surface-variant hover:text-accent font-mono text-xs transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
+                            title="Reveal player nationality">
+                            <span class="material-symbols-outlined text-xs text-accent">public</span>
+                            <span>Hint: Nationality</span>
+                            <span class="material-symbols-outlined text-xs opacity-50">visibility</span>
+                        </button>
+                        <span id="player-nat-badge"
+                            class="hidden font-mono text-xs bg-accent/10 border border-accent/30 text-accent px-3 py-1.5 rounded-xl flex items-center gap-1.5 font-bold animate-fadeIn">
+                            <span class="material-symbols-outlined text-xs">public</span>
+                            <span id="mystery-nat-text">...</span>
+                        </span>
+                    </div>
+
+                    <!-- Position Hint -->
+                    <div id="hint-pos-container">
+                        <button id="hint-pos-btn" type="button"
+                            class="px-3 py-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-accent/40 text-on-surface-variant hover:text-accent font-mono text-xs transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
+                            title="Reveal player position">
+                            <span class="material-symbols-outlined text-xs text-accent">sports_soccer</span>
+                            <span>Hint: Position</span>
+                            <span class="material-symbols-outlined text-xs opacity-50">visibility</span>
+                        </button>
+                        <span id="player-pos-badge"
+                            class="hidden font-mono text-xs bg-accent/10 border border-accent/30 text-accent px-3 py-1.5 rounded-xl flex items-center gap-1.5 font-bold animate-fadeIn">
+                            <span class="material-symbols-outlined text-xs">sports_soccer</span>
+                            <span id="mystery-pos-text">...</span>
+                        </span>
+                    </div>
+                </div>
+
                 <div id="mystery-player-meta-display"
                     class="hidden text-xs font-mono text-on-surface-variant font-bold">
                     <!-- Revealed upon game completion -->
@@ -404,17 +440,10 @@
                     What is Played With?
                 </h2>
                 <p class="font-body text-on-surface-variant text-sm leading-relaxed">
-                    Played With is a daily football deduction challenge by Playmaker where fans deduce a mystery star
-                    player through five teammates revealed in ascending order of competitive matches played together.
-                    Clue 1 unveils a rare teammate overlap (fewest matches), while Clue 5 reveals the mystery player's
-                    #1 most frequent career partner. Players submit guesses using a comprehensive player catalog with
-                    autocomplete. Submitting an incorrect guess deducts a life and unlocks the next teammate card. You
-                    can also skip to reveal the next clue. Solving the puzzle in the fewest possible clues earns a
-                    maximum efficiency score. New puzzles release daily at midnight UTC with full back-in-time archives.
+                    Played With is a daily football deduction challenge by Playmaker where fans deduce a mystery star player through five teammates revealed in ascending order of competitive matches played together: their 20th, 10th, 5th, 2nd, and #1 most frequent career teammates. Players submit guesses using a comprehensive player catalog with autocomplete. Submitting an incorrect guess deducts a life and unlocks the next teammate card. You can also skip to reveal the next clue. Solving the puzzle in the fewest possible clues earns a maximum efficiency score. New puzzles release daily at midnight UTC with full back-in-time archives.
                 </p>
                 <div class="border-t border-white/5 pt-3 space-y-2 text-xs font-mono text-on-surface-variant/70">
-                    <p><strong>Database Coverage:</strong> Official senior competitive matches across top 5 European
-                        leagues, domestic cups, and UEFA competitions.</p>
+                    <p><strong>Database Coverage:</strong> Official senior competitive matches across top 5 European leagues, domestic cups, and UEFA competitions.</p>
                     <p><strong>Daily Reset:</strong> A new puzzle unlocks every day at 00:00 UTC.</p>
                 </div>
             </article>
@@ -442,11 +471,11 @@
                 <p><strong class="text-white font-title">1. Goal:</strong> Deduce today's Mystery Player using 5
                     teammate clues revealed one by one.</p>
                 <div class="space-y-1.5 pl-3 border-l-2 border-accent/40 font-mono text-xs text-white/90">
-                    <div>🔥 <strong>Clue 1:</strong> Least frequent teammate (fewest matches shared)</div>
-                    <div>🧠 <strong>Clue 2:</strong> Low-mid frequency teammate</div>
-                    <div>⚡ <strong>Clue 3:</strong> Mid-frequency teammate</div>
-                    <div>🎯 <strong>Clue 4:</strong> 10th most frequent teammate</div>
-                    <div>🎁 <strong>Clue 5:</strong> #1 all-time most frequent partner</div>
+                    <div>🔥 <strong>Clue 1:</strong> 20th most frequent teammate</div>
+                    <div>🧠 <strong>Clue 2:</strong> 10th most frequent teammate</div>
+                    <div>⚡ <strong>Clue 3:</strong> 5th most frequent teammate</div>
+                    <div>🎯 <strong>Clue 4:</strong> 2nd most frequent teammate</div>
+                    <div>🎁 <strong>Clue 5:</strong> #1 most frequent teammate</div>
                 </div>
                 <p><strong class="text-white font-title">2. Lives & Guesses:</strong> You have 5 lives. An incorrect
                     guess deducts 1 life and reveals the next teammate card. You can also skip to reveal the next clue
@@ -586,17 +615,17 @@
     <script id="daily-game-data">
         // Injected by fetch_daily.py compiler at build time
         const DAILY_PLAYEDWITH_GAME = {
-            "mystery_player": "Lionel Messi",
-            "mystery_nationality": "Argentina",
-            "mystery_position": "Attack - Right Winger",
-            "mystery_peak_value": 180000000,
+            "mystery_player": "João Félix",
+            "mystery_nationality": "Portugal",
+            "mystery_position": "Attack",
+            "mystery_peak_value": 100000000,
             "total_steps": 5,
             "steps": [
-                { "step_number": 1, "clue_tier": "Least Frequent", "teammate_name": "Valentín Barco", "teammate_nationality": "Argentina", "shared_clubs": ["Argentina"], "appearances_together": 1 },
-                { "step_number": 2, "clue_tier": "Low-Mid Tier", "teammate_name": "Alexandre Letellier", "teammate_nationality": "France", "shared_clubs": ["Paris Saint-Germain"], "appearances_together": 2 },
-                { "step_number": 3, "clue_tier": "Mid Tier", "teammate_name": "Thilo Kehrer", "teammate_nationality": "Germany", "shared_clubs": ["Paris Saint-Germain"], "appearances_together": 21 },
-                { "step_number": 4, "clue_tier": "10th Most Frequent", "teammate_name": "Neymar", "teammate_nationality": "Brazil", "shared_clubs": ["Barcelona", "Paris Saint-Germain"], "appearances_together": 207 },
-                { "step_number": 5, "clue_tier": "Most Frequent", "teammate_name": "Sergio Busquets", "teammate_nationality": "Spain", "shared_clubs": ["Barcelona", "Inter Miami"], "appearances_together": 397 }
+                { "step_number": 1, "clue_tier": "20th Most Frequent", "teammate_name": "İlkay Gündoğan", "teammate_nationality": "Germany", "shared_clubs": ["Barcelona"], "appearances_together": 42 },
+                { "step_number": 2, "clue_tier": "10th Most Frequent", "teammate_name": "Saúl Ñíguez", "teammate_nationality": "Spain", "shared_clubs": ["Atlético Madrid"], "appearances_together": 81 },
+                { "step_number": 3, "clue_tier": "5th Most Frequent", "teammate_name": "Stefan Savic", "teammate_nationality": "Montenegro", "shared_clubs": ["Atlético Madrid"], "appearances_together": 90 },
+                { "step_number": 4, "clue_tier": "2nd Most Frequent", "teammate_name": "Ángel Correa", "teammate_nationality": "Argentina", "shared_clubs": ["Atlético Madrid"], "appearances_together": 122 },
+                { "step_number": 5, "clue_tier": "Most Frequent", "teammate_name": "Jan Oblak", "teammate_nationality": "Slovenia", "shared_clubs": ["Atlético Madrid"], "appearances_together": 127 }
             ]
         };
         const PUZZLE_NUMBER = 1;
@@ -641,6 +670,7 @@
         // Session State
         let revealedClues = [0];  // clue 1 is unlocked initially
         let revealedMatchHints = new Set();
+        let revealedMysteryHints = [];
         let wrongGuessesList = [];
         let gameOver = false;
         let isWon = false;
@@ -718,6 +748,57 @@
                     }
                     submitGuess();
                 }
+            });
+
+            // Mystery Player Triggerable Hints: Nationality & Position
+            document.getElementById('hint-nat-btn')?.addEventListener('click', () => {
+                if (!revealedMysteryHints.includes('nat')) {
+                    revealedMysteryHints.push('nat');
+                }
+                const natVal = (typeof FootyI18n !== 'undefined' && typeof FootyI18n.translateNationality === 'function')
+                    ? FootyI18n.translateNationality(activeGameData ? activeGameData.mystery_nationality : '')
+                    : (activeGameData ? activeGameData.mystery_nationality : '');
+                const natEl = document.getElementById('mystery-nat-text');
+                if (natEl) natEl.textContent = natVal;
+                document.getElementById('hint-nat-btn')?.classList.add('hidden');
+                document.getElementById('player-nat-badge')?.classList.remove('hidden');
+                saveCurrentProgress();
+                FootyUI.trackHint({
+                    hintType: 'nationality',
+                    hintText: activeGameData ? activeGameData.mystery_nationality : '',
+                    step: revealedClues.length,
+                    lives: livesCtrl ? livesCtrl.get() : INITIAL_LIVES
+                });
+                const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang && FootyI18n.getLang() === 'es') ||
+                             (typeof document !== 'undefined' && document.documentElement.lang === 'es') ||
+                             (typeof location !== 'undefined' && location.pathname.includes('/es/'));
+                const msg = isEs ? `¡Nacionalidad revelada: ${natVal}! 💡` : `Nationality revealed: ${natVal} 💡`;
+                FootyUI.toast(msg, 'info');
+            });
+
+            document.getElementById('hint-pos-btn')?.addEventListener('click', () => {
+                if (!revealedMysteryHints.includes('pos')) {
+                    revealedMysteryHints.push('pos');
+                }
+                const posVal = (typeof FootyI18n !== 'undefined' && typeof FootyI18n.translatePosition === 'function')
+                    ? FootyI18n.translatePosition(activeGameData ? activeGameData.mystery_position : '')
+                    : (activeGameData ? activeGameData.mystery_position : '');
+                const posEl = document.getElementById('mystery-pos-text');
+                if (posEl) posEl.textContent = posVal;
+                document.getElementById('hint-pos-btn')?.classList.add('hidden');
+                document.getElementById('player-pos-badge')?.classList.remove('hidden');
+                saveCurrentProgress();
+                FootyUI.trackHint({
+                    hintType: 'position',
+                    hintText: activeGameData ? activeGameData.mystery_position : '',
+                    step: revealedClues.length,
+                    lives: livesCtrl ? livesCtrl.get() : INITIAL_LIVES
+                });
+                const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang && FootyI18n.getLang() === 'es') ||
+                             (typeof document !== 'undefined' && document.documentElement.lang === 'es') ||
+                             (typeof location !== 'undefined' && location.pathname.includes('/es/'));
+                const msg = isEs ? `¡Posición revelada: ${posVal}! 💡` : `Position revealed: ${posVal} 💡`;
+                FootyUI.toast(msg, 'info');
             });
 
             // Delegate click for reveal matches hint buttons
@@ -850,11 +931,11 @@
             const steps = (activeGameData && activeGameData.steps) ? activeGameData.steps : [];
 
             const tierLabels = [
-                'CLUE 1 · LEAST FREQUENT TEAMMATE 🔥',
-                'CLUE 2 · LOW-MID TIER 🧠',
-                'CLUE 3 · MID TIER ⚡',
-                'CLUE 4 · 10TH MOST FREQUENT 🎯',
-                'CLUE 5 · MOST FREQUENT PARTNER 🎁'
+                'CLUE 1 · 20TH MOST FREQUENT 🔥',
+                'CLUE 2 · 10TH MOST FREQUENT 🧠',
+                'CLUE 3 · 5TH MOST FREQUENT ⚡',
+                'CLUE 4 · 2ND MOST FREQUENT 🎯',
+                'CLUE 5 · #1 MOST FREQUENT 🎁'
             ];
 
             steps.forEach((step, idx) => {
@@ -1105,6 +1186,22 @@
                 heroMeta.classList.remove('hidden');
             }
 
+            // Reveal hint badges
+            const natVal = (typeof FootyI18n !== 'undefined' && typeof FootyI18n.translateNationality === 'function')
+                ? FootyI18n.translateNationality(pNat)
+                : pNat;
+            const posVal = (typeof FootyI18n !== 'undefined' && typeof FootyI18n.translatePosition === 'function')
+                ? FootyI18n.translatePosition(pPos)
+                : pPos;
+            const natEl = document.getElementById('mystery-nat-text');
+            if (natEl) natEl.textContent = natVal;
+            const posEl = document.getElementById('mystery-pos-text');
+            if (posEl) posEl.textContent = posVal;
+            document.getElementById('hint-nat-btn')?.classList.add('hidden');
+            document.getElementById('player-nat-badge')?.classList.remove('hidden');
+            document.getElementById('hint-pos-btn')?.classList.add('hidden');
+            document.getElementById('player-pos-badge')?.classList.remove('hidden');
+
             document.getElementById('modal-mystery-player').textContent = pName;
             document.getElementById('modal-player-meta').textContent = `${pNat} · ${pPos} · Peak: €${Math.round(pVal / 1000000)}M`;
             document.getElementById('modal-best').textContent = stats.bestStreak || 0;
@@ -1130,6 +1227,7 @@
             storage.saveInProgress(puzzleNum, {
                 revealedClues: revealedClues,
                 revealedMatchHints: Array.from(revealedMatchHints),
+                revealedMysteryHints: revealedMysteryHints,
                 wrongGuessesList: wrongGuessesList,
                 lives: livesCtrl.get()
             });
@@ -1143,6 +1241,27 @@
             }
             if (Array.isArray(inProgress.revealedMatchHints)) {
                 revealedMatchHints = new Set(inProgress.revealedMatchHints);
+            }
+            if (Array.isArray(inProgress.revealedMysteryHints)) {
+                revealedMysteryHints = inProgress.revealedMysteryHints;
+                if (revealedMysteryHints.includes('nat')) {
+                    const natVal = (typeof FootyI18n !== 'undefined' && typeof FootyI18n.translateNationality === 'function')
+                        ? FootyI18n.translateNationality(activeGameData ? activeGameData.mystery_nationality : '')
+                        : (activeGameData ? activeGameData.mystery_nationality : '');
+                    const natEl = document.getElementById('mystery-nat-text');
+                    if (natEl) natEl.textContent = natVal;
+                    document.getElementById('hint-nat-btn')?.classList.add('hidden');
+                    document.getElementById('player-nat-badge')?.classList.remove('hidden');
+                }
+                if (revealedMysteryHints.includes('pos')) {
+                    const posVal = (typeof FootyI18n !== 'undefined' && typeof FootyI18n.translatePosition === 'function')
+                        ? FootyI18n.translatePosition(activeGameData ? activeGameData.mystery_position : '')
+                        : (activeGameData ? activeGameData.mystery_position : '');
+                    const posEl = document.getElementById('mystery-pos-text');
+                    if (posEl) posEl.textContent = posVal;
+                    document.getElementById('hint-pos-btn')?.classList.add('hidden');
+                    document.getElementById('player-pos-badge')?.classList.remove('hidden');
+                }
             }
             if (Array.isArray(inProgress.wrongGuessesList)) {
                 wrongGuessesList = inProgress.wrongGuessesList;
@@ -1182,6 +1301,22 @@
                 heroMeta.textContent = `${pNat} · ${pPos} · Peak: €${Math.round(pVal / 1000000)}M`;
                 heroMeta.classList.remove('hidden');
             }
+
+            // Reveal hint badges
+            const natVal = (typeof FootyI18n !== 'undefined' && typeof FootyI18n.translateNationality === 'function')
+                ? FootyI18n.translateNationality(pNat)
+                : pNat;
+            const posVal = (typeof FootyI18n !== 'undefined' && typeof FootyI18n.translatePosition === 'function')
+                ? FootyI18n.translatePosition(pPos)
+                : pPos;
+            const natEl = document.getElementById('mystery-nat-text');
+            if (natEl) natEl.textContent = natVal;
+            const posEl = document.getElementById('mystery-pos-text');
+            if (posEl) posEl.textContent = posVal;
+            document.getElementById('hint-nat-btn')?.classList.add('hidden');
+            document.getElementById('player-nat-badge')?.classList.remove('hidden');
+            document.getElementById('hint-pos-btn')?.classList.add('hidden');
+            document.getElementById('player-pos-badge')?.classList.remove('hidden');
 
             document.getElementById('modal-mystery-player').textContent = pName;
             document.getElementById('modal-player-meta').textContent = `${pNat} · ${pPos} · Peak: €${Math.round(pVal / 1000000)}M`;

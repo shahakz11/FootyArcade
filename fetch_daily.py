@@ -428,24 +428,30 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         ('>Clues</span>', '>Pistas</span>'),
 
         # Played With How To Play Modal
+        ('<p><strong class="text-white font-title">1. Goal:</strong> Deduce today\'s Mystery Player using 5\n                    teammate clues revealed one by one.</p>',
+         '<p><strong class="text-white font-title">1. Objetivo:</strong> Deduce al Jugador Misterioso de hoy usando 5 pistas de compañeros revelados uno a uno.</p>'),
         ('<p><strong class="text-white font-title">1. Goal:</strong> Deduce today\'s Mystery Player using 5 teammate clues revealed one by one.</p>',
          '<p><strong class="text-white font-title">1. Objetivo:</strong> Deduce al Jugador Misterioso de hoy usando 5 pistas de compañeros revelados uno a uno.</p>'),
-        ('<div>🔥 <strong>Clue 1:</strong> Least frequent teammate (fewest matches shared)</div>',
-         '<div>🔥 <strong>Pista 1:</strong> Compañero menos frecuente (menor cantidad de partidos compartidos)</div>'),
-        ('<div>🧠 <strong>Clue 2:</strong> Low-mid frequency teammate</div>',
-         '<div>🧠 <strong>Pista 2:</strong> Compañero de frecuencia baja-media</div>'),
-        ('<div>⚡ <strong>Clue 3:</strong> Mid-frequency teammate</div>',
-         '<div>⚡ <strong>Pista 3:</strong> Compañero de frecuencia media</div>'),
-        ('<div>🎯 <strong>Clue 4:</strong> 10th most frequent teammate</div>',
-         '<div>🎯 <strong>Pista 4:</strong> 10º compañero más frecuente</div>'),
-        ('<div>🎁 <strong>Clue 5:</strong> #1 all-time most frequent partner</div>',
-         '<div>🎁 <strong>Pista 5:</strong> Compañero #1 más habitual de su carrera</div>'),
+        ('<div>🔥 <strong>Clue 1:</strong> 20th most frequent teammate</div>',
+         '<div>🔥 <strong>Pista 1:</strong> 20º compañero más frecuente</div>'),
+        ('<div>🧠 <strong>Clue 2:</strong> 10th most frequent teammate</div>',
+         '<div>🧠 <strong>Pista 2:</strong> 10º compañero más frecuente</div>'),
+        ('<div>⚡ <strong>Clue 3:</strong> 5th most frequent teammate</div>',
+         '<div>⚡ <strong>Pista 3:</strong> 5º compañero más frecuente</div>'),
+        ('<div>🎯 <strong>Clue 4:</strong> 2nd most frequent teammate</div>',
+         '<div>🎯 <strong>Pista 4:</strong> 2º compañero más frecuente</div>'),
+        ('<div>🎁 <strong>Clue 5:</strong> #1 most frequent teammate</div>',
+         '<div>🎁 <strong>Pista 5:</strong> Compañero #1 más frecuente de su carrera</div>'),
+        ('<p><strong class="text-white font-title">2. Lives & Guesses:</strong> You have 5 lives. An incorrect\n                    guess deducts 1 life and reveals the next teammate card. You can also skip to reveal the next clue\n                    without losing a life.</p>',
+         '<p><strong class="text-white font-title">2. Vidas e Intentos:</strong> Tienes 5 vidas. Un fallo resta 1 vida y revela la siguiente carta de compañero. También puedes saltar para revelar la siguiente pista sin perder vidas.</p>'),
         ('<p><strong class="text-white font-title">2. Lives & Guesses:</strong> You have 5 lives. An incorrect guess deducts 1 life and reveals the next teammate card. You can also skip to reveal the next clue without losing a life.</p>',
          '<p><strong class="text-white font-title">2. Vidas e Intentos:</strong> Tienes 5 vidas. Un fallo resta 1 vida y revela la siguiente carta de compañero. También puedes saltar para revelar la siguiente pista sin perder vidas.</p>'),
-        ('<p><strong class="text-white font-title">2. Lives & Guesses:</strong> You have 5 lives. An incorrect guess or clicking \'Skip\' deducts a life and reveals the next teammate card.</p>',
-         '<p><strong class="text-white font-title">2. Vidas e Intentos:</strong> Tienes 5 vidas. Un fallo resta 1 vida y revela la siguiente carta de compañero. También puedes saltar para revelar la siguiente pista sin perder vidas.</p>'),
+        ('<p><strong class="text-white font-title">3. Hints:</strong> Click the lightbulb on any revealed card to\n                    reveal the exact number of matches shared together.</p>',
+         '<p><strong class="text-white font-title">3. Pistas:</strong> Haz clic en la bombilla de cualquier carta revelada para ver la cantidad exacta de partidos jugados juntos.</p>'),
         ('<p><strong class="text-white font-title">3. Hints:</strong> Click the lightbulb on any revealed card to reveal the exact number of matches shared together.</p>',
          '<p><strong class="text-white font-title">3. Pistas:</strong> Haz clic en la bombilla de cualquier carta revelada para ver la cantidad exacta de partidos jugados juntos.</p>'),
+        ('<p><strong class="text-white font-title">4. Scoring:</strong> Solving on Clue 1 awards a perfect 5/5\n                    score ⭐⭐⭐⭐⭐!</p>',
+         '<p><strong class="text-white font-title">4. Puntuación:</strong> ¡Acertar en la Pista 1 otorga una puntuación perfecta de 5/5 ⭐⭐⭐⭐⭐!</p>'),
         ('<p><strong class="text-white font-title">4. Scoring:</strong> Solving on Clue 1 awards a perfect 5/5 score ⭐⭐⭐⭐⭐!</p>',
          '<p><strong class="text-white font-title">4. Puntuación:</strong> ¡Acertar en la Pista 1 otorga una puntuación perfecta de 5/5 ⭐⭐⭐⭐⭐!</p>'),
 
@@ -632,11 +638,11 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         ("Valid: <strong class=\"text-white\">", "Válidos: <strong class=\"text-white\">"),
 
         # Played With JS dynamic labels & strings
-        ("'CLUE 1 · LEAST FREQUENT TEAMMATE 🔥'", "'PISTA 1 · COMPAÑERO MENOS FRECUENTE 🔥'"),
-        ("'CLUE 2 · LOW-MID TIER 🧠'", "'PISTA 2 · FRECUENCIA BAJA-MEDIA 🧠'"),
-        ("'CLUE 3 · MID TIER ⚡'", "'PISTA 3 · FRECUENCIA MEDIA ⚡'"),
-        ("'CLUE 4 · 10TH MOST FREQUENT 🎯'", "'PISTA 4 · 10º MÁS FRECUENTE 🎯'"),
-        ("'CLUE 5 · MOST FREQUENT PARTNER 🎁'", "'PISTA 5 · COMPAÑERO MÁS FRECUENTE 🎁'"),
+        ("'CLUE 1 · 20TH MOST FREQUENT 🔥'", "'PISTA 1 · 20º MÁS FRECUENTE 🔥'"),
+        ("'CLUE 2 · 10TH MOST FREQUENT 🧠'", "'PISTA 2 · 10º MÁS FRECUENTE 🧠'"),
+        ("'CLUE 3 · 5TH MOST FREQUENT ⚡'", "'PISTA 3 · 5º MÁS FRECUENTE ⚡'"),
+        ("'CLUE 4 · 2ND MOST FREQUENT 🎯'", "'PISTA 4 · 2º MÁS FRECUENTE 🎯'"),
+        ("'CLUE 5 · #1 MOST FREQUENT 🎁'", "'PISTA 5 · #1 MÁS FRECUENTE 🎁'"),
         ("('CLUE ' + (idx + 1))", "('PISTA ' + (idx + 1))"),
         ("Reveals after incorrect guess or skip", "Se desbloquea tras un fallo o al saltar"),
         ('<span class="text-[9px] font-mono text-accent uppercase font-bold tracking-tight">Matches</span>',
@@ -731,8 +737,8 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
             "Nombra futbolistas elegibles en 4 niveles progresivos de nacionalidad para completar el pasaporte del club de hoy — desde grandes potencias hasta unicornios de un solo jugador."
         ),
         "played_with": (
-            "5 teammates revealed by appearances together from least to most frequent. Deduce the mystery star!",
-            "5 compañeros revelados por partidos juntos de menor a mayor frecuencia. ¡Deduce la estrella misteriosa!"
+            "5 teammates revealed: 20th, 10th, 5th, 2nd, and #1 most appearances together. Deduce the mystery star!",
+            "5 compañeros revelados: 20º, 10º, 5º, 2º y #1 con más partidos juntos. ¡Deduce la estrella misteriosa!"
         ),
     }
     if game_id in game_descriptions:
@@ -766,12 +772,16 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
             'Pasaporte FC es un puzzle diario de trivia de fútbol de Playmaker donde los fanáticos consiguen sellos de nacionalidad para un club ancla destacado. Cada día se presenta un club de renombre mundial junto a cuatro niveles progresivos de nacionalidad. Los jugadores deben nombrar a cualquier futbolista elegible que haya jugado en el primer equipo o fichado por dicho club representando a la nación indicada. El reto comienza con grandes potencias futbolísticas antes de ascender a "El Unicornio", un país insólito con solo uno o dos jugadores en toda la historia del club.'
         ),
         "played_with": (
-            "Played With is a daily football deduction challenge by Playmaker where fans deduce a mystery star player (€30M+ peak valuation) through five teammates revealed in ascending order of competitive matches played together. Clue 1 unveils a rare teammate overlap (fewest matches), while Clue 5 reveals the mystery player's #1 most frequent career partner. Players submit guesses using a comprehensive player catalog with autocomplete. Submitting an incorrect guess deducts a life and unlocks the next teammate card. You can also skip to reveal the next clue. Solving the puzzle in the fewest possible clues earns a maximum efficiency score. New puzzles release daily at midnight UTC with full back-in-time archives.",
-            "Jugó Con es un reto diario de deducción futbolística de Playmaker donde los aficionados descubren a un jugador estrella misterioso (valor de mercado pico de +€30M) a través de cinco compañeros revelados en orden ascendente según los partidos competitivos jugados juntos. La Pista 1 muestra una coincidencia con pocos partidos compartidos, mientras que la Pista 5 revela a su compañero #1 más habitual de su carrera. Los jugadores envían sus intentos mediante un buscador con autocompletado. Un fallo resta una vida y desbloquea la siguiente carta de compañero. También puedes saltar para ver la siguiente pista sin perder vidas. ¡Resuelve el reto en la menor cantidad de pistas posible y mantén tu racha diaria!"
+            "Played With is a daily football deduction challenge by Playmaker where fans deduce a mystery star player through five teammates revealed in ascending order of competitive matches played together: their 20th, 10th, 5th, 2nd, and #1 most frequent career teammates. Players submit guesses using a comprehensive player catalog with autocomplete. Submitting an incorrect guess deducts a life and unlocks the next teammate card. You can also skip to reveal the next clue. Solving the puzzle in the fewest possible clues earns a maximum efficiency score. New puzzles release daily at midnight UTC with full back-in-time archives.",
+            "Jugó Con es un reto diario de deducción futbolística de Playmaker donde los aficionados descubren a un jugador estrella misterioso a través de cinco compañeros revelados en orden ascendente según los partidos competitivos jugados juntos: su 20º, 10º, 5º, 2º y #1 compañero más frecuente de su carrera. Los jugadores envían sus intentos mediante un buscador con autocompletado. Un fallo resta una vida y desbloquea la siguiente carta de compañero. También puedes saltar para ver la siguiente pista sin perder vidas. ¡Resuelve el reto en la menor cantidad de pistas posible y mantén tu racha diaria!"
         ),
     }
     for gid, (en_h, es_h) in how_to_play_paragraphs.items():
-        es_html = es_html.replace(en_h, es_h)
+        if en_h in es_html:
+            es_html = es_html.replace(en_h, es_h)
+        else:
+            pattern = re.sub(r'\s+', r'\\s+', re.escape(en_h))
+            es_html = re.sub(pattern, es_h, es_html)
 
     what_is_replacements = {
         "What is Top Transfers?": "¿Qué es Top Transfers?",

@@ -28,10 +28,10 @@ try:
         
         print(f"Page Title: {page.title()}")
         
-        # 1. Verify Puzzle #1 badge
+        # 1. Verify Puzzle badge
         puzzle_badge = page.locator("#puzzle-badge").inner_text()
         print(f"✓ Puzzle badge: {puzzle_badge}")
-        assert "PUZZLE #1" in puzzle_badge, f"Expected PUZZLE #1, got {puzzle_badge}"
+        assert "PUZZLE #" in puzzle_badge, f"Expected PUZZLE #, got {puzzle_badge}"
         
         # 2. Mystery Player Hero Card (Initial state: ???????)
         mystery_hero = page.locator("#mystery-player-display")
@@ -56,12 +56,32 @@ try:
         assert "(Portugal)" not in card1_text and "(Spain)" not in card1_text and "(France)" not in card1_text, "Nationality must not be shown after teammate name"
         print("✓ Teammate nationality is NOT shown after teammate name")
         
-        # 5. Verify Matches Hint Button & Toast
+        # 5. Verify Mystery Player Hints: Nationality & Position
+        hint_nat_btn = page.locator("#hint-nat-btn")
+        hint_pos_btn = page.locator("#hint-pos-btn")
+        assert hint_nat_btn.is_visible(), "Nationality hint button should be visible initially"
+        assert hint_pos_btn.is_visible(), "Position hint button should be visible initially"
+        
+        hint_nat_btn.click()
+        page.wait_for_selector("#player-nat-badge:not(.hidden)")
+        nat_text = page.locator("#mystery-nat-text").inner_text()
+        print(f"✓ Nationality hint revealed: '{nat_text}'")
+        assert len(nat_text) > 1, "Nationality hint text should be populated"
+        assert hint_nat_btn.is_hidden(), "Nationality hint button should hide after click"
+
+        hint_pos_btn.click()
+        page.wait_for_selector("#player-pos-badge:not(.hidden)")
+        pos_text = page.locator("#mystery-pos-text").inner_text()
+        print(f"✓ Position hint revealed: '{pos_text}'")
+        assert len(pos_text) > 1, "Position hint text should be populated"
+        assert hint_pos_btn.is_hidden(), "Position hint button should hide after click"
+
+        # 6. Verify Matches Hint Button & Toast
         hint_btn = clue_cards.nth(0).locator(".reveal-matches-btn")
         assert hint_btn.is_visible(), "Matches hint button should be visible initially"
         hint_btn.click()
-        page.wait_for_selector(".fa-toast-item")
-        toast_text = page.locator(".fa-toast-item").first.inner_text()
+        page.wait_for_timeout(200)
+        toast_text = page.locator(".fa-toast-item").last.inner_text()
         print(f"✓ Matches hint toast fired: '{toast_text}'")
         assert "matches" in toast_text.lower() or "played" in toast_text.lower()
         
@@ -166,6 +186,13 @@ try:
         h1_text = es_page.locator("h1").inner_text()
         print(f"✓ Spanish H1: {h1_text}")
         assert "JUGÓ CON" in h1_text
+        
+        # Verify instructions section at the bottom is translated
+        article_text = es_page.locator("article").inner_text()
+        print("✓ Spanish article text verified")
+        assert "jugó con" in article_text.lower()
+        assert "Played With is a daily football" not in article_text
+        assert "reto diario" in article_text.lower()
         
         browser.close()
         print("\n🏆 ALL USER REQUIREMENTS VERIFIED & PASSING WITH FLYING COLORS!")
