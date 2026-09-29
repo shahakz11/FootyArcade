@@ -26,6 +26,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE_DIR)
 
 from scripts.broll_manager import select_broll_clip
+from scripts.audio_manager import select_audio_track, get_track_display_name
 
 try:
     import imageio_ffmpeg
@@ -179,12 +180,16 @@ def center_crop_and_fill(frame, target_w=WIDTH, target_h=HEIGHT):
     y1 = (nh - target_h) // 2
     return resized[y1:y1+target_h, x1:x1+target_w]
 
-def render_ugc_video(data, output_path, bg_video_path=None, duration=DURATION_SEC, fps=FPS):
-    """Renders authentic clean white text over background video."""
+def render_ugc_video(data, output_path, bg_video_path=None, audio_path=None, duration=DURATION_SEC, fps=FPS):
+    """Renders authentic clean white text over background video with rotating background music."""
     total_frames = int(duration * fps)
     
     if not bg_video_path or not os.path.exists(bg_video_path):
         raise FileNotFoundError(f"❌ Background video file not found: {bg_video_path}")
+
+    # Select background music track if not explicitly passed
+    if not audio_path:
+        audio_path = select_audio_track(game_id=data.get("mode", "player_chain"))
 
     cap = cv2.VideoCapture(bg_video_path)
     if not cap.isOpened():
@@ -261,23 +266,40 @@ def render_ugc_video(data, output_path, bg_video_path=None, duration=DURATION_SE
     cap.release()
     video_writer.release()
 
-    # Clean high-quality video encoding (silent so platform audio / Instagram music is 100% clear)
-    cmd = [
-        FFMPEG_EXE, "-y",
-        "-i", temp_raw,
-        "-c:v", "libx264",
-        "-pix_fmt", "yuv420p",
-        "-preset", "fast",
-        "-crf", "18",
-        "-movflags", "+faststart",
-        output_path
-    ]
+    # Mux with background music if available
+    if audio_path and os.path.exists(audio_path):
+        cmd = [
+            FFMPEG_EXE, "-y",
+            "-i", temp_raw,
+            "-i", audio_path,
+            "-c:v", "libx264",
+            "-c:a", "aac",
+            "-b:a", "192k",
+            "-pix_fmt", "yuv420p",
+            "-preset", "fast",
+            "-crf", "18",
+            "-movflags", "+faststart",
+            "-shortest",
+            output_path
+        ]
+    else:
+        cmd = [
+            FFMPEG_EXE, "-y",
+            "-i", temp_raw,
+            "-c:v", "libx264",
+            "-pix_fmt", "yuv420p",
+            "-preset", "fast",
+            "-crf", "18",
+            "-movflags", "+faststart",
+            output_path
+        ]
     subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
     
     if os.path.exists(temp_raw):
         os.remove(temp_raw)
 
-    print(f"🎉 Successfully generated UGC video (clean audio): {output_path}")
+    print(f"🎉 Successfully generated UGC video: {output_path} (Music: {os.path.basename(audio_path) if audio_path else 'None'})")
+    return output_path, audio_path
 
 def generate_social_copy(data):
     """Generates viral Instagram/TikTok captions."""

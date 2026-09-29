@@ -16,6 +16,7 @@ from render_ugc_short import (
     generate_social_copy as generate_ugc_caption
 )
 from scripts.broll_manager import select_broll_clip
+from scripts.audio_manager import get_track_display_name
 from scripts.youtube_uploader import (
     upload_short,
     build_default_metadata,
@@ -320,6 +321,7 @@ async def process_all_games(
             # Render video
             custom_ig_caption = None
             custom_yt_title = None
+            audio_track_title = "Trending Football Beat"
 
             try:
                 if game_id in ("player_chain", "passport_fc"):
@@ -332,7 +334,13 @@ async def process_all_games(
                         
                     os.makedirs(os.path.join(BASE_DIR, "output_shorts"), exist_ok=True)
                     video_path = os.path.join(BASE_DIR, "output_shorts", f"ugc_rarity_{game_id}_{today_str}.mp4")
-                    render_ugc_video(ugc_data, video_path, bg_video_path=broll_clip)
+                    render_res = render_ugc_video(ugc_data, video_path, bg_video_path=broll_clip)
+                    if isinstance(render_res, tuple):
+                        video_path, audio_clip = render_res
+                        audio_track_title = get_track_display_name(audio_clip)
+                    else:
+                        video_path = render_res
+                        audio_track_title = "Trending Football Beat"
                     custom_ig_caption = generate_ugc_caption(ugc_data)
                     
                     if ugc_data["mode"] == "passport_fc" or ugc_data.get("is_country"):
@@ -423,8 +431,13 @@ async def process_all_games(
                 if publish_at is None or instant_reels:
                     # Upload immediately
                     try:
-                        print(f"🚀 Uploading Reel immediately to Instagram (Trending Audio: {'ON' if trending_audio else 'OFF'})...")
-                        ig_media_id, permalink = upload_reel_now(video_path, ig_caption, use_trending_audio=trending_audio)
+                        print(f"🚀 Uploading Reel immediately to Instagram (Audio: '{audio_track_title}')...")
+                        ig_media_id, permalink = upload_reel_now(
+                            video_path,
+                            ig_caption,
+                            audio_name=audio_track_title,
+                            use_trending_audio=False
+                        )
                         mark_ig_as_posted(game_id, today_str, permalink, ig_media_id)
                         ig_status = "Live Now"
                         ig_url = permalink
