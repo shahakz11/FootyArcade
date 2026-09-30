@@ -164,6 +164,29 @@ def get_target_name_from_game(game_id):
         print(f"⚠️ Could not parse target name from {game_id}.html: {e}")
     return ""
 
+def prepare_youtube_video(video_path, strip_audio=True):
+    """
+    Prepares a clean video file for YouTube Shorts.
+    If strip_audio is True, strips all audio tracks using FFmpeg (-an) so YouTube Shorts
+    upload without synthesized/background sound interference, optimizing retention metrics.
+    """
+    if not strip_audio or not video_path or not os.path.exists(video_path):
+        return video_path
+
+    silent_path = video_path.replace(".mp4", "_yt_silent.mp4")
+    try:
+        cmd = [
+            "ffmpeg", "-y", "-i", video_path,
+            "-c:v", "copy", "-an",
+            silent_path
+        ]
+        res = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        if res.returncode == 0 and os.path.exists(silent_path) and os.path.getsize(silent_path) > 0:
+            return silent_path
+    except Exception as e:
+        print(f"⚠️ YouTube audio strip notice: {e}")
+    return video_path
+
 async def process_all_games(
     mode="auto",
     slot_hours=None,
@@ -178,7 +201,8 @@ async def process_all_games(
     immediate_first=True,
     wait_queue=False,
     force=False,
-    trending_audio=True
+    trending_audio=True,
+    youtube_audio=False
 ):
     print("\n" + "=" * 68)
     print("   ⚽  PLAYMAKER — DAILY SHORTS & REELS UPLOADER (LIVE IMMEDIATE)")
@@ -405,8 +429,11 @@ async def process_all_games(
                     title, desc, tags = build_default_metadata(game_id=game_id, target_name=target_name)
                     
                 try:
+                    yt_video_path = prepare_youtube_video(video_path, strip_audio=not youtube_audio)
+                    if yt_video_path != video_path:
+                        print(f"🔇 [YouTube Shorts] Preparing audio-free video for upload: {os.path.basename(yt_video_path)}")
                     vid, shorts_url = upload_short(
-                        video_path=video_path,
+                        video_path=yt_video_path,
                         title=title,
                         description=desc,
                         tags=tags,
@@ -511,6 +538,7 @@ def main():
     parser.add_argument("--fast", action="store_true", help="Fast mode for testing")
     parser.add_argument("--dry-run", action="store_true", help="Render videos only without uploading")
     parser.add_argument("--no-youtube", action="store_true", help="Skip YouTube upload")
+    parser.add_argument("--youtube-with-audio", action="store_true", help="Keep audio when uploading to YouTube Shorts (default: stripped/silent to avoid audience retention loss)")
     parser.add_argument("--no-instagram", action="store_true", help="Skip Instagram upload")
     parser.add_argument("--no-trending-audio", action="store_true", help="Disable automatic Instagram trending audio attachment")
     parser.add_argument("--wait-queue", action="store_true", help="Wait in foreground for all queued reels to finish (ideal for GitHub Actions)")
@@ -550,7 +578,8 @@ def main():
         immediate_first=immediate_first,
         wait_queue=args.wait_queue,
         force=args.force,
-        trending_audio=not args.no_trending_audio
+        trending_audio=not args.no_trending_audio,
+        youtube_audio=args.youtube_with_audio
     ))
 
 if __name__ == "__main__":

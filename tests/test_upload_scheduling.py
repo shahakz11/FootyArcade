@@ -25,6 +25,7 @@ if BASE_DIR not in sys.path:
 from scripts.upload_daily_shorts import (
     compute_scheduled_slots,
     select_games_for_mode,
+    prepare_youtube_video,
     DAILY_GAMES,
     ALL_AVAILABLE_GAMES,
     DEFAULT_PEAK_SLOTS
@@ -87,6 +88,18 @@ class TestUploadScheduling(unittest.TestCase):
         self.assertEqual(len(slots), 2)
         self.assertEqual(slots[0]["iso"], "2026-09-16T12:00:00Z")
         self.assertEqual(slots[1]["iso"], "2026-09-16T20:00:00Z")
+
+    def test_prepare_youtube_video_strip_audio_false(self):
+        """When strip_audio is False, returns original path."""
+        path = "/tmp/non_existent_fake_video.mp4"
+        result = prepare_youtube_video(path, strip_audio=False)
+        self.assertEqual(result, path)
+
+    def test_prepare_youtube_video_non_existent(self):
+        """When file does not exist, gracefully returns original path."""
+        path = "/tmp/non_existent_fake_video.mp4"
+        result = prepare_youtube_video(path, strip_audio=True)
+        self.assertEqual(result, path)
 
 if __name__ == "__main__":
     unittest.main()
