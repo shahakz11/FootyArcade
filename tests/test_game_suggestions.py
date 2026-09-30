@@ -24,17 +24,10 @@ class TestGameSuggestions(unittest.TestCase):
         with open(self.games_json_path, "r", encoding="utf-8") as f:
             self.games = json.load(f)
         self.live_games = [g for g in self.games if g.get("status") != "coming_soon"]
-        self.all_game_ids = [
-            "top_transfers",
-            "transfer_destination",
-            "top_scorers",
-            "club_connect",
-            "player_chain",
-            "passport_fc",
-        ]
+        self.all_game_ids = [g["id"] for g in self.live_games]
 
     def test_registry_in_footy_ui(self):
-        """Verify all 6 games are registered in GAMES_REGISTRY inside footy-ui.js."""
+        """Verify all live games are registered in GAMES_REGISTRY inside footy-ui.js."""
         ui_path = os.path.join(self.root_dir, "games", "footy-ui.js")
         self.assertTrue(os.path.exists(ui_path))
         with open(ui_path, "r", encoding="utf-8") as f:
@@ -48,6 +41,24 @@ class TestGameSuggestions(unittest.TestCase):
             self.assertTrue(
                 f"id: '{game_id}'" in content or f'id: "{game_id}"' in content,
                 f"Game {game_id} missing in GAMES_REGISTRY",
+            )
+
+    def test_registry_colors_match_games_json(self):
+        """Verify accentHex colors in GAMES_REGISTRY match games.json exactly."""
+        ui_path = os.path.join(self.root_dir, "games", "footy-ui.js")
+        with open(ui_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        for game in self.live_games:
+            game_id = game["id"]
+            expected_color = game.get("accentHex")
+            if not expected_color:
+                continue
+            # Look for block containing id: 'game_id' and color: 'expected_color'
+            pattern = rf"id:\s*['\"]{game_id}['\"][\s\S]*?color:\s*['\"]({expected_color})['\"]"
+            self.assertTrue(
+                re.search(pattern, content, re.IGNORECASE),
+                f"Game {game_id} color in footy-ui.js does not match games.json ({expected_color})",
             )
 
     def test_i18n_dictionary_completeness(self):
@@ -64,6 +75,7 @@ class TestGameSuggestions(unittest.TestCase):
             "tagline_top_scorers",
             "tagline_club_connect",
             "tagline_player_chain",
+            "tagline_played_with",
             "tagline_passport_fc",
             "badge_solved",
             "badge_partial",
@@ -102,9 +114,15 @@ class TestGameSuggestions(unittest.TestCase):
                 content,
                 f"Missing data-current-game='{game['id']}' in {tmpl_file}",
             )
+            # Ensure no duplicate id in the same template
+            self.assertEqual(
+                content.count('id="fa-game-suggestions"'),
+                1,
+                f"Duplicate fa-game-suggestions id found in {tmpl_file}",
+            )
 
     def test_compiled_games_have_suggestions_container(self):
-        """Verify compiled English and Spanish game HTML pages have the fa-game-suggestions element."""
+        """Verify compiled English and Spanish game HTML pages have the fa-game-suggestions element without duplicates."""
         for game_id in self.all_game_ids:
             en_path = os.path.join(self.root_dir, "games", f"{game_id}.html")
             es_path = os.path.join(self.root_dir, "es", "games", f"{game_id}.html")
@@ -117,6 +135,11 @@ class TestGameSuggestions(unittest.TestCase):
                     en_content,
                     f"Missing fa-game-suggestions in {en_path}",
                 )
+                self.assertEqual(
+                    en_content.count('id="fa-game-suggestions"'),
+                    1,
+                    f"Duplicate fa-game-suggestions in {en_path}",
+                )
 
             if os.path.exists(es_path):
                 with open(es_path, "r", encoding="utf-8") as f:
@@ -125,6 +148,11 @@ class TestGameSuggestions(unittest.TestCase):
                     'id="fa-game-suggestions"',
                     es_content,
                     f"Missing fa-game-suggestions in {es_path}",
+                )
+                self.assertEqual(
+                    es_content.count('id="fa-game-suggestions"'),
+                    1,
+                    f"Duplicate fa-game-suggestions in {es_path}",
                 )
 
     def test_css_styles_exist(self):
@@ -143,13 +171,14 @@ class TestGameSuggestions(unittest.TestCase):
         self.assertIn(".fa-suggestions-back", css_content)
 
     def test_filtering_logic_simulation(self):
-        """Test that filtering for any current game yields exactly 5 cards and excludes current game."""
+        """Test that filtering for any current game yields exactly (total_live - 1) cards and excludes current game."""
+        expected_cards = len(self.all_game_ids) - 1
         for current_game in self.all_game_ids:
             filtered = [g for g in self.all_game_ids if g != current_game]
             self.assertEqual(
                 len(filtered),
-                5,
-                f"Expected 5 games for {current_game}, got {len(filtered)}",
+                expected_cards,
+                f"Expected {expected_cards} games for {current_game}, got {len(filtered)}",
             )
             self.assertNotIn(
                 current_game,

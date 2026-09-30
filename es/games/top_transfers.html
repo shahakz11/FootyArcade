@@ -441,10 +441,10 @@
 
 
     <script id="daily-game-data">
-        const DAILY_TRANSFER_GAME = {"mode": "club", "name": "Liverpool", "transfers": [{"player_name": "Alexander Isak", "from_club_name": "Newcastle United", "to_club_name": "Liverpool", "transfer_fee": "145000000.0", "transfer_date": "2025-09-01"}, {"player_name": "Florian Wirtz", "from_club_name": "Bayer Leverkusen", "to_club_name": "Liverpool", "transfer_fee": "125000000.0", "transfer_date": "2025-07-01"}, {"player_name": "Hugo Ekitiké", "from_club_name": "Frankfurt", "to_club_name": "Liverpool", "transfer_fee": "95000000.0", "transfer_date": "2025-07-23"}, {"player_name": "Darwin Núñez", "from_club_name": "Benfica", "to_club_name": "Liverpool", "transfer_fee": "85000000.0", "transfer_date": "2022-07-01"}, {"player_name": "Virgil van Dijk", "from_club_name": "Southampton", "to_club_name": "Liverpool", "transfer_fee": "84650000.0", "transfer_date": "2018-01-01"}, {"player_name": "Alisson", "from_club_name": "Roma", "to_club_name": "Liverpool", "transfer_fee": "72500000.0", "transfer_date": "2018-07-19"}, {"player_name": "Dominik Szoboszlai", "from_club_name": "RB Leipzig", "to_club_name": "Liverpool", "transfer_fee": "70000000.0", "transfer_date": "2023-07-02"}, {"player_name": "Jérémy Jacquet", "from_club_name": "Rennes", "to_club_name": "Liverpool", "transfer_fee": "63600000.0", "transfer_date": "2026-07-01"}, {"player_name": "Naby Keïta", "from_club_name": "RB Leipzig", "to_club_name": "Liverpool", "transfer_fee": "60000000.0", "transfer_date": "2018-07-01"}, {"player_name": "Luis Díaz", "from_club_name": "Porto", "to_club_name": "Liverpool", "transfer_fee": "49000000.0", "transfer_date": "2022-01-30"}]};
+        const DAILY_TRANSFER_GAME = {"mode": "nationality", "name": "Romania", "transfers": [{"player_name": "Radu Drăgușin", "from_club_name": "Genoa", "to_club_name": "Tottenham Hotspur", "transfer_fee": "28000000.0", "transfer_date": "2024-01-11"}, {"player_name": "Cristian Chivu", "from_club_name": "Ajax", "to_club_name": "Roma", "transfer_fee": "18000000.0", "transfer_date": "2003-07-07"}, {"player_name": "Dennis Man", "from_club_name": "FCSB", "to_club_name": "Parma", "transfer_fee": "12600000.0", "transfer_date": "2021-01-29"}, {"player_name": "Răzvan Marin", "from_club_name": "Standard Liège", "to_club_name": "Ajax", "transfer_fee": "12500000.0", "transfer_date": "2019-07-01"}, {"player_name": "Ionuț Radu", "from_club_name": "Genoa", "to_club_name": "Inter", "transfer_fee": "11500000.0", "transfer_date": "2019-07-12"}, {"player_name": "Nicolae Stanciu", "from_club_name": "Steaua Bucharest", "to_club_name": "RSC Anderlecht", "transfer_fee": "11000000.0", "transfer_date": "2016-08-29"}, {"player_name": "Valentin Mihăilă", "from_club_name": "Univ. Craiova", "to_club_name": "Parma", "transfer_fee": "9500000.0", "transfer_date": "2020-10-05"}, {"player_name": "Vlad Chiricheș", "from_club_name": "Steaua Bucharest", "to_club_name": "Tottenham Hotspur", "transfer_fee": "9500000.0", "transfer_date": "2013-08-30"}, {"player_name": "Alexandru Mitriță", "from_club_name": "Univ. Craiova", "to_club_name": "New York City", "transfer_fee": "8000000.0", "transfer_date": "2019-02-04"}, {"player_name": "George Pușcaș", "from_club_name": "Inter", "to_club_name": "Reading", "transfer_fee": "7500000.0", "transfer_date": "2019-08-07"}]};
         const GAME_NOTE = "Datos de transferencias actualizados a junio de 2026. No incluye cesiones.";
-        const PUZZLE_NUMBER    = 63;
-        const PUZZLE_ID        = 63;
+        const PUZZLE_NUMBER    = 66;
+        const PUZZLE_ID        = 66;
         const IS_BACK_IN_TIME  = false;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;
@@ -622,10 +622,10 @@
         document.getElementById('give-up-btn').addEventListener('click', () => {
             if (gameOver) return;
             FootyUI.confirm({
-                title: 'GIVE UP?',
+                title: '¿RENDIRSE?',
                 message: 'Are you sure you want to give up and reveal all answers?',
-                confirmText: 'GIVE UP',
-                cancelText: 'KEEP PLAYING',
+                confirmText: 'RENDIRSE',
+                cancelText: 'SEGUIR JUGANDO',
                 onConfirm: () => {
                     FootyUI.trackGiveUp({
                         score: score,

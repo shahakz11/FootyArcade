@@ -441,10 +441,10 @@
 
 
     <script id="daily-game-data">
-        const DAILY_TRANSFER_GAME = {"mode": "nationality", "name": "Bosnia-Herzegovina", "transfers": [{"player_name": "Miralem Pjanić", "from_club_name": "Juventus", "to_club_name": "Barcelona", "transfer_fee": "60000000.0", "transfer_date": "2020-09-01"}, {"player_name": "Edin Dzeko", "from_club_name": "Wolfsburg", "to_club_name": "Manchester City", "transfer_fee": "37000000.0", "transfer_date": "2011-01-07"}, {"player_name": "Ermedin Demirovic", "from_club_name": "Augsburg", "to_club_name": "Stuttgart", "transfer_fee": "23000000.0", "transfer_date": "2024-07-16"}, {"player_name": "Amar Dedić", "from_club_name": "RB Salzburg", "to_club_name": "Benfica", "transfer_fee": "12000000.0", "transfer_date": "2025-07-14"}, {"player_name": "Asmir Begovic", "from_club_name": "Chelsea", "to_club_name": "Bournemouth", "transfer_fee": "11500000.0", "transfer_date": "2017-07-01"}, {"player_name": "Rade Krunic", "from_club_name": "Empoli", "to_club_name": "AC Milan", "transfer_fee": "8600000.0", "transfer_date": "2019-07-08"}, {"player_name": "Zvjezdan Misimovic", "from_club_name": "Wolfsburg", "to_club_name": "Galatasaray", "transfer_fee": "8500000.0", "transfer_date": "2010-08-01"}, {"player_name": "Ivan Šunjić", "from_club_name": "Dinamo Zagreb", "to_club_name": "Birmingham", "transfer_fee": "8000000.0", "transfer_date": "2019-07-26"}, {"player_name": "Kerim Alajbegovic", "from_club_name": "Salzburg", "to_club_name": "Bayer Leverkusen", "transfer_fee": "8000000.0", "transfer_date": "2026-07-01"}, {"player_name": "Benjamin Tahirović", "from_club_name": "Roma", "to_club_name": "Ajax", "transfer_fee": "7500000.0", "transfer_date": "2023-07-01"}]};
+        const DAILY_TRANSFER_GAME = {"mode": "club", "name": "Zenit S-Pb", "transfers": [{"player_name": "Malcom", "from_club_name": "Barcelona", "to_club_name": "Zenit S-Pb", "transfer_fee": "41500000.0", "transfer_date": "2019-08-02"}, {"player_name": "Hulk", "from_club_name": "Porto", "to_club_name": "Zenit S-Pb", "transfer_fee": "40000000.0", "transfer_date": "2012-09-03"}, {"player_name": "Axel Witsel", "from_club_name": "Benfica", "to_club_name": "Zenit S-Pb", "transfer_fee": "40000000.0", "transfer_date": "2012-09-03"}, {"player_name": "Luiz Henrique", "from_club_name": "Botafogo", "to_club_name": "Zenit S-Pb", "transfer_fee": "33000000.0", "transfer_date": "2025-01-20"}, {"player_name": "Gerson", "from_club_name": "Flamengo", "to_club_name": "Zenit S-Pb", "transfer_fee": "25000000.0", "transfer_date": "2025-07-04"}, {"player_name": "Yuri Alberto", "from_club_name": "Internacional", "to_club_name": "Zenit S-Pb", "transfer_fee": "25000000.0", "transfer_date": "2022-01-31"}, {"player_name": "Leandro Paredes", "from_club_name": "Roma", "to_club_name": "Zenit S-Pb", "transfer_fee": "23000000.0", "transfer_date": "2017-07-01"}, {"player_name": "Bruno Alves", "from_club_name": "Porto", "to_club_name": "Zenit S-Pb", "transfer_fee": "22000000.0", "transfer_date": "2010-08-03"}, {"player_name": "Wendel", "from_club_name": "Sporting CP", "to_club_name": "Zenit S-Pb", "transfer_fee": "20300000.0", "transfer_date": "2020-10-06"}, {"player_name": "Salomón Rondón", "from_club_name": "Rubin Kazan", "to_club_name": "Zenit S-Pb", "transfer_fee": "18000000.0", "transfer_date": "2014-01-31"}]};
         const GAME_NOTE = "Datos de transferencias actualizados a junio de 2026. No incluye cesiones.";
-        const PUZZLE_NUMBER    = 62;
-        const PUZZLE_ID        = 62;
+        const PUZZLE_NUMBER    = 65;
+        const PUZZLE_ID        = 65;
         const IS_BACK_IN_TIME  = true;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;
@@ -622,10 +622,10 @@
         document.getElementById('give-up-btn').addEventListener('click', () => {
             if (gameOver) return;
             FootyUI.confirm({
-                title: 'GIVE UP?',
+                title: '¿RENDIRSE?',
                 message: 'Are you sure you want to give up and reveal all answers?',
-                confirmText: 'GIVE UP',
-                cancelText: 'KEEP PLAYING',
+                confirmText: 'RENDIRSE',
+                cancelText: 'SEGUIR JUGANDO',
                 onConfirm: () => {
                     FootyUI.trackGiveUp({
                         score: score,

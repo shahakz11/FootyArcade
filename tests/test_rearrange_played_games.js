@@ -253,33 +253,35 @@ it('3. initGameSuggestions sorts remaining games by priority status and renders 
     setupMockGameState('top_scorers', 'won');
     setupMockGameState('club_connect', 'in_progress');
     setupMockGameState('passport_fc', 'partial');
-    // player_chain is unplayed
+    // player_chain and played_with are unplayed
 
     const container = getMockElement('fa-game-suggestions');
     FootyUI.initGameSuggestions({ containerId: 'fa-game-suggestions', currentGame: 'top_transfers' });
 
     const cards = container.querySelectorAll('.fa-suggestion-card');
-    assert.strictEqual(cards.length, 5);
+    assert.strictEqual(cards.length, 6);
 
     const cardGameIds = cards.map(c => c.getAttribute('data-game-id'));
     assert.deepStrictEqual(cardGameIds, [
         'player_chain',         // 1. unplayed
-        'club_connect',        // 2. in_progress
-        'top_scorers',         // 3. won
-        'passport_fc',         // 4. partial
-        'transfer_destination' // 5. loss
+        'played_with',          // 2. unplayed
+        'club_connect',        // 3. in_progress
+        'top_scorers',         // 4. won
+        'passport_fc',         // 5. partial
+        'transfer_destination' // 6. loss
     ]);
 
     assert.strictEqual(cards[0].getAttribute('data-status'), 'unplayed');
-    assert.strictEqual(cards[1].getAttribute('data-status'), 'in_progress');
-    assert.strictEqual(cards[2].getAttribute('data-status'), 'won');
-    assert.strictEqual(cards[3].getAttribute('data-status'), 'partial');
-    assert.strictEqual(cards[4].getAttribute('data-status'), 'loss');
+    assert.strictEqual(cards[1].getAttribute('data-status'), 'unplayed');
+    assert.strictEqual(cards[2].getAttribute('data-status'), 'in_progress');
+    assert.strictEqual(cards[3].getAttribute('data-status'), 'won');
+    assert.strictEqual(cards[4].getAttribute('data-status'), 'partial');
+    assert.strictEqual(cards[5].getAttribute('data-status'), 'loss');
 
-    assert(cards[1].innerHTML.includes('fa-suggestion-badge-inprogress'), 'In-progress badge should be present');
-    assert(cards[2].innerHTML.includes('fa-suggestion-badge-solved'), 'Solved badge should be present');
-    assert(cards[3].innerHTML.includes('fa-suggestion-badge-partial'), 'Partial badge should be present');
-    assert(cards[4].innerHTML.includes('fa-suggestion-badge-failed'), 'Failed badge should be present');
+    assert(cards[2].innerHTML.includes('fa-suggestion-badge-inprogress'), 'In-progress badge should be present');
+    assert(cards[3].innerHTML.includes('fa-suggestion-badge-solved'), 'Solved badge should be present');
+    assert(cards[4].innerHTML.includes('fa-suggestion-badge-partial'), 'Partial badge should be present');
+    assert(cards[5].innerHTML.includes('fa-suggestion-badge-failed'), 'Failed badge should be present');
 });
 
 // Test 4: i18n Dictionary tokens

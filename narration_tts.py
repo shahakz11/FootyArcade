@@ -112,7 +112,7 @@ def get_game_voice_script(game_id, target_name="", extra_data=None):
             "intro": f"Can you guess {clean_target or 'this club'}'s record signings? Only real ballers know number one!",
             "guess_5": f"Number five: from {t5_from} for {t5_fee}... {p5_name}!",
             "guess_2": f"Number two: from {t2_from} for {t2_fee}... {p2_name}!",
-            "cliffhanger": f"Now the big one! Number one for {t1_fee}! Who is this superstar? You have three seconds!",
+            "cliffhanger": f"Now the big one! Number one for {t1_fee}! Who is this superstar? Guess now!",
             "outro": "Drop your guess in the comments right now! Check your answer on playmaker.best!"
         }
     elif game_id == "top_scorers":
@@ -138,7 +138,7 @@ def get_game_voice_script(game_id, target_name="", extra_data=None):
             "intro": f"Guess {target_player}'s career backwards! Let's test your ball knowledge!",
             "step_1": f"He played for {step1_to}... before that, {step1_from}!",
             "step_2": f"Before that, {step2_from}!",
-            "cliffhanger": "Before that... which club did he start his professional career at? You have three seconds!",
+            "cliffhanger": "Before that... which club did he start at? Guess before it loops!",
             "outro": "Drop the mystery club in the comments! Check your score on playmaker.best!"
         }
     elif game_id == "club_connect":

@@ -531,11 +531,11 @@
 
 
     <script id="daily-game-data">
-        const DAILY_CLUBCONNECT_GAME = {"club": "Wolverhampton Wanderers", "players": [{"player_name": "Fer López", "from_club_name": "Celta Vigo", "transfer_fee": 23000000.0, "transfer_date": "2025-07-01"}, {"player_name": "Nathan Collins", "from_club_name": "Burnley", "transfer_fee": 24300000.0, "transfer_date": "2022-07-12"}, {"player_name": "Tolu Arokodare", "from_club_name": "Genk", "transfer_fee": 26000000.0, "transfer_date": "2025-09-01"}, {"player_name": "Jørgen Strand Larsen", "from_club_name": "Celta Vigo", "transfer_fee": 27000000.0, "transfer_date": "2025-07-01"}, {"player_name": "Nélson Semedo", "from_club_name": "Barcelona", "transfer_fee": 32000000.0, "transfer_date": "2020-09-23"}]};
+        const DAILY_CLUBCONNECT_GAME = {"club": "West Ham United", "players": [{"player_name": "Nayef Aguerd", "from_club_name": "Rennes", "transfer_fee": 35000000.0, "transfer_date": "2022-07-01"}, {"player_name": "Edson Álvarez", "from_club_name": "Ajax", "transfer_fee": 38000000.0, "transfer_date": "2023-08-10"}, {"player_name": "Felipe Anderson", "from_club_name": "Lazio", "transfer_fee": 38000000.0, "transfer_date": "2018-07-15"}, {"player_name": "Gianluca Scamacca", "from_club_name": "Sassuolo", "transfer_fee": 38600000.0, "transfer_date": "2022-07-26"}, {"player_name": "Jean-Clair Todibo", "from_club_name": "Nice", "transfer_fee": 40000000.0, "transfer_date": "2025-07-01"}]};
         const ANSWER_CLUBS = ["AC Milan", "Ajax", "Al-Ahli", "Al-Duhail", "Al-Hilal", "Al-Ittihad", "Al-Nassr", "Al-Qadsiah", "Al-Rayyan", "Al-Sadd", "Almería", "América", "Anzhi", "Arsenal", "Aston Villa", "Atalanta", "Atletico Madrid", "BJ Guoan", "Barcelona", "Bayer Leverkusen", "Bayern Munich", "Benfica", "Besiktas", "Blackburn", "Bologna", "Borussia Dortmund", "Borussia Mönchengladbach", "Botafogo", "Bournemouth", "Brentford", "Brighton & Hove Albion", "Brugge", "Burnley", "CSKA Moscow", "Cagliari", "Celta Vigo", "Celtic", "Chelsea", "Como", "Cruz Azul", "Crystal Palace", "Dep. La Coruña", "Dinamo Moscow", "Dynamo Kyiv", "E. Frankfurt", "Espanyol", "Everton", "Fenerbahce", "Fenerbahçe", "Feyenoord", "Fiorentina", "Flamengo", "Forest", "Frankfurt", "Freiburg", "Fulham", "G. Bordeaux", "GZ Evergrande", "Galatasaray", "Genoa", "HB CFFC", "Hamburger", "Hertha Berlin", "Hoffenheim", "Inter", "Ipswich", "Juventus", "Krasnodar", "Lazio", "Leeds United", "Leicester City", "Lens", "Lille", "Liverpool", "Lyon", "Manchester City", "Manchester United", "Marseille", "Middlesbrough", "Monaco", "Mönchengladbach", "Napoli", "Newcastle United", "Nice", "Norwich", "Nott'm Forest", "PSV Eindhoven", "Palmeiras", "Paris Saint-Germain", "Parma", "Porto", "R. Strasbourg", "RB Leipzig", "RB Salzburg", "Rangers", "Real Betis", "Real Madrid", "Real Sociedad", "Rennes", "River Plate", "Roma", "Rubin Kazan", "Salzburg", "Sampdoria", "Sassuolo", "Schalke", "Sevilla", "Shakhtar D", "Sheff Utd", "Southampton", "Spartak Moscow", "Sporting CP", "Stoke City", "Stuttgart", "Sunderland", "Swansea", "Tigres UANL", "Torino", "Tottenham Hotspur", "Udinese", "Valencia", "Villarreal", "Watford", "West Brom", "West Ham United", "Wolfsburg", "Wolverhampton Wanderers", "Zenit S-Pb"];
         const GAME_NOTE = "Datos de fichajes actualizados a junio de 2026. Jugadores ordenados por costo de traspaso.";
-        const PUZZLE_NUMBER    = 57;
-        const PUZZLE_ID        = 57;
+        const PUZZLE_NUMBER    = 60;
+        const PUZZLE_ID        = 60;
         const IS_BACK_IN_TIME  = true;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;
@@ -630,7 +630,7 @@
             FootyUI.confirm({
                 title:       'GIVE UP?',
                 message:     'Are you sure you want to give up and reveal the answer?',
-                confirmText: 'GIVE UP',
+                confirmText: 'RENDIRSE',
                 cancelText:  'KEEP PLAYING',
                 onConfirm:   () => {
                     FootyUI.trackGiveUp({

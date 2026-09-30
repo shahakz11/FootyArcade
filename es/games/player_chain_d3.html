@@ -188,7 +188,7 @@
               "@type": "HowToStep",
               "position": 3,
               "name": "Deduce the Player of the Day",
-              "text": "Climb each link of the ladder or submit an instant-win guess for the Mystery Player of the Day."
+              "text": "Climb each link of the ladder or submit an instant-win guess for the Jugador Misterioso del Día."
             }
           ]
         },
@@ -208,7 +208,7 @@
               "name": "How does the instant win guess work?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "If you deduce the identity of the Mystery Player of the Day before completing all ladder links, you can guess them directly for an instant maximum-score win."
+                "text": "If you deduce the identity of the Jugador Misterioso del Día before completing all ladder links, you can guess them directly for an instant maximum-score win."
               }
             },
             {
@@ -407,9 +407,7 @@
 
         <!-- Incorrect Guesses Feed -->
         <section id="wrong-guesses-section" class="space-y-2 hidden">
-            <h4 class="text-xs uppercase font-mono tracking-widest text-on-surface-variant text-center">
-                INCORRECT GUESSES
-            </h4>
+            <h4 class="text-xs uppercase font-mono tracking-widest text-on-surface-variant text-center">INTENTOS INCORRECTOS</h4>
             <div id="wrong-guesses-container" class="flex flex-wrap gap-2 justify-center"></div>
         </section>
 
@@ -464,16 +462,6 @@
             </div>
         </section>
 
-        <!-- SEO: How to Play + More Daily Challenges -->
-        <section class="max-w-4xl mx-auto space-y-8 mt-12 pt-8 border-t border-white/5">
-            <div class="glass-card rounded-2xl p-6 space-y-3">
-                <h2 class="font-headline text-xl uppercase italic text-accent">CÓMO JUGAR</h2>
-                <p class="font-body text-on-surface-variant text-sm leading-relaxed">Conecta clubes consecutivos mediante compañeros de equipo para descubrir al jugador misterioso del día. Cada paso añade una restricción de club o selección. ¡Adivina un compañero válido para avanzar o identifica al jugador misterioso directamente para ganar!</p>
-                <p class="font-body text-on-surface-variant/60 text-xs">Datos de trayectoria y traspasos de Transfermarkt. Actualizados a junio de 2026.</p>
-            </div>
-            <div id="fa-game-suggestions" data-current-game="player_chain"></div>
-        </section>
-
     </main>
 
     <!-- How To Play Modal -->
@@ -501,7 +489,7 @@
         <div class="fa-modal-card bg-surface border border-accent/20 w-full max-w-md rounded-3xl p-5 sm:p-7 text-center space-y-4 sm:space-y-5 shadow-2xl relative max-h-[85vh] sm:max-h-[90vh] overflow-y-auto my-auto">
             <div class="absolute -top-10 -left-10 w-40 h-40 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
 
-            <button id="modal-close-btn" class="sticky top-0 float-right -mr-1 -mt-1 text-on-surface-variant hover:text-white transition-colors bg-black/40 hover:bg-black/80 rounded-full p-1.5 z-30 backdrop-blur-sm" aria-label="Close modal">
+            <button id="modal-close-btn" class="sticky top-0 float-right -mr-1 -mt-1 text-on-surface-variant hover:text-white transition-colors bg-black/40 hover:bg-black/80 rounded-full p-1.5 z-30 backdrop-blur-sm" aria-label="Cerrar ventana">
                 <span class="material-symbols-outlined text-xl block">close</span>
             </button>
 
@@ -604,10 +592,10 @@
 
     
     <script id="daily-game-data">
-        const DAILY_CHAIN_GAME = {"target_player": "Cristiano Ronaldo", "target_nationality": "Portugal", "target_position": "Attack", "total_steps": 4, "steps": [{"step_number": 1, "new_constraint": "Played for Real Madrid", "club": "Real Madrid", "active_constraints": ["Played for Real Madrid"], "active_clubs": ["Real Madrid"], "valid_players": ["Achraf Hakimi", "Adrián González", "Albano Bizzarri", "Albert Celades", "Alberto Marcos", "Alberto Soro", "Alphonse Areola", "Andriy Lunin", "Angel Di Maria", "Antonio Adán", "Antonio Blanco", "Antonio Núñez", "Antonio Rüdiger", "Arda Güler", "Arjen Robben", "Asier Illarramendi", "Aurélien Tchouaméni", "Borja Fernández", "Borja Mayoral", "Brahim Díaz", "Burgui", "Carlos Cano", "Carlos Diogo", "Carlos Sánchez", "Casemiro", "Chicharito", "Christian Karembeu", "Christian Panucci", "Cicinho", "Clarence Seedorf", "Claude Makélélé", "Cristiano Ronaldo", "César Sánchez", "Dani Carvajal", "Dani Ceballos", "Dani García", "Dani Gómez", "Dani Parejo", "Daniel Carvajal", "Danilo", "David Aganzo", "David Alaba", "David Beckham", "David Cobeño", "Davor Suker", "Dean Huijsen", "Dejan Petkovic", "Denis Cheryshev", "Diego Llorente", "Diego López", "Eden Hazard", "Edgar", "Eduardo Camavinga", "Emerson", "Emmanuel Adebayor", "Endrick", "Esteban Cambiasso", "Esteban Granero", "Ezequiel Garay", "Fabinho", "Fabio Cannavaro", "Federico Valverde", "Ferland Mendy", "Fernando", "Fernando Gago", "Fernando Hierro", "Fernando Morientes", "Fernando Pacheco", "Fernando Redondo", "Fernando Sanz", "Fran García", "Francisco Pavón", "Franco Mastantuono", "Fábio Coentrão", "Gabriel Heinze", "García Calvo", "Gareth Bale", "Gheorghe Hagi", "Gonzalo García", "Gonzalo Higuaín", "Guti", "Hugo Sánchez", "Iker Casillas", "Isco", "Iván Helguera", "Iván Zamorano", "Jaime", "James Rodríguez", "Javi García", "Javi Sánchez", "Javier Balboa", "Javier Hernández", "Javier Portillo", "Javier Saviola", "Jerzy Dudek", "Jesé", "Jesús Fernández", "Jesús Vallejo", "Jonathan Woodgate", "Jordi López", "Jorge de Frutos", "Joselu", "José Antonio Reyes", "José Callejón", "José Manuel Jurado", "Juanfran Torres", "Juanmi", "Juanmi Latasa", "Jude Bellingham", "Julien Faubert", "Júlio Baptista", "Kaká", "Karim Benzema", "Kepa Arrizabalaga", "Keylor Navas", "Kiko Casilla", "Klaas-Jan Huntelaar", "Kylian Mbappé", "Lassana Diarra", "Luca Zidane", "Lucas Silva", "Lucas Torró", "Lucas Vázquez", "Luis Enrique", "Luis Figo", "Luis Liendo", "Luka Jović", "Luka Modrić", "Luís Figo", "Mahamadou Diarra", "Manuel Canabal", "Marcelo", "Marco Asensio", "Marcos Llorente", "Mariano Díaz", "Mario Martín", "Martin Ødegaard", "Mateo Kovacic", "Mesut Özil", "Michael Essien", "Michael Laudrup", "Michael Owen", "Miguel Gutiérrez", "Miguel Torres", "Míchel Salgado", "Nacho Fernández", "Nicolas Anelka", "Njitap Geremi", "Nuri Şahin", "Omar Mascarell", "Pablo García", "Paul Breitner", "Pedro León", "Pedro Munitis", "Pepe", "Perica Ognjenovic", "Philipp Lienhart", "Rafa Marín", "Rafael van der Vaart", "Raphaël Varane", "Raúl", "Raúl Albiol", "Raúl Asencio", "Raúl Bravo", "Raúl de Tomás", "Reinier", "Ricardo Carvalho", "Robert Jarni", "Roberto Carlos", "Roberto Rojas", "Roberto Soldado", "Robinho", "Rodrygo", "Ronaldo", "Royston Drenthe", "Rubén González", "Rubén Yáñez", "Rubén de la Red", "Ruud van Nistelrooy", "Sami Khedira", "Samuel Eto'o", "Santi Aragón", "Santiago Solari", "Sergio Canales", "Sergio Ramos", "Sergio Reguilón", "Steve McManaman", "Sávio", "Takefusa Kubo", "Theo Hernández", "Thiago Pitarch", "Thibaut Courtois", "Thomas Gravesen", "Tomás Mejías", "Toni Kroos", "Trent Alexander-Arnold", "Valdo", "Vinicius Junior", "Víctor Chust", "Walter Samuel", "Wesley Sneijder", "Xabi Alonso", "Zinedine Zidane", "Zinédine Zidane", "Zé Roberto", "Álvaro Arbeloa", "Álvaro Carreras", "Álvaro Medrán", "Álvaro Mejía", "Álvaro Morata", "Álvaro Negredo", "Álvaro Odriozola", "Álvaro Rodríguez", "Ángel Di María", "Éder Militão", "Óscar Rodríguez"]}, {"step_number": 2, "new_constraint": "Played for Juventus", "club": "Juventus", "active_constraints": ["Played for Real Madrid", "Played for Juventus"], "active_clubs": ["Real Madrid", "Juventus"], "valid_players": ["Angel Di Maria", "Cristiano Ronaldo", "Danilo", "Dean Huijsen", "Emerson", "Fabio Cannavaro", "Gonzalo Higuaín", "Michael Laudrup", "Nicolas Anelka", "Robert Jarni", "Sami Khedira", "Zinedine Zidane", "Zinédine Zidane", "Álvaro Morata", "Ángel Di María"]}, {"step_number": 3, "new_constraint": "Played for Manchester United", "club": "Manchester United", "active_constraints": ["Played for Real Madrid", "Played for Juventus", "Played for Manchester United"], "active_clubs": ["Real Madrid", "Juventus", "Manchester United"], "valid_players": ["Angel Di Maria", "Cristiano Ronaldo", "Ángel Di María"]}, {"step_number": 4, "new_constraint": "Played for Portugal", "club": "Portugal", "active_constraints": ["Played for Real Madrid", "Played for Juventus", "Played for Manchester United", "Played for Portugal"], "active_clubs": ["Real Madrid", "Juventus", "Manchester United", "Portugal"], "valid_players": ["Cristiano Ronaldo"]}]};
+        const DAILY_CHAIN_GAME = {"target_player": "Éder Militão", "target_nationality": "Brazil", "target_position": "Defender", "total_steps": 4, "steps": [{"step_number": 1, "new_constraint": "Played for Real Madrid", "club": "Real Madrid", "active_constraints": ["Played for Real Madrid"], "active_clubs": ["Real Madrid"], "valid_players": ["Achraf Hakimi", "Adrián González", "Albano Bizzarri", "Albert Celades", "Alberto Marcos", "Alberto Soro", "Alphonse Areola", "Andriy Lunin", "Angel Di Maria", "Antonio Adán", "Antonio Blanco", "Antonio Núñez", "Antonio Rüdiger", "Arda Güler", "Arjen Robben", "Asier Illarramendi", "Aurélien Tchouaméni", "Borja Fernández", "Borja Mayoral", "Brahim Díaz", "Burgui", "Carlos Cano", "Carlos Diogo", "Carlos Sánchez", "Casemiro", "Chicharito", "Christian Karembeu", "Christian Panucci", "Cicinho", "Clarence Seedorf", "Claude Makélélé", "Cristiano Ronaldo", "César Sánchez", "Dani Carvajal", "Dani Ceballos", "Dani García", "Dani Gómez", "Dani Parejo", "Daniel Carvajal", "Danilo", "David Aganzo", "David Alaba", "David Beckham", "David Cobeño", "Davor Suker", "Dean Huijsen", "Dejan Petkovic", "Denis Cheryshev", "Diego Llorente", "Diego López", "Eden Hazard", "Edgar", "Eduardo Camavinga", "Emerson", "Emmanuel Adebayor", "Endrick", "Esteban Cambiasso", "Esteban Granero", "Ezequiel Garay", "Fabinho", "Fabio Cannavaro", "Federico Valverde", "Ferland Mendy", "Fernando", "Fernando Gago", "Fernando Hierro", "Fernando Morientes", "Fernando Pacheco", "Fernando Redondo", "Fernando Sanz", "Fran García", "Francisco Pavón", "Franco Mastantuono", "Fábio Coentrão", "Gabriel Heinze", "García Calvo", "Gareth Bale", "Gheorghe Hagi", "Gonzalo García", "Gonzalo Higuaín", "Guti", "Hugo Sánchez", "Iker Casillas", "Isco", "Iván Helguera", "Iván Zamorano", "Jaime", "James Rodríguez", "Javi García", "Javi Sánchez", "Javier Balboa", "Javier Hernández", "Javier Portillo", "Javier Saviola", "Jerzy Dudek", "Jesé", "Jesús Fernández", "Jesús Vallejo", "Jonathan Woodgate", "Jordi López", "Jorge de Frutos", "Joselu", "José Antonio Reyes", "José Callejón", "José Manuel Jurado", "Juanfran Torres", "Juanmi", "Juanmi Latasa", "Jude Bellingham", "Julien Faubert", "Júlio Baptista", "Kaká", "Karim Benzema", "Kepa Arrizabalaga", "Keylor Navas", "Kiko Casilla", "Klaas-Jan Huntelaar", "Kylian Mbappé", "Lassana Diarra", "Luca Zidane", "Lucas Silva", "Lucas Torró", "Lucas Vázquez", "Luis Enrique", "Luis Figo", "Luis Liendo", "Luka Jović", "Luka Modrić", "Luís Figo", "Mahamadou Diarra", "Manuel Canabal", "Marcelo", "Marco Asensio", "Marcos Llorente", "Mariano Díaz", "Mario Martín", "Martin Ødegaard", "Mateo Kovacic", "Mesut Özil", "Michael Essien", "Michael Laudrup", "Michael Owen", "Miguel Gutiérrez", "Miguel Torres", "Míchel Salgado", "Nacho Fernández", "Nicolas Anelka", "Njitap Geremi", "Nuri Şahin", "Omar Mascarell", "Pablo García", "Paul Breitner", "Pedro León", "Pedro Munitis", "Pepe", "Perica Ognjenovic", "Philipp Lienhart", "Rafa Marín", "Rafael van der Vaart", "Raphaël Varane", "Raúl", "Raúl Albiol", "Raúl Asencio", "Raúl Bravo", "Raúl de Tomás", "Reinier", "Ricardo Carvalho", "Robert Jarni", "Roberto Carlos", "Roberto Rojas", "Roberto Soldado", "Robinho", "Rodrygo", "Ronaldo", "Royston Drenthe", "Rubén González", "Rubén Yáñez", "Rubén de la Red", "Ruud van Nistelrooy", "Sami Khedira", "Samuel Eto'o", "Santi Aragón", "Santiago Solari", "Sergio Canales", "Sergio Ramos", "Sergio Reguilón", "Steve McManaman", "Sávio", "Takefusa Kubo", "Theo Hernández", "Thiago Pitarch", "Thibaut Courtois", "Thomas Gravesen", "Tomás Mejías", "Toni Kroos", "Trent Alexander-Arnold", "Valdo", "Vinicius Junior", "Víctor Chust", "Walter Samuel", "Wesley Sneijder", "Xabi Alonso", "Zinedine Zidane", "Zinédine Zidane", "Zé Roberto", "Álvaro Arbeloa", "Álvaro Carreras", "Álvaro Medrán", "Álvaro Mejía", "Álvaro Morata", "Álvaro Negredo", "Álvaro Odriozola", "Álvaro Rodríguez", "Ángel Di María", "Éder Militão", "Óscar Rodríguez"]}, {"step_number": 2, "new_constraint": "Played for Brazil", "club": "Brazil", "active_constraints": ["Played for Real Madrid", "Played for Brazil"], "active_clubs": ["Real Madrid", "Brazil"], "valid_players": ["Casemiro", "Cicinho", "Danilo", "Emerson", "Fabinho", "Júlio Baptista", "Kaká", "Lucas Silva", "Marcelo", "Reinier", "Roberto Carlos", "Robinho", "Rodrygo", "Ronaldo", "Sávio", "Vinicius Junior", "Zé Roberto", "Éder Militão"]}, {"step_number": 3, "new_constraint": "Played for São Paulo", "club": "São Paulo", "active_constraints": ["Played for Real Madrid", "Played for Brazil", "Played for São Paulo"], "active_clubs": ["Real Madrid", "Brazil", "São Paulo"], "valid_players": ["Casemiro", "Cicinho", "Júlio Baptista", "Kaká", "Éder Militão"]}, {"step_number": 4, "new_constraint": "Played for Porto", "club": "Porto", "active_constraints": ["Played for Real Madrid", "Played for Brazil", "Played for São Paulo", "Played for Porto"], "active_clubs": ["Real Madrid", "Brazil", "São Paulo", "Porto"], "valid_players": ["Casemiro", "Éder Militão"]}]};
         const GAME_NOTE = "Datos de trayectoria y fichajes actualizados a junio de 2026.";
-        const PUZZLE_NUMBER    = 14;
-        const PUZZLE_ID        = 14;
+        const PUZZLE_NUMBER    = 17;
+        const PUZZLE_ID        = 17;
         const IS_BACK_IN_TIME  = true;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;
@@ -785,10 +773,10 @@
             document.getElementById('give-up-btn').addEventListener('click', () => {
                 if (gameOver) return;
                 FootyUI.confirm({
-                    title: 'GIVE UP?',
+                    title: '¿RENDIRSE?',
                     message: 'Are you sure you want to give up? The mystery player and full chain will be revealed.',
-                    confirmText: 'GIVE UP',
-                    cancelText: 'KEEP PLAYING',
+                    confirmText: 'RENDIRSE',
+                    cancelText: 'SEGUIR JUGANDO',
                     onConfirm: () => {
                         FootyUI.trackGiveUp({
                             step: activeStepIndex + 1,
@@ -1291,7 +1279,7 @@
 
             const currStep = activeGameData.steps[activeStepIndex];
 
-            // 2. Check Instant Win Rule (Guessing Mystery Player of the Day)
+            // 2. Check Instant Win Rule (Guessing Jugador Misterioso del Día)
             if (FootyUI.isPlayerMatch(matched, activeGameData.target_player)) {
                 // INSTANT WIN!
                 didInstantWin = true;

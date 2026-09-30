@@ -398,9 +398,7 @@
 
         <!-- Incorrect Guesses Feed -->
         <section id="wrong-guesses-section" class="space-y-2 hidden">
-            <h4 class="text-xs uppercase font-mono tracking-widest text-on-surface-variant text-center">
-                INCORRECT GUESSES
-            </h4>
+            <h4 class="text-xs uppercase font-mono tracking-widest text-on-surface-variant text-center">INTENTOS INCORRECTOS</h4>
             <div id="wrong-guesses-container" class="flex flex-wrap gap-2 justify-center"></div>
         </section>
 
@@ -456,7 +454,7 @@
         <div class="fa-modal-card bg-surface border border-accent/20 w-full max-w-md rounded-3xl p-5 sm:p-7 text-center space-y-4 sm:space-y-5 shadow-2xl relative max-h-[85vh] sm:max-h-[90vh] overflow-y-auto my-auto">
             <div class="absolute -top-10 -left-10 w-40 h-40 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
 
-            <button id="modal-close-btn" class="sticky top-0 float-right -mr-1 -mt-1 text-on-surface-variant hover:text-white transition-colors bg-black/40 hover:bg-black/80 rounded-full p-1.5 z-30 backdrop-blur-sm cursor-pointer" aria-label="Close modal">
+            <button id="modal-close-btn" class="sticky top-0 float-right -mr-1 -mt-1 text-on-surface-variant hover:text-white transition-colors bg-black/40 hover:bg-black/80 rounded-full p-1.5 z-30 backdrop-blur-sm cursor-pointer" aria-label="Cerrar ventana">
                 <span class="material-symbols-outlined text-xl block">close</span>
             </button>
 
@@ -559,10 +557,10 @@
 
     
     <script id="daily-game-data">
-        const DAILY_PASSPORT_GAME = {"club": "Galatasaray", "total_steps": 4, "steps": [{"step_number": 1, "difficulty": "Easy", "nationality": "Brazil", "pool_size": 15, "sample_players": ["Maicon", "Cris", "Alex Telles"], "valid_players": ["Maicon", "Cris", "Alex Telles", "Tetê", "Gabriel Sara", "Fernando", "Carlos Vinícius", "Felipe Melo", "Lincoln", "Marcão", "Gustavo Assunção", "Mariano", "Jô", "Márcio Mixirica", "Capone"]}, {"step_number": 2, "difficulty": "Medium", "nationality": "Spain", "pool_size": 6, "sample_players": ["Álvaro Morata", "Juan Mata", "Angeliño"], "valid_players": ["Álvaro Morata", "Juan Mata", "Angeliño", "Albert Riera", "Iñaki Peña", "José Rodríguez"]}, {"step_number": 3, "difficulty": "Hard", "nationality": "Germany", "pool_size": 6, "sample_players": ["Leroy Sané", "Lukas Podolski", "İlkay Gündoğan"], "valid_players": ["Leroy Sané", "Lukas Podolski", "İlkay Gündoğan", "Kerem Demirbay", "Kevin Großkreutz", "Koray Günter"]}, {"step_number": 4, "difficulty": "The Unicorn", "nationality": "Japan", "pool_size": 2, "sample_players": ["Yuto Nagatomo", "Junichi Inamoto"], "valid_players": ["Yuto Nagatomo", "Junichi Inamoto"]}]};
+        const DAILY_PASSPORT_GAME = {"club": "Manchester United", "total_steps": 4, "steps": [{"step_number": 1, "difficulty": "Easy", "nationality": "France", "pool_size": 10, "sample_players": ["Paul Pogba", "Raphaël Varane", "Eric Cantona"], "valid_players": ["Paul Pogba", "Raphaël Varane", "Eric Cantona", "Patrice Evra", "Fabien Barthez", "Anthony Martial", "Leny Yoro", "Morgan Schneiderlin", "Willy Kambwala", "Laurent Blanc"]}, {"step_number": 2, "difficulty": "Medium", "nationality": "Denmark", "pool_size": 7, "sample_players": ["Christian Eriksen", "Peter Schmeichel", "Rasmus Højlund"], "valid_players": ["Christian Eriksen", "Peter Schmeichel", "Rasmus Højlund", "Patrick Dorgu", "Chido Obi", "Anders Lindegaard", "Mads Timm"]}, {"step_number": 3, "difficulty": "Hard", "nationality": "Portugal", "pool_size": 5, "sample_players": ["Cristiano Ronaldo", "Bruno Fernandes", "Nani"], "valid_players": ["Cristiano Ronaldo", "Bruno Fernandes", "Nani", "Diogo Dalot", "Joel Pereira"]}, {"step_number": 4, "difficulty": "The Unicorn", "nationality": "Colombia", "pool_size": 1, "sample_players": ["Radamel Falcao"], "valid_players": ["Radamel Falcao"]}]};
         const GAME_NOTE = "Fichajes y partidos oficiales desde 1990 + leyendas históricas verificadas (junio 2026).";
-        const PUZZLE_NUMBER    = 8;
-        const PUZZLE_ID        = 8;
+        const PUZZLE_NUMBER    = 11;
+        const PUZZLE_ID        = 11;
         const IS_BACK_IN_TIME  = true;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;
@@ -878,10 +876,10 @@
             document.getElementById('give-up-btn').addEventListener('click', () => {
                 if (gameOver) return;
                 FootyUI.confirm({
-                    title: 'GIVE UP?',
+                    title: '¿RENDIRSE?',
                     message: 'Are you sure you want to give up? The full ladder answers will be revealed.',
-                    confirmText: 'GIVE UP',
-                    cancelText: 'KEEP PLAYING',
+                    confirmText: 'RENDIRSE',
+                    cancelText: 'SEGUIR JUGANDO',
                     onConfirm: () => {
                         const score = stepRecords.filter(r => r && r.won).length;
                         FootyUI.trackGiveUp({
@@ -1204,7 +1202,7 @@
                 || (dropdown && typeof dropdown.getTopMatch === 'function' ? dropdown.getTopMatch(rawVal) : null);
 
             if (!matchedPlayer) {
-                showError('Player not recognized. Please pick from the dropdown.');
+                showError('Jugador no reconocido. Por favor elige de la lista desplegable.');
                 return;
             }
 
@@ -1295,7 +1293,7 @@
 
                 FootyUI.showFeedback({
                     isCorrect: false,
-                    title: 'INCORRECT GUESS',
+                    title: '¡INTENTO INCORRECTO!',
                     message: `${playerName} did not represent ${activeGameData.club} with ${currentStep.nationality}. Lost 1 life.`,
                     guess: playerName,
                     gameId: 'passport_fc',

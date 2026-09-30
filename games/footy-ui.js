@@ -3059,9 +3059,19 @@
             file: 'player_chain.html'
         },
         {
+            id: 'played_with',
+            icon: 'group',
+            color: '#f97316',
+            nameKey: 'game_played_with',
+            taglineKey: 'tagline_played_with',
+            defaultName: 'Played With',
+            defaultTagline: '5 teammates revealed by appearances together',
+            file: 'played_with.html'
+        },
+        {
             id: 'passport_fc',
             icon: 'public',
-            color: '#fbbf24',
+            color: '#10b981',
             nameKey: 'game_passport_fc',
             taglineKey: 'tagline_passport_fc',
             defaultName: 'Passport FC',

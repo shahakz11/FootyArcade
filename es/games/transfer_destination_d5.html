@@ -454,10 +454,10 @@
 
 
     <script id="daily-game-data">
-        const DAILY_DESTINATION_GAME = {"player_name": "Alexandre Lacazette", "nationality": "France", "position": "Attack", "transfers": [{"transfer_date": "2025-07-03 00:00:00", "from_club_name": "Lyon", "to_club_name": "NEOM", "transfer_fee": 0.0, "market_value_in_eur": 6000000.0, "transfer_type": "Transfer"}, {"transfer_date": "2022-07-01 00:00:00", "from_club_name": "Arsenal", "to_club_name": "Lyon", "transfer_fee": 0.0, "market_value_in_eur": 15000000.0, "transfer_type": "Transfer"}, {"transfer_date": "2017-07-05 00:00:00", "from_club_name": "Lyon", "to_club_name": "Arsenal", "transfer_fee": 53000000.0, "market_value_in_eur": 40000000.0, "transfer_type": "Transfer"}]};
+        const DAILY_DESTINATION_GAME = {"player_name": "Moisés Caicedo", "nationality": "Ecuador", "position": "Midfield", "transfers": [{"transfer_date": "2023-08-14 00:00:00", "from_club_name": "Brighton", "to_club_name": "Chelsea", "transfer_fee": 116000000.0, "market_value_in_eur": 75000000.0, "transfer_type": "Transfer"}, {"transfer_date": "2022-01-12 00:00:00", "from_club_name": "Beerschot", "to_club_name": "Brighton", "transfer_fee": 0.0, "market_value_in_eur": 4500000.0, "transfer_type": "Return from loan"}, {"transfer_date": "2021-08-31 00:00:00", "from_club_name": "Brighton", "to_club_name": "Beerschot", "transfer_fee": 0.0, "market_value_in_eur": 5000000.0, "transfer_type": "Loan"}, {"transfer_date": "2021-02-01 00:00:00", "from_club_name": "Independiente", "to_club_name": "Brighton", "transfer_fee": 28200000.0, "market_value_in_eur": 5000000.0, "transfer_type": "Transfer"}, {"transfer_date": "2019-01-01 00:00:00", "from_club_name": "IDV", "to_club_name": "Independiente", "transfer_fee": 0.0, "market_value_in_eur": 0.0, "transfer_type": "Transfer"}]};
         const GAME_NOTE = "Datos actualizados a junio de 2026. Solo transferencias de €1M+.";
-        const PUZZLE_NUMBER    = 58;
-        const PUZZLE_ID        = 58;
+        const PUZZLE_NUMBER    = 61;
+        const PUZZLE_ID        = 61;
         const IS_BACK_IN_TIME  = true;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;
@@ -560,10 +560,10 @@
         document.getElementById('give-up-btn').addEventListener('click', () => {
             if (gameOver) return;
             FootyUI.confirm({
-                title: 'GIVE UP?',
+                title: '¿RENDIRSE?',
                 message: 'Are you sure you want to give up and reveal the full career path?',
-                confirmText: 'GIVE UP',
-                cancelText: 'KEEP PLAYING',
+                confirmText: 'RENDIRSE',
+                cancelText: 'SEGUIR JUGANDO',
                 onConfirm: () => {
                     FootyUI.trackGiveUp({
                         step: activeStep + 1,

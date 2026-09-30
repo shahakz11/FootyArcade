@@ -147,7 +147,12 @@
       {
         "display_name": "Juventus",
         "aliases": [
-          "Juventus FC"
+          "Juventus FC",
+          "Juve Next Gen",
+          "Juventus-SP",
+          "Juve E",
+          "Juve Pergamino",
+          "Juve Stabia Y"
         ],
         "hidden": false
       },
@@ -359,6 +364,13 @@
   },
   "players": {
     "groups": [
+      {
+        "display_name": "Edin Dzeko",
+        "aliases": [
+          "Edin Džeko"
+        ],
+        "hidden": false
+      },
       {
         "display_name": "Rafinha",
         "aliases": [

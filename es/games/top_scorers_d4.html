@@ -442,10 +442,10 @@
 
 
     <script id="daily-game-data">
-        const DAILY_SCORERS_GAME = {"name": "UEFA Champions League 2023/24", "scorers": [{"player_name": "Harry Kane", "club_name": "Bayern Munich", "goals": 8, "appearances": 12, "nationality": "England"}, {"player_name": "Kylian Mbappé", "club_name": "Paris Saint-Germain", "goals": 8, "appearances": 12, "nationality": "France"}, {"player_name": "Vinicius Junior", "club_name": "Real Madrid", "goals": 6, "appearances": 10, "nationality": "Brazil"}, {"player_name": "Antoine Griezmann", "club_name": "Atlético de Madrid", "goals": 6, "appearances": 10, "nationality": "France"}, {"player_name": "Erling Haaland", "club_name": "Manchester City", "goals": 6, "appearances": 9, "nationality": "Norway"}, {"player_name": "Joselu", "club_name": "Real Madrid", "goals": 5, "appearances": 11, "nationality": "Spain"}, {"player_name": "Rodrygo", "club_name": "Real Madrid", "goals": 5, "appearances": 13, "nationality": "Brazil"}, {"player_name": "Rasmus Højlund", "club_name": "Manchester United", "goals": 5, "appearances": 6, "nationality": "Denmark"}, {"player_name": "Álvaro Morata", "club_name": "Atlético de Madrid", "goals": 5, "appearances": 10, "nationality": "Spain"}, {"player_name": "Galeno", "club_name": "Porto", "goals": 5, "appearances": 7, "nationality": "Brazil"}]};
+        const DAILY_SCORERS_GAME = {"name": "Serie A 2022/23", "scorers": [{"player_name": "Victor Osimhen", "club_name": "Napoli", "goals": 26, "appearances": 32, "nationality": "Nigeria"}, {"player_name": "Lautaro Martínez", "club_name": "Inter", "goals": 21, "appearances": 38, "nationality": "Argentina"}, {"player_name": "Boulaye Dia", "club_name": "Salernitana 1919", "goals": 16, "appearances": 33, "nationality": "Senegal"}, {"player_name": "Rafael Leão", "club_name": "AC Milan", "goals": 15, "appearances": 35, "nationality": "Portugal"}, {"player_name": "Ademola Lookman", "club_name": "Atalanta", "goals": 13, "appearances": 31, "nationality": "Nigeria"}, {"player_name": "Olivier Giroud", "club_name": "AC Milan", "goals": 13, "appearances": 33, "nationality": "France"}, {"player_name": "M'Bala Nzola", "club_name": "Spezia Calcio", "goals": 13, "appearances": 31, "nationality": "Angola"}, {"player_name": "Antonio Sanabria", "club_name": "Torino", "goals": 12, "appearances": 33, "nationality": "Paraguay"}, {"player_name": "Domenico Berardi", "club_name": "Sassuolo", "goals": 12, "appearances": 26, "nationality": "Italy"}, {"player_name": "Ciro Immobile", "club_name": "Società Sportiva Lazio S.p.A", "goals": 12, "appearances": 31, "nationality": "Italy"}]};
         const GAME_NOTE = "Datos de goles actualizados a junio de 2026.";
-        const PUZZLE_NUMBER    = 59;
-        const PUZZLE_ID        = 59;
+        const PUZZLE_NUMBER    = 62;
+        const PUZZLE_ID        = 62;
         const IS_BACK_IN_TIME  = true;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;
@@ -623,10 +623,10 @@
         document.getElementById('give-up-btn').addEventListener('click', () => {
             if (gameOver) return;
             FootyUI.confirm({
-                title: 'GIVE UP?',
+                title: '¿RENDIRSE?',
                 message: 'Are you sure you want to give up and reveal all answers?',
-                confirmText: 'GIVE UP',
-                cancelText: 'KEEP PLAYING',
+                confirmText: 'RENDIRSE',
+                cancelText: 'SEGUIR JUGANDO',
                 onConfirm: () => {
                     FootyUI.trackGiveUp({
                         score: score,
