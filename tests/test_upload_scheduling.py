@@ -59,9 +59,14 @@ class TestUploadScheduling(unittest.TestCase):
         self.assertEqual(len(daily_games), 1)
         self.assertIn(daily_games[0]["id"], ["player_chain", "passport_fc"])
 
-        auto_games = select_games_for_mode(mode="auto")
-        self.assertEqual(len(auto_games), 1)
-        self.assertIn(auto_games[0]["id"], ["player_chain", "passport_fc"])
+        # Midday 10:30 UTC Carousel window
+        carousel_auto = select_games_for_mode(mode="auto", curr_hour=10)
+        self.assertEqual(len(carousel_auto), 0)
+
+        # Evening 17:00 UTC Video Short window
+        video_auto = select_games_for_mode(mode="auto", curr_hour=17)
+        self.assertEqual(len(video_auto), 1)
+        self.assertIn(video_auto[0]["id"], ["player_chain", "passport_fc"])
 
     def test_select_games_both_and_all(self):
         """Both mode returns 2 games; all_games returns 6 games."""

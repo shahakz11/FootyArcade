@@ -50,19 +50,22 @@ ALL_AVAILABLE_GAMES = [
     {"id": "top_scorers",          "name": "Top Scorers"}
 ]
 
-DEFAULT_PEAK_SLOTS = [12, 20]  # 12:00 PM UTC and 8:00 PM UTC peak football engagement windows
+DEFAULT_PEAK_SLOTS = [10.5, 17]  # 10:30 AM UTC (Carousel) and 17:00 PM UTC (Video Short)
 
 def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_hour=None):
     """
     Selects which game(s) to process:
     - If all_games is True: returns ALL_AVAILABLE_GAMES (all 6)
     - If selected_game is provided: returns the matching game from ALL_AVAILABLE_GAMES
-    - If mode in ('midday', 'morning'): returns [Top Transfers]
-    - If mode in ('evening', 'night'): returns [Transfer Destination]
-    - If mode == 'both': returns [Top Transfers, Transfer Destination]
+    - If mode == 'carousel': returns [] (signals carousel-only execution)
+    - If mode in ('midday', 'morning'): returns [DAILY_GAMES[0]] (Player Chain)
+    - If mode in ('evening', 'night'): returns [DAILY_GAMES[1]] (Passport FC)
+    - If mode == 'both': returns DAILY_GAMES (2 games)
+    - If mode in ('short', 'video', 'daily'): returns alternating [Player Chain / Passport FC]
+    - If mode == 'all': returns ALL_AVAILABLE_GAMES (6 games)
     - If mode == 'auto' (default):
-        - If current hour < 16 (before 4 PM): returns [Top Transfers] (Midday Peak Run)
-        - If current hour >= 16 (4 PM onwards): returns [Transfer Destination] (Evening Peak Run)
+        - If current UTC hour < 14 (Morning/Midday): returns [] (triggers 10:30 AM UTC H2H Carousel)
+        - If current UTC hour >= 14 (Evening): returns alternating [Player Chain / Passport FC] for 17:00 PM UTC Video Short
     """
     if all_games:
         return ALL_AVAILABLE_GAMES
@@ -73,19 +76,32 @@ def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_h
         raise ValueError(f"Unknown game ID '{selected_game}'. Available: {[g['id'] for g in ALL_AVAILABLE_GAMES]}")
     
     mode_lower = (mode or "auto").lower()
-    if mode_lower in ("midday", "morning"):
-        return [DAILY_GAMES[0]]  # Player Chain (Step 2)
+    if mode_lower in ("carousel", "h2h"):
+        return []
+    elif mode_lower in ("midday", "morning"):
+        return [DAILY_GAMES[0]]  # Player Chain
     elif mode_lower in ("evening", "night"):
-        return [DAILY_GAMES[1]]  # Passport FC (Step 2)
+        return [DAILY_GAMES[1]]  # Passport FC
     elif mode_lower == "both":
         return DAILY_GAMES
-    elif mode_lower == "daily":
-        day_idx = datetime.date.today().toordinal() % len(DAILY_GAMES)
-        return [DAILY_GAMES[day_idx]]
+    elif mode_lower == "all":
+        return ALL_AVAILABLE_GAMES
 
-    # Auto mode: alternate daily between Player Chain and Passport FC
     day_idx = datetime.date.today().toordinal() % len(DAILY_GAMES)
-    return [DAILY_GAMES[day_idx]]
+    daily_short = [DAILY_GAMES[day_idx]]
+
+    if mode_lower in ("short", "video", "daily"):
+        return daily_short
+
+    # Auto mode:
+    # Morning / Midday (< 14:00 UTC): Carousel window (returns empty to bypass video rendering)
+    # Evening (>= 14:00 UTC): 17:00 UTC Video Short window
+    if curr_hour is None:
+        curr_hour = datetime.datetime.now(datetime.timezone.utc).hour
+
+    if curr_hour < 14:
+        return []  # 10:30 AM UTC Carousel window
+    return daily_short  # 17:00 PM UTC Video Short window
 
 def compute_scheduled_slots(num_videos, start_dt=None, slot_hours=None, immediate_first=True):
     """

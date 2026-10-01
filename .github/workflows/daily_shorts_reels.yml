@@ -1,11 +1,13 @@
-name: Daily Shorts & Reels Auto-Publisher
+name: Daily Social Auto-Publisher (Carousels & Shorts)
 
 on:
   schedule:
-    # Daily Prime Engagement Run: 16:42 UTC (19:42 local time UTC+3)
-    # Off-peak minute (:42) bypasses GitHub runner queue delays, ensuring the video
-    # finishes rendering (~2.5 min) and publishes right at the 17:00 UTC (8:00 PM local) global football peak.
-    - cron: '42 16 * * *'
+    # Slot 1: Midday H2H Carousel (10:30 AM UTC / 1:30 PM local UTC+3)
+    # Cron at 10:25 UTC allows ~2-3 min for runner spinup & snapshot rendering to publish at 10:30 UTC
+    - cron: '25 10 * * *'
+    # Slot 2: Evening Video Short / Reel (17:00 PM UTC / 8:00 PM local UTC+3)
+    # Cron at 16:55 UTC allows ~2-3 min for video rendering to publish right at 17:00 UTC
+    - cron: '55 16 * * *'
   workflow_dispatch:
     inputs:
       mode:
@@ -15,10 +17,8 @@ on:
         type: choice
         options:
           - auto
-          - daily
-          - midday
-          - evening
-          - both
+          - carousel
+          - short
           - all
       game:
         description: 'Specific game ID (optional override, e.g. top_transfers)'
