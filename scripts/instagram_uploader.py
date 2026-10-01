@@ -174,7 +174,8 @@ def is_already_posted(game_id, date_str, target_name=""):
                 "player_chain": ["player chain", "teammate chain"],
                 "club_connect": ["club connect", "which team all of these players transferred to"],
                 "top_scorers": ["scored the most goals", "top scorers"],
-                "passport_fc": ["passport fc", "club passport"]
+                "passport_fc": ["passport fc", "club passport"],
+                "h2h_carousel": ["prime vs prime", "who had the better career", "career numbers", "head to head"]
             }
             patterns = game_patterns.get(game_id, [])
 
@@ -532,6 +533,83 @@ def run_daemon():
                 os.remove(PID_FILE)
             except Exception:
                 pass
+
+# ── Instagram Carousel Upload ────────────────────────────────────────────────
+
+def upload_carousel_item_container(image_url, token, ig_user_id):
+    """Creates a single carousel item container on Instagram Graph API."""
+    url = f"https://graph.facebook.com/v21.0/{ig_user_id}/media"
+    data = {
+        "image_url": image_url,
+        "is_carousel_item": "true",
+        "access_token": token
+    }
+    encoded = urllib.parse.urlencode(data).encode("utf-8")
+    req = urllib.request.Request(url, data=encoded, method="POST")
+    with urllib.request.urlopen(req, timeout=20) as resp:
+        res = json.loads(resp.read().decode("utf-8"))
+        return res["id"]
+
+def upload_carousel_now(image_urls, caption=None, max_retries=3):
+    """
+    Publishes a multi-slide Carousel post to Instagram feed using Meta Graph API.
+    image_urls: list of 2-10 publicly accessible HTTPS image URLs.
+    Returns (ig_media_id, permalink).
+    """
+    if not image_urls or len(image_urls) < 2 or len(image_urls) > 10:
+        raise ValueError(f"Instagram Carousels require between 2 and 10 images. Provided: {len(image_urls) if image_urls else 0}")
+
+    config = load_config()
+    token = config["access_token"]
+    ig_user_id = config["ig_user_id"]
+
+    log_message(f"🎠 [Instagram] Starting Carousel upload with {len(image_urls)} slides...")
+
+    # Step 1: Create child item containers
+    child_ids = []
+    for idx, img_url in enumerate(image_urls):
+        log_message(f"  • Creating container for slide {idx+1}/{len(image_urls)}...")
+        item_id = upload_carousel_item_container(img_url, token, ig_user_id)
+        child_ids.append(item_id)
+        time.sleep(0.5)
+
+    # Step 2: Create parent CAROUSEL container
+    log_message(f"📦 [Instagram] Creating parent CAROUSEL container with {len(child_ids)} slides...")
+    parent_url = f"https://graph.facebook.com/v21.0/{ig_user_id}/media"
+    parent_data = {
+        "media_type": "CAROUSEL",
+        "children": ",".join(child_ids),
+        "access_token": token
+    }
+    if caption:
+        parent_data["caption"] = caption
+
+    encoded = urllib.parse.urlencode(parent_data).encode("utf-8")
+    req = urllib.request.Request(parent_url, data=encoded, method="POST")
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        parent_res = json.loads(resp.read().decode("utf-8"))
+        carousel_container_id = parent_res["id"]
+
+    # Step 3: Wait for processing readiness
+    log_message(f"⏳ [Instagram] Container created (ID: {carousel_container_id}). Waiting for media readiness...")
+    wait_for_container(carousel_container_id, token, max_attempts=15, delay=2)
+
+    # Step 4: Publish carousel
+    log_message(f"🚀 [Instagram] Publishing Carousel (Container ID: {carousel_container_id})...")
+    publish_url = f"https://graph.facebook.com/v21.0/{ig_user_id}/media_publish"
+    publish_data = urllib.parse.urlencode({
+        "creation_id": carousel_container_id,
+        "access_token": token
+    }).encode("utf-8")
+
+    req = urllib.request.Request(publish_url, data=publish_data, method="POST")
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        pub_res = json.loads(resp.read().decode("utf-8"))
+        ig_media_id = pub_res["id"]
+
+    permalink = fetch_permalink(ig_media_id, token)
+    log_message(f"🎉 [Instagram] Carousel successfully published! Live URL: {permalink}")
+    return ig_media_id, permalink
 
 def start_background_daemon():
     """Spawns the background daemon detached from the current process."""

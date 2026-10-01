@@ -537,15 +537,20 @@ def main():
     parser.add_argument("--port", type=int, default=8080, help="Local server port (default: 8080)")
     parser.add_argument("--fast", action="store_true", help="Fast mode for testing")
     parser.add_argument("--dry-run", action="store_true", help="Render videos only without uploading")
-    parser.add_argument("--no-youtube", action="store_true", help="Skip YouTube upload")
-    parser.add_argument("--youtube-with-audio", action="store_true", help="Keep audio when uploading to YouTube Shorts (default: stripped/silent to avoid audience retention loss)")
-    parser.add_argument("--no-instagram", action="store_true", help="Skip Instagram upload")
-    parser.add_argument("--no-trending-audio", action="store_true", help="Disable automatic Instagram trending audio attachment")
-    parser.add_argument("--wait-queue", action="store_true", help="Wait in foreground for all queued reels to finish (ideal for GitHub Actions)")
-    parser.add_argument("--force", action="store_true", help="Bypass deduplication checks and re-render/re-upload")
+    parser.add_argument("--h2h-carousel", action="store_true", help="Generate and publish today's Head-to-Head Instagram Carousel alongside shorts")
+    parser.add_argument("--daily-all", action="store_true", help="Publish complete daily package: alternating video short + H2H Instagram Carousel")
+    parser.add_argument("--carousel-only", action="store_true", help="Generate and publish H2H Carousel only (skips video shorts)")
 
     args = parser.parse_args()
     
+    if args.carousel_only:
+        from scripts.generate_h2h_carousel import get_daily_h2h_matchup, render_carousel_slides
+        p_a, p_b = get_daily_h2h_matchup()
+        print(f"\n🎠 [Daily Carousel] Generating today's H2H Carousel: {p_a} vs {p_b}...")
+        slides, caption = render_carousel_slides(p_a, p_b)
+        print(f"✅ Generated {len(slides)} slides.")
+        return
+
     mode = args.mode
     if args.midday_flag:
         mode = "midday"
@@ -582,5 +587,14 @@ def main():
         youtube_audio=args.youtube_with_audio
     ))
 
+    # If --h2h-carousel or --daily-all passed, generate the daily carousel
+    if args.h2h_carousel or args.daily_all:
+        from scripts.generate_h2h_carousel import get_daily_h2h_matchup, render_carousel_slides
+        p_a, p_b = get_daily_h2h_matchup()
+        print(f"\n🎠 [Daily Package] Generating today's H2H Carousel: {p_a} vs {p_b}...")
+        slides, caption = render_carousel_slides(p_a, p_b)
+        print(f"✅ Generated {len(slides)} slides for @playmaker.best Instagram feed.")
+
 if __name__ == "__main__":
     main()
+
