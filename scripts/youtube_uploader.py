@@ -70,6 +70,12 @@ def get_authenticated_service():
                 credentials = None
 
         if not refreshed:
+            if os.environ.get("CI") == "true" or not sys.stdin.isatty():
+                raise RuntimeError(
+                    "❌ YouTube OAuth credentials expired or invalid in non-interactive / CI environment. "
+                    "Please re-authenticate locally and update the GitHub YOUTUBE_TOKEN_JSON repository secret."
+                )
+
             client_secrets = find_client_secrets()
             if not client_secrets:
                 raise FileNotFoundError(

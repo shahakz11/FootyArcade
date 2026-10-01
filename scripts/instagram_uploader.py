@@ -509,16 +509,136 @@ def process_queue(force_all=False):
     _save_queue(remaining_queue)
     return processed_results
 
-def run_daemon():
+def wait_for_container(container_id, token, max_attempts=20, delay=2):
+    """Polls a Meta Graph API container until status is FINISHED or raises on ERROR."""
+    status_url = f"https://graph.facebook.com/v21.0/{container_id}?fields=status_code,status&access_token={token}"
+    for attempt in range(max_attempts):
+        time.sleep(delay)
+        try:
+            req = urllib.request.Request(status_url)
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                status_res = json.loads(resp.read().decode("utf-8"))
+                status_code = status_res.get("status_code", "")
+                if status_code == "FINISHED":
+                    return True
+                elif status_code == "ERROR":
+                    err_detail = status_res.get("status", "Unknown container processing error")
+                    raise RuntimeError(f"Meta container processing failed: {err_detail}")
+        except urllib.error.HTTPError as e:
+            log_message(f"⚠️ Container poll warning (HTTP {e.code}): {e.read().decode('utf-8')}")
+        except Exception as e:
+            log_message(f"⚠️ Container poll error: {e}")
+    return True
+
+def fetch_permalink(media_id, token):
+    """Retrieves permalink URL for published Instagram media."""
+    permalink = f"https://www.instagram.com/p/{media_id}/"
+    try:
+        detail_url = f"https://graph.facebook.com/v21.0/{media_id}?fields=permalink&access_token={token}"
+        req = urllib.request.Request(detail_url)
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            detail_res = json.loads(resp.read().decode("utf-8"))
+            if "permalink" in detail_res:
+                permalink = detail_res["permalink"]
+    except Exception:
+        pass
+    return permalink
+
+def upload_image_to_cdn(filepath):
+    """
+    Uploads a local slide image to a fast temporary CDN to obtain a public HTTPS URL for Meta Graph API.
+    Uses Catbox and Litterbox as reliable multi-tier fallbacks.
+    """
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f"Slide file not found: {filepath}")
+
+    boundary = '----WebKitFormBoundaryPlaymakerCarouselUpload'
+    with open(filepath, 'rb') as f:
+        file_bytes = f.read()
+
+    # Strategy 1: Catbox
+    try:
+        body = bytearray()
+        body.extend(f'--{boundary}\r\n'.encode('utf-8'))
+        body.extend(b'Content-Disposition: form-data; name="reqtype"\r\n\r\nfileupload\r\n')
+        body.extend(f'--{boundary}\r\n'.encode('utf-8'))
+        body.extend(b'Content-Disposition: form-data; name="fileToUpload"; filename="slide.png"\r\n')
+        body.extend(b'Content-Type: image/png\r\n\r\n')
+        body.extend(file_bytes)
+        body.extend(f'\r\n--{boundary}--\r\n'.encode('utf-8'))
+
+        req = urllib.request.Request(
+            'https://catbox.moe/user/api.php',
+            data=body,
+            headers={
+                'Content-Type': f'multipart/form-data; boundary={boundary}',
+                'User-Agent': 'Mozilla/5.0 (Playmaker/1.0)'
+            }
+        )
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            res_url = resp.read().decode('utf-8').strip()
+            if res_url.startswith("http"):
+                return res_url
+    except Exception as e:
+        log_message(f"⚠️ Catbox upload notice ({e}), falling back to Litterbox...")
+
+    # Strategy 2: Litterbox
+    try:
+        body = bytearray()
+        body.extend(f'--{boundary}\r\n'.encode('utf-8'))
+        body.extend(b'Content-Disposition: form-data; name="reqtype"\r\n\r\nfileupload\r\n')
+        body.extend(f'--{boundary}\r\n'.encode('utf-8'))
+        body.extend(b'Content-Disposition: form-data; name="time"\r\n\r\n24h\r\n')
+        body.extend(f'--{boundary}\r\n'.encode('utf-8'))
+        body.extend(b'Content-Disposition: form-data; name="fileToUpload"; filename="slide.png"\r\n')
+        body.extend(b'Content-Type: image/png\r\n\r\n')
+        body.extend(file_bytes)
+        body.extend(f'\r\n--{boundary}--\r\n'.encode('utf-8'))
+
+        req = urllib.request.Request(
+            'https://litterbox.catbox.moe/resources/internals/api.php',
+            data=body,
+            headers={
+                'Content-Type': f'multipart/form-data; boundary={boundary}',
+                'User-Agent': 'Mozilla/5.0 (Playmaker/1.0)'
+            }
+        )
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            res_url = resp.read().decode('utf-8').strip()
+            if res_url.startswith("http"):
+                return res_url
+    except Exception as e:
+        raise RuntimeError(f"Failed to upload slide to CDN: {e}")
+
+def upload_local_slides_to_temp_cdn(slide_paths):
+    """Uploads a list of local slide file paths to CDN and returns list of public HTTPS URLs."""
+    urls = []
+    log_message(f"☁️ [Instagram Carousel] Hosting {len(slide_paths)} slide images on CDN for Meta ingestion...")
+    for idx, sp in enumerate(slide_paths):
+        if sp.startswith("http://") or sp.startswith("https://"):
+            urls.append(sp)
+        else:
+            url = upload_image_to_cdn(sp)
+            urls.append(url)
+            log_message(f"  ✓ Slide {idx+1}/{len(slide_paths)} hosted: {url}")
+    return urls
+
+def run_daemon(max_iterations=120):
     """Background daemon loop: wakes every 60s, processes due reels, exits when queue is clear."""
-    # Write PID
+    # In CI or non-interactive environments, do an immediate queue flush and exit
+    if os.environ.get("CI") == "true":
+        log_message("⚡ [Instagram CI Mode] Running immediate queue flush...")
+        process_queue(force_all=True)
+        return
+
     pid = os.getpid()
     with open(PID_FILE, "w") as f:
         f.write(str(pid))
     log_message(f"🤖 [Instagram Daemon] Started with PID {pid}")
 
+    iterations = 0
     try:
-        while True:
+        while iterations < max_iterations:
             queue = _load_queue()
             pending = [q for q in queue if q.get("status") == "pending"]
             if not pending:
@@ -527,6 +647,7 @@ def run_daemon():
 
             process_queue(force_all=False)
             time.sleep(60)
+            iterations += 1
     finally:
         if os.path.exists(PID_FILE):
             try:
@@ -550,14 +671,20 @@ def upload_carousel_item_container(image_url, token, ig_user_id):
         res = json.loads(resp.read().decode("utf-8"))
         return res["id"]
 
-def upload_carousel_now(image_urls, caption=None, max_retries=3):
+def upload_carousel_now(slides_or_urls, caption=None, max_retries=3):
     """
     Publishes a multi-slide Carousel post to Instagram feed using Meta Graph API.
-    image_urls: list of 2-10 publicly accessible HTTPS image URLs.
+    slides_or_urls: list of 2-10 image URLs OR local PNG file paths.
     Returns (ig_media_id, permalink).
     """
-    if not image_urls or len(image_urls) < 2 or len(image_urls) > 10:
-        raise ValueError(f"Instagram Carousels require between 2 and 10 images. Provided: {len(image_urls) if image_urls else 0}")
+    if not slides_or_urls or len(slides_or_urls) < 2 or len(slides_or_urls) > 10:
+        raise ValueError(f"Instagram Carousels require between 2 and 10 images. Provided: {len(slides_or_urls) if slides_or_urls else 0}")
+
+    # If local files are passed, upload them to CDN first
+    if not all(str(s).startswith("http") for s in slides_or_urls):
+        image_urls = upload_local_slides_to_temp_cdn(slides_or_urls)
+    else:
+        image_urls = list(slides_or_urls)
 
     config = load_config()
     token = config["access_token"]
@@ -592,7 +719,7 @@ def upload_carousel_now(image_urls, caption=None, max_retries=3):
 
     # Step 3: Wait for processing readiness
     log_message(f"⏳ [Instagram] Container created (ID: {carousel_container_id}). Waiting for media readiness...")
-    wait_for_container(carousel_container_id, token, max_attempts=15, delay=2)
+    wait_for_container(carousel_container_id, token, max_attempts=20, delay=2)
 
     # Step 4: Publish carousel
     log_message(f"🚀 [Instagram] Publishing Carousel (Container ID: {carousel_container_id})...")

@@ -203,6 +203,56 @@ def prepare_youtube_video(video_path, strip_audio=True):
         print(f"⚠️ YouTube audio strip notice: {e}")
     return video_path
 
+async def publish_daily_h2h_carousel(dry_run=False, force=False, no_instagram=False):
+    """
+    Generates today's H2H Carousel matchup and publishes it to Instagram.
+    Includes full deduplication checks and CDN upload.
+    """
+    from scripts.generate_h2h_carousel import get_daily_h2h_matchup, render_carousel_slides_async
+    from scripts.instagram_uploader import is_already_posted, mark_as_posted, upload_carousel_now
+    
+    today_str = datetime.date.today().strftime("%Y-%m-%d")
+    p_a, p_b = get_daily_h2h_matchup()
+    target_pair = f"{p_a} & {p_b}"
+    
+    print("\n" + "=" * 68)
+    print(f"🎠  PLAYMAKER — DAILY H2H CAROUSEL ({p_a} vs {p_b})")
+    print("=" * 68)
+
+    # 1. Deduplication check
+    if not no_instagram and not force:
+        already_done, existing_url = is_already_posted("h2h_carousel", today_str, target_name=target_pair)
+        if already_done:
+            print(f"ℹ️ Today's H2H Carousel ({target_pair}) is already published: {existing_url}")
+            return {"game": f"H2H: {target_pair}", "ig_status": "Already Uploaded", "ig_url": existing_url, "yt_status": "—", "yt_url": "—"}
+
+    # 2. Render slides
+    print(f"🎨 Rendering 6 high-contrast comparison slides for {p_a} vs {p_b}...")
+    slides, caption = await render_carousel_slides_async(p_a, p_b)
+    print(f"✅ Generated {len(slides)} slides.")
+
+    if dry_run:
+        print(f"🔎 Dry run: {len(slides)} slides rendered, skipping Instagram upload.")
+        return {"game": f"H2H: {target_pair}", "ig_status": "Dry Run", "ig_url": slides[0] if slides else "", "yt_status": "—", "yt_url": "—"}
+
+    if no_instagram:
+        print("ℹ️ --no-instagram specified, skipping upload.")
+        return {"game": f"H2H: {target_pair}", "ig_status": "Skipped", "ig_url": "—", "yt_status": "—", "yt_url": "—"}
+
+    # 3. Upload to Instagram
+    try:
+        ig_media_id, permalink = upload_carousel_now(slides, caption=caption)
+        mark_as_posted("h2h_carousel", today_str, permalink, ig_media_id)
+        print(f"🎉 Live Instagram Carousel URL: {permalink}")
+        return {"game": f"H2H: {target_pair}", "ig_status": "Live Now", "ig_url": permalink, "yt_status": "—", "yt_url": "—"}
+    except Exception as e:
+        print(f"❌ Instagram Carousel upload error: {e}")
+        return {"game": f"H2H: {target_pair}", "ig_status": "Upload Error", "ig_url": str(e), "yt_status": "—", "yt_url": "—"}
+
+def publish_daily_h2h_carousel_sync(dry_run=False, force=False, no_instagram=False):
+    """Synchronous entrypoint for publish_daily_h2h_carousel."""
+    return asyncio.run(publish_daily_h2h_carousel(dry_run=dry_run, force=force, no_instagram=no_instagram))
+
 async def process_all_games(
     mode="auto",
     slot_hours=None,
@@ -221,31 +271,46 @@ async def process_all_games(
     youtube_audio=False
 ):
     print("\n" + "=" * 68)
-    print("   ⚽  PLAYMAKER — DAILY SHORTS & REELS UPLOADER (LIVE IMMEDIATE)")
+    print("   ⚽  PLAYMAKER — DAILY SOCIAL AUTO-PUBLISHER (SHORTS & CAROUSELS)")
     print("=" * 68)
 
     today_str = datetime.date.today().strftime("%Y-%m-%d")
+    now_utc = datetime.datetime.now(datetime.timezone.utc)
+    curr_hour = now_utc.hour
+    mode_lower = (mode or "auto").lower()
 
-    # 1. Verify YouTube channel identity
+    # 1. Check if this is a Midday Carousel Run
+    is_carousel_slot = (mode_lower in ("carousel", "h2h")) or (mode_lower == "auto" and curr_hour < 14)
+    is_short_slot = (mode_lower in ("short", "video", "daily", "midday", "morning", "evening", "night")) or (mode_lower == "auto" and curr_hour >= 14)
+    is_all = (mode_lower == "all") or all_games
+
+    results = []
+
+    if is_carousel_slot or is_all:
+        carousel_res = await publish_daily_h2h_carousel(dry_run=dry_run, force=force, no_instagram=no_instagram)
+        results.append(carousel_res)
+        if not is_all and not is_short_slot:
+            print("\n" + "=" * 80)
+            print("                      🎉 BATCH SUMMARY REPORT")
+            print("=" * 80)
+            print(f"{'Item':<26} | {'YouTube Shorts':<24} | {'Instagram':<26}")
+            print("-" * 80)
+            for r in results:
+                print(f"{r['game']:<26} | {r.get('yt_status', '—'):<24} | {r.get('ig_status', '—'):<26}")
+            print("=" * 80 + "\n")
+            return
+
+    # 2. Verify YouTube channel identity (for Video Shorts)
     channel_title, channel_id = None, None
     if not no_youtube:
         try:
             channel_title, channel_id = get_channel_info()
+            if channel_id:
+                print(f"📺 YouTube Channel: \033[1;32m{channel_title}\033[0m (ID: {channel_id})")
         except Exception as e:
             print(f"⚠️ YouTube check warning: {e}")
 
-        if not channel_id:
-            print("\n\033[1;31m❌ Error: No YouTube channel has been created for this Google account yet!\033[0m")
-            print("   (YouTube API returned: 'youtubeSignupRequired')\n")
-            print("👉 \033[1;33mQUICK 3-STEP FIX:\033[0m")
-            print("   1. Open \033[1;34mhttps://www.youtube.com/create_channel\033[0m in your browser while signed into Playmaker.")
-            print("   2. Click 'Create Channel'.")
-            print("   3. Delete the old token by running: \033[1;36mrm private/youtube_token.pickle\033[0m")
-            print("   4. Re-run UploadTodayShorts.command and authorize your newly created channel!\n")
-            return
-        print(f"📺 YouTube Channel: \033[1;32m{channel_title}\033[0m (ID: {channel_id})")
-
-    # 2. Verify Instagram identity
+    # 3. Verify Instagram identity
     ig_username, ig_id = None, None
     if not no_instagram:
         try:
@@ -253,7 +318,6 @@ async def process_all_games(
             print(f"📸 Instagram Account: \033[1;32m@{ig_username}\033[0m (ID: {ig_id})")
         except Exception as e:
             print(f"⚠️ Instagram warning: {e}")
-            print("   Reels upload will be skipped if authentication is invalid.")
 
     matchday_context = load_matchday_context_for_date(today_str)
     if matchday_context:
@@ -263,19 +327,16 @@ async def process_all_games(
         print(f"   Tags: {' '.join(matchday_context.get('hashtags', []))}")
         print("🔥" * 34 + "\n")
 
-    print("\n💡 Publishing Mode: Direct Live Upload (Public YouTube Short & Instagram Reel immediately).")
-
-    # 3. Compile today's latest daily puzzles
+    # 4. Compile today's latest daily puzzles
     print("🔄 Ensuring today's HTML game files are fully compiled and up to date...")
     subprocess.run([sys.executable, os.path.join(BASE_DIR, "fetch_daily.py")], check=True)
 
     server_proc = ensure_server_running(port)
-    results = []
     
     games_to_run = select_games_for_mode(
         mode=mode,
         selected_game=selected_game,
-        all_games=all_games
+        all_games=is_all
     )
 
     has_queued_reels = False
@@ -520,8 +581,8 @@ async def process_all_games(
 
     # 4. Spawn or run background scheduler if any reels are queued
     if has_queued_reels:
-        if wait_queue:
-            print("\n⏳ [Cloud/CI Mode] Waiting in foreground for all queued reels to publish...")
+        if wait_queue or os.environ.get("CI") == "true":
+            print("\n⏳ [Cloud/CI Mode] Flushing queued reels...")
             run_ig_daemon()
         else:
             start_background_daemon()
@@ -532,27 +593,33 @@ async def process_all_games(
     print("\n" + "=" * 80)
     print("                      🎉 BATCH SUMMARY REPORT")
     print("=" * 80)
-    print(f"{'Game':<20} | {'YouTube Shorts':<28} | {'Instagram Reels':<28}")
+    print(f"{'Game':<24} | {'YouTube Shorts':<26} | {'Instagram':<26}")
     print("-" * 80)
     for r in results:
-        yt_disp = f"{r['yt_status']}: {r['yt_url']}" if r['yt_url'] != "—" else r['yt_status']
-        ig_disp = f"{r['ig_status']}: {r['ig_url']}" if r['ig_url'] != "—" else r['ig_status']
-        print(f"{r['game']:<20} | {yt_disp[:28]:<28} | {ig_disp[:28]:<28}")
+        yt_disp = f"{r['yt_status']}: {r['yt_url']}" if r.get('yt_url') and r['yt_url'] != "—" else r.get('yt_status', '—')
+        ig_disp = f"{r['ig_status']}: {r['ig_url']}" if r.get('ig_url') and r['ig_url'] != "—" else r.get('ig_status', '—')
+        print(f"{r['game']:<24} | {yt_disp[:26]:<26} | {ig_disp[:26]:<26}")
     print("=" * 80 + "\n")
 
 def main():
     parser = argparse.ArgumentParser(description="Render and upload daily Playmaker games to YouTube Shorts & Instagram Reels.")
-    parser.add_argument("--mode", type=str, default="auto", choices=["auto", "midday", "morning", "evening", "night", "both", "all"], help="Publishing mode: auto (time-based), midday (Top Transfers), evening (Transfer Destination), or both")
-    parser.add_argument("--midday", "--morning", dest="midday_flag", action="store_true", help="Shortcut for --mode midday (renders & uploads Top Transfers immediately)")
-    parser.add_argument("--evening", "--night", dest="evening_flag", action="store_true", help="Shortcut for --mode evening (renders & uploads Transfer Destination immediately)")
-    parser.add_argument("--both", action="store_true", help="Shortcut for --mode both (renders & uploads both Top Transfers & Transfer Destination)")
+    parser.add_argument(
+        "--mode",
+        type=str,
+        default="auto",
+        choices=["auto", "carousel", "short", "video", "daily", "midday", "morning", "evening", "night", "both", "all", "h2h"],
+        help="Publishing mode: auto (time-based), carousel (H2H 10:30 UTC), short (Video 17:00 UTC), or all"
+    )
+    parser.add_argument("--midday", "--morning", dest="midday_flag", action="store_true", help="Shortcut for --mode midday")
+    parser.add_argument("--evening", "--night", dest="evening_flag", action="store_true", help="Shortcut for --mode evening")
+    parser.add_argument("--both", action="store_true", help="Shortcut for --mode both")
     parser.add_argument("--all-games", action="store_true", help="Render all 6 games instead of default 2")
     parser.add_argument("--game", type=str, default="", help="Run a specific game ID only (e.g. top_transfers, transfer_destination)")
-    parser.add_argument("--slots", type=str, default="12,20", help="Comma-separated UTC peak hours (default: '12,20')")
+    parser.add_argument("--slots", type=str, default="10.5,17", help="Comma-separated UTC peak hours (default: '10.5,17')")
     parser.add_argument("--schedule-future", action="store_true", help="Schedule uploads for future peak hours instead of uploading live immediately")
     parser.add_argument("--port", type=int, default=8080, help="Local server port (default: 8080)")
     parser.add_argument("--fast", action="store_true", help="Fast mode for testing")
-    parser.add_argument("--dry-run", action="store_true", help="Render videos only without uploading")
+    parser.add_argument("--dry-run", action="store_true", help="Render media only without uploading")
     parser.add_argument("--no-youtube", action="store_true", help="Skip YouTube upload")
     parser.add_argument("--youtube-with-audio", action="store_true", help="Keep audio when uploading to YouTube Shorts (default: stripped/silent to avoid audience retention loss)")
     parser.add_argument("--no-instagram", action="store_true", help="Skip Instagram upload")
@@ -565,26 +632,20 @@ def main():
 
     args = parser.parse_args()
     
-    if args.carousel_only:
-        from scripts.generate_h2h_carousel import get_daily_h2h_matchup, render_carousel_slides
-        p_a, p_b = get_daily_h2h_matchup()
-        print(f"\n🎠 [Daily Carousel] Generating today's H2H Carousel: {p_a} vs {p_b}...")
-        slides, caption = render_carousel_slides(p_a, p_b)
-        print(f"✅ Generated {len(slides)} slides.")
-        return
-
     mode = args.mode
-    if args.midday_flag:
+    if args.carousel_only or args.h2h_carousel:
+        mode = "carousel"
+    elif args.midday_flag:
         mode = "midday"
     elif args.evening_flag:
         mode = "evening"
     elif args.both:
         mode = "both"
-    elif args.all_games:
+    elif args.all_games or args.daily_all:
         mode = "all"
 
     try:
-        slot_hours = [int(h.strip()) for h in args.slots.split(",") if h.strip()]
+        slot_hours = [float(h.strip()) for h in args.slots.split(",") if h.strip()]
     except Exception:
         slot_hours = DEFAULT_PEAK_SLOTS
 
@@ -608,14 +669,6 @@ def main():
         trending_audio=not args.no_trending_audio,
         youtube_audio=args.youtube_with_audio
     ))
-
-    # If --h2h-carousel or --daily-all passed, generate the daily carousel
-    if args.h2h_carousel or args.daily_all:
-        from scripts.generate_h2h_carousel import get_daily_h2h_matchup, render_carousel_slides
-        p_a, p_b = get_daily_h2h_matchup()
-        print(f"\n🎠 [Daily Package] Generating today's H2H Carousel: {p_a} vs {p_b}...")
-        slides, caption = render_carousel_slides(p_a, p_b)
-        print(f"✅ Generated {len(slides)} slides for @playmaker.best Instagram feed.")
 
 if __name__ == "__main__":
     main()

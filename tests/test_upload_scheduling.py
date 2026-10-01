@@ -106,5 +106,12 @@ class TestUploadScheduling(unittest.TestCase):
         result = prepare_youtube_video(path, strip_audio=True)
         self.assertEqual(result, path)
 
+    def test_publish_daily_h2h_carousel_dry_run(self):
+        """Validates that publish_daily_h2h_carousel executes dry-run without network calls."""
+        from scripts.upload_daily_shorts import publish_daily_h2h_carousel_sync
+        res = publish_daily_h2h_carousel_sync(dry_run=True, force=True)
+        self.assertEqual(res["ig_status"], "Dry Run")
+        self.assertIn("H2H:", res["game"])
+
 if __name__ == "__main__":
     unittest.main()

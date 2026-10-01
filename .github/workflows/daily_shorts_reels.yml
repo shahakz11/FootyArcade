@@ -108,6 +108,7 @@ jobs:
 
       - name: Run Shorts & Reels Publisher
         env:
+          CI: "true"
           INPUT_MODE: ${{ github.event.inputs.mode }}
           INPUT_GAME: ${{ github.event.inputs.game }}
           INPUT_DRY_RUN: ${{ github.event.inputs.dry_run }}
