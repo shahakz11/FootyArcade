@@ -180,6 +180,8 @@ class PlayerStatsAggregator:
 
         if isinstance(name_or_id, int) or (isinstance(name_or_id, str) and name_or_id.isdigit()):
             p_id = int(name_or_id)
+            if p_id in self._cached_profiles:
+                return p_id
             if self._players_df is not None and (self._players_df['player_id'] == p_id).any():
                 return p_id
             return None
@@ -191,6 +193,15 @@ class PlayerStatsAggregator:
                 return self._name_country_to_id[(norm_name, norm_country)]
 
         candidate_ids = self._name_to_ids.get(norm_name, [])
+        if not candidate_ids:
+            # Check token permutation (e.g. "Son Heung-min" vs "Heung-min Son")
+            norm_tokens = set(norm_name.split())
+            if norm_tokens:
+                for indexed_norm, p_ids in self._name_to_ids.items():
+                    if set(indexed_norm.split()) == norm_tokens:
+                        candidate_ids = p_ids
+                        break
+
         if not candidate_ids:
             return None
         if len(candidate_ids) == 1:

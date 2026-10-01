@@ -118974,6 +118974,47 @@
         "goals_per_game": 0.19,
         "mins_per_ga": 83.6
       }
+    },
+    "3207": {
+      "player_id": 3207,
+      "name": "Thierry Henry",
+      "nationality": "France",
+      "position": "Attack",
+      "sub_position": "Centre-Forward",
+      "peak_market_value": 45000000.0,
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Thierry_Henry_2011.jpg/800px-Thierry_Henry_2011.jpg",
+      "club": {
+        "appearances": 794,
+        "goals": 360,
+        "assists": 174,
+        "minutes_played": 64200.0,
+        "distinct_clubs_count": 5,
+        "clubs": [
+          "Monaco",
+          "Juventus",
+          "Arsenal",
+          "Barcelona",
+          "New York Red Bulls"
+        ]
+      },
+      "international": {
+        "caps": 123,
+        "goals": 51,
+        "world_cup_goals": 6,
+        "euro_goals": 6,
+        "copa_america_goals": 0,
+        "qualifier_goals": 12,
+        "friendly_goals": 17,
+        "penalties_scored": 3
+      },
+      "overall": {
+        "total_appearances": 917,
+        "total_goals": 411,
+        "total_assists": 204,
+        "total_ga": 615,
+        "goals_per_game": 0.45,
+        "mins_per_ga": 104.4
+      }
     }
   }
 }
