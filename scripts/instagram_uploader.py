@@ -12,6 +12,7 @@ import json
 import urllib.request
 import urllib.parse
 import urllib.error
+import base64
 import datetime
 import argparse
 import subprocess
@@ -547,16 +548,96 @@ def fetch_permalink(media_id, token):
 def upload_image_to_cdn(filepath):
     """
     Uploads a local slide image to a fast temporary CDN to obtain a public HTTPS URL for Meta Graph API.
-    Uses Catbox and Litterbox as reliable multi-tier fallbacks.
+    Uses a robust multi-tier fallback architecture:
+      1. freeimage.host (fast, stable CDN direct image links on iili.io)
+      2. tmpfiles.org (direct download links)
+      3. uguu.se (fast temporary anonymous upload)
+      4. catbox.moe (standard multipart with modern browser User-Agent)
+      5. litterbox.catbox.moe (24h retention fallback)
     """
     if not os.path.exists(filepath):
         raise FileNotFoundError(f"Slide file not found: {filepath}")
 
-    boundary = '----WebKitFormBoundaryPlaymakerCarouselUpload'
     with open(filepath, 'rb') as f:
         file_bytes = f.read()
 
-    # Strategy 1: Catbox
+    chrome_ua = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+    boundary = '----WebKitFormBoundaryPlaymakerCarouselUpload'
+
+    # Strategy 1: freeimage.host (Fast, highly reliable CDN with direct image URLs)
+    try:
+        b64 = base64.b64encode(file_bytes).decode("utf-8")
+        post_data = urllib.parse.urlencode({
+            "key": "6d207e02198a847aa98d0a2a901485a5",
+            "action": "upload",
+            "source": b64,
+            "format": "json"
+        }).encode("utf-8")
+        req = urllib.request.Request(
+            "https://freeimage.host/api/1/upload",
+            data=post_data,
+            headers={"User-Agent": chrome_ua}
+        )
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            url = data.get("image", {}).get("url")
+            if url and url.startswith("http"):
+                return url
+    except Exception as e:
+        log_message(f"⚠️ freeimage.host upload notice ({e}), falling back...")
+
+    # Strategy 2: tmpfiles.org
+    try:
+        body = bytearray()
+        body.extend(f'--{boundary}\r\n'.encode('utf-8'))
+        body.extend(b'Content-Disposition: form-data; name="file"; filename="slide.png"\r\n')
+        body.extend(b'Content-Type: image/png\r\n\r\n')
+        body.extend(file_bytes)
+        body.extend(f'\r\n--{boundary}--\r\n'.encode('utf-8'))
+
+        req = urllib.request.Request(
+            'https://tmpfiles.org/api/v1/upload',
+            data=body,
+            headers={
+                'Content-Type': f'multipart/form-data; boundary={boundary}',
+                'User-Agent': chrome_ua
+            }
+        )
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            res = json.loads(resp.read().decode('utf-8'))
+            orig_url = res.get("data", {}).get("url", "")
+            if orig_url:
+                direct_url = orig_url.replace("https://tmpfiles.org/", "https://tmpfiles.org/dl/")
+                return direct_url
+    except Exception as e:
+        log_message(f"⚠️ tmpfiles.org upload notice ({e}), falling back...")
+
+    # Strategy 3: uguu.se
+    try:
+        body = bytearray()
+        body.extend(f'--{boundary}\r\n'.encode('utf-8'))
+        body.extend(b'Content-Disposition: form-data; name="files[]"; filename="slide.png"\r\n')
+        body.extend(b'Content-Type: image/png\r\n\r\n')
+        body.extend(file_bytes)
+        body.extend(f'\r\n--{boundary}--\r\n'.encode('utf-8'))
+
+        req = urllib.request.Request(
+            'https://uguu.se/upload',
+            data=body,
+            headers={
+                'Content-Type': f'multipart/form-data; boundary={boundary}',
+                'User-Agent': chrome_ua
+            }
+        )
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            res = json.loads(resp.read().decode('utf-8'))
+            url = res.get("files", [{}])[0].get("url")
+            if url and url.startswith("http"):
+                return url
+    except Exception as e:
+        log_message(f"⚠️ uguu.se upload notice ({e}), falling back...")
+
+    # Strategy 4: Catbox
     try:
         body = bytearray()
         body.extend(f'--{boundary}\r\n'.encode('utf-8'))
@@ -572,7 +653,7 @@ def upload_image_to_cdn(filepath):
             data=body,
             headers={
                 'Content-Type': f'multipart/form-data; boundary={boundary}',
-                'User-Agent': 'Mozilla/5.0 (Playmaker/1.0)'
+                'User-Agent': chrome_ua
             }
         )
         with urllib.request.urlopen(req, timeout=20) as resp:
@@ -582,7 +663,7 @@ def upload_image_to_cdn(filepath):
     except Exception as e:
         log_message(f"⚠️ Catbox upload notice ({e}), falling back to Litterbox...")
 
-    # Strategy 2: Litterbox
+    # Strategy 5: Litterbox
     try:
         body = bytearray()
         body.extend(f'--{boundary}\r\n'.encode('utf-8'))
@@ -600,7 +681,7 @@ def upload_image_to_cdn(filepath):
             data=body,
             headers={
                 'Content-Type': f'multipart/form-data; boundary={boundary}',
-                'User-Agent': 'Mozilla/5.0 (Playmaker/1.0)'
+                'User-Agent': chrome_ua
             }
         )
         with urllib.request.urlopen(req, timeout=20) as resp:
@@ -608,7 +689,7 @@ def upload_image_to_cdn(filepath):
             if res_url.startswith("http"):
                 return res_url
     except Exception as e:
-        raise RuntimeError(f"Failed to upload slide to CDN: {e}")
+        raise RuntimeError(f"Failed to upload slide across all CDN fallbacks: {e}")
 
 def upload_local_slides_to_temp_cdn(slide_paths):
     """Uploads a list of local slide file paths to CDN and returns list of public HTTPS URLs."""
