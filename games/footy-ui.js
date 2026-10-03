@@ -2564,6 +2564,32 @@
             timestamp: new Date().toISOString()
         };
 
+        // Bridge to Google Analytics 4 (gtag)
+        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+            try {
+                window.gtag('event', eventName, {
+                    game_id: payload.gameId,
+                    puzzle_id: payload.puzzleId,
+                    puzzle_num: payload.puzzleNum,
+                    won: payload.won,
+                    score: payload.score,
+                    max_score: payload.maxScore,
+                    lives: payload.lives,
+                    is_correct: payload.isCorrect,
+                    is_back_in_time: payload.isBackInTime,
+                    traffic_source: payload.trafficSource,
+                    method: payload.method,
+                    extra_details: payload.extraDetails
+                });
+            } catch (gtagErr) {
+                // Ignore analytics dispatch errors
+            }
+        }
+
+        if (!FEEDBACK_WEBHOOK_URL || FEEDBACK_WEBHOOK_URL.includes('XXXX')) {
+            return;
+        }
+
         fetch(FEEDBACK_WEBHOOK_URL, {
             method: 'POST',
             mode: 'no-cors',

@@ -76,13 +76,13 @@ class TestPassportFCDisambiguation(unittest.TestCase):
         # MUST NOT include Portuguese Pepe
         self.assertFalse(any(p == "pepe" for p in valid_lower), "Portuguese Pepe erroneously found in Brazil pool")
 
-    def test_day_157_real_madrid_belgium_qualifying_pool(self):
-        """Verify Day 157 Belgium step contains Courtois & Hazard and NOT Danilo."""
-        day_rows = self.puzzles_by_day.get(157, [])
-        self.assertTrue(day_rows, "Day 157 puzzle not found")
+    def test_real_madrid_belgium_qualifying_pool(self):
+        """Verify Real Madrid Belgium step contains Courtois & Hazard and NOT Danilo."""
+        day_rows = self.puzzles_by_day.get(123, [])
+        self.assertTrue(day_rows, "Day 123 puzzle not found")
 
         belgium_step = next((r for r in day_rows if r["nationality"] == "Belgium"), None)
-        self.assertIsNotNone(belgium_step, "Day 157 missing Belgium step")
+        self.assertIsNotNone(belgium_step, "Day 123 missing Belgium step")
 
         valid_players = json.loads(belgium_step["valid_players"])
         valid_lower = [p.lower() for p in valid_players]
@@ -118,6 +118,34 @@ class TestPassportFCDisambiguation(unittest.TestCase):
                             p_name, valid_lower,
                             f"Cross-contamination: Portuguese player '{p_name}' found in {club} [{nat}] pool on Day {day}"
                         )
+
+    def test_inter_milan_modric_and_messi_isolation(self):
+        """Verify Inter Milan puzzles never include Luka Modric (Inter Zapresic) or Lionel Messi (Inter Miami)."""
+        for day, rows in self.puzzles_by_day.items():
+            for r in rows:
+                if r["club"] == "Inter":
+                    valid_players = json.loads(r["valid_players"])
+                    valid_lower = [p.lower() for p in valid_players]
+                    self.assertFalse(
+                        any("modri" in p for p in valid_lower),
+                        f"Luka Modrić erroneously found in Inter Milan pool on Day {day}: {valid_players}"
+                    )
+                    self.assertFalse(
+                        any("messi" in p for p in valid_lower),
+                        f"Lionel Messi erroneously found in Inter Milan pool on Day {day}: {valid_players}"
+                    )
+
+    def test_liverpool_and_ajax_homonym_isolation(self):
+        """Verify Liverpool never contains Carlos Bueno (Liverpool Montevideo)."""
+        for day, rows in self.puzzles_by_day.items():
+            for r in rows:
+                if r["club"] == "Liverpool":
+                    valid_players = json.loads(r["valid_players"])
+                    valid_lower = [p.lower() for p in valid_players]
+                    self.assertFalse(
+                        any("carlos bueno" in p for p in valid_lower),
+                        f"Carlos Bueno erroneously found in Liverpool pool on Day {day}: {valid_players}"
+                    )
 
 
 if __name__ == "__main__":

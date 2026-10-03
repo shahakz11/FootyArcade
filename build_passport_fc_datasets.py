@@ -29,6 +29,7 @@ NATION_ALIASES = {
     "Korea, South": "South Korea",
     "Korea, North": "North Korea",
     "Bosnia-Herzegovina": "Bosnia & Herzegovina",
+    "Bosnia and Herzegovina": "Bosnia & Herzegovina",
     "Türkiye": "Turkey",
     "The Gambia": "Gambia",
     "DR Congo": "DR Congo",
@@ -42,6 +43,12 @@ def clean_nation_name(val):
     if not val or not isinstance(val, str):
         return ""
     val = val.strip()
+    if '  ' in val:
+        val = val.split('  ')[0].strip()
+    if ' / ' in val:
+        val = val.split(' / ')[0].strip()
+    if '/' in val:
+        val = val.split('/')[0].strip()
     return NATION_ALIASES.get(val, val)
 
 def normalize_name(s):
@@ -275,7 +282,7 @@ def load_data():
                     'nationality': nat
                 }
 
-            df_salimt_t = pd.read_csv(trans_file, usecols=['player_id', 'from_team_name', 'to_team_name', 'transfer_date'], low_memory=False)
+            df_salimt_t = pd.read_csv(trans_file, usecols=['player_id', 'from_team_id', 'to_team_id', 'from_team_name', 'to_team_name', 'transfer_date'], low_memory=False)
             df_salimt_t['parsed_date'] = pd.to_datetime(df_salimt_t['transfer_date'], errors='coerce')
             df_salimt_t = df_salimt_t[(df_salimt_t['parsed_date'].isna()) | (df_salimt_t['parsed_date'] <= '2026-09-13')]
 
@@ -285,12 +292,19 @@ def load_data():
                     continue
                 p_canon = meta['name']
                 p_nat = meta['nationality']
-                c1 = clean_club_name(str(r.from_team_name))
-                c2 = clean_club_name(str(r.to_team_name))
-                if c1 in major_club_names:
-                    club_nat_players[c1][p_nat].add(p_canon)
-                if c2 in major_club_names:
-                    club_nat_players[c2][p_nat].add(p_canon)
+                try:
+                    fid = int(r.from_team_id) if pd.notna(r.from_team_id) else None
+                except (ValueError, TypeError):
+                    fid = None
+                try:
+                    tid = int(r.to_team_id) if pd.notna(r.to_team_id) else None
+                except (ValueError, TypeError):
+                    tid = None
+
+                if fid and fid in club_id_to_name:
+                    club_nat_players[club_id_to_name[fid]][p_nat].add(p_canon)
+                if tid and tid in club_id_to_name:
+                    club_nat_players[club_id_to_name[tid]][p_nat].add(p_canon)
 
     # 5. Historical careers
     for h_name, d in hist_careers.items():
@@ -298,10 +312,9 @@ def load_data():
         if not h_nat:
             continue
         for c in d.get('clubs', []):
-            for mc in MAJOR_CLUBS:
-                cname = mc['name']
-                if cname.lower() in c.lower():
-                    club_nat_players[cname][h_nat].add(h_name)
+            clean_c = clean_club_name(c)
+            if clean_c in major_club_names:
+                club_nat_players[clean_c][h_nat].add(h_name)
 
     # 6. Manual specific historical enrichments
     manual_stars = [

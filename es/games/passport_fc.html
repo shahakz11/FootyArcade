@@ -39,8 +39,14 @@
     <meta name="twitter:description" content="Complete today's club passport by naming footballers across 4 progressive nationality stamps. Play now!"/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <!-- Google Analytics Measurement ID Placeholder -->
-    <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "G-8BC1041NX3");
+    </script>
 
     <!-- Tailwind & Google Fonts -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -557,10 +563,10 @@
 
     
     <script id="daily-game-data">
-        const DAILY_PASSPORT_GAME = {"club": "Atletico Madrid", "total_steps": 4, "steps": [{"step_number": 1, "difficulty": "Easy", "nationality": "France", "pool_size": 11, "sample_players": ["Antoine Griezmann", "Lucas Hernández", "Theo Hernández"], "valid_players": ["Antoine Griezmann", "Lucas Hernández", "Theo Hernández", "Grégory Coupet", "Thomas Lemar", "Clément Lenglet", "Moussa Dembélé", "Kévin Gameiro", "Benjamin Lecomte", "Josuha Guilavogui", "Han-Noah Massengo"]}, {"step_number": 2, "difficulty": "Medium", "nationality": "Uruguay", "pool_size": 12, "sample_players": ["Luis Suárez", "José María Giménez", "Cristian Rodríguez"], "valid_players": ["Luis Suárez", "José María Giménez", "Cristian Rodríguez", "Diego Forlán", "Diego Godín", "Lucas Torreira", "Santiago Mouriño", "Juan Manuel Sanabria", "Leandro Cabrera", "Rubén Olivera", "Emiliano Velázquez", "Juan González"]}, {"step_number": 3, "difficulty": "Hard", "nationality": "Belgium", "pool_size": 5, "sample_players": ["Thibaut Courtois", "Axel Witsel", "Toby Alderweireld"], "valid_players": ["Thibaut Courtois", "Axel Witsel", "Toby Alderweireld", "Yannick Carrasco", "Arthur Vermeeren"]}, {"step_number": 4, "difficulty": "The Unicorn", "nationality": "Slovenia", "pool_size": 1, "sample_players": ["Jan Oblak"], "valid_players": ["Jan Oblak"]}]};
+        const DAILY_PASSPORT_GAME = {"club": "Inter", "total_steps": 4, "steps": [{"step_number": 1, "difficulty": "Easy", "nationality": "Brazil", "pool_size": 31, "sample_players": ["Philippe Coutinho", "Ronaldo", "Júlio César"], "valid_players": ["Philippe Coutinho", "Ronaldo", "Júlio César", "Maxwell", "Roberto Carlos", "Maicon", "Rafael Alcântara", "Lúcio", "Adriano", "Rafinha", "Alex Telles", "Gabriel Barbosa", "Felipe", "Carlos Augusto", "Hernanes", "Luis Henrique", "Dodô", "Miranda", "Felipe Melo", "Juan Jesus", "Dalbert", "Gabriel Brazão", "Gilberto", "Jonathan", "Wallace Oliveira", "César", "Edinho", "Ítalo", "Rincón", "Caio Ribeiro", "Tiago Maringá"]}, {"step_number": 2, "difficulty": "Medium", "nationality": "Chile", "pool_size": 7, "sample_players": ["Alexis Sánchez", "Arturo Vidal", "Iván Zamorano"], "valid_players": ["Alexis Sánchez", "Arturo Vidal", "Iván Zamorano", "David Pizarro", "Gary Medel", "Mauricio Pinilla", "Luis Jiménez"]}, {"step_number": 3, "difficulty": "Hard", "nationality": "Denmark", "pool_size": 5, "sample_players": ["Christian Eriksen", "Jens Odgaard", "Patrick Olsen"], "valid_players": ["Christian Eriksen", "Jens Odgaard", "Patrick Olsen", "Morten Knudsen", "Thomas Helveg"]}, {"step_number": 4, "difficulty": "The Unicorn", "nationality": "Bosnia & Herzegovina", "pool_size": 1, "sample_players": ["Edin Džeko"], "valid_players": ["Edin Džeko"]}]};
         const GAME_NOTE = "Fichajes y partidos oficiales desde 1990 + leyendas históricas verificadas (junio 2026).";
-        const PUZZLE_NUMBER    = 18;
-        const PUZZLE_ID        = 18;
+        const PUZZLE_NUMBER    = 20;
+        const PUZZLE_ID        = 20;
         const IS_BACK_IN_TIME  = false;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;
