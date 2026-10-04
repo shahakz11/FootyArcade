@@ -39,14 +39,34 @@
     <meta name="twitter:description" content="Complete today's club passport by naming footballers across 4 progressive nationality stamps. Play now!"/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
 
     <!-- Tailwind & Google Fonts -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -567,6 +587,8 @@
             <span>·</span>
             <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Terms & Conditions</a>
             <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Cookie Preferences</a>
+            <span>·</span>
             <a href="../index.html" class="hover:underline hover:text-accent transition-colors">All Games</a>
         </div>
     </footer>
@@ -578,10 +600,10 @@
 
     
     <script id="daily-game-data">
-        const DAILY_PASSPORT_GAME = {"club": "Fenerbahce", "total_steps": 4, "steps": [{"step_number": 1, "difficulty": "Easy", "nationality": "Turkey", "pool_size": 153, "sample_players": ["Arda Güler", "Çağlar Söyüncü", "Cengiz Ünder"], "valid_players": ["Arda Güler", "Çağlar Söyüncü", "Cengiz Ünder", "Kerem Aktürkoğlu", "Cenk Tosun", "Ozan Tufan", "Caner Erkin", "Ferdi Kadıoğlu", "İrfan Can Kahveci", "Mert Müldür", "İsmail Yüksek", "Volkan Babacan", "Mert Günok", "Hasan Ali Kaldırım", "İsmail Köybaşı", "Altay Bayındır", "Samet Akaydin", "Oğuz Aydın", "Serdar Aziz", "Emre Mor", "Yusuf Akçiçek", "Ömer Beyaz", "Arda Okan Kurtulan", "Deniz Türüç", "Bartuğ Elmaz", "Serdar Dursun", "Yiğit Efe Demir", "Emre Belözoglu", "Mehmet Topal", "Berke Özer", "Gökhan Gönül", "Ertuğrul Taşkıran", "Volkan Demirel", "Mevlüt Erdinc", "Alper Potuk", "Servet Cetin", "Nazım Sangaré", "Tolga Cigerci", "Salih Uçan", "Mehmet Topuz", "Egemen Korkmaz", "Emir Ortakaya", "Mehmet Ekici", "Semih Sentürk", "Volkan Sen", "Levent Mercan", "Melih Bostan", "Sinan Gümüş", "Muhammed Gümüşkaya", "Umut Nayir", "Serdar Kesimal", "Şener Özbayraklı", "İrfan Can Eğribayat", "Özer Hurmaci", "İsak Vural", "Gökhan Ünal", "Harun Tekin", "Mert Hakan Yandaş", "Bekir Irtegün", "Ilhan Parlak", "Sezer Öztürk", "Burak Kapacak", "Orhan Sam", "Alaettin Ekici", "Ertuğrul Çetin", "Selcuk Sahin", "Ramazan Civelek", "Yasir Subaşı", "Özgür Cek", "Hakan Bayraktar", "Haydar Karataş", "Baris Alici", "Serdar Kulbilge", "Recep Niyaz", "Beykan Simsek", "Gökhan Emreciksin", "Emre Demir", "Ilhan Eker", "Tiago Çukur", "Kerim Zengin", "Sadık Çiftpınar", "Oguz Daglaroglu", "Can Arat", "Hakan Cinemre", "Oguz Kagan Güctekin", "Uygar Zeybek", "Onur Tuncer", "Tarık Çetin", "Çağtay Kurukalıp", "Melih Okutan", "Burak Yılmaz", "Abdullah Yiğiter", "Serhat Ahmetoglu", "Ahmethan Köse", "Murat Saglam", "Yigithan Güveli", "Erten Ersu", "Fatih Sanlitürk", "Muhammed Akarslan", "Yusuf Tunc", "Serhat Kot", "Samed Karakoc", "Caner Koca", "Ahmet Yıldırım", "Ibrahim Serdar Aydin", "Yusuf Kocatürk", "Eyüp Akcan", "Kamil Efe Üregen", "Emir Köksal", "Emre Nasuh", "Oytun Özdogan", "Furkan Akyüz", "Ümit Özat", "Saffet Akbaş", "Fatih Şanlıtürk", "Tufan Apaydın", "Fatih Akyel", "Tayfur Havutçu", "Deniz Barış", "Nuri Kamburoğlu", "Kemal Aslan", "Olcan Adın", "Serkan Özsoy", "Tümer Metin", "Serkan Kırıntılı", "İsmail Güldüren", "Tuncay Şanlı", "Taylan Işıldar", "Colin Kazım-Richards", "Murat Şahin", "Yiğit Fidan", "Serhat Akın", "Murat Hacıoğlu", "Abdülkadir Kayalı", "Atilla Güneş", "Abdullah Ercan", "Oktay Derelioğlu", "Mahmut Hanefi Erdoğdu", "Arda Akgün", "Gürhan Gürsoy", "Recep Biler", "Rüştü Reçber", "Mehmet Aurélio", "Erhan Albayrak", "Ali Güneş", "Ceyhun Eriş", "Alpay Özalan", "Yasin Çakmak", "Fahri Tatan", "Serkan Balcı", "Önder Turacı", "Mehmet Yozgatlı", "Mehmet Ayaz"]}, {"step_number": 2, "difficulty": "Medium", "nationality": "France", "pool_size": 6, "sample_players": ["N'Golo Kanté", "Nicolas Anelka", "Mathieu Valbuena"], "valid_players": ["N'Golo Kanté", "Nicolas Anelka", "Mathieu Valbuena", "Mattéo Guendouzi", "Allan Saint-Maximin", "Adil Rami"]}, {"step_number": 3, "difficulty": "Hard", "nationality": "Bosnia & Herzegovina", "pool_size": 2, "sample_players": ["Edin Džeko", "Rade Krunic"], "valid_players": ["Edin Džeko", "Rade Krunic"]}, {"step_number": 4, "difficulty": "The Unicorn", "nationality": "South Korea", "pool_size": 1, "sample_players": ["Min-jae Kim"], "valid_players": ["Min-jae Kim"]}]};
+        const DAILY_PASSPORT_GAME = {"club": "Atletico Madrid", "total_steps": 4, "steps": [{"step_number": 1, "difficulty": "Easy", "nationality": "France", "pool_size": 13, "sample_players": ["Antoine Griezmann", "Lucas Hernández", "Theo Hernández"], "valid_players": ["Antoine Griezmann", "Lucas Hernández", "Theo Hernández", "Grégory Coupet", "Thomas Lemar", "Clément Lenglet", "Moussa Dembélé", "Kévin Gameiro", "Benjamin Lecomte", "Josuha Guilavogui", "Florent Sinama-Pongolle", "Han-Noah Massengo", "Peter Luccin"]}, {"step_number": 2, "difficulty": "Medium", "nationality": "Italy", "pool_size": 8, "sample_players": ["Christian Vieri", "Thiago Motta", "Giacomo Raspadori"], "valid_players": ["Christian Vieri", "Thiago Motta", "Giacomo Raspadori", "Matteo Ruggeri", "Alessio Cerci", "Christian Abbiati", "Giorgio Venturin", "Michele Serena"]}, {"step_number": 3, "difficulty": "Hard", "nationality": "Belgium", "pool_size": 5, "sample_players": ["Thibaut Courtois", "Axel Witsel", "Toby Alderweireld"], "valid_players": ["Thibaut Courtois", "Axel Witsel", "Toby Alderweireld", "Yannick Carrasco", "Arthur Vermeeren"]}, {"step_number": 4, "difficulty": "The Unicorn", "nationality": "Slovenia", "pool_size": 1, "sample_players": ["Jan Oblak"], "valid_players": ["Jan Oblak"]}]};
         const GAME_NOTE = "Includes official transfers and appearances since 1990 + verified historical legends throughout club history (updated to June 2026).";
-        const PUZZLE_NUMBER    = 17;
-        const PUZZLE_ID        = 17;
+        const PUZZLE_NUMBER    = 18;
+        const PUZZLE_ID        = 18;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>

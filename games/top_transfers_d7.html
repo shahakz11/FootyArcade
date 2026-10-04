@@ -36,14 +36,34 @@
     <meta name="twitter:description" content="Guess the top 10 record signings for a club or nationality. A new daily football transfer trivia challenge with streak tracking and shareable results. Play free at Playmaker!"/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -364,6 +384,8 @@
             <span>·</span>
             <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Terms &amp; Conditions</a>
             <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Cookie Preferences</a>
+            <span>·</span>
             <a href="../index.html" class="hover:underline hover:text-accent transition-colors">Arcade Lobby</a>
         </div>
     </footer>
@@ -452,10 +474,10 @@
 
 
     <script id="daily-game-data">
-        const DAILY_TRANSFER_GAME = {"mode": "nationality", "name": "Belgium", "transfers": [{"player_name": "Eden Hazard", "from_club_name": "Chelsea", "to_club_name": "Real Madrid", "transfer_fee": "120800000.0", "transfer_date": "2019-07-01"}, {"player_name": "Romelu Lukaku", "from_club_name": "Inter", "to_club_name": "Chelsea", "transfer_fee": "113000000.0", "transfer_date": "2021-08-12"}, {"player_name": "Kevin De Bruyne", "from_club_name": "Wolfsburg", "to_club_name": "Manchester City", "transfer_fee": "76000000.0", "transfer_date": "2015-08-30"}, {"player_name": "Roméo Lavia", "from_club_name": "Southampton", "to_club_name": "Chelsea", "transfer_fee": "62100000.0", "transfer_date": "2023-08-18"}, {"player_name": "Jérémy Doku", "from_club_name": "Rennes", "to_club_name": "Manchester City", "transfer_fee": "60000000.0", "transfer_date": "2023-08-24"}, {"player_name": "Amadou Onana", "from_club_name": "Everton", "to_club_name": "Aston Villa", "transfer_fee": "59350000.0", "transfer_date": "2024-07-22"}, {"player_name": "Christian Benteke", "from_club_name": "Aston Villa", "to_club_name": "Liverpool", "transfer_fee": "46500000.0", "transfer_date": "2015-07-22"}, {"player_name": "Youri Tielemans", "from_club_name": "Monaco", "to_club_name": "Leicester City", "transfer_fee": "45000000.0", "transfer_date": "2019-07-08"}, {"player_name": "Loïs Openda", "from_club_name": "RB Leipzig", "to_club_name": "Juventus", "transfer_fee": "42750000.0", "transfer_date": "2026-07-01"}, {"player_name": "Axel Witsel", "from_club_name": "Benfica", "to_club_name": "Zenit S-Pb", "transfer_fee": "40000000.0", "transfer_date": "2012-09-03"}]};
+        const DAILY_TRANSFER_GAME = {"mode": "club", "name": "Liverpool", "transfers": [{"player_name": "Alexander Isak", "from_club_name": "Newcastle United", "to_club_name": "Liverpool", "transfer_fee": "145000000.0", "transfer_date": "2025-09-01"}, {"player_name": "Florian Wirtz", "from_club_name": "Bayer Leverkusen", "to_club_name": "Liverpool", "transfer_fee": "125000000.0", "transfer_date": "2025-07-01"}, {"player_name": "Hugo Ekitiké", "from_club_name": "Frankfurt", "to_club_name": "Liverpool", "transfer_fee": "95000000.0", "transfer_date": "2025-07-23"}, {"player_name": "Darwin Núñez", "from_club_name": "Benfica", "to_club_name": "Liverpool", "transfer_fee": "85000000.0", "transfer_date": "2022-07-01"}, {"player_name": "Virgil van Dijk", "from_club_name": "Southampton", "to_club_name": "Liverpool", "transfer_fee": "84650000.0", "transfer_date": "2018-01-01"}, {"player_name": "Alisson", "from_club_name": "Roma", "to_club_name": "Liverpool", "transfer_fee": "72500000.0", "transfer_date": "2018-07-19"}, {"player_name": "Dominik Szoboszlai", "from_club_name": "RB Leipzig", "to_club_name": "Liverpool", "transfer_fee": "70000000.0", "transfer_date": "2023-07-02"}, {"player_name": "Jérémy Jacquet", "from_club_name": "Rennes", "to_club_name": "Liverpool", "transfer_fee": "63600000.0", "transfer_date": "2026-07-01"}, {"player_name": "Naby Keïta", "from_club_name": "RB Leipzig", "to_club_name": "Liverpool", "transfer_fee": "60000000.0", "transfer_date": "2018-07-01"}, {"player_name": "Luis Díaz", "from_club_name": "Porto", "to_club_name": "Liverpool", "transfer_fee": "49000000.0", "transfer_date": "2022-01-30"}]};
         const GAME_NOTE = "Transfer data updated to June 2026. Does not include loan moves.";
-        const PUZZLE_NUMBER    = 60;
-        const PUZZLE_ID        = 60;
+        const PUZZLE_NUMBER    = 63;
+        const PUZZLE_ID        = 63;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>

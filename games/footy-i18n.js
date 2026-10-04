@@ -130,6 +130,16 @@
             share_passport_loss: '⛔ VISA DENIED · {score}/4 Stamps Unlocked',
             share_played_with_solved: '✨ SOLVED IN {score}/5 CLUES! · ❤️ {lives} left',
             share_played_with_lost: '❌ Mystery Player Missed · 💔 Out of lives',
+
+            // Cookie Consent & Privacy
+            cookie_consent_title: 'COOKIE PREFERENCES',
+            cookie_consent_msg: 'We use cookies and anonymous device telemetry to analyze gameplay traffic, track errors, and improve your daily trivia arcade experience.',
+            cookie_consent_accept: 'ACCEPT ALL',
+            cookie_consent_decline: 'DECLINE',
+            cookie_privacy_link: 'Privacy Policy',
+            cookie_terms_link: 'Terms & Conditions',
+            cookie_settings: 'Cookie Preferences',
+            toast_consent_saved: 'Cookie preferences saved! 🍪',
         },
         es: {
             locale_name: 'Español',
@@ -252,6 +262,16 @@
             share_passport_loss: '⛔ VISA DENEGADA · {score}/4 Sellos Desbloqueados',
             share_played_with_solved: '✨ ¡RESUELTO EN {score}/5 PISTAS! · ❤️ {lives} vidas',
             share_played_with_lost: '❌ Jugador Misterioso no adivinado · 💔 Sin vidas',
+
+            // Cookie Consent & Privacy
+            cookie_consent_title: 'PREFERENCIAS DE COOKIES',
+            cookie_consent_msg: 'Utilizamos cookies y telemetría de dispositivo anónima para analizar el tráfico del juego, registrar incidencias y mejorar tu experiencia en el arcade diario.',
+            cookie_consent_accept: 'ACEPTAR TODO',
+            cookie_consent_decline: 'RECHAZAR',
+            cookie_privacy_link: 'Política de Privacidad',
+            cookie_terms_link: 'Términos y Condiciones',
+            cookie_settings: 'Preferencias de Cookies',
+            toast_consent_saved: '¡Preferencias de cookies guardadas! 🍪',
         }
     };
 

@@ -36,14 +36,34 @@
     <meta name="twitter:description" content="Guess the top 10 record signings for a club or nationality. A new daily football transfer trivia challenge with streak tracking and shareable results. Play free at Playmaker!"/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -360,9 +380,11 @@
         </div>
         <div>PLAYMAKER &copy; 2026. ALL RIGHTS RESERVED.</div>
         <div class="space-x-4">
-            <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
+            <a href="../../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
             <span>·</span>
-            <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <a href="../../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Preferencias de Cookies</a>
             <span>·</span>
             <a href="../index.html" class="hover:underline hover:text-accent transition-colors">Lobby Arcade</a>
         </div>
@@ -447,10 +469,10 @@
 
 
     <script id="daily-game-data">
-        const DAILY_TRANSFER_GAME = {"mode": "club", "name": "Benfica", "transfers": [{"player_name": "Enzo Fernández", "from_club_name": "River Plate", "to_club_name": "Benfica", "transfer_fee": "44250000.0", "transfer_date": "2022-07-14"}, {"player_name": "Darwin Núñez", "from_club_name": "Almería", "to_club_name": "Benfica", "transfer_fee": "34000000.0", "transfer_date": "2020-09-04"}, {"player_name": "Orkun Kökçü", "from_club_name": "Feyenoord", "to_club_name": "Benfica", "transfer_fee": "29700000.0", "transfer_date": "2023-07-01"}, {"player_name": "Richard Ríos", "from_club_name": "Palmeiras", "to_club_name": "Benfica", "transfer_fee": "27000000.0", "transfer_date": "2025-07-22"}, {"player_name": "Franjo Ivanović", "from_club_name": "Union SG", "to_club_name": "Benfica", "transfer_fee": "22800000.0", "transfer_date": "2025-07-31"}, {"player_name": "Raúl Jiménez", "from_club_name": "Atletico Madrid", "to_club_name": "Benfica", "transfer_fee": "22000000.0", "transfer_date": "2015-08-13"}, {"player_name": "Marcos Leonardo", "from_club_name": "Santos", "to_club_name": "Benfica", "transfer_fee": "22000000.0", "transfer_date": "2024-01-04"}, {"player_name": "Arthur Cabral", "from_club_name": "Fiorentina", "to_club_name": "Benfica", "transfer_fee": "21000000.0", "transfer_date": "2023-08-10"}, {"player_name": "Georgiy Sudakov", "from_club_name": "Shakhtar D", "to_club_name": "Benfica", "transfer_fee": "20250000.0", "transfer_date": "2026-07-01"}, {"player_name": "Raúl de Tomás", "from_club_name": "Real Madrid", "to_club_name": "Benfica", "transfer_fee": "20000000.0", "transfer_date": "2019-07-03"}]};
+        const DAILY_TRANSFER_GAME = {"mode": "nationality", "name": "Poland", "transfers": [{"player_name": "Robert Lewandowski", "from_club_name": "Bayern Munich", "to_club_name": "Barcelona", "transfer_fee": "45000000.0", "transfer_date": "2022-07-19"}, {"player_name": "Krzysztof Piatek", "from_club_name": "Genoa", "to_club_name": "AC Milan", "transfer_fee": "35000000.0", "transfer_date": "2019-01-23"}, {"player_name": "Arkadiusz Milik", "from_club_name": "Ajax", "to_club_name": "Napoli", "transfer_fee": "32000000.0", "transfer_date": "2016-08-01"}, {"player_name": "Grzegorz Krychowiak", "from_club_name": "Sevilla", "to_club_name": "Paris Saint-Germain", "transfer_fee": "27500000.0", "transfer_date": "2016-07-03"}, {"player_name": "Jakub Kiwior", "from_club_name": "Spezia Calcio", "to_club_name": "Arsenal", "transfer_fee": "19500000.0", "transfer_date": "2023-01-23"}, {"player_name": "Wojciech Szczesny", "from_club_name": "Arsenal", "to_club_name": "Juventus", "transfer_fee": "18400000.0", "transfer_date": "2017-07-19"}, {"player_name": "Nicola Zalewski", "from_club_name": "Inter", "to_club_name": "Atalanta", "transfer_fee": "17500000.0", "transfer_date": "2025-08-18"}, {"player_name": "Piotr Zielinski", "from_club_name": "Udinese", "to_club_name": "Napoli", "transfer_fee": "16000000.0", "transfer_date": "2016-08-04"}, {"player_name": "Matty Cash", "from_club_name": "Forest", "to_club_name": "Aston Villa", "transfer_fee": "15750000.0", "transfer_date": "2020-09-03"}, {"player_name": "Marcin Bulka", "from_club_name": "Nice", "to_club_name": "NEOM", "transfer_fee": "15000000.0", "transfer_date": "2025-07-05"}]};
         const GAME_NOTE = "Datos de transferencias actualizados a junio de 2026. No incluye cesiones.";
-        const PUZZLE_NUMBER    = 67;
-        const PUZZLE_ID        = 67;
+        const PUZZLE_NUMBER    = 70;
+        const PUZZLE_ID        = 70;
         const IS_BACK_IN_TIME  = false;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;

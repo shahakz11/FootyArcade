@@ -44,14 +44,34 @@
         content="Five teammates revealed by matches shared together from least to most frequent. Guess the mystery player!" />
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png" />
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
 
     <!-- Tailwind & Google Fonts -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -586,10 +606,11 @@
         </div>
         <div>PLAYMAKER &copy; 2026. ALL RIGHTS RESERVED.</div>
         <div class="space-x-4">
-            <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
+            <a href="../../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
             <span>·</span>
-            <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Terms &amp;
-                Conditions</a>
+            <a href="../../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Preferencias de Cookies</a>
             <span>·</span>
             <a href="../index.html" class="hover:underline hover:text-accent transition-colors">Todos los Juegos</a>
         </div>
@@ -602,10 +623,10 @@
 
     
     <script id="daily-game-data">
-        const DAILY_PLAYEDWITH_GAME = {"mystery_player": "João Félix", "mystery_nationality": "Portugal", "mystery_position": "Attack", "mystery_peak_value": 100000000, "total_steps": 5, "steps": [{"step_number": 1, "clue_tier": "20th Most Frequent", "teammate_name": "İlkay Gündoğan", "teammate_nationality": "Germany", "shared_clubs": ["Barcelona"], "appearances_together": 42}, {"step_number": 2, "clue_tier": "10th Most Frequent", "teammate_name": "Saúl Ñíguez", "teammate_nationality": "Spain", "shared_clubs": ["Atlético Madrid"], "appearances_together": 81}, {"step_number": 3, "clue_tier": "5th Most Frequent", "teammate_name": "Stefan Savic", "teammate_nationality": "Montenegro", "shared_clubs": ["Atlético Madrid"], "appearances_together": 90}, {"step_number": 4, "clue_tier": "2nd Most Frequent", "teammate_name": "Ángel Correa", "teammate_nationality": "Argentina", "shared_clubs": ["Atlético Madrid"], "appearances_together": 122}, {"step_number": 5, "clue_tier": "Most Frequent", "teammate_name": "Jan Oblak", "teammate_nationality": "Slovenia", "shared_clubs": ["Atlético Madrid"], "appearances_together": 127}]};
+        const DAILY_PLAYEDWITH_GAME = {"mystery_player": "Matheus Cunha", "mystery_nationality": "Brazil", "mystery_position": "Attack", "mystery_peak_value": 75000000, "total_steps": 5, "steps": [{"step_number": 1, "clue_tier": "20th Most Frequent", "teammate_name": "Lukas Klostermann", "teammate_nationality": "Germany", "shared_clubs": ["RB Leipzig"], "appearances_together": 42}, {"step_number": 2, "clue_tier": "10th Most Frequent", "teammate_name": "Craig Dawson", "teammate_nationality": "England", "shared_clubs": ["Wolverhampton Wanderers"], "appearances_together": 53}, {"step_number": 3, "clue_tier": "5th Most Frequent", "teammate_name": "Rayan Aït-Nouri", "teammate_nationality": "Algeria", "shared_clubs": ["Wolverhampton Wanderers"], "appearances_together": 71}, {"step_number": 4, "clue_tier": "2nd Most Frequent", "teammate_name": "Toti", "teammate_nationality": "Portugal", "shared_clubs": ["Wolverhampton Wanderers"], "appearances_together": 74}, {"step_number": 5, "clue_tier": "Most Frequent", "teammate_name": "Nélson Semedo", "teammate_nationality": "Portugal", "shared_clubs": ["Wolverhampton Wanderers"], "appearances_together": 85}]};
         const GAME_NOTE = "Partidos oficiales en competiciones europeas y selecciones (actualizado a junio 2026).";
-        const PUZZLE_NUMBER    = 1;
-        const PUZZLE_ID        = 1;
+        const PUZZLE_NUMBER    = 4;
+        const PUZZLE_ID        = 4;
         const IS_BACK_IN_TIME  = true;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;

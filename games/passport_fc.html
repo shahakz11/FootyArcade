@@ -39,14 +39,34 @@
     <meta name="twitter:description" content="Complete today's club passport by naming footballers across 4 progressive nationality stamps. Play now!"/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
 
     <!-- Tailwind & Google Fonts -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -567,6 +587,8 @@
             <span>·</span>
             <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Terms & Conditions</a>
             <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Cookie Preferences</a>
+            <span>·</span>
             <a href="../index.html" class="hover:underline hover:text-accent transition-colors">All Games</a>
         </div>
     </footer>
@@ -578,10 +600,10 @@
 
     
     <script id="daily-game-data">
-        const DAILY_PASSPORT_GAME = {"club": "Inter", "total_steps": 4, "steps": [{"step_number": 1, "difficulty": "Easy", "nationality": "Brazil", "pool_size": 31, "sample_players": ["Philippe Coutinho", "Ronaldo", "Júlio César"], "valid_players": ["Philippe Coutinho", "Ronaldo", "Júlio César", "Maxwell", "Roberto Carlos", "Maicon", "Rafael Alcântara", "Lúcio", "Adriano", "Rafinha", "Alex Telles", "Gabriel Barbosa", "Felipe", "Carlos Augusto", "Hernanes", "Luis Henrique", "Dodô", "Miranda", "Felipe Melo", "Juan Jesus", "Dalbert", "Gabriel Brazão", "Gilberto", "Jonathan", "Wallace Oliveira", "César", "Edinho", "Ítalo", "Rincón", "Caio Ribeiro", "Tiago Maringá"]}, {"step_number": 2, "difficulty": "Medium", "nationality": "Chile", "pool_size": 7, "sample_players": ["Alexis Sánchez", "Arturo Vidal", "Iván Zamorano"], "valid_players": ["Alexis Sánchez", "Arturo Vidal", "Iván Zamorano", "David Pizarro", "Gary Medel", "Mauricio Pinilla", "Luis Jiménez"]}, {"step_number": 3, "difficulty": "Hard", "nationality": "Denmark", "pool_size": 5, "sample_players": ["Christian Eriksen", "Jens Odgaard", "Patrick Olsen"], "valid_players": ["Christian Eriksen", "Jens Odgaard", "Patrick Olsen", "Morten Knudsen", "Thomas Helveg"]}, {"step_number": 4, "difficulty": "The Unicorn", "nationality": "Bosnia & Herzegovina", "pool_size": 1, "sample_players": ["Edin Džeko"], "valid_players": ["Edin Džeko"]}]};
+        const DAILY_PASSPORT_GAME = {"club": "Bayer Leverkusen", "total_steps": 4, "steps": [{"step_number": 1, "difficulty": "Easy", "nationality": "Germany", "pool_size": 101, "sample_players": ["Florian Wirtz", "Kai Havertz", "Oliver Neuville"], "valid_players": ["Florian Wirtz", "Kai Havertz", "Oliver Neuville", "Ulf Kirsten", "Sven Bender", "Michael Ballack", "Bernd Schneider", "Toni Kroos", "Julian Brandt", "Jonathan Tah", "Emre Can", "Kevin Volland", "Bernd Leno", "Benjamin Henrichs", "Jonas Hofmann", "Robert Andrich", "Nadiem Amiri", "Kerem Demirbay", "André Schürrle", "Montrell Culbreath", "Mitchell Weiser", "Lars Bender", "Karim Bellarabi", "Danny da Costa", "Tim Oermann", "Stefan Kießling", "Gonzalo Castro", "Christoph Kramer", "Dominik Kohr", "Francis Onyeka", "Sidney Sam", "Patrick Helmes", "Simon Rolfes", "Philipp Wollscheid", "Stefan Reinartz", "Ken Izekor", "Jonas Meffert", "Joel Abu Hanna", "Farid Alfa-Ruprecht", "Bastian Oczipka", "Clemens Fritz", "Levin Öztunali", "Manuel Friedrich", "Roberto Hilbert", "Daniel Schwaab", "Marcel Risse", "Michael Rensing", "Hanno Balitsch", "Janis Blaswich", "Fabian Giefer", "Jens Hegeler", "Jan-Ingwer Callsen-Bracker", "Thorsten Kirschbaum", "Lennart Grill", "Samed Yesil", "Jan Boller", "Richard Sukuta-Pasu", "Alexander Meyer", "Malcolm Cacutalua", "Robin Becker", "Kolja Pusch", "Marlon Frey", "Julian Riedel", "Paterson Chato", "Lukas Boeder", "Niklas Lomb", "Sam Schreck", "Tobias Steffen", "Maximilian Wagener", "Jeremiah Mensah", "Markus Daun", "Sascha Dum", "Jörg Nowotny", "Michael Zepek", "Anel Dzaka", "Hans Jörg Butt", "Daniel Ischdonat", "Paul Freier", "Lukas Sinkiewicz", "Thomas Reichenberger", "Thomas Brdaric", "Andreas Voss", "Pierre De Wit", "Marcus Feinbier", "Claus-Dieter Wollitz", "Bernd Dreher", "Christian Schreier", "Sebastian Helbig", "Dirk Lottner", "René Rydlewicz", "Thorsten Burkhardt", "Benedikt Fernandez", "Dirk Heinen", "Christoph Preuß", "Erik Domaschke", "Paulo Rink", "Markus Feldhoff", "Ralf Becker", "Markus Kurth", "Hüzeyfe Doğan", "Mike Rietpietsch"]}, {"step_number": 2, "difficulty": "Medium", "nationality": "Switzerland", "pool_size": 6, "sample_players": ["Granit Xhaka", "Jonas Omlin", "Josip Drmic"], "valid_players": ["Granit Xhaka", "Jonas Omlin", "Josip Drmic", "Admir Mehmedi", "Eren Derdiyok", "Pascal Zuberbühler"]}, {"step_number": 3, "difficulty": "Hard", "nationality": "South Korea", "pool_size": 5, "sample_players": ["Heung-min Son", "Cha Bum-kun", "Son Heung-min"], "valid_players": ["Heung-min Son", "Cha Bum-kun", "Son Heung-min", "Du-ri Cha", "Seung-woo Ryu"]}, {"step_number": 4, "difficulty": "The Unicorn", "nationality": "Iran", "pool_size": 1, "sample_players": ["Sardar Azmoun"], "valid_players": ["Sardar Azmoun"]}]};
         const GAME_NOTE = "Includes official transfers and appearances since 1990 + verified historical legends throughout club history (updated to June 2026).";
-        const PUZZLE_NUMBER    = 20;
-        const PUZZLE_ID        = 20;
+        const PUZZLE_NUMBER    = 21;
+        const PUZZLE_ID        = 21;
         const IS_BACK_IN_TIME  = false;
         const MAX_BACK_DAYS    = 7;
     </script>

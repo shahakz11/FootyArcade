@@ -1,14 +1,34 @@
 <!DOCTYPE html>
 <html class="dark" lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Terms & Conditions | Playmaker</title>
@@ -149,37 +169,65 @@
 
         <section class="space-y-4">
             <h1 class="font-headline text-3xl uppercase italic tracking-wide text-accent">Terms &amp; Conditions</h1>
-            <p class="text-on-surface-variant text-sm">Last updated: September 1, 2026</p>
+            <p class="text-on-surface-variant text-sm">Last updated: October 4, 2026</p>
             <p class="text-on-background text-base leading-relaxed">
-                By accessing and playing Playmaker, you agree to comply with and be bound by the following terms and conditions.
+                By accessing and using <strong>Playmaker</strong> (<a href="https://playmaker.best" class="text-accent underline hover:text-white transition-colors">playmaker.best</a>), you agree to comply with and be bound by the following terms and conditions.
             </p>
         </section>
 
         <section class="space-y-4 border-t border-white/5 pt-6">
             <h2 class="font-title text-lg font-bold text-white uppercase tracking-wider">1. Acceptable Use &amp; Fair Play</h2>
             <p class="text-on-background text-sm leading-relaxed">
-                Playmaker is a free football guessing game provided for personal entertainment. You agree not to manipulate client state values in local storage maliciously to forge public stats screenshots, or overload the application resources.
+                Playmaker provides free daily football trivia and puzzle challenges for personal, non-commercial entertainment. You agree to use the service in a lawful and respectful manner:
+            </p>
+            <ul class="list-disc list-inside text-on-background text-sm space-y-2 leading-relaxed ml-2">
+                <li>You may not use automated bots, spiders, or scrapers to overwhelm application endpoints or harvest daily puzzle answers.</li>
+                <li>You agree not to manipulate local storage state maliciously for fraudulent claims or attempt to disrupt service delivery for other users.</li>
+            </ul>
+        </section>
+
+        <section class="space-y-4 border-t border-white/5 pt-6">
+            <h2 class="font-title text-lg font-bold text-white uppercase tracking-wider">2. Intellectual Property &amp; Proprietary Rights</h2>
+            <p class="text-on-background text-sm leading-relaxed">
+                All original software code, user interface designs, visual layouts, dark neon styling systems, brand graphics, game algorithms, and compilation scripts are the exclusive intellectual property of Playmaker and are protected by applicable copyright and intellectual property laws.
             </p>
         </section>
 
         <section class="space-y-4 border-t border-white/5 pt-6">
-            <h2 class="font-title text-lg font-bold text-white uppercase tracking-wider">2. Intellectual Property</h2>
+            <h2 class="font-title text-lg font-bold text-white uppercase tracking-wider">3. Nominative Fair Use &amp; Football Trademark Disclaimer</h2>
             <p class="text-on-background text-sm leading-relaxed">
-                All game designs, layouts, styling frameworks, and client-side logic are proprietary code of Playmaker. Football player statistics and datasets are preprocessed from open-source Kaggle repositories and club trademarks belong to their respective owners.
+                Playmaker is an independent, fan-made trivia platform. References to professional footballers, managers, football clubs, leagues, national associations, trophies, and tournaments across all game modes (such as <em>Top Transfers, Top Scorers, Club Connect, Transfer Destination, Player Chain, Passport FC, Played With</em>) are made strictly for <strong>descriptive, historical, educational, and trivia gaming purposes under nominative fair use</strong>.
+            </p>
+            <p class="text-on-background text-sm leading-relaxed">
+                Playmaker is <strong>not affiliated with, associated with, sponsored by, or endorsed by</strong> FIFA, UEFA, the Premier League, La Liga, Serie A, Bundesliga, Ligue 1, Major League Soccer, or any professional football federation or club. All trademarks, club names, logos, and emblems remain the property of their respective legal owners.
             </p>
         </section>
 
         <section class="space-y-4 border-t border-white/5 pt-6">
-            <h2 class="font-title text-lg font-bold text-white uppercase tracking-wider">3. Disclaimer of Warranties</h2>
+            <h2 class="font-title text-lg font-bold text-white uppercase tracking-wider">4. Statistical Datasets &amp; Accuracy</h2>
             <p class="text-on-background text-sm leading-relaxed">
-                Playmaker is provided on an "as is" and "as available" basis. We make no guarantees that game cycles will always match transfer dates perfectly, or that local storage stats will persist if you clear your browser cookies.
+                Historical football statistics, transfer fee records, match appearance logs, and goal tallies are preprocessed from open-source datasets (including Kaggle and public football archives) and curated football records. While we strive for absolute factual accuracy, historical records and fee structures may vary across historical reporting sources. Game puzzles and VAR evaluation models are provided on an "as is" basis for recreational trivia.
             </p>
         </section>
 
         <section class="space-y-4 border-t border-white/5 pt-6">
-            <h2 class="font-title text-lg font-bold text-white uppercase tracking-wider">4. Limitation of Liability &amp; Privacy</h2>
+            <h2 class="font-title text-lg font-bold text-white uppercase tracking-wider">5. Disclaimer of Warranties &amp; Limitation of Liability</h2>
             <p class="text-on-background text-sm leading-relaxed">
-                Under no circumstances shall Playmaker be liable for any direct or indirect issues resulting from browser crashes, loss of streaks, or game data malfunctions. For details on how we handle user data and local browser storage, please review our <a href="privacy.html" class="text-accent underline hover:text-white transition-colors">Privacy Policy</a>.
+                Playmaker is provided on an "as is" and "as available" basis without warranties of any kind, whether express or implied. Under no circumstances shall Playmaker or its creators be liable for any direct, indirect, incidental, or consequential damages resulting from browser incompatibilities, local storage deletions, streak resets, or temporary service interruptions.
+            </p>
+        </section>
+
+        <section class="space-y-4 border-t border-white/5 pt-6">
+            <h2 class="font-title text-lg font-bold text-white uppercase tracking-wider">6. Privacy &amp; Data Handling</h2>
+            <p class="text-on-background text-sm leading-relaxed">
+                Your use of Playmaker is also governed by our <a href="privacy.html" class="text-accent underline hover:text-white transition-colors">Privacy Policy</a>, which outlines how your game progress is stored locally on your device and how anonymous telemetry and cookie consent are handled.
+            </p>
+        </section>
+
+        <section class="space-y-4 border-t border-white/5 pt-6">
+            <h2 class="font-title text-lg font-bold text-white uppercase tracking-wider">7. Modifications to Terms</h2>
+            <p class="text-on-background text-sm leading-relaxed">
+                We reserve the right to revise these Terms &amp; Conditions as new game modes or regulatory guidelines evolve. Your continued use of Playmaker following any revisions constitutes your acceptance of the updated terms.
             </p>
         </section>
     </main>
@@ -207,6 +255,8 @@
             <span>·</span>
             <a href="terms.html" class="text-accent underline font-bold">Terms &amp; Conditions</a>
             <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Cookie Preferences</a>
+            <span>·</span>
             <a href="index.html" class="hover:underline hover:text-accent transition-colors">Arcade Lobby</a>
         </div>
         <div class="space-x-4 mt-2">
@@ -219,5 +269,7 @@
             <a href="games/club_connect.html" class="hover:underline hover:text-accent transition-colors">Club Connect</a>
         </div>
     </footer>
+    <script src="games/footy-i18n.js"></script>
+    <script src="games/footy-ui.js"></script>
 </body>
 </html>

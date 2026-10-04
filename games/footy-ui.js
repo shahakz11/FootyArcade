@@ -2346,106 +2346,183 @@
 
     // ────────────────────────────────────────────────────────
     // ────────────────────────────────────────────────────────
-    // 10. Auto-initialize Analytics, Error Tracking & Cookie Consent Banner
+    // 10. GDPR Cookie Consent & Google Consent Mode v2
     // ────────────────────────────────────────────────────────
+    const FootyConsent = {
+        STORAGE_KEY: 'playmaker_cookie_consent',
+        LEGACY_KEY: 'footy_consent',
+
+        getConsent() {
+            try {
+                const stored = localStorage.getItem(this.STORAGE_KEY);
+                if (stored === 'granted' || stored === 'denied') {
+                    return stored;
+                }
+                const legacy = localStorage.getItem(this.LEGACY_KEY);
+                if (legacy === 'accepted') {
+                    localStorage.setItem(this.STORAGE_KEY, 'granted');
+                    return 'granted';
+                }
+                if (legacy === 'declined') {
+                    localStorage.setItem(this.STORAGE_KEY, 'denied');
+                    return 'denied';
+                }
+            } catch (e) {}
+            return null;
+        },
+
+        setConsent(status) {
+            const normalized = status === 'granted' ? 'granted' : 'denied';
+            try {
+                localStorage.setItem(this.STORAGE_KEY, normalized);
+                localStorage.setItem(this.LEGACY_KEY, normalized === 'granted' ? 'accepted' : 'declined');
+            } catch (e) {}
+
+            if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+                window.gtag('consent', 'update', {
+                    'ad_storage': normalized,
+                    'ad_user_data': normalized,
+                    'ad_personalization': normalized,
+                    'analytics_storage': normalized
+                });
+            }
+
+            if (typeof trackEvent === 'function') {
+                trackEvent('cookie_consent_decision', { consent_status: normalized });
+            }
+
+            this.hideBanner();
+
+            if (typeof FootyI18n !== 'undefined' && typeof toast === 'function') {
+                toast(FootyI18n.t('toast_consent_saved', 'Cookie preferences saved! 🍪'), 'success');
+            }
+        },
+
+        showBanner() {
+            if (document.getElementById('fa-cookie-consent-banner')) {
+                return;
+            }
+
+            const banner = document.createElement('div');
+            banner.id = 'fa-cookie-consent-banner';
+            banner.className = 'fa-consent-banner';
+
+            const pathname = (typeof window !== 'undefined' && window.location) ? window.location.pathname : '';
+            const isGame = pathname.includes('/games/') || pathname.includes('/es/games/');
+            const privacyPath = isGame ? '../privacy.html' : 'privacy.html';
+            const termsPath = isGame ? '../terms.html' : 'terms.html';
+
+            const t = (key, fallback) => (typeof FootyI18n !== 'undefined' ? FootyI18n.t(key, fallback) : fallback);
+
+            const title = t('cookie_consent_title', 'COOKIE PREFERENCES');
+            const msg = t('cookie_consent_msg', 'We use cookies and anonymous device telemetry to analyze gameplay traffic, track errors, and improve your daily trivia arcade experience.');
+            const privacyText = t('cookie_privacy_link', 'Privacy Policy');
+            const termsText = t('cookie_terms_link', 'Terms & Conditions');
+            const declineText = t('cookie_consent_decline', 'DECLINE');
+            const acceptText = t('cookie_consent_accept', 'ACCEPT ALL');
+
+            banner.innerHTML = `
+                <div class="fa-consent-content">
+                    <div class="flex items-start gap-3 flex-grow">
+                        <span class="material-symbols-outlined text-accent text-2xl shrink-0 mt-0.5 select-none" aria-hidden="true">cookie</span>
+                        <div class="space-y-1 text-left">
+                            <h5 class="font-title text-sm font-bold text-white uppercase tracking-wider">${title}</h5>
+                            <p class="text-on-surface-variant text-xs leading-relaxed max-w-xl">
+                                ${msg}
+                                <span class="whitespace-nowrap inline-block mt-0.5">
+                                    <a href="${privacyPath}" class="text-accent underline hover:brightness-110 ml-0.5 transition-colors">${privacyText}</a> &middot;
+                                    <a href="${termsPath}" class="text-accent underline hover:brightness-110 ml-0.5 transition-colors">${termsText}</a>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0 w-full sm:w-auto justify-end mt-2 sm:mt-0">
+                        <button id="fa-consent-decline" type="button" class="flex-1 sm:flex-initial px-4 py-2.5 bg-surface-container-high border border-white/10 hover:border-white/20 text-on-surface-variant hover:text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer">
+                            ${declineText}
+                        </button>
+                        <button id="fa-consent-accept" type="button" class="flex-1 sm:flex-initial px-5 py-2.5 bg-accent text-black font-bold uppercase tracking-wider rounded-xl text-xs hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-accent/20 cursor-pointer">
+                            ${acceptText}
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(banner);
+
+            const acceptBtn = document.getElementById('fa-consent-accept');
+            if (acceptBtn) {
+                acceptBtn.addEventListener('click', () => {
+                    this.setConsent('granted');
+                });
+            }
+
+            const declineBtn = document.getElementById('fa-consent-decline');
+            if (declineBtn) {
+                declineBtn.addEventListener('click', () => {
+                    this.setConsent('denied');
+                });
+            }
+        },
+
+        hideBanner() {
+            const el = document.getElementById('fa-cookie-consent-banner');
+            if (el) {
+                el.style.opacity = '0';
+                el.style.transform = 'translate(-50%, 20px)';
+                setTimeout(() => el.remove(), 250);
+            }
+        },
+
+        bindSettingsTriggers() {
+            if (typeof document === 'undefined') return;
+            document.querySelectorAll('[data-action="open-cookie-settings"]').forEach(btn => {
+                btn.removeEventListener('click', this._onTriggerClick);
+                btn.addEventListener('click', this._onTriggerClick);
+            });
+        },
+
+        _onTriggerClick(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            FootyConsent.showBanner();
+        }
+    };
+
     function initAnalyticsAndConsent() {
-        const gaMeta = document.querySelector('meta[name="google-analytics-id"]');
-        const gaId = gaMeta ? gaMeta.getAttribute('content') : null;
-        if (!gaId || gaId.startsWith('G-XXX')) {
-            return;
-        }
-
-        const consent = localStorage.getItem('footy_consent');
-        if (consent === 'accepted') {
-            loadGA4(gaId);
-        } else if (consent === 'declined') {
-            console.log('[FootyUI] Analytics cookies declined by user.');
+        const consent = FootyConsent.getConsent();
+        if (!consent) {
+            FootyConsent.showBanner();
         } else {
-            showConsentBanner(gaId);
+            if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+                window.gtag('consent', 'update', {
+                    'ad_storage': consent,
+                    'ad_user_data': consent,
+                    'ad_personalization': consent,
+                    'analytics_storage': consent
+                });
+            }
         }
-    }
+        FootyConsent.bindSettingsTriggers();
 
-    function loadGA4(gaId) {
-        // Inject Google Tag Manager script
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
-        document.head.appendChild(script);
+        // Error tracking catcher (anonymous exception logging)
+        if (typeof window !== 'undefined') {
+            window.addEventListener('error', function (event) {
+                if (window.gtag) {
+                    window.gtag('event', 'exception', {
+                        'description': event.message + ' at ' + event.filename + ':' + event.lineno,
+                        'fatal': true
+                    });
+                }
+            });
 
-        window.dataLayer = window.dataLayer || [];
-        window.gtag = function () { dataLayer.push(arguments); };
-        window.gtag('js', new Date());
-        window.gtag('config', gaId);
-
-        // Error tracking catcher
-        window.addEventListener('error', function (event) {
-            if (window.gtag) {
-                window.gtag('event', 'exception', {
-                    'description': event.message + ' at ' + event.filename + ':' + event.lineno,
-                    'fatal': true
-                });
-            }
-        });
-
-        window.addEventListener('unhandledrejection', function (event) {
-            if (window.gtag) {
-                window.gtag('event', 'exception', {
-                    'description': 'Unhandled Promise: ' + (event.reason ? event.reason.message || event.reason : 'unknown'),
-                    'fatal': false
-                });
-            }
-        });
-    }
-
-    function showConsentBanner(gaId) {
-        const banner = document.createElement('div');
-        banner.className = 'fa-consent-banner';
-
-        // Account for relative path based on location
-        const isGame = window.location.pathname.includes('/games/');
-        const privacyPath = isGame ? '../privacy.html' : 'privacy.html';
-        const termsPath = isGame ? '../terms.html' : 'terms.html';
-        const isEs = (typeof FootyI18n !== 'undefined' && FootyI18n.getLang() === 'es');
-
-        const title = isEs ? 'Uso de Cookies' : 'Cookie Consent';
-        const bodyText = isEs
-            ? `Utilizamos cookies para analizar el tráfico, registrar errores y mejorar tu experiencia de juego. Al pulsar "ACEPTAR TODO", aceptas nuestra <a href="${privacyPath}" class="text-accent underline hover:brightness-110">Política de Privacidad</a> y nuestros <a href="${termsPath}" class="text-accent underline hover:brightness-110">Términos y Condiciones</a>.`
-            : `We use cookies to analyze traffic, track errors, and improve your trivia experience. By clicking "ACCEPT ALL", you agree to our <a href="${privacyPath}" class="text-accent underline hover:brightness-110">Privacy Policy</a> and <a href="${termsPath}" class="text-accent underline hover:brightness-110">Terms & Conditions</a>.`;
-        const declineText = isEs ? 'RECHAZAR' : 'DECLINE';
-        const acceptText = isEs ? 'ACEPTAR TODO' : 'ACCEPT ALL';
-
-        banner.innerHTML = `
-            <div class="fa-consent-content">
-                <span class="material-symbols-outlined text-accent text-2xl shrink-0">cookie</span>
-                <div class="space-y-1 text-left flex-grow">
-                    <h5 class="font-title text-sm font-bold text-white uppercase tracking-wider">${title}</h5>
-                    <p class="text-on-surface-variant text-xs leading-relaxed max-w-lg">
-                        ${bodyText}
-                    </p>
-                </div>
-                <div class="flex gap-2 shrink-0 w-full sm:w-auto justify-end">
-                    <button id="fa-consent-decline" class="px-4 py-2 bg-surface border border-white/10 text-on-surface-variant hover:text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all">
-                        ${declineText}
-                    </button>
-                    <button id="fa-consent-accept" class="px-4 py-2 bg-accent text-black hover:brightness-110 active:scale-95 rounded-xl text-xs font-bold uppercase tracking-wider transition-all">
-                        ${acceptText}
-                    </button>
-                </div>
-            </div>
-        `;
-
-        document.body.appendChild(banner);
-
-        document.getElementById('fa-consent-accept').addEventListener('click', () => {
-            localStorage.setItem('footy_consent', 'accepted');
-            banner.remove();
-            loadGA4(gaId);
-        });
-
-        document.getElementById('fa-consent-decline').addEventListener('click', () => {
-            localStorage.setItem('footy_consent', 'declined');
-            banner.remove();
-        });
+            window.addEventListener('unhandledrejection', function (event) {
+                if (window.gtag) {
+                    window.gtag('event', 'exception', {
+                        'description': 'Unhandled Promise: ' + (event.reason ? event.reason.message || event.reason : 'unknown'),
+                        'fatal': false
+                    });
+                }
+            });
+        }
     }
 
     // ── Visitor & Session Identification ─────────────────────
@@ -3292,8 +3369,11 @@
         renderPWABanner,
         initLanguageSwitcher,
         initGameSuggestions,
-        GAMES_REGISTRY
+        GAMES_REGISTRY,
+        FootyConsent
     };
+
+    global.FootyConsent = FootyConsent;
 
 })(window);
 

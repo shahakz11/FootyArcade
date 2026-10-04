@@ -103,6 +103,8 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
     es_html = es_html.replace('href="../manifest.json"', 'href="../../manifest.json"')
     es_html = es_html.replace('href="../favicon.ico"', 'href="../../favicon.ico"')
     es_html = es_html.replace('href="../index.html"', 'href="../index.html"')
+    es_html = es_html.replace('href="../privacy.html"', 'href="../../privacy.html"')
+    es_html = es_html.replace('href="../terms.html"', 'href="../../terms.html"')
 
     # 3. Swap active switcher button state
     es_html = es_html.replace(
@@ -394,6 +396,8 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         ('Privacy Policy', 'Política de Privacidad'),
         ('Terms & Conditions', 'Términos y Condiciones'),
         ('Terms &amp; Conditions', 'Términos y Condiciones'),
+        ('Cookie Preferences', 'Preferencias de Cookies'),
+        ('COOKIE PREFERENCES', 'PREFERENCIAS DE COOKIES'),
         ('All Games', 'Todos los Juegos'),
         ('Arcade Lobby', 'Lobby Arcade'),
         ('STEP 1 &mdash; NAME A QUALIFYING FOOTBALLER:', 'PASO 1 &mdash; NOMBRA A UN JUGADOR VÁLIDO:'),

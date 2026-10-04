@@ -39,14 +39,34 @@
     <meta name="twitter:description" content="Complete today's club passport by naming footballers across 4 progressive nationality stamps. Play now!"/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
 
     <!-- Tailwind & Google Fonts -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -548,9 +568,11 @@
         </div>
         <div>PLAYMAKER &copy; 2026. ALL RIGHTS RESERVED.</div>
         <div class="space-x-4">
-            <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
+            <a href="../../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
             <span>·</span>
-            <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <a href="../../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Preferencias de Cookies</a>
             <span>·</span>
             <a href="../index.html" class="hover:underline hover:text-accent transition-colors">Todos los Juegos</a>
         </div>
@@ -563,10 +585,10 @@
 
     
     <script id="daily-game-data">
-        const DAILY_PASSPORT_GAME = {"club": "Liverpool", "total_steps": 4, "steps": [{"step_number": 1, "difficulty": "Easy", "nationality": "England", "pool_size": 93, "sample_players": ["Raheem Sterling", "Trent Alexander-Arnold", "Jordan Henderson"], "valid_players": ["Raheem Sterling", "Trent Alexander-Arnold", "Jordan Henderson", "Ben Davies", "Steven Gerrard", "Robbie Fowler", "Jamie Carragher", "John Barnes", "Steve McManaman", "Michael Owen", "James Milner", "Alex Oxlade-Chamberlain", "Harvey Elliott", "Adam Lallana", "Joe Gomez", "Curtis Jones", "Jarell Quansah", "Dominic Solanke", "Tyler Morton", "Rio Ngumoha", "Conor Coady", "Nathaniel Clyne", "Daniel Sturridge", "Danny Ings", "Sean Longstaff", "Jonjo Shelvey", "Ryan Kent", "Joe Cole", "Trey Nyoni", "Andy Carroll", "Glen Johnson", "Freddie Woodman", "Stewart Downing", "Rhian Brewster", "Peter Crouch", "Jermaine Pennant", "Jordon Ibe", "Scott Carson", "Paul Konchesky", "Kaide Gordon", "Nathaniel Phillips", "Jon Flanagan", "Rhys Williams", "Andre Wisdom", "Leighton Clarkson", "Ovie Ejaria", "Rickie Lambert", "Martin Kelly", "Danny Guthrie", "James McConnell", "Sheyi Ojo", "Jay Spearing", "Jack Robinson", "Harvey Davies", "Amara Nallo", "Bobby Clark", "Jayden Danns", "Luke Chambers", "Jerome Sinclair", "Jordan Rossiter", "Andy Lonergan", "Calum Scanlon", "Cameron Brannagan", "Connor Randall", "Adam Lewis", "Elijah Dixon-Bonner", "Nathan Eccleston", "David Martin", "Jake Cain", "Adam Morgan", "Joe Hardy", "Joe Maguire", "Paul Ince", "Alec Chamberlain", "Stephen Darby", "Robbie Threlfall", "Chris Kirkland", "Stephen Wright", "Nat Phillips", "David James", "David Burrows", "Stephen Warnock", "Jon Otsemobor", "Neil Mellor", "David Thompson", "Alan Navarro", "Danny Murphy", "John Welsh", "Ian Dunbavin", "Jamie Redknapp", "Jack Hobbs", "David Mannix", "Paul Harrison"]}, {"step_number": 2, "difficulty": "Medium", "nationality": "Germany", "pool_size": 7, "sample_players": ["Florian Wirtz", "Karl-Heinz Riedle", "Emre Can"], "valid_players": ["Florian Wirtz", "Karl-Heinz Riedle", "Emre Can", "Loris Karius", "Samed Yesil", "Dietmar Hamann", "Markus Babbel"]}, {"step_number": 3, "difficulty": "Hard", "nationality": "Senegal", "pool_size": 3, "sample_players": ["Sadio Mané", "El-Hadji Diouf", "Salif Diao"], "valid_players": ["Sadio Mané", "El-Hadji Diouf", "Salif Diao"]}, {"step_number": 4, "difficulty": "The Unicorn", "nationality": "Egypt", "pool_size": 1, "sample_players": ["Mohamed Salah"], "valid_players": ["Mohamed Salah"]}]};
+        const DAILY_PASSPORT_GAME = {"club": "Inter", "total_steps": 4, "steps": [{"step_number": 1, "difficulty": "Easy", "nationality": "Brazil", "pool_size": 31, "sample_players": ["Philippe Coutinho", "Ronaldo", "Júlio César"], "valid_players": ["Philippe Coutinho", "Ronaldo", "Júlio César", "Maxwell", "Roberto Carlos", "Maicon", "Rafael Alcântara", "Lúcio", "Adriano", "Rafinha", "Alex Telles", "Gabriel Barbosa", "Felipe", "Carlos Augusto", "Hernanes", "Luis Henrique", "Dodô", "Miranda", "Felipe Melo", "Juan Jesus", "Dalbert", "Gabriel Brazão", "Gilberto", "Jonathan", "Wallace Oliveira", "César", "Edinho", "Ítalo", "Rincón", "Caio Ribeiro", "Tiago Maringá"]}, {"step_number": 2, "difficulty": "Medium", "nationality": "Chile", "pool_size": 7, "sample_players": ["Alexis Sánchez", "Arturo Vidal", "Iván Zamorano"], "valid_players": ["Alexis Sánchez", "Arturo Vidal", "Iván Zamorano", "David Pizarro", "Gary Medel", "Mauricio Pinilla", "Luis Jiménez"]}, {"step_number": 3, "difficulty": "Hard", "nationality": "Denmark", "pool_size": 5, "sample_players": ["Christian Eriksen", "Jens Odgaard", "Patrick Olsen"], "valid_players": ["Christian Eriksen", "Jens Odgaard", "Patrick Olsen", "Morten Knudsen", "Thomas Helveg"]}, {"step_number": 4, "difficulty": "The Unicorn", "nationality": "Bosnia & Herzegovina", "pool_size": 1, "sample_players": ["Edin Džeko"], "valid_players": ["Edin Džeko"]}]};
         const GAME_NOTE = "Fichajes y partidos oficiales desde 1990 + leyendas históricas verificadas (junio 2026).";
-        const PUZZLE_NUMBER    = 19;
-        const PUZZLE_ID        = 19;
+        const PUZZLE_NUMBER    = 20;
+        const PUZZLE_ID        = 20;
         const IS_BACK_IN_TIME  = true;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;

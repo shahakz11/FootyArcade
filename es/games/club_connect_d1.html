@@ -36,14 +36,34 @@
     <meta name="twitter:description" content="Five players were all signed by the same mystery club. Guess the club before all players are revealed."/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -448,9 +468,11 @@
         </div>
         <div>PLAYMAKER &copy; 2026. ALL RIGHTS RESERVED.</div>
         <div class="space-x-4">
-            <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
+            <a href="../../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
             <span>·</span>
-            <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <a href="../../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Preferencias de Cookies</a>
             <span>·</span>
             <a href="../index.html" class="hover:underline hover:text-accent transition-colors">Lobby Arcade</a>
         </div>
@@ -537,11 +559,11 @@
 
 
     <script id="daily-game-data">
-        const DAILY_CLUBCONNECT_GAME = {"club": "Espanyol", "players": [{"player_name": "Léo Baptistão", "from_club_name": "Atletico Madrid", "transfer_fee": 7000000.0, "transfer_date": "2016-07-09"}, {"player_name": "César Montes", "from_club_name": "Monterrey", "transfer_fee": 8000000.0, "transfer_date": "2023-01-01"}, {"player_name": "Fernando Calero", "from_club_name": "Real Valladolid", "transfer_fee": 8000000.0, "transfer_date": "2019-08-09"}, {"player_name": "Sergi Darder", "from_club_name": "Lyon", "transfer_fee": 8000000.0, "transfer_date": "2018-07-01"}, {"player_name": "Leandro Cabrera", "from_club_name": "Getafe", "transfer_fee": 9000000.0, "transfer_date": "2020-01-20"}]};
+        const DAILY_CLUBCONNECT_GAME = {"club": "Zenit S-Pb", "players": [{"player_name": "Salomón Rondón", "from_club_name": "Rubin Kazan", "transfer_fee": 18000000.0, "transfer_date": "2014-01-31"}, {"player_name": "Wendel", "from_club_name": "Sporting CP", "transfer_fee": 20300000.0, "transfer_date": "2020-10-06"}, {"player_name": "Bruno Alves", "from_club_name": "Porto", "transfer_fee": 22000000.0, "transfer_date": "2010-08-03"}, {"player_name": "Leandro Paredes", "from_club_name": "Roma", "transfer_fee": 23000000.0, "transfer_date": "2017-07-01"}, {"player_name": "Gerson", "from_club_name": "Flamengo", "transfer_fee": 25000000.0, "transfer_date": "2025-07-04"}]};
         const ANSWER_CLUBS = ["AC Milan", "Ajax", "Al-Ahli", "Al-Duhail", "Al-Hilal", "Al-Ittihad", "Al-Nassr", "Al-Qadsiah", "Al-Rayyan", "Al-Sadd", "Almería", "América", "Anzhi", "Arsenal", "Aston Villa", "Atalanta", "Atletico Madrid", "BJ Guoan", "Barcelona", "Bayer Leverkusen", "Bayern Munich", "Benfica", "Besiktas", "Blackburn", "Bologna", "Borussia Dortmund", "Borussia Mönchengladbach", "Botafogo", "Bournemouth", "Brentford", "Brighton & Hove Albion", "Brugge", "Burnley", "CSKA Moscow", "Cagliari", "Celta Vigo", "Celtic", "Chelsea", "Como", "Cruz Azul", "Crystal Palace", "Dep. La Coruña", "Dinamo Moscow", "Dynamo Kyiv", "E. Frankfurt", "Espanyol", "Everton", "Fenerbahce", "Fenerbahçe", "Feyenoord", "Fiorentina", "Flamengo", "Forest", "Frankfurt", "Freiburg", "Fulham", "G. Bordeaux", "GZ Evergrande", "Galatasaray", "Genoa", "HB CFFC", "Hamburger", "Hertha Berlin", "Hoffenheim", "Inter", "Ipswich", "Juventus", "Krasnodar", "Lazio", "Leeds United", "Leicester City", "Lens", "Lille", "Liverpool", "Lyon", "Manchester City", "Manchester United", "Marseille", "Middlesbrough", "Monaco", "Mönchengladbach", "Napoli", "Newcastle United", "Nice", "Norwich", "Nott'm Forest", "PSV Eindhoven", "Palmeiras", "Paris Saint-Germain", "Parma", "Porto", "R. Strasbourg", "RB Leipzig", "RB Salzburg", "Rangers", "Real Betis", "Real Madrid", "Real Sociedad", "Rennes", "River Plate", "Roma", "Rubin Kazan", "Salzburg", "Sampdoria", "Sassuolo", "Schalke", "Sevilla", "Shakhtar D", "Sheff Utd", "Southampton", "Spartak Moscow", "Sporting CP", "Stoke City", "Stuttgart", "Sunderland", "Swansea", "Tigres UANL", "Torino", "Tottenham Hotspur", "Udinese", "Valencia", "Villarreal", "Watford", "West Brom", "West Ham United", "Wolfsburg", "Wolverhampton Wanderers", "Zenit S-Pb"];
         const GAME_NOTE = "Datos de fichajes actualizados a junio de 2026. Jugadores ordenados por costo de traspaso.";
-        const PUZZLE_NUMBER    = 62;
-        const PUZZLE_ID        = 62;
+        const PUZZLE_NUMBER    = 65;
+        const PUZZLE_ID        = 65;
         const IS_BACK_IN_TIME  = true;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;

@@ -39,14 +39,34 @@
     <meta name="twitter:description" content="Complete today's club passport by naming footballers across 4 progressive nationality stamps. Play now!"/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
 
     <!-- Tailwind & Google Fonts -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -567,6 +587,8 @@
             <span>·</span>
             <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Terms & Conditions</a>
             <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Cookie Preferences</a>
+            <span>·</span>
             <a href="../index.html" class="hover:underline hover:text-accent transition-colors">All Games</a>
         </div>
     </footer>
@@ -578,10 +600,10 @@
 
     
     <script id="daily-game-data">
-        const DAILY_PASSPORT_GAME = {"club": "Atletico Madrid", "total_steps": 4, "steps": [{"step_number": 1, "difficulty": "Easy", "nationality": "France", "pool_size": 13, "sample_players": ["Antoine Griezmann", "Lucas Hernández", "Theo Hernández"], "valid_players": ["Antoine Griezmann", "Lucas Hernández", "Theo Hernández", "Grégory Coupet", "Thomas Lemar", "Clément Lenglet", "Moussa Dembélé", "Kévin Gameiro", "Benjamin Lecomte", "Josuha Guilavogui", "Florent Sinama-Pongolle", "Han-Noah Massengo", "Peter Luccin"]}, {"step_number": 2, "difficulty": "Medium", "nationality": "Italy", "pool_size": 8, "sample_players": ["Christian Vieri", "Thiago Motta", "Giacomo Raspadori"], "valid_players": ["Christian Vieri", "Thiago Motta", "Giacomo Raspadori", "Matteo Ruggeri", "Alessio Cerci", "Christian Abbiati", "Giorgio Venturin", "Michele Serena"]}, {"step_number": 3, "difficulty": "Hard", "nationality": "Belgium", "pool_size": 5, "sample_players": ["Thibaut Courtois", "Axel Witsel", "Toby Alderweireld"], "valid_players": ["Thibaut Courtois", "Axel Witsel", "Toby Alderweireld", "Yannick Carrasco", "Arthur Vermeeren"]}, {"step_number": 4, "difficulty": "The Unicorn", "nationality": "Slovenia", "pool_size": 1, "sample_players": ["Jan Oblak"], "valid_players": ["Jan Oblak"]}]};
+        const DAILY_PASSPORT_GAME = {"club": "Liverpool", "total_steps": 4, "steps": [{"step_number": 1, "difficulty": "Easy", "nationality": "England", "pool_size": 93, "sample_players": ["Raheem Sterling", "Trent Alexander-Arnold", "Jordan Henderson"], "valid_players": ["Raheem Sterling", "Trent Alexander-Arnold", "Jordan Henderson", "Ben Davies", "Steven Gerrard", "Robbie Fowler", "Jamie Carragher", "John Barnes", "Steve McManaman", "Michael Owen", "James Milner", "Alex Oxlade-Chamberlain", "Harvey Elliott", "Adam Lallana", "Joe Gomez", "Curtis Jones", "Jarell Quansah", "Dominic Solanke", "Tyler Morton", "Rio Ngumoha", "Conor Coady", "Nathaniel Clyne", "Daniel Sturridge", "Danny Ings", "Sean Longstaff", "Jonjo Shelvey", "Ryan Kent", "Joe Cole", "Trey Nyoni", "Andy Carroll", "Glen Johnson", "Freddie Woodman", "Stewart Downing", "Rhian Brewster", "Peter Crouch", "Jermaine Pennant", "Jordon Ibe", "Scott Carson", "Paul Konchesky", "Kaide Gordon", "Nathaniel Phillips", "Jon Flanagan", "Rhys Williams", "Andre Wisdom", "Leighton Clarkson", "Ovie Ejaria", "Rickie Lambert", "Martin Kelly", "Danny Guthrie", "James McConnell", "Sheyi Ojo", "Jay Spearing", "Jack Robinson", "Harvey Davies", "Amara Nallo", "Bobby Clark", "Jayden Danns", "Luke Chambers", "Jerome Sinclair", "Jordan Rossiter", "Andy Lonergan", "Calum Scanlon", "Cameron Brannagan", "Connor Randall", "Adam Lewis", "Elijah Dixon-Bonner", "Nathan Eccleston", "David Martin", "Jake Cain", "Adam Morgan", "Joe Hardy", "Joe Maguire", "Paul Ince", "Alec Chamberlain", "Stephen Darby", "Robbie Threlfall", "Chris Kirkland", "Stephen Wright", "Nat Phillips", "David James", "David Burrows", "Stephen Warnock", "Jon Otsemobor", "Neil Mellor", "David Thompson", "Alan Navarro", "Danny Murphy", "John Welsh", "Ian Dunbavin", "Jamie Redknapp", "Jack Hobbs", "David Mannix", "Paul Harrison"]}, {"step_number": 2, "difficulty": "Medium", "nationality": "Germany", "pool_size": 7, "sample_players": ["Florian Wirtz", "Karl-Heinz Riedle", "Emre Can"], "valid_players": ["Florian Wirtz", "Karl-Heinz Riedle", "Emre Can", "Loris Karius", "Samed Yesil", "Dietmar Hamann", "Markus Babbel"]}, {"step_number": 3, "difficulty": "Hard", "nationality": "Senegal", "pool_size": 3, "sample_players": ["Sadio Mané", "El-Hadji Diouf", "Salif Diao"], "valid_players": ["Sadio Mané", "El-Hadji Diouf", "Salif Diao"]}, {"step_number": 4, "difficulty": "The Unicorn", "nationality": "Egypt", "pool_size": 1, "sample_players": ["Mohamed Salah"], "valid_players": ["Mohamed Salah"]}]};
         const GAME_NOTE = "Includes official transfers and appearances since 1990 + verified historical legends throughout club history (updated to June 2026).";
-        const PUZZLE_NUMBER    = 18;
-        const PUZZLE_ID        = 18;
+        const PUZZLE_NUMBER    = 19;
+        const PUZZLE_ID        = 19;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>

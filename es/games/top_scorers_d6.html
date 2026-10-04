@@ -36,14 +36,34 @@
     <meta name="twitter:description" content="Name the all-time top scorers for a club, league, or national team. A daily football scoring trivia challenge with 6 lives. Play free at Playmaker!"/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -361,9 +381,11 @@
         </div>
         <div>PLAYMAKER &copy; 2026. ALL RIGHTS RESERVED.</div>
         <div class="space-x-4">
-            <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
+            <a href="../../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
             <span>·</span>
-            <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <a href="../../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Preferencias de Cookies</a>
             <span>·</span>
             <a href="../index.html" class="hover:underline hover:text-accent transition-colors">Lobby Arcade</a>
         </div>
@@ -448,10 +470,10 @@
 
 
     <script id="daily-game-data">
-        const DAILY_SCORERS_GAME = {"name": "UEFA Champions League 2024/25", "scorers": [{"player_name": "Raphinha", "club_name": "Barcelona", "goals": 13, "appearances": 14, "nationality": "Brazil"}, {"player_name": "Serhou Guirassy", "club_name": "Borussia Dortmund", "goals": 13, "appearances": 14, "nationality": "Guinea"}, {"player_name": "Harry Kane", "club_name": "Bayern Munich", "goals": 11, "appearances": 13, "nationality": "England"}, {"player_name": "Robert Lewandowski", "club_name": "Barcelona", "goals": 11, "appearances": 13, "nationality": "Poland"}, {"player_name": "Lautaro Martínez", "club_name": "Inter", "goals": 9, "appearances": 14, "nationality": "Argentina"}, {"player_name": "Ousmane Dembélé", "club_name": "Paris Saint-Germain", "goals": 8, "appearances": 15, "nationality": "France"}, {"player_name": "Vinicius Junior", "club_name": "Real Madrid", "goals": 8, "appearances": 12, "nationality": "Brazil"}, {"player_name": "Erling Haaland", "club_name": "Manchester City", "goals": 8, "appearances": 9, "nationality": "Norway"}, {"player_name": "Kylian Mbappé", "club_name": "Real Madrid", "goals": 7, "appearances": 14, "nationality": "France"}, {"player_name": "Julián Alvarez", "club_name": "Atlético de Madrid", "goals": 7, "appearances": 10, "nationality": "Argentina"}]};
+        const DAILY_SCORERS_GAME = {"name": "La Liga 2017/18", "scorers": [{"player_name": "Lionel Messi", "club_name": "Barcelona", "goals": 34, "appearances": 36, "nationality": "Argentina"}, {"player_name": "Cristiano Ronaldo", "club_name": "Real Madrid", "goals": 26, "appearances": 27, "nationality": "Portugal"}, {"player_name": "Luis Suárez", "club_name": "Barcelona", "goals": 25, "appearances": 33, "nationality": "Uruguay"}, {"player_name": "Iago Aspas", "club_name": "Celta Vigo", "goals": 22, "appearances": 34, "nationality": "Spain"}, {"player_name": "Cristhian Stuani", "club_name": "Girona", "goals": 21, "appearances": 33, "nationality": "Uruguay"}, {"player_name": "Antoine Griezmann", "club_name": "Atlético de Madrid", "goals": 19, "appearances": 32, "nationality": "France"}, {"player_name": "Maxi Gómez", "club_name": "Celta Vigo", "goals": 18, "appearances": 36, "nationality": "Uruguay"}, {"player_name": "Gareth Bale", "club_name": "Real Madrid", "goals": 16, "appearances": 26, "nationality": "Wales"}, {"player_name": "Rodrigo", "club_name": "Valencia", "goals": 16, "appearances": 37, "nationality": "Spain"}, {"player_name": "Gerard Moreno", "club_name": "Espanyol Barcelona", "goals": 16, "appearances": 38, "nationality": "Spain"}]};
         const GAME_NOTE = "Datos de goles actualizados a junio de 2026.";
-        const PUZZLE_NUMBER    = 61;
-        const PUZZLE_ID        = 61;
+        const PUZZLE_NUMBER    = 64;
+        const PUZZLE_ID        = 64;
         const IS_BACK_IN_TIME  = true;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;

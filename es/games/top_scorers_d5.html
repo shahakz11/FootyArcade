@@ -36,14 +36,34 @@
     <meta name="twitter:description" content="Name the all-time top scorers for a club, league, or national team. A daily football scoring trivia challenge with 6 lives. Play free at Playmaker!"/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -361,9 +381,11 @@
         </div>
         <div>PLAYMAKER &copy; 2026. ALL RIGHTS RESERVED.</div>
         <div class="space-x-4">
-            <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
+            <a href="../../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
             <span>·</span>
-            <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <a href="../../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Preferencias de Cookies</a>
             <span>·</span>
             <a href="../index.html" class="hover:underline hover:text-accent transition-colors">Lobby Arcade</a>
         </div>
@@ -448,10 +470,10 @@
 
 
     <script id="daily-game-data">
-        const DAILY_SCORERS_GAME = {"name": "Serie A 2022/23", "scorers": [{"player_name": "Victor Osimhen", "club_name": "Napoli", "goals": 26, "appearances": 32, "nationality": "Nigeria"}, {"player_name": "Lautaro Martínez", "club_name": "Inter", "goals": 21, "appearances": 38, "nationality": "Argentina"}, {"player_name": "Boulaye Dia", "club_name": "Salernitana 1919", "goals": 16, "appearances": 33, "nationality": "Senegal"}, {"player_name": "Rafael Leão", "club_name": "AC Milan", "goals": 15, "appearances": 35, "nationality": "Portugal"}, {"player_name": "Ademola Lookman", "club_name": "Atalanta", "goals": 13, "appearances": 31, "nationality": "Nigeria"}, {"player_name": "Olivier Giroud", "club_name": "AC Milan", "goals": 13, "appearances": 33, "nationality": "France"}, {"player_name": "M'Bala Nzola", "club_name": "Spezia Calcio", "goals": 13, "appearances": 31, "nationality": "Angola"}, {"player_name": "Antonio Sanabria", "club_name": "Torino", "goals": 12, "appearances": 33, "nationality": "Paraguay"}, {"player_name": "Domenico Berardi", "club_name": "Sassuolo", "goals": 12, "appearances": 26, "nationality": "Italy"}, {"player_name": "Ciro Immobile", "club_name": "Società Sportiva Lazio S.p.A", "goals": 12, "appearances": 31, "nationality": "Italy"}]};
+        const DAILY_SCORERS_GAME = {"name": "UEFA Europa League 2018/19", "scorers": [{"player_name": "Olivier Giroud", "club_name": "Chelsea", "goals": 11, "appearances": 14, "nationality": "France"}, {"player_name": "Luka Jović", "club_name": "Eintracht Frankfurt", "goals": 11, "appearances": 14, "nationality": "Serbia"}, {"player_name": "Pierre-Emerick Aubameyang", "club_name": "Arsenal", "goals": 8, "appearances": 12, "nationality": "Gabon"}, {"player_name": "Wissam Ben Yedder", "club_name": "Sevilla", "goals": 8, "appearances": 8, "nationality": "France"}, {"player_name": "Sébastien Haller", "club_name": "Eintracht Frankfurt", "goals": 6, "appearances": 10, "nationality": "Cote d'Ivoire"}, {"player_name": "Giovani Lo Celso", "club_name": "Real Betis Balompié", "goals": 5, "appearances": 7, "nationality": "Argentina"}, {"player_name": "Pedro", "club_name": "Chelsea", "goals": 5, "appearances": 14, "nationality": "Spain"}, {"player_name": "Alexandre Lacazette", "club_name": "Arsenal", "goals": 5, "appearances": 10, "nationality": "France"}, {"player_name": "Patrick Cutrone", "club_name": "AC Milan", "goals": 4, "appearances": 5, "nationality": "Italy"}, {"player_name": "Éver Banega", "club_name": "Sevilla", "goals": 4, "appearances": 8, "nationality": "Argentina"}]};
         const GAME_NOTE = "Datos de goles actualizados a junio de 2026.";
-        const PUZZLE_NUMBER    = 62;
-        const PUZZLE_ID        = 62;
+        const PUZZLE_NUMBER    = 65;
+        const PUZZLE_ID        = 65;
         const IS_BACK_IN_TIME  = true;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;

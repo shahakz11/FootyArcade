@@ -35,10 +35,34 @@
     <meta name="twitter:card" content="summary_large_image"/>
     <meta name="twitter:title" content="Playmaker | Juegos de Trivia de Fútbol y Quizzes de Fichajes Diarios"/>
     <meta name="twitter:description" content="Juega gratis a los mejores juegos diarios de trivia de fútbol en español: adivina fichajes récord, trayectorias de futbolistas, cadenas de compañeros y máximos goleadores. Nuevos retos cada día."/>
-    <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
 
-    <!-- Google Analytics Measurement ID Placeholder -->
-    <meta name="google-analytics-id" content="G-XXXXXXXXXX"/>
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
+      gtag("js", new Date());
+      gtag("config", "G-8BC1041NX3");
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -400,6 +424,8 @@
             <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
             <span>·</span>
             <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Preferencias de Cookies</a>
             <span>·</span>
             <a href="../marketing.html" class="hover:underline hover:text-accent transition-colors">Kit de Marketing</a>
         </div>

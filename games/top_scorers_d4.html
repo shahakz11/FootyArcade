@@ -36,14 +36,34 @@
     <meta name="twitter:description" content="Name the all-time top scorers for a club, league, or national team. A daily football scoring trivia challenge with 6 lives. Play free at Playmaker!"/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -365,6 +385,8 @@
             <span>·</span>
             <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Terms &amp; Conditions</a>
             <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Cookie Preferences</a>
+            <span>·</span>
             <a href="../index.html" class="hover:underline hover:text-accent transition-colors">Arcade Lobby</a>
         </div>
     </footer>
@@ -453,10 +475,10 @@
 
 
     <script id="daily-game-data">
-        const DAILY_SCORERS_GAME = {"name": "Bundesliga 2013/14", "scorers": [{"player_name": "Robert Lewandowski", "club_name": "Borussia Dortmund", "goals": 20, "appearances": 33, "nationality": "Poland"}, {"player_name": "Mario Mandzukic", "club_name": "Bayern Munich", "goals": 18, "appearances": 30, "nationality": "Croatia"}, {"player_name": "Josip Drmic", "club_name": "Nuremberg", "goals": 17, "appearances": 33, "nationality": "Switzerland"}, {"player_name": "Adrián Ramos", "club_name": "Hertha Berlin", "goals": 16, "appearances": 32, "nationality": "Colombia"}, {"player_name": "Roberto Firmino", "club_name": "Hoffenheim", "goals": 16, "appearances": 33, "nationality": "Brazil"}, {"player_name": "Marco Reus", "club_name": "Borussia Dortmund", "goals": 16, "appearances": 30, "nationality": "Germany"}, {"player_name": "Stefan Kießling", "club_name": "Bayer Leverkusen", "goals": 15, "appearances": 32, "nationality": "Germany"}, {"player_name": "Shinji Okazaki", "club_name": "Mainz 05", "goals": 15, "appearances": 33, "nationality": "Japan"}, {"player_name": "Raffael", "club_name": "Borussia Mönchengladbach", "goals": 14, "appearances": 34, "nationality": "Brazil"}, {"player_name": "Ivica Olic", "club_name": "Wolfsburg", "goals": 14, "appearances": 32, "nationality": "Croatia"}]};
+        const DAILY_SCORERS_GAME = {"name": "UEFA Champions League 2019/20", "scorers": [{"player_name": "Robert Lewandowski", "club_name": "Bayern Munich", "goals": 15, "appearances": 10, "nationality": "Poland"}, {"player_name": "Erling Haaland", "club_name": "Fußballclub Red Bull Salzburg", "goals": 10, "appearances": 8, "nationality": "Norway"}, {"player_name": "Serge Gnabry", "club_name": "Bayern Munich", "goals": 9, "appearances": 10, "nationality": "Germany"}, {"player_name": "Memphis Depay", "club_name": "Lyon", "goals": 6, "appearances": 8, "nationality": "Netherlands"}, {"player_name": "Raheem Sterling", "club_name": "Manchester City", "goals": 6, "appearances": 9, "nationality": "England"}, {"player_name": "Dries Mertens", "club_name": "Napoli", "goals": 6, "appearances": 8, "nationality": "Belgium"}, {"player_name": "Harry Kane", "club_name": "Tottenham Hotspur", "goals": 6, "appearances": 5, "nationality": "England"}, {"player_name": "Gabriel Jesus", "club_name": "Manchester City", "goals": 6, "appearances": 8, "nationality": "Brazil"}, {"player_name": "Kylian Mbappé", "club_name": "Paris Saint-Germain", "goals": 5, "appearances": 10, "nationality": "France"}, {"player_name": "Lautaro Martínez", "club_name": "Inter", "goals": 5, "appearances": 6, "nationality": "Argentina"}]};
         const GAME_NOTE = "Goals data updated to June 2026.";
-        const PUZZLE_NUMBER    = 63;
-        const PUZZLE_ID        = 63;
+        const PUZZLE_NUMBER    = 66;
+        const PUZZLE_ID        = 66;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>

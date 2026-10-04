@@ -36,14 +36,34 @@
     <meta name="twitter:description" content="Guess the career path of a mystery football player step-by-step. Predict their clubs chronologically. Play free at Playmaker!"/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -367,9 +387,11 @@
         </div>
         <div>PLAYMAKER &copy; 2026. ALL RIGHTS RESERVED.</div>
         <div class="space-x-4">
-            <a href="../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
+            <a href="../../privacy.html" class="hover:underline hover:text-accent transition-colors">Política de Privacidad</a>
             <span>·</span>
-            <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <a href="../../terms.html" class="hover:underline hover:text-accent transition-colors">Términos y Condiciones</a>
+            <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Preferencias de Cookies</a>
             <span>·</span>
             <a href="../index.html" class="hover:underline hover:text-accent transition-colors">Lobby Arcade</a>
         </div>
@@ -460,10 +482,10 @@
 
 
     <script id="daily-game-data">
-        const DAILY_DESTINATION_GAME = {"player_name": "James Maddison", "nationality": "England", "position": "Midfield", "transfers": [{"transfer_date": "2023-07-01 00:00:00", "from_club_name": "Leicester City", "to_club_name": "Tottenham", "transfer_fee": 46300000.0, "market_value_in_eur": 60000000.0, "transfer_type": ""}, {"transfer_date": "2018-07-01 00:00:00", "from_club_name": "Norwich", "to_club_name": "Leicester City", "transfer_fee": 25000000.0, "market_value_in_eur": 10000000.0, "transfer_type": "Transfer"}, {"transfer_date": "2017-01-02 00:00:00", "from_club_name": "Aberdeen", "to_club_name": "Norwich", "transfer_fee": 0.0, "market_value_in_eur": 1500000.0, "transfer_type": ""}, {"transfer_date": "2016-08-31 00:00:00", "from_club_name": "Norwich", "to_club_name": "Aberdeen", "transfer_fee": 0.0, "market_value_in_eur": 1500000.0, "transfer_type": ""}, {"transfer_date": "2016-05-31 00:00:00", "from_club_name": "Coventry", "to_club_name": "Norwich", "transfer_fee": 0.0, "market_value_in_eur": 1500000.0, "transfer_type": ""}, {"transfer_date": "2016-02-02 00:00:00", "from_club_name": "Norwich", "to_club_name": "Coventry", "transfer_fee": 0.0, "market_value_in_eur": 500000.0, "transfer_type": ""}, {"transfer_date": "2016-02-01 00:00:00", "from_club_name": "Coventry", "to_club_name": "Norwich", "transfer_fee": 2650000.0, "market_value_in_eur": 500000.0, "transfer_type": ""}]};
+        const DAILY_DESTINATION_GAME = {"player_name": "Loïs Openda", "nationality": "Belgium", "position": "Attack", "transfers": [{"transfer_date": "2026-07-01 00:00:00", "from_club_name": "RB Leipzig", "to_club_name": "Juventus", "transfer_fee": 42750000.0, "market_value_in_eur": 25000000.0, "transfer_type": ""}, {"transfer_date": "2026-06-30 00:00:00", "from_club_name": "Juventus", "to_club_name": "RB Leipzig", "transfer_fee": 0.0, "market_value_in_eur": 50000000.0, "transfer_type": "Return from loan"}, {"transfer_date": "2025-09-01 00:00:00", "from_club_name": "RB Leipzig", "to_club_name": "Juventus", "transfer_fee": 0.0, "market_value_in_eur": 50000000.0, "transfer_type": "Loan"}, {"transfer_date": "2023-07-14 00:00:00", "from_club_name": "Lens", "to_club_name": "RB Leipzig", "transfer_fee": 40000000.0, "market_value_in_eur": 35000000.0, "transfer_type": "Transfer"}, {"transfer_date": "2022-07-06 00:00:00", "from_club_name": "Brugge", "to_club_name": "Lens", "transfer_fee": 15390000.0, "market_value_in_eur": 7500000.0, "transfer_type": "Transfer"}, {"transfer_date": "2022-06-30 00:00:00", "from_club_name": "Vitesse", "to_club_name": "Brugge", "transfer_fee": 0.0, "market_value_in_eur": 7500000.0, "transfer_type": "Return from loan"}, {"transfer_date": "2020-07-21 00:00:00", "from_club_name": "Brugge", "to_club_name": "Vitesse", "transfer_fee": 0.0, "market_value_in_eur": 4000000.0, "transfer_type": "Loan"}]};
         const GAME_NOTE = "Datos actualizados a junio de 2026. Solo transferencias de €1M+.";
-        const PUZZLE_NUMBER    = 62;
-        const PUZZLE_ID        = 62;
+        const PUZZLE_NUMBER    = 65;
+        const PUZZLE_ID        = 65;
         const IS_BACK_IN_TIME  = true;
         if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
         const MAX_BACK_DAYS    = 7;

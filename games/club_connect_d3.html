@@ -36,14 +36,34 @@
     <meta name="twitter:description" content="Five players were all signed by the same mystery club. Guess the club before all players are revealed."/>
     <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
       gtag("js", new Date());
       gtag("config", "G-8BC1041NX3");
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -452,6 +472,8 @@
             <span>·</span>
             <a href="../terms.html" class="hover:underline hover:text-accent transition-colors">Terms &amp; Conditions</a>
             <span>·</span>
+            <a href="javascript:void(0)" data-action="open-cookie-settings" class="hover:underline hover:text-accent transition-colors">Cookie Preferences</a>
+            <span>·</span>
             <a href="../index.html" class="hover:underline hover:text-accent transition-colors">Arcade Lobby</a>
         </div>
     </footer>
@@ -542,11 +564,11 @@
 
 
     <script id="daily-game-data">
-        const DAILY_CLUBCONNECT_GAME = {"club": "West Ham United", "players": [{"player_name": "Nayef Aguerd", "from_club_name": "Rennes", "transfer_fee": 35000000.0, "transfer_date": "2022-07-01"}, {"player_name": "Edson Álvarez", "from_club_name": "Ajax", "transfer_fee": 38000000.0, "transfer_date": "2023-08-10"}, {"player_name": "Felipe Anderson", "from_club_name": "Lazio", "transfer_fee": 38000000.0, "transfer_date": "2018-07-15"}, {"player_name": "Gianluca Scamacca", "from_club_name": "Sassuolo", "transfer_fee": 38600000.0, "transfer_date": "2022-07-26"}, {"player_name": "Jean-Clair Todibo", "from_club_name": "Nice", "transfer_fee": 40000000.0, "transfer_date": "2025-07-01"}]};
+        const DAILY_CLUBCONNECT_GAME = {"club": "Liverpool", "players": [{"player_name": "Luis Díaz", "from_club_name": "Porto", "transfer_fee": 49000000.0, "transfer_date": "2022-01-30"}, {"player_name": "Naby Keïta", "from_club_name": "RB Leipzig", "transfer_fee": 60000000.0, "transfer_date": "2018-07-01"}, {"player_name": "Jérémy Jacquet", "from_club_name": "Rennes", "transfer_fee": 63600000.0, "transfer_date": "2026-07-01"}, {"player_name": "Dominik Szoboszlai", "from_club_name": "RB Leipzig", "transfer_fee": 70000000.0, "transfer_date": "2023-07-02"}, {"player_name": "Alisson", "from_club_name": "Roma", "transfer_fee": 72500000.0, "transfer_date": "2018-07-19"}]};
         const ANSWER_CLUBS = ["AC Milan", "Ajax", "Al-Ahli", "Al-Duhail", "Al-Hilal", "Al-Ittihad", "Al-Nassr", "Al-Qadsiah", "Al-Rayyan", "Al-Sadd", "Almería", "América", "Anzhi", "Arsenal", "Aston Villa", "Atalanta", "Atletico Madrid", "BJ Guoan", "Barcelona", "Bayer Leverkusen", "Bayern Munich", "Benfica", "Besiktas", "Blackburn", "Bologna", "Borussia Dortmund", "Borussia Mönchengladbach", "Botafogo", "Bournemouth", "Brentford", "Brighton & Hove Albion", "Brugge", "Burnley", "CSKA Moscow", "Cagliari", "Celta Vigo", "Celtic", "Chelsea", "Como", "Cruz Azul", "Crystal Palace", "Dep. La Coruña", "Dinamo Moscow", "Dynamo Kyiv", "E. Frankfurt", "Espanyol", "Everton", "Fenerbahce", "Fenerbahçe", "Feyenoord", "Fiorentina", "Flamengo", "Forest", "Frankfurt", "Freiburg", "Fulham", "G. Bordeaux", "GZ Evergrande", "Galatasaray", "Genoa", "HB CFFC", "Hamburger", "Hertha Berlin", "Hoffenheim", "Inter", "Ipswich", "Juventus", "Krasnodar", "Lazio", "Leeds United", "Leicester City", "Lens", "Lille", "Liverpool", "Lyon", "Manchester City", "Manchester United", "Marseille", "Middlesbrough", "Monaco", "Mönchengladbach", "Napoli", "Newcastle United", "Nice", "Norwich", "Nott'm Forest", "PSV Eindhoven", "Palmeiras", "Paris Saint-Germain", "Parma", "Porto", "R. Strasbourg", "RB Leipzig", "RB Salzburg", "Rangers", "Real Betis", "Real Madrid", "Real Sociedad", "Rennes", "River Plate", "Roma", "Rubin Kazan", "Salzburg", "Sampdoria", "Sassuolo", "Schalke", "Sevilla", "Shakhtar D", "Sheff Utd", "Southampton", "Spartak Moscow", "Sporting CP", "Stoke City", "Stuttgart", "Sunderland", "Swansea", "Tigres UANL", "Torino", "Tottenham Hotspur", "Udinese", "Valencia", "Villarreal", "Watford", "West Brom", "West Ham United", "Wolfsburg", "Wolverhampton Wanderers", "Zenit S-Pb"];
         const GAME_NOTE = "Transfer data updated to June 2026. Players ordered from least to most expensive signing.";
-        const PUZZLE_NUMBER    = 60;
-        const PUZZLE_ID        = 60;
+        const PUZZLE_NUMBER    = 63;
+        const PUZZLE_ID        = 63;
         const IS_BACK_IN_TIME  = true;
         const MAX_BACK_DAYS    = 7;
     </script>
