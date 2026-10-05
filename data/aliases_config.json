@@ -3,6 +3,16 @@
   "clubs": {
     "groups": [
       {
+        "display_name": "Dinamo Zagreb",
+        "aliases": [
+          "GNK Dinamo Zagreb",
+          "D. Zagreb",
+          "Din. Zagreb",
+          "Croatia Zagreb"
+        ],
+        "hidden": false
+      },
+      {
         "display_name": "Beerschot",
         "aliases": [
           "Beerschot VA",
@@ -364,6 +374,11 @@
   },
   "players": {
     "groups": [
+      {
+        "display_name": "Luis Suárez",
+        "aliases": [],
+        "hidden": false
+      },
       {
         "display_name": "Edin Dzeko",
         "aliases": [
