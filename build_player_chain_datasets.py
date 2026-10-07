@@ -192,15 +192,18 @@ def build_player_career_database():
 
     player_metadata = {}
     for p in all_players:
-        player_metadata[p['Name']] = {
-            'name': p['Name'],
-            'nationality': p.get('Nationality', ''),
-            'position': p.get('Position', '')
-        }
+        if p['Name'] not in player_metadata:
+            player_metadata[p['Name']] = {
+                'name': p['Name'],
+                'nationality': p.get('Nationality', ''),
+                'position': p.get('Position', '')
+            }
 
     # Entity-level tracking to prevent collisions between different players with same name (e.g. Rafinha b. 1985 vs b. 1993)
     entity_clubs = defaultdict(set)
     entity_name = {}
+    entity_nationality = {}
+    entity_position = {}
     club_to_entities = defaultdict(set)
 
     KNOWN_HOMONYM_ENTITIES = {
@@ -220,8 +223,15 @@ def build_player_career_database():
     dc_id_map = {}
     if os.path.exists(dc_path):
         print(f"Reading Davidcariboo players & transfers from {dc_path}...")
-        df_dc_p = pd.read_csv(os.path.join(dc_path, 'players.csv'), usecols=['player_id', 'name'], low_memory=False)
-        dc_id_map = dict(zip(df_dc_p['player_id'], df_dc_p['name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True)))
+        df_dc_p = pd.read_csv(os.path.join(dc_path, 'players.csv'), usecols=['player_id', 'name', 'country_of_citizenship', 'position', 'sub_position'], low_memory=False)
+        for r in df_dc_p.itertuples(index=False):
+            pid = int(r.player_id)
+            clean_pname = re.sub(r'\s*\(\d+\)$', '', str(r.name) if pd.notna(r.name) else '').strip()
+            dc_id_map[pid] = clean_pname
+            if pd.notna(r.country_of_citizenship) and str(r.country_of_citizenship).strip():
+                entity_nationality[pid] = str(r.country_of_citizenship).strip()
+            if pd.notna(r.position) and str(r.position).strip():
+                entity_position[pid] = str(r.sub_position if (pd.notna(r.sub_position) and str(r.sub_position).strip()) else r.position).strip()
 
         df_dc_t = pd.read_csv(
             os.path.join(dc_path, 'transfers.csv'),
@@ -538,7 +548,7 @@ def build_player_career_database():
     # 4. Build p_clubs mapping player display name -> union of clubs (for candidate star selection & ML indexing)
     # Also index nationality as constraint entity
     for eid, name in entity_name.items():
-        nat = player_metadata.get(name, {}).get('nationality', '')
+        nat = entity_nationality.get(eid) or player_metadata.get(name, {}).get('nationality', '')
         if nat:
             club_to_entities[nat].add(eid)
             entity_clubs[eid].add(nat)

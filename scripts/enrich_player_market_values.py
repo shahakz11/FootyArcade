@@ -15,6 +15,21 @@ def normalize_name(name):
     norm = ''.join(c for c in norm if not unicodedata.combining(c))
     return norm.lower().strip()
 
+def to_macro_pos(pos):
+    p = (pos or '').lower().strip()
+    if not p or p == 'player' or p == 'missing':
+        return 'Player'
+    if 'goal' in p or p == 'gk':
+        return 'Goalkeeper'
+    if 'def' in p or 'back' in p:
+        return 'Defender'
+    if 'mid' in p:
+        return 'Midfield'
+    if 'att' in p or 'forward' in p or 'wing' in p or 'striker' in p:
+        return 'Attack'
+    return pos.capitalize() if pos else 'Player'
+
+
 def main():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     all_players_path = os.path.join(base_dir, 'all_players.json')
@@ -50,7 +65,9 @@ def main():
 
             norm = normalize_name(raw_name)
             nat = normalize_name(str(row['country_of_citizenship'])) if pd.notna(row['country_of_citizenship']) else ""
-            pos = normalize_name(str(row['position'])) if pd.notna(row['position']) else ""
+            raw_pos = str(row['position']) if pd.notna(row['position']) else ""
+            macro_pos = to_macro_pos(raw_pos)
+            pos = normalize_name(macro_pos)
             key_tuple = (norm, nat, pos)
             if val > market_val_by_tuple.get(key_tuple, 0):
                 market_val_by_tuple[key_tuple] = val
@@ -156,11 +173,40 @@ def main():
             if benchmark > market_val_by_exact.get(legend_name, 0):
                 market_val_by_exact[legend_name] = benchmark
 
-    # 4. Enrich existing_players with MarketValue
-    enriched_count = 0
-    clean_players = []
-    seen = set()
+    # 4. Ingest players from df_players, existing_players, and historical legends
+    # Deduplicate by (norm_name, norm_nat, norm_pos) so distinct players sharing the same name are preserved
+    player_entity_map = {} # (norm_name, norm_nat, norm_pos) -> player_dict
 
+    # Ingest from df_players first (full Kaggle database)
+    if player_files:
+        for _, row in df_players.iterrows():
+            raw_name = str(row['name']) if pd.notna(row['name']) else ""
+            if not raw_name or raw_name == 'nan':
+                continue
+            raw_name = re.sub(r'\s*\(\d+\)$', '', raw_name).strip()
+            nat = str(row['country_of_citizenship']) if pd.notna(row['country_of_citizenship']) else ""
+            pos = str(row['position']) if pd.notna(row['position']) else "Player"
+            sub_pos = str(row['sub_position']) if pd.notna(row['sub_position']) else ""
+            
+            # Normalize to macro position (Attack, Midfield, Defender, Goalkeeper)
+            display_pos = to_macro_pos(pos if pos != "Player" else sub_pos)
+            
+            val1 = float(row['highest_market_value_in_eur']) if pd.notna(row['highest_market_value_in_eur']) else 0.0
+            val2 = float(row['market_value_in_eur']) if pd.notna(row['market_value_in_eur']) else 0.0
+            val = max(val1, val2)
+
+            norm = normalize_name(raw_name)
+            key = (norm, normalize_name(nat), normalize_name(display_pos))
+            
+            if key not in player_entity_map or int(val) > player_entity_map[key]['MarketValue']:
+                player_entity_map[key] = {
+                    "Name": raw_name,
+                    "Nationality": nat,
+                    "Position": display_pos,
+                    "MarketValue": int(val)
+                }
+
+    # Ingest / enrich existing_players
     for p in existing_players:
         raw_name = str(p.get('Name', '')).strip()
         if not raw_name:
@@ -172,27 +218,26 @@ def main():
 
         # Fix specific historical mismatches
         if raw_name == 'Pelé' and nationality == 'Portugal':
-            # Create/correct Brazilian Pelé
             nationality = 'Brazil'
             position = 'Attack'
         elif raw_name == 'Roberto Baggio' and nationality == 'Brazil':
             nationality = 'Italy'
-            position = 'Attack - Second Striker'
+            position = 'Attack'
 
+        macro_pos = to_macro_pos(position)
         norm = normalize_name(raw_name)
         # Check exact icon override first (e.g. Cristiano Ronaldo 180m, Lionel Messi 180m)
         if raw_name in top_tier_icons:
             if raw_name == 'Ronaldo':
-                if nationality == 'Brazil' and ('centre-forward' in position.lower() or 'attack' in position.lower()):
+                if nationality == 'Brazil' and macro_pos == 'Attack':
                     val = top_tier_icons['Ronaldo']
             elif raw_name == 'Fernando':
-                # Preserve Fernando Reges or Fernando historical benchmarks if applicable
                 pass
             else:
                 val = top_tier_icons[raw_name]
 
         if val is None:
-            val = market_val_by_tuple.get((norm, normalize_name(nationality), normalize_name(position)))
+            val = market_val_by_tuple.get((norm, normalize_name(nationality), normalize_name(macro_pos)))
         if val is None:
             val = market_val_by_exact.get(raw_name)
         if val is None:
@@ -201,17 +246,22 @@ def main():
             else:
                 val = 0
 
-        p_copy = {
-            "Name": raw_name,
-            "Nationality": nationality,
-            "Position": position,
-            "MarketValue": int(val)
-        }
-        if val > 0:
-            enriched_count += 1
-
-        seen.add(raw_name.lower())
-        clean_players.append(p_copy)
+        val_int = int(val or 0)
+        key = (norm, normalize_name(nationality), normalize_name(macro_pos))
+        if key not in player_entity_map:
+            player_entity_map[key] = {
+                "Name": raw_name,
+                "Nationality": nationality,
+                "Position": macro_pos,
+                "MarketValue": val_int
+            }
+        else:
+            if val_int > player_entity_map[key]['MarketValue']:
+                player_entity_map[key]['MarketValue'] = val_int
+            if not player_entity_map[key]['Nationality'] and nationality:
+                player_entity_map[key]['Nationality'] = nationality
+            if (not player_entity_map[key]['Position'] or player_entity_map[key]['Position'] == 'Player') and macro_pos != 'Player':
+                player_entity_map[key]['Position'] = macro_pos
 
     # Ensure missing iconic all-time legends are included
     guaranteed_legends = [
@@ -229,33 +279,39 @@ def main():
     ]
 
     for g in guaranteed_legends:
-        if g['Name'].lower() not in seen:
-            seen.add(g['Name'].lower())
-            clean_players.append(g)
-            enriched_count += 1
+        key = (normalize_name(g['Name']), normalize_name(g['Nationality']), normalize_name(to_macro_pos(g['Position'])))
+        g_copy = dict(g)
+        g_copy['Position'] = to_macro_pos(g['Position'])
+        if key not in player_entity_map or g_copy['MarketValue'] > player_entity_map[key]['MarketValue']:
+            player_entity_map[key] = g_copy
 
     # Ensure all legends from historical_careers.json are included
     if os.path.exists(historical_path):
         with open(historical_path, 'r', encoding='utf-8') as f:
             hist_careers = json.load(f)
         for legend_name, info in hist_careers.items():
-            if legend_name.lower() not in seen:
-                seen.add(legend_name.lower())
-                clean_players.append({
+            nat = info.get("nationality", "")
+            pos = to_macro_pos(info.get("position", "Player"))
+            key = (normalize_name(legend_name), normalize_name(nat), normalize_name(pos))
+            if key not in player_entity_map:
+                player_entity_map[key] = {
                     "Name": legend_name,
-                    "Nationality": info.get("nationality", ""),
-                    "Position": info.get("position", "Player"),
+                    "Nationality": nat,
+                    "Position": pos,
                     "MarketValue": 80000000
-                })
-                enriched_count += 1
+                }
+            elif player_entity_map[key]['MarketValue'] < 80000000:
+                player_entity_map[key]['MarketValue'] = 80000000
 
+    clean_players = list(player_entity_map.values())
     # Pre-sort descending by MarketValue, then alphabetical by Name
     clean_players.sort(key=lambda x: (-x['MarketValue'], x['Name'].lower()))
 
+    enriched_count = sum(1 for p in clean_players if p['MarketValue'] > 0)
     print(f"Enriched {enriched_count} / {len(clean_players)} players with market value > 0.")
     print("Top 15 players by MarketValue:")
     for p in clean_players[:15]:
-        print(f"  {p['Name']} ({p['Nationality']}) — €{p['MarketValue']:,}")
+        print(f"  {p['Name']} ({p['Nationality']} · {p['Position']}) — €{p['MarketValue']:,}")
 
     # Write back to all_players.json
     with open(all_players_path, 'w', encoding='utf-8') as f:

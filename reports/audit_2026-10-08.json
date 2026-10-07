@@ -1,0 +1,127 @@
+{
+  "timestamp": "2026-10-07T14:13:37.653144",
+  "targetDate": "2026-10-08",
+  "offset": 1,
+  "status": "FIXED",
+  "puzzles": {
+    "top_transfers": 74,
+    "transfer_destination": 74,
+    "top_scorers": 74,
+    "club_connect": 70,
+    "player_chain": 28,
+    "played_with": 12,
+    "passport_fc": 25
+  },
+  "issues": [],
+  "fixes": [
+    {
+      "game_id": "player_chain",
+      "puzzle_num": 28,
+      "action": "expand_pool",
+      "detail": "Added verified teammate 'Paulo Sousa' to Step 2"
+    }
+  ],
+  "ai_checks": [
+    {
+      "game_id": "top_transfers",
+      "puzzle_num": 74,
+      "result": {
+        "consensus": true,
+        "all_factual": true,
+        "primary_model": "gemini-2.5-flash (Search Grounded)",
+        "notes": "All listed top record signings for Irish nationality are factual and accurate according to Transfermarkt records, adhering to the specified fact-checking rules."
+      }
+    },
+    {
+      "game_id": "transfer_destination",
+      "puzzle_num": 74,
+      "result": {
+        "consensus": false,
+        "all_factual": true,
+        "primary_model": "gemini-2.5-flash (Search Grounded)",
+        "secondary_model": "gemini-3.5-flash",
+        "notes": "Model 1 flagged an issue, but Model 2 rejected it as a false alarm. Maintained original puzzle."
+      }
+    },
+    {
+      "game_id": "top_scorers",
+      "puzzle_num": 74,
+      "result": {
+        "consensus": true,
+        "all_factual": true,
+        "primary_model": "gemini-2.5-flash (Search Grounded)",
+        "notes": "All listed top scorers for Ligue 1 2014/15, including their clubs, nationalities, goals, and appearances, are factual and accurate according to Transfermarkt records."
+      }
+    },
+    {
+      "game_id": "club_connect",
+      "puzzle_num": 70,
+      "result": {
+        "consensus": false,
+        "all_factual": true,
+        "primary_model": "gemini-2.5-flash (Search Grounded)",
+        "secondary_model": "gemini-3.6-flash",
+        "notes": "Model 1 flagged an issue, but Model 2 rejected it as a false alarm. Maintained original puzzle."
+      }
+    },
+    {
+      "game": "player_chain",
+      "step": 2,
+      "result": {
+        "status": "success",
+        "missing_added": [
+          "Paulo Sousa"
+        ],
+        "primary_model": "gemini-2.5-flash (Search Grounded)",
+        "notes": "Added 1 missing qualifying player(s) confirmed by 2 models."
+      }
+    },
+    {
+      "game": "player_chain",
+      "step": 3,
+      "result": {
+        "status": "complete",
+        "missing_added": [],
+        "notes": "All qualifying players identified by gemini-2.5-flash (Search Grounded) already exist in pool."
+      }
+    },
+    {
+      "game": "player_chain",
+      "step": 4,
+      "result": {
+        "status": "complete",
+        "missing_added": [],
+        "notes": "All qualifying players identified by gemini-2.5-flash (Search Grounded) already exist in pool."
+      }
+    },
+    {
+      "game": "passport_fc",
+      "step": 2,
+      "result": {
+        "status": "success",
+        "missing_added": [],
+        "primary_model": "gemini-2.5-flash (Search Grounded)",
+        "notes": "Added 0 missing qualifying player(s) confirmed by 2 models."
+      }
+    },
+    {
+      "game": "passport_fc",
+      "step": 3,
+      "result": {
+        "status": "complete",
+        "missing_added": [],
+        "notes": "All qualifying players identified by gemini-2.5-flash (Search Grounded) already exist in pool."
+      }
+    },
+    {
+      "game": "passport_fc",
+      "step": 4,
+      "result": {
+        "status": "complete",
+        "missing_added": [],
+        "notes": "All qualifying players identified by gemini-2.5-flash (Search Grounded) already exist in pool."
+      }
+    }
+  ],
+  "execTimeSec": 147.96
+}

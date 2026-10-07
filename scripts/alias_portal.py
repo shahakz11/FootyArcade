@@ -253,6 +253,42 @@ CURATED_ENTITIES = [
         "Position": "Right Winger",
         "Clubs": "Corinthians, Arouca, Portland Timbers",
         "MarketValue": 2500000
+    },
+    {
+        "Name": "Luis Suárez",
+        "FullName": "Luis Alberto Suárez Díaz",
+        "DOB": "1987-01-24",
+        "Nationality": "Uruguay",
+        "Position": "Centre-Forward",
+        "Clubs": "Nacional, Groningen, Ajax, Liverpool, Barcelona, Atletico Madrid, Grêmio, Inter Miami",
+        "MarketValue": 90000000
+    },
+    {
+        "Name": "Luis Suárez",
+        "FullName": "Luis Javier Suárez Charris",
+        "DOB": "1997-12-02",
+        "Nationality": "Colombia",
+        "Position": "Centre-Forward",
+        "Clubs": "UD Almería, Marseille, Granada CF, Watford, Real Zaragoza, Gimnàstic, Sporting CP",
+        "MarketValue": 30000000
+    },
+    {
+        "Name": "Raúl Jiménez",
+        "FullName": "Raúl Alonso Jiménez Rodríguez",
+        "DOB": "1991-05-05",
+        "Nationality": "Mexico",
+        "Position": "Centre-Forward",
+        "Clubs": "América, Atlético Madrid, Benfica, Wolverhampton Wanderers, Fulham",
+        "MarketValue": 50000000
+    },
+    {
+        "Name": "Raúl Jiménez",
+        "FullName": "Raúl Jiménez Gómez",
+        "DOB": "2006-02-16",
+        "Nationality": "Spain",
+        "Position": "Goalkeeper",
+        "Clubs": "Valencia, Elche, CD Roda, Villarreal",
+        "MarketValue": 200000
     }
 ]
 
@@ -706,22 +742,22 @@ def api_search_players():
 @app.route("/api/players/disambiguation-candidates", methods=["GET"])
 def api_disambiguation_candidates():
     catalog = get_player_catalog()
-    mononym_map = {}
+    homonym_map = {}
     for p in catalog:
         name = (p.get("Name") or "").strip()
-        if not name or " " in name:
+        if not name:
             continue
-        mononym_map.setdefault(name, []).append(p)
+        homonym_map.setdefault(name, []).append(p)
     
     candidates = []
-    priority_names = ["Fernandinho", "Rafinha", "Antony", "Adriano", "Danilo", "Fernando", "Willian", "Paulinho", "Emerson", "Fred", "Gabriel", "Marcelo", "Eduardo"]
+    priority_names = ["Luis Suárez", "Raúl Jiménez", "Fernandinho", "Rafinha", "Antony", "Adriano", "Danilo", "Fernando", "Willian", "Paulinho", "Emerson", "Fred", "Gabriel", "Marcelo", "Eduardo"]
     
     handled = set()
     for name in priority_names:
-        if name in mononym_map and len(mononym_map[name]) > 1:
+        if name in homonym_map and len(homonym_map[name]) > 1:
             handled.add(name)
             entities = []
-            for p in mononym_map[name]:
+            for p in homonym_map[name]:
                 entities.append({
                     "full_name": p.get("FullName") or p.get("Name"),
                     "dob": p.get("DOB", ""),
@@ -734,8 +770,9 @@ def api_disambiguation_candidates():
                 "entities": entities
             })
             
-    for name, p_list in sorted(mononym_map.items()):
+    for name, p_list in sorted(homonym_map.items()):
         if name not in handled and len(p_list) > 1:
+            handled.add(name)
             entities = []
             for p in p_list:
                 entities.append({
@@ -1510,11 +1547,20 @@ PORTAL_HTML = r"""<!DOCTYPE html>
         function selectModalAliasIndex(idx) {
             const item = currentModalAliasMatches[idx];
             if (!item) return;
-            const alias = typeof item === 'object' ? item.Name : item;
+            const disp = (document.getElementById('modal-display-name').value || '').trim();
+            let alias = typeof item === 'object' ? item.Name : item;
+            if (typeof item === 'object' && disp && alias.toLowerCase() === disp.toLowerCase()) {
+                if (item.FullName && item.FullName.toLowerCase() !== disp.toLowerCase()) {
+                    alias = item.FullName;
+                } else if (item.Nationality) {
+                    alias = `${item.Name} (${item.Nationality})`;
+                }
+            }
             selectModalAlias(alias);
         }
 
         function selectModalAlias(alias) {
+            if (!alias) return;
             if (!modalAliases.includes(alias)) {
                 modalAliases.push(alias);
                 renderModalAliases();
@@ -1534,7 +1580,7 @@ PORTAL_HTML = r"""<!DOCTYPE html>
             const isHidden = document.getElementById('modal-hidden-checkbox').checked;
             const newGroup = {
                 display_name: displayName,
-                aliases: modalAliases.filter(a => a !== displayName),
+                aliases: modalAliases.filter(a => a.trim().toLowerCase() !== displayName.toLowerCase()),
                 hidden: isHidden
             };
 
