@@ -93,85 +93,99 @@ def main():
             if fee > market_val_by_exact.get(t_name, 0):
                 market_val_by_exact[t_name] = fee
 
-    # 3. Benchmark all-time historical icons & legends
+    # 3. Benchmark all-time historical icons & legends with their specific nationality & position
     top_tier_icons = {
-        "Lionel Messi": 180000000,
-        "Cristiano Ronaldo": 180000000,
-        "Pelé": 180000000,
-        "Diego Maradona": 180000000,
-        "Johan Cruyff": 170000000,
-        "Zinedine Zidane": 170000000,
-        "Zinédine Zidane": 170000000,
-        "Ronaldo": 170000000,           # Ronaldo Nazário (R9)
-        "Ronaldo Nazário": 170000000,
-        "Ronaldinho": 160000000,
-        "Franz Beckenbauer": 160000000,
-        "Alfredo Di Stéfano": 150000000,
-        "Ferenc Puskás": 150000000,
-        "Michel Platini": 150000000,
-        "Gerd Müller": 150000000,
-        "Marco van Basten": 150000000,
-        "Paolo Maldini": 150000000,
-        "Roberto Baggio": 140000000,
-        "Thierry Henry": 140000000,
-        "Kaká": 140000000,
-        "Andrés Iniesta": 140000000,
-        "Xavi": 140000000,
-        "Dennis Bergkamp": 130000000,
-        "David Beckham": 130000000,
-        "Ruud Gullit": 130000000,
-        "George Best": 130000000,
-        "Garrincha": 130000000,
-        "Eusébio": 130000000,
-        "Lev Yashin": 120000000,
-        "Franco Baresi": 120000000,
-        "Bobby Charlton": 120000000,
-        "Lothar Matthäus": 120000000,
-        "Gianluigi Buffon": 120000000,
-        "Iker Casillas": 120000000,
-        "Wayne Rooney": 120000000,
-        "Raúl": 120000000,
-        "Luis Figo": 120000000,
-        "Rivaldo": 120000000,
-        "Romário": 120000000,
-        "Steven Gerrard": 110000000,
-        "Frank Lampard": 110000000,
-        "Andrea Pirlo": 110000000,
-        "Carles Puyol": 100000000,
-        "Alessandro Del Piero": 100000000,
-        "Francesco Totti": 100000000,
-        "Didier Drogba": 100000000,
-        "Samuel Eto'o": 100000000,
-        "Clarence Seedorf": 100000000,
-        "Patrick Vieira": 100000000,
-        "Paul Scholes": 100000000,
-        "Ryan Giggs": 100000000,
-        "Ruud van Nistelrooy": 100000000,
-        "Andriy Shevchenko": 100000000,
-        "Michael Ballack": 100000000,
-        "Pavel Nedvěd": 100000000,
-        "Fabio Cannavaro": 100000000,
-        "Roberto Carlos": 100000000,
-        "Cafu": 100000000,
-        "Javier Zanetti": 100000000
+        ("Lionel Messi", "Argentina", "Attack"): 180000000,
+        ("Cristiano Ronaldo", "Portugal", "Attack"): 180000000,
+        ("Pelé", "Brazil", "Attack"): 180000000,
+        ("Diego Maradona", "Argentina", "Attack"): 180000000,
+        ("Johan Cruyff", "Netherlands", "Attack"): 170000000,
+        ("Zinedine Zidane", "France", "Midfield"): 170000000,
+        ("Zinédine Zidane", "France", "Midfield"): 170000000,
+        ("Ronaldo", "Brazil", "Attack"): 170000000,           # Ronaldo Nazário (R9)
+        ("Ronaldo Nazário", "Brazil", "Attack"): 170000000,
+        ("Ronaldinho", "Brazil", "Attack"): 160000000,
+        ("Franz Beckenbauer", "Germany", "Defender"): 160000000,
+        ("Alfredo Di Stéfano", "Argentina", "Attack"): 150000000,
+        ("Ferenc Puskás", "Hungary", "Attack"): 150000000,
+        ("Michel Platini", "France", "Midfield"): 150000000,
+        ("Gerd Müller", "Germany", "Attack"): 150000000,
+        ("Marco van Basten", "Netherlands", "Attack"): 150000000,
+        ("Paolo Maldini", "Italy", "Defender"): 150000000,
+        ("Roberto Baggio", "Italy", "Attack"): 140000000,
+        ("Thierry Henry", "France", "Attack"): 140000000,
+        ("Kaká", "Brazil", "Midfield"): 140000000,
+        ("Andrés Iniesta", "Spain", "Midfield"): 140000000,
+        ("Xavi", "Spain", "Midfield"): 140000000,
+        ("Dennis Bergkamp", "Netherlands", "Attack"): 130000000,
+        ("David Beckham", "England", "Midfield"): 130000000,
+        ("Ruud Gullit", "Netherlands", "Midfield"): 130000000,
+        ("George Best", "Northern Ireland", "Attack"): 130000000,
+        ("Garrincha", "Brazil", "Attack"): 130000000,
+        ("Eusébio", "Portugal", "Attack"): 130000000,
+        ("Lev Yashin", "Russia", "Goalkeeper"): 120000000,
+        ("Franco Baresi", "Italy", "Defender"): 120000000,
+        ("Bobby Charlton", "England", "Midfield"): 120000000,
+        ("Lothar Matthäus", "Germany", "Midfield"): 120000000,
+        ("Gianluigi Buffon", "Italy", "Goalkeeper"): 120000000,
+        ("Iker Casillas", "Spain", "Goalkeeper"): 120000000,
+        ("Wayne Rooney", "England", "Attack"): 120000000,
+        ("Raúl", "Spain", "Attack"): 120000000,
+        ("Luis Figo", "Portugal", "Attack"): 120000000,
+        ("Rivaldo", "Brazil", "Attack"): 120000000,
+        ("Romário", "Brazil", "Attack"): 120000000,
+        ("Steven Gerrard", "England", "Midfield"): 110000000,
+        ("Frank Lampard", "England", "Midfield"): 110000000,
+        ("Andrea Pirlo", "Italy", "Midfield"): 110000000,
+        ("Carles Puyol", "Spain", "Defender"): 100000000,
+        ("Alessandro Del Piero", "Italy", "Attack"): 100000000,
+        ("Francesco Totti", "Italy", "Attack"): 100000000,
+        ("Didier Drogba", "Cote d'Ivoire", "Attack"): 100000000,
+        ("Samuel Eto'o", "Cameroon", "Attack"): 100000000,
+        ("Clarence Seedorf", "Netherlands", "Midfield"): 100000000,
+        ("Patrick Vieira", "France", "Midfield"): 100000000,
+        ("Paul Scholes", "England", "Midfield"): 100000000,
+        ("Ryan Giggs", "Wales", "Midfield"): 100000000,
+        ("Ruud van Nistelrooy", "Netherlands", "Attack"): 100000000,
+        ("Andriy Shevchenko", "Ukraine", "Attack"): 100000000,
+        ("Michael Ballack", "Germany", "Midfield"): 100000000,
+        ("Pavel Nedvěd", "Czech Republic", "Midfield"): 100000000,
+        ("Fabio Cannavaro", "Italy", "Defender"): 100000000,
+        ("Roberto Carlos", "Brazil", "Defender"): 100000000,
+        ("Cafu", "Brazil", "Defender"): 100000000,
+        ("Javier Zanetti", "Argentina", "Defender"): 100000000
     }
 
-    for icon_name, icon_val in top_tier_icons.items():
+    for (icon_name, icon_nat, icon_pos), icon_val in top_tier_icons.items():
         norm = normalize_name(icon_name)
-        market_val_by_name[norm] = max(market_val_by_name.get(norm, 0), icon_val)
-        market_val_by_exact[icon_name] = max(market_val_by_exact.get(icon_name, 0), icon_val)
+        norm_nat = normalize_name(icon_nat)
+        norm_pos = normalize_name(icon_pos)
+        tuple_key = (norm, norm_nat, norm_pos)
+        market_val_by_tuple[tuple_key] = max(market_val_by_tuple.get(tuple_key, 0), icon_val)
 
     # Ingest historical_careers.json (ensure all 507 legends have at least €80M benchmark)
     if os.path.exists(historical_path):
         with open(historical_path, 'r', encoding='utf-8') as f:
             hist_careers = json.load(f)
-        for legend_name in hist_careers.keys():
+        for legend_name, info in hist_careers.items():
             norm = normalize_name(legend_name)
+            nat = normalize_name(info.get("nationality", ""))
+            pos = normalize_name(to_macro_pos(info.get("position", "Player")))
             benchmark = 80000000
-            if benchmark > market_val_by_name.get(norm, 0):
-                market_val_by_name[norm] = benchmark
-            if benchmark > market_val_by_exact.get(legend_name, 0):
-                market_val_by_exact[legend_name] = benchmark
+            tuple_key = (norm, nat, pos)
+            market_val_by_tuple[tuple_key] = max(market_val_by_tuple.get(tuple_key, 0), benchmark)
+
+    # Track distinct entities per name in Kaggle database to identify homonyms
+    entities_per_name = {}
+    if player_files:
+        for _, row in df_players.iterrows():
+            name = str(row['name']).strip()
+            if not name or name == 'nan':
+                continue
+            norm = normalize_name(name)
+            nat = normalize_name(str(row['country_of_citizenship'])) if pd.notna(row['country_of_citizenship']) else ''
+            pos = normalize_name(to_macro_pos(str(row['position']))) if pd.notna(row['position']) else ''
+            entities_per_name.setdefault(norm, set()).add((nat, pos))
 
     # 4. Ingest players from df_players, existing_players, and historical legends
     # Deduplicate by (norm_name, norm_nat, norm_pos) so distinct players sharing the same name are preserved
@@ -226,28 +240,20 @@ def main():
 
         macro_pos = to_macro_pos(position)
         norm = normalize_name(raw_name)
-        # Check exact icon override first (e.g. Cristiano Ronaldo 180m, Lionel Messi 180m)
-        if raw_name in top_tier_icons:
-            if raw_name == 'Ronaldo':
-                if nationality == 'Brazil' and macro_pos == 'Attack':
-                    val = top_tier_icons['Ronaldo']
-            elif raw_name == 'Fernando':
-                pass
-            else:
-                val = top_tier_icons[raw_name]
+        norm_nat = normalize_name(nationality)
+        norm_pos = normalize_name(macro_pos)
 
+        # Check tuple override first (exact entity match)
+        val = market_val_by_tuple.get((norm, norm_nat, norm_pos))
         if val is None:
-            val = market_val_by_tuple.get((norm, normalize_name(nationality), normalize_name(macro_pos)))
-        if val is None:
-            val = market_val_by_exact.get(raw_name)
-        if val is None:
-            if norm not in ('ronaldo', 'fernando', 'rafinha', 'danilo', 'adriano'):
+            # ONLY use market_val_by_name if this name belongs to a SINGLE unique entity across world football
+            if len(entities_per_name.get(norm, set())) <= 1:
                 val = market_val_by_name.get(norm, 0)
             else:
                 val = 0
 
         val_int = int(val or 0)
-        key = (norm, normalize_name(nationality), normalize_name(macro_pos))
+        key = (norm, norm_nat, norm_pos)
         if key not in player_entity_map:
             player_entity_map[key] = {
                 "Name": raw_name,
