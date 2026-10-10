@@ -71,8 +71,7 @@
       {
         "display_name": "Everton",
         "aliases": [
-          "Everton FC",
-          "Everton Moldes"
+          "Everton FC"
         ],
         "hidden": false
       },
@@ -89,10 +88,7 @@
         "aliases": [
           "Valencia CF",
           "Valencia S. A. D",
-          "Valencia You",
-          "Gran Valencia",
-          "FCM Valencia",
-          "IDA Valencia"
+          "Valencia You"
         ],
         "hidden": false
       },
@@ -159,10 +155,7 @@
         "aliases": [
           "Juventus FC",
           "Juve Next Gen",
-          "Juventus-SP",
-          "Juve E",
-          "Juve Pergamino",
-          "Juve Stabia Y"
+          "Juve E"
         ],
         "hidden": false
       },
@@ -230,8 +223,7 @@
       {
         "display_name": "Newcastle United",
         "aliases": [
-          "Newcastle",
-          "Newcastle United Jets"
+          "Newcastle"
         ],
         "hidden": false
       },
@@ -342,8 +334,7 @@
         "display_name": "Real Madrid",
         "aliases": [
           "Real Madrid C",
-          "Real Madrid Dep",
-          "Real Madriz"
+          "Real Madrid Dep"
         ],
         "hidden": false
       },

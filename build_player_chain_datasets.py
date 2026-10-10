@@ -142,12 +142,125 @@ NON_CLUBS = {
     'special olympics', 'none'
 }
 
+DISAMBIGUATED_CLUBS = {
+    # Liverpool (Uruguay)
+    'Liverpool FC Montevideo': 'Liverpool Montevideo',
+    'Liverpool Montevideo': 'Liverpool Montevideo',
+    'Liverpool (Montevideo)': 'Liverpool Montevideo',
+    'Liverpool M.': 'Liverpool Montevideo',
+    'Liverpool FC (URU)': 'Liverpool Montevideo',
+    'Liverpool FC (Montevideo)': 'Liverpool Montevideo',
+    'Liverpool Fútbol Club': 'Liverpool Montevideo',
+    'Liverpool Futbol Club': 'Liverpool Montevideo',
+
+    # Barcelona (Ecuador)
+    'Barcelona SC': 'Barcelona Guayaquil',
+    'Barcelona SC Guayaquil': 'Barcelona Guayaquil',
+    'Barcelona Sporting Club': 'Barcelona Guayaquil',
+    'Barcelona Guayaquil': 'Barcelona Guayaquil',
+    'Barcelona de Guayaquil': 'Barcelona Guayaquil',
+
+    # Everton (Chile / Other)
+    'Everton de Viña del Mar': 'Everton de Viña',
+    'Everton (Chile)': 'Everton de Viña',
+    'Everton Viña del Mar': 'Everton de Viña',
+    'Everton Moldes': 'Everton Moldes',
+    'CD Everton': 'Everton de Viña',
+
+    # Arsenal (Argentina)
+    'Arsenal de Sarandí': 'Arsenal de Sarandí',
+    'Arsenal Sarandí': 'Arsenal de Sarandí',
+    'Arsenal Sarandi': 'Arsenal de Sarandí',
+    'Arsenal FC (Sarandí)': 'Arsenal de Sarandí',
+    'Arsenal Fútbol Club': 'Arsenal de Sarandí',
+    'Arsenal Futbol Club': 'Arsenal de Sarandí',
+
+    # Newcastle Jets (Australia)
+    'Newcastle United Jets': 'Newcastle Jets',
+    'Newcastle Jets': 'Newcastle Jets',
+    'Newcastle Jets FC': 'Newcastle Jets',
+
+    # Athletic Club (Brazil - MG)
+    'Athletic Club (MG)': 'Athletic-MG',
+    'Athletic Club MG': 'Athletic-MG',
+    'Athletic-MG': 'Athletic-MG',
+
+    # Sporting clubs
+    'Sporting Cristal': 'Sporting Cristal',
+    'Sporting Gijón': 'Sporting Gijón',
+    'Real Sporting de Gijón': 'Sporting Gijón',
+    'Sporting de Gijón': 'Sporting Gijón',
+    'Sporting Kansas City': 'Sporting Kansas City',
+
+    # Juventus homonyms
+    'Juventus-SP': 'Juventus-SP',
+    'Juventus de São Paulo': 'Juventus-SP',
+    'Juve Pergamino': 'Juve Pergamino',
+    'Juve Stabia': 'Juve Stabia',
+    'Juve Stabia Y': 'Juve Stabia',
+
+    # Valencia homonyms
+    'Gran Valencia': 'Gran Valencia',
+    'FCM Valencia': 'FCM Valencia',
+    'IDA Valencia': 'IDA Valencia',
+
+    # Real Madriz (Nicaragua)
+    'Real Madriz': 'Real Madriz',
+    'Real Madriz FC': 'Real Madriz',
+
+    # Inter homonyms
+    'Inter de Limeira': 'Inter de Limeira',
+    'Inter de Santa Maria': 'Inter de Santa Maria',
+    'Internacional': 'Internacional',
+    'SC Internacional': 'Internacional',
+    'Internacional de Porto Alegre': 'Internacional',
+    'Inter Miami': 'Inter Miami',
+    'Inter Miami CF': 'Inter Miami',
+
+    # Nacional homonyms
+    'Atlético Nacional': 'Atlético Nacional',
+    'Nacional da Madeira': 'CD Nacional',
+    'CD Nacional': 'CD Nacional',
+    'Club Nacional de Football': 'Nacional',
+
+    # Torque (Uruguay)
+    'Montevideo City Torque': 'Montevideo City Torque',
+    'Club Atlético Torque': 'Montevideo City Torque',
+}
+
 def clean_club_name(val):
     if not isinstance(val, str):
         return ''
     val = val.strip().strip('.').strip('"').strip("'")
     if not val or val.lower() in NON_CLUBS or YOUTH_PATTERNS.search(val):
         return ''
+
+    # Check explicit disambiguation map FIRST before any prefix/suffix stripping
+    if val in DISAMBIGUATED_CLUBS:
+        return DISAMBIGUATED_CLUBS[val]
+    
+    val_lower = val.lower()
+    if 'montevideo' in val_lower or 'liverpool futbol club' in val_lower or 'liverpool fútbol club' in val_lower or 'liverpool fc (uru)' in val_lower:
+        return 'Liverpool Montevideo'
+    if 'guayaquil' in val_lower or 'barcelona sc' in val_lower or 'barcelona sporting club' in val_lower:
+        return 'Barcelona Guayaquil'
+    if 'sarandi' in val_lower or 'sarandí' in val_lower or 'arsenal futbol club' in val_lower or 'arsenal fútbol club' in val_lower:
+        return 'Arsenal de Sarandí'
+    if 'viña del mar' in val_lower or 'vina del mar' in val_lower or 'cd everton' in val_lower:
+        return 'Everton de Viña'
+    if 'newcastle jets' in val_lower or 'newcastle united jets' in val_lower:
+        return 'Newcastle Jets'
+    if 'athletic club (mg)' in val_lower or 'athletic club mg' in val_lower:
+        return 'Athletic-MG'
+    if 'sporting cristal' in val_lower:
+        return 'Sporting Cristal'
+    if 'sporting gijon' in val_lower or 'sporting gijón' in val_lower or 'sporting de gijon' in val_lower or 'sporting de gijón' in val_lower:
+        return 'Sporting Gijón'
+    if 'sporting kansas' in val_lower:
+        return 'Sporting Kansas City'
+    if 'juventus-sp' in val_lower or 'juve pergamino' in val_lower or 'juve stabia' in val_lower:
+        return 'Juventus-SP' if 'juventus-sp' in val_lower else ('Juve Pergamino' if 'pergamino' in val_lower else 'Juve Stabia')
+
     if val in ALIASES:
         return ALIASES[val]
 
@@ -160,6 +273,9 @@ def clean_club_name(val):
 
     if not cleaned or cleaned.lower() in NON_CLUBS:
         return ''
+
+    if cleaned in DISAMBIGUATED_CLUBS:
+        return DISAMBIGUATED_CLUBS[cleaned]
 
     if cleaned in ALIASES:
         return ALIASES[cleaned]
@@ -233,9 +349,47 @@ def build_player_career_database():
             if pd.notna(r.position) and str(r.position).strip():
                 entity_position[pid] = str(r.sub_position if (pd.notna(r.sub_position) and str(r.sub_position).strip()) else r.position).strip()
 
+        dc_club_map = {}
+        clubs_csv = os.path.join(dc_path, 'clubs.csv')
+        if os.path.exists(clubs_csv):
+            df_dc_clubs = pd.read_csv(clubs_csv, low_memory=False)
+            for r in df_dc_clubs.itertuples(index=False):
+                cid = int(r.club_id) if pd.notna(r.club_id) else None
+                if cid is None:
+                    continue
+                cname = str(r.name) if pd.notna(r.name) else ''
+                country = str(getattr(r, 'country_name', '')).strip() if pd.notna(getattr(r, 'country_name', '')) else ''
+                comp = str(getattr(r, 'domestic_competition_id', '')).strip() if pd.notna(getattr(r, 'domestic_competition_id', '')) else ''
+                
+                # Check known homonym club IDs
+                if cid == 2199 or (cname == 'Liverpool FC' and (country == 'Uruguay' or comp.startswith('URU'))):
+                    dc_club_map[cid] = 'Liverpool Montevideo'
+                elif cid == 31 or (cname == 'Liverpool FC' and (country == 'England' or comp.startswith('GB'))):
+                    dc_club_map[cid] = 'Liverpool'
+                elif cid == 2210 or ('Barcelona' in cname and (country == 'Ecuador' or comp.startswith('ECU'))):
+                    dc_club_map[cid] = 'Barcelona Guayaquil'
+                elif cid == 131 or (cname == 'FC Barcelona' and (country == 'Spain' or comp.startswith('ES'))):
+                    dc_club_map[cid] = 'Barcelona'
+                elif cid == 4673 or ('Arsenal' in cname and (country == 'Argentina' or comp.startswith('ARG'))):
+                    dc_club_map[cid] = 'Arsenal de Sarandí'
+                elif cid == 11 or (cname == 'Arsenal FC' and (country == 'England' or comp.startswith('GB'))):
+                    dc_club_map[cid] = 'Arsenal'
+                elif cid == 9789 or ('Everton' in cname and (country == 'Chile' or comp.startswith('CL'))):
+                    dc_club_map[cid] = 'Everton de Viña'
+                elif cid == 29 or (cname == 'Everton FC' and (country == 'England' or comp.startswith('GB'))):
+                    dc_club_map[cid] = 'Everton'
+                elif cid == 4662 or ('Newcastle' in cname and (country == 'Australia' or comp.startswith('AU') or 'Jets' in cname)):
+                    dc_club_map[cid] = 'Newcastle Jets'
+                elif cid == 762 or (cname == 'Newcastle United' and (country == 'England' or comp.startswith('GB'))):
+                    dc_club_map[cid] = 'Newcastle United'
+                elif cid == 76228 or (cname == 'Athletic Club' and (country == 'Brazil' or comp.startswith('BRA'))):
+                    dc_club_map[cid] = 'Athletic-MG'
+                elif cid == 621 or (cname == 'Athletic Bilbao' and (country == 'Spain' or comp.startswith('ES'))):
+                    dc_club_map[cid] = 'Athletic Bilbao'
+
         df_dc_t = pd.read_csv(
             os.path.join(dc_path, 'transfers.csv'),
-            usecols=['player_id', 'player_name', 'from_club_name', 'to_club_name', 'transfer_date'],
+            usecols=['player_id', 'player_name', 'from_club_id', 'to_club_id', 'from_club_name', 'to_club_name', 'transfer_date'],
             low_memory=False
         )
         df_dc_t['parsed_date'] = pd.to_datetime(df_dc_t['transfer_date'], errors='coerce')
@@ -246,8 +400,10 @@ def build_player_career_database():
             name = (KNOWN_HOMONYM_ENTITIES.get(pid) or dc_id_map.get(pid) or str(row.player_name)).strip()
             if pid is not None and name and name != 'nan' and name in player_metadata:
                 entity_name[pid] = name
-                c1 = clean_club_name(str(row.from_club_name))
-                c2 = clean_club_name(str(row.to_club_name))
+                fcid = int(row.from_club_id) if (hasattr(row, 'from_club_id') and pd.notna(row.from_club_id)) else None
+                tcid = int(row.to_club_id) if (hasattr(row, 'to_club_id') and pd.notna(row.to_club_id)) else None
+                c1 = dc_club_map.get(fcid) if fcid in dc_club_map else clean_club_name(str(row.from_club_name))
+                c2 = dc_club_map.get(tcid) if tcid in dc_club_map else clean_club_name(str(row.to_club_name))
                 if c1:
                     entity_clubs[pid].add(c1)
                     club_to_entities[c1].add(pid)
