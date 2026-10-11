@@ -1,0 +1,199 @@
+#!/usr/bin/env python3
+"""
+tests/test_career_flight_short.py
+
+Hermetic unit test suite for the Career Flight Short video generator:
+- Tests n-2 date resolution
+- Tests chronological transfer ordering (switching from reverse to chronological)
+- Tests club geo-resolution and haversine distances
+- Tests 3D slerp and spherical projection
+- Tests video timeline frame budgeting
+"""
+
+import os
+import sys
+import unittest
+import datetime
+import numpy as np
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, BASE_DIR)
+
+from render_career_flight_short import (
+    get_n_minus_2_date,
+    load_destination_puzzle,
+    build_video_timeline,
+    format_fee_label
+)
+from scripts.geo_manager import (
+    get_club_location,
+    haversine_distance_km,
+    latlon_to_vec3,
+    slerp,
+    project_point_to_screen
+)
+
+class TestCareerFlightShort(unittest.TestCase):
+
+    def test_n_minus_2_date_resolution(self):
+        """Verifies that the target date is strictly n-2 (two days ago)."""
+        ref_date = datetime.date(2026, 10, 11)
+        expected = datetime.date(2026, 10, 9)
+        self.assertEqual(get_n_minus_2_date(ref_date), expected)
+
+        ref_leap = datetime.date(2024, 3, 1)
+        expected_leap = datetime.date(2024, 2, 28)
+        self.assertEqual(get_n_minus_2_date(ref_leap), expected_leap)
+
+    def test_chronological_transfer_ordering(self):
+        """
+        Verifies that transfers are ordered chronologically from first club to last club,
+        reversing the puzzle's default reverse chronological order.
+        """
+        # Puzzle #75 is Paul Pogba
+        data = load_destination_puzzle(puzzle_num_override=75)
+        self.assertEqual(data["player_name"], "Paul Pogba")
+        self.assertEqual(data["nationality"], "France")
+
+        legs = data["legs"]
+        self.assertGreaterEqual(len(legs), 2)
+
+        # First leg must start from Manchester United and go to Juventus (12/13)
+        self.assertEqual(legs[0]["from_club"], "Manchester United")
+        self.assertEqual(legs[0]["to_club"], "Juventus")
+
+        # Second leg must be Juventus -> Manchester United (16/17)
+        self.assertEqual(legs[1]["from_club"], "Juventus")
+        self.assertEqual(legs[1]["to_club"], "Manchester United")
+
+        # Third leg must be Manchester United -> Juventus (22/23)
+        self.assertEqual(legs[2]["from_club"], "Manchester United")
+        self.assertEqual(legs[2]["to_club"], "Juventus")
+
+    def test_geo_resolution_and_distance(self):
+        """Verifies club coordinates and accurate haversine distances."""
+        loc_man = get_club_location("Manchester United")
+        loc_tur = get_club_location("Juventus")
+
+        self.assertEqual(loc_man["city"], "Manchester")
+        self.assertEqual(loc_tur["city"], "Turin")
+
+        dist = haversine_distance_km(loc_man["lat"], loc_man["lon"], loc_tur["lat"], loc_tur["lon"])
+        # Manchester to Turin is ~1,173 km (between 1,100 and 1,250 km)
+        self.assertGreater(dist, 1100.0)
+        self.assertLess(dist, 1250.0)
+
+    def test_3d_projection_and_slerp(self):
+        """Verifies 3D spherical geometry and orthographic projection."""
+        v1 = latlon_to_vec3(53.46, -2.29) # Manchester
+        v2 = latlon_to_vec3(45.10, 7.64)  # Turin
+
+        # Norm of unit vectors must be 1.0
+        self.assertAlmostEqual(float(np.linalg.norm(v1)), 1.0, places=5)
+        self.assertAlmostEqual(float(np.linalg.norm(v2)), 1.0, places=5)
+
+        # Midpoint via slerp
+        mid = slerp(v1, v2, 0.5)
+        self.assertAlmostEqual(float(np.linalg.norm(mid)), 1.0, places=5)
+
+        # Forward projection on screen
+        sx, sy, vis = project_point_to_screen(53.46, -2.29, 50.0, 0.0, 540, 800, 600)
+        self.assertTrue(vis)
+        self.assertIsInstance(sx, int)
+        self.assertIsInstance(sy, int)
+
+    def test_fee_label_formatter(self):
+        """Verifies clear transfer fee formatting."""
+        self.assertEqual(format_fee_label(0.0), "FREE TRANSFER")
+        self.assertEqual(format_fee_label(105_000_000.0), "€105M FEE")
+        self.assertEqual(format_fee_label(38_500_000.0), "€38.5M FEE")
+        self.assertEqual(format_fee_label(500_000.0), "€500K FEE")
+
+    def test_timeline_budgeting(self):
+        """Verifies that generated timelines maintain 18-28s duration for shorts."""
+        dummy_puzzle = {
+            "legs": [
+                {"from_club": "A", "to_club": "B", "distance_km": 100, "season": "10/11", "fee": 0, "from_loc": {}, "to_loc": {}},
+                {"from_club": "B", "to_club": "C", "distance_km": 200, "season": "12/13", "fee": 10, "from_loc": {}, "to_loc": {}},
+                {"from_club": "C", "to_club": "D", "distance_km": 300, "season": "15/16", "fee": 50, "from_loc": {}, "to_loc": {}}
+            ]
+        }
+        tl = build_video_timeline(dummy_puzzle)
+        self.assertGreaterEqual(tl["total_duration"], 15.0)
+        self.assertLessEqual(tl["total_duration"], 30.0)
+        self.assertEqual(tl["total_frames"], int(tl["total_duration"] * 30))
+
+    def test_metadata_generation(self):
+        """Verifies rich SEO-optimized metadata generation for YouTube and Instagram."""
+        from render_career_flight_short import generate_career_flight_metadata
+        data = load_destination_puzzle(puzzle_num_override=75)
+        meta = generate_career_flight_metadata(data)
+
+        # YouTube Title
+        yt_title = meta["youtube_title"]
+        self.assertIn("Paul Pogba", yt_title)
+        self.assertIn("#Shorts", yt_title)
+        self.assertLessEqual(len(yt_title), 100)
+
+        # YouTube Description
+        yt_desc = meta["youtube_description"]
+        self.assertIn("Paul Pogba", yt_desc)
+        self.assertIn("Total Distance Flown", yt_desc)
+        self.assertIn("https://playmaker.best/games/transfer_destination.html", yt_desc)
+        self.assertIn("#football", yt_desc)
+        self.assertIn("#PaulPogba", yt_desc)
+
+        # YouTube Tags
+        yt_tags = meta["youtube_tags"]
+        self.assertIsInstance(yt_tags, list)
+        self.assertIn("Paul Pogba", yt_tags)
+        self.assertIn("career flight map", yt_tags)
+        self.assertIn("Shorts", yt_tags)
+
+        # Instagram Caption
+        ig_caption = meta["instagram_caption"]
+        self.assertIn("PAUL POGBA", ig_caption)
+        self.assertIn("RATE HIS CAREER", ig_caption)
+        self.assertIn("playmaker.best", ig_caption)
+        self.assertIn("#reels", ig_caption)
+        self.assertIn("#PaulPogba", ig_caption)
+        self.assertIn("#flightradar", ig_caption)
+        self.assertGreaterEqual(len([w for w in ig_caption.split() if w.startswith("#")]), 15)
+
+    def test_upload_pipeline_integration(self):
+        """Verifies integration into upload_daily_shorts.py and time slot routing."""
+        from scripts.upload_daily_shorts import (
+            select_games_for_mode,
+            get_target_name_from_game,
+            ALL_AVAILABLE_GAMES
+        )
+
+        # 1. Game listed in available games
+        game_ids = [g["id"] for g in ALL_AVAILABLE_GAMES]
+        self.assertIn("career_flight", game_ids)
+
+        # 2. Mode selection
+        career_mode_games = select_games_for_mode("career_flight")
+        self.assertEqual(len(career_mode_games), 1)
+        self.assertEqual(career_mode_games[0]["id"], "career_flight")
+
+        # 3. Morning slot (07:00 UTC / 10:00 AM user local time)
+        morning_games = select_games_for_mode("auto", curr_hour=7)
+        self.assertEqual(len(morning_games), 1)
+        self.assertEqual(morning_games[0]["id"], "career_flight")
+
+        # 4. Midday slot (10:30 UTC / 1:30 PM user local time) returns [] for carousel
+        midday_games = select_games_for_mode("auto", curr_hour=10)
+        self.assertEqual(len(midday_games), 0)
+
+        # 5. Evening slot (17:00 UTC / 8:00 PM user local time) returns UGC short
+        evening_games = select_games_for_mode("auto", curr_hour=17)
+        self.assertEqual(len(evening_games), 1)
+        self.assertIn(evening_games[0]["id"], ["player_chain", "passport_fc"])
+
+        # 6. Target name extraction in < 10ms
+        target_name = get_target_name_from_game("career_flight")
+        self.assertTrue(len(target_name) > 0)
+
+if __name__ == "__main__":
+    unittest.main()

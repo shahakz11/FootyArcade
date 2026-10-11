@@ -2,6 +2,9 @@ name: Daily Social Auto-Publisher (Carousels & Shorts)
 
 on:
   schedule:
+    # Slot 0: Morning Career Flight Short / Reel (07:00 AM UTC / 10:00 AM local UTC+3)
+    # Cron at 06:55 UTC allows ~3-4 min for video rendering to publish right at 07:00 UTC (10:00 AM local)
+    - cron: '55 6 * * *'
     # Slot 1: Midday H2H Carousel (10:30 AM UTC / 1:30 PM local UTC+3)
     # Cron at 10:25 UTC allows ~2-3 min for runner spinup & snapshot rendering to publish at 10:30 UTC
     - cron: '25 10 * * *'
@@ -17,6 +20,7 @@ on:
         type: choice
         options:
           - auto
+          - career_flight
           - carousel
           - short
           - all

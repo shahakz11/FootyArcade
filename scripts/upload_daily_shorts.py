@@ -41,7 +41,10 @@ DAILY_GAMES = [
     {"id": "passport_fc",  "name": "Passport FC (Step 2)"}
 ]
 
+CAREER_FLIGHT_GAME = {"id": "career_flight", "name": "Career Flight Map"}
+
 ALL_AVAILABLE_GAMES = [
+    {"id": "career_flight",        "name": "Career Flight Map"},
     {"id": "player_chain",         "name": "Player Chain"},
     {"id": "passport_fc",          "name": "Passport FC"},
     {"id": "top_transfers",        "name": "Top Transfers"},
@@ -50,22 +53,24 @@ ALL_AVAILABLE_GAMES = [
     {"id": "top_scorers",          "name": "Top Scorers"}
 ]
 
-DEFAULT_PEAK_SLOTS = [10.5, 17]  # 10:30 AM UTC (Carousel) and 17:00 PM UTC (Video Short)
+DEFAULT_PEAK_SLOTS = [7, 10.5, 17]  # 07:00 UTC (10:00 AM local Career Flight), 10:30 UTC (Carousel), 17:00 UTC (Video Short)
 
 def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_hour=None):
     """
     Selects which game(s) to process:
-    - If all_games is True: returns ALL_AVAILABLE_GAMES (all 6)
+    - If all_games is True: returns ALL_AVAILABLE_GAMES (all 7)
     - If selected_game is provided: returns the matching game from ALL_AVAILABLE_GAMES
-    - If mode == 'carousel': returns [] (signals carousel-only execution)
-    - If mode in ('midday', 'morning'): returns [DAILY_GAMES[0]] (Player Chain)
+    - If mode in ('career', 'career_flight', 'morning'): returns [CAREER_FLIGHT_GAME] (10:00 AM user time / 07:00 UTC)
+    - If mode in ('carousel', 'h2h'): returns [] (signals carousel-only execution at 10:30 UTC)
+    - If mode in ('midday',): returns [DAILY_GAMES[0]] (Player Chain)
     - If mode in ('evening', 'night'): returns [DAILY_GAMES[1]] (Passport FC)
-    - If mode == 'both': returns DAILY_GAMES (2 games)
+    - If mode == 'both': returns [CAREER_FLIGHT_GAME] + DAILY_GAMES
     - If mode in ('short', 'video', 'daily'): returns alternating [Player Chain / Passport FC]
-    - If mode == 'all': returns ALL_AVAILABLE_GAMES (6 games)
+    - If mode == 'all': returns ALL_AVAILABLE_GAMES (7 games)
     - If mode == 'auto' (default):
-        - If current UTC hour < 14 (Morning/Midday): returns [] (triggers 10:30 AM UTC H2H Carousel)
-        - If current UTC hour >= 14 (Evening): returns alternating [Player Chain / Passport FC] for 17:00 PM UTC Video Short
+        - If current UTC hour < 9 (Morning, ~07:00 UTC / 10:00 AM local UTC+3): returns [CAREER_FLIGHT_GAME]
+        - If current UTC hour 9 <= h < 14 (Midday, ~10:30 UTC): returns [] (triggers 10:30 AM UTC H2H Carousel)
+        - If current UTC hour >= 14 (Evening, ~17:00 UTC): returns alternating [Player Chain / Passport FC] for 17:00 UTC Video Short
     """
     if all_games:
         return ALL_AVAILABLE_GAMES
@@ -76,14 +81,16 @@ def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_h
         raise ValueError(f"Unknown game ID '{selected_game}'. Available: {[g['id'] for g in ALL_AVAILABLE_GAMES]}")
     
     mode_lower = (mode or "auto").lower()
-    if mode_lower in ("carousel", "h2h"):
+    if mode_lower in ("career", "career_flight", "morning"):
+        return [CAREER_FLIGHT_GAME]
+    elif mode_lower in ("carousel", "h2h"):
         return []
-    elif mode_lower in ("midday", "morning"):
+    elif mode_lower == "midday":
         return [DAILY_GAMES[0]]  # Player Chain
     elif mode_lower in ("evening", "night"):
         return [DAILY_GAMES[1]]  # Passport FC
     elif mode_lower == "both":
-        return DAILY_GAMES
+        return [CAREER_FLIGHT_GAME] + DAILY_GAMES
     elif mode_lower == "all":
         return ALL_AVAILABLE_GAMES
 
@@ -94,12 +101,15 @@ def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_h
         return daily_short
 
     # Auto mode:
-    # Morning / Midday (< 14:00 UTC): Carousel window (returns empty to bypass video rendering)
-    # Evening (>= 14:00 UTC): 17:00 UTC Video Short window
+    # Morning (< 9:00 UTC / 10:00 AM local UTC+3): 07:00 UTC Career Flight Short
+    # Midday (9:00 - 14:00 UTC / 1:30 PM local UTC+3): 10:30 UTC H2H Carousel window
+    # Evening (>= 14:00 UTC / 8:00 PM local UTC+3): 17:00 UTC Video Short window
     if curr_hour is None:
         curr_hour = datetime.datetime.now(datetime.timezone.utc).hour
 
-    if curr_hour < 14:
+    if curr_hour < 9:
+        return [CAREER_FLIGHT_GAME]
+    elif curr_hour < 14:
         return []  # 10:30 AM UTC Carousel window
     return daily_short  # 17:00 PM UTC Video Short window
 
@@ -148,6 +158,14 @@ def get_target_name_from_game(game_id):
     Extracts the daily puzzle target name/theme directly from the compiled HTML or UGC puzzle dataset.
     Allows running live API deduplication BEFORE spending 2-3 minutes rendering video.
     """
+    if game_id == "career_flight":
+        try:
+            from render_career_flight_short import load_destination_puzzle
+            p_data = load_destination_puzzle()
+            return p_data.get("player_name", "")
+        except Exception:
+            return ""
+
     if game_id in ("player_chain", "passport_fc"):
         try:
             ugc = extract_ugc_data(game_id, day=None)
@@ -279,9 +297,13 @@ async def process_all_games(
     curr_hour = now_utc.hour
     mode_lower = (mode or "auto").lower()
 
-    # 1. Check if this is a Midday Carousel Run
-    is_carousel_slot = (mode_lower in ("carousel", "h2h")) or (mode_lower == "auto" and curr_hour < 14)
-    is_short_slot = (mode_lower in ("short", "video", "daily", "midday", "morning", "evening", "night")) or (mode_lower == "auto" and curr_hour >= 14)
+    # 1. Determine slot routing:
+    # - Morning Slot (07:00 UTC / 10:00 AM local UTC+3): Career Flight Short
+    # - Midday Slot (10:30 UTC / 1:30 PM local UTC+3): H2H Carousel
+    # - Evening Slot (17:00 UTC / 8:00 PM local UTC+3): Video Short (Player Chain / Passport FC)
+    is_career_slot = (mode_lower in ("career", "career_flight", "morning")) or (selected_game == "career_flight") or (mode_lower == "auto" and curr_hour < 9)
+    is_carousel_slot = (mode_lower in ("carousel", "h2h")) or (mode_lower == "auto" and 9 <= curr_hour < 14 and not selected_game)
+    is_short_slot = (mode_lower in ("short", "video", "daily", "midday", "evening", "night")) or (mode_lower == "auto" and curr_hour >= 14) or is_career_slot
     is_all = (mode_lower == "all") or all_games
 
     results = []
@@ -328,8 +350,12 @@ async def process_all_games(
         print("🔥" * 34 + "\n")
 
     # 4. Compile today's latest daily puzzles
-    print("🔄 Ensuring today's HTML game files are fully compiled and up to date...")
-    subprocess.run([sys.executable, os.path.join(BASE_DIR, "fetch_daily.py")], check=True)
+    if os.environ.get("TESTING") != "true" and not dry_run:
+        print("🔄 Ensuring today's HTML game files are fully compiled and up to date...")
+        try:
+            subprocess.run([sys.executable, os.path.join(BASE_DIR, "fetch_daily.py")], check=True)
+        except Exception as e:
+            print(f"⚠️ fetch_daily notice: {e}")
 
     server_proc = ensure_server_running(port)
     
@@ -422,10 +448,32 @@ async def process_all_games(
             # Render video
             custom_ig_caption = None
             custom_yt_title = None
+            custom_yt_desc = None
+            custom_yt_tags = None
             audio_track_title = "Trending Football Beat"
 
             try:
-                if game_id in ("player_chain", "passport_fc"):
+                if game_id == "career_flight":
+                    from render_career_flight_short import (
+                        render_career_flight_video,
+                        load_destination_puzzle,
+                        generate_career_flight_metadata
+                    )
+                    puzzle_data = load_destination_puzzle()
+                    target_name = puzzle_data["player_name"]
+                    meta = generate_career_flight_metadata(puzzle_data)
+                    custom_yt_title = meta["youtube_title"]
+                    custom_yt_desc = meta["youtube_description"]
+                    custom_yt_tags = meta["youtube_tags"]
+                    custom_ig_caption = meta["instagram_caption"]
+                    audio_track_title = "Career Flight Audio"
+
+                    os.makedirs(os.path.join(BASE_DIR, "output_shorts"), exist_ok=True)
+                    clean_name = target_name.replace(" ", "_").replace("'", "")
+                    video_out = os.path.join(BASE_DIR, "output_shorts", f"career_flight_{clean_name}_{today_str}.mp4")
+                    video_path = render_career_flight_video(output_path=video_out, force=force)
+
+                elif game_id in ("player_chain", "passport_fc"):
                     ugc_data = extract_ugc_data(game_id, day=None)
                     target_name = f"{ugc_data['entity_1']} & {ugc_data['entity_2']}"
                     
@@ -495,18 +543,20 @@ async def process_all_games(
             elif not no_youtube:
                 if custom_yt_title:
                     title = custom_yt_title
-                    desc = (
+                    desc = custom_yt_desc if custom_yt_desc else (
                         f"{title}\n\n"
                         f"🎮 Play today's free daily puzzle (no download, no sign up):\n"
                         f"👉 https://playmaker.best/\n\n"
                         f"#Shorts #football #soccer #ballknowledge #trivia #playmaker"
                     )
-                    tags = ["Shorts", "football", "soccer", "trivia", "quiz", "ball knowledge", "reels"]
+                    tags = custom_yt_tags if custom_yt_tags else ["Shorts", "football", "soccer", "trivia", "quiz", "ball knowledge", "reels"]
                 else:
                     title, desc, tags = build_default_metadata(game_id=game_id, target_name=target_name)
                     
                 try:
-                    yt_video_path = prepare_youtube_video(video_path, strip_audio=not youtube_audio)
+                    # Keep synthesized audio for career_flight unless explicitly disabled
+                    strip_audio = not youtube_audio and (game_id != "career_flight")
+                    yt_video_path = prepare_youtube_video(video_path, strip_audio=strip_audio)
                     if yt_video_path != video_path:
                         print(f"🔇 [YouTube Shorts] Preparing audio-free video for upload: {os.path.basename(yt_video_path)}")
                     vid, shorts_url = upload_short(
@@ -607,21 +657,23 @@ def main():
         "--mode",
         type=str,
         default="auto",
-        choices=["auto", "carousel", "short", "video", "daily", "midday", "morning", "evening", "night", "both", "all", "h2h"],
-        help="Publishing mode: auto (time-based), carousel (H2H 10:30 UTC), short (Video 17:00 UTC), or all"
+        choices=["auto", "career", "career_flight", "carousel", "short", "video", "daily", "midday", "morning", "evening", "night", "both", "all", "h2h"],
+        help="Publishing mode: auto (time-based), career_flight (10:00 AM local), carousel (H2H 10:30 UTC), short (Video 17:00 UTC), or all"
     )
-    parser.add_argument("--midday", "--morning", dest="midday_flag", action="store_true", help="Shortcut for --mode midday")
+    parser.add_argument("--career-flight", "--career", dest="career_flag", action="store_true", help="Shortcut for --mode career_flight (10:00 AM local / 07:00 UTC Career Flight Short)")
+    parser.add_argument("--morning", dest="morning_flag", action="store_true", help="Shortcut for --mode morning (10:00 AM local Career Flight)")
+    parser.add_argument("--midday", dest="midday_flag", action="store_true", help="Shortcut for --mode midday")
     parser.add_argument("--evening", "--night", dest="evening_flag", action="store_true", help="Shortcut for --mode evening")
     parser.add_argument("--both", action="store_true", help="Shortcut for --mode both")
-    parser.add_argument("--all-games", action="store_true", help="Render all 6 games instead of default 2")
-    parser.add_argument("--game", type=str, default="", help="Run a specific game ID only (e.g. top_transfers, transfer_destination)")
-    parser.add_argument("--slots", type=str, default="10.5,17", help="Comma-separated UTC peak hours (default: '10.5,17')")
+    parser.add_argument("--all-games", action="store_true", help="Render all 7 games instead of default")
+    parser.add_argument("--game", type=str, default="", help="Run a specific game ID only (e.g. career_flight, top_transfers, transfer_destination)")
+    parser.add_argument("--slots", type=str, default="7,10.5,17", help="Comma-separated UTC peak hours (default: '7,10.5,17')")
     parser.add_argument("--schedule-future", action="store_true", help="Schedule uploads for future peak hours instead of uploading live immediately")
     parser.add_argument("--port", type=int, default=8080, help="Local server port (default: 8080)")
     parser.add_argument("--fast", action="store_true", help="Fast mode for testing")
     parser.add_argument("--dry-run", action="store_true", help="Render media only without uploading")
     parser.add_argument("--no-youtube", action="store_true", help="Skip YouTube upload")
-    parser.add_argument("--youtube-with-audio", action="store_true", help="Keep audio when uploading to YouTube Shorts (default: stripped/silent to avoid audience retention loss)")
+    parser.add_argument("--youtube-with-audio", action="store_true", help="Keep audio when uploading to YouTube Shorts (default: stripped/silent for UGC; kept for career_flight)")
     parser.add_argument("--no-instagram", action="store_true", help="Skip Instagram upload")
     parser.add_argument("--no-trending-audio", action="store_true", help="Disable automatic Instagram trending audio attachment")
     parser.add_argument("--wait-queue", action="store_true", help="Wait in foreground for all queued reels to finish (ideal for GitHub Actions)")
@@ -635,6 +687,10 @@ def main():
     mode = args.mode
     if args.carousel_only or args.h2h_carousel:
         mode = "carousel"
+    elif args.career_flag:
+        mode = "career_flight"
+    elif args.morning_flag:
+        mode = "morning"
     elif args.midday_flag:
         mode = "midday"
     elif args.evening_flag:

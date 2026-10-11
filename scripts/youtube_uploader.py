@@ -256,6 +256,7 @@ def build_default_metadata(game_id="top_transfers", target_name="", matchday_con
     game_titles = {
         "top_transfers": f"{hook_prefix}Can you guess {target_name or 'the club'}'s record transfers? ⚽ #Shorts",
         "transfer_destination": f"{hook_prefix}Guess the mystery player's career path backwards! ⚽ #Shorts",
+        "career_flight": f"{hook_prefix}{target_name or 'Superstar'}'s Career Flight Map! ✈️🌍 Where Did He Play? #Shorts",
         "player_chain": f"{hook_prefix}Can you complete this teammate chain? ⚽ #Shorts",
         "club_connect": f"{hook_prefix}Can you guess which team all of these players transferred to? ⚽ #Shorts",
         "top_scorers": f"{hook_prefix}Who scored the most goals in {target_name or 'this season'}? ⚽ #Shorts",
@@ -330,6 +331,7 @@ def is_youtube_already_uploaded(game_id, target_name="", date_str=None, youtube=
         game_patterns = {
             "top_transfers": ["record transfers", "top transfers"],
             "transfer_destination": ["career path backwards", "transfer destination"],
+            "career_flight": ["career flight", "flight map", "career journey", "where did he play"],
             "player_chain": ["player chain", "teammate chain"],
             "club_connect": ["which team all of these players transferred to", "club connect"],
             "top_scorers": ["scored the most goals", "top scorers"],
