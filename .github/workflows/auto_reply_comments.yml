@@ -1,9 +1,6 @@
 name: Social Media Auto-Reply Bot (YouTube & Instagram)
 
 on:
-  schedule:
-    # Runs every hour to reply to new comments across YouTube & Instagram
-    - cron: '30 * * * *'
   workflow_dispatch:
     inputs:
       dry_run:

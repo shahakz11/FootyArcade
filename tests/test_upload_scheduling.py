@@ -39,7 +39,8 @@ class TestUploadScheduling(unittest.TestCase):
         game_ids = [g["id"] for g in DAILY_GAMES]
         self.assertIn("player_chain", game_ids)
         self.assertIn("passport_fc", game_ids)
-        self.assertEqual(len(ALL_AVAILABLE_GAMES), 6)
+        self.assertEqual(len(ALL_AVAILABLE_GAMES), 7)
+        self.assertIn("career_flight", [g["id"] for g in ALL_AVAILABLE_GAMES])
 
     def test_select_games_midday_mode(self):
         """Midday mode strictly returns Player Chain."""
@@ -75,7 +76,7 @@ class TestUploadScheduling(unittest.TestCase):
         self.assertEqual([g["id"] for g in both_games], ["player_chain", "passport_fc"])
 
         all_g = select_games_for_mode(all_games=True)
-        self.assertEqual(len(all_g), 6)
+        self.assertEqual(len(all_g), 7)
 
     def test_immediate_live_publishing_default(self):
         """By default, compute_scheduled_slots returns immediate live slots (iso=None)."""

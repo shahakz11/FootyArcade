@@ -90,7 +90,7 @@ def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_h
     elif mode_lower in ("evening", "night"):
         return [DAILY_GAMES[1]]  # Passport FC
     elif mode_lower == "both":
-        return [CAREER_FLIGHT_GAME] + DAILY_GAMES
+        return DAILY_GAMES
     elif mode_lower == "all":
         return ALL_AVAILABLE_GAMES
 
