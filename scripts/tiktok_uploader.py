@@ -291,7 +291,30 @@ def init_video_publish(
             data = json.loads(resp.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
         err_msg = e.read().decode("utf-8")
-        raise RuntimeError(f"TikTok init_video_publish HTTP {e.code}: {err_msg}")
+        if "unaudited_client" in err_msg or "unaudited" in err_msg.lower():
+            log_message("ℹ️ Direct public post requires app audit. Falling back to Creator Inbox / Draft mode...")
+            inbox_url = "https://open.tiktokapis.com/v2/post/publish/inbox/video/init/"
+            inbox_body = {
+                "source_info": {
+                    "source": "FILE_UPLOAD",
+                    "video_size": total_size,
+                    "chunk_size": actual_chunk_size,
+                    "total_chunk_count": total_chunks
+                }
+            }
+            inbox_req = urllib.request.Request(
+                inbox_url,
+                data=json.dumps(inbox_body).encode("utf-8"),
+                headers={
+                    "Authorization": f"Bearer {token}",
+                    "Content-Type": "application/json; charset=UTF-8"
+                },
+                method="POST"
+            )
+            with urllib.request.urlopen(inbox_req, timeout=30) as inbox_resp:
+                data = json.loads(inbox_resp.read().decode("utf-8"))
+        else:
+            raise RuntimeError(f"TikTok init_video_publish HTTP {e.code}: {err_msg}")
     except Exception as e:
         raise RuntimeError(f"TikTok init_video_publish failed: {e}")
 
@@ -413,8 +436,11 @@ def poll_publish_status(publish_id, max_attempts=30, interval_seconds=3):
         res_data = data.get("data", {})
         status = res_data.get("status", "")
 
-        if status == "SUCCESS":
-            log_message(f"🎉 TikTok publish SUCCESS! Publish ID: {publish_id}")
+        if status in ("SUCCESS", "SEND_TO_USER_INBOX"):
+            if status == "SEND_TO_USER_INBOX":
+                log_message(f"🎉 TikTok upload delivered to Creator Inbox! Publish ID: {publish_id}")
+            else:
+                log_message(f"🎉 TikTok publish SUCCESS! Publish ID: {publish_id}")
             return res_data
         elif status == "FAILED":
             fail_reason = res_data.get("fail_reason", "Unknown failure reason")
