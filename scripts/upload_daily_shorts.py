@@ -40,6 +40,7 @@ try:
         check_connection as check_tt_connection,
         upload_tiktok_now,
         build_tiktok_caption,
+        clean_tiktok_caption,
         is_already_posted as is_tt_already_posted,
         mark_as_posted as mark_tt_as_posted
     )
@@ -47,6 +48,7 @@ except ImportError:
     check_tt_connection = None
     upload_tiktok_now = None
     build_tiktok_caption = None
+    clean_tiktok_caption = None
     is_tt_already_posted = None
     mark_tt_as_posted = None
 
@@ -565,7 +567,8 @@ async def process_all_games(
                 results.append({
                     "game": game_name,
                     "yt_status": "Render Failed", "yt_url": "—",
-                    "ig_status": "Render Failed", "ig_url": "—"
+                    "ig_status": "Render Failed", "ig_url": "—",
+                    "tt_status": "Render Failed", "tt_url": "—"
                 })
                 continue
 
@@ -574,7 +577,8 @@ async def process_all_games(
                 results.append({
                     "game": game_name,
                     "yt_status": "Rendered (Dry Run)", "yt_url": video_path,
-                    "ig_status": "Rendered (Dry Run)", "ig_url": video_path
+                    "ig_status": "Rendered (Dry Run)", "ig_url": video_path,
+                    "tt_status": "Rendered (Dry Run)", "tt_url": video_path
                 })
                 continue
 
@@ -676,10 +680,12 @@ async def process_all_games(
                 tt_status = "Already Uploaded"
                 tt_url = tt_existing_url
             elif not no_tiktok and upload_tiktok_now:
-                tt_caption = (
-                    build_tiktok_caption(game_id=game_id, target_name=target_name, matchday_context=matchday_context, date_str=today_str)
-                    if build_tiktok_caption else f"Play today's {game_name} at playmaker.best! ⚽ #fyp #football #soccer"
-                )
+                if custom_ig_caption and clean_tiktok_caption:
+                    tt_caption = clean_tiktok_caption(custom_ig_caption)
+                elif build_tiktok_caption:
+                    tt_caption = build_tiktok_caption(game_id=game_id, target_name=target_name, matchday_context=matchday_context, date_str=today_str)
+                else:
+                    tt_caption = f"Play today's {game_name} at playmaker.best! ⚽ #fyp #football #soccer"
                 try:
                     print(f"🎵 Uploading video to TikTok (Privacy: PUBLIC_TO_EVERYONE)...")
                     publish_id, tt_res = upload_tiktok_now(

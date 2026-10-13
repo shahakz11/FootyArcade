@@ -115,6 +115,12 @@ def sync_secrets(owner="shahakz11", repo="FootyArcade"):
         with open(ig_path, "r", encoding="utf-8") as f:
             set_github_secret("INSTAGRAM_CONFIG", f.read())
 
+    # Sync TIKTOK_CONFIG if present
+    tt_path = os.path.join(PRIVATE_DIR, "tiktok_config.json")
+    if os.path.exists(tt_path):
+        with open(tt_path, "r", encoding="utf-8") as f:
+            set_github_secret("TIKTOK_CONFIG", f.read())
+
     print("✨ Sync completed successfully!")
     return True
 

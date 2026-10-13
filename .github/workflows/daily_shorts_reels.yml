@@ -71,6 +71,7 @@ jobs:
           YOUTUBE_TOKEN_JSON: ${{ secrets.YOUTUBE_TOKEN_JSON }}
           YOUTUBE_TOKEN_BASE64: ${{ secrets.YOUTUBE_TOKEN_BASE64 }}
           INSTAGRAM_CONFIG: ${{ secrets.INSTAGRAM_CONFIG }}
+          TIKTOK_CONFIG: ${{ secrets.TIKTOK_CONFIG }}
         run: |
           mkdir -p private
           if [ -n "$YOUTUBE_TOKEN_JSON" ]; then
@@ -91,10 +92,18 @@ jobs:
           echo "$INSTAGRAM_CONFIG" > private/instagram_config.json
           echo "✅ Restored Instagram credentials."
 
+          if [ -n "$TIKTOK_CONFIG" ]; then
+            echo "$TIKTOK_CONFIG" > private/tiktok_config.json
+            echo "✅ Restored TikTok credentials."
+          fi
+
       - name: Verify Credentials Health
         run: |
           python3 scripts/youtube_uploader.py --channel
           python3 scripts/instagram_uploader.py --check
+          if [ -f private/tiktok_config.json ]; then
+            python3 scripts/tiktok_uploader.py --verify || true
+          fi
 
       - name: Verify B-Roll Library
         run: |

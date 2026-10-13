@@ -305,6 +305,18 @@ class TestTikTokUploader(unittest.TestCase):
         self.assertIn("Real Madrid", cap)
         self.assertIn("#fyp", cap)
         self.assertIn("#football", cap)
+        self.assertNotIn("#reels", cap.lower())
+        self.assertNotIn("link in bio", cap.lower())
+
+    def test_clean_tiktok_caption_strips_forbidden_elements(self):
+        from scripts.tiktok_uploader import clean_tiktok_caption
+        raw = "Play today at playmaker.best (link in bio!) #reels #football #soccer #linkinbio"
+        cleaned = clean_tiktok_caption(raw)
+        self.assertNotIn("#reels", cleaned.lower())
+        self.assertNotIn("#linkinbio", cleaned.lower())
+        self.assertNotIn("link in bio", cleaned.lower())
+        self.assertIn("#fyp", cleaned)
+        self.assertIn("playmaker.best", cleaned)
 
 if __name__ == "__main__":
     unittest.main()

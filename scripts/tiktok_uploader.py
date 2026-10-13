@@ -142,14 +142,53 @@ def get_valid_access_token():
 
 def check_connection(silent=False):
     """
-    Verifies TikTok connection and fetches user info.
-    GET https://open.tiktokapis.com/v2/user/info/?fields=avatar_url,display_name,username,open_id
+    Verifies TikTok connection and fetches creator info.
+    Primary: POST https://open.tiktokapis.com/v2/post/publish/creator_info/query/
+    Fallback: GET https://open.tiktokapis.com/v2/user/info/?fields=avatar_url,display_name,username,open_id
     Returns dict with username, display_name, avatar_url, open_id.
     """
     token = get_valid_access_token()
+    config = load_config()
+
+    # Try creator_info endpoint first (authorized via Content Posting API)
+    creator_url = "https://open.tiktokapis.com/v2/post/publish/creator_info/query/"
+    req = urllib.request.Request(
+        creator_url,
+        data=b"{}",
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json; charset=UTF-8"
+        },
+        method="POST"
+    )
+
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        if data.get("error", {}).get("code") == "ok":
+            c_data = data.get("data", {})
+            user_sub = c_data.get("user", {})
+            username = c_data.get("creator_username") or user_sub.get("username")
+            if username:
+                display_name = c_data.get("creator_nickname") or user_sub.get("display_name", username)
+                avatar_url = c_data.get("creator_avatar_url") or user_sub.get("avatar_url", "")
+                open_id = user_sub.get("open_id") or config.get("open_id", "")
+                if not silent:
+                    log_message(f"✅ Connected to TikTok: @{username} ({display_name})")
+                return {
+                    "username": username,
+                    "display_name": display_name,
+                    "avatar_url": avatar_url,
+                    "open_id": open_id,
+                    "privacy_levels": c_data.get("privacy_level_options", []),
+                    "max_duration": c_data.get("max_video_post_duration_sec", 600)
+                }
+    except Exception:
+        pass
+
+    # Fallback to user/info if Login Kit scope is present
     fields = "avatar_url,display_name,username,open_id"
     url = f"https://open.tiktokapis.com/v2/user/info/?fields={fields}"
-
     req = urllib.request.Request(
         url,
         headers={"Authorization": f"Bearer {token}"},
@@ -165,7 +204,6 @@ def check_connection(silent=False):
     except Exception as e:
         raise RuntimeError(f"Could not connect to TikTok: {e}")
 
-    # Check error field in TikTok response
     error_info = data.get("error", {})
     if error_info.get("code") and error_info.get("code") != "ok":
         raise RuntimeError(f"TikTok API Error: {error_info.get('message', 'Unknown error')} (code: {error_info.get('code')})")
@@ -174,7 +212,7 @@ def check_connection(silent=False):
     username = user_info.get("username", "unknown")
     display_name = user_info.get("display_name", username)
     avatar_url = user_info.get("avatar_url", "")
-    open_id = user_info.get("open_id", "")
+    open_id = user_info.get("open_id", config.get("open_id", ""))
 
     if not silent:
         log_message(f"✅ Connected to TikTok: @{username} ({display_name})")
@@ -217,7 +255,8 @@ def init_video_publish(
     token = get_valid_access_token()
     url = "https://open.tiktokapis.com/v2/post/publish/video/init/"
 
-    post_title = (title or caption or "")[:150]
+    raw_text = (title or caption or "")
+    post_title = clean_tiktok_caption(raw_text)[:2200]
 
     body = {
         "post_info": {
@@ -478,22 +517,52 @@ def mark_as_posted(game_id, date_str, publish_id, target_name="", post_data=None
 
 # ── Caption Helper ────────────────────────────────────────────────────────────
 
+def clean_tiktok_caption(caption: str) -> str:
+    """
+    Sanitizes caption for TikTok:
+    - Strips #reels, #reel, #linkinbio hashtags
+    - Strips 'link in bio' / '(link in bio!)' references
+    - Ensures TikTok discovery hashtags (#fyp, #footballtiktok, #foryou)
+    - Normalizes spacing and clean line breaks
+    """
+    if not caption:
+        return ""
+    import re
+    text = caption
+    # Remove #reels, #reel, #linkinbio hashtags (case-insensitive)
+    text = re.sub(r"(?i)#reels\b", "", text)
+    text = re.sub(r"(?i)#reel\b", "", text)
+    text = re.sub(r"(?i)#linkinbio\b", "", text)
+    
+    # Remove "(link in bio!)", "link in bio!", "(link in bio)", "link in bio"
+    text = re.sub(r"(?i)\(?\s*link\s+in\s+bio\s*!?\s*\)?", "", text)
+    
+    # Clean up empty parens and normalize spaces
+    text = re.sub(r"\(\s*\)", "", text)
+    text = re.sub(r"[ \t]+", " ", text)
+    text = "\n".join(line.strip() for line in text.split("\n"))
+    text = re.sub(r"\n{3,}", "\n\n", text)
+
+    # Ensure TikTok specific discovery tags
+    if "#fyp" not in text:
+        text = text.strip() + " #fyp #footballtiktok #foryou"
+
+    return text.strip()
+
 def build_tiktok_caption(game_id="top_transfers", target_name="", matchday_context=None, date_str=None):
     """
     Generates high-converting, viral caption with relevant hashtags for TikTok.
-    Mirrors Instagram and YouTube caption formatting.
+    Excludes #reels and 'link in bio', optimizing for TikTok algorithmic distribution.
     """
     try:
         from scripts.instagram_uploader import build_instagram_caption
-        # Use instagram base caption adapted with TikTok hashtags
-        cap = build_instagram_caption(game_id, target_name, matchday_context, date_str)
-        # Add TikTok specific tags if missing
-        if "#fyp" not in cap:
-            cap += " #fyp #footballtiktok #foryou"
-        return cap
+        raw_cap = build_instagram_caption(game_id, target_name, matchday_context, date_str)
+        return clean_tiktok_caption(raw_cap)
     except Exception:
         # Fallback if instagram uploader is not imported
-        return f"Daily Football Challenge! Can you guess {target_name or 'the answer'}? ⚽ #fyp #football #soccer #trivia #playmaker"
+        return clean_tiktok_caption(
+            f"Daily Football Challenge! Can you guess {target_name or 'the answer'}? ⚽ #football #soccer #trivia #playmaker"
+        )
 
 # ── CLI Interface ────────────────────────────────────────────────────────────
 
