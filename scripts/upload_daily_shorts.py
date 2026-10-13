@@ -35,6 +35,21 @@ from scripts.instagram_uploader import (
     is_already_posted as is_ig_already_posted,
     mark_as_posted as mark_ig_as_posted
 )
+try:
+    from scripts.tiktok_uploader import (
+        check_connection as check_tt_connection,
+        upload_tiktok_now,
+        build_tiktok_caption,
+        is_already_posted as is_tt_already_posted,
+        mark_as_posted as mark_tt_as_posted
+    )
+except ImportError:
+    check_tt_connection = None
+    upload_tiktok_now = None
+    build_tiktok_caption = None
+    is_tt_already_posted = None
+    mark_tt_as_posted = None
+
 
 DAILY_GAMES = [
     {"id": "player_chain", "name": "Player Chain (Step 2)"},
@@ -281,6 +296,7 @@ async def process_all_games(
     all_games=False,
     no_youtube=False,
     no_instagram=False,
+    no_tiktok=False,
     instant_reels=True,
     immediate_first=True,
     wait_queue=False,
@@ -289,7 +305,7 @@ async def process_all_games(
     youtube_audio=False
 ):
     print("\n" + "=" * 68)
-    print("   ⚽  PLAYMAKER — DAILY SOCIAL AUTO-PUBLISHER (SHORTS & CAROUSELS)")
+    print("   ⚽  PLAYMAKER — DAILY SOCIAL AUTO-PUBLISHER (SHORTS, CAROUSELS, TIKTOK)")
     print("=" * 68)
 
     today_str = datetime.date.today().strftime("%Y-%m-%d")
@@ -340,6 +356,24 @@ async def process_all_games(
             print(f"📸 Instagram Account: \033[1;32m@{ig_username}\033[0m (ID: {ig_id})")
         except Exception as e:
             print(f"⚠️ Instagram warning: {e}")
+
+    # 4. Verify TikTok identity
+    tt_username = None
+    if not no_tiktok and check_tt_connection:
+        tt_config_path = os.path.join(BASE_DIR, "private", "tiktok_config.json")
+        if not os.path.exists(tt_config_path):
+            print("ℹ️ TikTok configuration not found (private/tiktok_config.json). TikTok uploads disabled.")
+            no_tiktok = True
+        else:
+            try:
+                tt_info = check_tt_connection(silent=True)
+                tt_username = tt_info.get("username", "unknown")
+                print(f"🎵 TikTok Account: \033[1;32m@{tt_username}\033[0m ({tt_info.get('display_name', '')})")
+            except Exception as e:
+                print(f"⚠️ TikTok warning: {e}")
+                no_tiktok = True
+    elif not check_tt_connection:
+        no_tiktok = True
 
     matchday_context = load_matchday_context_for_date(today_str)
     if matchday_context:
@@ -401,6 +435,8 @@ async def process_all_games(
             yt_existing_url = ""
             ig_already_done = False
             ig_existing_url = ""
+            tt_already_done = False
+            tt_existing_url = ""
 
             if not force and not dry_run:
                 # 1. YouTube check
@@ -429,19 +465,35 @@ async def process_all_games(
                     except Exception as e:
                         print(f"   ⚠️ Instagram deduplication check error: {e}")
 
+                # 3. TikTok check
+                if not no_tiktok and is_tt_already_posted:
+                    try:
+                        tt_already_done, tt_existing_url = is_tt_already_posted(
+                            game_id=game_id,
+                            date_str=today_str,
+                            target_name=preview_target
+                        )
+                        if tt_already_done:
+                            print(f"   ℹ️ [TikTok Check] Already uploaded today: {tt_existing_url}")
+                    except Exception as e:
+                        print(f"   ⚠️ TikTok deduplication check error: {e}")
+
                 # If all requested platforms are already uploaded, skip rendering!
                 yt_satisfied = no_youtube or yt_already_done
                 ig_satisfied = no_instagram or ig_already_done
+                tt_satisfied = no_tiktok or tt_already_done
 
-                if yt_satisfied and ig_satisfied:
-                    print(f"\n⚡ [Deduplication] Both platforms already have today's video for {game_name}!")
+                if yt_satisfied and ig_satisfied and tt_satisfied:
+                    print(f"\n⚡ [Deduplication] All requested platforms already have today's video for {game_name}!")
                     print(f"   Skipping browser launch and video rendering to save compute & prevent duplicates.\n")
                     results.append({
                         "game": game_name,
                         "yt_status": "Already Uploaded" if yt_already_done else "Skipped",
                         "yt_url": yt_existing_url if yt_already_done else "—",
                         "ig_status": "Already Uploaded" if ig_already_done else "Skipped",
-                        "ig_url": ig_existing_url if ig_already_done else "—"
+                        "ig_url": ig_existing_url if ig_already_done else "—",
+                        "tt_status": "Already Uploaded" if tt_already_done else "Skipped",
+                        "tt_url": tt_existing_url if tt_already_done else "—"
                     })
                     continue
 
@@ -618,10 +670,38 @@ async def process_all_games(
                         ig_status = "Queue Error"
                         ig_url = str(e)
 
+            # ── C. Upload to TikTok ───────────────────────────────────────────
+            tt_status, tt_url = "Skipped", "—"
+            if tt_already_done:
+                tt_status = "Already Uploaded"
+                tt_url = tt_existing_url
+            elif not no_tiktok and upload_tiktok_now:
+                tt_caption = (
+                    build_tiktok_caption(game_id=game_id, target_name=target_name, matchday_context=matchday_context, date_str=today_str)
+                    if build_tiktok_caption else f"Play today's {game_name} at playmaker.best! ⚽ #fyp #football #soccer"
+                )
+                try:
+                    print(f"🎵 Uploading video to TikTok (Privacy: PUBLIC_TO_EVERYONE)...")
+                    publish_id, tt_res = upload_tiktok_now(
+                        video_path=video_path,
+                        caption=tt_caption,
+                        privacy_level="PUBLIC_TO_EVERYONE",
+                        poll_status=True
+                    )
+                    if mark_tt_as_posted:
+                        mark_tt_as_posted(game_id, today_str, publish_id, target_name=target_name, post_data=tt_res)
+                    tt_status = "Live Now"
+                    tt_url = f"PublishID: {publish_id}"
+                except Exception as e:
+                    print(f"❌ TikTok upload error for {game_name}: {e}")
+                    tt_status = "Upload Error"
+                    tt_url = str(e)
+
             results.append({
                 "game": game_name,
                 "yt_status": yt_status, "yt_url": yt_url,
-                "ig_status": ig_status, "ig_url": ig_url
+                "ig_status": ig_status, "ig_url": ig_url,
+                "tt_status": tt_status, "tt_url": tt_url
             })
 
     finally:
@@ -639,20 +719,21 @@ async def process_all_games(
             print("\n🤖 Detached background Instagram daemon started.")
             print("   Queued reels will publish automatically at their scheduled hours.")
 
-    # 5. Print Consolidated Dual-Platform Summary Table
-    print("\n" + "=" * 80)
-    print("                      🎉 BATCH SUMMARY REPORT")
-    print("=" * 80)
-    print(f"{'Game':<24} | {'YouTube Shorts':<26} | {'Instagram':<26}")
-    print("-" * 80)
+    # 5. Print Consolidated Multi-Platform Summary Table
+    print("\n" + "=" * 105)
+    print("                              🎉 BATCH SUMMARY REPORT")
+    print("=" * 105)
+    print(f"{'Game':<22} | {'YouTube Shorts':<25} | {'Instagram':<25} | {'TikTok':<25}")
+    print("-" * 105)
     for r in results:
         yt_disp = f"{r['yt_status']}: {r['yt_url']}" if r.get('yt_url') and r['yt_url'] != "—" else r.get('yt_status', '—')
         ig_disp = f"{r['ig_status']}: {r['ig_url']}" if r.get('ig_url') and r['ig_url'] != "—" else r.get('ig_status', '—')
-        print(f"{r['game']:<24} | {yt_disp[:26]:<26} | {ig_disp[:26]:<26}")
-    print("=" * 80 + "\n")
+        tt_disp = f"{r.get('tt_status', '—')}: {r.get('tt_url', '—')}" if r.get('tt_url') and r.get('tt_url') != "—" else r.get('tt_status', '—')
+        print(f"{r['game']:<22} | {yt_disp[:25]:<25} | {ig_disp[:25]:<25} | {tt_disp[:25]:<25}")
+    print("=" * 105 + "\n")
 
 def main():
-    parser = argparse.ArgumentParser(description="Render and upload daily Playmaker games to YouTube Shorts & Instagram Reels.")
+    parser = argparse.ArgumentParser(description="Render and upload daily Playmaker games to YouTube Shorts, Instagram Reels & TikTok.")
     parser.add_argument(
         "--mode",
         type=str,
@@ -675,6 +756,7 @@ def main():
     parser.add_argument("--no-youtube", action="store_true", help="Skip YouTube upload")
     parser.add_argument("--youtube-with-audio", action="store_true", help="Keep audio when uploading to YouTube Shorts (default: stripped/silent for UGC; kept for career_flight)")
     parser.add_argument("--no-instagram", action="store_true", help="Skip Instagram upload")
+    parser.add_argument("--no-tiktok", action="store_true", help="Skip TikTok upload")
     parser.add_argument("--no-trending-audio", action="store_true", help="Disable automatic Instagram trending audio attachment")
     parser.add_argument("--wait-queue", action="store_true", help="Wait in foreground for all queued reels to finish (ideal for GitHub Actions)")
     parser.add_argument("--force", action="store_true", help="Bypass deduplication checks and re-render/re-upload")
@@ -718,6 +800,7 @@ def main():
         all_games=args.all_games or (mode == "all"),
         no_youtube=args.no_youtube,
         no_instagram=args.no_instagram,
+        no_tiktok=args.no_tiktok,
         instant_reels=True,
         immediate_first=immediate_first,
         wait_queue=args.wait_queue,

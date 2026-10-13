@@ -1,0 +1,17 @@
+{
+  "scriptId": "1QgXgt2vedJ9zB_KXszSSKlRtM9qiOp9o-K9zqgZ3bGh05Jpw0x6lFlJt",
+  "rootDir": "gas_outreach",
+  "parentId": "1ZNJ57i7kVUYrdW4q4S3lRe4NqYUM7-lL4RQtSzX0_8Q",
+  "scriptExtensions": [
+    ".js",
+    ".gs"
+  ],
+  "htmlExtensions": [
+    ".html"
+  ],
+  "jsonExtensions": [
+    ".json"
+  ],
+  "filePushOrder": [],
+  "skipSubdirectories": false
+}
