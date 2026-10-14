@@ -195,5 +195,30 @@ class TestCareerFlightShort(unittest.TestCase):
         target_name = get_target_name_from_game("career_flight")
         self.assertTrue(len(target_name) > 0)
 
+    def test_all_180_destination_puzzles_have_verified_locations(self):
+        """
+        Regression & Integrity Gate:
+        Guarantees that EVERY single club across all 180 puzzle days in daily_destination_games.csv
+        has verified, real coordinates and NEVER falls back to default Paris/Central Europe.
+        """
+        import pandas as pd
+        csv_path = os.path.join(BASE_DIR, "daily_destination_games.csv")
+        self.assertTrue(os.path.exists(csv_path), "daily_destination_games.csv must exist")
+
+        df = pd.read_csv(csv_path)
+        all_clubs = set(df["from_club_name"].dropna().unique()).union(set(df["to_club_name"].dropna().unique()))
+
+        unmapped_clubs = []
+        for club in sorted(all_clubs):
+            loc = get_club_location(club)
+            # Default fallback in geo_manager is lat: 48.8566, lon: 2.3522 and country: 'Europe'
+            if loc.get("country") == "Europe" and abs(loc.get("lat", 0.0) - 48.8566) < 0.001 and abs(loc.get("lon", 0.0) - 2.3522) < 0.001:
+                unmapped_clubs.append(club)
+
+        self.assertEqual(
+            len(unmapped_clubs), 0,
+            f"The following {len(unmapped_clubs)} clubs in daily_destination_games.csv lack verified locations: {unmapped_clubs}"
+        )
+
 if __name__ == "__main__":
     unittest.main()

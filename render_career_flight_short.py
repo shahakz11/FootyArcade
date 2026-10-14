@@ -306,6 +306,12 @@ def load_destination_puzzle(target_date=None, puzzle_num_override=None):
 
         loc_from = get_club_location(from_club)
         loc_to = get_club_location(to_club)
+
+        # Detect unmapped fallback coordinates to prevent silent rendering glitches
+        for cname, loc in [(from_club, loc_from), (to_club, loc_to)]:
+            if loc.get("country") == "Europe" and abs(loc.get("lat", 0.0) - 48.8566) < 0.001 and abs(loc.get("lon", 0.0) - 2.3522) < 0.001:
+                print(f"⚠️ [GEO WARNING] Club '{cname}' is using default Central Europe fallback! Please map it in data/club_locations.json.")
+
         dist_km = haversine_distance_km(loc_from["lat"], loc_from["lon"], loc_to["lat"], loc_to["lon"])
 
         legs.append({
