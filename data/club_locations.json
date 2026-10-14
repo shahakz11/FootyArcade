@@ -1,0 +1,1506 @@
+{
+  "Toronto": {
+    "city": "Toronto",
+    "country": "Canada",
+    "code": "CAN",
+    "flag": "🇨🇦",
+    "lat": 43.6332,
+    "lon": -79.4186
+  },
+  "Toronto FC": {
+    "city": "Toronto",
+    "country": "Canada",
+    "code": "CAN",
+    "flag": "🇨🇦",
+    "lat": 43.6332,
+    "lon": -79.4186
+  },
+  "Miami": {
+    "city": "Miami",
+    "country": "United States",
+    "code": "USA",
+    "flag": "🇺🇸",
+    "lat": 26.1928,
+    "lon": -80.1606
+  },
+  "Inter Miami": {
+    "city": "Miami",
+    "country": "United States",
+    "code": "USA",
+    "flag": "🇺🇸",
+    "lat": 26.1928,
+    "lon": -80.1606
+  },
+  "Orlando": {
+    "city": "Orlando",
+    "country": "United States",
+    "code": "USA",
+    "flag": "🇺🇸",
+    "lat": 28.5411,
+    "lon": -81.3894
+  },
+  "Orlando City": {
+    "city": "Orlando",
+    "country": "United States",
+    "code": "USA",
+    "flag": "🇺🇸",
+    "lat": 28.5411,
+    "lon": -81.3894
+  },
+  "Minnesota": {
+    "city": "Saint Paul",
+    "country": "United States",
+    "code": "USA",
+    "flag": "🇺🇸",
+    "lat": 44.9537,
+    "lon": -93.1656
+  },
+  "SJ Earthquakes": {
+    "city": "San Jose",
+    "country": "United States",
+    "code": "USA",
+    "flag": "🇺🇸",
+    "lat": 37.3514,
+    "lon": -121.925
+  },
+  "San Jose Earthquakes": {
+    "city": "San Jose",
+    "country": "United States",
+    "code": "USA",
+    "flag": "🇺🇸",
+    "lat": 37.3514,
+    "lon": -121.925
+  },
+  "Monterrey": {
+    "city": "Monterrey",
+    "country": "Mexico",
+    "code": "MEX",
+    "flag": "🇲🇽",
+    "lat": 25.6692,
+    "lon": -100.2444
+  },
+  "América": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "code": "MEX",
+    "flag": "🇲🇽",
+    "lat": 19.3028,
+    "lon": -99.1506
+  },
+  "América Coapa": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "code": "MEX",
+    "flag": "🇲🇽",
+    "lat": 19.3028,
+    "lon": -99.1506
+  },
+  "América Premier": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "code": "MEX",
+    "flag": "🇲🇽",
+    "lat": 19.3028,
+    "lon": -99.1506
+  },
+  "Club América": {
+    "city": "Mexico City",
+    "country": "Mexico",
+    "code": "MEX",
+    "flag": "🇲🇽",
+    "lat": 19.3028,
+    "lon": -99.1506
+  },
+  "León": {
+    "city": "León",
+    "country": "Mexico",
+    "code": "MEX",
+    "flag": "🇲🇽",
+    "lat": 21.1158,
+    "lon": -101.6567
+  },
+  "Melb. Victory": {
+    "city": "Melbourne",
+    "country": "Australia",
+    "code": "AUS",
+    "flag": "🇦🇺",
+    "lat": -37.8253,
+    "lon": 144.9833
+  },
+  "Melbourne Victory": {
+    "city": "Melbourne",
+    "country": "Australia",
+    "code": "AUS",
+    "flag": "🇦🇺",
+    "lat": -37.8253,
+    "lon": 144.9833
+  },
+  "Western Sydney": {
+    "city": "Sydney",
+    "country": "Australia",
+    "code": "AUS",
+    "flag": "🇦🇺",
+    "lat": -33.8117,
+    "lon": 151.0042
+  },
+  "Western Sydney Wanderers": {
+    "city": "Sydney",
+    "country": "Australia",
+    "code": "AUS",
+    "flag": "🇦🇺",
+    "lat": -33.8117,
+    "lon": 151.0042
+  },
+  "BJ Guoan": {
+    "city": "Beijing",
+    "country": "China",
+    "code": "CHN",
+    "flag": "🇨🇳",
+    "lat": 39.93,
+    "lon": 116.4383
+  },
+  "Beijing Guoan": {
+    "city": "Beijing",
+    "country": "China",
+    "code": "CHN",
+    "flag": "🇨🇳",
+    "lat": 39.93,
+    "lon": 116.4383
+  },
+  "JS Suning": {
+    "city": "Nanjing",
+    "country": "China",
+    "code": "CHN",
+    "flag": "🇨🇳",
+    "lat": 32.0083,
+    "lon": 118.7233
+  },
+  "Jiangsu Suning": {
+    "city": "Nanjing",
+    "country": "China",
+    "code": "CHN",
+    "flag": "🇨🇳",
+    "lat": 32.0083,
+    "lon": 118.7233
+  },
+  "Kataller Toyama": {
+    "city": "Toyama",
+    "country": "Japan",
+    "code": "JPN",
+    "flag": "🇯🇵",
+    "lat": 36.6231,
+    "lon": 137.1953
+  },
+  "Al-Rayyan": {
+    "city": "Al Rayyan",
+    "country": "Qatar",
+    "code": "QAT",
+    "flag": "🇶🇦",
+    "lat": 25.3289,
+    "lon": 51.3414
+  },
+  "NEOM": {
+    "city": "Tabuk",
+    "country": "Saudi Arabia",
+    "code": "KSA",
+    "flag": "🇸🇦",
+    "lat": 28.3833,
+    "lon": 36.5667
+  },
+  "Sharjah": {
+    "city": "Sharjah",
+    "country": "UAE",
+    "code": "UAE",
+    "flag": "🇦🇪",
+    "lat": 25.3283,
+    "lon": 55.4219
+  },
+  "Sepahan": {
+    "city": "Isfahan",
+    "country": "Iran",
+    "code": "IRN",
+    "flag": "🇮🇷",
+    "lat": 32.6106,
+    "lon": 51.6883
+  },
+  "Atlético-MG": {
+    "city": "Belo Horizonte",
+    "country": "Brazil",
+    "code": "BRA",
+    "flag": "🇧🇷",
+    "lat": -19.93,
+    "lon": -43.9511
+  },
+  "Atlético Mineiro": {
+    "city": "Belo Horizonte",
+    "country": "Brazil",
+    "code": "BRA",
+    "flag": "🇧🇷",
+    "lat": -19.93,
+    "lon": -43.9511
+  },
+  "Atlético-PR": {
+    "city": "Curitiba",
+    "country": "Brazil",
+    "code": "BRA",
+    "flag": "🇧🇷",
+    "lat": -25.4483,
+    "lon": -49.2769
+  },
+  "Athletico Paranaense": {
+    "city": "Curitiba",
+    "country": "Brazil",
+    "code": "BRA",
+    "flag": "🇧🇷",
+    "lat": -25.4483,
+    "lon": -49.2769
+  },
+  "GO Audax": {
+    "city": "Osasco",
+    "country": "Brazil",
+    "code": "BRA",
+    "flag": "🇧🇷",
+    "lat": -23.5325,
+    "lon": -46.7917
+  },
+  "Paulínia-SP": {
+    "city": "Paulínia",
+    "country": "Brazil",
+    "code": "BRA",
+    "flag": "🇧🇷",
+    "lat": -22.7611,
+    "lon": -47.1539
+  },
+  "RS Futebol": {
+    "city": "Alvorada",
+    "country": "Brazil",
+    "code": "BRA",
+    "flag": "🇧🇷",
+    "lat": -30.0003,
+    "lon": -51.0833
+  },
+  "Tombense": {
+    "city": "Tombos",
+    "country": "Brazil",
+    "code": "BRA",
+    "flag": "🇧🇷",
+    "lat": -20.9069,
+    "lon": -42.0253
+  },
+  "Banfield": {
+    "city": "Banfield",
+    "country": "Argentina",
+    "code": "ARG",
+    "flag": "🇦🇷",
+    "lat": -34.7472,
+    "lon": -58.3917
+  },
+  "Belgrano": {
+    "city": "Córdoba",
+    "country": "Argentina",
+    "code": "ARG",
+    "flag": "🇦🇷",
+    "lat": -31.4056,
+    "lon": -64.2056
+  },
+  "Defensa": {
+    "city": "Florencio Varela",
+    "country": "Argentina",
+    "code": "ARG",
+    "flag": "🇦🇷",
+    "lat": -34.8236,
+    "lon": -58.2881
+  },
+  "Defensa y Justicia": {
+    "city": "Florencio Varela",
+    "country": "Argentina",
+    "code": "ARG",
+    "flag": "🇦🇷",
+    "lat": -34.8236,
+    "lon": -58.2881
+  },
+  "Independiente": {
+    "city": "Avellaneda",
+    "country": "Argentina",
+    "code": "ARG",
+    "flag": "🇦🇷",
+    "lat": -34.6703,
+    "lon": -58.3711
+  },
+  "Newell's": {
+    "city": "Rosario",
+    "country": "Argentina",
+    "code": "ARG",
+    "flag": "🇦🇷",
+    "lat": -32.9556,
+    "lon": -60.6653
+  },
+  "Newell's Old Boys": {
+    "city": "Rosario",
+    "country": "Argentina",
+    "code": "ARG",
+    "flag": "🇦🇷",
+    "lat": -32.9556,
+    "lon": -60.6653
+  },
+  "Talleres": {
+    "city": "Córdoba",
+    "country": "Argentina",
+    "code": "ARG",
+    "flag": "🇦🇷",
+    "lat": -31.4464,
+    "lon": -64.1783
+  },
+  "Vélez": {
+    "city": "Buenos Aires",
+    "country": "Argentina",
+    "code": "ARG",
+    "flag": "🇦🇷",
+    "lat": -34.6353,
+    "lon": -58.5208
+  },
+  "Vélez Sarsfield": {
+    "city": "Buenos Aires",
+    "country": "Argentina",
+    "code": "ARG",
+    "flag": "🇦🇷",
+    "lat": -34.6353,
+    "lon": -58.5208
+  },
+  "Fénix": {
+    "city": "Montevideo",
+    "country": "Uruguay",
+    "code": "URU",
+    "flag": "🇺🇾",
+    "lat": -34.8717,
+    "lon": -56.2167
+  },
+  "Junior": {
+    "city": "Barranquilla",
+    "country": "Colombia",
+    "code": "COL",
+    "flag": "🇨🇴",
+    "lat": 10.9256,
+    "lon": -74.8
+  },
+  "Barranquilla": {
+    "city": "Barranquilla",
+    "country": "Colombia",
+    "code": "COL",
+    "flag": "🇨🇴",
+    "lat": 10.9639,
+    "lon": -74.7964
+  },
+  "Millonarios": {
+    "city": "Bogotá",
+    "country": "Colombia",
+    "code": "COL",
+    "flag": "🇨🇴",
+    "lat": 4.6458,
+    "lon": -74.0775
+  },
+  "IDV": {
+    "city": "Sangolquí",
+    "country": "Ecuador",
+    "code": "ECU",
+    "flag": "🇪🇨",
+    "lat": -0.3308,
+    "lon": -78.4389
+  },
+  "Independiente del Valle": {
+    "city": "Sangolquí",
+    "country": "Ecuador",
+    "code": "ECU",
+    "flag": "🇪🇨",
+    "lat": -0.3308,
+    "lon": -78.4389
+  },
+  "Minerven": {
+    "city": "El Callao",
+    "country": "Venezuela",
+    "code": "VEN",
+    "flag": "🇻🇪",
+    "lat": 7.35,
+    "lon": -61.8333
+  },
+  "El Mokawloon": {
+    "city": "Cairo",
+    "country": "Egypt",
+    "code": "EGY",
+    "flag": "🇪🇬",
+    "lat": 30.0531,
+    "lon": 31.3008
+  },
+  "Mokawloon": {
+    "city": "Cairo",
+    "country": "Egypt",
+    "code": "EGY",
+    "flag": "🇪🇬",
+    "lat": 30.0531,
+    "lon": 31.3008
+  },
+  "FUS Rabat": {
+    "city": "Rabat",
+    "country": "Morocco",
+    "code": "MAR",
+    "flag": "🇲🇦",
+    "lat": 33.9983,
+    "lon": -6.8539
+  },
+  "Génération Foot": {
+    "city": "Dakar",
+    "country": "Senegal",
+    "code": "SEN",
+    "flag": "🇸🇳",
+    "lat": 14.7644,
+    "lon": -17.2917
+  },
+  "Right to Dream": {
+    "city": "Old Akrade",
+    "country": "Ghana",
+    "code": "GHA",
+    "flag": "🇬🇭",
+    "lat": 6.2083,
+    "lon": 0.05
+  },
+  "Horoya": {
+    "city": "Conakry",
+    "country": "Guinea",
+    "code": "GUI",
+    "flag": "🇬🇳",
+    "lat": 9.537,
+    "lon": -13.6785
+  },
+  "Denguélé": {
+    "city": "Odienné",
+    "country": "Ivory Coast",
+    "code": "CIV",
+    "flag": "🇨🇮",
+    "lat": 9.505,
+    "lon": -7.5642
+  },
+  "Crotone": {
+    "city": "Crotone",
+    "country": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹",
+    "lat": 39.0808,
+    "lon": 17.1272
+  },
+  "Bari": {
+    "city": "Bari",
+    "country": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹",
+    "lat": 41.0928,
+    "lon": 16.84
+  },
+  "Cesena": {
+    "city": "Cesena",
+    "country": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹",
+    "lat": 44.1417,
+    "lon": 12.2611
+  },
+  "Cremonese": {
+    "city": "Cremona",
+    "country": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹",
+    "lat": 45.1411,
+    "lon": 10.0347
+  },
+  "Modena": {
+    "city": "Modena",
+    "country": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹",
+    "lat": 44.6533,
+    "lon": 10.9286
+  },
+  "Pisa": {
+    "city": "Pisa",
+    "country": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹",
+    "lat": 43.7258,
+    "lon": 10.3953
+  },
+  "Sambonifacese": {
+    "city": "San Bonifacio",
+    "country": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹",
+    "lat": 45.3986,
+    "lon": 11.275
+  },
+  "Trapani": {
+    "city": "Trapani",
+    "country": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹",
+    "lat": 38.0264,
+    "lon": 12.5358
+  },
+  "Treviso": {
+    "city": "Treviso",
+    "country": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹",
+    "lat": 45.6706,
+    "lon": 12.2417
+  },
+  "Venezia": {
+    "city": "Venice",
+    "country": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹",
+    "lat": 45.4286,
+    "lon": 12.3592
+  },
+  "Verona": {
+    "city": "Verona",
+    "country": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹",
+    "lat": 45.4354,
+    "lon": 10.9686
+  },
+  "Viterbese Y": {
+    "city": "Viterbo",
+    "country": "Italy",
+    "code": "ITA",
+    "flag": "🇮🇹",
+    "lat": 42.4278,
+    "lon": 12.1069
+  },
+  "Aberdeen": {
+    "city": "Aberdeen",
+    "country": "Scotland",
+    "code": "SCO",
+    "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+    "lat": 57.1594,
+    "lon": -2.0886
+  },
+  "Queens Park": {
+    "city": "Glasgow",
+    "country": "Scotland",
+    "code": "SCO",
+    "flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+    "lat": 55.8258,
+    "lon": -4.2525
+  },
+  "Birmingham": {
+    "city": "Birmingham",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 52.4756,
+    "lon": -1.8683
+  },
+  "West Brom": {
+    "city": "West Bromwich",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 52.5092,
+    "lon": -1.9639
+  },
+  "Sunderland": {
+    "city": "Sunderland",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 54.9144,
+    "lon": -1.3883
+  },
+  "St. Pauli": {
+    "city": "Hamburg",
+    "country": "Germany",
+    "code": "GER",
+    "flag": "🇩🇪",
+    "lat": 53.5544,
+    "lon": 9.9678
+  },
+  "Barnsley": {
+    "city": "Barnsley",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 53.5522,
+    "lon": -1.4678
+  },
+  "Blackpool": {
+    "city": "Blackpool",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 53.8047,
+    "lon": -3.0353
+  },
+  "Bristol": {
+    "city": "Bristol",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 51.44,
+    "lon": -2.6203
+  },
+  "Charlton": {
+    "city": "London",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 51.4864,
+    "lon": 0.0361
+  },
+  "Coventry": {
+    "city": "Coventry",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 52.4481,
+    "lon": -1.4956
+  },
+  "Crewe Alexandra": {
+    "city": "Crewe",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 53.0872,
+    "lon": -2.4358
+  },
+  "Exeter": {
+    "city": "Exeter",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 50.7311,
+    "lon": -3.5211
+  },
+  "Ipswich": {
+    "city": "Ipswich",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 52.055,
+    "lon": 1.1447
+  },
+  "Leyton Orient": {
+    "city": "London",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 51.56,
+    "lon": -0.0125
+  },
+  "Luton": {
+    "city": "Luton",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 51.8842,
+    "lon": -0.4317
+  },
+  "MK Dons": {
+    "city": "Milton Keynes",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 52.0097,
+    "lon": -0.7336
+  },
+  "Maidenhead": {
+    "city": "Maidenhead",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 51.52,
+    "lon": -0.7183
+  },
+  "Maidenhead Utd": {
+    "city": "Maidenhead",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 51.52,
+    "lon": -0.7183
+  },
+  "Marlow": {
+    "city": "Marlow",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 51.5714,
+    "lon": -0.7761
+  },
+  "Millwall": {
+    "city": "London",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 51.4858,
+    "lon": -0.0508
+  },
+  "Newport County": {
+    "city": "Newport",
+    "country": "Wales",
+    "code": "WAL",
+    "flag": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+    "lat": 51.5881,
+    "lon": -2.9875
+  },
+  "Northampton": {
+    "city": "Northampton",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 52.2353,
+    "lon": -0.9333
+  },
+  "Nottingham": {
+    "city": "Nottingham",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 52.94,
+    "lon": -1.1328
+  },
+  "Peterborough": {
+    "city": "Peterborough",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 52.5647,
+    "lon": -0.2403
+  },
+  "Preston": {
+    "city": "Preston",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 53.7722,
+    "lon": -2.6881
+  },
+  "QPR": {
+    "city": "London",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 51.5092,
+    "lon": -0.2322
+  },
+  "Reading": {
+    "city": "Reading",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 51.4222,
+    "lon": -0.9828
+  },
+  "Scunthorpe Utd": {
+    "city": "Scunthorpe",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 53.5786,
+    "lon": -0.6975
+  },
+  "Shrewsbury": {
+    "city": "Shrewsbury",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 52.6886,
+    "lon": -2.7486
+  },
+  "Welling Utd": {
+    "city": "London",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 51.4583,
+    "lon": 0.1067
+  },
+  "Weston-super-M": {
+    "city": "Weston-super-Mare",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 51.3364,
+    "lon": -2.9553
+  },
+  "Wigan": {
+    "city": "Wigan",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 53.5478,
+    "lon": -2.6539
+  },
+  "Wycombe": {
+    "city": "High Wycombe",
+    "country": "England",
+    "code": "ENG",
+    "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "lat": 51.6306,
+    "lon": -0.8008
+  },
+  "Amiens": {
+    "city": "Amiens",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 49.8942,
+    "lon": 2.2619
+  },
+  "Alfortville": {
+    "city": "Alfortville",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 48.7833,
+    "lon": 2.4167
+  },
+  "Angers SCO": {
+    "city": "Angers",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 47.4603,
+    "lon": -0.5306
+  },
+  "Boulogne": {
+    "city": "Boulogne-sur-Mer",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 50.7256,
+    "lon": 1.6231
+  },
+  "Dijon": {
+    "city": "Dijon",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 47.3244,
+    "lon": 5.0678
+  },
+  "EA Guingamp": {
+    "city": "Guingamp",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 48.5572,
+    "lon": -3.1647
+  },
+  "Istres": {
+    "city": "Istres",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 43.5042,
+    "lon": 4.9961
+  },
+  "Le Havre": {
+    "city": "Le Havre",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 49.4989,
+    "lon": 0.1697
+  },
+  "Mantois 78": {
+    "city": "Mantes-la-Ville",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 48.9744,
+    "lon": 1.7083
+  },
+  "Nancy": {
+    "city": "Nancy",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 48.6958,
+    "lon": 6.2108
+  },
+  "Quimper": {
+    "city": "Quimper",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 47.9969,
+    "lon": -4.0983
+  },
+  "SM Caen": {
+    "city": "Caen",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 49.1794,
+    "lon": -0.3964
+  },
+  "Sochaux": {
+    "city": "Montbéliard",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 47.5122,
+    "lon": 6.8344
+  },
+  "Suresnes": {
+    "city": "Suresnes",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 48.87,
+    "lon": 2.2233
+  },
+  "Valenciennes": {
+    "city": "Valenciennes",
+    "country": "France",
+    "code": "FRA",
+    "flag": "🇫🇷",
+    "lat": 50.3508,
+    "lon": 3.5358
+  },
+  "Bilbao": {
+    "city": "Bilbao",
+    "country": "Spain",
+    "code": "ESP",
+    "flag": "🇪🇸",
+    "lat": 43.2641,
+    "lon": -2.9493
+  },
+  "Eibar": {
+    "city": "Eibar",
+    "country": "Spain",
+    "code": "ESP",
+    "flag": "🇪🇸",
+    "lat": 43.1817,
+    "lon": -2.4756
+  },
+  "Elche": {
+    "city": "Elche",
+    "country": "Spain",
+    "code": "ESP",
+    "flag": "🇪🇸",
+    "lat": 38.2669,
+    "lon": -0.6631
+  },
+  "Mirandés": {
+    "city": "Miranda de Ebro",
+    "country": "Spain",
+    "code": "ESP",
+    "flag": "🇪🇸",
+    "lat": 42.6842,
+    "lon": -2.9472
+  },
+  "CyD Leonesa": {
+    "city": "León",
+    "country": "Spain",
+    "code": "ESP",
+    "flag": "🇪🇸",
+    "lat": 42.5894,
+    "lon": -5.5786
+  },
+  "Atl. Madrileño": {
+    "city": "Madrid",
+    "country": "Spain",
+    "code": "ESP",
+    "flag": "🇪🇸",
+    "lat": 40.4362,
+    "lon": -3.5996
+  },
+  "Belenenses": {
+    "city": "Lisbon",
+    "country": "Portugal",
+    "code": "POR",
+    "flag": "🇵🇹",
+    "lat": 38.7028,
+    "lon": -9.2069
+  },
+  "Boavista Y19": {
+    "city": "Porto",
+    "country": "Portugal",
+    "code": "POR",
+    "flag": "🇵🇹",
+    "lat": 41.1611,
+    "lon": -8.6417
+  },
+  "Estoril": {
+    "city": "Estoril",
+    "country": "Portugal",
+    "code": "POR",
+    "flag": "🇵🇹",
+    "lat": 38.7083,
+    "lon": -9.3972
+  },
+  "Fátima": {
+    "city": "Fátima",
+    "country": "Portugal",
+    "code": "POR",
+    "flag": "🇵🇹",
+    "lat": 39.6167,
+    "lon": -8.65
+  },
+  "GD Ribeirão": {
+    "city": "Ribeirão",
+    "country": "Portugal",
+    "code": "POR",
+    "flag": "🇵🇹",
+    "lat": 41.3583,
+    "lon": -8.5639
+  },
+  "Moreirense": {
+    "city": "Moreira de Cónegos",
+    "country": "Portugal",
+    "code": "POR",
+    "flag": "🇵🇹",
+    "lat": 41.3811,
+    "lon": -8.3375
+  },
+  "Rio Ave": {
+    "city": "Vila do Conde",
+    "country": "Portugal",
+    "code": "POR",
+    "flag": "🇵🇹",
+    "lat": 41.3639,
+    "lon": -8.7428
+  },
+  "Sacavenense": {
+    "city": "Sacavém",
+    "country": "Portugal",
+    "code": "POR",
+    "flag": "🇵🇹",
+    "lat": 38.7917,
+    "lon": -9.1056
+  },
+  "Sintrense": {
+    "city": "Sintra",
+    "country": "Portugal",
+    "code": "POR",
+    "flag": "🇵🇹",
+    "lat": 38.8028,
+    "lon": -9.3817
+  },
+  "Sintrense Y19": {
+    "city": "Sintra",
+    "country": "Portugal",
+    "code": "POR",
+    "flag": "🇵🇹",
+    "lat": 38.8028,
+    "lon": -9.3817
+  },
+  "Vit. Guimarães": {
+    "city": "Guimarães",
+    "country": "Portugal",
+    "code": "POR",
+    "flag": "🇵🇹",
+    "lat": 41.4456,
+    "lon": -8.3006
+  },
+  "Desportivo": {
+    "city": "Chaves",
+    "country": "Portugal",
+    "code": "POR",
+    "flag": "🇵🇹",
+    "lat": 41.7456,
+    "lon": -7.4667
+  },
+  "Groningen": {
+    "city": "Groningen",
+    "country": "Netherlands",
+    "code": "NED",
+    "flag": "🇳🇱",
+    "lat": 53.2064,
+    "lon": 6.5917
+  },
+  "Heerenveen": {
+    "city": "Heerenveen",
+    "country": "Netherlands",
+    "code": "NED",
+    "flag": "🇳🇱",
+    "lat": 52.9583,
+    "lon": 5.9361
+  },
+  "NEC Nijmegen": {
+    "city": "Nijmegen",
+    "country": "Netherlands",
+    "code": "NED",
+    "flag": "🇳🇱",
+    "lat": 51.8222,
+    "lon": 5.8372
+  },
+  "NECOss": {
+    "city": "Nijmegen",
+    "country": "Netherlands",
+    "code": "NED",
+    "flag": "🇳🇱",
+    "lat": 51.8222,
+    "lon": 5.8372
+  },
+  "PEC Zwolle": {
+    "city": "Zwolle",
+    "country": "Netherlands",
+    "code": "NED",
+    "flag": "🇳🇱",
+    "lat": 52.5167,
+    "lon": 6.1264
+  },
+  "RKC Waalwijk": {
+    "city": "Waalwijk",
+    "country": "Netherlands",
+    "code": "NED",
+    "flag": "🇳🇱",
+    "lat": 51.6833,
+    "lon": 5.0667
+  },
+  "Twente": {
+    "city": "Enschede",
+    "country": "Netherlands",
+    "code": "NED",
+    "flag": "🇳🇱",
+    "lat": 52.2367,
+    "lon": 6.8378
+  },
+  "Utrecht": {
+    "city": "Utrecht",
+    "country": "Netherlands",
+    "code": "NED",
+    "flag": "🇳🇱",
+    "lat": 52.0783,
+    "lon": 5.1461
+  },
+  "Vitesse": {
+    "city": "Arnhem",
+    "country": "Netherlands",
+    "code": "NED",
+    "flag": "🇳🇱",
+    "lat": 51.9631,
+    "lon": 5.8928
+  },
+  "Beerschot VA": {
+    "city": "Antwerp",
+    "country": "Belgium",
+    "code": "BEL",
+    "flag": "🇧🇪",
+    "lat": 51.1917,
+    "lon": 4.3833
+  },
+  "Standard": {
+    "city": "Liège",
+    "country": "Belgium",
+    "code": "BEL",
+    "flag": "🇧🇪",
+    "lat": 50.61,
+    "lon": 5.5433
+  },
+  "Lausanne-Sport": {
+    "city": "Lausanne",
+    "country": "Switzerland",
+    "code": "SUI",
+    "flag": "🇨🇭",
+    "lat": 46.5389,
+    "lon": 6.6236
+  },
+  "Luzern": {
+    "city": "Lucerne",
+    "country": "Switzerland",
+    "code": "SUI",
+    "flag": "🇨🇭",
+    "lat": 47.0347,
+    "lon": 8.3106
+  },
+  "Team Vaud": {
+    "city": "Lausanne",
+    "country": "Switzerland",
+    "code": "SUI",
+    "flag": "🇨🇭",
+    "lat": 46.5389,
+    "lon": 6.6236
+  },
+  "Liefering": {
+    "city": "Salzburg",
+    "country": "Austria",
+    "code": "AUT",
+    "flag": "🇦🇹",
+    "lat": 47.8156,
+    "lon": 12.9981
+  },
+  "Bromma": {
+    "city": "Stockholm",
+    "country": "Sweden",
+    "code": "SWE",
+    "flag": "🇸🇪",
+    "lat": 59.3667,
+    "lon": 17.9333
+  },
+  "Brommapojkarna": {
+    "city": "Stockholm",
+    "country": "Sweden",
+    "code": "SWE",
+    "flag": "🇸🇪",
+    "lat": 59.3667,
+    "lon": 17.9333
+  },
+  "Molde": {
+    "city": "Molde",
+    "country": "Norway",
+    "code": "NOR",
+    "flag": "🇳🇴",
+    "lat": 62.7375,
+    "lon": 7.15
+  },
+  "Sarpsborg 08": {
+    "city": "Sarpsborg",
+    "country": "Norway",
+    "code": "NOR",
+    "flag": "🇳🇴",
+    "lat": 59.2833,
+    "lon": 11.1167
+  },
+  "Lyngby": {
+    "city": "Lyngby",
+    "country": "Denmark",
+    "code": "DEN",
+    "flag": "🇩🇰",
+    "lat": 55.7708,
+    "lon": 12.5028
+  },
+  "Nordsjaelland": {
+    "city": "Farum",
+    "country": "Denmark",
+    "code": "DEN",
+    "flag": "🇩🇰",
+    "lat": 55.8153,
+    "lon": 12.3667
+  },
+  "Vejle": {
+    "city": "Vejle",
+    "country": "Denmark",
+    "code": "DEN",
+    "flag": "🇩🇰",
+    "lat": 55.7117,
+    "lon": 9.5539
+  },
+  "Valur": {
+    "city": "Reykjavík",
+    "country": "Iceland",
+    "code": "ISL",
+    "flag": "🇮🇸",
+    "lat": 64.1333,
+    "lon": -21.9167
+  },
+  "Víkingur": {
+    "city": "Reykjavík",
+    "country": "Iceland",
+    "code": "ISL",
+    "flag": "🇮🇸",
+    "lat": 64.1206,
+    "lon": -21.8722
+  },
+  "Din. Zagreb": {
+    "city": "Zagreb",
+    "country": "Croatia",
+    "code": "CRO",
+    "flag": "🇭🇷",
+    "lat": 45.8189,
+    "lon": 16.0181
+  },
+  "Partizan": {
+    "city": "Belgrade",
+    "country": "Serbia",
+    "code": "SRB",
+    "flag": "🇷🇸",
+    "lat": 44.7886,
+    "lon": 20.4592
+  },
+  "Teleoptik": {
+    "city": "Zemun",
+    "country": "Serbia",
+    "code": "SRB",
+    "flag": "🇷🇸",
+    "lat": 44.85,
+    "lon": 20.3667
+  },
+  "Kolubara": {
+    "city": "Lazarevac",
+    "country": "Serbia",
+    "code": "SRB",
+    "flag": "🇷🇸",
+    "lat": 44.3833,
+    "lon": 20.25
+  },
+  "Vojvodina": {
+    "city": "Novi Sad",
+    "country": "Serbia",
+    "code": "SRB",
+    "flag": "🇷🇸",
+    "lat": 45.2444,
+    "lon": 19.8436
+  },
+  "Zeljeznicar": {
+    "city": "Sarajevo",
+    "country": "Bosnia",
+    "code": "BIH",
+    "flag": "🇧🇦",
+    "lat": 43.8478,
+    "lon": 18.3889
+  },
+  "Cracovia": {
+    "city": "Kraków",
+    "country": "Poland",
+    "code": "POL",
+    "flag": "🇵🇱",
+    "lat": 50.0578,
+    "lon": 19.9214
+  },
+  "Lubin": {
+    "city": "Lubin",
+    "country": "Poland",
+    "code": "POL",
+    "flag": "🇵🇱",
+    "lat": 51.4,
+    "lon": 16.2
+  },
+  "Zaglebie Lubin": {
+    "city": "Lubin",
+    "country": "Poland",
+    "code": "POL",
+    "lat": 51.4,
+    "lon": 16.2,
+    "flag": "🇵🇱"
+  },
+  "Dzierzoniow": {
+    "city": "Dzierżoniów",
+    "country": "Poland",
+    "code": "POL",
+    "flag": "🇵🇱",
+    "lat": 50.7281,
+    "lon": 16.6508
+  },
+  "L. Dzierzoniow": {
+    "city": "Dzierżoniów",
+    "country": "Poland",
+    "code": "POL",
+    "flag": "🇵🇱",
+    "lat": 50.7281,
+    "lon": 16.6508
+  },
+  "Bohemians 1905": {
+    "city": "Prague",
+    "country": "Czech Republic",
+    "code": "CZE",
+    "flag": "🇨🇿",
+    "lat": 50.0664,
+    "lon": 14.4553
+  },
+  "Sparta": {
+    "city": "Prague",
+    "country": "Czech Republic",
+    "code": "CZE",
+    "flag": "🇨🇿",
+    "lat": 50.1,
+    "lon": 14.4158
+  },
+  "Teplice": {
+    "city": "Teplice",
+    "country": "Czech Republic",
+    "code": "CZE",
+    "flag": "🇨🇿",
+    "lat": 50.6406,
+    "lon": 13.8247
+  },
+  "Usti nad Labem": {
+    "city": "Ústí nad Labem",
+    "country": "Czech Republic",
+    "code": "CZE",
+    "flag": "🇨🇿",
+    "lat": 50.6606,
+    "lon": 14.0322
+  },
+  "MFK Kosice": {
+    "city": "Košice",
+    "country": "Slovakia",
+    "code": "SVK",
+    "flag": "🇸🇰",
+    "lat": 48.7164,
+    "lon": 21.2611
+  },
+  "STK Samorin": {
+    "city": "Šamorín",
+    "country": "Slovakia",
+    "code": "SVK",
+    "flag": "🇸🇰",
+    "lat": 48.0264,
+    "lon": 17.3119
+  },
+  "ETO Győr": {
+    "city": "Győr",
+    "country": "Hungary",
+    "code": "HUN",
+    "flag": "🇭🇷",
+    "lat": 47.6931,
+    "lon": 17.6594
+  },
+  "Ferencváros": {
+    "city": "Budapest",
+    "country": "Hungary",
+    "code": "HUN",
+    "flag": "🇭🇺",
+    "lat": 47.4747,
+    "lon": 19.0964
+  },
+  "Dinamo Moscow": {
+    "city": "Moscow",
+    "country": "Russia",
+    "code": "RUS",
+    "flag": "🇷🇺",
+    "lat": 55.7917,
+    "lon": 37.5597
+  },
+  "Loko Moscow": {
+    "city": "Moscow",
+    "country": "Russia",
+    "code": "RUS",
+    "flag": "🇷🇺",
+    "lat": 55.8033,
+    "lon": 37.7414
+  },
+  "Ufa": {
+    "city": "Ufa",
+    "country": "Russia",
+    "code": "RUS",
+    "flag": "🇷🇺",
+    "lat": 54.7389,
+    "lon": 55.9722
+  },
+  "Desna": {
+    "city": "Chernihiv",
+    "country": "Ukraine",
+    "code": "UKR",
+    "flag": "🇺🇦",
+    "lat": 51.4983,
+    "lon": 31.2894
+  },
+  "Pannaxiakos": {
+    "city": "Naxos",
+    "country": "Greece",
+    "code": "GRE",
+    "flag": "🇬🇷",
+    "lat": 37.1,
+    "lon": 25.3833
+  },
+  "AM Football": {
+    "city": "Madrid",
+    "country": "Spain",
+    "code": "ESP",
+    "flag": "🇪🇸",
+    "lat": 40.4168,
+    "lon": -3.7038
+  }
+}
