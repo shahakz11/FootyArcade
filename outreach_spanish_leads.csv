@@ -1,5 +1,5 @@
-"Status","Target Company","Category","Recipient Email","Subject","Email Body"
-"READY","Biwenger (Diario AS)","Fantasy Football","contacto@biwenger.com","Mini-juegos de fútbol diarios para Biwenger: Retención entre jornadas y tiempo de sesión","Hola equipo de Biwenger,
+"Status","Target Company","Category","Recipient Email","Fallback Channel","Fallback URL / Handle","Subject","Email Body"
+"READY","Biwenger (Diario AS)","Fantasy Football","contacto@biwenger.com","Web Form / Twitter DM","https://www.biwenger.com/contacto/ (Twitter: @biwenger)","Mini-juegos de fútbol diarios para Biwenger: Retención entre jornadas y tiempo de sesión","Hola equipo de Biwenger,
 
 En Biwenger tienen la mayor comunidad fantasy de LaLiga en España, pero como toda plataforma fantasy, existe el reto de mantener a los usuarios entrando a la app de lunes a jueves cuando no hay partidos en juego.
 
@@ -18,7 +18,7 @@ Un saludo cordial,
 
 Playmaker Team
 https://playmaker.best"
-"READY","Mister Fantasy (Champion Games)","Fantasy Football","marc@championgames.com","Gamificación diaria para Mister Fantasy: Mini-juegos de retención entre jornadas","Hola Marc,
+"READY","Mister Fantasy (Champion Games)","Fantasy Football","marc@championgames.com","Help Center / Twitter DM","https://mister.mundodeportivo.com (Twitter: @mister_fantasy)","Gamificación diaria para Mister Fantasy: Mini-juegos de retención entre jornadas","Hola Marc,
 
 Te escribo porque sigo el desarrollo de Mister Fantasy y la experiencia tan cuidada que han creado para los managers de fútbol.
 
@@ -37,7 +37,7 @@ Un saludo,
 
 Playmaker Team
 https://playmaker.best"
-"READY","FútbolFantasy","Alineaciones & Fantasy","admin@futbolfantasy.com","Widget de juegos interactivos de fútbol para FútbolFantasy (dwell time y engagement)","Hola equipo de FútbolFantasy,
+"READY","FútbolFantasy","Alineaciones & Fantasy","futbolfantasy@gmail.com","Web Form","https://www.futbolfantasy.com/contacto","Widget de juegos interactivos de fútbol para FútbolFantasy (dwell time y engagement)","Hola equipo de FútbolFantasy,
 
 FútbolFantasy es la web de referencia absoluta para quienes seguimos LaLiga y el fantasy a diario. Sus usuarios pasan mucho tiempo leyendo previas y posibles alineaciones.
 
@@ -56,7 +56,7 @@ Un saludo cordial,
 
 Playmaker Team
 https://playmaker.best"
-"READY","Jornada Perfecta","Fantasy & Noticias","jornadaperfecta@gmail.com","Colaboración interactiva para Jornada Perfecta: Reto diario de fútbol","Hola equipo de Jornada Perfecta,
+"READY","Jornada Perfecta","Fantasy & Noticias","jornadaperfecta@gmail.com","Web Form","https://www.jornadaperfecta.com/blog/contacto/","Colaboración interactiva para Jornada Perfecta: Reto diario de fútbol","Hola equipo de Jornada Perfecta,
 
 Seguimos de cerca sus análisis y guías fantasy para managers en España.
 
@@ -72,7 +72,7 @@ Un saludo cordial,
 
 Playmaker Team
 https://playmaker.best"
-"READY","Comunio España","Fantasy Football","info@comunio.es","Gamificación y mini-juegos diarios de fútbol para Comunio","Hola equipo de Comunio,
+"READY","Comunio España","Fantasy Football","info@comunio.es","Twitter DM","https://twitter.com/comunioEs","Gamificación y mini-juegos diarios de fútbol para Comunio","Hola equipo de Comunio,
 
 Comunio es la plataforma histórica por excelencia para ligas de amigos en el fútbol español.
 
@@ -88,7 +88,7 @@ Un saludo cordial,
 
 Playmaker Team
 https://playmaker.best"
-"READY","BeSoccer / Resultados de Fútbol","Scores & Datos (España)","api@besoccer.com","Propuesta interactiva para BeSoccer: Mini-juegos diarios de fútbol integrables","Hola equipo de BeSoccer,
+"READY","BeSoccer / Resultados de Fútbol","Scores & Datos (España)","api@besoccer.com","Sponsorships / Ads Email","sponsoring@besoccer.com / salesteam@besoccer.com","Propuesta interactiva para BeSoccer: Mini-juegos diarios de fútbol integrables","Hola equipo de BeSoccer,
 
 Conocemos el ecosistema de BeSoccer y la enorme base de datos con la que alimentan a millones de aficionados tanto en España como en Latinoamérica.
 
@@ -107,7 +107,7 @@ Un saludo cordial,
 
 Playmaker Team
 https://playmaker.best"
-"READY","Promiedos","Scores & Tablas (Argentina)","contact@promiedos.com.ar","Juego futbolero diario para Promiedos (Reto del Día)","Hola gente de Promiedos,
+"READY","Promiedos","Scores & Tablas (Argentina)","contact@promiedos.com.ar","Twitter DM / Instagram","https://twitter.com/Promiedos (@promiedosok)","Juego futbolero diario para Promiedos (Reto del Día)","Hola gente de Promiedos,
 
 Todos los que amamos el fútbol entramos a Promiedos a mirar las tablas, los historiales y los resultados al minuto.
 
@@ -127,7 +127,7 @@ Abrazo grande,
 
 Playmaker Team
 https://playmaker.best"
-"READY","Relevo (Vocento)","Medio Deportivo (España)","comunidades@relevo.com","Propuesta interactiva para Relevo: Mini-juegos diarios de fútbol (retención y comunidad)","Hola equipo de Relevo,
+"READY","Relevo (Vocento)","Medio Deportivo (España)","publi@relevo.com","Redacción Email / Twitter DM","redaccion@relevo.com (Twitter: @relevo)","Propuesta interactiva para Relevo: Mini-juegos diarios de fútbol (retención y comunidad)","Hola equipo de Relevo,
 
 Nos encanta el tono fresco y la forma visual e interactiva con la que conectan con los aficionados en Relevo.
 
@@ -146,7 +146,7 @@ Un saludo cordial,
 
 Playmaker Team
 https://playmaker.best"
-"READY","Revista Panenka","Cultura & Revista (España)","redaccion@panenka.org","Colaboración interactiva para Panenka: Pasatiempos diarios de cultura y memoria futbolera","Hola equipo de Panenka,
+"READY","Revista Panenka","Cultura & Revista (España)","publicidad@panenka.org","Twitter DM / Editorial","https://twitter.com/RevistaPanenka (redaccion@panenka.org)","Colaboración interactiva para Panenka: Pasatiempos diarios de cultura y memoria futbolera","Hola equipo de Panenka,
 
 Panenka es el hogar de la memoria y la cultura futbolera en nuestro idioma.
 
@@ -162,7 +162,7 @@ Un saludo cordial,
 
 Playmaker Team
 https://playmaker.best"
-"READY","ElDesmarque (Mediaset)","Medio Deportivo (España)","redaccion@eldesmarque.com","Módulo de mini-juegos de fútbol para ElDesmarque: Incremento de tiempo en página","Hola equipo de ElDesmarque,
+"READY","ElDesmarque (Mediaset)","Medio Deportivo (España)","redaccion@eldesmarque.com","Twitter DM","https://twitter.com/eldesmarque","Módulo de mini-juegos de fútbol para ElDesmarque: Incremento de tiempo en página","Hola equipo de ElDesmarque,
 
 Nos ponemos en contacto para presentarles una propuesta orientada a enriquecer la experiencia de sus lectores y maximizar el tiempo medio por visita (dwell time) en ElDesmarque.
 
@@ -181,7 +181,7 @@ Un saludo cordial,
 
 Playmaker Team
 https://playmaker.best"
-"READY","Futbol Sites / Bolavip","Red de Medios (LatAm)","contact@futbolsites.net","Propuesta de Gamificación para la red de Futbol Sites (Bolavip, RedGol): Mini-juegos diarios","Hola equipo de Futbol Sites,
+"READY","Futbol Sites / Bolavip","Red de Medios (LatAm)","contact@futbolsites.net","Web Form","https://bolavip.com/info/contact","Propuesta de Gamificación para la red de Futbol Sites (Bolavip, RedGol): Mini-juegos diarios","Hola equipo de Futbol Sites,
 
 Conocemos el alcance de su red de medios deportivos en América Latina y el mercado hispano de Estados Unidos (Bolavip, RedGol, DaleAlbo, etc.).
 
@@ -202,7 +202,7 @@ Un saludo cordial,
 
 Playmaker Team
 https://playmaker.best"
-"READY","Somos Invictos","Comunidad & Medios (México/LatAm)","contacto@somosinvictos.com","Dinámica diaria interactiva para la comunidad de Somos Invictos","Hola equipo de Somos Invictos,
+"READY","Somos Invictos","Comunidad & Medios (México/LatAm)","contacto@somosinvictos.com","Web Form / Twitter DM","https://somosinvictos.com/contactanos/ (Twitter: @SomosInvictos)","Dinámica diaria interactiva para la comunidad de Somos Invictos","Hola equipo de Somos Invictos,
 
 Seguimos a diario el contenido y los debates que generan con la comunidad futbolera más apasionada de redes.
 
@@ -222,7 +222,7 @@ Un saludo cordial,
 
 Playmaker Team
 https://playmaker.best"
-"READY","JuanFutbol","Medio Joven (México)","hey@juanfutbol.com","Retos futboleros diarios para la comunidad de JuanFutbol","Hola compas de JuanFutbol,
+"READY","JuanFutbol","Medio Joven (México)","hey@juanfutbol.com","Twitter DM","https://twitter.com/juanfutbol","Retos futboleros diarios para la comunidad de JuanFutbol","Hola compas de JuanFutbol,
 
 Ustedes tienen la vibra más entretenida y cercana del fútbol digital en México y Latinoamérica.
 
@@ -238,7 +238,7 @@ Un saludo,
 
 Playmaker Team
 https://playmaker.best"
-"READY","La Media Inglesa","Comunidad & YouTube (España)","info@lamediainglesa.com","Pasatiempo futbolero diario para la comunidad de La Media Inglesa","Hola equipo de La Media Inglesa,
+"READY","La Media Inglesa","Comunidad & YouTube (España)","info@lamediainglesa.com","Twitter DM","https://twitter.com/LaMediaInglesa","Pasatiempo futbolero diario para la comunidad de La Media Inglesa","Hola equipo de La Media Inglesa,
 
 Sabemos lo mucho que disfruta su comunidad con los debates de historia, transferencias y anécdotas de jugadores en cada directo y video.
 
