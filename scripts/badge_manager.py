@@ -68,6 +68,14 @@ ADDITIONAL_CRESTS = {
     "Feyenoord": "https://crests.football-data.org/675.png",
     "Celtic": "https://crests.football-data.org/732.png",
     "Rangers": "https://crests.football-data.org/734.png",
+    "Racing": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Escudo_de_Racing_Club_%282014%29.svg/500px-Escudo_de_Racing_Club_%282014%29.svg.png",
+    "Racing Club": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Escudo_de_Racing_Club_%282014%29.svg/500px-Escudo_de_Racing_Club_%282014%29.svg.png",
+    "Racing Club de Avellaneda": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Escudo_de_Racing_Club_%282014%29.svg/500px-Escudo_de_Racing_Club_%282014%29.svg.png",
+    "Racing Santander": "https://crests.football-data.org/5335.png",
+    "Real Racing Club": "https://crests.football-data.org/5335.png",
+    "Real Racing Club de Santander": "https://crests.football-data.org/5335.png",
+    "Lens": "https://crests.football-data.org/546.png",
+    "RC Lens": "https://crests.football-data.org/546.png",
 }
 
 _URL_MAP = None
@@ -243,10 +251,23 @@ def get_club_badge(club_name, size=(160, 160)):
     url_map = load_crest_url_database()
     crest_url = url_map.get(canonical.lower()) or url_map.get(club_name.lower())
     
-    # If not found directly, try partial matching
+    # If not found directly, try word-boundary or high-confidence matching
     if not crest_url:
+        can_clean = canonical.lower()
+        # First priority: check if any key in url_map is contained in canonical (e.g. key="chelsea" in "chelsea fc")
         for k, u in url_map.items():
-            if k in canonical.lower() or canonical.lower() in k:
+            if re.search(r'\b' + re.escape(k) + r'\b', can_clean):
+                crest_url = u
+                break
+
+    if not crest_url:
+        # Second priority: check if canonical matches a complete word token in k (e.g. canonical="real racing club" in k="real racing club de santander")
+        # Do not allow short strings (< 6 chars like "racing") to blindly match arbitrary club names if ambiguous
+        for k, u in url_map.items():
+            if len(can_clean) >= 6 and re.search(r'\b' + re.escape(can_clean) + r'\b', k):
+                # Avoid matching generic terms or ambiguous single words like 'racing' matching 'racing club de lens' or 'racing santander'
+                if can_clean == "racing" and "santander" in k:
+                    continue
                 crest_url = u
                 break
 
