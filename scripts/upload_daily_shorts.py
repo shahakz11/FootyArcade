@@ -59,6 +59,7 @@ DAILY_GAMES = [
 ]
 
 CAREER_FLIGHT_GAME = {"id": "career_flight", "name": "Career Flight Map"}
+PLAYED_WITH_GAME = {"id": "played_with", "name": "Played With"}
 
 ALL_AVAILABLE_GAMES = [
     {"id": "career_flight",        "name": "Career Flight Map"},
@@ -76,8 +77,9 @@ def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_h
     """
     Selects which game(s) to process:
     - If all_games is True: returns ALL_AVAILABLE_GAMES (all 7)
-    - If selected_game is provided: returns the matching game from ALL_AVAILABLE_GAMES
+    - If selected_game is provided: returns the matching game from ALL_AVAILABLE_GAMES or PLAYED_WITH_GAME
     - If mode in ('career', 'career_flight', 'morning'): returns [CAREER_FLIGHT_GAME] (10:00 AM user time / 07:00 UTC)
+    - If mode in ('played_with', 'playedwith'): returns [PLAYED_WITH_GAME]
     - If mode in ('carousel', 'h2h'): returns [] (signals carousel-only execution at 10:30 UTC)
     - If mode in ('midday',): returns [DAILY_GAMES[0]] (Player Chain)
     - If mode in ('evening', 'night'): returns [DAILY_GAMES[1]] (Passport FC)
@@ -92,14 +94,19 @@ def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_h
     if all_games:
         return ALL_AVAILABLE_GAMES
     if selected_game:
+        if selected_game in ("played_with", "playedwith"):
+            return [PLAYED_WITH_GAME]
         matched = [g for g in ALL_AVAILABLE_GAMES if g["id"] == selected_game]
         if matched:
             return matched
-        raise ValueError(f"Unknown game ID '{selected_game}'. Available: {[g['id'] for g in ALL_AVAILABLE_GAMES]}")
+        available = [g['id'] for g in ALL_AVAILABLE_GAMES] + ["played_with"]
+        raise ValueError(f"Unknown game ID '{selected_game}'. Available: {available}")
     
     mode_lower = (mode or "auto").lower()
     if mode_lower in ("career", "career_flight", "morning"):
         return [CAREER_FLIGHT_GAME]
+    elif mode_lower in ("played_with", "playedwith"):
+        return [PLAYED_WITH_GAME]
     elif mode_lower in ("carousel", "h2h"):
         return []
     elif mode_lower == "midday":
@@ -170,7 +177,7 @@ def compute_scheduled_slots(num_videos, start_dt=None, slot_hours=None, immediat
 
     return slots
 
-def get_target_name_from_game(game_id):
+def get_target_name_from_game(game_id, day=None, date_str=None):
     """
     Extracts the daily puzzle target name/theme directly from the compiled HTML or UGC puzzle dataset.
     Allows running live API deduplication BEFORE spending 2-3 minutes rendering video.
@@ -180,6 +187,14 @@ def get_target_name_from_game(game_id):
             from render_career_flight_short import load_destination_puzzle
             p_data = load_destination_puzzle()
             return p_data.get("player_name", "")
+        except Exception:
+            return ""
+
+    if game_id == "played_with":
+        try:
+            from render_played_with_short import load_played_with_puzzle
+            p_data = load_played_with_puzzle(day=day, date_str=date_str)
+            return p_data.get("mystery_player", "")
         except Exception:
             return ""
 
@@ -304,7 +319,10 @@ async def process_all_games(
     wait_queue=False,
     force=False,
     trending_audio=True,
-    youtube_audio=False
+    youtube_audio=False,
+    day=None,
+    date=None,
+    preview=False
 ):
     print("\n" + "=" * 68)
     print("   ⚽  PLAYMAKER — DAILY SOCIAL AUTO-PUBLISHER (SHORTS, CAROUSELS, TIKTOK)")
@@ -320,8 +338,9 @@ async def process_all_games(
     # - Midday Slot (10:30 UTC / 1:30 PM local UTC+3): H2H Carousel
     # - Evening Slot (17:00 UTC / 8:00 PM local UTC+3): Video Short (Player Chain / Passport FC)
     is_career_slot = (mode_lower in ("career", "career_flight", "morning")) or (selected_game == "career_flight") or (mode_lower == "auto" and curr_hour < 9)
+    is_played_with_slot = (mode_lower in ("played_with", "playedwith")) or (selected_game == "played_with")
     is_carousel_slot = (mode_lower in ("carousel", "h2h")) or (mode_lower == "auto" and 9 <= curr_hour < 14 and not selected_game)
-    is_short_slot = (mode_lower in ("short", "video", "daily", "midday", "evening", "night")) or (mode_lower == "auto" and curr_hour >= 14) or is_career_slot
+    is_short_slot = (mode_lower in ("short", "video", "daily", "midday", "evening", "night")) or (mode_lower == "auto" and curr_hour >= 14) or is_career_slot or is_played_with_slot
     is_all = (mode_lower == "all") or all_games
 
     results = []
@@ -386,20 +405,21 @@ async def process_all_games(
         print("🔥" * 34 + "\n")
 
     # 4. Compile today's latest daily puzzles
-    if os.environ.get("TESTING") != "true" and not dry_run:
+    if os.environ.get("TESTING") != "true" and not dry_run and not preview and selected_game != "played_with":
         print("🔄 Ensuring today's HTML game files are fully compiled and up to date...")
         try:
             subprocess.run([sys.executable, os.path.join(BASE_DIR, "fetch_daily.py")], check=True)
         except Exception as e:
             print(f"⚠️ fetch_daily notice: {e}")
 
-    server_proc = ensure_server_running(port)
-    
     games_to_run = select_games_for_mode(
         mode=mode,
         selected_game=selected_game,
         all_games=is_all
     )
+
+    requires_server = any(g["id"] not in ("career_flight", "played_with", "player_chain", "passport_fc") for g in games_to_run)
+    server_proc = ensure_server_running(port) if requires_server else None
 
     has_queued_reels = False
 
@@ -428,7 +448,7 @@ async def process_all_games(
             print("-" * 68)
 
             # Pre-flight check: extract target name from HTML
-            preview_target = get_target_name_from_game(game_id)
+            preview_target = get_target_name_from_game(game_id, day=day, date_str=date)
             if preview_target:
                 print(f"🔍 Pre-flight detected target: '{preview_target}' for {game_name}")
 
@@ -527,6 +547,64 @@ async def process_all_games(
                     video_out = os.path.join(BASE_DIR, "output_shorts", f"career_flight_{clean_name}_{today_str}.mp4")
                     video_path = render_career_flight_video(output_path=video_out, force=force)
 
+                elif game_id == "played_with":
+                    from render_played_with_short import (
+                        load_played_with_puzzle,
+                        render_played_with_video,
+                        render_played_with_frame,
+                        generate_social_copy as generate_played_with_social_copy
+                    )
+                    puzzle_data = load_played_with_puzzle(day=day, date_str=date)
+                    target_name = puzzle_data["mystery_player"]
+                    social_meta = generate_played_with_social_copy(puzzle_data)
+
+                    custom_yt_title = social_meta.get("youtube_title")
+                    custom_yt_desc = (
+                        f"{custom_yt_title}\n\n"
+                        f"{social_meta.get('caption')}\n\n"
+                        f"🎮 Play today's free daily puzzles on playmaker.best:\n"
+                        f"👉 https://playmaker.best/\n\n"
+                        f"#Shorts #football #soccer #ballknowledge #trivia #playmaker"
+                    )
+                    custom_yt_tags = [t.lstrip("#") for t in social_meta.get("hashtags", [])]
+                    custom_ig_caption = social_meta.get("caption")
+                    audio_track_title = "Trending Football Beat"
+
+                    os.makedirs(os.path.join(BASE_DIR, "output_shorts"), exist_ok=True)
+                    clean_name = target_name.replace(" ", "_").replace("'", "")
+                    puzzle_day = puzzle_data.get("game_day", 1)
+
+                    if preview:
+                        preview_out = os.path.join(BASE_DIR, "output_shorts", f"played_with_preview_{clean_name}_day_{puzzle_day}.jpg")
+                        broll_clip = select_broll_clip(exclude_paths=session_used_broll, game_id="played_with")
+                        cap = None
+                        if broll_clip and os.path.exists(broll_clip):
+                            try:
+                                import cv2
+                                cap = cv2.VideoCapture(broll_clip)
+                            except Exception:
+                                cap = None
+                        frame = None
+                        if cap and cap.isOpened():
+                            target_f = min(int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1, int(5.8 * 30))
+                            cap.set(cv2.CAP_PROP_POS_FRAMES, max(0, target_f))
+                            ret, frame = cap.read()
+                            cap.release()
+                        pil_img = render_played_with_frame(frame, puzzle_data, frame_idx=180, total_frames=225)
+                        pil_img.convert("RGB").save(preview_out, quality=95)
+                        video_path = preview_out
+                        print(f"📸 [Preview Mode] Played With preview frame generated: {preview_out}")
+                    else:
+                        video_out = os.path.join(BASE_DIR, "output_shorts", f"played_with_{clean_name}_day_{puzzle_day}_{today_str}.mp4")
+                        broll_clip = select_broll_clip(exclude_paths=session_used_broll, game_id="played_with")
+                        if broll_clip:
+                            session_used_broll.append(broll_clip)
+                        video_path = render_played_with_video(
+                            puzzle_data=puzzle_data,
+                            output_path=video_out,
+                            bg_clip=broll_clip
+                        )
+
                 elif game_id in ("player_chain", "passport_fc"):
                     ugc_data = extract_ugc_data(game_id, day=None)
                     target_name = f"{ugc_data['entity_1']} & {ugc_data['entity_2']}"
@@ -572,13 +650,14 @@ async def process_all_games(
                 })
                 continue
 
-            if dry_run:
-                print(f"🔎 Dry run: Video created at {video_path}, skipping actual uploads.")
+            if dry_run or preview:
+                status_label = "Preview Generated" if preview else "Rendered (Dry Run)"
+                print(f"🔎 {status_label}: Media created at {video_path}, skipping actual uploads.")
                 results.append({
                     "game": game_name,
-                    "yt_status": "Rendered (Dry Run)", "yt_url": video_path,
-                    "ig_status": "Rendered (Dry Run)", "ig_url": video_path,
-                    "tt_status": "Rendered (Dry Run)", "tt_url": video_path
+                    "yt_status": status_label, "yt_url": video_path,
+                    "ig_status": status_label, "ig_url": video_path,
+                    "tt_status": status_label, "tt_url": video_path
                 })
                 continue
 
@@ -610,8 +689,8 @@ async def process_all_games(
                     title, desc, tags = build_default_metadata(game_id=game_id, target_name=target_name)
                     
                 try:
-                    # Keep synthesized audio for career_flight unless explicitly disabled
-                    strip_audio = not youtube_audio and (game_id != "career_flight")
+                    # Keep synthesized audio for career_flight and played_with unless explicitly disabled
+                    strip_audio = not youtube_audio and (game_id not in ("career_flight", "played_with"))
                     yt_video_path = prepare_youtube_video(video_path, strip_audio=strip_audio)
                     if yt_video_path != video_path:
                         print(f"🔇 [YouTube Shorts] Preparing audio-free video for upload: {os.path.basename(yt_video_path)}")
@@ -737,6 +816,22 @@ async def process_all_games(
         tt_disp = f"{r.get('tt_status', '—')}: {r.get('tt_url', '—')}" if r.get('tt_url') and r.get('tt_url') != "—" else r.get('tt_status', '—')
         print(f"{r['game']:<22} | {yt_disp[:25]:<25} | {ig_disp[:25]:<25} | {tt_disp[:25]:<25}")
     print("=" * 105 + "\n")
+    return results
+
+def publish_daily_played_with_short_sync(dry_run=False, force=False, day=None, date=None, preview=False, no_youtube=False, no_instagram=False, no_tiktok=False):
+    """Synchronous helper for rendering/uploading Played With vertical video shorts."""
+    return asyncio.run(process_all_games(
+        mode="played_with",
+        selected_game="played_with",
+        dry_run=dry_run,
+        force=force,
+        day=day,
+        date=date,
+        preview=preview,
+        no_youtube=no_youtube,
+        no_instagram=no_instagram,
+        no_tiktok=no_tiktok
+    ))
 
 def main():
     parser = argparse.ArgumentParser(description="Render and upload daily Playmaker games to YouTube Shorts, Instagram Reels & TikTok.")
@@ -744,23 +839,27 @@ def main():
         "--mode",
         type=str,
         default="auto",
-        choices=["auto", "career", "career_flight", "carousel", "short", "video", "daily", "midday", "morning", "evening", "night", "both", "all", "h2h"],
-        help="Publishing mode: auto (time-based), career_flight (10:00 AM local), carousel (H2H 10:30 UTC), short (Video 17:00 UTC), or all"
+        choices=["auto", "career", "career_flight", "carousel", "short", "video", "daily", "midday", "morning", "evening", "night", "both", "all", "h2h", "played_with"],
+        help="Publishing mode: auto (time-based), career_flight (10:00 AM local), carousel (H2H 10:30 UTC), short (Video 17:00 UTC), played_with, or all"
     )
     parser.add_argument("--career-flight", "--career", dest="career_flag", action="store_true", help="Shortcut for --mode career_flight (10:00 AM local / 07:00 UTC Career Flight Short)")
+    parser.add_argument("--played-with", dest="played_with_flag", action="store_true", help="Shortcut for --game played_with (Played With 5-tier teammate clue short)")
     parser.add_argument("--morning", dest="morning_flag", action="store_true", help="Shortcut for --mode morning (10:00 AM local Career Flight)")
     parser.add_argument("--midday", dest="midday_flag", action="store_true", help="Shortcut for --mode midday")
     parser.add_argument("--evening", "--night", dest="evening_flag", action="store_true", help="Shortcut for --mode evening")
     parser.add_argument("--both", action="store_true", help="Shortcut for --mode both")
     parser.add_argument("--all-games", action="store_true", help="Render all 7 games instead of default")
-    parser.add_argument("--game", type=str, default="", help="Run a specific game ID only (e.g. career_flight, top_transfers, transfer_destination)")
+    parser.add_argument("--game", type=str, default="", help="Run a specific game ID only (e.g. played_with, career_flight, top_transfers, transfer_destination)")
+    parser.add_argument("--day", type=int, default=None, help="Puzzle day number (1-365) for games supporting it (e.g. played_with)")
+    parser.add_argument("--date", type=str, default=None, help="Target date YYYY-MM-DD for puzzle selection")
+    parser.add_argument("--preview", action="store_true", help="Generate single preview frame image only without rendering full video or uploading")
     parser.add_argument("--slots", type=str, default="7,10.5,17", help="Comma-separated UTC peak hours (default: '7,10.5,17')")
     parser.add_argument("--schedule-future", action="store_true", help="Schedule uploads for future peak hours instead of uploading live immediately")
     parser.add_argument("--port", type=int, default=8080, help="Local server port (default: 8080)")
     parser.add_argument("--fast", action="store_true", help="Fast mode for testing")
     parser.add_argument("--dry-run", action="store_true", help="Render media only without uploading")
     parser.add_argument("--no-youtube", action="store_true", help="Skip YouTube upload")
-    parser.add_argument("--youtube-with-audio", action="store_true", help="Keep audio when uploading to YouTube Shorts (default: stripped/silent for UGC; kept for career_flight)")
+    parser.add_argument("--youtube-with-audio", action="store_true", help="Keep audio when uploading to YouTube Shorts (default: stripped/silent for UGC; kept for career_flight and played_with)")
     parser.add_argument("--no-instagram", action="store_true", help="Skip Instagram upload")
     parser.add_argument("--no-tiktok", action="store_true", help="Skip TikTok upload")
     parser.add_argument("--no-trending-audio", action="store_true", help="Disable automatic Instagram trending audio attachment")
@@ -773,6 +872,9 @@ def main():
     args = parser.parse_args()
     
     mode = args.mode
+    selected_game = args.game
+    if args.played_with_flag:
+        selected_game = "played_with"
     if args.carousel_only or args.h2h_carousel:
         mode = "carousel"
     elif args.career_flag:
@@ -796,13 +898,13 @@ def main():
     # By default, upload live immediately (immediate_first=True unless --schedule-future is passed)
     immediate_first = not args.schedule_future
 
-    asyncio.run(process_all_games(
+    return asyncio.run(process_all_games(
         mode=mode,
         slot_hours=slot_hours,
         fast_mode=args.fast,
         port=args.port,
         dry_run=args.dry_run,
-        selected_game=args.game,
+        selected_game=selected_game,
         all_games=args.all_games or (mode == "all"),
         no_youtube=args.no_youtube,
         no_instagram=args.no_instagram,
@@ -812,7 +914,10 @@ def main():
         wait_queue=args.wait_queue,
         force=args.force,
         trending_audio=not args.no_trending_audio,
-        youtube_audio=args.youtube_with_audio
+        youtube_audio=args.youtube_with_audio,
+        day=args.day,
+        date=args.date,
+        preview=args.preview
     ))
 
 if __name__ == "__main__":

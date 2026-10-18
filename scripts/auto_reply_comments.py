@@ -29,6 +29,8 @@ import urllib.request
 import urllib.parse
 import urllib.error
 import datetime
+import tempfile
+import threading
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
@@ -121,7 +123,54 @@ NICKNAMES = {
     "simic": "Dario Šimić",
     "pasalic": "Mario Pašalić",
     "bellingham": "Jude Bellingham",
-    "haaland": "Erling Haaland"
+    "haaland": "Erling Haaland",
+
+    # Modern Stars, Nicknames & Common Aliases
+    "vini": "Vinicius Junior",
+    "vini jr": "Vinicius Junior",
+    "vinicius": "Vinicius Junior",
+    "vinicius jr": "Vinicius Junior",
+    "kdb": "Kevin De Bruyne",
+    "debruyne": "Kevin De Bruyne",
+    "de bruyne": "Kevin De Bruyne",
+    "vvd": "Virgil van Dijk",
+    "van dijk": "Virgil van Dijk",
+    "taa": "Trent Alexander-Arnold",
+    "starboy": "Bukayo Saka",
+    "saka": "Bukayo Saka",
+    "foden": "Phil Foden",
+    "lewa": "Robert Lewandowski",
+    "lewandowski": "Robert Lewandowski",
+    "sonny": "Heung-min Son",
+    "son": "Heung-min Son",
+    "bambi": "Jamal Musiala",
+    "musiala": "Jamal Musiala",
+    "wirtz": "Florian Wirtz",
+    "pedri": "Pedri",
+    "gavi": "Gavi",
+    "rodri": "Rodri",
+    "spider": "Julián Álvarez",
+    "la arana": "Julián Álvarez",
+    "julian alvarez": "Julián Álvarez",
+    "alvarez": "Julián Álvarez",
+    "valverde": "Federico Valverde",
+    "el pajarito": "Federico Valverde",
+    "camavinga": "Eduardo Camavinga",
+    "cama": "Eduardo Camavinga",
+    "tchouameni": "Aurélien Tchouaméni",
+    "arda": "Arda Güler",
+    "guler": "Arda Güler",
+    "lamine": "Lamine Yamal",
+    "yamal": "Lamine Yamal",
+    "minjae": "Min-jae Kim",
+    "min jae": "Min-jae Kim",
+    "eze": "Eberechi Eze",
+    "emre can": "Emre Can",
+    "nico paz": "Nico Paz",
+    "auba": "Pierre-Emerick Aubameyang",
+    "aubameyang": "Pierre-Emerick Aubameyang",
+    "choupo": "Eric Maxim Choupo-Moting",
+    "choupo moting": "Eric Maxim Choupo-Moting"
 }
 
 # ── Dynamic Rotating Reply Templates ──────────────────────────────────────────
@@ -133,11 +182,34 @@ REPLY_TEMPLATES = [
     "🎯 Verified! {player} is in the official answer pool ⚽ Beat today's puzzle at playmaker.best (link in bio)!"
 ]
 
+PLAYED_WITH_REPLY_TEMPLATES = [
+    "🎯 Spot on! It's {player}! Elite ball knowledge 👏 Try today's 6 daily puzzles at playmaker.best (link in bio) ⚽",
+    "🔥 Boom! {player} is 100% correct! 🧠 Can you beat today's full challenge on playmaker.best? (link in bio) 🏆",
+    "🧠 Big brain shout! It is indeed {player} ⚽ Test your ball knowledge across 6 daily games at playmaker.best (link in bio)!",
+    "👏 Quality guess with {player}! Nailed it. Play today's full daily arcade at playmaker.best (link in bio) 🎮",
+    "🎯 Verified! {player} is the mystery footballer! ⚽ Can you solve today's live puzzle at playmaker.best (link in bio)!"
+]
+
+LATIN_TRANSLITERATION = {
+    "Ø": "O",
+    "ø": "o",
+    "ß": "ss",
+    "Æ": "AE",
+    "æ": "ae",
+    "Ł": "L",
+    "ł": "l",
+    "Đ": "D",
+    "đ": "d",
+}
+
 def normalize_text(text):
     """Strips diacritics, lowercases, and removes punctuation."""
     if not text:
         return ""
-    text = unicodedata.normalize("NFKD", str(text)).encode("ASCII", "ignore").decode("utf-8")
+    text = str(text)
+    for k, v in LATIN_TRANSLITERATION.items():
+        text = text.replace(k, v)
+    text = unicodedata.normalize("NFKD", text).encode("ASCII", "ignore").decode("utf-8")
     text = text.lower()
     text = re.sub(r"[^\w\s]", " ", text)
     return " ".join(text.split())
@@ -151,12 +223,88 @@ def load_ledger(ledger_path):
             return {}
     return {}
 
+_LEDGER_LOCK = threading.Lock()
+
 def save_ledger(ledger_path, ledger):
-    os.makedirs(os.path.dirname(ledger_path), exist_ok=True)
-    with open(ledger_path, "w", encoding="utf-8") as f:
-        json.dump(ledger, f, indent=2, ensure_ascii=False)
+    """Atomically saves the reply ledger using a unique temp file and thread lock."""
+    with _LEDGER_LOCK:
+        dir_name = os.path.dirname(ledger_path)
+        if dir_name:
+            os.makedirs(dir_name, exist_ok=True)
+        tf = tempfile.NamedTemporaryFile("w", dir=dir_name or None, delete=False, encoding="utf-8")
+        tmp_path = tf.name
+        try:
+            json.dump(ledger, tf, indent=2, ensure_ascii=False)
+            tf.flush()
+            os.fsync(tf.fileno())
+            tf.close()
+            os.replace(tmp_path, ledger_path)
+        except Exception:
+            tf.close()
+            if os.path.exists(tmp_path):
+                try:
+                    os.remove(tmp_path)
+                except OSError:
+                    pass
+            raise
 
 # ── Answer Pool Resolvers ─────────────────────────────────────────────────────
+
+def load_played_with_pools(csv_path=None):
+    """
+    Ingests daily_played_with_games.csv and returns structured answer pools:
+    [
+        {
+            "type": "played_with",
+            "game_day": int,
+            "mystery_player": str,
+            "players": [mystery_player],
+            "teammates": [str, ...]
+        },
+        ...
+    ]
+    """
+    if csv_path is None:
+        csv_path = os.path.join(BASE_DIR, "daily_played_with_games.csv")
+
+    if not os.path.exists(csv_path):
+        return []
+
+    import csv
+    from collections import OrderedDict
+
+    puzzles = OrderedDict()
+    try:
+        with open(csv_path, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                try:
+                    day = int(row.get("game_day", 0))
+                except (ValueError, TypeError):
+                    continue
+                mystery = row.get("mystery_player", "").strip()
+                teammate = row.get("teammate_name", "").strip()
+                if day not in puzzles:
+                    puzzles[day] = {
+                        "mystery": mystery,
+                        "teammates": []
+                    }
+                if teammate and teammate not in puzzles[day]["teammates"]:
+                    puzzles[day]["teammates"].append(teammate)
+
+        pools = []
+        for day, data in puzzles.items():
+            pools.append({
+                "type": "played_with",
+                "game_day": day,
+                "mystery_player": data["mystery"],
+                "players": [data["mystery"]],
+                "teammates": data["teammates"]
+            })
+        return pools
+    except Exception as e:
+        print(f"⚠️ Error loading played_with games from {csv_path}: {e}")
+        return []
 
 def get_all_active_daily_answer_pools():
     """Extracts answer pools from all daily CSVs for broad matching."""
@@ -197,15 +345,26 @@ def get_all_active_daily_answer_pools():
         except Exception:
             pass
 
+    # 3. Played With
+    try:
+        pw_pools = load_played_with_pools()
+        pools.extend(pw_pools)
+    except Exception as e:
+        print(f"⚠️ Error loading played_with games: {e}")
+
     return pools
 
 def extract_pool_from_caption(caption_or_title, all_pools=None):
     """
-    Parses a video title or caption to extract (Club + Nationality) or (Club A + Club B).
-    Examples:
-    - 'Name ONE France player for Chelsea (No one else will say)...' -> (Chelsea, France)
-    - 'Name ONE player for Barcelona & Benfica...' -> (Barcelona, Benfica)
-    - 'Name A player who played for Real Madrid & Juventus' -> (Real Madrid, Juventus)
+    Parses a video title or caption to extract the corresponding answer pool.
+    Supports:
+    - Played With day numbers: e.g. 'Played With #19', 'Played With Day 19', 'Who Am I? #19'
+    - Passport FC: (Country + Club)
+    - Player Chain: (Club A + Club B)
+    - Played With teammate clue list: if >= 2 teammates match a puzzle's teammate list
+
+    Returns list of valid player names, or None if unrecognized.
+    Guards against returning all historical players.
     """
     if not caption_or_title:
         return None
@@ -215,7 +374,32 @@ def extract_pool_from_caption(caption_or_title, all_pools=None):
 
     norm_text = normalize_text(caption_or_title)
 
-    # Pattern 1: Country + Club ("Name ONE France player to play for Chelsea" / "France player for Chelsea")
+    # ── Pattern 1: Played With / Who Am I Day Number ──
+    # Matches "Played With #19", "Played With Day 19", "Played With Puzzle #19", "Who Am I? #19", etc.
+    pattern_pw = r"\bplayed\s+with\b[^\w\d\n\r]*(?:(?:day|puzzle)\b[^\w\d\n\r]*#?\s*(\d+)|#\s*(\d+))"
+    pattern_wai = r"\bwho\s+am\s+i\b[^\w\d\n\r]*(?:(?:day|puzzle)\b[^\w\d\n\r]*#?\s*(\d+)|#\s*(\d+))"
+    pattern_tag = r"#playedwith_?(\d+)\b"
+
+    m_pw = re.search(pattern_pw, caption_or_title, re.IGNORECASE)
+    day_num = None
+    if m_pw:
+        day_num = int(m_pw.group(1) or m_pw.group(2))
+    else:
+        m_wai = re.search(pattern_wai, caption_or_title, re.IGNORECASE)
+        if m_wai:
+            day_num = int(m_wai.group(1) or m_wai.group(2))
+        else:
+            m_tag = re.search(pattern_tag, caption_or_title, re.IGNORECASE)
+            if m_tag:
+                day_num = int(m_tag.group(1))
+
+    if day_num is not None:
+        for pool in all_pools:
+            if pool.get("type") == "played_with" and pool.get("game_day") == day_num:
+                return pool.get("players", [])
+
+    # ── Pattern 2: Passport FC: Country + Club ──
+    # ("Name ONE France player to play for Chelsea" / "France player for Chelsea")
     m_country = re.search(r"name one (\w+(?:\s+\w+)?) player (?:to play for|for) (.+?)(?: that| \n|\.|\(|$)", caption_or_title, re.IGNORECASE)
     if m_country:
         nat = m_country.group(1).strip()
@@ -229,66 +413,241 @@ def extract_pool_from_caption(caption_or_title, all_pools=None):
                 if (norm_nat in p_nat or p_nat in norm_nat) and (norm_club in p_club or p_club in norm_club):
                     return pool["players"]
 
-    # Pattern 2: Club A + Club B ("played for BOTH Barcelona and Benfica" / "played for Real Madrid & Juventus")
+    # ── Pattern 3: Player Chain: Club A + Club B ──
+    # ("played for BOTH Barcelona and Benfica" / "played for Real Madrid & Juventus")
     m_clubs = re.search(r"(?:played for both|for|played for) (.+?) (?:and|&|\+) (.+?)(?: that| \n|\.|\(|$)", caption_or_title, re.IGNORECASE)
     if m_clubs:
         c1 = normalize_text(m_clubs.group(1).strip())
         c2 = normalize_text(m_clubs.group(2).strip())
         for pool in all_pools:
-            p_c1 = normalize_text(pool.get("entity_1", ""))
-            p_c2 = normalize_text(pool.get("entity_2", ""))
-            if (c1 in p_c1 and c2 in p_c2) or (c1 in p_c2 and c2 in p_c1):
-                return pool["players"]
+            if pool.get("type") == "player_chain":
+                p_c1 = normalize_text(pool.get("entity_1", ""))
+                p_c2 = normalize_text(pool.get("entity_2", ""))
+                if (c1 in p_c1 and c2 in p_c2) or (c1 in p_c2 and c2 in p_c1):
+                    return pool["players"]
+
+    # ── Pattern 4: Played With Teammate Clue List ──
+    # Match if >= 2 teammates mentioned in caption match a puzzle's teammate list
+    best_match = None
+    max_hits = 0
+    for pool in all_pools:
+        if pool.get("type") == "played_with":
+            teammates = pool.get("teammates", [])
+            hits = 0
+            for tm in teammates:
+                norm_tm = normalize_text(tm)
+                if not norm_tm:
+                    continue
+                # Full teammate name match
+                if re.search(r"\b" + re.escape(norm_tm) + r"\b", norm_text):
+                    hits += 1
+                    continue
+                # Compound last name or single last name (min 3 chars)
+                parts = norm_tm.split()
+                if len(parts) >= 2:
+                    compound_last = " ".join(parts[-2:])
+                    if len(compound_last) >= 5 and re.search(r"\b" + re.escape(compound_last) + r"\b", norm_text):
+                        hits += 1
+                        continue
+                    last = parts[-1]
+                    if len(last) >= 3 and re.search(r"\b" + re.escape(last) + r"\b", norm_text):
+                        hits += 1
+                        continue
+                elif len(norm_tm) >= 3 and re.search(r"\b" + re.escape(norm_tm) + r"\b", norm_text):
+                    hits += 1
+                    continue
+            if hits > max_hits:
+                max_hits = hits
+                best_match = pool
+
+    if max_hits >= 2 and best_match:
+        return best_match.get("players", [])
 
     return None
+
+CHATTER_WORDS = {
+    # Pronouns & determiners
+    "i", "me", "my", "myself", "mine",
+    "you", "your", "yours", "yourself", "yourselves",
+    "he", "him", "his", "himself",
+    "she", "her", "hers", "herself",
+    "it", "its", "itself",
+    "we", "us", "our", "ours", "ourselves",
+    "they", "them", "their", "theirs", "themselves",
+    "this", "that", "these", "those", "there", "here",
+    "what", "which", "who", "whom", "whose", "where", "when", "why", "how",
+    "a", "an", "the",
+
+    # Prepositions & conjunctions
+    "in", "on", "at", "to", "for", "of", "with", "by", "from", "about",
+    "into", "through", "during", "before", "after", "above", "below",
+    "up", "down", "out", "off", "over", "under", "again", "further",
+    "then", "once", "as", "until", "while", "against", "between",
+    "and", "but", "or", "nor", "so", "yet", "if", "because", "although",
+    "though", "since", "unless", "than", "whether", "either", "neither",
+    "without", "like",
+
+    # Verbs, auxiliaries & contractions
+    "is", "am", "are", "was", "were", "be", "been", "being",
+    "have", "has", "had", "having",
+    "do", "does", "did", "doing", "done",
+    "can", "could", "will", "would", "shall", "should", "may", "might", "must",
+    "s", "t", "re", "ve", "m", "d", "ll",
+    "dont", "doesnt", "didnt", "cant", "wont", "isnt", "arent", "wasnt", "werent",
+    "hasnt", "havent", "hadnt", "couldnt", "wouldnt", "shouldnt",
+
+    # Speech / thinking / guessing verbs
+    "think", "thinks", "thought", "thinking",
+    "guess", "guesses", "guessed", "guessing",
+    "know", "knows", "knew", "known", "knowing",
+    "say", "says", "said", "saying",
+    "mean", "means", "meant", "meaning",
+    "believe", "believes", "believed", "believing",
+    "bet", "bets", "betting",
+    "feel", "feels", "felt",
+    "reckon", "reckons", "reckoned",
+    "suppose", "supposes", "supposed",
+    "hope", "hopes", "hoped",
+    "swear", "swears", "swore",
+    "see", "sees", "saw", "seen", "seeing",
+    "look", "looks", "looked", "looking",
+    "sound", "sounds", "sounded", "sounding",
+    "tell", "tells", "told",
+    "remember", "remembers", "remembered",
+    "played", "plays", "play", "playing",
+    "got", "get", "gets", "getting",
+
+    # Adverbs, certainty & reaction words
+    "yes", "no", "not", "yeah", "yep", "nope", "nah", "aye",
+    "sure", "surely", "definitely", "obviously", "clearly", "probably", "maybe",
+    "perhaps", "certainly", "actually", "honestly", "truly", "literally", "really",
+    "always", "never", "ever", "already", "still", "just", "only", "also", "too",
+    "even", "very", "quite", "well", "now", "easily", "simply", "totally",
+    "absolutely", "correctly", "pretty", "right", "wrong", "easy", "hard",
+
+    # Community, slang & footy terms
+    "bro", "brother", "bruh", "brah", "mate", "man", "dude", "guy", "guys",
+    "lad", "lads", "boy", "boys", "blud", "fam", "boss", "chief", "king",
+    "goat", "legend", "baller", "beast", "wall", "monster", "machine", "star",
+    "great", "good", "best", "fav", "favorite", "favourite", "worst",
+    "underrated", "overrated", "elite", "class", "prime", "top",
+    "first", "second", "third", "one", "two", "three",
+    "shout", "pick", "answer", "choice", "name", "player", "players",
+    "footballer", "striker", "midfielder", "defender", "winger", "keeper",
+    "goalkeeper", "captain", "club", "team", "country", "league", "match",
+    "game", "video", "short", "shorts", "reel", "reels", "tiktok", "clip",
+    "love", "hate", "fire", "boom", "doubt", "chance", "way", "case", "point",
+    "fact", "facts", "lol", "lmao", "haha", "hahaha", "gg", "wow", "omg",
+    "pls", "please", "thanks", "thank", "thx", "ty", "cheers",
+    "drop", "comment", "comments", "bio", "link", "arcade", "puzzle", "puzzles",
+    "challenge", "today", "todays", "day", "daily",
+    "percent", "pct",
+
+    # Common clubs & teams
+    "arsenal", "chelsea", "liverpool", "city", "united", "barca", "barcelona",
+    "madrid", "juve", "juventus", "milan", "inter", "bayern", "psg",
+    "benfica", "sporting", "porto", "dortmund", "atletico", "spurs", "tottenham"
+}
+
+def _is_valid_adjacent_word(word, player_words):
+    if not word:
+        return True
+    if word in player_words:
+        return True
+    if word in CHATTER_WORDS:
+        return True
+    if word.isdigit():
+        return True
+    return False
+
+def _find_valid_match_span(comment_words, target_words, player_words):
+    """
+    Finds if target_words appears as a contiguous sub-slice in comment_words
+    such that words immediately before and after (if any) are valid
+    (either part of the player's name, or a known chatter word, or a number).
+    Also guards against 2-word foreign player names (e.g. 'Felix Kroos', 'Gabriel Jesus').
+    """
+    L = len(target_words)
+    if L == 0 or len(comment_words) < L:
+        return False
+
+    for i in range(len(comment_words) - L + 1):
+        if comment_words[i : i + L] == target_words:
+            prev_w = comment_words[i - 1] if i > 0 else None
+            next_w = comment_words[i + L] if (i + L) < len(comment_words) else None
+
+            if _is_valid_adjacent_word(prev_w, player_words) and _is_valid_adjacent_word(next_w, player_words):
+                # Additional check: If comment has 2 words and neither is a chatter word,
+                # both words MUST belong to the player's name.
+                if len(comment_words) == 2:
+                    w0, w1 = comment_words[0], comment_words[1]
+                    if (w0 not in CHATTER_WORDS and not w0.isdigit()) and (w1 not in CHATTER_WORDS and not w1.isdigit()):
+                        if w0 not in player_words or w1 not in player_words:
+                            return False
+                return True
+    return False
 
 def match_comment_to_pool(comment_text, valid_players):
     """
     Checks if comment_text contains a valid player name, nickname, or last name.
     Returns the canonical player name if matched, else None.
+    Guards against collisions with different players sharing parts (e.g. 'Felix Kroos', 'Gabriel Jesus').
     """
     if not comment_text or not valid_players:
         return None
 
     norm_comment = normalize_text(comment_text)
+    if not norm_comment:
+        return None
+    comment_words = norm_comment.split()
 
     # 1. Nicknames and typo dictionary check
     for nick, canonical in NICKNAMES.items():
-        if re.search(r"\b" + re.escape(nick) + r"\b", norm_comment):
+        norm_nick = normalize_text(nick)
+        if not norm_nick:
+            continue
+        nick_words = norm_nick.split()
+        if re.search(r"\b" + re.escape(norm_nick) + r"\b", norm_comment):
             norm_canonical = normalize_text(canonical)
+            canonical_words = set(norm_canonical.split()) | set(nick_words)
             for p in valid_players:
                 norm_p = normalize_text(p)
+                p_words = set(norm_p.split()) | canonical_words
                 if norm_canonical == norm_p or re.search(r"\b" + re.escape(norm_canonical) + r"\b", norm_p):
-                    return p
+                    if _find_valid_match_span(comment_words, nick_words, p_words):
+                        return p
 
     # 2. Direct player matching - sort by descending length to prioritize full names before short surnames
     sorted_players = sorted(valid_players, key=lambda x: len(x), reverse=True)
     for p in sorted_players:
         norm_p = normalize_text(p)
         parts = norm_p.split()
+        if not parts:
+            continue
+        player_words = set(parts)
 
         # A. Full name match with word boundaries
-        if re.search(r"\b" + re.escape(norm_p) + r"\b", norm_comment):
-            return p
+        if len(parts) >= 2:
+            if _find_valid_match_span(comment_words, parts, player_words):
+                return p
 
         # B. Multi-word parts (e.g. 'Di Maria', 'De Jong', 'Van Dijk')
         if len(parts) >= 2:
-            compound_last = " ".join(parts[-2:])
-            if len(compound_last) >= 5:
-                if re.search(r"\b" + re.escape(compound_last) + r"\b", norm_comment):
+            compound_last = parts[-2:]
+            if len(" ".join(compound_last)) >= 5:
+                if _find_valid_match_span(comment_words, compound_last, player_words):
                     return p
 
         # C. Last name match (min 4 characters to avoid false positives)
         if len(parts) > 1:
             last = parts[-1]
             if len(last) >= 4:
-                # Word boundary match
-                if re.search(r"\b" + re.escape(last) + r"\b", norm_comment):
+                if _find_valid_match_span(comment_words, [last], player_words):
                     return p
 
-        # D. Single-name superstars (e.g. 'Ronaldo', 'Neymar', 'Casemiro', 'Deco')
-        elif len(norm_p) >= 4:
-            if re.search(r"\b" + re.escape(norm_p) + r"\b", norm_comment):
+        # D. Single-name superstars (e.g. 'Ronaldo', 'Neymar', 'Casemiro', 'Deco', 'Gabriel')
+        elif len(parts) == 1 and len(norm_p) >= 4:
+            if _find_valid_match_span(comment_words, [norm_p], player_words):
                 return p
 
     return None
@@ -404,15 +763,22 @@ def run_youtube_auto_replies(dry_run=False, limit=20):
         # Extract answer pool
         pool = extract_pool_from_caption(v_title, all_pools)
         if not pool:
-            merged = []
-            for p in all_pools:
-                merged.extend(p.get("players", []))
-            pool = list(set(merged))
+            # Guard against fallback to merging all historical players, preventing false-positive replies
+            print(f"⚠️ [AUTO-REPLY] Could not resolve answer pool for '{v_title[:45]}'. Skipping reply matching.")
+            continue
+
+        # Check if matched pool is a played_with mystery player puzzle
+        is_played_with = False
+        for p in all_pools:
+            if p.get("type") == "played_with" and p.get("players") == pool:
+                is_played_with = True
+                break
 
         matched_player = match_comment_to_pool(text, pool)
         if matched_player:
             total_matched += 1
-            template = random.choice(REPLY_TEMPLATES)
+            templates = PLAYED_WITH_REPLY_TEMPLATES if is_played_with else REPLY_TEMPLATES
+            template = random.choice(templates)
             reply_msg = template.format(player=matched_player)
 
             print(f"\n✨ [YOUTUBE MATCH FOUND!]")
@@ -505,10 +871,16 @@ def run_instagram_auto_replies(dry_run=False, limit=15, my_username="playmaker.b
 
         pool = extract_pool_from_caption(caption, all_pools)
         if not pool:
-            merged = []
-            for p in all_pools:
-                merged.extend(p.get("players", []))
-            pool = list(set(merged))
+            # Guard against fallback to merging all historical players, preventing false-positive replies
+            print(f"⚠️ [AUTO-REPLY] Could not resolve answer pool for post '{(caption or '').splitlines()[0][:45]}'. Skipping reply matching.")
+            continue
+
+        # Check if matched pool is a played_with mystery player puzzle
+        is_played_with = False
+        for p in all_pools:
+            if p.get("type") == "played_with" and p.get("players") == pool:
+                is_played_with = True
+                break
 
         for c in comments:
             total_checked += 1
@@ -538,7 +910,8 @@ def run_instagram_auto_replies(dry_run=False, limit=15, my_username="playmaker.b
             matched_player = match_comment_to_pool(c_text, pool)
             if matched_player:
                 total_matched += 1
-                template = random.choice(REPLY_TEMPLATES)
+                templates = PLAYED_WITH_REPLY_TEMPLATES if is_played_with else REPLY_TEMPLATES
+                template = random.choice(templates)
                 reply_msg = template.format(player=matched_player)
 
                 print(f"\n✨ [INSTAGRAM MATCH FOUND!]")

@@ -3,6 +3,16 @@
   "clubs": {
     "groups": [
       {
+        "display_name": "Inter Miami",
+        "aliases": [
+          "Inter Miami CF",
+          "Miami",
+          "Miami FC",
+          "Miami 2"
+        ],
+        "hidden": false
+      },
+      {
         "display_name": "Dinamo Zagreb",
         "aliases": [
           "GNK Dinamo Zagreb",
