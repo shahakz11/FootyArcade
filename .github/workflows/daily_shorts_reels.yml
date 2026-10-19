@@ -13,6 +13,7 @@ on:
           - career_flight
           - carousel
           - short
+          - played_with
           - all
       game:
         description: 'Specific game ID (optional override, e.g. top_transfers)'
