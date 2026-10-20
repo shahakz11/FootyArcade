@@ -36,13 +36,15 @@ from scripts.geo_manager import (
     latlon_to_vec3,
     vec3_to_latlon,
     slerp,
-    project_point_to_screen
+    project_point_to_screen,
+    is_same_country
 )
 from scripts.badge_manager import get_club_badge
 from scripts.player_image_manager import resolve_player_image_path
 from audio_sfx import (
     SAMPLE_RATE,
     generate_whoosh_sound,
+    generate_car_drive_sound,
     generate_correct_sound,
     generate_sub_drop_sound,
     generate_background_rhythm_bed
@@ -64,6 +66,7 @@ DEFAULT_GLOBE_R = 640
 
 EARTH_TEX_PATH = os.path.join(BASE_DIR, "assets", "map", "earth_day_2048.jpg")
 AIRPLANE_PATH = os.path.join(BASE_DIR, "assets", "map", "airplane.png")
+CAR_PATH = os.path.join(BASE_DIR, "assets", "map", "car.png")
 LEDGER_PATH = os.path.join(BASE_DIR, "data", "puzzle_schedule_ledger.json")
 DESTINATION_CSV = os.path.join(BASE_DIR, "daily_destination_games.csv")
 
@@ -313,6 +316,8 @@ def load_destination_puzzle(target_date=None, puzzle_num_override=None):
                 print(f"⚠️ [GEO WARNING] Club '{cname}' is using default Central Europe fallback! Please map it in data/club_locations.json.")
 
         dist_km = haversine_distance_km(loc_from["lat"], loc_from["lon"], loc_to["lat"], loc_to["lon"])
+        is_domestic = is_same_country(loc_from, loc_to)
+        travel_method = "car" if is_domestic else "flight"
 
         legs.append({
             "from_club": from_club,
@@ -321,7 +326,9 @@ def load_destination_puzzle(target_date=None, puzzle_num_override=None):
             "fee": fee,
             "from_loc": loc_from,
             "to_loc": loc_to,
-            "distance_km": dist_km
+            "distance_km": dist_km,
+            "travel_method": travel_method,
+            "is_domestic": is_domestic
         })
         prev_club = to_club
 
@@ -347,8 +354,13 @@ def generate_career_flight_metadata(puzzle_data):
     origin = puzzle_data.get("origin_club", "")
     legs = puzzle_data.get("legs", [])
     
-    # Calculate flight stats
+    # Calculate flight & drive stats
     total_km = sum(float(l.get("distance_km", 0.0)) for l in legs)
+    flight_km = sum(float(l.get("distance_km", 0.0)) for l in legs if l.get("travel_method") != "car")
+    drive_km = sum(float(l.get("distance_km", 0.0)) for l in legs if l.get("travel_method") == "car")
+    has_flight = any(l.get("travel_method") != "car" for l in legs)
+    has_car = any(l.get("travel_method") == "car" for l in legs)
+    all_car = has_car and not has_flight
     
     # Build route sequence
     route_clubs = [origin] if origin else []
@@ -376,17 +388,39 @@ def generate_career_flight_metadata(puzzle_data):
     clean_tag = player.replace(" ", "").replace("'", "").replace("-", "")
 
     # 1. YouTube Title (< 70 chars for clean mobile truncation)
-    yt_title = f"{player}'s Career Flight Map! ✈️🌍 Where Did He Play? #Shorts"
-    if len(yt_title) > 95:
-        yt_title = f"{player}'s Career Flight Map! ✈️🌍 #Shorts"
+    if all_car:
+        yt_title = f"{player}'s Career Road Trip! 🚗 Where Did He Play? #Shorts"
+        if len(yt_title) > 95:
+            yt_title = f"{player}'s Career Road Trip! 🚗 #Shorts"
+    elif has_car and has_flight:
+        yt_title = f"{player}'s Career Journey! ✈️🚗 Where Did He Play? #Shorts"
+        if len(yt_title) > 95:
+            yt_title = f"{player}'s Career Journey! ✈️🚗 #Shorts"
+    else:
+        yt_title = f"{player}'s Career Flight Map! ✈️🌍 Where Did He Play? #Shorts"
+        if len(yt_title) > 95:
+            yt_title = f"{player}'s Career Flight Map! ✈️🌍 #Shorts"
 
     # 2. YouTube Description
+    if all_car:
+        desc_intro = f"🚗 Tracing {player}'s complete career road trip across the country!\n"
+        dist_str = f"📏 Total Distance Driven: {int(total_km):,} km\n"
+        route_label = "🚗 Route"
+    elif has_car and has_flight:
+        desc_intro = f"✈️🚗 Tracing {player}'s complete career flight & road journey across the globe!\n"
+        dist_str = f"📏 Total Distance: {int(total_km):,} km ({int(flight_km):,} km flown, {int(drive_km):,} km driven)\n"
+        route_label = "🛫/🚗 Route"
+    else:
+        desc_intro = f"✈️ Tracing {player}'s complete career flight journey across the globe!\n"
+        dist_str = f"📏 Total Distance Flown: {int(total_km):,} km\n"
+        route_label = "🛫 Route"
+
     yt_desc = (
-        f"✈️ Tracing {player}'s complete career flight journey across the globe!\n"
+        f"{desc_intro}"
         f"Can you name every club he played for without missing one? 🤔\n\n"
         f"📍 Origin: {origin}\n"
-        f"🛫 Route: {route_arrow_str}\n"
-        f"📏 Total Distance Flown: {int(total_km):,} km\n"
+        f"{route_label}: {route_arrow_str}\n"
+        f"{dist_str}"
         f"💰 Career Transfer Fees: {fee_str}\n\n"
         f"🎮 Guess today's mystery transfer destination live (free, no sign up):\n"
         f"👉 https://playmaker.best/games/transfer_destination.html\n"
@@ -413,6 +447,8 @@ def generate_career_flight_metadata(puzzle_data):
         "premier league",
         "champions league"
     ]
+    if has_car:
+        yt_tags.extend(["career road trip", "car travel", "road trip"])
     # Add clubs to tags
     for c in route_clubs[:4]:
         if c and c not in yt_tags:
@@ -425,13 +461,29 @@ def generate_career_flight_metadata(puzzle_data):
         to_c = leg.get("to_club", "")
         season = leg.get("season", "")
         season_str = f" ({season})" if season else ""
-        leg_bullets.append(f"• {from_c} ➡️ {to_c}{season_str}")
+        icon = "🚗" if leg.get("travel_method") == "car" else "✈️"
+        leg_bullets.append(f"• {from_c} {icon} {to_c}{season_str}")
     
     route_bullets_str = "\n".join(leg_bullets) if leg_bullets else f"• {route_arrow_str}"
 
+    if all_car:
+        ig_header = (
+            f"🚗 {player.upper()}'S COMPLETE CAREER ROAD TRIP!\n"
+            f"{int(total_km):,} km driven across his football journey.\n\n"
+        )
+    elif has_car and has_flight:
+        ig_header = (
+            f"✈️🚗 {player.upper()}'S COMPLETE CAREER JOURNEY!\n"
+            f"{int(total_km):,} km traveled ({int(flight_km):,} km flown, {int(drive_km):,} km driven).\n\n"
+        )
+    else:
+        ig_header = (
+            f"✈️🌍 {player.upper()}'S COMPLETE CAREER FLIGHT MAP!\n"
+            f"{int(total_km):,} km flown across his football journey.\n\n"
+        )
+
     ig_caption = (
-        f"✈️🌍 {player.upper()}'S COMPLETE CAREER FLIGHT MAP!\n"
-        f"{int(total_km):,} km flown across his football journey.\n\n"
+        f"{ig_header}"
         f"Can you name every single club he played for? 🤔\n\n"
         f"📍 The Career Journey:\n"
         f"{route_bullets_str}\n\n"
@@ -449,6 +501,8 @@ def generate_career_flight_metadata(puzzle_data):
         "instagram_caption": ig_caption,
         "target_name": player,
         "total_km": total_km,
+        "flight_km": flight_km,
+        "drive_km": drive_km,
         "route_str": route_arrow_str
     }
 
@@ -488,7 +542,7 @@ def build_video_timeline(puzzle_data):
 # Audio Track Generator
 # ─────────────────────────────────────────────────────────────
 def synthesize_career_audio(timeline, output_wav_path):
-    """Builds energetic sports audio track with jet whooshes, arrival chimes, and rhythm bed."""
+    """Builds energetic sports audio track with jet whooshes, engine zooms, arrival chimes, and rhythm bed."""
     total_samples = int(SAMPLE_RATE * timeline["total_duration"])
     audio = np.zeros(total_samples, dtype=np.float32)
 
@@ -504,6 +558,7 @@ def synthesize_career_audio(timeline, output_wav_path):
             audio[start_s:end_s] += sound_arr[:valid] * gain
 
     whoosh = generate_whoosh_sound()
+    car_sound = generate_car_drive_sound()
     chime = generate_correct_sound()
     sub_drop = generate_sub_drop_sound()
 
@@ -512,8 +567,11 @@ def synthesize_career_audio(timeline, output_wav_path):
 
     curr_time = timeline["intro_frames"] / FPS
     for i, leg in enumerate(timeline["legs"]):
-        # Takeoff whoosh
-        add_sfx(whoosh, curr_time + 0.1, 0.85)
+        is_car = (leg.get("travel_method") == "car")
+        if is_car:
+            add_sfx(car_sound, curr_time + 0.1, 0.85)
+        else:
+            add_sfx(whoosh, curr_time + 0.1, 0.85)
         # Landing chime (at 75% of leg duration)
         landing_time = curr_time + (timeline["leg_duration"] * 0.72)
         add_sfx(chime, landing_time, 0.95)
@@ -536,8 +594,14 @@ def synthesize_career_audio(timeline, output_wav_path):
 # ─────────────────────────────────────────────────────────────
 # Frame Compositor
 # ─────────────────────────────────────────────────────────────
-def render_flight_frame(frame_idx, timeline, puzzle_data, globe_renderer, airplane_sprite, player_portrait_img):
-    """Renders a single 1080x1920 video frame with 3D Earth, flight trajectory, and HUD cards."""
+def render_flight_frame(frame_idx, timeline, puzzle_data, globe_renderer, airplane_sprite, player_portrait_img, car_sprite=None):
+    """Renders a single 1080x1920 video frame with 3D Earth, flight/road trajectory, and HUD cards."""
+    if car_sprite is None and os.path.exists(CAR_PATH):
+        try:
+            car_sprite = Image.open(CAR_PATH).convert("RGBA")
+        except Exception:
+            pass
+
     total_frames = timeline["total_frames"]
     intro_frames = timeline["intro_frames"]
     leg_frames = timeline["leg_frames"]
@@ -601,8 +665,9 @@ def render_flight_frame(frame_idx, timeline, puzzle_data, globe_renderer, airpla
     frame = Image.fromarray(cv2.cvtColor(globe_canvas, cv2.COLOR_BGR2RGBA))
     draw = ImageDraw.Draw(frame, "RGBA")
 
-    # 3. Draw Completed & Active Flight Trails
+    # 3. Draw Completed & Active Flight/Road Trails
     for idx, leg in enumerate(legs):
+        is_car_leg = (leg.get("travel_method") == "car")
         v1 = latlon_to_vec3(leg["from_loc"]["lat"], leg["from_loc"]["lon"])
         v2 = latlon_to_vec3(leg["to_loc"]["lat"], leg["to_loc"]["lon"])
 
@@ -613,35 +678,54 @@ def render_flight_frame(frame_idx, timeline, puzzle_data, globe_renderer, airpla
             for s in range(max_step + 1):
                 vt = slerp(v1, v2, s / float(max_step))
                 lat_d, lon_d = vec3_to_latlon(vt)
-                alt = 1.0 + 0.03 * math.sin(math.pi * (s / float(max_step)))
+                if is_car_leg:
+                    alt = 1.002
+                else:
+                    alt = 1.0 + 0.03 * math.sin(math.pi * (s / float(max_step)))
                 px, py, vis = project_point_to_screen(lat_d, lon_d, cam_lat, cam_lon, GLOBE_CX, GLOBE_CY, cam_R, alt)
                 if vis:
                     pts.append((px, py))
             if len(pts) > 1:
-                for k in range(len(pts) - 1):
-                    draw.line([pts[k], pts[k+1]], fill=(0, 240, 255, 60), width=6)
-                    draw.line([pts[k], pts[k+1]], fill=(255, 255, 255, 140), width=2)
+                if is_car_leg:
+                    for k in range(len(pts) - 1):
+                        draw.line([pts[k], pts[k+1]], fill=(255, 190, 0, 80), width=6)
+                        draw.line([pts[k], pts[k+1]], fill=(255, 245, 200, 160), width=2)
+                else:
+                    for k in range(len(pts) - 1):
+                        draw.line([pts[k], pts[k+1]], fill=(0, 240, 255, 60), width=6)
+                        draw.line([pts[k], pts[k+1]], fill=(255, 255, 255, 140), width=2)
         elif idx == active_leg_idx and not is_intro:
-            # Active currently flying leg
+            # Active currently traveling leg
             max_step = max(2, int(40 * leg_progress))
             pts = []
             for s in range(max_step + 1):
                 t_sub = (s / float(max_step)) * leg_progress
                 vt = slerp(v1, v2, t_sub)
                 lat_d, lon_d = vec3_to_latlon(vt)
-                alt = 1.0 + 0.045 * math.sin(math.pi * t_sub)
+                if is_car_leg:
+                    alt = 1.002
+                else:
+                    alt = 1.0 + 0.045 * math.sin(math.pi * t_sub)
                 px, py, vis = project_point_to_screen(lat_d, lon_d, cam_lat, cam_lon, GLOBE_CX, GLOBE_CY, cam_R, alt)
                 if vis:
                     pts.append((px, py))
             if len(pts) > 1:
-                # Outer cyan neon glow
-                for k in range(len(pts) - 1):
-                    draw.line([pts[k], pts[k+1]], fill=(0, 240, 255, 120), width=10)
-                # Core bright trail
-                for k in range(len(pts) - 1):
-                    draw.line([pts[k], pts[k+1]], fill=(255, 255, 255, 240), width=4)
+                if is_car_leg:
+                    # Outer amber/gold road glow
+                    for k in range(len(pts) - 1):
+                        draw.line([pts[k], pts[k+1]], fill=(255, 200, 0, 140), width=10)
+                    # Core bright road trail
+                    for k in range(len(pts) - 1):
+                        draw.line([pts[k], pts[k+1]], fill=(255, 255, 240, 240), width=4)
+                else:
+                    # Outer cyan neon glow
+                    for k in range(len(pts) - 1):
+                        draw.line([pts[k], pts[k+1]], fill=(0, 240, 255, 120), width=10)
+                    # Core bright trail
+                    for k in range(len(pts) - 1):
+                        draw.line([pts[k], pts[k+1]], fill=(255, 255, 255, 240), width=4)
 
-            # Draw Airplane Icon at Current Head
+            # Draw Vehicle Icon at Current Head (Car or Airplane)
             if pts:
                 head_x, head_y = pts[-1]
                 # Tangent angle
@@ -652,19 +736,28 @@ def render_flight_frame(frame_idx, timeline, puzzle_data, globe_renderer, airpla
                 else:
                     dx, dy = 1, 0
                 angle_deg = math.degrees(math.atan2(dy, dx)) + 90.0
-                plane_rot = airplane_sprite.resize((72, 72)).rotate(-angle_deg, resample=Image.BICUBIC)
-                frame.alpha_composite(plane_rot, (head_x - 36, head_y - 36))
+                active_sprite = car_sprite if (is_car_leg and car_sprite is not None) else airplane_sprite
+                sprite_size = (64, 64) if is_car_leg else (72, 72)
+                half_sz = sprite_size[0] // 2
+                vehicle_rot = active_sprite.resize(sprite_size).rotate(-angle_deg, resample=Image.BICUBIC)
+                frame.alpha_composite(vehicle_rot, (head_x - half_sz, head_y - half_sz))
 
     # 4. Draw Waypoints & Radar Pins
     all_visited_locs = [origin_loc] + [l["to_loc"] for l in legs[:active_leg_idx + (1 if leg_progress > 0.7 or is_outro else 0)]]
-    for loc in all_visited_locs:
+    for i_loc, loc in enumerate(all_visited_locs):
         px, py, vis = project_point_to_screen(loc["lat"], loc["lon"], cam_lat, cam_lon, GLOBE_CX, GLOBE_CY, cam_R)
         if vis:
-            draw.ellipse([px - 7, py - 7, px + 7, py + 7], fill=(0, 240, 255, 240), outline=(255, 255, 255, 255), width=2)
+            is_loc_car = False
+            if i_loc > 0 and i_loc - 1 < len(legs):
+                is_loc_car = (legs[i_loc - 1].get("travel_method") == "car")
+            dot_color = (255, 200, 0, 240) if is_loc_car else (0, 240, 255, 240)
+            draw.ellipse([px - 7, py - 7, px + 7, py + 7], fill=dot_color, outline=(255, 255, 255, 255), width=2)
             # Radar pulse rings on latest destination
             if not is_outro and loc == legs[active_leg_idx]["to_loc"] and leg_progress > 0.7:
+                is_active_car = (legs[active_leg_idx].get("travel_method") == "car")
+                pulse_color = (255, 200, 0, 180) if is_active_car else (0, 240, 255, 180)
                 pulse_r = 12 + int(14 * ((frame_idx % 20) / 20.0))
-                draw.ellipse([px - pulse_r, py - pulse_r, px + pulse_r, py + pulse_r], outline=(0, 240, 255, 180), width=2)
+                draw.ellipse([px - pulse_r, py - pulse_r, px + pulse_r, py + pulse_r], outline=pulse_color, width=2)
 
     # 5. Top Header Banner
     draw.rectangle([0, 0, WIDTH, 175], fill=(7, 10, 18, 230))
@@ -678,10 +771,22 @@ def render_flight_frame(frame_idx, timeline, puzzle_data, globe_renderer, airpla
     pill_w, pill_h = 420, 38
     pill_x0 = 450 - (pill_w // 2)
     pill_y0 = 108
-    draw.rounded_rectangle([pill_x0, pill_y0, pill_x0 + pill_w, pill_y0 + pill_h], radius=14, fill=(12, 18, 30), outline=(0, 240, 255), width=2)
+    curr_is_car = (not is_intro and not is_outro and legs[active_leg_idx].get("travel_method") == "car")
+    all_car = all(l.get("travel_method") == "car" for l in legs)
+
+    if curr_is_car or (is_intro and all_car):
+        subtitle_text = "CAREER ROAD TRIP • FOOTYARCADE"
+        pill_border = (255, 200, 0)
+        pill_text_col = (255, 200, 0)
+    else:
+        subtitle_text = "CAREER FLIGHT MAP • FOOTYARCADE"
+        pill_border = (0, 240, 255)
+        pill_text_col = (0, 240, 255)
+
+    draw.rounded_rectangle([pill_x0, pill_y0, pill_x0 + pill_w, pill_y0 + pill_h], radius=14, fill=(12, 18, 30), outline=pill_border, width=2)
     flag_ico = draw_flag_badge(nationality, size=(30, 20))
     frame.alpha_composite(flag_ico, (pill_x0 + 12, pill_y0 + 9))
-    draw.text((pill_x0 + 52, pill_y0 + 19), "CAREER FLIGHT MAP • FOOTYARCADE", fill=(0, 240, 255), font=get_font(18, True), anchor="lm")
+    draw.text((pill_x0 + 52, pill_y0 + 19), subtitle_text, fill=pill_text_col, font=get_font(18, True), anchor="lm")
 
     # 6. Live Distance Odometer (Top Right)
     draw.rounded_rectangle([WIDTH - 220, 24, WIDTH - 30, 84], radius=12, fill=(10, 16, 26, 230), outline=(255, 215, 0, 180), width=2)
@@ -696,6 +801,7 @@ def render_flight_frame(frame_idx, timeline, puzzle_data, globe_renderer, airpla
         frame.alpha_composite(glass, (card_x, card_y))
 
         curr_leg = legs[active_leg_idx]
+        is_car_leg = (curr_leg.get("travel_method") == "car")
         if is_intro:
             disp_club = origin_club
             disp_loc = origin_loc
@@ -707,7 +813,7 @@ def render_flight_frame(frame_idx, timeline, puzzle_data, globe_renderer, airpla
             disp_loc = curr_leg["to_loc"]
             disp_tag = f"SEASON {curr_leg['season']}" if curr_leg['season'] else "TRANSFER"
             disp_fee = format_fee_label(curr_leg["fee"])
-            disp_dist = f"+{int(curr_leg['distance_km']):,} KM FLOWN"
+            disp_dist = f"+{int(curr_leg['distance_km']):,} KM DRIVEN" if is_car_leg else f"+{int(curr_leg['distance_km']):,} KM FLOWN"
 
         # Luminous backing disc for badge so dark crests stand out
         badge_cx, badge_cy = card_x + 95, card_y + 105
@@ -720,8 +826,9 @@ def render_flight_frame(frame_idx, timeline, puzzle_data, globe_renderer, airpla
 
         # City & Country
         city_line = f"{disp_loc['city'].upper()}, {disp_loc['country'].upper()} [{disp_loc['code']}]"
-        # Small cyan marker dot
-        draw.ellipse([card_x + 188, card_y + 105, card_x + 200, card_y + 117], fill=(0, 240, 255, 255))
+        # Small marker dot (gold if car, cyan if flight)
+        marker_color = (255, 200, 0, 255) if (not is_intro and is_car_leg) else (0, 240, 255, 255)
+        draw.ellipse([card_x + 188, card_y + 105, card_x + 200, card_y + 117], fill=marker_color)
         draw.text((card_x + 210, card_y + 100), city_line, fill=(180, 210, 240, 255), font=get_font(24, False))
 
         # Transfer & Distance Pills
@@ -730,7 +837,8 @@ def render_flight_frame(frame_idx, timeline, puzzle_data, globe_renderer, airpla
         draw.text((card_x + 342, card_y + 165), f"{disp_tag} • {disp_fee}", fill=(7, 12, 20, 255), font=get_font(18, True), anchor="mm")
 
         # Right pill (Distance)
-        draw.rounded_rectangle([card_x + 515, card_y + 144, card_x + 765, card_y + 186], radius=10, fill=(0, 240, 255, 220))
+        dist_fill = (255, 200, 0, 220) if (not is_intro and is_car_leg) else (0, 240, 255, 220)
+        draw.rounded_rectangle([card_x + 515, card_y + 144, card_x + 765, card_y + 186], radius=10, fill=dist_fill)
         draw.text((card_x + 640, card_y + 165), disp_dist, fill=(7, 12, 20, 255), font=get_font(18, True), anchor="mm")
     else:
         # Outro Full Recap Summary Card
@@ -801,9 +909,10 @@ def render_career_flight_video(target_date=None, puzzle_num=None, output_path=No
     p_id = puzzle_data["puzzle_id"]
 
     print(f"🎯 Target Player: {player_name} (Puzzle #{p_id}, Date: {date_str})")
-    print(f"✈️ Total Flight Legs: {len(puzzle_data['legs'])}")
+    print(f"🌍 Total Career Journey Legs: {len(puzzle_data['legs'])}")
     for i, leg in enumerate(puzzle_data["legs"]):
-        print(f"   Leg {i+1}: {leg['from_club']} -> {leg['to_club']} ({leg['season']}) [{int(leg['distance_km']):,} km]")
+        m_ico = "🚗" if leg.get("travel_method") == "car" else "✈️"
+        print(f"   Leg {i+1} [{m_ico} {leg.get('travel_method', 'flight').upper()}]: {leg['from_club']} -> {leg['to_club']} ({leg['season']}) [{int(leg['distance_km']):,} km]")
 
     if not output_path:
         sanitized = player_name.replace(" ", "_").replace("'", "")
@@ -816,6 +925,7 @@ def render_career_flight_video(target_date=None, puzzle_num=None, output_path=No
     # Initialize Assets
     globe_renderer = GlobeRenderer()
     airplane_sprite = Image.open(AIRPLANE_PATH).convert("RGBA")
+    car_sprite = Image.open(CAR_PATH).convert("RGBA") if os.path.exists(CAR_PATH) else None
 
     # Resolve Player Image
     portrait_path = resolve_player_image_path(player_name)
@@ -832,7 +942,7 @@ def render_career_flight_video(target_date=None, puzzle_num=None, output_path=No
     if preview_only:
         preview_frame_idx = timeline["intro_frames"] + int(timeline["leg_frames"] * 0.5)
         print(f"📸 Generating single preview frame at frame #{preview_frame_idx}...")
-        img = render_flight_frame(preview_frame_idx, timeline, puzzle_data, globe_renderer, airplane_sprite, player_portrait_img)
+        img = render_flight_frame(preview_frame_idx, timeline, puzzle_data, globe_renderer, airplane_sprite, player_portrait_img, car_sprite=car_sprite)
         preview_out = os.path.join(BASE_DIR, f"preview_career_flight_{sanitized}.jpg")
         img.save(preview_out, quality=95)
         print(f"✓ Saved preview frame to {preview_out}")
@@ -868,7 +978,7 @@ def render_career_flight_video(target_date=None, puzzle_num=None, output_path=No
         proc = subprocess.Popen(ffmpeg_cmd, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
 
         for f_idx in range(timeline["total_frames"]):
-            frame_img = render_flight_frame(f_idx, timeline, puzzle_data, globe_renderer, airplane_sprite, player_portrait_img)
+            frame_img = render_flight_frame(f_idx, timeline, puzzle_data, globe_renderer, airplane_sprite, player_portrait_img, car_sprite=car_sprite)
             proc.stdin.write(frame_img.tobytes())
 
             if (f_idx + 1) % 60 == 0 or f_idx == timeline["total_frames"] - 1:

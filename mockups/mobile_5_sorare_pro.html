@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Playmaker — Sorare Pro Tactical Hub (Mobile First)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pitch: {
+                            carbon: '#0c1017',
+                            card: '#151b26',
+                            border: '#232d3f',
+                            gold: '#facc15',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            crimson: '#ef4444'
+                        }
+                    },
+                    fontFamily: {
+                        num: ['"Teko"', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 20; }
+        .matte-card {
+            background: linear-gradient(180deg, #18202d 0%, #121822 100%);
+            border: 1px solid #283449;
+            box-shadow: 0 8px 24px -4px rgba(0,0,0,0.4);
+        }
+    </style>
+</head>
+<body class="bg-[#080b10] text-slate-100 font-sans antialiased min-h-screen flex justify-center">
+
+    <!-- Mobile Frame (390px) -->
+    <div class="w-full max-w-[420px] bg-pitch-carbon min-h-screen border-x border-pitch-border flex flex-col justify-between relative shadow-2xl pb-24">
+
+        <!-- Header -->
+        <header class="p-4 border-b border-pitch-border/80 bg-pitch-card/60 backdrop-blur-md space-y-3 sticky top-0 z-40">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-pitch-emerald text-black font-num text-xl font-bold flex items-center justify-center">
+                        P
+                    </div>
+                    <div>
+                        <div class="font-extrabold text-lg text-white leading-none tracking-tight">PLAYMAKER</div>
+                        <div class="text-[10px] text-slate-400 font-mono tracking-widest uppercase">PRO MANAGER MATCHDAY</div>
+                    </div>
+                </div>
+
+                <!-- Streak & Multiplier -->
+                <div class="flex items-center gap-1.5 bg-black/60 border border-pitch-border px-3 py-1 rounded-xl">
+                    <span class="text-pitch-gold text-xs">🔥</span>
+                    <span class="font-num text-lg font-bold text-white leading-none">4</span>
+                    <span class="text-[10px] text-slate-400 font-mono">DAYS</span>
+                </div>
+            </div>
+
+            <!-- Segmented Switcher -->
+            <div class="bg-black/60 p-1 rounded-xl border border-pitch-border flex items-center text-xs font-bold text-center">
+                <button class="flex-1 py-1.5 rounded-lg bg-pitch-card text-white shadow-sm border border-pitch-border/60">TODAY'S FIXTURES</button>
+                <button class="flex-1 py-1.5 text-slate-400 hover:text-white transition">LEADERBOARDS</button>
+                <button class="flex-1 py-1.5 text-slate-400 hover:text-white transition">VAULT</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="p-4 space-y-4 flex-1">
+
+            <!-- SPOTLIGHT FIXTURE CARD (Horizontal Hero) -->
+            <div class="matte-card rounded-2xl p-5 relative overflow-hidden border border-pitch-emerald/40">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="bg-pitch-emerald/15 text-pitch-emerald border border-pitch-emerald/30 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider font-mono">
+                            FEATURED FIXTURE #112
+                        </span>
+                        <h2 class="font-extrabold text-2xl text-white mt-1">TRANSFER DESTINATION</h2>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-num text-3xl font-bold text-pitch-gold leading-none">3.8</div>
+                        <div class="text-[9px] text-slate-400 font-mono">DIFFICULTY</div>
+                    </div>
+                </div>
+
+                <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                    Guess the Dutch international forward who traveled through Feyenoord, Arsenal, Manchester United, and Fenerbahçe.
+                </p>
+
+                <!-- Tactical Clue Bar -->
+                <div class="grid grid-cols-3 gap-2 my-3 text-center text-xs">
+                    <div class="bg-black/40 border border-pitch-border p-2 rounded-xl">
+                        <div class="text-[9px] text-slate-400 font-mono">POSITION</div>
+                        <div class="font-bold text-white">Striker ⚽</div>
+                    </div>
+                    <div class="bg-black/40 border border-pitch-border p-2 rounded-xl">
+                        <div class="text-[9px] text-slate-400 font-mono">CAPS</div>
+                        <div class="font-bold text-white">102 Int. 🇳🇱</div>
+                    </div>
+                    <div class="bg-black/40 border border-pitch-border p-2 rounded-xl">
+                        <div class="text-[9px] text-slate-400 font-mono">WIN RATE</div>
+                        <div class="font-bold text-pitch-emerald">84% Solved</div>
+                    </div>
+                </div>
+
+                <a href="../games/transfer_destination.html" class="block w-full bg-pitch-emerald hover:bg-emerald-400 text-slate-950 font-bold text-center py-3 rounded-xl transition text-xs uppercase tracking-wider font-mono shadow-lg shadow-pitch-emerald/10">
+                    START CHALLENGE
+                </a>
+            </div>
+
+            <!-- TACTICAL FIXTURE LIST -->
+            <div class="space-y-2.5">
+                <div class="flex items-center justify-between text-xs font-bold text-slate-400 font-mono uppercase tracking-wider">
+                    <span>MATCH SCHEDULE (6 REMAINING)</span>
+                    <span class="text-pitch-gold">2 SOLVED</span>
+                </div>
+
+                <!-- Fixture 1: Passport FC -->
+                <div class="matte-card rounded-xl p-3.5 flex items-center justify-between gap-3 group hover:border-pitch-emerald/50 transition">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-black/60 border border-pitch-border flex items-center justify-center font-num text-xl text-pitch-emerald">
+                            01
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-sm text-white group-hover:text-pitch-emerald transition">Passport FC</h3>
+                                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-black text-slate-400 border border-pitch-border">5 LIVES</span>
+                            </div>
+                            <div class="text-xs text-slate-400 mt-0.5">Real Madrid 🇪🇸 • 4 Nationality Stamps</div>
+                        </div>
+                    </div>
+                    <a href="../games/passport_fc.html" class="bg-pitch-card hover:bg-pitch-border text-white text-xs font-bold px-3 py-1.5 rounded-lg border border-pitch-border transition shrink-0 font-mono">
+                        PLAY
+                    </a>
+                </div>
+
+                <!-- Fixture 2: Played With -->
+                <div class="matte-card rounded-xl p-3.5 flex items-center justify-between gap-3 group hover:border-pitch-amber/50 transition">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-black/60 border border-pitch-border flex items-center justify-center font-num text-xl text-pitch-amber">
+                            02
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-sm text-white group-hover:text-pitch-amber transition">Played With</h3>
+                                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-pitch-amber/20 text-pitch-amber border border-pitch-amber/40">IN PROGRESS</span>
+                            </div>
+                            <div class="text-xs text-slate-400 mt-0.5">3/5 Teammates Revealed • 2 Lives Left</div>
+                        </div>
+                    </div>
+                    <a href="../games/played_with.html" class="bg-pitch-amber text-black text-xs font-bold px-3 py-1.5 rounded-lg transition shrink-0 font-mono">
+                        RESUME
+                    </a>
+                </div>
+
+                <!-- Fixture 3: Top Transfers -->
+                <div class="matte-card rounded-xl p-3.5 flex items-center justify-between gap-3 group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-black/60 border border-pitch-border flex items-center justify-center font-num text-xl text-cyan-400">
+                            03
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-sm text-white">Top Transfers</h3>
+                                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-pitch-emerald/20 text-pitch-emerald border border-pitch-emerald/40">SOLVED (10/10)</span>
+                            </div>
+                            <div class="text-xs text-slate-400 mt-0.5">Chelsea FC Record Fees • 100% Score</div>
+                        </div>
+                    </div>
+                    <a href="../games/top_transfers.html" class="bg-black text-slate-400 text-xs font-bold px-3 py-1.5 rounded-lg border border-pitch-border transition shrink-0 font-mono">
+                        RECAP
+                    </a>
+                </div>
+
+                <!-- Fixture 4: Club Connect -->
+                <div class="matte-card rounded-xl p-3.5 flex items-center justify-between gap-3 group">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-black/60 border border-pitch-border flex items-center justify-center font-num text-xl text-purple-400">
+                            04
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-sm text-white">Club Connect</h3>
+                                <span class="text-[9px] font-mono px-1.5 py-0.2 rounded bg-black text-slate-400 border border-pitch-border">3 LIVES</span>
+                            </div>
+                            <div class="text-xs text-slate-400 mt-0.5">5 Signings • 1 Common Club</div>
+                        </div>
+                    </div>
+                    <a href="../games/club_connect.html" class="bg-pitch-card hover:bg-pitch-border text-white text-xs font-bold px-3 py-1.5 rounded-lg border border-pitch-border transition shrink-0 font-mono">
+                        PLAY
+                    </a>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Fixed Bottom Thumb Controls -->
+        <nav class="fixed bottom-0 w-full max-w-[420px] bg-pitch-card border-t border-pitch-border px-6 py-2.5 flex items-center justify-between z-50 text-slate-400 font-mono text-[10px]">
+            <button class="flex flex-col items-center text-pitch-emerald font-bold gap-0.5">
+                <span class="material-symbols-outlined text-xl">sports</span>
+                <span>MATCHDAY</span>
+            </button>
+            <button class="flex flex-col items-center hover:text-white gap-0.5 transition">
+                <span class="material-symbols-outlined text-xl">history</span>
+                <span>HISTORY</span>
+            </button>
+            <button class="flex flex-col items-center hover:text-white gap-0.5 transition">
+                <span class="material-symbols-outlined text-xl">leaderboard</span>
+                <span>TABLE</span>
+            </button>
+            <button class="flex flex-col items-center hover:text-white gap-0.5 transition">
+                <span class="material-symbols-outlined text-xl">manage_accounts</span>
+                <span>TACTICS</span>
+            </button>
+        </nav>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>FC TRIVIA SNAP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=JetBrains+Mono:wght@500;600&amp;family=Space+Grotesk:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-fixed": "#151c26",
+            "on-surface-variant": "#c5c6cc",
+            "on-error": "#690005",
+            "tertiary-fixed": "#efdbff",
+            "on-error-container": "#ffdad6",
+            "surface-dim": "#051424",
+            "surface-container-highest": "#273647",
+            "on-surface": "#d4e4fa",
+            "on-tertiary-fixed": "#2b0052",
+            "on-tertiary-fixed-variant": "#6600b7",
+            "surface-variant": "#273647",
+            "error": "#ffb4ab",
+            "inverse-primary": "#585f6a",
+            "error-container": "#93000a",
+            "secondary-container": "#00fe66",
+            "surface-container-lowest": "#010f1e",
+            "tertiary-container": "#14002b",
+            "surface-bright": "#2c3a4b",
+            "on-secondary-fixed-variant": "#00531b",
+            "surface-container": "#122130",
+            "secondary-fixed-dim": "#00e55b",
+            "on-primary-fixed-variant": "#404752",
+            "secondary-fixed": "#6bff83",
+            "inverse-surface": "#d4e4fa",
+            "surface-tint": "#c0c7d4",
+            "on-primary-container": "#737a86",
+            "primary-fixed-dim": "#c0c7d4",
+            "surface-container-low": "#0d1d2c",
+            "inverse-on-surface": "#233242",
+            "on-secondary": "#003911",
+            "surface-container-high": "#1c2b3b",
+            "on-tertiary": "#470083",
+            "primary": "#c0c7d4",
+            "surface": "#051424",
+            "primary-fixed": "#dce3f0",
+            "on-tertiary-container": "#9c52ee",
+            "on-secondary-fixed": "#002107",
+            "tertiary": "#dbb8ff",
+            "secondary": "#ebffe6",
+            "on-background": "#d4e4fa",
+            "on-primary": "#2a313b",
+            "primary-container": "#050b14",
+            "tertiary-fixed-dim": "#dbb8ff",
+            "background": "#051424",
+            "outline-variant": "#45474b",
+            "outline": "#8f9096",
+            "on-secondary-container": "#007128"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "margin": "2rem",
+            "space-lg": "1.5rem",
+            "gutter": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-xl": ["Anton"],
+            "body-md": ["Space Grotesk"],
+            "headline-xxl": ["Anton"],
+            "body-lg": ["Space Grotesk"],
+            "headline-md": ["Space Grotesk"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-sm": ["Space Grotesk"],
+            "headline-lg": ["Anton"],
+            "body-sm": ["Space Grotesk"],
+            "label-lg": ["JetBrains Mono"],
+            "label-md": ["JetBrains Mono"]
+          },
+          "fontSize": {
+            "headline-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "0.03em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-xxl": ["64px", { "lineHeight": "72px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "0.01em", "fontWeight": "700" }],
+            "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "500" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "0.02em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background-color: #051424;
+      color: #d4e4fa;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .turf-pattern {
+      background-image: linear-gradient(rgba(5, 20, 36, 0.9), rgba(5, 20, 36, 0.95)), repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(0, 254, 102, 0.03) 40px, rgba(0, 254, 102, 0.03) 80px);
+    }
+    .glow-emerald { box-shadow: 0 0 25px rgba(16, 185, 129, 0.25); }
+    .glow-cyber { box-shadow: 0 0 25px rgba(0, 254, 102, 0.3); }
+    .glow-platinum { box-shadow: 0 0 25px rgba(220, 227, 240, 0.3); }
+    .glow-orange { box-shadow: 0 0 25px rgba(249, 115, 22, 0.3); }
+    .glow-purple { box-shadow: 0 0 25px rgba(156, 82, 238, 0.3); }
+    .glow-blue { box-shadow: 0 0 25px rgba(59, 130, 246, 0.3); }
+    
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #010f1e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #273647;
+      border-radius: 4px;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-background flex justify-center items-center min-h-screen m-0 p-0">
+<!-- Mobile Screen Container -->
+<div class="relative w-[390px] h-[844px] bg-surface turf-pattern overflow-hidden flex flex-col justify-between shadow-2xl border border-outline-variant/30">
+<!-- Top App Bar -->
+<header class="w-full px-4 py-3 bg-surface shadow-md flex justify-between items-center z-40">
+<div class="flex items-center space-x-3">
+<div class="relative w-10 h-10 rounded-full overflow-hidden border-2 border-secondary flex items-center justify-center bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="Close up portrait of an elite competitive esports player wearing specialized gaming headset with ambient neon rim lighting, high-contrast sports aesthetic, dark cinematic atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD302pBh75eInNbrtvymYDwM0Zy8FuV8y87xvdcxbsU_NN4hLY5UWmhe6cYEPDpamhPuENQpn3ctm2GvsNL5NwCYSV7k1yMWlZvX0EEVE-p_6rcsMj43JR70IdqQ_t-p9uO1LPhm7Wr_3h1yKGEM8-IIOU5oF5OPCn6k5phBGqtdqE0_PfLbWO4YahPf8KUb0dFpQkonqnyw_vluRX_0YqT50tJEwKKv9Hnjo4bcCY-L2w068exWyXNG8EAvkwT5AvG1_7dx22Xs94"/>
+</div>
+<div>
+<div class="text-headline-md font-headline-md font-bold text-primary tracking-tight">FC TRIVIA SNAP</div>
+<div class="flex items-center space-x-2">
+<span class="text-label-sm font-label-sm px-1.5 py-0.5 rounded bg-secondary-container/20 text-secondary font-bold">🔥 4 DAY STREAK</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant flex items-center"><span class="material-symbols-outlined text-[12px] mr-0.5">schedule</span>Reset 06:41</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<button class="w-9 h-9 rounded-xl bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-variant transition-transform duration-100 active:scale-95">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Scrollable Content -->
+<main class="flex-1 overflow-y-auto px-4 py-3 pb-24 space-y-4">
+<!-- Daily Quest Progress Card -->
+<div class="bg-surface-container-low border border-outline-variant/40 rounded-xl p-3.5 relative overflow-hidden">
+<div class="absolute -right-6 -bottom-6 w-24 h-24 bg-secondary/10 rounded-full blur-xl pointer-events-none"></div>
+<div class="flex justify-between items-center mb-2">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">military_tech</span>
+<span class="text-label-lg font-label-lg text-on-surface">Daily Pack: 2/7 Games Completed</span>
+</div>
+<button class="w-8 h-8 rounded-lg bg-secondary-container text-on-secondary-container flex items-center justify-center hover:scale-105 transition-transform active:scale-95 shadow-lg">
+<span class="material-symbols-outlined text-[18px]">redeem</span>
+</button>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 28.5%;"></div>
+</div>
+</div>
+<!-- Game Selector Cards -->
+<div class="space-y-4">
+<!-- 1. PASSPORT FC -->
+<div class="relative bg-gradient-to-br from-emerald-950 via-surface-container to-surface rounded-xl p-4 border border-emerald-500/40 glow-emerald transform transition-all duration-200 active:scale-98 cursor-pointer group">
+<div class="absolute top-2 right-3 text-label-sm font-label-sm text-emerald-400 font-bold bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-500/30">HOLOGRAPHIC</div>
+<div class="flex items-start justify-between">
+<div>
+<span class="text-label-sm font-label-sm text-emerald-300 tracking-widest uppercase">GLOBAL EXPEDITION</span>
+<h3 class="text-headline-md font-headline-md text-on-surface mt-0.5">PASSPORT FC</h3>
+</div>
+<div class="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">public</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mt-2">Identify international superstars by their passport stamps and national team glory paths.</p>
+<div class="mt-4 flex items-center justify-between pt-3 border-t border-emerald-500/20">
+<span class="text-label-sm font-label-sm text-emerald-400">⚡ REWARD: ICON PACK</span>
+<span class="material-symbols-outlined text-emerald-400 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- 2. TRANSFER DESTINATION -->
+<div class="relative bg-gradient-to-br from-surface-container via-surface to-secondary-container/10 rounded-xl p-4 border border-secondary/40 glow-cyber transform transition-all duration-200 active:scale-98 cursor-pointer group">
+<div class="absolute top-2 right-3 text-label-sm font-label-sm text-secondary font-bold bg-surface-container-high px-2 py-0.5 rounded border border-secondary/30">RADAR LOCK</div>
+<div class="flex items-start justify-between">
+<div>
+<span class="text-label-sm font-label-sm text-secondary tracking-widest uppercase">CAREER PATHWAY</span>
+<h3 class="text-headline-md font-headline-md text-on-surface mt-0.5">TRANSFER DESTINATION</h3>
+</div>
+<div class="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">radar</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mt-2">Trace flight paths and multi-club stops across Europe's top leagues in record time.</p>
+<div class="mt-4 flex items-center justify-between pt-3 border-t border-secondary/20">
+<span class="text-label-sm font-label-sm text-secondary">⚡ REWARD: 1,500 COINS</span>
+<span class="material-symbols-outlined text-secondary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- 3. TOP TRANSFERS -->
+<div class="relative bg-gradient-to-br from-slate-900 via-surface-container to-surface rounded-xl p-4 border border-primary/40 glow-platinum transform transition-all duration-200 active:scale-98 cursor-pointer group">
+<div class="absolute top-2 right-3 text-label-sm font-label-sm text-primary font-bold bg-surface-container-highest px-2 py-0.5 rounded border border-primary/30">HIGH-ROLLER</div>
+<div class="flex items-start justify-between">
+<div>
+<span class="text-label-sm font-label-sm text-primary-fixed tracking-widest uppercase">MEGA VALUATIONS</span>
+<h3 class="text-headline-md font-headline-md text-on-surface mt-0.5">TOP TRANSFERS</h3>
+</div>
+<div class="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">payments</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mt-2">Guess the record-breaking transfer fees and blockbuster window movements.</p>
+<div class="mt-4 flex items-center justify-between pt-3 border-t border-primary/20">
+<span class="text-label-sm font-label-sm text-primary">⚡ REWARD: RARE GOLD PACK</span>
+<span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- 4. PLAYED WITH -->
+<div class="relative bg-gradient-to-br from-orange-950 via-surface-container to-surface rounded-xl p-4 border border-orange-500/40 glow-orange transform transition-all duration-200 active:scale-98 cursor-pointer group">
+<div class="absolute top-2 right-3 text-label-sm font-label-sm text-orange-400 font-bold bg-orange-950/80 px-2 py-0.5 rounded border border-orange-500/30">CHEMISTRY</div>
+<div class="flex items-start justify-between">
+<div>
+<span class="text-label-sm font-label-sm text-orange-300 tracking-widest uppercase">LINK PINS</span>
+<h3 class="text-headline-md font-headline-md text-on-surface mt-0.5">PLAYED WITH</h3>
+</div>
+<div class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center text-orange-400 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">hub</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mt-2">Connect legendary teammates who shared the pitch for both club and country.</p>
+<div class="mt-4 flex items-center justify-between pt-3 border-t border-orange-500/20">
+<span class="text-label-sm font-label-sm text-orange-400">⚡ REWARD: HERO CARD</span>
+<span class="material-symbols-outlined text-orange-400 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- 5. CLUB CONNECT -->
+<div class="relative bg-gradient-to-br from-purple-950 via-surface-container to-surface rounded-xl p-4 border border-purple-500/40 glow-purple transform transition-all duration-200 active:scale-98 cursor-pointer group">
+<div class="absolute top-2 right-3 text-label-sm font-label-sm text-purple-300 font-bold bg-purple-950/80 px-2 py-0.5 rounded border border-purple-500/30">MYSTERY DOSSIER</div>
+<div class="flex items-start justify-between">
+<div>
+<span class="text-label-sm font-label-sm text-purple-300 tracking-widest uppercase">SQUAD BUILDER</span>
+<h3 class="text-headline-md font-headline-md text-on-surface mt-0.5">CLUB CONNECT</h3>
+</div>
+<div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">folder_special</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mt-2">Uncover five hidden player silhouettes sharing a common historical dressing room.</p>
+<div class="mt-4 flex items-center justify-between pt-3 border-t border-purple-500/20">
+<span class="text-label-sm font-label-sm text-purple-300">⚡ REWARD: ULTIMATE PACK</span>
+<span class="material-symbols-outlined text-purple-300 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- 6. PLAYER CHAIN -->
+<div class="relative bg-gradient-to-br from-blue-950 via-surface-container to-surface rounded-xl p-4 border border-blue-500/40 glow-blue transform transition-all duration-200 active:scale-98 cursor-pointer group">
+<div class="absolute top-2 right-3 text-label-sm font-label-sm text-blue-400 font-bold bg-blue-950/80 px-2 py-0.5 rounded border border-blue-500/30">STEEL CHAIN</div>
+<div class="flex items-start justify-between">
+<div>
+<span class="text-label-sm font-label-sm text-blue-300 tracking-widest uppercase">SEQUENCE MASTER</span>
+<h3 class="text-headline-md font-headline-md text-on-surface mt-0.5">PLAYER CHAIN</h3>
+</div>
+<div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">link</span>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant mt-2">Build an unbroken chain of career transfers linking Player A to Player Z.</p>
+<div class="mt-4 flex items-center justify-between pt-3 border-t border-blue-500/20">
+<span class="text-label-sm font-label-sm text-blue-400">⚡ REWARD: MEGA COIN DROP</span>
+<span class="material-symbols-outlined text-blue-400 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-[390px] z-50 flex justify-around items-center px-2 py-2 bg-surface-container-low shadow-lg">
+<!-- Lobby (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container rounded-xl px-3 py-1.5 transition-transform duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">sports_soccer</span>
+<span class="text-label-sm font-label-sm font-bold mt-0.5">Lobby</span>
+</a>
+<!-- Cards -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1.5 hover:text-on-surface dark:hover:text-on-surface transition-transform duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">style</span>
+<span class="text-label-sm font-label-sm mt-0.5">Cards</span>
+</a>
+<!-- Quests -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1.5 hover:text-on-surface dark:hover:text-on-surface transition-transform duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">military_tech</span>
+<span class="text-label-sm font-label-sm mt-0.5">Quests</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1.5 hover:text-on-surface dark:hover:text-on-surface transition-transform duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">person</span>
+<span class="text-label-sm font-label-sm mt-0.5">Profile</span>
+</a>
+</nav>
+</div>
+</body></html>

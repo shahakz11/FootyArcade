@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Playmaker — Matchday Pro (Broadcast Dark Hub)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        match: {
+                            canvas: '#0B0F19',
+                            surface: '#131B2B',
+                            elevated: '#1A253A',
+                            border: '#24344D',
+                            accent: '#10B981',
+                            blue: '#38BDF8',
+                            amber: '#F59E0B'
+                        }
+                    },
+                    fontFamily: {
+                        headline: ['"Chakra Petch"', 'sans-serif'],
+                        body: ['"Inter"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-match-canvas text-slate-100 font-body antialiased min-h-screen">
+
+    <!-- Top Live Ticker Bar -->
+    <div class="bg-[#070A10] border-b border-match-border/60 py-2 px-4 text-xs">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-match-accent/15 text-match-accent border border-match-accent/30 text-[10px] font-bold tracking-wider uppercase">
+                    <span class="w-1.5 h-1.5 rounded-full bg-match-accent animate-ping"></span>
+                    MATCHDAY LIVE
+                </span>
+                <span class="text-slate-400 font-medium">Daily Football Drop #112</span>
+            </div>
+            <div class="flex items-center gap-4 text-slate-400 text-[11px]">
+                <span>Reset in <strong class="text-white font-mono">06:41:20</strong></span>
+                <span class="text-match-border">•</span>
+                <div class="flex items-center gap-1.5 font-bold text-match-amber">
+                    <span>🔥 4 STREAK</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="bg-match-surface/90 backdrop-blur-md border-b border-match-border sticky top-0 z-40">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <!-- Brand -->
+            <a href="#" class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-match-accent to-emerald-400 text-slate-950 flex items-center justify-center font-black shadow-md shadow-match-accent/20">
+                    <span class="material-symbols-outlined text-2xl font-bold">sports_and_outdoors</span>
+                </div>
+                <div>
+                    <div class="font-headline text-2xl font-bold tracking-wider uppercase text-white leading-none">PLAYMAKER</div>
+                    <div class="text-[10px] font-semibold text-match-accent uppercase tracking-widest">Football Intelligence Arcade</div>
+                </div>
+            </a>
+
+            <!-- Header Utility Bar -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="bg-match-canvas border border-match-border p-0.5 rounded-lg text-xs font-mono flex items-center">
+                    <span class="px-2 py-0.5 rounded bg-match-accent text-slate-950 font-bold">EN</span>
+                    <span class="px-2 py-0.5 text-slate-400 hover:text-white cursor-pointer">ES</span>
+                </div>
+
+                <button class="bg-match-elevated hover:bg-match-border border border-match-border px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 transition flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm text-match-accent">query_stats</span>
+                    <span class="hidden sm:inline">My Standings</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-6 space-y-8">
+
+        <!-- HORIZONTAL DATE SCRUBBER (Past Puzzles Timeline) -->
+        <section class="bg-match-surface border border-match-border rounded-2xl p-3 flex items-center justify-between gap-2 overflow-x-auto">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400 px-3 hidden md:inline">Calendar:</span>
+            <div class="flex items-center gap-2 flex-1 justify-around">
+                <button class="px-3 py-1.5 rounded-xl bg-match-canvas border border-match-border text-slate-400 hover:text-white text-xs text-center min-w-[70px]">
+                    <div class="text-[10px] font-mono text-slate-500">THU 15</div>
+                    <div class="font-bold text-xs text-match-accent">✓ 7/7</div>
+                </button>
+                <button class="px-3 py-1.5 rounded-xl bg-match-canvas border border-match-border text-slate-400 hover:text-white text-xs text-center min-w-[70px]">
+                    <div class="text-[10px] font-mono text-slate-500">FRI 16</div>
+                    <div class="font-bold text-xs text-match-accent">✓ 6/7</div>
+                </button>
+                <button class="px-3 py-1.5 rounded-xl bg-match-canvas border border-match-border text-slate-400 hover:text-white text-xs text-center min-w-[70px]">
+                    <div class="text-[10px] font-mono text-slate-500">SAT 17</div>
+                    <div class="font-bold text-xs text-match-accent">✓ 7/7</div>
+                </button>
+                <button class="px-3 py-1.5 rounded-xl bg-match-canvas border border-match-border text-slate-400 hover:text-white text-xs text-center min-w-[70px]">
+                    <div class="text-[10px] font-mono text-slate-500">SUN 18</div>
+                    <div class="font-bold text-xs text-match-amber">⏳ 4/7</div>
+                </button>
+                <button class="px-3.5 py-1.5 rounded-xl bg-match-accent text-slate-950 font-bold text-xs text-center shadow-lg shadow-match-accent/20 min-w-[85px]">
+                    <div class="text-[10px] font-mono opacity-80">TODAY</div>
+                    <div class="font-extrabold text-xs">MON 19</div>
+                </button>
+            </div>
+        </section>
+
+        <!-- SPOTLIGHT MATCHDAY FEATURE -->
+        <section class="bg-gradient-to-r from-match-surface via-match-elevated to-match-surface border border-match-border rounded-2xl p-6 relative overflow-hidden">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-0.5 rounded-full bg-match-accent/20 border border-match-accent/40 text-match-accent text-[10px] font-bold tracking-wider uppercase font-headline">
+                            MATCHDAY SPOTLIGHT
+                        </span>
+                        <span class="text-xs text-slate-400">• High completion rate (88%)</span>
+                    </div>
+
+                    <h2 class="font-headline text-3xl sm:text-4xl font-bold uppercase tracking-wide text-white">
+                        PASSPORT FC — REAL MADRID 🇪🇸
+                    </h2>
+
+                    <p class="text-slate-300 text-xs sm:text-sm max-w-xl leading-relaxed">
+                        Collect all 4 nationality stamps for Real Madrid's all-time squad. Can you unlock the legendary Tier 4 single-player unicorn?
+                    </p>
+                </div>
+
+                <div class="flex flex-col items-center sm:items-end justify-center gap-2 min-w-[180px]">
+                    <a href="games/passport_fc.html" class="w-full bg-match-accent hover:bg-emerald-400 text-slate-950 font-bold font-headline tracking-wide px-6 py-3 rounded-xl text-center shadow-md shadow-match-accent/20 transition flex items-center justify-center gap-2">
+                        <span>LAUNCH PUZZLE</span>
+                        <span class="material-symbols-outlined text-lg">play_arrow</span>
+                    </a>
+                    <span class="text-[11px] text-slate-400 font-mono">5 Lives • 4 Nationality Tiers</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORY FILTER TABS -->
+        <div class="flex items-center gap-2 border-b border-match-border pb-2 overflow-x-auto">
+            <button class="px-4 py-1.5 rounded-lg bg-match-elevated border border-match-border text-white text-xs font-semibold">All Games (7)</button>
+            <button class="px-4 py-1.5 rounded-lg hover:bg-match-surface text-slate-400 hover:text-slate-200 text-xs font-medium transition">Transfer Market (3)</button>
+            <button class="px-4 py-1.5 rounded-lg hover:bg-match-surface text-slate-400 hover:text-slate-200 text-xs font-medium transition">Teammates & Rosters (2)</button>
+            <button class="px-4 py-1.5 rounded-lg hover:bg-match-surface text-slate-400 hover:text-slate-200 text-xs font-medium transition">Goalscorers (1)</button>
+        </div>
+
+        <!-- MODERN TACTICAL GAME TILES -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <!-- Card 1: Transfer Destination -->
+            <div class="bg-match-surface hover:bg-match-elevated border border-match-border rounded-xl p-5 transition group flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-9 h-9 rounded-lg bg-match-canvas border border-match-border flex items-center justify-center text-match-accent">
+                                <span class="material-symbols-outlined text-xl">alt_route</span>
+                            </span>
+                            <div>
+                                <h3 class="font-headline font-bold text-lg text-white group-hover:text-match-accent transition">Transfer Destination</h3>
+                                <span class="text-[10px] text-slate-400 font-mono">Career Timeline Deductions</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-match-canvas border border-match-border text-slate-300">
+                            5 Lives
+                        </span>
+                    </div>
+
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Step through a star player's chronological club transfers and identify the footballer before reveals exhaust.
+                    </p>
+
+                    <!-- Tactical preview bar -->
+                    <div class="bg-match-canvas border border-match-border/60 rounded-lg p-2 flex items-center justify-between text-xs font-mono">
+                        <span class="text-slate-400">Today: Mystery Forward</span>
+                        <span class="text-match-accent">4 Club Stops</span>
+                    </div>
+                </div>
+
+                <div class="pt-4 mt-3 border-t border-match-border/50 flex items-center justify-between text-xs">
+                    <span class="text-slate-500 font-medium">Unplayed</span>
+                    <a href="games/transfer_destination.html" class="font-bold text-match-accent group-hover:underline flex items-center gap-1">
+                        PLAY CHALLENGE <span class="material-symbols-outlined text-sm">chevron_right</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 2: Played With -->
+            <div class="bg-match-surface hover:bg-match-elevated border border-match-border rounded-xl p-5 transition group flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-9 h-9 rounded-lg bg-match-canvas border border-match-border flex items-center justify-center text-orange-400">
+                                <span class="material-symbols-outlined text-xl">group</span>
+                            </span>
+                            <div>
+                                <h3 class="font-headline font-bold text-lg text-white group-hover:text-orange-400 transition">Played With</h3>
+                                <span class="text-[10px] text-slate-400 font-mono">Teammate Frequency Clues</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-orange-950/60 border border-orange-500/40 text-orange-400">
+                            In Progress (3/5)
+                        </span>
+                    </div>
+
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        5 teammates ordered from least to most shared matches. Deduce the common thread and name the mystery footballer.
+                    </p>
+
+                    <div class="bg-match-canvas border border-match-border/60 rounded-lg p-2 flex items-center justify-between text-xs font-mono">
+                        <span class="text-slate-400">Teammate #3 Revealed</span>
+                        <span class="text-orange-400 font-bold">2 Lives Left</span>
+                    </div>
+                </div>
+
+                <div class="pt-4 mt-3 border-t border-match-border/50 flex items-center justify-between text-xs">
+                    <span class="text-orange-400 font-medium">Resume Match</span>
+                    <a href="games/played_with.html" class="font-bold text-white group-hover:underline flex items-center gap-1">
+                        CONTINUE <span class="material-symbols-outlined text-sm">chevron_right</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 3: Top Transfers -->
+            <div class="bg-match-surface hover:bg-match-elevated border border-match-border rounded-xl p-5 transition group flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-9 h-9 rounded-lg bg-match-canvas border border-match-border flex items-center justify-center text-match-blue">
+                                <span class="material-symbols-outlined text-xl">payments</span>
+                            </span>
+                            <div>
+                                <h3 class="font-headline font-bold text-lg text-white group-hover:text-match-blue transition">Top Transfers</h3>
+                                <span class="text-[10px] text-slate-400 font-mono">Record Signings Leaderboard</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-match-accent/15 border border-match-accent/30 text-match-accent">
+                            ✓ Solved (10/10)
+                        </span>
+                    </div>
+
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Name the top 10 all-time transfer records for today's selected club or national team with fee and year hints.
+                    </p>
+
+                    <div class="bg-match-canvas border border-match-border/60 rounded-lg p-2 flex items-center justify-between text-xs font-mono">
+                        <span class="text-slate-400">Chelsea FC Records</span>
+                        <span class="text-match-accent font-bold">100% Score</span>
+                    </div>
+                </div>
+
+                <div class="pt-4 mt-3 border-t border-match-border/50 flex items-center justify-between text-xs">
+                    <span class="text-match-accent font-medium">Completed</span>
+                    <a href="games/top_transfers.html" class="font-bold text-slate-400 group-hover:text-white flex items-center gap-1">
+                        VIEW RESULT <span class="material-symbols-outlined text-sm">visibility</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 4: Player Chain -->
+            <div class="bg-match-surface hover:bg-match-elevated border border-match-border rounded-xl p-5 transition group flex flex-col justify-between">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-9 h-9 rounded-lg bg-match-canvas border border-match-border flex items-center justify-center text-sky-400">
+                                <span class="material-symbols-outlined text-xl">link</span>
+                            </span>
+                            <div>
+                                <h3 class="font-headline font-bold text-lg text-white group-hover:text-sky-400 transition">Player Chain</h3>
+                                <span class="text-[10px] text-slate-400 font-mono">Expanding Club Ladder</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-match-canvas border border-match-border text-slate-300">
+                            5 Lives
+                        </span>
+                    </div>
+
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Name footballers matching an expanding chain of career clubs to reach the mystery Player of the Day.
+                    </p>
+
+                    <div class="bg-match-canvas border border-match-border/60 rounded-lg p-2 flex items-center justify-between text-xs font-mono">
+                        <span class="text-slate-400">Ladder Mode</span>
+                        <span class="text-slate-300">Instant-Win Enabled</span>
+                    </div>
+                </div>
+
+                <div class="pt-4 mt-3 border-t border-match-border/50 flex items-center justify-between text-xs">
+                    <span class="text-slate-500 font-medium">Unplayed</span>
+                    <a href="games/player_chain.html" class="font-bold text-match-accent group-hover:underline flex items-center gap-1">
+                        PLAY CHALLENGE <span class="material-symbols-outlined text-sm">chevron_right</span>
+                    </a>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- HUD STANDINGS & TELEMETRY -->
+        <section class="bg-match-surface border border-match-border rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="space-y-1 text-center sm:text-left">
+                <div class="font-headline text-lg font-bold uppercase text-white">YOUR MATCH TELEMETRY</div>
+                <div class="text-xs text-slate-400">Locally synchronized with your browser. No cookies or login required.</div>
+            </div>
+            <div class="flex items-center gap-6 font-mono text-center">
+                <div>
+                    <div class="text-2xl font-bold text-white font-headline">18</div>
+                    <div class="text-[10px] uppercase text-slate-500">PLAYED</div>
+                </div>
+                <div class="h-8 w-px bg-match-border"></div>
+                <div>
+                    <div class="text-2xl font-bold text-match-accent font-headline">14</div>
+                    <div class="text-[10px] uppercase text-slate-500">WINS</div>
+                </div>
+                <div class="h-8 w-px bg-match-border"></div>
+                <div>
+                    <div class="text-2xl font-bold text-match-amber font-headline">7</div>
+                    <div class="text-[10px] uppercase text-slate-500">STREAK</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-match-border mt-16 py-8 text-center text-xs text-slate-500 font-mono">
+        <div>PLAYMAKER &copy; 2026 • BROADCAST FOOTBALL TRIVIA</div>
+    </footer>
+
+</body>
+</html>

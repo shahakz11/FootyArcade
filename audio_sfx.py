@@ -80,6 +80,22 @@ def generate_whoosh_sound():
     audio = (noise * 0.35 + mod * 0.25) * env * 0.6
     return audio
 
+def generate_car_drive_sound():
+    """Generates a dynamic 220ms car acceleration / drive-by engine sound."""
+    dur = 0.22
+    num_s = int(SAMPLE_RATE * dur)
+    t = np.linspace(0, dur, num_s, endpoint=False)
+    # Pitched engine growl with rising rev
+    f_rev = 120.0 + 160.0 * (t / dur) ** 1.5
+    phase = 2 * np.pi * np.cumsum(f_rev) / SAMPLE_RATE
+    # Engine harmonics + exhaust rumble
+    harmonics = np.sin(phase) * 0.4 + np.sin(2 * phase) * 0.3 + np.sin(3 * phase) * 0.15
+    exhaust_noise = (np.random.rand(num_s) * 2 - 1) * 0.15
+    env = np.sin(np.pi * (t / dur)) ** 1.8
+    audio = (harmonics + exhaust_noise) * env * 0.8
+    return audio
+
+
 def generate_sub_drop_sound():
     """Generates an impactful 0.6s sub-bass drop / heartbeat for mystery countdown suspense."""
     dur = 0.65

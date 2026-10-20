@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Playmaker — FUT Card Battler Deck (Mobile First)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        void: '#050b14',
+                        carddeck: '#0d1829',
+                        futgreen: '#00ff66',
+                        futcyan: '#00e5ff',
+                        futgold: '#ffb800',
+                        futpurple: '#a855f7',
+                        futorange: '#ff5500'
+                    },
+                    fontFamily: {
+                        pack: ['"Anton"', 'sans-serif'],
+                        tech: ['"Space Grotesk"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .holo-emerald {
+            background: linear-gradient(135deg, rgba(0, 255, 102, 0.15) 0%, rgba(13, 24, 41, 0.95) 60%);
+            border: 2px solid rgba(0, 255, 102, 0.4);
+            box-shadow: 0 0 25px -5px rgba(0, 255, 102, 0.2);
+        }
+        .holo-cyan {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.15) 0%, rgba(13, 24, 41, 0.95) 60%);
+            border: 2px solid rgba(0, 229, 255, 0.4);
+            box-shadow: 0 0 25px -5px rgba(0, 229, 255, 0.2);
+        }
+        .holo-orange {
+            background: linear-gradient(135deg, rgba(255, 85, 0, 0.15) 0%, rgba(13, 24, 41, 0.95) 60%);
+            border: 2px solid rgba(255, 85, 0, 0.4);
+            box-shadow: 0 0 25px -5px rgba(255, 85, 0, 0.2);
+        }
+        .holo-purple {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(13, 24, 41, 0.95) 60%);
+            border: 2px solid rgba(168, 85, 247, 0.4);
+            box-shadow: 0 0 25px -5px rgba(168, 85, 247, 0.2);
+        }
+        .card-sheen {
+            position: relative;
+            overflow: hidden;
+        }
+        .card-sheen::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(60deg, transparent 40%, rgba(255, 255, 255, 0.08) 50%, transparent 60%);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-[#03060b] text-slate-100 font-tech antialiased min-h-screen flex justify-center selection:bg-futgreen selection:text-black">
+
+    <!-- Mobile Screen Frame (390px mobile canvas) -->
+    <div class="w-full max-w-[420px] bg-void min-h-screen border-x border-slate-800 flex flex-col justify-between relative shadow-2xl pb-24">
+
+        <!-- Top Profile & Daily Loot Chest Bar -->
+        <header class="bg-carddeck/80 backdrop-blur-md border-b border-slate-800 p-4 space-y-3 sticky top-0 z-40">
+            <div class="flex items-center justify-between">
+                <!-- User Profile & Level -->
+                <div class="flex items-center gap-2.5">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-futgreen to-emerald-400 text-slate-950 font-pack text-xl flex items-center justify-center font-bold shadow-md shadow-futgreen/20">
+                        88
+                    </div>
+                    <div>
+                        <div class="font-pack text-base tracking-wide text-white leading-none">SCOUT #42</div>
+                        <div class="text-[10px] text-futgreen font-mono uppercase tracking-wider font-bold">LEGENDARY TIER</div>
+                    </div>
+                </div>
+
+                <!-- Streak Flame + Timer -->
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-1 bg-yellow-500/10 border border-yellow-500/30 px-2.5 py-1 rounded-lg text-yellow-400 font-mono text-xs font-bold">
+                        <span>🔥</span>
+                        <span>4 STREAK</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Pack Quest Progress -->
+            <div class="bg-void/80 border border-slate-800 rounded-xl p-2.5 flex items-center justify-between gap-3">
+                <div class="flex-1 space-y-1">
+                    <div class="flex items-center justify-between text-[11px] font-mono">
+                        <span class="text-slate-400">DAILY QUEST</span>
+                        <span class="text-futgreen font-bold">2 / 7 PACKS CRACKED</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-futgreen to-emerald-400 rounded-full" style="width: 28%"></div>
+                    </div>
+                </div>
+                <!-- Interactive Loot Chest -->
+                <div class="w-8 h-8 rounded-lg bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-yellow-400 text-sm animate-bounce cursor-pointer shadow-sm" title="Unlock at 7/7">
+                    🎁
+                </div>
+            </div>
+        </header>
+
+        <!-- Vertically Scrollable Holographic Cards -->
+        <main class="p-4 space-y-4 flex-1">
+
+            <!-- Title -->
+            <div class="flex items-center justify-between">
+                <div class="font-pack text-xl uppercase tracking-wider text-white">TODAY'S CARD DECK</div>
+                <span class="text-[11px] font-mono text-slate-400">SERIES '26 • UTC 00:00</span>
+            </div>
+
+            <!-- CARD 1: PASSPORT FC (Emerald Hologram) -->
+            <div class="holo-emerald rounded-2xl p-4 card-sheen group hover:scale-[1.01] transition duration-200">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[9px] font-mono font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                            CLUB PASSPORT
+                        </span>
+                        <h3 class="font-pack text-2xl uppercase tracking-wide text-white mt-1 group-hover:text-futgreen transition">
+                            PASSPORT FC
+                        </h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-black/60 border border-emerald-500/30 flex items-center justify-center text-futgreen font-pack text-lg">
+                        5L
+                    </div>
+                </div>
+
+                <div class="my-3 bg-black/40 border border-emerald-500/20 rounded-xl p-2.5 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">🇪🇸</span>
+                        <div>
+                            <div class="text-[10px] font-mono text-slate-400">ANCHOR CLUB</div>
+                            <div class="text-xs font-bold text-white">Real Madrid All-Time</div>
+                        </div>
+                    </div>
+                    <span class="text-[11px] font-mono text-futgreen font-bold">Unicorn Tier</span>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                    <span class="text-[11px] font-mono text-slate-400">Unplayed Today</span>
+                    <a href="../games/passport_fc.html" class="bg-futgreen hover:bg-emerald-400 text-slate-950 font-pack text-sm uppercase tracking-wider px-4 py-2 rounded-xl font-bold flex items-center gap-1 shadow-md shadow-futgreen/20">
+                        <span>CRACK CARD</span>
+                        <span class="material-symbols-outlined text-base">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARD 2: TRANSFER DESTINATION (Cyber Radar) -->
+            <div class="holo-cyan rounded-2xl p-4 card-sheen group hover:scale-[1.01] transition duration-200">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-[9px] font-mono font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                            FLIGHT PATH RADAR
+                        </span>
+                        <h3 class="font-pack text-2xl uppercase tracking-wide text-white mt-1 group-hover:text-futcyan transition">
+                            TRANSFER DESTINATION
+                        </h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-black/60 border border-cyan-500/30 flex items-center justify-center text-futcyan font-pack text-lg">
+                        ✓
+                    </div>
+                </div>
+
+                <div class="my-3 bg-black/40 border border-cyan-500/20 rounded-xl p-2.5 flex items-center justify-between">
+                    <div>
+                        <div class="text-[10px] font-mono text-slate-400">SOLVED TODAY</div>
+                        <div class="text-xs font-bold text-futcyan">Robin van Persie 🇳🇱</div>
+                    </div>
+                    <span class="text-[11px] font-mono text-emerald-400 font-bold">100% Score</span>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                    <span class="text-[11px] font-mono text-emerald-400">Solved in 3 guesses</span>
+                    <a href="../games/transfer_destination.html" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-pack text-sm uppercase tracking-wider px-4 py-2 rounded-xl font-bold flex items-center gap-1">
+                        <span>RECAP</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARD 3: PLAYED WITH (Fiery Orange Chemistry) -->
+            <div class="holo-orange rounded-2xl p-4 card-sheen group hover:scale-[1.01] transition duration-200">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="bg-orange-500/20 text-orange-300 border border-orange-500/40 text-[9px] font-mono font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                            SQUAD CHEMISTRY 99
+                        </span>
+                        <h3 class="font-pack text-2xl uppercase tracking-wide text-white mt-1 group-hover:text-futorange transition">
+                            PLAYED WITH
+                        </h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-black/60 border border-orange-500/30 flex items-center justify-center text-futorange font-pack text-lg">
+                        3/5
+                    </div>
+                </div>
+
+                <div class="my-3 bg-black/40 border border-orange-500/20 rounded-xl p-2.5 flex items-center justify-between">
+                    <div>
+                        <div class="text-[10px] font-mono text-slate-400">IN PROGRESS</div>
+                        <div class="text-xs font-bold text-orange-400">3 of 5 Teammates Revealed</div>
+                    </div>
+                    <span class="text-[11px] font-mono text-futorange font-bold">2 Lives Left</span>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                    <span class="text-[11px] font-mono text-orange-400">Active Game</span>
+                    <a href="../games/played_with.html" class="bg-futorange hover:bg-orange-600 text-white font-pack text-sm uppercase tracking-wider px-4 py-2 rounded-xl font-bold flex items-center gap-1 shadow-md shadow-futorange/20">
+                        <span>RESUME RUN</span>
+                        <span class="material-symbols-outlined text-base">play_arrow</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARD 4: CLUB CONNECT (Amethyst Mystery Syndicate) -->
+            <div class="holo-purple rounded-2xl p-4 card-sheen group hover:scale-[1.01] transition duration-200">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <span class="bg-purple-500/20 text-purple-300 border border-purple-500/40 text-[9px] font-mono font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                            SECRET SYNDICATE
+                        </span>
+                        <h3 class="font-pack text-2xl uppercase tracking-wide text-white mt-1 group-hover:text-futpurple transition">
+                            CLUB CONNECT
+                        </h3>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-black/60 border border-purple-500/30 flex items-center justify-center text-futpurple font-pack text-lg">
+                        3L
+                    </div>
+                </div>
+
+                <div class="my-3 bg-black/40 border border-purple-500/20 rounded-xl p-2.5 flex items-center justify-between">
+                    <div>
+                        <div class="text-[10px] font-mono text-slate-400">MYSTERY SQUAD</div>
+                        <div class="text-xs font-bold text-purple-300">5 Players • 1 Shared Club</div>
+                    </div>
+                    <span class="text-[11px] font-mono text-purple-400 font-bold">Locked</span>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                    <span class="text-[11px] font-mono text-slate-400">3 Lives Remaining</span>
+                    <a href="../games/club_connect.html" class="bg-futpurple hover:bg-purple-600 text-white font-pack text-sm uppercase tracking-wider px-4 py-2 rounded-xl font-bold flex items-center gap-1 shadow-md shadow-futpurple/20">
+                        <span>CRACK CARD</span>
+                        <span class="material-symbols-outlined text-base">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Fixed Bottom Thumb Dock -->
+        <nav class="fixed bottom-0 w-full max-w-[420px] bg-carddeck border-t border-slate-800 p-3 flex items-center justify-around z-50">
+            <button class="flex flex-col items-center text-futgreen font-mono text-[9px] gap-1">
+                <span class="material-symbols-outlined text-xl">view_carousel</span>
+                <span>DECK</span>
+            </button>
+            <button class="flex flex-col items-center text-slate-400 hover:text-white font-mono text-[9px] gap-1">
+                <span class="material-symbols-outlined text-xl">inventory_2</span>
+                <span>CHESTS</span>
+            </button>
+            <button class="flex flex-col items-center text-slate-400 hover:text-white font-mono text-[9px] gap-1">
+                <span class="material-symbols-outlined text-xl">leaderboard</span>
+                <span>LEADERBOARD</span>
+            </button>
+            <button class="flex flex-col items-center text-slate-400 hover:text-white font-mono text-[9px] gap-1">
+                <span class="material-symbols-outlined text-xl">settings</span>
+                <span>SETTINGS</span>
+            </button>
+        </nav>
+
+    </div>
+
+</body>
+</html>

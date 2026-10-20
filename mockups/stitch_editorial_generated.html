@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PLAYMAKER — Editorial Sports Arcade</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface-variant": "#3d4a42",
+            "surface-container-high": "#e4eae4",
+            "tertiary-container": "#ba5551",
+            "transfer-destination": "#059669",
+            "outline": "#6d7a72",
+            "on-surface": "#0F172A",
+            "secondary": "#545f73",
+            "passport-fc": "#10B981",
+            "on-tertiary-container": "#fffbff",
+            "secondary-fixed": "#d8e3fb",
+            "primary-fixed": "#85f8c4",
+            "inverse-surface": "#2c322e",
+            "error-container": "#ffdad6",
+            "surface-container": "#e9efe9",
+            "surface-bright": "#f5fbf5",
+            "on-background": "#171d19",
+            "top-scorers": "#D97706",
+            "on-primary-fixed": "#002114",
+            "on-error": "#ffffff",
+            "on-secondary": "#ffffff",
+            "on-primary": "#ffffff",
+            "primary-container": "#00855d",
+            "on-tertiary": "#ffffff",
+            "surface-container-lowest": "#FFFFFF",
+            "on-error-container": "#93000a",
+            "club-connect": "#A855F7",
+            "accent": "#F59E0B",
+            "surface-variant": "#dee4de",
+            "secondary-container": "#d5e0f8",
+            "surface-container-low": "#eff5ef",
+            "outline-variant": "#bccac0",
+            "surface-tint": "#006c4a",
+            "tertiary": "#9b3e3b",
+            "on-primary-fixed-variant": "#005137",
+            "on-primary-container": "#f5fff7",
+            "primary-fixed-dim": "#68dba9",
+            "on-secondary-fixed": "#111c2d",
+            "on-tertiary-fixed-variant": "#7f2928",
+            "secondary-fixed-dim": "#bcc7de",
+            "on-tertiary-fixed": "#410004",
+            "surface": "#FFFFFF",
+            "on-secondary-container": "#586377",
+            "background": "#F8FAFC",
+            "surface-container-highest": "#CBD5E1",
+            "player-chain": "#0284C7",
+            "primary": "#006948",
+            "surface-dim": "#F1F5F9",
+            "inverse-on-surface": "#ecf2ec",
+            "tertiary-fixed-dim": "#ffb3ae",
+            "inverse-primary": "#68dba9",
+            "tertiary-fixed": "#ffdad7",
+            "played-with": "#F97316",
+            "on-secondary-fixed-variant": "#3c475a",
+            "top-transfers": "#0EA5E9",
+            "error": "#EF4444"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "margin": "1.5rem",
+            "gutter": "1rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "headline-lg-mobile": ["Barlow Condensed"],
+            "display-lg": ["Barlow Condensed"],
+            "headline-lg": ["Barlow Condensed"],
+            "display-lg-mobile": ["Barlow Condensed"],
+            "body-md": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-lg-mobile": ["26px", { "lineHeight": "1.2", "fontWeight": "700" }],
+            "display-lg": ["48px", { "lineHeight": "1.1", "fontWeight": "800" }],
+            "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+            "display-lg-mobile": ["36px", { "lineHeight": "1.15", "fontWeight": "800" }],
+            "body-md": ["15px", { "lineHeight": "1.6", "fontWeight": "400" }],
+            "title-md": ["18px", { "lineHeight": "1.4", "fontWeight": "700" }],
+            "label-sm": ["12px", { "letterSpacing": "0.04em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface sticky top-0 z-50">
+<div class="w-full max-w-[1120px] mx-auto px-6 md:px-margin flex justify-between items-center h-16">
+<div class="flex items-center gap-8">
+<a class="font-headline-lg text-headline-lg font-medium tracking-tight text-on-surface dark:text-inverse-on-surface uppercase" href="#">PLAYMAKER</a>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-primary dark:text-inverse-primary border-b-2 border-primary dark:border-inverse-primary pb-1 font-semibold text-label-md" href="#">Today</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface text-label-md transition-colors duration-150" href="#">Archive</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface text-label-md transition-colors duration-150" href="#">Leaderboards</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-on-surface dark:hover:text-inverse-on-surface text-label-md transition-colors duration-150" href="#">How to Play</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<!-- Streak Counter -->
+<div class="hidden sm:flex items-center gap-1.5 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-amber-600 text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-bold text-xs tracking-wide">14 DAY STREAK</span>
+</div>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">leaderboard</span>
+</button>
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-4 py-2 rounded-full font-semibold text-sm transition-all shadow-sm active:opacity-80">
+          Subscribe
+        </button>
+</div>
+</div>
+</header>
+<main class="w-full max-w-[1120px] mx-auto px-6 md:px-margin py-8 space-y-12">
+<!-- Spotlight Hero Section: Transfer Destination -->
+<section class="bg-surface-container-low rounded-xl p-6 md:p-10 border border-outline-variant relative overflow-hidden shadow-sm">
+<div class="absolute top-0 right-0 w-1/3 h-full opacity-10 pointer-events-none bg-gradient-to-l from-primary to-transparent"></div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10">
+<div class="md:col-span-7 space-y-4">
+<div class="flex items-center gap-3">
+<span class="bg-transfer-destination text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Spotlight Puzzle</span>
+<span class="text-on-surface-variant text-sm font-medium">Edition #429 • Oct 24</span>
+</div>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface tracking-tight">
+            Transfer Destination: Midfield Maestro
+          </h1>
+<p class="text-on-surface-variant text-base max-w-xl leading-relaxed">
+            Trace the career trajectory of a legendary playmaker who won domestic titles across three different top-five European leagues between 2012 and 2024. Connect the clubs in chronological order.
+          </p>
+<div class="flex flex-wrap gap-4 pt-2">
+<div class="bg-surface px-4 py-2 rounded-lg border border-outline-variant">
+<span class="block text-xs text-on-surface-variant font-medium">Success Rate</span>
+<span class="font-bold text-lg text-on-surface">34.2%</span>
+</div>
+<div class="bg-surface px-4 py-2 rounded-lg border border-outline-variant">
+<span class="block text-xs text-on-surface-variant font-medium">Average Time</span>
+<span class="font-bold text-lg text-on-surface">2m 45s</span>
+</div>
+<div class="bg-surface px-4 py-2 rounded-lg border border-outline-variant">
+<span class="block text-xs text-on-surface-variant font-medium">Global Solves</span>
+<span class="font-bold text-lg text-on-surface">42,850</span>
+</div>
+</div>
+<div class="pt-4 flex items-center gap-4">
+<button class="bg-primary hover:bg-primary-container text-on-primary px-8 py-3.5 rounded-full font-bold text-base transition-all shadow-md flex items-center gap-2">
+<span class="material-symbols-outlined">play_arrow</span>
+              Continue Puzzle
+            </button>
+<span class="text-xs text-on-surface-variant font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span> 4 guesses remaining
+            </span>
+</div>
+</div>
+<div class="md:col-span-5 flex justify-center">
+<div class="w-full h-72 rounded-xl bg-cover bg-center border border-outline-variant shadow-inner relative flex items-end p-6" data-alt="A detailed editorial sports illustration depicting a classic leather football resting on pristine emerald green turf under stadium lights, surrounded by tactical diagrams and chalkboards in a clean minimalist light mode aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCx7ZJ4A7YPJqdXJi_o-Ybrg0pkD9M15Rx2akeIpOhhRI3xv6_npwo9nI9q7CPdmRMBZPvjfypXx3TYJj6Zm0V9dEjz8CLjzAqBTEPMX7j7vZyWgPeCUVIrmiqv86DoEH3loMMUqtiGu0cBxAlxbrWaoi315ewverFm9oZrfm40h8UT0lYSRrLJHq-5DGDrbCe6GIkV6GBAf0dZ-vIt9upUEFQISU4R6-puY5UXhMQ7Rl1AYmlNwRqmkIx2Ga-6Cnk5QRODUNQCQP8')">
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/80 via-transparent to-transparent rounded-xl"></div>
+<div class="relative z-10 text-white space-y-1">
+<span class="text-xs uppercase tracking-widest bg-transfer-destination px-2 py-0.5 rounded font-bold">Active Board</span>
+<div class="font-headline-lg text-2xl">Step 3 of 5 Unlocked</div>
+<p class="text-xs text-surface-variant">Identify the 2016 winter transfer window move.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- The Daily Six Grid -->
+<section class="space-y-6">
+<div class="flex justify-between items-end border-b border-outline-variant pb-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">The Daily Six</h2>
+<p class="text-on-surface-variant text-sm">Handcrafted daily challenges for football intellectuals and stat enthusiasts.</p>
+</div>
+<span class="text-xs font-bold text-primary bg-surface-container-high px-3 py-1 rounded-full">All 6 Active</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1: Top Transfers -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant hover:border-primary transition-all duration-200 flex flex-col justify-between shadow-sm group">
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="bg-top-transfers/10 text-top-transfers font-bold text-xs px-2.5 py-1 rounded-full uppercase tracking-wider">Top Transfers</span>
+<span class="text-xs text-on-surface-variant font-medium">Completed</span>
+</div>
+<h3 class="font-headline-lg text-xl text-on-surface group-hover:text-primary transition-colors">Record-Breaking Windows</h3>
+<p class="text-sm text-on-surface-variant line-clamp-2">Match the historic summer transfer fees with the correct buying and selling clubs from the last decade.</p>
+</div>
+<div class="pt-6 flex items-center justify-between mt-4 border-t border-surface-container">
+<div class="flex items-center gap-1 text-xs text-top-transfers font-bold">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span> Solved Today
+            </div>
+<button class="text-xs font-bold text-on-surface group-hover:text-primary flex items-center gap-1">Review <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+</div>
+</div>
+<!-- Card 2: Pathway Recall -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant hover:border-primary transition-all duration-200 flex flex-col justify-between shadow-sm group">
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="bg-passport-fc/10 text-passport-fc font-bold text-xs px-2.5 py-1 rounded-full uppercase tracking-wider">Pathway Recall</span>
+<span class="text-xs text-on-surface-variant font-medium">In Progress</span>
+</div>
+<h3 class="font-headline-lg text-xl text-on-surface group-hover:text-primary transition-colors">Journeyman Strikers</h3>
+<p class="text-sm text-on-surface-variant line-clamp-2">Trace the complete club career path of legendary international strikers without hitting a dead end.</p>
+</div>
+<div class="pt-6 flex items-center justify-between mt-4 border-t border-surface-container">
+<div class="flex items-center gap-1 text-xs text-passport-fc font-bold">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">play_circle</span> 2/4 Steps
+            </div>
+<button class="text-xs font-bold text-on-surface group-hover:text-primary flex items-center gap-1">Resume <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+</div>
+</div>
+<!-- Card 3: Starting XI Recall -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant hover:border-primary transition-all duration-200 flex flex-col justify-between shadow-sm group">
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="bg-top-scorers/10 text-top-scorers font-bold text-xs px-2.5 py-1 rounded-full uppercase tracking-wider">Starting XI Recall</span>
+<span class="text-xs text-on-surface-variant font-medium">New</span>
+</div>
+<h3 class="font-headline-lg text-xl text-on-surface group-hover:text-primary transition-colors">The 2008 UCL Final Lineup</h3>
+<p class="text-sm text-on-surface-variant line-clamp-2">Name all 11 starting players and the manager for the iconic Moscow European Cup showdown.</p>
+</div>
+<div class="pt-6 flex items-center justify-between mt-4 border-t border-surface-container">
+<div class="flex items-center gap-1 text-xs text-top-scorers font-bold">
+<span class="material-symbols-outlined text-sm">lock_open</span> Unlocked
+            </div>
+<button class="text-xs font-bold text-on-surface group-hover:text-primary flex items-center gap-1">Play Now <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+</div>
+</div>
+<!-- Card 4: Tactical Matrix -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant hover:border-primary transition-all duration-200 flex flex-col justify-between shadow-sm group">
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="bg-club-connect/10 text-club-connect font-bold text-xs px-2.5 py-1 rounded-full uppercase tracking-wider">Tactical Matrix</span>
+<span class="text-xs text-on-surface-variant font-medium">New</span>
+</div>
+<h3 class="font-headline-lg text-xl text-on-surface group-hover:text-primary transition-colors">The 3-4-2-1 Revolution</h3>
+<p class="text-sm text-on-surface-variant line-clamp-2">Position the correct historical roles and player profiles into the modern tactical formation grid.</p>
+</div>
+<div class="pt-6 flex items-center justify-between mt-4 border-t border-surface-container">
+<div class="flex items-center gap-1 text-xs text-club-connect font-bold">
+<span class="material-symbols-outlined text-sm">lock_open</span> Unlocked
+            </div>
+<button class="text-xs font-bold text-on-surface group-hover:text-primary flex items-center gap-1">Play Now <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+</div>
+</div>
+<!-- Card 5: Kit Heritage -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant hover:border-primary transition-all duration-200 flex flex-col justify-between shadow-sm group">
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="bg-played-with/10 text-played-with font-bold text-xs px-2.5 py-1 rounded-full uppercase tracking-wider">Kit Heritage</span>
+<span class="text-xs text-on-surface-variant font-medium">New</span>
+</div>
+<h3 class="font-headline-lg text-xl text-on-surface group-hover:text-primary transition-colors">Iconic 90s Shirt Sponsors</h3>
+<p class="text-sm text-on-surface-variant line-clamp-2">Identify the legendary sponsors, manufacturers, and specific seasons from minimalist vintage shirt silhouettes.</p>
+</div>
+<div class="pt-6 flex items-center justify-between mt-4 border-t border-surface-container">
+<div class="flex items-center gap-1 text-xs text-played-with font-bold">
+<span class="material-symbols-outlined text-sm">lock_open</span> Unlocked
+            </div>
+<button class="text-xs font-bold text-on-surface group-hover:text-primary flex items-center gap-1">Play Now <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+</div>
+</div>
+<!-- Card 6: Rulebook Case -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant hover:border-primary transition-all duration-200 flex flex-col justify-between shadow-sm group">
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="bg-player-chain/10 text-player-chain font-bold text-xs px-2.5 py-1 rounded-full uppercase tracking-wider">Rulebook Case</span>
+<span class="text-xs text-on-surface-variant font-medium">New</span>
+</div>
+<h3 class="font-headline-lg text-xl text-on-surface group-hover:text-primary transition-colors">The Backpass Dilemma</h3>
+<p class="text-sm text-on-surface-variant line-clamp-2">Analyze obscure IFAB Law 12 match scenarios and determine the exact referee restart decision.</p>
+</div>
+<div class="pt-6 flex items-center justify-between mt-4 border-t border-surface-container">
+<div class="flex items-center gap-1 text-xs text-player-chain font-bold">
+<span class="material-symbols-outlined text-sm">lock_open</span> Unlocked
+            </div>
+<button class="text-xs font-bold text-on-surface group-hover:text-primary flex items-center gap-1">Play Now <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+</div>
+</div>
+</div>
+</section>
+<!-- Global Scorecard & Past Editions Vault -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Today's Global Scorecard -->
+<section class="md:col-span-5 bg-surface rounded-xl p-6 border border-outline-variant space-y-6">
+<div class="flex justify-between items-center border-b border-outline-variant pb-4">
+<h2 class="font-headline-lg text-xl text-on-surface">Global Scorecard</h2>
+<span class="text-xs text-on-surface-variant font-medium">Oct 24, 2026</span>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center p-3 bg-surface-container-low rounded-lg">
+<div>
+<div class="font-bold text-sm text-on-surface">Average Daily Score</div>
+<div class="text-xs text-on-surface-variant">Across 142,000 players</div>
+</div>
+<div class="font-headline-lg text-xl text-primary">4.2 / 6</div>
+</div>
+<div class="flex justify-between items-center p-3 bg-surface-container-low rounded-lg">
+<div>
+<div class="font-bold text-sm text-on-surface">Hardest Puzzle Today</div>
+<div class="text-xs text-on-surface-variant">Starting XI Recall</div>
+</div>
+<div class="font-headline-lg text-xl text-tertiary">18% Solved</div>
+</div>
+<div class="flex justify-between items-center p-3 bg-surface-container-low rounded-lg">
+<div>
+<div class="font-bold text-sm text-on-surface">Longest Active Streak</div>
+<div class="text-xs text-on-surface-variant">Community Leader</div>
+</div>
+<div class="font-headline-lg text-xl text-amber-600">842 Days</div>
+</div>
+</div>
+<button class="w-full py-3 bg-surface-container hover:bg-surface-container-high text-on-surface font-bold text-sm rounded-lg transition-colors border border-outline-variant">
+          View Full Leaderboard
+        </button>
+</section>
+<!-- Past Editions Vault -->
+<section class="md:col-span-7 bg-surface rounded-xl p-6 border border-outline-variant space-y-6">
+<div class="flex justify-between items-center border-b border-outline-variant pb-4">
+<h2 class="font-headline-lg text-xl text-on-surface">Past Editions Vault</h2>
+<a class="text-xs font-bold text-primary hover:underline" href="#">Browse All Archive</a>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3.5 hover:bg-surface-container-low rounded-lg transition-colors border border-transparent hover:border-outline-variant">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg text-lg text-on-surface-variant">#428</span>
+<div>
+<h4 class="font-bold text-sm text-on-surface">The Galácticos Era Matrix</h4>
+<p class="text-xs text-on-surface-variant">Published Oct 23, 2026</p>
+</div>
+</div>
+<button class="px-3 py-1.5 text-xs font-bold bg-surface-container text-on-surface rounded hover:bg-primary hover:text-white transition-colors">Play</button>
+</div>
+<div class="flex items-center justify-between p-3.5 hover:bg-surface-container-low rounded-lg transition-colors border border-transparent hover:border-outline-variant">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg text-lg text-on-surface-variant">#427</span>
+<div>
+<h4 class="font-bold text-sm text-on-surface">Serie A 90s Defensive Titans</h4>
+<p class="text-xs text-on-surface-variant">Published Oct 22, 2026</p>
+</div>
+</div>
+<button class="px-3 py-1.5 text-xs font-bold bg-surface-container text-on-surface rounded hover:bg-primary hover:text-white transition-colors">Play</button>
+</div>
+<div class="flex items-center justify-between p-3.5 hover:bg-surface-container-low rounded-lg transition-colors border border-transparent hover:border-outline-variant">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg text-lg text-on-surface-variant">#426</span>
+<div>
+<h4 class="font-bold text-sm text-on-surface">World Cup Final Hat-Tricks</h4>
+<p class="text-xs text-on-surface-variant">Published Oct 21, 2026</p>
+</div>
+</div>
+<button class="px-3 py-1.5 text-xs font-bold bg-surface-container text-on-surface rounded hover:bg-primary hover:text-white transition-colors">Play</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-container-high mt-16 border-t border-outline-variant">
+<div class="w-full max-w-[1120px] mx-auto px-6 md:px-margin py-10 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="space-y-2 text-center md:text-left">
+<div class="font-headline-md text-headline-md font-medium text-on-surface dark:text-inverse-on-surface">PLAYMAKER</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">© 2026 Playmaker Games. All rights reserved. The daily intellectual football puzzle companion.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-6 text-label-sm font-label-sm">
+<a class="text-on-surface-variant hover:text-primary underline transition-all" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-all" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-all" href="#">Archive Edition</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-all" href="#">Help &amp; FAQ</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-all" href="#">Editorial Standards</a>
+</div>
+</div>
+</footer>
+</body></html>

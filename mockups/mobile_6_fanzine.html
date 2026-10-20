@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Playmaker — The Matchday Programme (Editorial Fanzine)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        fanzine: {
+                            paper: '#f5f1e8',
+                            ink: '#111111',
+                            sub: '#555555',
+                            red: '#d92525',
+                            yellow: '#f59e0b',
+                            green: '#15803d',
+                            blue: '#1d4ed8'
+                        }
+                    },
+                    fontFamily: {
+                        display: ['"Anton"', 'sans-serif'],
+                        body: ['"Work Sans"', 'sans-serif'],
+                        mono: ['"Space Mono"', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 20; }
+        .paper-grain {
+            background-color: #f5f1e8;
+            background-image: radial-gradient(#d3cbbe 0.75px, transparent 0.75px);
+            background-size: 12px 12px;
+        }
+        .risograph-shadow {
+            box-shadow: 4px 4px 0px 0px #111111;
+        }
+    </style>
+</head>
+<body class="bg-[#1a1714] text-fanzine-ink font-body antialiased min-h-screen flex justify-center selection:bg-fanzine-red selection:text-white">
+
+    <!-- Mobile Frame (390px) -->
+    <div class="w-full max-w-[420px] paper-grain min-h-screen border-x-4 border-fanzine-ink flex flex-col justify-between relative shadow-2xl pb-24 text-fanzine-ink">
+
+        <!-- Top Programme Masthead -->
+        <header class="border-b-4 border-fanzine-ink p-4 space-y-2 bg-[#fcf9f2]">
+            <!-- Issue & Turnstile Bar -->
+            <div class="flex items-center justify-between text-[10px] font-mono border-b-2 border-fanzine-ink pb-1 font-bold">
+                <span>VOL. III • ISSUE #112</span>
+                <span>PRICE: FREE</span>
+                <span>OCTOBER 19, 2026</span>
+            </div>
+
+            <!-- Big Chunky Title -->
+            <div class="flex items-center justify-between pt-1">
+                <div>
+                    <h1 class="font-display text-4xl tracking-tight leading-none uppercase text-fanzine-ink">PLAYMAKER</h1>
+                    <div class="text-[11px] font-mono tracking-widest uppercase font-bold text-fanzine-red">THE OFFICIAL FOOTBALL PROGRAMME</div>
+                </div>
+
+                <!-- Turnstile Punch Badge -->
+                <div class="border-2 border-fanzine-ink p-1.5 text-center font-mono risograph-shadow bg-yellow-300">
+                    <div class="text-[9px] uppercase font-bold">STREAK</div>
+                    <div class="font-display text-2xl leading-none">04</div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between text-[11px] font-mono pt-1 text-fanzine-sub">
+                <span>7 DAILY FIXTURES</span>
+                <span class="text-fanzine-red font-bold">RESET: 06:41:20</span>
+            </div>
+        </header>
+
+        <!-- Main Programme Content -->
+        <main class="p-4 space-y-4 flex-1">
+
+            <!-- EDITORIAL LEAD STORY / TODAY'S FIXTURE -->
+            <div class="bg-white border-3 border-fanzine-ink p-4 rounded-none risograph-shadow space-y-2.5">
+                <div class="flex items-center justify-between border-b-2 border-fanzine-ink pb-1.5">
+                    <span class="bg-fanzine-red text-white text-[10px] font-mono font-bold px-2 py-0.5 uppercase tracking-wider">
+                        ★ LEAD FIXTURE
+                    </span>
+                    <span class="text-[10px] font-mono font-bold">MATCH 01 / 07</span>
+                </div>
+
+                <h2 class="font-display text-2xl uppercase tracking-tight text-fanzine-ink leading-tight">
+                    THE CAREER FLIGHT: HOLLAND TO ISTANBUL
+                </h2>
+
+                <p class="text-xs text-fanzine-sub leading-relaxed">
+                    Trace the Dutch talisman from Rotterdam through London, Manchester, and the Bosphorus. Four stops. Five lives. Who wore the shirt?
+                </p>
+
+                <!-- Timetable Itinerary -->
+                <div class="border-2 border-fanzine-ink p-2 font-mono text-xs bg-yellow-50 space-y-1">
+                    <div class="flex justify-between text-[10px] text-fanzine-sub border-b border-dashed border-slate-300 pb-0.5">
+                        <span>DEPARTURE</span>
+                        <span>ARRIVAL</span>
+                        <span>STATUS</span>
+                    </div>
+                    <div class="flex justify-between font-bold">
+                        <span>FEYENOORD</span>
+                        <span>ARSENAL</span>
+                        <span class="text-fanzine-green">TRANSFERRED</span>
+                    </div>
+                    <div class="flex justify-between font-bold">
+                        <span>ARSENAL</span>
+                        <span>MAN UTD</span>
+                        <span class="text-fanzine-green">TRANSFERRED</span>
+                    </div>
+                </div>
+
+                <a href="../games/transfer_destination.html" class="block w-full bg-fanzine-ink hover:bg-fanzine-red text-white font-display text-lg text-center py-2.5 uppercase tracking-wider transition risograph-shadow">
+                    SOLVE THIS PUZZLE ▶
+                </a>
+            </div>
+
+            <!-- FIXTURE 2: PASSPORT FC (Customs Stamp Column) -->
+            <div class="bg-white border-2 border-fanzine-ink p-3.5 risograph-shadow space-y-2">
+                <div class="flex items-center justify-between border-b border-fanzine-ink pb-1">
+                    <div class="flex items-center gap-2">
+                        <span class="font-display text-lg tracking-wide">PASSPORT FC</span>
+                        <span class="text-[10px] font-mono text-fanzine-sub">CUSTOMS REPORT</span>
+                    </div>
+                    <span class="bg-green-100 text-fanzine-green border border-fanzine-green text-[10px] font-mono font-bold px-1.5 py-0.2">
+                        5 LIVES
+                    </span>
+                </div>
+                <p class="text-xs text-fanzine-sub">
+                    Today's squad ledger: <strong>Real Madrid C.F. 🇪🇸</strong>. 4 nationality stamps to complete the page.
+                </p>
+                <div class="flex items-center justify-between pt-1">
+                    <span class="text-[11px] font-mono text-fanzine-sub">Unplayed today</span>
+                    <a href="../games/passport_fc.html" class="font-mono text-xs font-bold text-fanzine-red hover:underline flex items-center gap-1">
+                        OPEN PASSPORT ➔
+                    </a>
+                </div>
+            </div>
+
+            <!-- FIXTURE 3: PLAYED WITH (The Dressing Room Sheet) -->
+            <div class="bg-white border-2 border-fanzine-ink p-3.5 risograph-shadow space-y-2">
+                <div class="flex items-center justify-between border-b border-fanzine-ink pb-1">
+                    <div class="flex items-center gap-2">
+                        <span class="font-display text-lg tracking-wide">PLAYED WITH</span>
+                        <span class="text-[10px] font-mono text-fanzine-sub">TEAMMATES</span>
+                    </div>
+                    <span class="bg-yellow-100 text-yellow-800 border border-yellow-600 text-[10px] font-mono font-bold px-1.5 py-0.2">
+                        IN PROGRESS
+                    </span>
+                </div>
+                <p class="text-xs text-fanzine-sub">
+                    5 teammates revealed from 1 match to legendary tandem. 3 teammates revealed so far.
+                </p>
+                <div class="flex items-center justify-between pt-1">
+                    <span class="text-[11px] font-mono text-yellow-700 font-bold">2 Lives Remaining</span>
+                    <a href="../games/played_with.html" class="font-mono text-xs font-bold text-fanzine-ink hover:underline flex items-center gap-1">
+                        RESUME SHEET ➔
+                    </a>
+                </div>
+            </div>
+
+            <!-- FIXTURE 4: TOP TRANSFERS (The Transfer Ledger) -->
+            <div class="bg-white border-2 border-fanzine-ink p-3.5 risograph-shadow space-y-2">
+                <div class="flex items-center justify-between border-b border-fanzine-ink pb-1">
+                    <div class="flex items-center gap-2">
+                        <span class="font-display text-lg tracking-wide">TOP TRANSFERS</span>
+                        <span class="text-[10px] font-mono text-fanzine-sub">FINANCIAL LEDGER</span>
+                    </div>
+                    <span class="bg-fanzine-green text-white text-[10px] font-mono font-bold px-1.5 py-0.2">
+                        ✓ 10/10 SOLVED
+                    </span>
+                </div>
+                <p class="text-xs text-fanzine-sub">
+                    Chelsea FC all-time record transfers. All 10 signings correctly identified!
+                </p>
+                <div class="flex items-center justify-between pt-1">
+                    <span class="text-[11px] font-mono text-fanzine-green font-bold">Score: 100% (Clean Sheet)</span>
+                    <a href="../games/top_transfers.html" class="font-mono text-xs text-fanzine-sub hover:underline">
+                        View Board ➔
+                    </a>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Programme Bottom Bar -->
+        <nav class="fixed bottom-0 w-full max-w-[420px] bg-[#fcf9f2] border-t-4 border-fanzine-ink p-3 flex items-center justify-around z-50 text-[10px] font-mono font-bold">
+            <button class="text-fanzine-red flex flex-col items-center gap-0.5">
+                <span class="material-symbols-outlined text-lg">newspaper</span>
+                <span>FIXTURES</span>
+            </button>
+            <button class="text-fanzine-sub hover:text-black flex flex-col items-center gap-0.5">
+                <span class="material-symbols-outlined text-lg">calendar_today</span>
+                <span>ARCHIVE</span>
+            </button>
+            <button class="text-fanzine-sub hover:text-black flex flex-col items-center gap-0.5">
+                <span class="material-symbols-outlined text-lg">military_tech</span>
+                <span>TABLE</span>
+            </button>
+            <button class="text-fanzine-sub hover:text-black flex flex-col items-center gap-0.5">
+                <span class="material-symbols-outlined text-lg">info</span>
+                <span>RULES</span>
+            </button>
+        </nav>
+
+    </div>
+
+</body>
+</html>

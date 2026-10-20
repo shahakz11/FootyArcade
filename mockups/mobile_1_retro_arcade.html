@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Playmaker — 16-Bit Pocket Arcade (Mobile First)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Chakra+Petch:wght@500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        arcade: {
+                            bg: '#140c1c',
+                            cabinet: '#261b36',
+                            screen: '#0f051d',
+                            green: '#38b764',
+                            cyan: '#00e7ff',
+                            gold: '#fee761',
+                            red: '#ff0044',
+                            orange: '#f77622',
+                            purple: '#b55088'
+                        }
+                    },
+                    fontFamily: {
+                        pixel: ['"Press Start 2P"', 'monospace'],
+                        tech: ['"Chakra Petch"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .pixel-border {
+            box-shadow: 
+                -4px 0 0 0 #000,
+                4px 0 0 0 #000,
+                0 -4px 0 0 #000,
+                0 4px 0 0 #000;
+        }
+        .pixel-btn {
+            box-shadow: inset -3px -3px 0 0 rgba(0,0,0,0.4), inset 3px 3px 0 0 rgba(255,255,255,0.4);
+        }
+        .crt-scanlines {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 6px 100%;
+        }
+    </style>
+</head>
+<body class="bg-[#0b0612] text-slate-100 font-tech antialiased min-h-screen flex justify-center selection:bg-arcade-green selection:text-black">
+
+    <!-- Mobile Device Container (390px phone canvas) -->
+    <div class="w-full max-w-[420px] bg-arcade-bg min-h-screen border-x-2 border-black flex flex-col justify-between relative shadow-2xl pb-24 crt-scanlines">
+
+        <!-- Top Arcade Marquee & HUD -->
+        <header class="bg-arcade-cabinet border-b-4 border-black p-4 space-y-2.5">
+            <!-- Coin & Credit Bar -->
+            <div class="flex items-center justify-between text-[10px] font-pixel text-arcade-gold tracking-widest">
+                <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-arcade-green animate-ping"></span>
+                    1P READY
+                </span>
+                <span class="text-white">STREAK: <span class="text-arcade-gold font-bold">4 DAYS</span></span>
+                <span class="bg-black/60 px-2 py-0.5 rounded text-arcade-cyan">CREDIT 01</span>
+            </div>
+
+            <!-- Arcade Title Header -->
+            <div class="flex items-center justify-between pt-1">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-arcade-green text-black font-pixel text-xs flex items-center justify-center pixel-border font-bold">
+                        ⚽
+                    </div>
+                    <div>
+                        <div class="font-pixel text-sm text-white tracking-wider">PLAYMAKER</div>
+                        <div class="text-[9px] font-pixel text-arcade-green">16-BIT DAILY ARCADE</div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-1.5">
+                    <button class="bg-black text-arcade-cyan p-1.5 rounded pixel-btn text-xs" title="SFX On">
+                        <span class="material-symbols-outlined text-sm">volume_up</span>
+                    </button>
+                    <button class="bg-black text-arcade-gold p-1.5 rounded pixel-btn text-xs" title="Stats">
+                        <span class="material-symbols-outlined text-sm">trophy</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Daily Drop Countdown Ticker -->
+            <div class="bg-black/80 rounded p-1.5 text-center font-pixel text-[8px] text-slate-300 flex items-center justify-between border border-arcade-purple/40">
+                <span>NEW DROP: #112</span>
+                <span class="text-arcade-cyan font-bold">RESET IN 06:41:20</span>
+            </div>
+        </header>
+
+        <!-- Main Game Cartridge Stack -->
+        <main class="p-4 space-y-4 flex-1">
+
+            <!-- Stage Select Header -->
+            <div class="flex items-center justify-between font-pixel text-[10px]">
+                <span class="text-arcade-gold">▶ SELECT CARTRIDGE</span>
+                <span class="text-slate-400">STAGE 2/7 CLEAR</span>
+            </div>
+
+            <!-- CARTRIDGE 1: PASSPORT FC (Retro Green Border) -->
+            <div class="bg-[#12281a] border-4 border-black p-3.5 rounded-xl pixel-border relative overflow-hidden group hover:translate-x-1 transition duration-150">
+                <div class="flex items-start gap-3">
+                    <!-- Pixel Icon Badge -->
+                    <div class="w-14 h-14 bg-arcade-green text-black rounded-lg flex flex-col items-center justify-center border-2 border-black shrink-0 font-pixel">
+                        <span class="text-2xl">🌍</span>
+                        <span class="text-[7px] font-bold">STAMP</span>
+                    </div>
+
+                    <div class="flex-1 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-pixel text-xs text-arcade-green tracking-wide">PASSPORT FC</span>
+                            <span class="text-[8px] font-pixel bg-black px-1.5 py-0.5 rounded text-white">5 LIVES</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-tight">
+                            Unlock 4 nationality stamps for today's anchor club. Hunt the 1-player Unicorn!
+                        </p>
+                        <div class="flex items-center gap-2 pt-1 font-pixel text-[8px] text-arcade-gold">
+                            <span>TODAY: REAL MADRID 🇪🇸</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3 pt-2.5 border-t-2 border-black/60 flex items-center justify-between">
+                    <span class="text-[9px] font-pixel text-slate-400">STATUS: UNPLAYED</span>
+                    <a href="../games/passport_fc.html" class="bg-arcade-green text-black font-pixel text-[9px] px-3 py-1.5 rounded pixel-btn font-bold flex items-center gap-1 group-hover:bg-emerald-300">
+                        <span>PLAY</span>
+                        <span>▶</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARTRIDGE 2: TRANSFER DESTINATION (Flight Route Cartridge) -->
+            <div class="bg-[#1c2415] border-4 border-black p-3.5 rounded-xl pixel-border relative overflow-hidden group hover:translate-x-1 transition duration-150">
+                <div class="flex items-start gap-3">
+                    <div class="w-14 h-14 bg-emerald-500 text-black rounded-lg flex flex-col items-center justify-center border-2 border-black shrink-0 font-pixel">
+                        <span class="text-2xl">✈️</span>
+                        <span class="text-[7px] font-bold">ROUTE</span>
+                    </div>
+
+                    <div class="flex-1 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-pixel text-xs text-emerald-400 tracking-wide">DESTINATION</span>
+                            <span class="text-[8px] font-pixel bg-arcade-green text-black font-bold px-1.5 py-0.5 rounded">SOLVED</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-tight">
+                            Trace the mystery forward's career stops from Feyenoord to Fenerbahçe.
+                        </p>
+                        <div class="flex items-center gap-2 pt-1 font-pixel text-[8px] text-emerald-400">
+                            <span>4/4 CLUBS GUESSED</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3 pt-2.5 border-t-2 border-black/60 flex items-center justify-between">
+                    <span class="text-[9px] font-pixel text-emerald-400">SCORE: 100%</span>
+                    <a href="../games/transfer_destination.html" class="bg-black text-slate-300 font-pixel text-[9px] px-3 py-1.5 rounded pixel-btn flex items-center gap-1">
+                        <span>RECAP</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARTRIDGE 3: PLAYED WITH (Arcade 2P Versus Co-op) -->
+            <div class="bg-[#261510] border-4 border-black p-3.5 rounded-xl pixel-border relative overflow-hidden group hover:translate-x-1 transition duration-150">
+                <div class="flex items-start gap-3">
+                    <div class="w-14 h-14 bg-arcade-orange text-black rounded-lg flex flex-col items-center justify-center border-2 border-black shrink-0 font-pixel">
+                        <span class="text-2xl">👥</span>
+                        <span class="text-[7px] font-bold">CO-OP</span>
+                    </div>
+
+                    <div class="flex-1 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-pixel text-xs text-arcade-orange tracking-wide">PLAYED WITH</span>
+                            <span class="text-[8px] font-pixel bg-arcade-orange text-black px-1.5 py-0.5 rounded font-bold animate-pulse">IN PROGRESS</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-tight">
+                            5 shared teammates from 1 appearance to iconic duo. Deduce the partner!
+                        </p>
+                        <div class="flex items-center gap-2 pt-1 font-pixel text-[8px] text-arcade-gold">
+                            <span>3/5 REVEALED • 2 LIVES LEFT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3 pt-2.5 border-t-2 border-black/60 flex items-center justify-between">
+                    <span class="text-[9px] font-pixel text-arcade-orange">CONTINUE RUN</span>
+                    <a href="../games/played_with.html" class="bg-arcade-orange text-black font-pixel text-[9px] px-3 py-1.5 rounded pixel-btn font-bold flex items-center gap-1">
+                        <span>RESUME</span>
+                        <span>▶</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARTRIDGE 4: TOP TRANSFERS (Stock Market Cyber Cartridge) -->
+            <div class="bg-[#0b2129] border-4 border-black p-3.5 rounded-xl pixel-border relative overflow-hidden group hover:translate-x-1 transition duration-150">
+                <div class="flex items-start gap-3">
+                    <div class="w-14 h-14 bg-arcade-cyan text-black rounded-lg flex flex-col items-center justify-center border-2 border-black shrink-0 font-pixel">
+                        <span class="text-2xl">💎</span>
+                        <span class="text-[7px] font-bold">CASH</span>
+                    </div>
+
+                    <div class="flex-1 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-pixel text-xs text-arcade-cyan tracking-wide">TOP TRANSFERS</span>
+                            <span class="text-[8px] font-pixel bg-arcade-green text-black font-bold px-1.5 py-0.5 rounded">SOLVED</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-tight">
+                            Top 10 record signing fees for Chelsea FC before lives run out.
+                        </p>
+                        <div class="flex items-center gap-2 pt-1 font-pixel text-[8px] text-arcade-cyan">
+                            <span>10/10 CORRECT • RECORD HIGH</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3 pt-2.5 border-t-2 border-black/60 flex items-center justify-between">
+                    <span class="text-[9px] font-pixel text-arcade-cyan">CLEAR</span>
+                    <a href="../games/top_transfers.html" class="bg-black text-slate-300 font-pixel text-[9px] px-3 py-1.5 rounded pixel-btn flex items-center gap-1">
+                        <span>RECAP</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- CARTRIDGE 5: CLUB CONNECT (Purple Mystery Syndicate) -->
+            <div class="bg-[#241026] border-4 border-black p-3.5 rounded-xl pixel-border relative overflow-hidden group hover:translate-x-1 transition duration-150">
+                <div class="flex items-start gap-3">
+                    <div class="w-14 h-14 bg-arcade-purple text-white rounded-lg flex flex-col items-center justify-center border-2 border-black shrink-0 font-pixel">
+                        <span class="text-2xl">🕵️</span>
+                        <span class="text-[7px] font-bold">MYSTERY</span>
+                    </div>
+
+                    <div class="flex-1 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-pixel text-xs text-pink-400 tracking-wide">CLUB CONNECT</span>
+                            <span class="text-[8px] font-pixel bg-black px-1.5 py-0.5 rounded text-white">3 LIVES</span>
+                        </div>
+                        <p class="text-[11px] text-slate-300 leading-tight">
+                            5 footballers. 1 common club bought them all. Guess before clues run dry!
+                        </p>
+                        <div class="flex items-center gap-2 pt-1 font-pixel text-[8px] text-pink-400">
+                            <span>UNPLAYED TODAY</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3 pt-2.5 border-t-2 border-black/60 flex items-center justify-between">
+                    <span class="text-[9px] font-pixel text-slate-400">LIVES: 3</span>
+                    <a href="../games/club_connect.html" class="bg-pink-500 text-black font-pixel text-[9px] px-3 py-1.5 rounded pixel-btn font-bold flex items-center gap-1">
+                        <span>PLAY</span>
+                        <span>▶</span>
+                    </a>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Fixed Bottom Thumb Controls -->
+        <nav class="fixed bottom-0 w-full max-w-[420px] bg-arcade-cabinet border-t-4 border-black p-3 flex items-center justify-around z-50">
+            <button class="flex flex-col items-center text-arcade-green font-pixel text-[8px] gap-1">
+                <span class="material-symbols-outlined text-xl">sports_esports</span>
+                <span>GAMES</span>
+            </button>
+            <button class="flex flex-col items-center text-slate-400 hover:text-white font-pixel text-[8px] gap-1">
+                <span class="material-symbols-outlined text-xl">calendar_today</span>
+                <span>VAULT</span>
+            </button>
+            <button class="flex flex-col items-center text-slate-400 hover:text-white font-pixel text-[8px] gap-1">
+                <span class="material-symbols-outlined text-xl">leaderboard</span>
+                <span>RANKS</span>
+            </button>
+            <button class="flex flex-col items-center text-slate-400 hover:text-white font-pixel text-[8px] gap-1">
+                <span class="material-symbols-outlined text-xl">help</span>
+                <span>HOW TO</span>
+            </button>
+        </nav>
+
+    </div>
+
+</body>
+</html>

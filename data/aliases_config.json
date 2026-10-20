@@ -3,6 +3,39 @@
   "clubs": {
     "groups": [
       {
+        "display_name": "Hull City",
+        "aliases": [
+          "Hull"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Nottingham Forest",
+        "aliases": [
+          "Nott'm Forest",
+          "Nottm Forest",
+          "Nottingham"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "AS Monaco",
+        "aliases": [
+          "Monaco",
+          "Monaco C",
+          "Association sportive de Monaco"
+        ],
+        "hidden": false
+      },
+      {
+        "display_name": "Ipswich Town",
+        "aliases": [
+          "Ipswich",
+          "Ipswich Town Yo"
+        ],
+        "hidden": false
+      },
+      {
         "display_name": "Inter Miami",
         "aliases": [
           "Inter Miami CF",
@@ -371,7 +404,11 @@
         "hidden": false
       }
     ],
-    "hidden_standalone": []
+    "hidden_standalone": [
+      "Manch. 62",
+      "Manchego",
+      "Manchester 62"
+    ]
   },
   "players": {
     "groups": [

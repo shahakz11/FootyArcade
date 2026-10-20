@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Playmaker — Non-AI Mobile Redesign Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .phone-bezel {
+            border: 12px solid #1e293b;
+            border-radius: 46px;
+            box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+        .phone-notch {
+            width: 120px;
+            height: 24px;
+            background-color: #1e293b;
+            border-bottom-left-radius: 14px;
+            border-bottom-right-radius: 14px;
+        }
+    </style>
+</head>
+<body class="bg-[#090d16] text-slate-100 font-sans antialiased min-h-screen pb-16">
+
+    <!-- Top Command Header -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-lg bg-emerald-500 text-slate-950 font-bold flex items-center justify-center font-mono">P</span>
+                <div>
+                    <h1 class="font-bold text-base text-white leading-none">Playmaker Non-AI Redesign Studio</h1>
+                    <span class="text-[11px] text-emerald-400 font-mono">Mobile-First • Zero AI Tropes • Authentic Football UI</span>
+                </div>
+            </div>
+
+            <!-- Viewport Switcher -->
+            <div class="flex items-center gap-2">
+                <span class="text-xs text-slate-400 font-mono hidden sm:inline">VIEW:</span>
+                <div class="bg-slate-800 border border-slate-700 p-1 rounded-xl flex items-center gap-1">
+                    <button onclick="setDevice('mobile')" id="btn-mobile" class="px-3 py-1 rounded-lg bg-emerald-500 text-slate-950 text-xs font-bold flex items-center gap-1.5 transition">
+                        <span class="material-symbols-outlined text-sm">smartphone</span>
+                        <span>Phone (390px)</span>
+                    </button>
+                    <button onclick="setDevice('desktop')" id="btn-desktop" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition">
+                        <span class="material-symbols-outlined text-sm">desktop_windows</span>
+                        <span>Expand</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Style Selector Sub-navigation -->
+    <div class="bg-slate-900/90 border-b border-slate-800 backdrop-blur-md px-4 py-3 sticky top-16 z-40">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 overflow-x-auto">
+            <div class="flex items-center gap-2">
+                <!-- Tab 1: Clean Native iOS (FotMob / Apple Sports) -->
+                <button onclick="switchTab('native')" id="tab-native" class="tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-blue-500 text-white flex items-center gap-2 shadow-sm transition">
+                    <span>📱</span>
+                    <span>1. Apple Sports / FotMob (Clean Native)</span>
+                </button>
+                <!-- Tab 2: Sorare / FM Touch Pro -->
+                <button onclick="switchTab('sorare')" id="tab-sorare" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 flex items-center gap-2 transition">
+                    <span>⚽</span>
+                    <span>2. Sorare Pro / Manager Touch</span>
+                </button>
+                <!-- Tab 3: Matchday Programme / Fanzine -->
+                <button onclick="switchTab('fanzine')" id="tab-fanzine" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 flex items-center gap-2 transition">
+                    <span>📰</span>
+                    <span>3. Retro Matchday Programme</span>
+                </button>
+                <!-- Tab 4: Google Stitch Clean iOS -->
+                <button onclick="switchTab('stitch_ios')" id="tab-stitch_ios" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold text-emerald-400 hover:text-emerald-300 bg-emerald-950/40 border border-emerald-700/50 flex items-center gap-2 transition">
+                    <span>✨</span>
+                    <span>Google Stitch Clean iOS</span>
+                </button>
+            </div>
+
+            <a id="direct-link" href="mobile_4_clean_native.html" target="_blank" class="text-xs text-slate-400 hover:text-emerald-400 flex items-center gap-1 shrink-0 font-mono">
+                <span>Open in Tab</span>
+                <span class="material-symbols-outlined text-sm">open_in_new</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- Left: Style Breakdown & Design DNA (4 cols) -->
+        <div class="lg:col-span-4 space-y-6">
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 shadow-xl">
+                <div>
+                    <div id="design-badge" class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono tracking-wider uppercase bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                        OPTION 1 — RECOMMENDED
+                    </div>
+                    <h2 id="design-title" class="text-xl font-bold text-white mt-1">Apple Sports / FotMob (Clean Native)</h2>
+                    <p id="design-desc" class="text-xs text-slate-400 leading-relaxed mt-1">
+                        Zero neon, zero holograms, zero sci-fi gradients. Pure native iOS sports architecture with high-density data widgets that show actual gameplay snippets.
+                    </p>
+                </div>
+
+                <!-- Attributes Table -->
+                <div class="border-t border-slate-800 pt-3 space-y-2 text-xs">
+                    <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold">Game Widget Previews</div>
+                    
+                    <div class="space-y-1.5" id="game-brand-breakdown">
+                        <div class="bg-slate-800/50 p-2 rounded-lg border border-slate-700/50 flex items-center justify-between">
+                            <span class="font-bold text-emerald-400">Passport FC:</span>
+                            <span class="text-slate-300 font-mono text-[11px]">Real Madrid 🇪🇸 + 4 Quota Dots</span>
+                        </div>
+                        <div class="bg-slate-800/50 p-2 rounded-lg border border-slate-700/50 flex items-center justify-between">
+                            <span class="font-bold text-blue-400">Destination:</span>
+                            <span class="text-slate-300 font-mono text-[11px]">FEY ➔ ARS ➔ MUN Career Line</span>
+                        </div>
+                        <div class="bg-slate-800/50 p-2 rounded-lg border border-slate-700/50 flex items-center justify-between">
+                            <span class="font-bold text-orange-400">Played With:</span>
+                            <span class="text-slate-300 font-mono text-[11px]">Scholes (242) • Giggs (189)</span>
+                        </div>
+                        <div class="bg-slate-800/50 p-2 rounded-lg border border-slate-700/50 flex items-center justify-between">
+                            <span class="font-bold text-cyan-400">Top Transfers:</span>
+                            <span class="text-slate-300 font-mono text-[11px]">£106.8M Record Signing Fee Tag</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Why this is 100% NON-AI -->
+                <div class="border-t border-slate-800 pt-3 space-y-2">
+                    <div class="text-[11px] font-mono uppercase tracking-wider text-slate-400 font-bold">Why This Eliminates the "AI Look"</div>
+                    <ul id="design-reasons" class="text-xs text-slate-300 space-y-1.5 list-disc list-inside leading-relaxed">
+                        <li><strong>No glowing neon halos:</strong> Uses authentic iOS system dark slate (#000000 / #1C1C1E).</li>
+                        <li><strong>Real football data:</strong> Instead of buzzwords, cards show real club stops, caps, and fees.</li>
+                        <li><strong>Native tap targets:</strong> 44px+ thumb triggers and bottom navigation tab bar.</li>
+                        <li><strong>High contrast & legible:</strong> Built for quick morning play on a smartphone.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Mobile-First Highlights -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-xs space-y-2">
+                <div class="font-bold text-emerald-400 uppercase tracking-wider font-mono flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-sm">verified</span>
+                    Human Craftsmanship Signals
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-400">
+                    <div class="bg-slate-800/50 p-2 rounded border border-slate-700/40">✓ Apple SF / Inter Typography</div>
+                    <div class="bg-slate-800/50 p-2 rounded border border-slate-700/40">✓ 1px Muted Hairline Dividers</div>
+                    <div class="bg-slate-800/50 p-2 rounded border border-slate-700/40">✓ Native Segmented Bar</div>
+                    <div class="bg-slate-800/50 p-2 rounded border border-slate-700/40">✓ Purposeful Data Density</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right: Mobile Device Frame with Live Interactive Mockup (8 cols) -->
+        <div class="lg:col-span-8 flex flex-col items-center">
+            
+            <div id="phone-container" class="phone-bezel bg-black relative flex flex-col items-center overflow-hidden transition-all duration-300 w-[414px]">
+                <!-- Top Phone Speaker / Notch -->
+                <div class="phone-notch z-50 absolute top-0 flex items-center justify-center">
+                    <div class="w-10 h-1 bg-slate-600 rounded-full"></div>
+                </div>
+
+                <!-- Live Iframe inside phone -->
+                <iframe id="preview-frame" src="mobile_4_clean_native.html" class="w-[390px] h-[820px] border-0 rounded-[34px] overflow-y-auto pt-2 bg-black"></iframe>
+            </div>
+
+            <div class="text-[11px] text-slate-500 font-mono mt-3">
+                Interact with the mobile screen directly above • Scroll and tap to test touch response
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const STYLES = {
+            native: {
+                title: "Apple Sports / FotMob (Clean Native)",
+                badge: "OPTION 1 — RECOMMENDED",
+                badgeClass: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+                desc: "Zero neon, zero holograms, zero sci-fi gradients. Pure native iOS sports architecture with high-density data widgets that show actual gameplay snippets.",
+                url: "mobile_4_clean_native.html",
+                brands: [
+                    { game: "Passport FC", brand: "Real Madrid 🇪🇸 + 4 Quota Dots", color: "text-emerald-400" },
+                    { game: "Destination", brand: "FEY ➔ ARS ➔ MUN Career Line", color: "text-blue-400" },
+                    { game: "Played With", brand: "Scholes (242) • Giggs (189)", color: "text-orange-400" },
+                    { game: "Top Transfers", brand: "£106.8M Record Signing Fee Tag", color: "text-cyan-400" }
+                ],
+                reasons: [
+                    "<strong>No glowing neon halos:</strong> Uses authentic iOS system dark slate (#000000 / #1C1C1E).",
+                    "<strong>Real football data:</strong> Instead of buzzwords, cards show real club stops, caps, and fees.",
+                    "<strong>Native tap targets:</strong> 44px+ thumb triggers and bottom navigation tab bar.",
+                    "<strong>High contrast & legible:</strong> Built for quick morning play on a smartphone."
+                ]
+            },
+            sorare: {
+                title: "Sorare Pro / Manager Touch (Club Fantasy)",
+                badge: "OPTION 2 — TACTICAL MATTE",
+                badgeClass: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+                desc: "Inspired by Sorare, Football Manager Touch, and modern matchday broadcasting. Matte carbon finish, jersey typography numbers, and tactical difficulty ratings.",
+                url: "mobile_5_sorare_pro.html",
+                brands: [
+                    { game: "Featured", brand: "Horizontal Spotlight Fixture Card", color: "text-emerald-400" },
+                    { game: "Passport FC", brand: "Numbered Fixture 01 with 5 Lives Tag", color: "text-emerald-400" },
+                    { game: "Played With", brand: "Numbered Fixture 02 with In-Progress Tag", color: "text-amber-400" },
+                    { game: "Top Transfers", brand: "Numbered Fixture 03 with Record Recap", color: "text-cyan-400" }
+                ],
+                reasons: [
+                    "<strong>Matte Carbon Finish:</strong> Replaces flashy gradients with subtle, dark football surfaces.",
+                    "<strong>Real Stadium Numbers:</strong> Teko condensed typography mirrors real football kit numbers.",
+                    "<strong>Managerial Telemetry:</strong> Win rates, difficulty scores (3.8/5), and tactical summaries.",
+                    "<strong>Single-Thumb Fixture Flow:</strong> Clean stacked fixtures built for rapid thumb tapping."
+                ]
+            },
+            fanzine: {
+                title: "Retro Matchday Programme (Editorial Print)",
+                badge: "OPTION 3 — ARTISANAL SUPPORTER PRINT",
+                badgeClass: "bg-red-500/20 text-red-400 border-red-500/30",
+                desc: "Inspired by authentic UK football programmes and fanzines (Mundial, When Saturday Comes). Warm printed newsprint, chunky grotesque type, and turnstile ticket punch.",
+                url: "mobile_6_fanzine.html",
+                brands: [
+                    { game: "Lead Fixture", brand: "The Career Flight (Timetable style)", color: "text-red-500" },
+                    { game: "Passport FC", brand: "Customs Report Column (#ES-2026)", color: "text-green-600" },
+                    { game: "Played With", brand: "Dressing Room Teammate Sheet", color: "text-yellow-600" },
+                    { game: "Top Transfers", brand: "Financial Transfer Ledger Sheet", color: "text-green-600" }
+                ],
+                reasons: [
+                    "<strong>100% Non-AI Aesthetic:</strong> Authentic tactile newsprint texture and print ink.",
+                    "<strong>Deep Football Heritage:</strong> Feels like picking up an official paper programme at the turnstile.",
+                    "<strong>Chunky Editorial Typography:</strong> Bold Anton + Space Mono creates instant character.",
+                    "<strong>Risograph Drop Shadows:</strong> Hard-edged 4px ink shadows create real physical presence."
+                ]
+            },
+            stitch_ios: {
+                title: "Google Stitch Clean iOS Sports Hub",
+                badge: "GOOGLE STITCH CLOUD OUTPUT",
+                badgeClass: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+                desc: "Clean iOS Apple Sports design rendered directly by Google Stitch MCP cloud without any AI neon or holographic effects.",
+                url: "stitch_clean_ios.html",
+                brands: [
+                    { game: "Passport FC", brand: "Stitch Native Widget", color: "text-emerald-400" },
+                    { game: "Destination", brand: "Stitch Pathway Widget", color: "text-blue-400" },
+                    { game: "Played With", brand: "Stitch Connection Widget", color: "text-orange-400" },
+                    { game: "Top Transfers", brand: "Stitch Financial Widget", color: "text-cyan-400" }
+                ],
+                reasons: [
+                    "<strong>Generated by Google Stitch:</strong> Direct mobile viewport generation.",
+                    "<strong>Clean Apple Sports Palette:</strong> #000000 canvas with #1C1C1E elevated containers.",
+                    "<strong>High Performance:</strong> Zero extraneous assets, lightweight and fast."
+                ]
+            }
+        };
+
+        function switchTab(key) {
+            const data = STYLES[key];
+
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.className = 'tab-btn px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 flex items-center gap-2 transition';
+            });
+
+            const activeBtn = document.getElementById('tab-' + key);
+            if (key === 'native') activeBtn.className = 'tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-blue-500 text-white flex items-center gap-2 shadow-sm transition';
+            else if (key === 'sorare') activeBtn.className = 'tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500 text-slate-950 flex items-center gap-2 shadow-sm transition';
+            else if (key === 'fanzine') activeBtn.className = 'tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-red-600 text-white flex items-center gap-2 shadow-sm transition';
+            else if (key === 'stitch_ios') activeBtn.className = 'tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 text-white flex items-center gap-2 shadow-sm transition';
+
+            document.getElementById('design-title').textContent = data.title;
+            document.getElementById('design-desc').textContent = data.desc;
+            document.getElementById('design-badge').textContent = data.badge;
+            document.getElementById('design-badge').className = `inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono tracking-wider uppercase ${data.badgeClass}`;
+            document.getElementById('direct-link').href = data.url;
+
+            const brandsDiv = document.getElementById('game-brand-breakdown');
+            brandsDiv.innerHTML = data.brands.map(b => `
+                <div class="bg-slate-800/50 p-2 rounded-lg border border-slate-700/50 flex items-center justify-between">
+                    <span class="font-bold ${b.color}">${b.game}:</span>
+                    <span class="text-slate-300 font-mono text-[11px]">${b.brand}</span>
+                </div>
+            `).join('');
+
+            const reasonsUl = document.getElementById('design-reasons');
+            reasonsUl.innerHTML = data.reasons.map(r => `<li>${r}</li>`).join('');
+
+            document.getElementById('preview-frame').src = data.url;
+        }
+
+        function setDevice(device) {
+            const container = document.getElementById('phone-container');
+            const frame = document.getElementById('preview-frame');
+            const btnMobile = document.getElementById('btn-mobile');
+            const btnDesktop = document.getElementById('btn-desktop');
+
+            if (device === 'desktop') {
+                container.className = 'w-full max-w-full bg-slate-900 border border-slate-800 rounded-2xl p-2 shadow-2xl';
+                frame.style.width = '100%';
+                frame.style.borderRadius = '12px';
+                btnDesktop.className = 'px-3 py-1 rounded-lg bg-emerald-500 text-slate-950 text-xs font-bold flex items-center gap-1.5 transition';
+                btnMobile.className = 'px-3 py-1 rounded-lg text-slate-400 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition';
+            } else {
+                container.className = 'phone-bezel bg-black relative flex flex-col items-center overflow-hidden transition-all duration-300 w-[414px]';
+                frame.style.width = '390px';
+                frame.style.borderRadius = '34px';
+                btnMobile.className = 'px-3 py-1 rounded-lg bg-emerald-500 text-slate-950 text-xs font-bold flex items-center gap-1.5 transition';
+                btnDesktop.className = 'px-3 py-1 rounded-lg text-slate-400 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition';
+            }
+        }
+    </script>
+</body>
+</html>

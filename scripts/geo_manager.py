@@ -302,3 +302,32 @@ def project_point_to_screen(lat_deg: float, lon_deg: float,
     screen_y = int(cy - radius * altitude * y_proj)
     is_visible = cos_c > -0.05 # allow slightly past horizon for atmosphere
     return screen_x, screen_y, is_visible
+
+def normalize_country_name(country_name: str) -> str:
+    """Normalizes country name string for reliable domestic/international comparison."""
+    c = str(country_name or "").strip().lower()
+    synonyms = {
+        "uk": "england",
+        "united kingdom": "england",
+        "great britain": "england",
+        "usa": "united states",
+        "united states of america": "united states",
+        "america": "united states",
+        "espana": "spain",
+        "españa": "spain",
+        "italia": "italy",
+        "deutschland": "germany",
+        "brasil": "brazil"
+    }
+    return synonyms.get(c, c)
+
+def is_same_country(loc_from: dict, loc_to: dict) -> bool:
+    """Checks if two club location dictionaries belong to the same country."""
+    if not isinstance(loc_from, dict) or not isinstance(loc_to, dict):
+        return False
+    c1 = normalize_country_name(loc_from.get("country", ""))
+    c2 = normalize_country_name(loc_to.get("country", ""))
+    if not c1 or not c2 or c1 in ("europe", "unknown") or c2 in ("europe", "unknown"):
+        return False
+    return c1 == c2
+

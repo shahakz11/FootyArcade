@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>Playmaker — Clean Native Sports (FotMob / Apple Sports)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ios: {
+                            bg: '#000000',
+                            card: '#1c1c1e',
+                            secondary: '#2c2c2e',
+                            border: '#38383a',
+                            subtext: '#8e8e93',
+                            blue: '#0a84ff',
+                            green: '#30d158',
+                            orange: '#ff9f0a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Inter"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 20; }
+    </style>
+</head>
+<body class="bg-[#000000] text-white font-sans antialiased min-h-screen flex justify-center selection:bg-ios-blue selection:text-white">
+
+    <!-- Mobile Screen Canvas (390px phone canvas) -->
+    <div class="w-full max-w-[420px] bg-ios-bg min-h-screen border-x border-ios-border/60 flex flex-col justify-between relative shadow-2xl pb-24">
+
+        <!-- iOS Native Status / Header -->
+        <header class="bg-ios-bg/95 backdrop-blur-xl border-b border-ios-border/40 px-4 pt-4 pb-3 sticky top-0 z-40 space-y-3">
+            <div class="flex items-center justify-between">
+                <div>
+                    <div class="flex items-center gap-1.5 text-xs text-ios-subtext font-medium">
+                        <span>Monday, October 19</span>
+                        <span>•</span>
+                        <span>Daily Drop #112</span>
+                    </div>
+                    <h1 class="text-2xl font-bold tracking-tight text-white leading-none mt-0.5">PLAYMAKER</h1>
+                </div>
+
+                <!-- Native iOS Streak Pill -->
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-1 bg-ios-card border border-ios-border/80 px-2.5 py-1 rounded-full text-xs font-semibold text-ios-orange">
+                        <span>🔥</span>
+                        <span class="text-white font-bold">4</span>
+                        <span class="text-[10px] text-ios-subtext uppercase">Streak</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Progress Strip (Clean Native Card) -->
+            <div class="bg-ios-card rounded-xl p-3 border border-ios-border/50 flex items-center justify-between gap-3">
+                <div class="flex-1 space-y-1.5">
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="font-semibold text-white">Daily Progress</span>
+                        <span class="text-ios-green font-semibold">2 of 7 Solved</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-ios-secondary rounded-full overflow-hidden">
+                        <div class="h-full bg-ios-green rounded-full" style="width: 28%"></div>
+                    </div>
+                </div>
+                <div class="h-7 w-px bg-ios-border/60"></div>
+                <div class="text-right">
+                    <div class="text-[10px] text-ios-subtext">NEW PUZZLE IN</div>
+                    <div class="text-xs font-mono font-semibold text-white">06:41:20</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Game Cards Stack (FotMob / Apple Sports Clean Rows) -->
+        <main class="p-4 space-y-3 flex-1">
+
+            <!-- GAME 1: PASSPORT FC -->
+            <div class="bg-ios-card rounded-2xl p-4 border border-ios-border/60 space-y-3">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="text-[11px] font-semibold text-ios-green uppercase tracking-wider">
+                            Club Passport Quotas
+                        </div>
+                        <h2 class="text-lg font-bold text-white leading-tight">Passport FC</h2>
+                    </div>
+                    <span class="bg-ios-secondary text-ios-subtext text-[11px] font-semibold px-2 py-0.5 rounded-md font-mono">
+                        5 Lives
+                    </span>
+                </div>
+
+                <!-- Gameplay Preview Widget: Real Madrid Club Quota -->
+                <div class="bg-ios-secondary/60 rounded-xl p-3 border border-ios-border/40 space-y-2">
+                    <div class="flex items-center justify-between text-xs">
+                        <div class="flex items-center gap-2">
+                            <span class="text-base">🇪🇸</span>
+                            <span class="font-bold text-white">Real Madrid C.F.</span>
+                        </div>
+                        <span class="text-[11px] text-ios-subtext font-mono">Tier 4 Unicorn</span>
+                    </div>
+                    <!-- 4 Stamp Indicator Dots -->
+                    <div class="flex items-center gap-1.5 pt-1">
+                        <div class="flex-1 h-1.5 rounded-full bg-ios-green"></div>
+                        <div class="flex-1 h-1.5 rounded-full bg-ios-green"></div>
+                        <div class="flex-1 h-1.5 rounded-full bg-ios-border"></div>
+                        <div class="flex-1 h-1.5 rounded-full bg-ios-border"></div>
+                        <span class="text-[10px] text-ios-subtext font-mono ml-1">2/4 Stamps</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                    <span class="text-xs text-ios-subtext">In Progress Today</span>
+                    <a href="../games/passport_fc.html" class="bg-ios-green hover:bg-emerald-400 text-black font-semibold text-xs px-4 py-2 rounded-xl transition flex items-center gap-1">
+                        <span>Continue</span>
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- GAME 2: TRANSFER DESTINATION -->
+            <div class="bg-ios-card rounded-2xl p-4 border border-ios-border/60 space-y-3">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="text-[11px] font-semibold text-ios-blue uppercase tracking-wider">
+                            Career Pathway Timeline
+                        </div>
+                        <h2 class="text-lg font-bold text-white leading-tight">Transfer Destination</h2>
+                    </div>
+                    <span class="bg-ios-green/20 text-ios-green text-[11px] font-semibold px-2 py-0.5 rounded-md flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[12px]">check</span> Solved
+                    </span>
+                </div>
+
+                <!-- Career Path Step Clues Widget -->
+                <div class="bg-ios-secondary/60 rounded-xl p-2.5 border border-ios-border/40">
+                    <div class="flex items-center gap-1.5 text-[11px] font-mono text-slate-300 overflow-x-auto py-0.5">
+                        <span class="bg-black/50 px-2 py-0.5 rounded border border-ios-border/60">Feyenoord</span>
+                        <span class="text-ios-subtext">➔</span>
+                        <span class="bg-black/50 px-2 py-0.5 rounded border border-ios-border/60">Arsenal</span>
+                        <span class="text-ios-subtext">➔</span>
+                        <span class="bg-black/50 px-2 py-0.5 rounded border border-ios-border/60">Man United</span>
+                        <span class="text-ios-subtext">➔</span>
+                        <span class="bg-black/50 px-2 py-0.5 rounded border border-ios-border/60">Fenerbahçe</span>
+                    </div>
+                    <div class="text-[11px] text-ios-subtext mt-1.5 flex items-center justify-between">
+                        <span>Solved: <strong>R. van Persie 🇳🇱</strong></span>
+                        <span class="text-ios-green">Score: 100%</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                    <span class="text-xs text-ios-subtext">Completed in 3 guesses</span>
+                    <a href="../games/transfer_destination.html" class="bg-ios-secondary text-white font-semibold text-xs px-3.5 py-1.5 rounded-xl border border-ios-border hover:bg-ios-border transition">
+                        View Result
+                    </a>
+                </div>
+            </div>
+
+            <!-- GAME 3: PLAYED WITH -->
+            <div class="bg-ios-card rounded-2xl p-4 border border-ios-border/60 space-y-3">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="text-[11px] font-semibold text-ios-orange uppercase tracking-wider">
+                            Teammate Match Connections
+                        </div>
+                        <h2 class="text-lg font-bold text-white leading-tight">Played With</h2>
+                    </div>
+                    <span class="bg-ios-orange/20 text-ios-orange text-[11px] font-semibold px-2 py-0.5 rounded-md">
+                        In Progress (3/5)
+                    </span>
+                </div>
+
+                <!-- Teammates Match Count Widget -->
+                <div class="bg-ios-secondary/60 rounded-xl p-2.5 border border-ios-border/40 space-y-1.5 text-xs">
+                    <div class="flex items-center justify-between text-slate-300">
+                        <span>1. P. Scholes</span>
+                        <span class="text-ios-subtext font-mono">242 matches</span>
+                    </div>
+                    <div class="flex items-center justify-between text-slate-300">
+                        <span>2. E. van der Sar</span>
+                        <span class="text-ios-subtext font-mono">189 matches</span>
+                    </div>
+                    <div class="flex items-center justify-between text-ios-orange font-medium">
+                        <span>3. Teammate #3 Revealed</span>
+                        <span class="font-mono">2 Lives Left</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                    <span class="text-xs text-ios-subtext">Resume your streak</span>
+                    <a href="../games/played_with.html" class="bg-ios-orange hover:bg-amber-500 text-black font-semibold text-xs px-4 py-2 rounded-xl transition flex items-center gap-1">
+                        <span>Continue</span>
+                        <span class="material-symbols-outlined text-sm">play_arrow</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- GAME 4: TOP TRANSFERS -->
+            <div class="bg-ios-card rounded-2xl p-4 border border-ios-border/60 space-y-3">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="text-[11px] font-semibold text-cyan-400 uppercase tracking-wider">
+                            Record Signings Quiz
+                        </div>
+                        <h2 class="text-lg font-bold text-white leading-tight">Top Transfers</h2>
+                    </div>
+                    <span class="bg-ios-green/20 text-ios-green text-[11px] font-semibold px-2 py-0.5 rounded-md flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[12px]">check</span> Solved (10/10)
+                    </span>
+                </div>
+
+                <!-- Fee Tags Preview Widget -->
+                <div class="bg-ios-secondary/60 rounded-xl p-2.5 border border-ios-border/40 flex items-center justify-between text-xs">
+                    <div>
+                        <div class="font-semibold text-white">Chelsea FC Records</div>
+                        <div class="text-[11px] text-ios-subtext mt-0.5">Top 10 Signings Verified</div>
+                    </div>
+                    <div class="text-right">
+                        <span class="bg-black/50 border border-ios-border px-2 py-0.5 rounded text-[11px] font-mono text-cyan-400">£106.8M Top Fee</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                    <span class="text-xs text-ios-subtext">Perfect 100% Score</span>
+                    <a href="../games/top_transfers.html" class="bg-ios-secondary text-white font-semibold text-xs px-3.5 py-1.5 rounded-xl border border-ios-border hover:bg-ios-border transition">
+                        View Board
+                    </a>
+                </div>
+            </div>
+
+            <!-- GAME 5: CLUB CONNECT -->
+            <div class="bg-ios-card rounded-2xl p-4 border border-ios-border/60 space-y-3">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <div class="text-[11px] font-semibold text-purple-400 uppercase tracking-wider">
+                            Common Club Signings
+                        </div>
+                        <h2 class="text-lg font-bold text-white leading-tight">Club Connect</h2>
+                    </div>
+                    <span class="bg-ios-secondary text-ios-subtext text-[11px] font-semibold px-2 py-0.5 rounded-md font-mono">
+                        3 Lives
+                    </span>
+                </div>
+
+                <div class="bg-ios-secondary/60 rounded-xl p-2.5 border border-ios-border/40 text-xs text-slate-300">
+                    5 players revealed one-by-one by transfer fee. Which club bought all 5?
+                </div>
+
+                <div class="flex items-center justify-between pt-1">
+                    <span class="text-xs text-ios-subtext">Unplayed Today</span>
+                    <a href="../games/club_connect.html" class="bg-ios-blue hover:bg-blue-600 text-white font-semibold text-xs px-4 py-2 rounded-xl transition flex items-center gap-1">
+                        <span>Play Challenge</span>
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Native iOS Bottom Tab Bar -->
+        <nav class="fixed bottom-0 w-full max-w-[420px] bg-ios-card/95 backdrop-blur-xl border-t border-ios-border/60 px-6 py-2.5 flex items-center justify-between z-50 text-ios-subtext">
+            <button class="flex flex-col items-center text-ios-blue text-[10px] font-semibold gap-0.5">
+                <span class="material-symbols-outlined text-xl">sports_soccer</span>
+                <span>Puzzles</span>
+            </button>
+            <button class="flex flex-col items-center hover:text-white text-[10px] font-semibold gap-0.5 transition">
+                <span class="material-symbols-outlined text-xl">calendar_month</span>
+                <span>Calendar</span>
+            </button>
+            <button class="flex flex-col items-center hover:text-white text-[10px] font-semibold gap-0.5 transition">
+                <span class="material-symbols-outlined text-xl">leaderboard</span>
+                <span>Stats</span>
+            </button>
+            <button class="flex flex-col items-center hover:text-white text-[10px] font-semibold gap-0.5 transition">
+                <span class="material-symbols-outlined text-xl">help_outline</span>
+                <span>Rules</span>
+            </button>
+        </nav>
+
+    </div>
+
+</body>
+</html>

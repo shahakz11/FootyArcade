@@ -23,14 +23,21 @@ from render_career_flight_short import (
     get_n_minus_2_date,
     load_destination_puzzle,
     build_video_timeline,
-    format_fee_label
+    format_fee_label,
+    generate_career_flight_metadata,
+    render_flight_frame,
+    GlobeRenderer,
+    AIRPLANE_PATH,
+    CAR_PATH
 )
 from scripts.geo_manager import (
     get_club_location,
     haversine_distance_km,
     latlon_to_vec3,
+    vec3_to_latlon,
     slerp,
-    project_point_to_screen
+    project_point_to_screen,
+    is_same_country
 )
 
 class TestCareerFlightShort(unittest.TestCase):
@@ -219,6 +226,91 @@ class TestCareerFlightShort(unittest.TestCase):
             len(unmapped_clubs), 0,
             f"The following {len(unmapped_clubs)} clubs in daily_destination_games.csv lack verified locations: {unmapped_clubs}"
         )
+
+    def test_same_country_detection(self):
+        """Verifies accurate detection of same-country transfers vs international transfers."""
+        loc_ars = get_club_location("Arsenal")
+        loc_che = get_club_location("Chelsea")
+        loc_rm = get_club_location("Real Madrid")
+        loc_bar = get_club_location("Barcelona")
+        loc_juv = get_club_location("Juventus")
+
+        # England to England -> Same country
+        self.assertTrue(is_same_country(loc_ars, loc_che))
+        # Spain to Spain -> Same country
+        self.assertTrue(is_same_country(loc_rm, loc_bar))
+        # England to Spain -> Different country
+        self.assertFalse(is_same_country(loc_ars, loc_rm))
+        # Spain to Italy -> Different country
+        self.assertFalse(is_same_country(loc_rm, loc_juv))
+        # Fallback Europe / Unknown -> Should not match
+        self.assertFalse(is_same_country({"country": "Europe"}, {"country": "Europe"}))
+
+    def test_domestic_transfers_travel_method(self):
+        """
+        Verifies that domestic transfers are assigned 'car' travel method
+        and international transfers are assigned 'flight' travel method.
+        """
+        # Puzzle #20: Nathan Aké (all domestic in England: Chelsea, Watford, Bournemouth, Man City)
+        ake_data = load_destination_puzzle(puzzle_num_override=20)
+        self.assertEqual(ake_data["player_name"], "Nathan Aké")
+        for leg in ake_data["legs"]:
+            self.assertEqual(leg["travel_method"], "car", f"Domestic leg {leg['from_club']} -> {leg['to_club']} must be car")
+            self.assertTrue(leg["is_domestic"])
+
+        # Puzzle #75: Paul Pogba (all international between England & Italy)
+        pogba_data = load_destination_puzzle(puzzle_num_override=75)
+        for leg in pogba_data["legs"]:
+            self.assertEqual(leg["travel_method"], "flight", f"International leg {leg['from_club']} -> {leg['to_club']} must be flight")
+            self.assertFalse(leg["is_domestic"])
+
+        # Puzzle #1: Karim Benzema (Lyon -> Real Madrid: flight, Real Madrid -> Al-Ittihad: flight, Al-Ittihad -> Al-Hilal: car)
+        benzema_data = load_destination_puzzle(puzzle_num_override=1)
+        legs = benzema_data["legs"]
+        self.assertEqual(legs[0]["travel_method"], "flight")
+        self.assertEqual(legs[1]["travel_method"], "flight")
+        self.assertEqual(legs[2]["travel_method"], "car") # Al-Ittihad -> Al-Hilal (Saudi Arabia)
+
+    def test_metadata_for_domestic_and_mixed_transfers(self):
+        """Verifies metadata adapts title, description, and hashtags for car travel and mixed routes."""
+        # Nathan Aké: All domestic
+        ake_data = load_destination_puzzle(puzzle_num_override=20)
+        ake_meta = generate_career_flight_metadata(ake_data)
+        self.assertIn("Career Road Trip", ake_meta["youtube_title"])
+        self.assertIn("🚗", ake_meta["youtube_title"])
+        self.assertIn("Total Distance Driven", ake_meta["youtube_description"])
+        self.assertIn("COMPLETE CAREER ROAD TRIP", ake_meta["instagram_caption"])
+        self.assertIn("🚗", ake_meta["instagram_caption"])
+        self.assertIn("career road trip", ake_meta["youtube_tags"])
+        self.assertIn("car travel", ake_meta["youtube_tags"])
+
+        # Karim Benzema: Mixed
+        benzema_data = load_destination_puzzle(puzzle_num_override=1)
+        benz_meta = generate_career_flight_metadata(benzema_data)
+        self.assertIn("Career Journey", benz_meta["youtube_title"])
+        self.assertIn("✈️🚗", benz_meta["youtube_title"])
+        self.assertIn("flown", benz_meta["youtube_description"])
+        self.assertIn("driven", benz_meta["youtube_description"])
+        self.assertIn("COMPLETE CAREER JOURNEY", benz_meta["instagram_caption"])
+        self.assertIn("🚗", benz_meta["instagram_caption"])
+        self.assertIn("✈️", benz_meta["instagram_caption"])
+
+    def test_render_frame_with_car_travel(self):
+        """Verifies frame compositor renders correctly with car travel without crashing."""
+        from PIL import Image
+        globe_renderer = GlobeRenderer()
+        airplane_sprite = Image.open(AIRPLANE_PATH).convert("RGBA")
+        car_sprite = Image.open(CAR_PATH).convert("RGBA")
+
+        ake_data = load_destination_puzzle(puzzle_num_override=20)
+        tl = build_video_timeline(ake_data)
+
+        # Active car leg frame
+        frame_idx = tl["intro_frames"] + 15
+        frame_img = render_flight_frame(frame_idx, tl, ake_data, globe_renderer, airplane_sprite, None, car_sprite=car_sprite)
+        self.assertEqual(frame_img.size, (1080, 1920))
+        self.assertEqual(frame_img.mode, "RGB")
+
 
 if __name__ == "__main__":
     unittest.main()
