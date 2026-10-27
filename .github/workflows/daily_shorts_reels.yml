@@ -56,10 +56,16 @@ jobs:
           python-version: '3.13'
           cache: 'pip'
 
-      - name: Install system dependencies (FFmpeg)
+      - name: Verify or Install FFmpeg
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
+          if command -v ffmpeg >/dev/null 2>&1; then
+            echo "✅ FFmpeg already installed: $(which ffmpeg)"
+            ffmpeg -version | head -n 1
+          else
+            echo "⚠️ FFmpeg not found, installing..."
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
 
       - name: Install Python dependencies
         run: |
