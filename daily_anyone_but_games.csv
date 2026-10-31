@@ -1,0 +1,541 @@
+game_day,excluded_player,excluded_player_id,table_number,total_tables,table_label,answers,answer_count
+1,Bernardo Silva,241641,1,3,Played for BOTH Benfica & Manchester City,"[""Ederson"", ""Issa Kaboré"", ""Javi García"", ""João Cancelo"", ""Nicolás Otamendi"", ""Nolito"", ""Rúben Dias""]",7
+1,Bernardo Silva,241641,2,3,Played for Benfica (peak market value ≥ €80M),"[""Enzo Fernández"", ""Jan Oblak"", ""João Félix"", ""João Neves"", ""Rúben Dias""]",5
+1,Bernardo Silva,241641,3,3,Portuguese with 100+ career goals,"[""André Silva"", ""Bruno Fernandes"", ""Cristiano Ronaldo"", ""Diogo Jota"", ""Paulinho"", ""Pizzi"", ""Rafa Silva"", ""Ricardo Horta""]",8
+2,Thiago Alcántara,60444,1,3,Spanish who played for Bayern Munich,"[""Bryan Zaragoza"", ""Javi Martínez"", ""Juan Bernat"", ""Marc Roca"", ""Pepe Reina"", ""Xabi Alonso"", ""Álvaro Odriozola""]",7
+2,Thiago Alcántara,60444,2,3,Played for BOTH Barcelona & Bayern Munich,"[""Arturo Vidal"", ""João Cancelo"", ""Mark van Bommel"", ""Pepe Reina"", ""Philippe Coutinho"", ""Robert Lewandowski""]",6
+2,Thiago Alcántara,60444,3,3,Played for BOTH Bayern Munich & Liverpool,"[""Alou Diarra"", ""Emre Can"", ""Luis Díaz"", ""Pepe Reina"", ""Philippe Coutinho"", ""Ryan Gravenberch"", ""Sadio Mané"", ""Xabi Alonso"", ""Xherdan Shaqiri""]",9
+3,Zlatan Ibrahimović,3455,1,3,Swedish who played for Juventus,"[""Albin Ekdal"", ""Andreas Isaksson"", ""Dejan Kulusevski"", ""Emil Holm"", ""Olof Mellberg""]",5
+3,Zlatan Ibrahimović,3455,2,3,Played for BOTH Barcelona & Juventus,"[""Arthur Melo"", ""Arturo Vidal"", ""Dani Alves"", ""João Cancelo"", ""Martín Cáceres"", ""Miralem Pjanić"", ""Neto"", ""Wojciech Szczesny""]",8
+3,Zlatan Ibrahimović,3455,3,3,Swedish with 50+ career goals,"[""Alexander Isak"", ""Emil Forsberg"", ""Jesper Karlsson"", ""Marcus Berg"", ""Sam Larsson"", ""Viktor Claesson"", ""Viktor Gyökeres""]",7
+4,Georginio Wijnaldum,49499,1,3,Dutch who played for Liverpool,"[""Cody Gakpo"", ""Dirk Kuyt"", ""Jeremie Frimpong"", ""Ryan Babel"", ""Ryan Gravenberch"", ""Sepp van den Berg"", ""Virgil van Dijk""]",7
+4,Georginio Wijnaldum,49499,2,3,Played for BOTH Feyenoord & PSV Eindhoven,"[""Guus Til"", ""Jorrit Hendrix"", ""Luciano Narsingh"", ""Otman Bakkal"", ""Rick Karsdorp"", ""Tyrell Malacia""]",6
+4,Georginio Wijnaldum,49499,3,3,Played for PSV Eindhoven (peak market value ≥ €50M),"[""Cody Gakpo"", ""Jarrad Branthwaite"", ""Mario Götze"", ""Memphis Depay"", ""Noni Madueke"", ""Savinho"", ""Xavi Simons""]",7
+5,Christian Eriksen,69633,1,3,Danish who played for Ajax,"[""Anton Gaaei"", ""Christian Poulsen"", ""Kasper Dolberg"", ""Lasse Schöne"", ""Mohamed Daramy"", ""Rasmus Nissen Kristensen"", ""Viktor Fischer""]",7
+5,Christian Eriksen,69633,2,3,Played for BOTH Ajax & Manchester United,"[""André Onana"", ""Antony"", ""Daley Blind"", ""Donny van de Beek"", ""Lisandro Martínez"", ""Matthijs de Ligt"", ""Noussair Mazraoui"", ""Wout Weghorst"", ""Zlatan Ibrahimović""]",9
+5,Christian Eriksen,69633,3,3,Danish with 75+ career goals,"[""Andreas Cornelius"", ""Kasper Dolberg"", ""Martin Braithwaite"", ""Nicolai Jörgensen""]",4
+6,Paulinho,57229,1,3,Brazilian who played for Tottenham Hotspur,"[""Carlos Vinícius"", ""Emerson Royal"", ""Heurelho Gomes"", ""Lucas Moura"", ""Richarlison"", ""Sandro"", ""Souza""]",7
+6,Paulinho,57229,2,3,Played for BOTH Barcelona & Corinthians,"[""Henrique"", ""Javier Mascherano"", ""Malcom"", ""Memphis Depay""]",4
+6,Paulinho,57229,3,3,Played for BOTH Barcelona & Tottenham Hotspur,"[""Clément Lenglet"", ""Eidur Gudjohnsen"", ""Emerson Royal"", ""Giovani dos Santos"", ""Kevin-Prince Boateng""]",5
+7,Christopher Nkunku,344381,1,3,French who played for RB Leipzig,"[""Abdoul Koné"", ""Castello Lukeba"", ""Dayot Upamecano"", ""El Chadaille Bitshiabu"", ""Ibrahima Konaté"", ""Mohamed Simakan"", ""Nordi Mukiele"", ""Tidiam Gomis""]",8
+7,Christopher Nkunku,344381,2,3,Played for BOTH Chelsea & Paris Saint-Germain,"[""Alex"", ""David Luiz"", ""Lassana Diarra"", ""Nicolas Anelka"", ""Thiago Silva""]",5
+7,Christopher Nkunku,344381,3,3,Played for RB Leipzig (peak market value ≥ €80M),"[""Dominik Szoboszlai"", ""Joshua Kimmich"", ""Josko Gvardiol"", ""Timo Werner"", ""Xavi Simons"", ""Yan Diomande""]",6
+8,Romelu Lukaku,96341,1,3,Belgian who played for Chelsea,"[""Charly Musonda Jr."", ""Diego Moreira"", ""Eden Hazard"", ""Kevin De Bruyne"", ""Michy Batshuayi"", ""Mike Penders"", ""Roméo Lavia"", ""Thibaut Courtois"", ""Thorgan Hazard""]",9
+8,Romelu Lukaku,96341,2,3,Played for BOTH Chelsea & Manchester United,"[""Alejandro Garnacho"", ""Danny Drinkwater"", ""Jadon Sancho"", ""Juan Mata"", ""Mason Mount"", ""Nemanja Matić"", ""Radamel Falcao""]",7
+8,Romelu Lukaku,96341,3,3,Belgian with 100+ career goals,"[""Dries Mertens"", ""Eden Hazard"", ""Hans Vanaken"", ""Jelle Vossen"", ""Kevin De Bruyne"", ""Michy Batshuayi""]",6
+9,Martín Zubimendi,423440,1,3,Played for BOTH Arsenal & Real Sociedad,"[""Carlos Vela"", ""Fran Mérida"", ""Kieran Tierney"", ""Martin Ødegaard"", ""Mathew Ryan"", ""Mikel Arteta"", ""Mikel Merino"", ""Nacho Monreal""]",8
+9,Martín Zubimendi,423440,2,3,Played for Real Sociedad (peak market value ≥ €50M),"[""Alexander Isak"", ""Antoine Griezmann"", ""Carlos Soler"", ""David Silva"", ""Martin Ødegaard"", ""Mikel Merino"", ""Mikel Oyarzabal"", ""Takefusa Kubo"", ""Theo Hernández""]",9
+9,Martín Zubimendi,423440,3,3,Played for Real Sociedad (peak market value ≥ €80M),"[""Alexander Isak"", ""Antoine Griezmann"", ""Martin Ødegaard""]",3
+10,David Beckham,3139,1,3,English who played for AC Milan,"[""Fikayo Tomori"", ""Kyle Walker"", ""Ruben Loftus-Cheek"", ""Tammy Abraham""]",4
+10,David Beckham,3139,2,3,Played for BOTH Manchester United & Paris Saint-Germain,"[""Ander Herrera"", ""Edinson Cavani"", ""Manuel Ugarte"", ""Zlatan Ibrahimović"", ""Ángel Di María""]",5
+10,David Beckham,3139,3,3,Played for LA Galaxy (peak market value ≥ €30M),"[""Douglas Costa"", ""Marco Reus"", ""Steven Gerrard"", ""Zlatan Ibrahimović""]",4
+11,Lucas Hernández,281963,1,3,French who played for Atletico Madrid,"[""Antoine Griezmann"", ""Benjamin Lecomte"", ""Clément Lenglet"", ""Florent Sinama-Pongolle"", ""Josuha Guilavogui"", ""Kévin Gameiro"", ""Moussa Dembélé"", ""Theo Hernández"", ""Thomas Lemar""]",9
+11,Lucas Hernández,281963,2,3,Played for BOTH Atletico Madrid & Paris Saint-Germain,"[""Cristian Rodríguez"", ""Kévin Gameiro"", ""Thiago Motta""]",3
+11,Lucas Hernández,281963,3,3,Played for BOTH Bayern Munich & Paris Saint-Germain,"[""Eric-Maxim Choupo-Moting"", ""Juan Bernat"", ""Kingsley Coman"", ""Renato Sanches"", ""Tanguy Nianzou""]",5
+12,Harry Kane,132098,1,3,Played for BOTH Leicester City & Tottenham Hotspur,"[""Harry Winks"", ""James Maddison"", ""Kyle Naughton"", ""Oliver Skipp"", ""Paul Konchesky""]",5
+12,Harry Kane,132098,2,3,Played for Leicester City (peak market value ≥ €50M),"[""Ademola Lookman"", ""Ben Chilwell"", ""Harry Maguire"", ""James Maddison"", ""N'Golo Kanté"", ""Riyad Mahrez"", ""Wesley Fofana"", ""Wilfred Ndidi"", ""Youri Tielemans""]",9
+12,Harry Kane,132098,3,3,English with 100+ career goals,"[""James Tavernier"", ""Jamie Vardy"", ""Marcus Rashford"", ""Ollie Watkins"", ""Phil Foden"", ""Raheem Sterling""]",6
+13,Gonçalo Guedes,225122,1,3,Portuguese who played for Paris Saint-Germain,"[""Danilo Pereira"", ""Gonçalo Ramos"", ""João Neves"", ""Nuno Mendes"", ""Renato Sanches"", ""Vitinha""]",6
+13,Gonçalo Guedes,225122,2,3,Played for BOTH Benfica & Paris Saint-Germain,"[""Cristian Rodríguez"", ""David Luiz"", ""Gonçalo Ramos"", ""João Neves"", ""Juan Bernat"", ""Julian Draxler"", ""Renato Sanches"", ""Ángel Di María""]",8
+13,Gonçalo Guedes,225122,3,3,Played for BOTH Paris Saint-Germain & Real Sociedad,"[""Carlos Soler"", ""Mikel Arteta"", ""Rafinha"", ""Yuri Berchiche""]",4
+14,Matthijs de Ligt,326031,1,3,Dutch who played for Manchester United,"[""Alexander Büttner"", ""Daley Blind"", ""Donny van de Beek"", ""Joshua Zirkzee"", ""Memphis Depay"", ""Robin van Persie"", ""Timothy Fosu-Mensah"", ""Tyrell Malacia"", ""Wout Weghorst""]",9
+14,Matthijs de Ligt,326031,2,3,Played for BOTH Ajax & Juventus,"[""Arkadiusz Milik"", ""Christian Poulsen"", ""Daniele Rugani"", ""Francisco Conceição"", ""Mohamed Ihattaren"", ""Zlatan Ibrahimović""]",6
+14,Matthijs de Ligt,326031,3,3,Played for BOTH Ajax & Manchester United,"[""André Onana"", ""Antony"", ""Christian Eriksen"", ""Daley Blind"", ""Donny van de Beek"", ""Lisandro Martínez"", ""Noussair Mazraoui"", ""Wout Weghorst"", ""Zlatan Ibrahimović""]",9
+15,Martin Ødegaard,316264,1,3,Played for Arsenal (peak market value ≥ €80M),"[""Bukayo Saka"", ""Declan Rice"", ""Gabriel Jesus"", ""Gabriel Martinelli"", ""Kai Havertz"", ""Martín Zubimendi"", ""Raheem Sterling"", ""Serge Gnabry"", ""William Saliba""]",9
+15,Martin Ødegaard,316264,2,3,Norwegian with 30+ career goals,"[""Alexander Sørloth"", ""Andreas Schjelderup"", ""Erling Haaland"", ""Joshua King"", ""Jørgen Strand Larsen"", ""Markus Henriksen"", ""Mohamed Elyounoussi"", ""Oliver Edvardsen"", ""Tobias Lauritsen""]",9
+15,Martin Ødegaard,316264,3,3,Norwegian with 50+ career goals,"[""Alexander Sørloth"", ""Erling Haaland"", ""Joshua King"", ""Jørgen Strand Larsen"", ""Mohamed Elyounoussi"", ""Tobias Lauritsen""]",6
+16,Lucas Ocampos,189441,1,3,Argentinian who played for AC Milan,"[""Fabricio Coloccini"", ""Gonzalo Higuaín"", ""José Sosa"", ""Lucas Biglia"", ""Luka Romero"", ""Mateo Musacchio"", ""Matías Silvestre"", ""Maxi López""]",8
+16,Lucas Ocampos,189441,2,3,Played for BOTH AC Milan & Ajax,"[""Bojan Krkic"", ""Klaas-Jan Huntelaar"", ""Nigel de Jong"", ""Sergiño Dest"", ""Urby Emanuelson"", ""Zlatan Ibrahimović""]",6
+16,Lucas Ocampos,189441,3,3,Played for River Plate (peak market value ≥ €50M),"[""Alexis Sánchez"", ""Enzo Fernández"", ""Franco Mastantuono"", ""Gonzalo Higuaín"", ""Julián Alvarez"", ""Radamel Falcao""]",6
+17,Adama Traoré,204103,1,3,Spanish who played for Aston Villa,"[""Andrés García"", ""Borja Bastón"", ""Carles Gil"", ""Carlos Cuéllar"", ""Jota Peleteiro"", ""Marco Asensio"", ""Pau Torres"", ""Pepe Reina"", ""Álex Moreno""]",9
+17,Adama Traoré,204103,2,3,Spanish who played for West Ham United,"[""Adrián San Miguel"", ""Carlos Soler"", ""Lucas Pérez"", ""Pablo Fornals"", ""Roberto"", ""Álvaro Arbeloa""]",6
+17,Adama Traoré,204103,3,3,Played for BOTH Aston Villa & Barcelona,"[""Clément Lenglet"", ""Lucas Digne"", ""Marcus Rashford"", ""Pepe Reina"", ""Philippe Coutinho""]",5
+18,Dayot Upamecano,344695,1,3,French who played for RB Leipzig,"[""Abdoul Koné"", ""Castello Lukeba"", ""Christopher Nkunku"", ""El Chadaille Bitshiabu"", ""Ibrahima Konaté"", ""Mohamed Simakan"", ""Nordi Mukiele"", ""Tidiam Gomis""]",8
+18,Dayot Upamecano,344695,2,3,Played for BOTH Bayern Munich & Red Bull Salzburg,"[""Konrad Laimer"", ""Marcel Sabitzer"", ""Sadio Mané""]",3
+18,Dayot Upamecano,344695,3,3,Played for Red Bull Salzburg (peak market value ≥ €30M),"[""Benjamin Sesko"", ""Brenden Aaronson"", ""Dominik Szoboszlai"", ""Erling Haaland"", ""Karim Adeyemi"", ""Konrad Laimer"", ""Mamadou Sangaré"", ""Marcel Sabitzer"", ""Sadio Mané"", ""Strahinja Pavlović""]",10
+19,Antoine Griezmann,125781,1,3,Played for BOTH Atletico Madrid & Barcelona,"[""Arda Turan"", ""Clément Lenglet"", ""David Villa"", ""João Félix"", ""Luis Suárez"", ""Memphis Depay"", ""Sergio Agüero"", ""Simão"", ""Thiago Motta""]",9
+19,Antoine Griezmann,125781,2,3,Played for Atletico Madrid (peak market value ≥ €80M),"[""Jan Oblak"", ""João Félix"", ""Julián Alvarez"", ""Luis Suárez"", ""Marcos Llorente"", ""Rodri"", ""Saúl Ñíguez"", ""Sergio Agüero""]",8
+19,Antoine Griezmann,125781,3,3,French with 150+ career goals,"[""Alexandre Lacazette"", ""Karim Benzema"", ""Kylian Mbappé"", ""Kévin Gameiro"", ""Olivier Giroud"", ""Wissam Ben Yedder""]",6
+20,Lucas Digne,126664,1,3,French who played for Aston Villa,"[""Aly Cissokho"", ""Axel Disasi"", ""Boubacar Kamara"", ""Charles N'Zogbia"", ""Clément Lenglet"", ""Frédéric Guilbert"", ""Jordan Amavi"", ""Jordan Veretout"", ""Morgan Sanson"", ""Moussa Diaby""]",10
+20,Lucas Digne,126664,2,3,French who played for Barcelona,"[""Antoine Griezmann"", ""Clément Lenglet"", ""Jean-Clair Todibo"", ""Jules Koundé"", ""Jérémy Mathieu"", ""Ludovic Giuly"", ""Ousmane Dembélé"", ""Samuel Umtiti"", ""Éric Abidal""]",9
+20,Lucas Digne,126664,3,3,Played for BOTH Aston Villa & Paris Saint-Germain,"[""Idrissa Gueye"", ""Marco Asensio"", ""Moussa Diaby""]",3
+21,Diogo Jota,340950,1,3,Portuguese who played for Atletico Madrid,"[""Gelson Martins"", ""João Félix"", ""Marcos Paulo"", ""Pizzi"", ""Rúben Micael"", ""Simão"", ""Sílvio"", ""Tiago Mendes""]",8
+21,Diogo Jota,340950,2,3,Played for BOTH Atletico Madrid & Liverpool,"[""Emiliano Insúa"", ""Fernando Torres"", ""Florent Sinama-Pongolle"", ""Javier Manquillo"", ""Luis Suárez""]",5
+21,Diogo Jota,340950,3,3,Portuguese with 100+ career goals,"[""André Silva"", ""Bernardo Silva"", ""Bruno Fernandes"", ""Cristiano Ronaldo"", ""Paulinho"", ""Pizzi"", ""Rafa Silva"", ""Ricardo Horta""]",8
+22,Dominik Szoboszlai,451276,1,3,Played for BOTH Liverpool & Red Bull Salzburg,"[""Péter Gulácsi"", ""Sadio Mané"", ""Stefan Bajcetic"", ""Takumi Minamino""]",4
+22,Dominik Szoboszlai,451276,2,3,Played for Liverpool (peak market value ≥ €100M),"[""Alexander Isak"", ""Alexis Mac Allister"", ""Florian Wirtz"", ""Mohamed Salah"", ""Philippe Coutinho"", ""Raheem Sterling"", ""Sadio Mané"", ""Trent Alexander-Arnold"", ""Virgil van Dijk""]",9
+22,Dominik Szoboszlai,451276,3,3,Hungarian with 30+ career goals,"[""Roland Sallai"", ""Willi Orbán"", ""Ádám Szalai""]",3
+23,Marcus Rashford,258923,1,3,Played for BOTH Aston Villa & Barcelona,"[""Adama Traoré"", ""Clément Lenglet"", ""Lucas Digne"", ""Pepe Reina"", ""Philippe Coutinho""]",5
+23,Marcus Rashford,258923,2,3,Played for Aston Villa (peak market value ≥ €80M),"[""Jack Grealish"", ""Jadon Sancho"", ""Marco Asensio"", ""Morgan Rogers"", ""Philippe Coutinho""]",5
+23,Marcus Rashford,258923,3,3,English with 100+ career goals,"[""Harry Kane"", ""James Tavernier"", ""Jamie Vardy"", ""Ollie Watkins"", ""Phil Foden"", ""Raheem Sterling""]",6
+24,Donyell Malen,326029,1,3,Dutch who played for Aston Villa,"[""Anwar El Ghazi"", ""Ian Maatsen"", ""Lamare Bogarde"", ""Marco Bizot"", ""Ron Vlaar"", ""Wilfred Bouma""]",6
+24,Donyell Malen,326029,2,3,Played for BOTH Aston Villa & Borussia Dortmund,"[""Carney Chukwuemeka"", ""Ian Maatsen"", ""Jadon Sancho""]",3
+24,Donyell Malen,326029,3,3,Played for BOTH Borussia Dortmund & PSV Eindhoven,"[""Fábio Silva"", ""Ivan Perišić"", ""Mario Götze"", ""Thorgan Hazard""]",4
+25,Luis Díaz,480692,1,3,Played for BOTH Bayern Munich & Liverpool,"[""Alou Diarra"", ""Emre Can"", ""Pepe Reina"", ""Philippe Coutinho"", ""Ryan Gravenberch"", ""Sadio Mané"", ""Thiago Alcántara"", ""Xabi Alonso"", ""Xherdan Shaqiri""]",9
+25,Luis Díaz,480692,2,3,Colombian with 75+ career goals,"[""Alfredo Morelos"", ""Carlos Bacca"", ""Duván Zapata"", ""Hugo Rodallega"", ""James Rodríguez"", ""Jhon Córdoba"", ""Luis Muriel"", ""Mateo Cassierra"", ""Radamel Falcao""]",9
+25,Luis Díaz,480692,3,3,Colombian with 100+ career goals,"[""Alfredo Morelos"", ""Carlos Bacca"", ""Duván Zapata"", ""Jhon Córdoba"", ""Luis Muriel"", ""Radamel Falcao""]",6
+26,Bruno Fernandes,240306,1,3,Played for BOTH Manchester United & Sporting CP,"[""Cristiano Ronaldo"", ""Manuel Ugarte"", ""Marcos Rojo"", ""Nani""]",4
+26,Bruno Fernandes,240306,2,3,Played for Sporting CP (peak market value ≥ €50M),"[""Cristiano Ronaldo"", ""João Palhinha"", ""Manuel Ugarte"", ""Mateus Fernandes"", ""Matheus Nunes"", ""Morten Hjulmand"", ""Nuno Mendes"", ""Rafael Leão"", ""Raphinha"", ""Viktor Gyökeres""]",10
+26,Bruno Fernandes,240306,3,3,Portuguese with 75+ career goals,"[""André Silva"", ""Bernardo Silva"", ""Cristiano Ronaldo"", ""Diogo Jota"", ""Paulinho"", ""Pedro Gonçalves"", ""Pizzi"", ""Rafa Silva"", ""Rafael Leão"", ""Ricardo Horta""]",10
+27,Nélson Semedo,231572,1,3,Portuguese who played for Barcelona,"[""André Gomes"", ""Francisco Trincão"", ""João Cancelo"", ""João Félix"", ""Ricardo Quaresma"", ""Simão""]",6
+27,Nélson Semedo,231572,2,3,Portuguese who played for Fenerbahce,"[""Bruma"", ""Bruno Alves"", ""Luís Neto"", ""Miguel Crespo"", ""Nani"", ""Raúl Meireles""]",6
+27,Nélson Semedo,231572,3,3,Played for BOTH Barcelona & Benfica,"[""André Gomes"", ""Javier Saviola"", ""Jean-Clair Todibo"", ""João Cancelo"", ""João Félix"", ""Keirrison"", ""Simão""]",7
+28,Miralem Pjanić,44162,1,3,Played for BOTH Barcelona & Juventus,"[""Arthur Melo"", ""Arturo Vidal"", ""Dani Alves"", ""João Cancelo"", ""Martín Cáceres"", ""Neto"", ""Wojciech Szczesny"", ""Zlatan Ibrahimović""]",8
+28,Miralem Pjanić,44162,2,3,Played for Besiktas (peak market value ≥ €50M),"[""Ciro Immobile"", ""Dele Alli"", ""Tammy Abraham"", ""Wilfred Ndidi""]",4
+28,Miralem Pjanić,44162,3,3,Bosnian with 30+ career goals,"[""Edin Dzeko"", ""Edin Visca"", ""Ermedin Demirovic"", ""Riad Bajic"", ""Senad Lulic"", ""Vedad Ibisevic""]",6
+29,Sadio Mané,200512,1,3,Played for BOTH Bayern Munich & Liverpool,"[""Alou Diarra"", ""Emre Can"", ""Luis Díaz"", ""Pepe Reina"", ""Philippe Coutinho"", ""Ryan Gravenberch"", ""Thiago Alcántara"", ""Xabi Alonso"", ""Xherdan Shaqiri""]",9
+29,Sadio Mané,200512,2,3,Played for Red Bull Salzburg (peak market value ≥ €30M),"[""Benjamin Sesko"", ""Brenden Aaronson"", ""Dayot Upamecano"", ""Dominik Szoboszlai"", ""Erling Haaland"", ""Karim Adeyemi"", ""Konrad Laimer"", ""Mamadou Sangaré"", ""Marcel Sabitzer"", ""Strahinja Pavlović""]",10
+29,Sadio Mané,200512,3,3,Played for Red Bull Salzburg (peak market value ≥ €50M),"[""Benjamin Sesko"", ""Dayot Upamecano"", ""Dominik Szoboszlai"", ""Erling Haaland"", ""Karim Adeyemi""]",5
+30,Antony,602105,1,3,Brazilian who played for Ajax,"[""Danilo"", ""David Neres"", ""Filipe Luís"", ""Lucas Rosa"", ""Matheus"", ""Maxwell""]",6
+30,Antony,602105,2,3,Played for BOTH Ajax & Manchester United,"[""André Onana"", ""Christian Eriksen"", ""Daley Blind"", ""Donny van de Beek"", ""Lisandro Martínez"", ""Matthijs de Ligt"", ""Noussair Mazraoui"", ""Wout Weghorst"", ""Zlatan Ibrahimović""]",9
+30,Antony,602105,3,3,Played for Real Betis (peak market value ≥ €50M),"[""Fabián Ruiz"", ""Giovani Lo Celso"", ""Isco"", ""Nabil Fekir""]",4
+31,Jesse Lingard,141660,1,3,Played for BOTH Corinthians & West Ham United,"[""Carlos Tevez"", ""Fabián Balbuena"", ""Javier Mascherano""]",3
+31,Jesse Lingard,141660,2,3,Played for BOTH Leicester City & Manchester United,"[""Danny Drinkwater"", ""Danny Simpson"", ""Harry Maguire"", ""Jonny Evans"", ""Michael Keane"", ""Nick Powell"", ""Ron-Robert Zieler"", ""Tom Cleverley""]",8
+31,Jesse Lingard,141660,3,3,Played for BOTH Manchester United & West Ham United,"[""Aaron Wan-Bissaka"", ""Carlos Tevez"", ""Chicharito"", ""David Bellion"", ""Michael Carrick"", ""Patrice Evra"", ""Rio Ferdinand""]",7
+32,Álvaro Carreras,811778,1,3,Spanish who played for Manchester United,"[""Ander Herrera"", ""David de Gea"", ""Gerard Piqué"", ""Juan Mata"", ""Sergio Reguilón"", ""Víctor Valdés""]",6
+32,Álvaro Carreras,811778,2,3,Played for BOTH Benfica & Real Madrid,"[""Ezequiel Garay"", ""Fábio Coentrão"", ""Javi García"", ""Javier Saviola"", ""José Antonio Reyes"", ""Luka Jović"", ""Raúl de Tomás"", ""Ángel Di María""]",8
+32,Álvaro Carreras,811778,3,3,Played for BOTH Manchester United & Real Madrid,"[""Casemiro"", ""Chicharito"", ""Cristiano Ronaldo"", ""David Beckham"", ""Michael Owen"", ""Raphaël Varane"", ""Sergio Reguilón"", ""Ángel Di María""]",8
+33,Neymar,68290,1,3,Brazilian who played for Al-Hilal,"[""Eduardo"", ""Kaio César"", ""Léo Bonatini"", ""Malcom"", ""Marcos Leonardo"", ""Matheus Pereira"", ""Renan Lodi""]",7
+33,Neymar,68290,2,3,Played for Al-Hilal (peak market value ≥ €30M),"[""Darwin Núñez"", ""João Cancelo"", ""Kalidou Koulibaly"", ""Karim Benzema"", ""Malcom"", ""Renan Lodi"", ""Rúben Neves"", ""Sergej Milinković-Savić"", ""Theo Hernández""]",9
+33,Neymar,68290,3,3,Brazilian with 100+ career goals,"[""Gabriel Jesus"", ""Jonas"", ""Raphinha"", ""Roberto Firmino"", ""Vinicius Junior"", ""Willian José""]",6
+34,Wojciech Szczesny,44058,1,3,Polish who played for Arsenal,"[""Jakub Kiwior"", ""Krystian Bielik"", ""Lukasz Fabianski""]",3
+34,Wojciech Szczesny,44058,2,3,Played for BOTH Arsenal & Barcelona,"[""Aleksandr Hleb"", ""Alex Song"", ""Alexis Sánchez"", ""Cesc Fàbregas"", ""Denis Suárez"", ""Héctor Bellerín"", ""Mikel Arteta"", ""Neto"", ""Pierre-Emerick Aubameyang"", ""Thomas Vermaelen""]",10
+34,Wojciech Szczesny,44058,3,3,Played for BOTH Barcelona & Juventus,"[""Arthur Melo"", ""Arturo Vidal"", ""Dani Alves"", ""João Cancelo"", ""Martín Cáceres"", ""Miralem Pjanić"", ""Neto"", ""Zlatan Ibrahimović""]",8
+35,Lucas Torreira,318077,1,3,Uruguayan who played for Atletico Madrid,"[""Cristian Rodríguez"", ""Diego Godín"", ""José María Giménez"", ""Juan Manuel Sanabria"", ""Leandro Cabrera"", ""Luis Suárez"", ""Rubén Olivera"", ""Santiago Mouriño""]",8
+35,Lucas Torreira,318077,2,3,Played for BOTH Arsenal & Atletico Madrid,"[""Fran Mérida"", ""Gabriel Paulista"", ""José Antonio Reyes"", ""Thomas Partey""]",4
+35,Lucas Torreira,318077,3,3,Played for BOTH Atletico Madrid & Galatasaray,"[""Arda Turan"", ""Emiliano Insúa"", ""Emre Belözoglu"", ""Leo Franco"", ""Radamel Falcao"", ""Álvaro Morata""]",6
+36,Gareth Bale,39381,1,3,Welsh who played for Tottenham Hotspur,"[""Ben Davies"", ""Brennan Johnson"", ""Joe Rodon"", ""Simon Davies""]",4
+36,Gareth Bale,39381,2,3,Played for BOTH Real Madrid & Tottenham Hotspur,"[""Emmanuel Adebayor"", ""Luka Modrić"", ""Rafael van der Vaart"", ""Roberto Soldado"", ""Sergio Reguilón""]",5
+36,Gareth Bale,39381,3,3,Played for Tottenham Hotspur (peak market value ≥ €80M),"[""Andrew Robertson"", ""Christian Eriksen"", ""Dele Alli"", ""Harry Kane"", ""Heung-min Son"", ""Randal Kolo Muani"", ""Timo Werner"", ""Xavi Simons""]",8
+37,Xavi Simons,566931,1,3,Dutch who played for Tottenham Hotspur,"[""Arnaut Danjuma"", ""Michel Vorm"", ""Micky van de Ven"", ""Rafael van der Vaart"", ""Steven Bergwijn"", ""Vincent Janssen""]",6
+37,Xavi Simons,566931,2,3,Played for BOTH Paris Saint-Germain & Tottenham Hotspur,"[""Benjamin Stambouli"", ""Giovani Lo Celso"", ""Lucas Moura"", ""Randal Kolo Muani"", ""Serge Aurier"", ""Yuri Berchiche""]",6
+37,Xavi Simons,566931,3,3,Played for Tottenham Hotspur (peak market value ≥ €80M),"[""Andrew Robertson"", ""Christian Eriksen"", ""Dele Alli"", ""Gareth Bale"", ""Harry Kane"", ""Heung-min Son"", ""Randal Kolo Muani"", ""Timo Werner""]",8
+38,Ante Rebić,187587,1,3,Croatian who played for AC Milan,"[""Alen Halilovic"", ""Luka Modrić"", ""Mario Mandzukic"", ""Mario Pašalić"", ""Nikola Kalinic""]",5
+38,Ante Rebić,187587,2,3,Played for BOTH AC Milan & Besiktas,"[""José Sosa"", ""Kevin-Prince Boateng"", ""Tammy Abraham""]",3
+38,Ante Rebić,187587,3,3,Croatian with 50+ career goals,"[""Andrej Kramaric"", ""Ante Budimir"", ""Ivan Perišić"", ""Ivan Rakitic"", ""Ivan Santini"", ""Mario Mandzukic"", ""Mario Pašalić"", ""Marko Livaja"", ""Nikola Kalinic"", ""Nikola Vlašić""]",10
+39,Arthur Melo,362842,1,3,Brazilian who played for Liverpool,"[""Alisson"", ""Allan"", ""Fabinho"", ""Lucas Leiva"", ""Philippe Coutinho"", ""Roberto Firmino""]",6
+39,Arthur Melo,362842,2,3,Played for BOTH Barcelona & Juventus,"[""Arturo Vidal"", ""Dani Alves"", ""João Cancelo"", ""Martín Cáceres"", ""Miralem Pjanić"", ""Neto"", ""Wojciech Szczesny"", ""Zlatan Ibrahimović""]",8
+39,Arthur Melo,362842,3,3,Played for BOTH Juventus & Liverpool,"[""Alberto Aquilani"", ""Christian Poulsen"", ""Emre Can"", ""Federico Chiesa"", ""Mohamed Sissoko"", ""Nicolas Anelka""]",6
+40,Jude Bellingham,581678,1,3,English who played for Borussia Dortmund,"[""Jadon Sancho"", ""Jamie Gittens"", ""Jobe Bellingham""]",3
+40,Jude Bellingham,581678,2,3,Played for BOTH Borussia Dortmund & Real Madrid,"[""Achraf Hakimi"", ""Nuri Sahin"", ""Reinier""]",3
+40,Jude Bellingham,581678,3,3,Played for Borussia Dortmund (peak market value ≥ €80M),"[""Achraf Hakimi"", ""Alexander Isak"", ""Erling Haaland"", ""Jadon Sancho"", ""Ousmane Dembélé"", ""Robert Lewandowski""]",6
+41,Héctor Bellerín,191217,1,3,Spanish who played for Sporting CP,"[""Alberto Zapater"", ""Antonio Adán"", ""Diego Capel"", ""Iván Fresneda"", ""Pablo Sarabia"", ""Pedro Porro""]",6
+41,Héctor Bellerín,191217,2,3,Played for BOTH Arsenal & Sporting CP,"[""Cédric Soares"", ""Emiliano Viviano"", ""Joel Campbell"", ""Rui Fonte"", ""Viktor Gyökeres""]",5
+41,Héctor Bellerín,191217,3,3,Played for BOTH Real Betis & Sporting CP,"[""Antonio Adán"", ""Cristiano Piccini"", ""Jesé"", ""Joel Campbell"", ""Miguel Lopes"", ""Ricardo"", ""Ricky van Wolfswinkel"", ""Rui Silva"", ""William Carvalho"", ""Zouhair Feddal""]",10
+42,Darwin Núñez,546543,1,3,Played for Al-Hilal (peak market value ≥ €30M),"[""João Cancelo"", ""Kalidou Koulibaly"", ""Karim Benzema"", ""Malcom"", ""Neymar"", ""Renan Lodi"", ""Rúben Neves"", ""Sergej Milinković-Savić"", ""Theo Hernández""]",9
+42,Darwin Núñez,546543,2,3,Uruguayan with 30+ career goals,"[""Cristhian Stuani"", ""Diego Rolán"", ""Edinson Cavani"", ""Federico Valverde"", ""Gastón Pereiro"", ""Luis Suárez"", ""Matías Vecino"", ""Maxi Gómez"", ""Rodrigo Zalazar"", ""Sebastián Coates""]",10
+42,Darwin Núñez,546543,3,3,Uruguayan with 50+ career goals,"[""Cristhian Stuani"", ""Edinson Cavani"", ""Gastón Pereiro"", ""Luis Suárez"", ""Maxi Gómez""]",5
+43,Frenkie de Jong,326330,1,3,Dutch who played for Barcelona,"[""Ibrahim Afellay"", ""Jasper Cillessen"", ""Luuk de Jong"", ""Mark van Bommel"", ""Memphis Depay""]",5
+43,Frenkie de Jong,326330,2,3,Played for BOTH Ajax & Barcelona,"[""Bojan Krkic"", ""Isaac Cuenca"", ""Jasper Cillessen"", ""Luis Suárez"", ""Maxwell"", ""Sergiño Dest"", ""Thomas Vermaelen"", ""Zlatan Ibrahimović""]",8
+43,Frenkie de Jong,326330,3,3,Played for Ajax (peak market value ≥ €80M),"[""Christian Eriksen"", ""Luis Suárez"", ""Ryan Gravenberch""]",3
+44,Matheus Cunha,517894,1,3,Brazilian who played for Manchester United,"[""Alex Telles"", ""Anderson"", ""Andreas Pereira"", ""Antony"", ""Casemiro"", ""Fred"", ""Fábio"", ""Rafael""]",8
+44,Matheus Cunha,517894,2,3,Brazilian who played for RB Leipzig,"[""Bernardo"", ""Luan Cândido"", ""Rômulo""]",3
+44,Matheus Cunha,517894,3,3,Played for BOTH Atletico Madrid & Manchester United,"[""David de Gea"", ""Memphis Depay"", ""Radamel Falcao"", ""Sergio Reguilón""]",4
+45,Filip Kostić,161011,1,3,Serbian who played for Fenerbahce,"[""Dušan Tadić"", ""Lazar Markovic"", ""Milos Krasic""]",3
+45,Filip Kostić,161011,2,3,Played for BOTH Fenerbahce & Juventus,"[""Diego"", ""Leonardo Bonucci"", ""Mauricio Isla"", ""Milos Krasic"", ""Nicolas Anelka"", ""Reto Ziegler""]",6
+45,Filip Kostić,161011,3,3,Serbian with 50+ career goals,"[""Adem Ljajic"", ""Aleksandar Mitrović"", ""Aleksandar Prijovic"", ""Dušan Tadić"", ""Dušan Vlahović"", ""Luka Jović"", ""Sergej Milinković-Savić""]",7
+46,Mohammed Kudus,543499,1,3,Played for BOTH Ajax & Tottenham Hotspur,"[""Christian Eriksen"", ""Davinson Sánchez"", ""Jan Vertonghen"", ""Mounir El Hamdaoui"", ""Rafael van der Vaart"", ""Steven Bergwijn"", ""Steven Pienaar"", ""Toby Alderweireld""]",8
+46,Mohammed Kudus,543499,2,3,Played for West Ham United (peak market value ≥ €50M),"[""Carlos Soler"", ""Declan Rice"", ""Evan Ferguson"", ""Jarrod Bowen"", ""Kalvin Phillips"", ""Lucas Paquetá"", ""Mateus Fernandes""]",7
+46,Mohammed Kudus,543499,3,3,Ghanaian with 50+ career goals,"[""André Ayew"", ""Iñaki Williams"", ""Jordan Ayew""]",3
+47,Paul Pogba,122153,1,3,French who played for Manchester United,"[""Anthony Martial"", ""David Bellion"", ""Leny Yoro"", ""Louis Saha"", ""Morgan Schneiderlin"", ""Patrice Evra"", ""Raphaël Varane"", ""Willy Kambwala""]",8
+47,Paul Pogba,122153,2,3,Played for BOTH Juventus & Manchester United,"[""Carlos Tevez"", ""Cristiano Ronaldo"", ""Matthijs de Ligt"", ""Patrice Evra"", ""Zlatan Ibrahimović"", ""Ángel Di María""]",6
+47,Paul Pogba,122153,3,3,Played for Manchester United (peak market value ≥ €80M),"[""Bruno Fernandes"", ""Bryan Mbeumo"", ""Casemiro"", ""Christian Eriksen"", ""Cristiano Ronaldo"", ""Jadon Sancho"", ""Marcus Rashford"", ""Raphaël Varane"", ""Romelu Lukaku""]",9
+48,Arturo Vidal,37666,1,3,Played for BOTH Barcelona & Bayern Munich,"[""João Cancelo"", ""Mark van Bommel"", ""Pepe Reina"", ""Philippe Coutinho"", ""Robert Lewandowski"", ""Thiago Alcántara""]",6
+48,Arturo Vidal,37666,2,3,Played for BOTH Barcelona & Juventus,"[""Arthur Melo"", ""Dani Alves"", ""João Cancelo"", ""Martín Cáceres"", ""Miralem Pjanić"", ""Neto"", ""Wojciech Szczesny"", ""Zlatan Ibrahimović""]",8
+48,Arturo Vidal,37666,3,3,Played for BOTH Bayern Munich & Juventus,"[""Douglas Costa"", ""Emre Can"", ""João Cancelo"", ""Kingsley Coman"", ""Lúcio"", ""Mario Mandzukic"", ""Matthijs de Ligt"", ""Medhi Benatia""]",8
+49,Alexis Sánchez,40433,1,3,Played for BOTH Arsenal & Barcelona,"[""Aleksandr Hleb"", ""Alex Song"", ""Cesc Fàbregas"", ""Denis Suárez"", ""Héctor Bellerín"", ""Mikel Arteta"", ""Neto"", ""Pierre-Emerick Aubameyang"", ""Thomas Vermaelen"", ""Wojciech Szczesny""]",10
+49,Alexis Sánchez,40433,2,3,Played for River Plate (peak market value ≥ €50M),"[""Enzo Fernández"", ""Franco Mastantuono"", ""Gonzalo Higuaín"", ""Julián Alvarez"", ""Lucas Ocampos"", ""Radamel Falcao""]",6
+49,Alexis Sánchez,40433,3,3,Chilean with 30+ career goals,"[""Arturo Vidal"", ""Fabián Orellana"", ""Mauricio Pinilla""]",3
+50,Mohamed Salah,148455,1,3,Played for Chelsea (peak market value ≥ €100M),"[""Cole Palmer"", ""Eden Hazard"", ""Jadon Sancho"", ""João Félix"", ""Kevin De Bruyne"", ""Moisés Caicedo"", ""N'Golo Kanté"", ""Raheem Sterling"", ""Romelu Lukaku""]",9
+50,Mohamed Salah,148455,2,3,Played for Liverpool (peak market value ≥ €100M),"[""Alexander Isak"", ""Alexis Mac Allister"", ""Dominik Szoboszlai"", ""Florian Wirtz"", ""Philippe Coutinho"", ""Raheem Sterling"", ""Sadio Mané"", ""Trent Alexander-Arnold"", ""Virgil van Dijk""]",9
+50,Mohamed Salah,148455,3,3,Egyptian with 50+ career goals,"[""Ahmed Hassan"", ""Omar Marmoush"", ""Trezeguet""]",3
+51,Fernando Torres,7767,1,3,Spanish who played for AC Milan,"[""Bojan Krkic"", ""Diego López"", ""Dídac Vilà"", ""Gerard Deulofeu"", ""Pepe Reina"", ""Samu Castillejo"", ""Suso"", ""Álex Jiménez"", ""Álvaro Morata""]",9
+51,Fernando Torres,7767,2,3,Played for BOTH AC Milan & Liverpool,"[""Alberto Aquilani"", ""Divock Origi"", ""Fabio Borini"", ""Gabriel Paletta"", ""Mario Balotelli"", ""Pepe Reina"", ""Suso""]",7
+51,Fernando Torres,7767,3,3,Played for BOTH Atletico Madrid & Liverpool,"[""Diogo Jota"", ""Emiliano Insúa"", ""Florent Sinama-Pongolle"", ""Javier Manquillo"", ""Luis Suárez""]",5
+52,Pedro Porro,553875,1,3,Spanish who played for Sporting CP,"[""Alberto Zapater"", ""Antonio Adán"", ""Diego Capel"", ""Héctor Bellerín"", ""Iván Fresneda"", ""Pablo Sarabia""]",6
+52,Pedro Porro,553875,2,3,Spanish who played for Tottenham Hotspur,"[""Bryan Gil"", ""Fernando Llorente"", ""Iago Falque"", ""Pau López"", ""Roberto Soldado"", ""Sergio Reguilón"", ""Yuri Berchiche""]",7
+52,Pedro Porro,553875,3,3,Played for BOTH Manchester City & Tottenham Hotspur,"[""Emmanuel Adebayor"", ""Joe Hart"", ""Kieran Trippier"", ""Kyle Walker"", ""Vedran Corluka""]",5
+53,Sandro Tonali,397033,1,3,Italian who played for Newcastle United,"[""Antonio Barreca"", ""Davide Santon"", ""Giuseppe Rossi""]",3
+53,Sandro Tonali,397033,2,3,Played for BOTH AC Milan & Newcastle United,"[""Fabricio Coloccini"", ""Malick Thiaw"", ""Oguchi Onyewu""]",3
+53,Sandro Tonali,397033,3,3,Played for AC Milan (peak market value ≥ €80M),"[""Christopher Nkunku"", ""João Félix"", ""Rafael Leão""]",3
+54,Julián Alvarez,576024,1,3,Played for BOTH Atletico Madrid & Manchester City,"[""Kieran Trippier"", ""Martin Petrov"", ""Martín Demichelis"", ""Rodri"", ""Sergio Agüero"", ""Stefan Savic""]",6
+54,Julián Alvarez,576024,2,3,Played for BOTH Atletico Madrid & River Plate,"[""Augusto Fernández"", ""Javier Pinola"", ""Martín Demichelis"", ""Matías Kranevitter"", ""Radamel Falcao"", ""Rafael Borré""]",6
+54,Julián Alvarez,576024,3,3,Played for Atletico Madrid (peak market value ≥ €80M),"[""Antoine Griezmann"", ""Jan Oblak"", ""João Félix"", ""Luis Suárez"", ""Marcos Llorente"", ""Rodri"", ""Saúl Ñíguez"", ""Sergio Agüero""]",8
+55,David Neres,469822,1,3,Brazilian who played for Ajax,"[""Antony"", ""Danilo"", ""Filipe Luís"", ""Lucas Rosa"", ""Matheus"", ""Maxwell""]",6
+55,David Neres,469822,2,3,Played for BOTH Benfica & Shakhtar Donetsk,"[""Anatoliy Trubin"", ""Facundo Ferreyra"", ""Georgiy Sudakov"", ""Pedrinho""]",4
+55,David Neres,469822,3,3,Played for Shakhtar Donetsk (peak market value ≥ €30M),"[""Alex Teixeira"", ""Douglas Costa"", ""Fernandinho"", ""Fred"", ""Georgiy Sudakov"", ""Henrikh Mkhitaryan"", ""Kevin"", ""Mykhaylo Mudryk"", ""Ruslan Malinovskyi"", ""Willian""]",10
+56,Kingsley Coman,243714,1,3,Played for BOTH Bayern Munich & Juventus,"[""Arturo Vidal"", ""Douglas Costa"", ""Emre Can"", ""João Cancelo"", ""Lúcio"", ""Mario Mandzukic"", ""Matthijs de Ligt"", ""Medhi Benatia""]",8
+56,Kingsley Coman,243714,2,3,Played for BOTH Bayern Munich & Paris Saint-Germain,"[""Eric-Maxim Choupo-Moting"", ""Juan Bernat"", ""Lucas Hernández"", ""Renato Sanches"", ""Tanguy Nianzou""]",5
+56,Kingsley Coman,243714,3,3,Played for Al-Nassr (peak market value ≥ €50M),"[""Aymeric Laporte"", ""Cristiano Ronaldo"", ""João Félix"", ""Marcelo Brozović"", ""Sadio Mané""]",5
+57,Dele Alli,207929,1,3,English who played for Besiktas,"[""Alex Oxlade-Chamberlain"", ""Joe Worrall"", ""Nathan Redmond"", ""Tammy Abraham""]",4
+57,Dele Alli,207929,2,3,Played for BOTH Besiktas & Tottenham Hotspur,"[""Gedson Fernandes"", ""Georges-Kevin N'Koudou"", ""Kevin-Prince Boateng""]",3
+57,Dele Alli,207929,3,3,Played for Besiktas (peak market value ≥ €50M),"[""Ciro Immobile"", ""Miralem Pjanić"", ""Tammy Abraham"", ""Wilfred Ndidi""]",4
+58,Fred,191614,1,3,Brazilian who played for Manchester United,"[""Alex Telles"", ""Anderson"", ""Andreas Pereira"", ""Antony"", ""Casemiro"", ""Fábio"", ""Matheus Cunha"", ""Rafael""]",8
+58,Fred,191614,2,3,Played for BOTH Internacional & Shakhtar Donetsk,"[""Alan Patrick"", ""Ilsinho"", ""Luiz Adriano"", ""Taison"", ""Vinícius Tobias"", ""Vitão""]",6
+58,Fred,191614,3,3,Played for Internacional (peak market value ≥ €30M),"[""Alexandre Pato"", ""Alisson"", ""Anderson"", ""Mário Fernandes"", ""Oscar"", ""Otávio"", ""Wesley Moraes""]",7
+59,Juan Mata,44068,1,3,Spanish who played for Manchester United,"[""Ander Herrera"", ""David de Gea"", ""Gerard Piqué"", ""Sergio Reguilón"", ""Víctor Valdés"", ""Álvaro Carreras""]",6
+59,Juan Mata,44068,2,3,Played for BOTH Chelsea & Galatasaray,"[""Didier Drogba"", ""Hakim Ziyech"", ""Michy Batshuayi"", ""Patrick van Aanholt"", ""Radamel Falcao"", ""Álvaro Morata""]",6
+59,Juan Mata,44068,3,3,Played for BOTH Chelsea & Manchester United,"[""Alejandro Garnacho"", ""Danny Drinkwater"", ""Jadon Sancho"", ""Mason Mount"", ""Nemanja Matić"", ""Radamel Falcao"", ""Romelu Lukaku""]",7
+60,Ademola Lookman,406040,1,3,Nigerian who played for Leicester City,"[""Ahmed Musa"", ""Joe Aribo"", ""Kelechi Iheanacho"", ""Wilfred Ndidi"", ""Yakubu Aiyegbeni""]",5
+60,Ademola Lookman,406040,2,3,Played for Leicester City (peak market value ≥ €50M),"[""Ben Chilwell"", ""Harry Kane"", ""Harry Maguire"", ""James Maddison"", ""N'Golo Kanté"", ""Riyad Mahrez"", ""Wesley Fofana"", ""Wilfred Ndidi"", ""Youri Tielemans""]",9
+60,Ademola Lookman,406040,3,3,Nigerian with 75+ career goals,"[""Brown Ideye"", ""Cyriel Dessers"", ""Kelechi Iheanacho"", ""Paul Onuachu"", ""Victor Osimhen""]",5
+61,Enzo Fernández,648195,1,3,Argentinian who played for Chelsea,"[""Aarón Anselmino"", ""Alejandro Garnacho"", ""Facundo Buonanotte"", ""Franco Di Santo"", ""Gonzalo Higuaín"", ""Willy Caballero""]",6
+61,Enzo Fernández,648195,2,3,Played for BOTH Benfica & Chelsea,"[""David Luiz"", ""Eduardo"", ""João Félix"", ""Nemanja Matić"", ""Ramires"", ""Tiago Mendes""]",6
+61,Enzo Fernández,648195,3,3,Played for River Plate (peak market value ≥ €50M),"[""Alexis Sánchez"", ""Franco Mastantuono"", ""Gonzalo Higuaín"", ""Julián Alvarez"", ""Lucas Ocampos"", ""Radamel Falcao""]",6
+62,Felipe Anderson,159372,1,3,Brazilian who played for West Ham United,"[""Igor Julio"", ""Ilan"", ""Lucas Paquetá"", ""Luís Guilherme"", ""Nenê"", ""Pablo""]",6
+62,Felipe Anderson,159372,2,3,Played for BOTH Lazio & West Ham United,"[""Lionel Scaloni"", ""Mauro Zárate"", ""Taty Castellanos"", ""Thomas Hitzlsperger"", ""Valon Behrami""]",5
+62,Felipe Anderson,159372,3,3,Played for Palmeiras (peak market value ≥ €30M),"[""Danilo"", ""Endrick"", ""Estêvão"", ""Gabriel Jesus"", ""Kevin"", ""Ramires"", ""Vitor Reis"", ""Vitor Roque"", ""Yerry Mina""]",9
+63,Radamel Falcao,39152,1,3,Colombian who played for River Plate,"[""Carlos Sánchez"", ""Jorge Carrascal"", ""Juan Fernando Quintero"", ""Kevin Castaño"", ""Mario Yepes"", ""Miguel Borja"", ""Rafael Borré"", ""Éder Balanta""]",8
+63,Radamel Falcao,39152,2,3,Played for BOTH Atletico Madrid & River Plate,"[""Augusto Fernández"", ""Javier Pinola"", ""Julián Alvarez"", ""Martín Demichelis"", ""Matías Kranevitter"", ""Rafael Borré""]",6
+63,Radamel Falcao,39152,3,3,Played for River Plate (peak market value ≥ €50M),"[""Alexis Sánchez"", ""Enzo Fernández"", ""Franco Mastantuono"", ""Gonzalo Higuaín"", ""Julián Alvarez"", ""Lucas Ocampos""]",6
+64,Ousmane Dembélé,288230,1,3,French who played for Barcelona,"[""Antoine Griezmann"", ""Clément Lenglet"", ""Jean-Clair Todibo"", ""Jules Koundé"", ""Jérémy Mathieu"", ""Lucas Digne"", ""Ludovic Giuly"", ""Samuel Umtiti"", ""Éric Abidal""]",9
+64,Ousmane Dembélé,288230,2,3,Played for BOTH Barcelona & Borussia Dortmund,"[""Kevin-Prince Boateng"", ""Marc Bartra"", ""Paco Alcácer"", ""Pierre-Emerick Aubameyang"", ""Robert Lewandowski"", ""İlkay Gündoğan""]",6
+64,Ousmane Dembélé,288230,3,3,Played for Borussia Dortmund (peak market value ≥ €80M),"[""Achraf Hakimi"", ""Alexander Isak"", ""Erling Haaland"", ""Jadon Sancho"", ""Jude Bellingham"", ""Robert Lewandowski""]",6
+65,Tijjani Reijnders,460939,1,3,Dutch who played for AC Milan,"[""Klaas-Jan Huntelaar"", ""Marco van Ginkel"", ""Mark van Bommel"", ""Nigel de Jong"", ""Urby Emanuelson""]",5
+65,Tijjani Reijnders,460939,2,3,Dutch who played for Manchester City,"[""Karim Rekik"", ""Nathan Aké"", ""Nigel de Jong""]",3
+65,Tijjani Reijnders,460939,3,3,Played for BOTH AC Milan & Manchester City,"[""Brahim Díaz"", ""Gianluigi Donnarumma"", ""Kyle Walker"", ""Mario Balotelli"", ""Nigel de Jong"", ""Robinho""]",6
+66,Nicolás Otamendi,54781,1,3,Played for BOTH Benfica & Manchester City,"[""Bernardo Silva"", ""Ederson"", ""Issa Kaboré"", ""Javi García"", ""João Cancelo"", ""Nolito"", ""Rúben Dias""]",7
+66,Nicolás Otamendi,54781,2,3,Played for BOTH Benfica & River Plate,"[""Benjamín Rollheiser"", ""Enzo Fernández"", ""Enzo Pérez"", ""Javier Saviola"", ""Maximiliano Pereira"", ""Pablo Aimar"", ""Rogelio Funes Mori""]",7
+66,Nicolás Otamendi,54781,3,3,Played for BOTH Manchester City & River Plate,"[""Claudio Echeverri"", ""Julián Alvarez"", ""Martín Demichelis""]",3
+67,Rodrigo Bentancur,354362,1,3,Uruguayan who played for Boca Juniors,"[""Edinson Cavani"", ""Lucas Olaza"", ""Marcelo Saracchi"", ""Miguel Merentiel"", ""Nahitan Nández"", ""Álvaro González""]",6
+67,Rodrigo Bentancur,354362,2,3,Played for BOTH Boca Juniors & Juventus,"[""Carlos Tevez"", ""Daniel Osvaldo"", ""Leandro Paredes""]",3
+67,Rodrigo Bentancur,354362,3,3,Played for Boca Juniors (peak market value ≥ €30M),"[""Alan Varela"", ""Alexis Mac Allister"", ""Ander Herrera"", ""Carlos Tevez"", ""Daniele De Rossi"", ""Edinson Cavani"", ""Leandro Paredes"", ""Mateo Retegui"", ""Nico Gaitán"", ""Valentín Barco""]",10
+68,João Félix,462250,1,3,Portuguese who played for Barcelona,"[""André Gomes"", ""Francisco Trincão"", ""João Cancelo"", ""Nélson Semedo"", ""Ricardo Quaresma"", ""Simão""]",6
+68,João Félix,462250,2,3,Played for BOTH Atletico Madrid & Barcelona,"[""Antoine Griezmann"", ""Arda Turan"", ""Clément Lenglet"", ""David Villa"", ""Luis Suárez"", ""Memphis Depay"", ""Sergio Agüero"", ""Simão"", ""Thiago Motta""]",9
+68,João Félix,462250,3,3,Played for Atletico Madrid (peak market value ≥ €80M),"[""Antoine Griezmann"", ""Jan Oblak"", ""Julián Alvarez"", ""Luis Suárez"", ""Marcos Llorente"", ""Rodri"", ""Saúl Ñíguez"", ""Sergio Agüero""]",8
+69,Malcom,323704,1,3,Brazilian who played for Al-Hilal,"[""Eduardo"", ""Kaio César"", ""Léo Bonatini"", ""Marcos Leonardo"", ""Matheus Pereira"", ""Neymar"", ""Renan Lodi""]",7
+69,Malcom,323704,2,3,Played for BOTH Barcelona & Corinthians,"[""Henrique"", ""Javier Mascherano"", ""Memphis Depay"", ""Paulinho""]",4
+69,Malcom,323704,3,3,Played for Al-Hilal (peak market value ≥ €30M),"[""Darwin Núñez"", ""João Cancelo"", ""Kalidou Koulibaly"", ""Karim Benzema"", ""Neymar"", ""Renan Lodi"", ""Rúben Neves"", ""Sergej Milinković-Savić"", ""Theo Hernández""]",9
+70,Davinson Sánchez,341429,1,3,Colombian who played for Galatasaray,"[""Carlos Cuesta"", ""Radamel Falcao"", ""Yáser Asprilla""]",3
+70,Davinson Sánchez,341429,2,3,Played for BOTH Ajax & Tottenham Hotspur,"[""Christian Eriksen"", ""Jan Vertonghen"", ""Mohammed Kudus"", ""Mounir El Hamdaoui"", ""Rafael van der Vaart"", ""Steven Bergwijn"", ""Steven Pienaar"", ""Toby Alderweireld""]",8
+70,Davinson Sánchez,341429,3,3,Played for BOTH Galatasaray & Tottenham Hotspur,"[""Carlos Vinícius"", ""DeAndre Yedlin"", ""Gedson Fernandes"", ""Giovani dos Santos"", ""Serge Aurier"", ""Tanguy Ndombélé""]",6
+71,Ryan Gravenberch,478573,1,3,Dutch who played for Liverpool,"[""Cody Gakpo"", ""Dirk Kuyt"", ""Georginio Wijnaldum"", ""Jeremie Frimpong"", ""Ryan Babel"", ""Sepp van den Berg"", ""Virgil van Dijk""]",7
+71,Ryan Gravenberch,478573,2,3,Played for BOTH Ajax & Liverpool,"[""Christian Poulsen"", ""Jordan Henderson"", ""Luis Suárez"", ""Ryan Babel"", ""Vitezslav Jaros""]",5
+71,Ryan Gravenberch,478573,3,3,Played for BOTH Bayern Munich & Liverpool,"[""Alou Diarra"", ""Emre Can"", ""Luis Díaz"", ""Pepe Reina"", ""Philippe Coutinho"", ""Sadio Mané"", ""Thiago Alcántara"", ""Xabi Alonso"", ""Xherdan Shaqiri""]",9
+72,Ángel Di María,45320,1,3,Argentinian who played for Real Madrid,"[""Esteban Cambiasso"", ""Ezequiel Garay"", ""Fernando Gago"", ""Franco Mastantuono"", ""Gonzalo Higuaín"", ""Javier Saviola"", ""Walter Samuel""]",7
+72,Ángel Di María,45320,2,3,Played for BOTH Benfica & Real Madrid,"[""Ezequiel Garay"", ""Fábio Coentrão"", ""Javi García"", ""Javier Saviola"", ""José Antonio Reyes"", ""Luka Jović"", ""Raúl de Tomás"", ""Álvaro Carreras""]",8
+72,Ángel Di María,45320,3,3,Argentinian with 100+ career goals,"[""Gonzalo Higuaín"", ""Lautaro Martínez"", ""Lionel Messi"", ""Mauro Icardi"", ""Paulo Dybala"", ""Sergio Agüero""]",6
+73,Ivan Perišić,42460,1,3,Played for BOTH Bayern Munich & Borussia Dortmund,"[""Emre Can"", ""Marcel Sabitzer"", ""Mario Götze"", ""Mats Hummels"", ""Niklas Süle"", ""Raphaël Guerreiro"", ""Robert Lewandowski"", ""Sebastian Rode""]",8
+73,Ivan Perišić,42460,2,3,Croatian with 50+ career goals,"[""Andrej Kramaric"", ""Ante Budimir"", ""Ante Rebić"", ""Ivan Rakitic"", ""Ivan Santini"", ""Mario Mandzukic"", ""Mario Pašalić"", ""Marko Livaja"", ""Nikola Kalinic"", ""Nikola Vlašić""]",10
+73,Ivan Perišić,42460,3,3,Croatian with 75+ career goals,"[""Andrej Kramaric"", ""Ante Budimir"", ""Ivan Rakitic"", ""Ivan Santini"", ""Mario Mandzukic"", ""Mario Pašalić"", ""Nikola Kalinic""]",7
+74,David Alaba,59016,1,3,Austrian who played for Bayern Munich,"[""Alessandro Schöpf"", ""Konrad Laimer"", ""Marcel Sabitzer"", ""Marco Friedl"", ""Paul Wanner""]",5
+74,David Alaba,59016,2,3,Played for BOTH Bayern Munich & Real Madrid,"[""Arjen Robben"", ""Hamit Altintop"", ""James Rodríguez"", ""Toni Kroos"", ""Xabi Alonso"", ""Álvaro Odriozola""]",6
+74,David Alaba,59016,3,3,Austrian with 30+ career goals,"[""Christoph Baumgartner"", ""Florian Kainz"", ""Guido Burgstaller"", ""Marcel Sabitzer"", ""Marko Arnautovic"", ""Martin Harnik"", ""Michael Gregoritsch""]",7
+75,Alexis Mac Allister,534033,1,3,Argentinian who played for Liverpool,"[""Emiliano Insúa"", ""Javier Mascherano"", ""Óscar Ustari""]",3
+75,Alexis Mac Allister,534033,2,3,Played for BOTH Boca Juniors & Liverpool,"[""Emiliano Insúa"", ""Gabriel Paletta"", ""Óscar Ustari""]",3
+75,Alexis Mac Allister,534033,3,3,Played for Boca Juniors (peak market value ≥ €30M),"[""Alan Varela"", ""Ander Herrera"", ""Carlos Tevez"", ""Daniele De Rossi"", ""Edinson Cavani"", ""Leandro Paredes"", ""Mateo Retegui"", ""Nico Gaitán"", ""Rodrigo Bentancur"", ""Valentín Barco""]",10
+76,Leandro Paredes,166237,1,3,Argentinian who played for Paris Saint-Germain,"[""Ezequiel Lavezzi"", ""Giovani Lo Celso"", ""Javier Pastore"", ""Lionel Messi"", ""Mauro Icardi"", ""Ángel Di María""]",6
+76,Leandro Paredes,166237,2,3,Played for BOTH Boca Juniors & Juventus,"[""Carlos Tevez"", ""Daniel Osvaldo"", ""Rodrigo Bentancur""]",3
+76,Leandro Paredes,166237,3,3,Played for Boca Juniors (peak market value ≥ €30M),"[""Alan Varela"", ""Alexis Mac Allister"", ""Ander Herrera"", ""Carlos Tevez"", ""Daniele De Rossi"", ""Edinson Cavani"", ""Mateo Retegui"", ""Nico Gaitán"", ""Rodrigo Bentancur"", ""Valentín Barco""]",10
+77,Diego Carlos,329145,1,3,Brazilian who played for Aston Villa,"[""Alysson"", ""Douglas Luiz"", ""Philippe Coutinho"", ""Wesley Moraes""]",4
+77,Diego Carlos,329145,2,3,Played for BOTH Aston Villa & Fenerbahce,"[""Ally Samatta"", ""Jhon Durán"", ""Marco Asensio""]",3
+77,Diego Carlos,329145,3,3,Played for Fenerbahce (peak market value ≥ €50M),"[""Arda Güler"", ""Ederson"", ""Fred"", ""Marco Asensio"", ""Mesut Özil"", ""Milan Škriniar"", ""Min-jae Kim""]",7
+78,Luis Suárez,44352,1,3,Played for BOTH Atletico Madrid & Barcelona,"[""Antoine Griezmann"", ""Arda Turan"", ""Clément Lenglet"", ""David Villa"", ""João Félix"", ""Memphis Depay"", ""Sergio Agüero"", ""Simão"", ""Thiago Motta""]",9
+78,Luis Suárez,44352,2,3,Played for Atletico Madrid (peak market value ≥ €80M),"[""Antoine Griezmann"", ""Jan Oblak"", ""João Félix"", ""Julián Alvarez"", ""Marcos Llorente"", ""Rodri"", ""Saúl Ñíguez"", ""Sergio Agüero""]",8
+78,Luis Suárez,44352,3,3,Uruguayan with 50+ career goals,"[""Cristhian Stuani"", ""Darwin Núñez"", ""Edinson Cavani"", ""Gastón Pereiro"", ""Maxi Gómez""]",5
+79,Youri Tielemans,249565,1,3,Belgian who played for Aston Villa,"[""Amadou Onana"", ""Björn Engels"", ""Christian Benteke"", ""Leander Dendoncker""]",4
+79,Youri Tielemans,249565,2,3,Played for BOTH Aston Villa & Leicester City,"[""Curtis Davies"", ""Danny Drinkwater"", ""Jordan Ayew"", ""Kevin Phillips"", ""Marc Albrighton"", ""Ryan Bertrand"", ""Tom Cleverley""]",7
+79,Youri Tielemans,249565,3,3,Played for Leicester City (peak market value ≥ €50M),"[""Ademola Lookman"", ""Ben Chilwell"", ""Harry Kane"", ""Harry Maguire"", ""James Maddison"", ""N'Golo Kanté"", ""Riyad Mahrez"", ""Wesley Fofana"", ""Wilfred Ndidi""]",9
+80,Kieran Trippier,95810,1,3,Played for BOTH Atletico Madrid & Manchester City,"[""Julián Alvarez"", ""Martin Petrov"", ""Martín Demichelis"", ""Rodri"", ""Sergio Agüero"", ""Stefan Savic""]",6
+80,Kieran Trippier,95810,2,3,Played for BOTH Atletico Madrid & Tottenham Hotspur,"[""Clément Lenglet"", ""Conor Gallagher"", ""Matt Doherty"", ""Sergio Reguilón"", ""Toby Alderweireld""]",5
+80,Kieran Trippier,95810,3,3,Played for BOTH Manchester City & Newcastle United,"[""Craig Bellamy"", ""Florian Lejeune"", ""James Milner"", ""Joey Barton"", ""Loris Karius"", ""Shay Given"", ""Stephen Ireland"", ""Sylvain Distin""]",8
+81,Luka Modrić,27992,1,3,Croatian who played for AC Milan,"[""Alen Halilovic"", ""Ante Rebić"", ""Mario Mandzukic"", ""Mario Pašalić"", ""Nikola Kalinic""]",5
+81,Luka Modrić,27992,2,3,Croatian who played for Tottenham Hotspur,"[""Ivan Perišić"", ""Luka Vuskovic"", ""Niko Kranjcar"", ""Stipe Pletikosa"", ""Vedran Corluka""]",5
+81,Luka Modrić,27992,3,3,Played for BOTH Real Madrid & Tottenham Hotspur,"[""Emmanuel Adebayor"", ""Gareth Bale"", ""Rafael van der Vaart"", ""Roberto Soldado"", ""Sergio Reguilón""]",5
+82,Jan Oblak,121483,1,3,Played for Atletico Madrid (peak market value ≥ €80M),"[""Antoine Griezmann"", ""João Félix"", ""Julián Alvarez"", ""Luis Suárez"", ""Marcos Llorente"", ""Rodri"", ""Saúl Ñíguez"", ""Sergio Agüero""]",8
+82,Jan Oblak,121483,2,3,Played for Atletico Madrid (peak market value ≥ €100M),"[""Antoine Griezmann"", ""João Félix"", ""Julián Alvarez"", ""Rodri""]",4
+82,Jan Oblak,121483,3,3,Played for Benfica (peak market value ≥ €80M),"[""Bernardo Silva"", ""Enzo Fernández"", ""João Félix"", ""João Neves"", ""Rúben Dias""]",5
+83,Arda Turan,21369,1,3,Played for BOTH Atletico Madrid & Galatasaray,"[""Emiliano Insúa"", ""Emre Belözoglu"", ""Leo Franco"", ""Lucas Torreira"", ""Radamel Falcao"", ""Álvaro Morata""]",6
+83,Arda Turan,21369,2,3,Played for BOTH Barcelona & Galatasaray,"[""Giovani dos Santos"", ""Iñaki Peña"", ""Yusuf Demir"", ""İlkay Gündoğan""]",4
+83,Arda Turan,21369,3,3,Turkish with 30+ career goals,"[""Adem Büyük"", ""Emre Belözoglu"", ""Mevlüt Erdinc"", ""Mustafa Pektemek"", ""Olcan Adin"", ""Olcay Sahan"", ""Selcuk Inan"", ""Umut Bulut"", ""Yasin Öztekin""]",9
+84,Ibrahima Konaté,357119,1,3,French who played for Liverpool,"[""Alou Diarra"", ""Aly Cissokho"", ""David N'Gog"", ""Djibril Cissé"", ""Florent Sinama-Pongolle"", ""Hugo Ekitiké"", ""Jérémy Jacquet"", ""Mamadou Sakho"", ""Nicolas Anelka""]",9
+84,Ibrahima Konaté,357119,2,3,French who played for RB Leipzig,"[""Abdoul Koné"", ""Castello Lukeba"", ""Christopher Nkunku"", ""Dayot Upamecano"", ""El Chadaille Bitshiabu"", ""Mohamed Simakan"", ""Nordi Mukiele"", ""Tidiam Gomis""]",8
+84,Ibrahima Konaté,357119,3,3,Played for BOTH Liverpool & RB Leipzig,"[""Dominik Szoboszlai"", ""Fábio Carvalho"", ""Péter Gulácsi""]",3
+85,Trent Alexander-Arnold,314353,1,3,English who played for Real Madrid,"[""David Beckham"", ""Jude Bellingham"", ""Michael Owen""]",3
+85,Trent Alexander-Arnold,314353,2,3,Played for BOTH Liverpool & Real Madrid,"[""Michael Owen"", ""Nicolas Anelka"", ""Nuri Sahin"", ""Xabi Alonso"", ""Álvaro Arbeloa""]",5
+85,Trent Alexander-Arnold,314353,3,3,Played for Real Madrid (peak market value ≥ €100M),"[""Aurélien Tchouaméni"", ""Cristiano Ronaldo"", ""Eden Hazard"", ""Eduardo Camavinga"", ""Federico Valverde"", ""Jude Bellingham"", ""Kylian Mbappé"", ""Martin Ødegaard"", ""Rodrygo"", ""Vinicius Junior""]",10
+86,Ederson,238223,1,3,Played for BOTH Benfica & Fenerbahce,"[""Bruma"", ""Kerem Aktürkoğlu"", ""Lazar Markovic"", ""Nélson Semedo"", ""Talisca""]",5
+86,Ederson,238223,2,3,Played for BOTH Benfica & Manchester City,"[""Bernardo Silva"", ""Issa Kaboré"", ""Javi García"", ""João Cancelo"", ""Nicolás Otamendi"", ""Nolito"", ""Rúben Dias""]",7
+86,Ederson,238223,3,3,Played for Fenerbahce (peak market value ≥ €50M),"[""Arda Güler"", ""Diego Carlos"", ""Fred"", ""Marco Asensio"", ""Mesut Özil"", ""Milan Škriniar"", ""Min-jae Kim""]",7
+87,Dani Ceballos,319745,1,3,Played for BOTH Arsenal & Real Betis,"[""Héctor Bellerín"", ""Joel Campbell"", ""Sokratis Papastathopoulos""]",3
+87,Dani Ceballos,319745,2,3,Played for BOTH Arsenal & Real Madrid,"[""Emmanuel Adebayor"", ""José Antonio Reyes"", ""Júlio Baptista"", ""Kepa Arrizabalaga"", ""Lassana Diarra"", ""Martin Ødegaard"", ""Mesut Özil"", ""Nicolas Anelka""]",8
+87,Dani Ceballos,319745,3,3,Played for BOTH Real Betis & Real Madrid,"[""Antonio Adán"", ""Diego Llorente"", ""Isco"", ""Javi García"", ""Jesé"", ""Rafael van der Vaart"", ""Sergio Canales""]",7
+88,Mario Götze,74842,1,3,German who played for PSV Eindhoven,"[""Adrian Fein"", ""Armel Bella-Kotchap"", ""Daniel Schwaab"", ""Philipp Max"", ""Timo Baumgartl""]",5
+88,Mario Götze,74842,2,3,Played for BOTH Bayern Munich & Borussia Dortmund,"[""Emre Can"", ""Ivan Perišić"", ""Marcel Sabitzer"", ""Mats Hummels"", ""Niklas Süle"", ""Raphaël Guerreiro"", ""Robert Lewandowski"", ""Sebastian Rode""]",8
+88,Mario Götze,74842,3,3,Played for PSV Eindhoven (peak market value ≥ €50M),"[""Cody Gakpo"", ""Georginio Wijnaldum"", ""Jarrad Branthwaite"", ""Memphis Depay"", ""Noni Madueke"", ""Savinho"", ""Xavi Simons""]",7
+89,Mauro Icardi,68863,1,3,Argentinian who played for Paris Saint-Germain,"[""Ezequiel Lavezzi"", ""Giovani Lo Celso"", ""Javier Pastore"", ""Leandro Paredes"", ""Lionel Messi"", ""Ángel Di María""]",6
+89,Mauro Icardi,68863,2,3,Played for Paris Saint-Germain (peak market value ≥ €100M),"[""Désiré Doué"", ""João Neves"", ""Khvicha Kvaratskhelia"", ""Kylian Mbappé"", ""Lionel Messi"", ""Neymar"", ""Ousmane Dembélé"", ""Vitinha""]",8
+89,Mauro Icardi,68863,3,3,Argentinian with 100+ career goals,"[""Gonzalo Higuaín"", ""Lautaro Martínez"", ""Lionel Messi"", ""Paulo Dybala"", ""Sergio Agüero"", ""Ángel Di María""]",6
+90,Michy Batshuayi,179184,1,3,Belgian who played for Chelsea,"[""Charly Musonda Jr."", ""Diego Moreira"", ""Eden Hazard"", ""Kevin De Bruyne"", ""Mike Penders"", ""Romelu Lukaku"", ""Roméo Lavia"", ""Thibaut Courtois"", ""Thorgan Hazard""]",9
+90,Michy Batshuayi,179184,2,3,Played for BOTH Borussia Dortmund & Chelsea,"[""Aarón Anselmino"", ""André Schürrle"", ""Carney Chukwuemeka"", ""Christian Pulisic"", ""Ian Maatsen"", ""Jadon Sancho"", ""Jamie Gittens"", ""Pierre-Emerick Aubameyang"", ""Thorgan Hazard""]",9
+90,Michy Batshuayi,179184,3,3,Belgian with 100+ career goals,"[""Dries Mertens"", ""Eden Hazard"", ""Hans Vanaken"", ""Jelle Vossen"", ""Kevin De Bruyne"", ""Romelu Lukaku""]",6
+91,Sergio Agüero,26399,1,3,Played for BOTH Atletico Madrid & Barcelona,"[""Antoine Griezmann"", ""Arda Turan"", ""Clément Lenglet"", ""David Villa"", ""João Félix"", ""Luis Suárez"", ""Memphis Depay"", ""Simão"", ""Thiago Motta""]",9
+91,Sergio Agüero,26399,2,3,Played for Atletico Madrid (peak market value ≥ €80M),"[""Antoine Griezmann"", ""Jan Oblak"", ""João Félix"", ""Julián Alvarez"", ""Luis Suárez"", ""Marcos Llorente"", ""Rodri"", ""Saúl Ñíguez""]",8
+91,Sergio Agüero,26399,3,3,Argentinian with 100+ career goals,"[""Gonzalo Higuaín"", ""Lautaro Martínez"", ""Lionel Messi"", ""Mauro Icardi"", ""Paulo Dybala"", ""Ángel Di María""]",6
+92,Sergej Milinković-Savić,266302,1,3,Serbian who played for Lazio,"[""Aleksandar Kolarov"", ""Dejan Stankovic"", ""Dusan Basta"", ""Filip Djordjevic"", ""Petar Ratkov""]",5
+92,Sergej Milinković-Savić,266302,2,3,Played for Al-Hilal (peak market value ≥ €50M),"[""Darwin Núñez"", ""João Cancelo"", ""Kalidou Koulibaly"", ""Karim Benzema"", ""Neymar"", ""Renan Lodi"", ""Rúben Neves"", ""Theo Hernández""]",8
+92,Sergej Milinković-Savić,266302,3,3,Serbian with 50+ career goals,"[""Adem Ljajic"", ""Aleksandar Mitrović"", ""Aleksandar Prijovic"", ""Dušan Tadić"", ""Dušan Vlahović"", ""Filip Kostić"", ""Luka Jović""]",7
+93,Memphis Depay,167850,1,3,Dutch who played for Barcelona,"[""Frenkie de Jong"", ""Ibrahim Afellay"", ""Jasper Cillessen"", ""Luuk de Jong"", ""Mark van Bommel""]",5
+93,Memphis Depay,167850,2,3,Played for BOTH Barcelona & PSV Eindhoven,"[""Eidur Gudjohnsen"", ""Ibrahim Afellay"", ""Luuk de Jong"", ""Mark van Bommel"", ""Sergiño Dest""]",5
+93,Memphis Depay,167850,3,3,Played for PSV Eindhoven (peak market value ≥ €50M),"[""Cody Gakpo"", ""Georginio Wijnaldum"", ""Jarrad Branthwaite"", ""Mario Götze"", ""Noni Madueke"", ""Savinho"", ""Xavi Simons""]",7
+94,Alex Oxlade-Chamberlain,143424,1,3,English who played for Besiktas,"[""Dele Alli"", ""Joe Worrall"", ""Nathan Redmond"", ""Tammy Abraham""]",4
+94,Alex Oxlade-Chamberlain,143424,2,3,Played for BOTH Arsenal & Besiktas,"[""Gabriel Paulista"", ""Mohamed Elneny"", ""Oğuzhan Özyakup""]",3
+94,Alex Oxlade-Chamberlain,143424,3,3,Played for BOTH Arsenal & Liverpool,"[""Jermaine Pennant"", ""Kolo Touré"", ""Nicolas Anelka"", ""Raheem Sterling"", ""Yossi Benayoun""]",5
+95,Timo Werner,170527,1,3,German who played for Chelsea,"[""André Schürrle"", ""Antonio Rüdiger"", ""Kai Havertz"", ""Robert Huth""]",4
+95,Timo Werner,170527,2,3,Played for Tottenham Hotspur (peak market value ≥ €80M),"[""Andrew Robertson"", ""Christian Eriksen"", ""Dele Alli"", ""Gareth Bale"", ""Harry Kane"", ""Heung-min Son"", ""Randal Kolo Muani"", ""Xavi Simons""]",8
+95,Timo Werner,170527,3,3,German with 100+ career goals,"[""Kai Havertz"", ""Kevin Volland"", ""Lars Stindl"", ""Leroy Sané"", ""Marco Reus"", ""Max Kruse"", ""Serge Gnabry"", ""Thomas Müller""]",8
+96,Rafael Leão,357164,1,3,Portuguese who played for AC Milan,"[""André Silva"", ""Diogo Dalot"", ""João Félix""]",3
+96,Rafael Leão,357164,2,3,Played for Sporting CP (peak market value ≥ €50M),"[""Bruno Fernandes"", ""Cristiano Ronaldo"", ""João Palhinha"", ""Manuel Ugarte"", ""Mateus Fernandes"", ""Matheus Nunes"", ""Morten Hjulmand"", ""Nuno Mendes"", ""Raphinha"", ""Viktor Gyökeres""]",10
+96,Rafael Leão,357164,3,3,Portuguese with 75+ career goals,"[""André Silva"", ""Bernardo Silva"", ""Bruno Fernandes"", ""Cristiano Ronaldo"", ""Diogo Jota"", ""Paulinho"", ""Pedro Gonçalves"", ""Pizzi"", ""Rafa Silva"", ""Ricardo Horta""]",10
+97,Xabi Alonso,7476,1,3,Spanish who played for Bayern Munich,"[""Bryan Zaragoza"", ""Javi Martínez"", ""Juan Bernat"", ""Marc Roca"", ""Pepe Reina"", ""Thiago Alcántara"", ""Álvaro Odriozola""]",7
+97,Xabi Alonso,7476,2,3,Played for BOTH Bayern Munich & Liverpool,"[""Alou Diarra"", ""Emre Can"", ""Luis Díaz"", ""Pepe Reina"", ""Philippe Coutinho"", ""Ryan Gravenberch"", ""Sadio Mané"", ""Thiago Alcántara"", ""Xherdan Shaqiri""]",9
+97,Xabi Alonso,7476,3,3,Played for BOTH Bayern Munich & Real Madrid,"[""Arjen Robben"", ""David Alaba"", ""Hamit Altintop"", ""James Rodríguez"", ""Toni Kroos"", ""Álvaro Odriozola""]",6
+98,Matheus Nunes,601883,1,3,Portuguese who played for Manchester City,"[""Bernardo Silva"", ""João Cancelo"", ""Rony Lopes"", ""Rúben Dias""]",4
+98,Matheus Nunes,601883,2,3,Played for BOTH Manchester City & Sporting CP,"[""Felipe Caicedo"", ""Gelson Fernandes"", ""Pedro Porro""]",3
+98,Matheus Nunes,601883,3,3,Played for Sporting CP (peak market value ≥ €50M),"[""Bruno Fernandes"", ""Cristiano Ronaldo"", ""João Palhinha"", ""Manuel Ugarte"", ""Mateus Fernandes"", ""Morten Hjulmand"", ""Nuno Mendes"", ""Rafael Leão"", ""Raphinha"", ""Viktor Gyökeres""]",10
+99,Vinicius Junior,371998,1,3,Played for Flamengo (peak market value ≥ €50M),"[""Alex Sandro"", ""Jorginho"", ""Lucas Paquetá"", ""Saúl Ñíguez""]",4
+99,Vinicius Junior,371998,2,3,Played for Real Madrid (peak market value ≥ €100M),"[""Aurélien Tchouaméni"", ""Cristiano Ronaldo"", ""Eden Hazard"", ""Eduardo Camavinga"", ""Federico Valverde"", ""Jude Bellingham"", ""Kylian Mbappé"", ""Martin Ødegaard"", ""Rodrygo"", ""Trent Alexander-Arnold""]",10
+99,Vinicius Junior,371998,3,3,Brazilian with 100+ career goals,"[""Gabriel Jesus"", ""Jonas"", ""Neymar"", ""Raphinha"", ""Roberto Firmino"", ""Willian José""]",6
+100,Pierre-Emerick Aubameyang,58864,1,3,Played for BOTH AC Milan & Borussia Dortmund,"[""Christian Pulisic"", ""Kevin-Prince Boateng"", ""Niclas Füllkrug"", ""Sokratis Papastathopoulos""]",4
+100,Pierre-Emerick Aubameyang,58864,2,3,Played for BOTH Barcelona & Borussia Dortmund,"[""Kevin-Prince Boateng"", ""Marc Bartra"", ""Ousmane Dembélé"", ""Paco Alcácer"", ""Robert Lewandowski"", ""İlkay Gündoğan""]",6
+100,Pierre-Emerick Aubameyang,58864,3,3,Played for BOTH Borussia Dortmund & Chelsea,"[""Aarón Anselmino"", ""André Schürrle"", ""Carney Chukwuemeka"", ""Christian Pulisic"", ""Ian Maatsen"", ""Jadon Sancho"", ""Jamie Gittens"", ""Michy Batshuayi"", ""Thorgan Hazard""]",9
+101,Marcel Sabitzer,106987,1,3,Austrian who played for Bayern Munich,"[""Alessandro Schöpf"", ""David Alaba"", ""Konrad Laimer"", ""Marco Friedl"", ""Paul Wanner""]",5
+101,Marcel Sabitzer,106987,2,3,Played for Red Bull Salzburg (peak market value ≥ €30M),"[""Benjamin Sesko"", ""Brenden Aaronson"", ""Dayot Upamecano"", ""Dominik Szoboszlai"", ""Erling Haaland"", ""Karim Adeyemi"", ""Konrad Laimer"", ""Mamadou Sangaré"", ""Sadio Mané"", ""Strahinja Pavlović""]",10
+101,Marcel Sabitzer,106987,3,3,Austrian with 30+ career goals,"[""Christoph Baumgartner"", ""David Alaba"", ""Florian Kainz"", ""Guido Burgstaller"", ""Marko Arnautovic"", ""Martin Harnik"", ""Michael Gregoritsch""]",7
+102,Conor Gallagher,488362,1,3,Played for BOTH Atletico Madrid & Chelsea,"[""César Azpilicueta"", ""Diego Costa"", ""Fernando Torres"", ""Filipe Luís"", ""João Félix"", ""Radamel Falcao"", ""Saúl Ñíguez"", ""Thibaut Courtois"", ""Tiago Mendes"", ""Álvaro Morata""]",10
+102,Conor Gallagher,488362,2,3,Played for BOTH Atletico Madrid & Tottenham Hotspur,"[""Clément Lenglet"", ""Kieran Trippier"", ""Matt Doherty"", ""Sergio Reguilón"", ""Toby Alderweireld""]",5
+102,Conor Gallagher,488362,3,3,Played for BOTH Chelsea & Tottenham Hotspur,"[""Eidur Gudjohnsen"", ""Scott Parker"", ""Timo Werner"", ""William Gallas""]",4
+103,Declan Rice,357662,1,3,Played for Arsenal (peak market value ≥ €80M),"[""Bukayo Saka"", ""Gabriel Jesus"", ""Gabriel Martinelli"", ""Kai Havertz"", ""Martin Ødegaard"", ""Martín Zubimendi"", ""Raheem Sterling"", ""Serge Gnabry"", ""William Saliba""]",9
+103,Declan Rice,357662,2,3,Played for Arsenal (peak market value ≥ €100M),"[""Bukayo Saka"", ""Martin Ødegaard"", ""Raheem Sterling"", ""William Saliba""]",4
+103,Declan Rice,357662,3,3,Played for West Ham United (peak market value ≥ €50M),"[""Carlos Soler"", ""Evan Ferguson"", ""Jarrod Bowen"", ""Kalvin Phillips"", ""Lucas Paquetá"", ""Mateus Fernandes"", ""Mohammed Kudus""]",7
+104,Thorgan Hazard,102226,1,3,Belgian who played for Borussia Dortmund,"[""Adnan Januzaj"", ""Axel Witsel"", ""Julien Duranville"", ""Michy Batshuayi"", ""Thomas Meunier""]",5
+104,Thorgan Hazard,102226,2,3,Belgian who played for Chelsea,"[""Charly Musonda Jr."", ""Diego Moreira"", ""Eden Hazard"", ""Kevin De Bruyne"", ""Michy Batshuayi"", ""Mike Penders"", ""Romelu Lukaku"", ""Roméo Lavia"", ""Thibaut Courtois""]",9
+104,Thorgan Hazard,102226,3,3,Played for BOTH Chelsea & PSV Eindhoven,"[""Alex"", ""Arjen Robben"", ""Eidur Gudjohnsen"", ""Jeffrey Bruma"", ""Marco van Ginkel"", ""Noni Madueke"", ""Patrick van Aanholt""]",7
+105,Luis Alberto,128220,1,3,Spanish who played for Lazio,"[""Alfonso Pedraza"", ""Jony"", ""Mario Gila"", ""Patric"", ""Pedro"", ""Pepe Reina"", ""Raúl Moro""]",7
+105,Luis Alberto,128220,2,3,Played for BOTH Lazio & Liverpool,"[""Djibril Cissé"", ""Lucas Leiva"", ""Pepe Reina""]",3
+105,Luis Alberto,128220,3,3,Played for Lazio (peak market value ≥ €50M),"[""Alessio Romagnoli"", ""Ciro Immobile"", ""Mattéo Guendouzi"", ""Pedro Neto"", ""Sergej Milinković-Savić"", ""Stefan de Vrij""]",6
+106,Jadon Sancho,401173,1,3,English who played for Borussia Dortmund,"[""Jamie Gittens"", ""Jobe Bellingham"", ""Jude Bellingham""]",3
+106,Jadon Sancho,401173,2,3,Played for BOTH Borussia Dortmund & Chelsea,"[""Aarón Anselmino"", ""André Schürrle"", ""Carney Chukwuemeka"", ""Christian Pulisic"", ""Ian Maatsen"", ""Jamie Gittens"", ""Michy Batshuayi"", ""Pierre-Emerick Aubameyang"", ""Thorgan Hazard""]",9
+106,Jadon Sancho,401173,3,3,Played for Chelsea (peak market value ≥ €100M),"[""Cole Palmer"", ""Eden Hazard"", ""João Félix"", ""Kevin De Bruyne"", ""Mohamed Salah"", ""Moisés Caicedo"", ""N'Golo Kanté"", ""Raheem Sterling"", ""Romelu Lukaku""]",9
+107,Karim Adeyemi,496094,1,3,German who played for Red Bull Salzburg,"[""Hany Mukhtar"", ""Mergim Berisha"", ""Timo Horn""]",3
+107,Karim Adeyemi,496094,2,3,Played for BOTH Borussia Dortmund & Red Bull Salzburg,"[""Erling Haaland"", ""Joane Gadou"", ""Marcel Sabitzer"", ""Marin Pongracic""]",4
+107,Karim Adeyemi,496094,3,3,Played for Red Bull Salzburg (peak market value ≥ €30M),"[""Benjamin Sesko"", ""Brenden Aaronson"", ""Dayot Upamecano"", ""Dominik Szoboszlai"", ""Erling Haaland"", ""Konrad Laimer"", ""Mamadou Sangaré"", ""Marcel Sabitzer"", ""Sadio Mané"", ""Strahinja Pavlović""]",10
+108,Johan Bakayoko,565424,1,3,Belgian who played for PSV Eindhoven,"[""Dries Mertens"", ""Matteo Dams"", ""Maxime Lestienne"", ""Thorgan Hazard"", ""Yorbe Vertessen""]",5
+108,Johan Bakayoko,565424,2,3,Belgian who played for RB Leipzig,"[""Arthur Vermeeren"", ""Loïs Openda"", ""Maarten Vandevoordt"", ""Massimo Bruno""]",4
+108,Johan Bakayoko,565424,3,3,Played for BOTH PSV Eindhoven & RB Leipzig,"[""Angeliño"", ""Bruma"", ""Xavi Simons""]",3
+109,Wilfried Zaha,145988,1,3,Ivorian who played for Galatasaray,"[""Didier Drogba"", ""Emmanuel Eboué"", ""Jean Michaël Seri"", ""Serge Aurier"", ""Wilfried Singo""]",5
+109,Wilfried Zaha,145988,2,3,Played for BOTH Galatasaray & Manchester United,"[""Alex Telles"", ""Juan Mata"", ""Radamel Falcao""]",3
+109,Wilfried Zaha,145988,3,3,Ivorian with 75+ career goals,"[""Nicolas Pépé"", ""Salomon Kalou"", ""Sébastien Haller"", ""Wilfried Bony""]",4
+110,Kai Havertz,309400,1,3,German who played for Chelsea,"[""André Schürrle"", ""Antonio Rüdiger"", ""Robert Huth"", ""Timo Werner""]",4
+110,Kai Havertz,309400,2,3,Played for Arsenal (peak market value ≥ €80M),"[""Bukayo Saka"", ""Declan Rice"", ""Gabriel Jesus"", ""Gabriel Martinelli"", ""Martin Ødegaard"", ""Martín Zubimendi"", ""Raheem Sterling"", ""Serge Gnabry"", ""William Saliba""]",9
+110,Kai Havertz,309400,3,3,German with 100+ career goals,"[""Kevin Volland"", ""Lars Stindl"", ""Leroy Sané"", ""Marco Reus"", ""Max Kruse"", ""Serge Gnabry"", ""Thomas Müller"", ""Timo Werner""]",8
+111,Toby Alderweireld,42710,1,3,Belgian who played for Ajax,"[""Jan Vertonghen"", ""Mats Rits"", ""Mika Godts"", ""Thomas Vermaelen""]",4
+111,Toby Alderweireld,42710,2,3,Played for BOTH Ajax & Tottenham Hotspur,"[""Christian Eriksen"", ""Davinson Sánchez"", ""Jan Vertonghen"", ""Mohammed Kudus"", ""Mounir El Hamdaoui"", ""Rafael van der Vaart"", ""Steven Bergwijn"", ""Steven Pienaar""]",8
+111,Toby Alderweireld,42710,3,3,Played for BOTH Atletico Madrid & Tottenham Hotspur,"[""Clément Lenglet"", ""Conor Gallagher"", ""Kieran Trippier"", ""Matt Doherty"", ""Sergio Reguilón""]",5
+112,Hakim Ziyech,217111,1,3,Moroccan who played for Ajax,"[""Anass Salah-Eddine"", ""Mohamed Ihattaren"", ""Mounir El Hamdaoui"", ""Noussair Mazraoui"", ""Oussama Idrissi"", ""Rayane Bounida"", ""Zakaria Labyad""]",7
+112,Hakim Ziyech,217111,2,3,Played for BOTH Chelsea & Galatasaray,"[""Didier Drogba"", ""Juan Mata"", ""Michy Batshuayi"", ""Patrick van Aanholt"", ""Radamel Falcao"", ""Álvaro Morata""]",6
+112,Hakim Ziyech,217111,3,3,Moroccan with 50+ career goals,"[""Aatif Chahechouhe"", ""Ayoub El Kaabi"", ""Munir El Haddadi"", ""Oussama Idrissi"", ""Tarik Tissoudali"", ""Younès Belhanda"", ""Youssef El Arabi"", ""Youssef En-Nesyri""]",8
+113,Alexander Isak,349066,1,3,Played for BOTH Borussia Dortmund & Real Sociedad,"[""Adnan Januzaj"", ""Mikel Merino"", ""Sergio Gómez""]",3
+113,Alexander Isak,349066,2,3,Played for Newcastle United (peak market value ≥ €50M),"[""Anthony Elanga"", ""Anthony Gordon"", ""Bruno Guimarães"", ""Elliot Anderson"", ""Florian Thauvin"", ""Georginio Wijnaldum"", ""Ivan Toney"", ""Mikel Merino"", ""Nick Woltemade"", ""Sandro Tonali""]",10
+113,Alexander Isak,349066,3,3,Swedish with 50+ career goals,"[""Emil Forsberg"", ""Jesper Karlsson"", ""Marcus Berg"", ""Sam Larsson"", ""Viktor Claesson"", ""Viktor Gyökeres"", ""Zlatan Ibrahimović""]",7
+114,İlkay Gündoğan,53622,1,3,German who played for Galatasaray,"[""Kerem Demirbay"", ""Kevin Großkreutz"", ""Koray Günter"", ""Leroy Sané"", ""Lukas Podolski""]",5
+114,İlkay Gündoğan,53622,2,3,German who played for Manchester City,"[""Jérôme Boateng"", ""Leroy Sané"", ""Loris Karius"", ""Lukas Nmecha"", ""Stefan Ortega""]",5
+114,İlkay Gündoğan,53622,3,3,Played for BOTH Borussia Dortmund & Galatasaray,"[""Emre Mor"", ""Kevin Großkreutz"", ""Koray Günter"", ""Michy Batshuayi"", ""Yasin Öztekin""]",5
+115,Nani,33706,1,3,Portuguese who played for Fenerbahce,"[""Bruma"", ""Bruno Alves"", ""Luís Neto"", ""Miguel Crespo"", ""Nélson Semedo"", ""Raúl Meireles""]",6
+115,Nani,33706,2,3,Portuguese who played for Lazio,"[""Eliseu"", ""Hélder Postiga"", ""Luís Maximiano"", ""Nuno Tavares"", ""Pedro Neto""]",5
+115,Nani,33706,3,3,Played for BOTH Lazio & Sporting CP,"[""Felipe Caicedo"", ""Hélder Postiga"", ""Jovane Cabral"", ""Luís Maximiano"", ""Maurício"", ""Michaël Ciani""]",6
+116,Manuel Ugarte,476701,1,3,Uruguayan who played for Sporting CP,"[""Franco Israel"", ""Maxi Araújo"", ""Rodrigo Zalazar"", ""Sebastián Coates""]",4
+116,Manuel Ugarte,476701,2,3,Played for BOTH Manchester United & Sporting CP,"[""Bruno Fernandes"", ""Cristiano Ronaldo"", ""Marcos Rojo"", ""Nani""]",4
+116,Manuel Ugarte,476701,3,3,Played for Sporting CP (peak market value ≥ €50M),"[""Bruno Fernandes"", ""Cristiano Ronaldo"", ""João Palhinha"", ""Mateus Fernandes"", ""Matheus Nunes"", ""Morten Hjulmand"", ""Nuno Mendes"", ""Rafael Leão"", ""Raphinha"", ""Viktor Gyökeres""]",10
+117,Saúl Ñíguez,148928,1,3,Played for BOTH Atletico Madrid & Chelsea,"[""Conor Gallagher"", ""César Azpilicueta"", ""Diego Costa"", ""Fernando Torres"", ""Filipe Luís"", ""João Félix"", ""Radamel Falcao"", ""Thibaut Courtois"", ""Tiago Mendes"", ""Álvaro Morata""]",10
+117,Saúl Ñíguez,148928,2,3,Played for BOTH Atletico Madrid & Flamengo,"[""Diego"", ""Elias"", ""Filipe Luís"", ""Samuel Lino""]",4
+117,Saúl Ñíguez,148928,3,3,Played for Atletico Madrid (peak market value ≥ €80M),"[""Antoine Griezmann"", ""Jan Oblak"", ""João Félix"", ""Julián Alvarez"", ""Luis Suárez"", ""Marcos Llorente"", ""Rodri"", ""Sergio Agüero""]",8
+118,Nemanja Matić,74683,1,3,Serbian who played for Benfica,"[""Andrija Zivkovic"", ""Filip Djuricic"", ""Lazar Markovic"", ""Ljubomir Fejsa"", ""Luka Jović"", ""Mile Svilar"", ""Miralem Sulejmani"", ""Nemanja Radonjic""]",8
+118,Nemanja Matić,74683,2,3,Serbian who played for Manchester United,"[""Nemanja Vidic‎"", ""Vanja Milinković-Savić"", ""Zoran Tosic""]",3
+118,Nemanja Matić,74683,3,3,Played for BOTH Chelsea & Manchester United,"[""Alejandro Garnacho"", ""Danny Drinkwater"", ""Jadon Sancho"", ""Juan Mata"", ""Mason Mount"", ""Radamel Falcao"", ""Romelu Lukaku""]",7
+119,Renan Lodi,476352,1,3,Brazilian who played for Al-Hilal,"[""Eduardo"", ""Kaio César"", ""Léo Bonatini"", ""Malcom"", ""Marcos Leonardo"", ""Matheus Pereira"", ""Neymar""]",7
+119,Renan Lodi,476352,2,3,Played for BOTH Al-Hilal & Atletico Madrid,"[""Luciano Vietto"", ""Theo Hernández"", ""Yassine Bounou""]",3
+119,Renan Lodi,476352,3,3,Played for Al-Hilal (peak market value ≥ €30M),"[""Darwin Núñez"", ""João Cancelo"", ""Kalidou Koulibaly"", ""Karim Benzema"", ""Malcom"", ""Neymar"", ""Rúben Neves"", ""Sergej Milinković-Savić"", ""Theo Hernández""]",9
+120,Raphinha,411295,1,3,Played for BOTH Barcelona & Sporting CP,"[""Francisco Trincão"", ""Héctor Bellerín"", ""Jeffrén"", ""Jérémy Mathieu"", ""Ricardo Quaresma"", ""Simão""]",6
+120,Raphinha,411295,2,3,Played for Sporting CP (peak market value ≥ €80M),"[""Bruno Fernandes"", ""Cristiano Ronaldo"", ""Nuno Mendes"", ""Rafael Leão""]",4
+120,Raphinha,411295,3,3,Brazilian with 100+ career goals,"[""Gabriel Jesus"", ""Jonas"", ""Neymar"", ""Roberto Firmino"", ""Vinicius Junior"", ""Willian José""]",6
+121,Savinho,743591,1,3,Brazilian who played for PSV Eindhoven,"[""Alex"", ""Carlos Vinícius"", ""Cássio"", ""Fagner"", ""Heurelho Gomes"", ""Marcelo"", ""Mauro Júnior""]",7
+121,Savinho,743591,2,3,Played for BOTH Manchester City & PSV Eindhoven,"[""Andreas Isaksson"", ""Angeliño"", ""Karim Rekik"", ""Oleksandr Zinchenko""]",4
+121,Savinho,743591,3,3,Played for PSV Eindhoven (peak market value ≥ €50M),"[""Cody Gakpo"", ""Georginio Wijnaldum"", ""Jarrad Branthwaite"", ""Mario Götze"", ""Memphis Depay"", ""Noni Madueke"", ""Xavi Simons""]",7
+122,Arjen Robben,4360,1,3,Dutch who played for Chelsea,"[""Emmanuel Emegha"", ""Ian Maatsen"", ""Jeffrey Bruma"", ""Jorrel Hato"", ""Khalid Boulahrouz"", ""Marco van Ginkel"", ""Nathan Aké"", ""Patrick van Aanholt""]",8
+122,Arjen Robben,4360,2,3,Played for BOTH Bayern Munich & PSV Eindhoven,"[""Adrian Fein"", ""Ivan Perišić"", ""Malik Tillman"", ""Mario Götze"", ""Mark van Bommel"", ""Paul Wanner""]",6
+122,Arjen Robben,4360,3,3,Played for BOTH Chelsea & PSV Eindhoven,"[""Alex"", ""Eidur Gudjohnsen"", ""Jeffrey Bruma"", ""Marco van Ginkel"", ""Noni Madueke"", ""Patrick van Aanholt"", ""Thorgan Hazard""]",7
+123,Jorginho,102017,1,3,Italian who played for Chelsea,"[""Cesare Casadei"", ""Davide Zappacosta"", ""Emerson"", ""Fabio Borini"", ""Marco Amelia""]",5
+123,Jorginho,102017,2,3,Played for BOTH Chelsea & Flamengo,"[""David Luiz"", ""Filipe Luís"", ""Kenedy"", ""Saúl Ñíguez""]",4
+123,Jorginho,102017,3,3,Played for Flamengo (peak market value ≥ €50M),"[""Alex Sandro"", ""Lucas Paquetá"", ""Saúl Ñíguez"", ""Vinicius Junior""]",4
+124,Lionel Messi,28003,1,3,Argentinian who played for Paris Saint-Germain,"[""Ezequiel Lavezzi"", ""Giovani Lo Celso"", ""Javier Pastore"", ""Leandro Paredes"", ""Mauro Icardi"", ""Ángel Di María""]",6
+124,Lionel Messi,28003,2,3,Played for Barcelona (peak market value ≥ €100M),"[""Antoine Griezmann"", ""Fermín López"", ""João Félix"", ""Lamine Yamal"", ""Neymar"", ""Ousmane Dembélé"", ""Pedri"", ""Philippe Coutinho""]",8
+124,Lionel Messi,28003,3,3,Argentinian with 100+ career goals,"[""Gonzalo Higuaín"", ""Lautaro Martínez"", ""Mauro Icardi"", ""Paulo Dybala"", ""Sergio Agüero"", ""Ángel Di María""]",6
+125,Diogo Dalot,357147,1,3,Portuguese who played for AC Milan,"[""André Silva"", ""João Félix"", ""Rafael Leão""]",3
+125,Diogo Dalot,357147,2,3,Portuguese who played for Manchester United,"[""Bruno Fernandes"", ""Cristiano Ronaldo"", ""Nani""]",3
+125,Diogo Dalot,357147,3,3,Played for BOTH AC Milan & Manchester United,"[""David Beckham"", ""Matteo Darmian"", ""Zlatan Ibrahimović""]",3
+126,Kyle Walker,95424,1,3,English who played for AC Milan,"[""David Beckham"", ""Fikayo Tomori"", ""Ruben Loftus-Cheek"", ""Tammy Abraham""]",4
+126,Kyle Walker,95424,2,3,Played for BOTH AC Milan & Manchester City,"[""Brahim Díaz"", ""Gianluigi Donnarumma"", ""Mario Balotelli"", ""Nigel de Jong"", ""Robinho"", ""Tijjani Reijnders""]",6
+126,Kyle Walker,95424,3,3,Played for BOTH Aston Villa & Tottenham Hotspur,"[""Alan Hutton"", ""Clément Lenglet"", ""Darren Bent"", ""Jermaine Jenas"", ""Josh Onomah"", ""Peter Crouch"", ""Pierluigi Gollini"", ""Tom Carroll"", ""Wayne Routledge""]",9
+127,Leroy Sané,192565,1,3,German who played for Galatasaray,"[""Kerem Demirbay"", ""Kevin Großkreutz"", ""Koray Günter"", ""Lukas Podolski"", ""İlkay Gündoğan""]",5
+127,Leroy Sané,192565,2,3,Played for BOTH Galatasaray & Manchester City,"[""Albert Riera"", ""Angeliño"", ""Fernando"", ""Jason Denayer"", ""Nigel de Jong"", ""Omar Elabdellaoui"", ""İlkay Gündoğan""]",7
+127,Leroy Sané,192565,3,3,Played for Manchester City (peak market value ≥ €100M),"[""Bernardo Silva"", ""Cole Palmer"", ""Erling Haaland"", ""Jack Grealish"", ""Julián Alvarez"", ""Kevin De Bruyne"", ""Phil Foden"", ""Raheem Sterling"", ""Rodri""]",9
+128,Edinson Cavani,48280,1,3,Uruguayan who played for Boca Juniors,"[""Lucas Olaza"", ""Marcelo Saracchi"", ""Miguel Merentiel"", ""Nahitan Nández"", ""Rodrigo Bentancur"", ""Álvaro González""]",6
+128,Edinson Cavani,48280,2,3,Played for BOTH Manchester United & Paris Saint-Germain,"[""Ander Herrera"", ""David Beckham"", ""Manuel Ugarte"", ""Zlatan Ibrahimović"", ""Ángel Di María""]",5
+128,Edinson Cavani,48280,3,3,Played for Boca Juniors (peak market value ≥ €30M),"[""Alan Varela"", ""Alexis Mac Allister"", ""Ander Herrera"", ""Carlos Tevez"", ""Daniele De Rossi"", ""Leandro Paredes"", ""Mateo Retegui"", ""Nico Gaitán"", ""Rodrigo Bentancur"", ""Valentín Barco""]",10
+129,André Silva,198008,1,3,Portuguese who played for AC Milan,"[""Diogo Dalot"", ""João Félix"", ""Rafael Leão""]",3
+129,André Silva,198008,2,3,Portuguese who played for Real Sociedad,"[""Bruma"", ""Gonçalo Guedes"", ""Kévin Rodrigues""]",3
+129,André Silva,198008,3,3,Portuguese with 75+ career goals,"[""Bernardo Silva"", ""Bruno Fernandes"", ""Cristiano Ronaldo"", ""Diogo Jota"", ""Paulinho"", ""Pedro Gonçalves"", ""Pizzi"", ""Rafa Silva"", ""Rafael Leão"", ""Ricardo Horta""]",10
+130,Karim Benzema,18922,1,3,French who played for Al-Hilal,"[""Bafétimbi Gomis"", ""Saïmon Bouabré"", ""Theo Hernández""]",3
+130,Karim Benzema,18922,2,3,Played for Al-Hilal (peak market value ≥ €30M),"[""Darwin Núñez"", ""João Cancelo"", ""Kalidou Koulibaly"", ""Malcom"", ""Neymar"", ""Renan Lodi"", ""Rúben Neves"", ""Sergej Milinković-Savić"", ""Theo Hernández""]",9
+130,Karim Benzema,18922,3,3,French with 150+ career goals,"[""Alexandre Lacazette"", ""Antoine Griezmann"", ""Kylian Mbappé"", ""Kévin Gameiro"", ""Olivier Giroud"", ""Wissam Ben Yedder""]",6
+131,Raheem Sterling,134425,1,3,Played for BOTH Arsenal & Liverpool,"[""Alex Oxlade-Chamberlain"", ""Jermaine Pennant"", ""Kolo Touré"", ""Nicolas Anelka"", ""Yossi Benayoun""]",5
+131,Raheem Sterling,134425,2,3,Played for BOTH Arsenal & Manchester City,"[""Bacary Sagna"", ""Emmanuel Adebayor"", ""Gabriel Jesus"", ""Gaël Clichy"", ""Kolo Touré"", ""Nicolas Anelka"", ""Oleksandr Zinchenko"", ""Pablo Marí"", ""Samir Nasri""]",9
+131,Raheem Sterling,134425,3,3,Played for Arsenal (peak market value ≥ €80M),"[""Bukayo Saka"", ""Declan Rice"", ""Gabriel Jesus"", ""Gabriel Martinelli"", ""Kai Havertz"", ""Martin Ødegaard"", ""Martín Zubimendi"", ""Serge Gnabry"", ""William Saliba""]",9
+132,Robin van Persie,4380,1,3,Dutch who played for Fenerbahce,"[""Dirk Kuyt"", ""Gregory van der Wiel"", ""Jeremain Lens"", ""Vincent Janssen""]",4
+132,Robin van Persie,4380,2,3,Played for BOTH Fenerbahce & Feyenoord,"[""Colin Kazim-Richards"", ""Dirk Kuyt"", ""Sebastian Szymanski"", ""Sofyan Amrabat""]",4
+132,Robin van Persie,4380,3,3,Played for BOTH Fenerbahce & Manchester United,"[""Altay Bayındır"", ""Fred"", ""Joshua King"", ""Nani"", ""Sofyan Amrabat""]",5
+133,Andrew Robertson,234803,1,3,Scottish who played for Liverpool,"[""Ben Gannon-Doak"", ""Calvin Ramsay"", ""Charlie Adam""]",3
+133,Andrew Robertson,234803,2,3,Played for BOTH Liverpool & Tottenham Hotspur,"[""Dominic Solanke"", ""Paul Konchesky"", ""Peter Crouch"", ""Steven Caulker""]",4
+133,Andrew Robertson,234803,3,3,Played for Tottenham Hotspur (peak market value ≥ €80M),"[""Christian Eriksen"", ""Dele Alli"", ""Gareth Bale"", ""Harry Kane"", ""Heung-min Son"", ""Randal Kolo Muani"", ""Timo Werner"", ""Xavi Simons""]",8
+134,Robert Lewandowski,38253,1,3,Played for BOTH Barcelona & Borussia Dortmund,"[""Kevin-Prince Boateng"", ""Marc Bartra"", ""Ousmane Dembélé"", ""Paco Alcácer"", ""Pierre-Emerick Aubameyang"", ""İlkay Gündoğan""]",6
+134,Robert Lewandowski,38253,2,3,Played for Borussia Dortmund (peak market value ≥ €80M),"[""Achraf Hakimi"", ""Alexander Isak"", ""Erling Haaland"", ""Jadon Sancho"", ""Jude Bellingham"", ""Ousmane Dembélé""]",6
+134,Robert Lewandowski,38253,3,3,Polish with 30+ career goals,"[""Adam Buksa"", ""Arkadiusz Milik"", ""Grzegorz Krychowiak"", ""Karol Świderski"", ""Krzysztof Piatek"", ""Lukasz Teodorczyk"", ""Piotr Zielinski"", ""Sebastian Szymanski""]",8
+135,Stefan de Vrij,111196,1,3,Dutch who played for Lazio,"[""Kenneth Taylor"", ""Tijjani Noslin"", ""Wesley Hoedt""]",3
+135,Stefan de Vrij,111196,2,3,Played for Feyenoord (peak market value ≥ €50M),"[""Georginio Wijnaldum"", ""Raheem Sterling"", ""Santiago Gimenez""]",3
+135,Stefan de Vrij,111196,3,3,Played for Lazio (peak market value ≥ €50M),"[""Alessio Romagnoli"", ""Ciro Immobile"", ""Luis Alberto"", ""Mattéo Guendouzi"", ""Pedro Neto"", ""Sergej Milinković-Savić""]",6
+136,Ian Maatsen,485585,1,3,Dutch who played for Chelsea,"[""Arjen Robben"", ""Emmanuel Emegha"", ""Jeffrey Bruma"", ""Jorrel Hato"", ""Khalid Boulahrouz"", ""Marco van Ginkel"", ""Nathan Aké"", ""Patrick van Aanholt""]",8
+136,Ian Maatsen,485585,2,3,Played for BOTH Aston Villa & Borussia Dortmund,"[""Carney Chukwuemeka"", ""Donyell Malen"", ""Jadon Sancho""]",3
+136,Ian Maatsen,485585,3,3,Played for BOTH Borussia Dortmund & Chelsea,"[""Aarón Anselmino"", ""André Schürrle"", ""Carney Chukwuemeka"", ""Christian Pulisic"", ""Jadon Sancho"", ""Jamie Gittens"", ""Michy Batshuayi"", ""Pierre-Emerick Aubameyang"", ""Thorgan Hazard""]",9
+137,Clément Lenglet,182904,1,3,French who played for Aston Villa,"[""Aly Cissokho"", ""Axel Disasi"", ""Boubacar Kamara"", ""Charles N'Zogbia"", ""Frédéric Guilbert"", ""Jordan Amavi"", ""Jordan Veretout"", ""Lucas Digne"", ""Morgan Sanson"", ""Moussa Diaby""]",10
+137,Clément Lenglet,182904,2,3,Played for BOTH Aston Villa & Barcelona,"[""Adama Traoré"", ""Lucas Digne"", ""Marcus Rashford"", ""Pepe Reina"", ""Philippe Coutinho""]",5
+137,Clément Lenglet,182904,3,3,Played for BOTH Atletico Madrid & Tottenham Hotspur,"[""Conor Gallagher"", ""Kieran Trippier"", ""Matt Doherty"", ""Sergio Reguilón"", ""Toby Alderweireld""]",5
+138,Eden Hazard,50202,1,3,Belgian who played for Chelsea,"[""Charly Musonda Jr."", ""Diego Moreira"", ""Kevin De Bruyne"", ""Michy Batshuayi"", ""Mike Penders"", ""Romelu Lukaku"", ""Roméo Lavia"", ""Thibaut Courtois"", ""Thorgan Hazard""]",9
+138,Eden Hazard,50202,2,3,Played for Chelsea (peak market value ≥ €100M),"[""Cole Palmer"", ""Jadon Sancho"", ""João Félix"", ""Kevin De Bruyne"", ""Mohamed Salah"", ""Moisés Caicedo"", ""N'Golo Kanté"", ""Raheem Sterling"", ""Romelu Lukaku""]",9
+138,Eden Hazard,50202,3,3,Belgian with 100+ career goals,"[""Dries Mertens"", ""Hans Vanaken"", ""Jelle Vossen"", ""Kevin De Bruyne"", ""Michy Batshuayi"", ""Romelu Lukaku""]",6
+139,Carlos Tevez,4276,1,3,Argentinian who played for West Ham United,"[""Guido Rodríguez"", ""Javier Mascherano"", ""Jonathan Calleri"", ""Lionel Scaloni"", ""Manuel Lanzini"", ""Mauro Zárate"", ""Pablo Zabaleta"", ""Taty Castellanos""]",8
+139,Carlos Tevez,4276,2,3,Played for BOTH Boca Juniors & Manchester United,"[""Ander Herrera"", ""Edinson Cavani"", ""Marcos Rojo"", ""Sergio Romero""]",4
+139,Carlos Tevez,4276,3,3,Played for Boca Juniors (peak market value ≥ €30M),"[""Alan Varela"", ""Alexis Mac Allister"", ""Ander Herrera"", ""Daniele De Rossi"", ""Edinson Cavani"", ""Leandro Paredes"", ""Mateo Retegui"", ""Nico Gaitán"", ""Rodrigo Bentancur"", ""Valentín Barco""]",10
+140,João Palhinha,257455,1,3,Portuguese who played for Bayern Munich,"[""João Cancelo"", ""Raphaël Guerreiro"", ""Renato Sanches""]",3
+140,João Palhinha,257455,2,3,Played for BOTH Bayern Munich & Tottenham Hotspur,"[""Eric Dier"", ""Harry Kane"", ""Ivan Perišić"", ""Mathys Tel"", ""Pierre-Emile Højbjerg""]",5
+140,João Palhinha,257455,3,3,Played for Sporting CP (peak market value ≥ €50M),"[""Bruno Fernandes"", ""Cristiano Ronaldo"", ""Manuel Ugarte"", ""Mateus Fernandes"", ""Matheus Nunes"", ""Morten Hjulmand"", ""Nuno Mendes"", ""Rafael Leão"", ""Raphinha"", ""Viktor Gyökeres""]",10
+141,Kevin De Bruyne,88755,1,3,Belgian who played for Chelsea,"[""Charly Musonda Jr."", ""Diego Moreira"", ""Eden Hazard"", ""Michy Batshuayi"", ""Mike Penders"", ""Romelu Lukaku"", ""Roméo Lavia"", ""Thibaut Courtois"", ""Thorgan Hazard""]",9
+141,Kevin De Bruyne,88755,2,3,Played for Chelsea (peak market value ≥ €100M),"[""Cole Palmer"", ""Eden Hazard"", ""Jadon Sancho"", ""João Félix"", ""Mohamed Salah"", ""Moisés Caicedo"", ""N'Golo Kanté"", ""Raheem Sterling"", ""Romelu Lukaku""]",9
+141,Kevin De Bruyne,88755,3,3,Belgian with 100+ career goals,"[""Dries Mertens"", ""Eden Hazard"", ""Hans Vanaken"", ""Jelle Vossen"", ""Michy Batshuayi"", ""Romelu Lukaku""]",6
+142,Jérémy Doku,486049,1,3,Belgian who played for Manchester City,"[""Dedryck Boyata"", ""Jason Denayer"", ""Kevin De Bruyne"", ""Vincent Kompany""]",4
+142,Jérémy Doku,486049,2,3,Played for BOTH Anderlecht & Manchester City,"[""Kasper Schmeichel"", ""Lukas Nmecha"", ""Samir Nasri"", ""Sergio Gómez"", ""Taylor Harwood-Bellis"", ""Vincent Kompany""]",6
+142,Jérémy Doku,486049,3,3,Played for Anderlecht (peak market value ≥ €50M),"[""Joshua Zirkzee"", ""Romelu Lukaku"", ""Youri Tielemans""]",3
+143,Alex Telles,255755,1,3,Brazilian who played for Al-Nassr,"[""Bento"", ""Giuliano"", ""Luiz Gustavo"", ""Maicon"", ""Petros"", ""Talisca"", ""Wesley"", ""Ângelo""]",8
+143,Alex Telles,255755,2,3,Brazilian who played for Galatasaray,"[""Carlos Vinícius"", ""Cris"", ""Felipe Melo"", ""Fernando"", ""Gabriel Sara"", ""Gustavo Assunção"", ""Maicon"", ""Marcão"", ""Mariano"", ""Tetê""]",10
+143,Alex Telles,255755,3,3,Played for BOTH Galatasaray & Manchester United,"[""Juan Mata"", ""Radamel Falcao"", ""Wilfried Zaha""]",3
+144,Riyad Mahrez,171424,1,3,Played for BOTH Leicester City & Manchester City,"[""Ben Mee"", ""Gelson Fernandes"", ""Kasper Schmeichel"", ""Kelechi Iheanacho""]",4
+144,Riyad Mahrez,171424,2,3,Played for Leicester City (peak market value ≥ €50M),"[""Ademola Lookman"", ""Ben Chilwell"", ""Harry Kane"", ""Harry Maguire"", ""James Maddison"", ""N'Golo Kanté"", ""Wesley Fofana"", ""Wilfred Ndidi"", ""Youri Tielemans""]",9
+144,Riyad Mahrez,171424,3,3,Algerian with 50+ career goals,"[""Amine Gouiri"", ""Andy Delort"", ""Ishak Belfodil"", ""Islam Slimani"", ""Sofiane Feghouli""]",5
+145,João Neves,670681,1,3,Portuguese who played for Paris Saint-Germain,"[""Danilo Pereira"", ""Gonçalo Guedes"", ""Gonçalo Ramos"", ""Nuno Mendes"", ""Renato Sanches"", ""Vitinha""]",6
+145,João Neves,670681,2,3,Played for BOTH Benfica & Paris Saint-Germain,"[""Cristian Rodríguez"", ""David Luiz"", ""Gonçalo Guedes"", ""Gonçalo Ramos"", ""Juan Bernat"", ""Julian Draxler"", ""Renato Sanches"", ""Ángel Di María""]",8
+145,João Neves,670681,3,3,Played for Paris Saint-Germain (peak market value ≥ €100M),"[""Désiré Doué"", ""Khvicha Kvaratskhelia"", ""Kylian Mbappé"", ""Lionel Messi"", ""Mauro Icardi"", ""Neymar"", ""Ousmane Dembélé"", ""Vitinha""]",8
+146,Arkadiusz Milik,191891,1,3,Played for BOTH Ajax & Juventus,"[""Christian Poulsen"", ""Daniele Rugani"", ""Francisco Conceição"", ""Matthijs de Ligt"", ""Mohamed Ihattaren"", ""Zlatan Ibrahimović""]",6
+146,Arkadiusz Milik,191891,2,3,Polish with 30+ career goals,"[""Adam Buksa"", ""Grzegorz Krychowiak"", ""Karol Świderski"", ""Krzysztof Piatek"", ""Lukasz Teodorczyk"", ""Piotr Zielinski"", ""Robert Lewandowski"", ""Sebastian Szymanski""]",8
+146,Arkadiusz Milik,191891,3,3,Polish with 50+ career goals,"[""Krzysztof Piatek"", ""Lukasz Teodorczyk"", ""Piotr Zielinski"", ""Robert Lewandowski""]",4
+147,Gonzalo Higuaín,39153,1,3,Argentinian who played for Real Madrid,"[""Esteban Cambiasso"", ""Ezequiel Garay"", ""Fernando Gago"", ""Franco Mastantuono"", ""Javier Saviola"", ""Walter Samuel"", ""Ángel Di María""]",7
+147,Gonzalo Higuaín,39153,2,3,Played for BOTH Juventus & Real Madrid,"[""Cristiano Ronaldo"", ""Danilo"", ""Dean Huijsen"", ""Nicolas Anelka"", ""Sami Khedira"", ""Álvaro Morata"", ""Ángel Di María""]",7
+147,Gonzalo Higuaín,39153,3,3,Played for River Plate (peak market value ≥ €50M),"[""Alexis Sánchez"", ""Enzo Fernández"", ""Franco Mastantuono"", ""Julián Alvarez"", ""Lucas Ocampos"", ""Radamel Falcao""]",6
+148,Rodri,357565,1,3,Played for BOTH Atletico Madrid & Manchester City,"[""Julián Alvarez"", ""Kieran Trippier"", ""Martin Petrov"", ""Martín Demichelis"", ""Sergio Agüero"", ""Stefan Savic""]",6
+148,Rodri,357565,2,3,Played for Atletico Madrid (peak market value ≥ €80M),"[""Antoine Griezmann"", ""Jan Oblak"", ""João Félix"", ""Julián Alvarez"", ""Luis Suárez"", ""Marcos Llorente"", ""Saúl Ñíguez"", ""Sergio Agüero""]",8
+148,Rodri,357565,3,3,Played for Manchester City (peak market value ≥ €100M),"[""Bernardo Silva"", ""Cole Palmer"", ""Erling Haaland"", ""Jack Grealish"", ""Julián Alvarez"", ""Kevin De Bruyne"", ""Leroy Sané"", ""Phil Foden"", ""Raheem Sterling""]",9
+149,Luka Jović,257462,1,3,Serbian who played for Benfica,"[""Andrija Zivkovic"", ""Filip Djuricic"", ""Lazar Markovic"", ""Ljubomir Fejsa"", ""Mile Svilar"", ""Miralem Sulejmani"", ""Nemanja Matić"", ""Nemanja Radonjic""]",8
+149,Luka Jović,257462,2,3,Played for BOTH AC Milan & Benfica,"[""Adel Taarabt"", ""Bryan Cristante"", ""João Félix"", ""Pelé"", ""Soualiho Meïté""]",5
+149,Luka Jović,257462,3,3,Serbian with 50+ career goals,"[""Adem Ljajic"", ""Aleksandar Mitrović"", ""Aleksandar Prijovic"", ""Dušan Tadić"", ""Dušan Vlahović"", ""Filip Kostić"", ""Sergej Milinković-Savić""]",7
+150,José Antonio Reyes,7717,1,3,Spanish who played for Benfica,"[""Alejandro Grimaldo"", ""Carlos Marchena"", ""Javi García"", ""Juan Bernat"", ""Nolito"", ""Rafa Obrador"", ""Raúl de Tomás"", ""Roberto"", ""Rodrigo"", ""Álvaro Carreras""]",10
+150,José Antonio Reyes,7717,2,3,Played for BOTH Arsenal & Atletico Madrid,"[""Fran Mérida"", ""Gabriel Paulista"", ""Lucas Torreira"", ""Thomas Partey""]",4
+150,José Antonio Reyes,7717,3,3,Played for BOTH Benfica & Real Madrid,"[""Ezequiel Garay"", ""Fábio Coentrão"", ""Javi García"", ""Javier Saviola"", ""Luka Jović"", ""Raúl de Tomás"", ""Álvaro Carreras"", ""Ángel Di María""]",8
+151,Christian Pulisic,315779,1,3,American who played for AC Milan,"[""Oguchi Onyewu"", ""Sergiño Dest"", ""Yunus Musah""]",3
+151,Christian Pulisic,315779,2,3,Played for BOTH Borussia Dortmund & Chelsea,"[""Aarón Anselmino"", ""André Schürrle"", ""Carney Chukwuemeka"", ""Ian Maatsen"", ""Jadon Sancho"", ""Jamie Gittens"", ""Michy Batshuayi"", ""Pierre-Emerick Aubameyang"", ""Thorgan Hazard""]",9
+151,Christian Pulisic,315779,3,3,American with 30+ career goals,"[""Folarin Balogun"", ""Haji Wright"", ""Jozy Altidore"", ""Malik Tillman"", ""Ricardo Pepi"", ""Weston McKennie""]",6
+152,Cristiano Ronaldo,8198,1,3,Portuguese who played for Juventus,"[""Alberto Costa"", ""Francisco Conceição"", ""João Cancelo"", ""João Mário"", ""Renato Veiga"", ""Tiago Djaló"", ""Tiago Mendes""]",7
+152,Cristiano Ronaldo,8198,2,3,Played for BOTH Juventus & Real Madrid,"[""Danilo"", ""Dean Huijsen"", ""Gonzalo Higuaín"", ""Nicolas Anelka"", ""Sami Khedira"", ""Álvaro Morata"", ""Ángel Di María""]",7
+152,Cristiano Ronaldo,8198,3,3,Played for Al-Nassr (peak market value ≥ €50M),"[""Aymeric Laporte"", ""João Félix"", ""Kingsley Coman"", ""Marcelo Brozović"", ""Sadio Mané""]",5
+153,Benjamin Sesko,627442,1,3,Played for Red Bull Salzburg (peak market value ≥ €30M),"[""Brenden Aaronson"", ""Dayot Upamecano"", ""Dominik Szoboszlai"", ""Erling Haaland"", ""Karim Adeyemi"", ""Konrad Laimer"", ""Mamadou Sangaré"", ""Marcel Sabitzer"", ""Sadio Mané"", ""Strahinja Pavlović""]",10
+153,Benjamin Sesko,627442,2,3,Played for Red Bull Salzburg (peak market value ≥ €50M),"[""Dayot Upamecano"", ""Dominik Szoboszlai"", ""Erling Haaland"", ""Karim Adeyemi"", ""Sadio Mané""]",5
+153,Benjamin Sesko,627442,3,3,Slovenian with 30+ career goals,"[""Andraz Sporar"", ""Benjamin Verbic"", ""Jasmin Kurtic"", ""Josip Ilicic"", ""Robert Beric"", ""Tim Matavz""]",6
+154,Giovani Lo Celso,348795,1,3,Argentinian who played for Paris Saint-Germain,"[""Ezequiel Lavezzi"", ""Javier Pastore"", ""Leandro Paredes"", ""Lionel Messi"", ""Mauro Icardi"", ""Ángel Di María""]",6
+154,Giovani Lo Celso,348795,2,3,Played for BOTH Paris Saint-Germain & Tottenham Hotspur,"[""Benjamin Stambouli"", ""Lucas Moura"", ""Randal Kolo Muani"", ""Serge Aurier"", ""Xavi Simons"", ""Yuri Berchiche""]",6
+154,Giovani Lo Celso,348795,3,3,Played for Real Betis (peak market value ≥ €50M),"[""Antony"", ""Fabián Ruiz"", ""Isco"", ""Nabil Fekir""]",4
+155,Erling Haaland,418560,1,3,Played for Manchester City (peak market value ≥ €100M),"[""Bernardo Silva"", ""Cole Palmer"", ""Jack Grealish"", ""Julián Alvarez"", ""Kevin De Bruyne"", ""Leroy Sané"", ""Phil Foden"", ""Raheem Sterling"", ""Rodri""]",9
+155,Erling Haaland,418560,2,3,Norwegian with 30+ career goals,"[""Alexander Sørloth"", ""Andreas Schjelderup"", ""Joshua King"", ""Jørgen Strand Larsen"", ""Markus Henriksen"", ""Martin Ødegaard"", ""Mohamed Elyounoussi"", ""Oliver Edvardsen"", ""Tobias Lauritsen""]",9
+155,Erling Haaland,418560,3,3,Norwegian with 50+ career goals,"[""Alexander Sørloth"", ""Joshua King"", ""Jørgen Strand Larsen"", ""Martin Ødegaard"", ""Mohamed Elyounoussi"", ""Tobias Lauritsen""]",6
+156,Alejandro Garnacho,811779,1,3,Argentinian who played for Chelsea,"[""Aarón Anselmino"", ""Enzo Fernández"", ""Facundo Buonanotte"", ""Franco Di Santo"", ""Gonzalo Higuaín"", ""Willy Caballero""]",6
+156,Alejandro Garnacho,811779,2,3,Argentinian who played for Manchester United,"[""Carlos Tevez"", ""Lisandro Martínez"", ""Marcos Rojo"", ""Sergio Romero"", ""Ángel Di María""]",5
+156,Alejandro Garnacho,811779,3,3,Played for BOTH Chelsea & Manchester United,"[""Danny Drinkwater"", ""Jadon Sancho"", ""Juan Mata"", ""Mason Mount"", ""Nemanja Matić"", ""Radamel Falcao"", ""Romelu Lukaku""]",7
+157,Álvaro Morata,128223,1,3,Spanish who played for AC Milan,"[""Bojan Krkic"", ""Diego López"", ""Dídac Vilà"", ""Fernando Torres"", ""Gerard Deulofeu"", ""Pepe Reina"", ""Samu Castillejo"", ""Suso"", ""Álex Jiménez""]",9
+157,Álvaro Morata,128223,2,3,Played for BOTH Chelsea & Juventus,"[""Denis Zakaria"", ""Gonzalo Higuaín"", ""Juan Cuadrado"", ""Nicolas Anelka"", ""Renato Veiga"", ""Tiago Mendes""]",6
+157,Álvaro Morata,128223,3,3,Played for BOTH Juventus & Real Madrid,"[""Cristiano Ronaldo"", ""Danilo"", ""Dean Huijsen"", ""Gonzalo Higuaín"", ""Nicolas Anelka"", ""Sami Khedira"", ""Ángel Di María""]",7
+158,Joshua Zirkzee,435648,1,3,Dutch who played for Anderlecht,"[""Alexander Büttner"", ""Bart Verbruggen"", ""Bram Nuytinck"", ""Demy de Zeeuw"", ""Michel Vlap"", ""Wesley Hoedt""]",6
+158,Joshua Zirkzee,435648,2,3,Dutch who played for Manchester United,"[""Alexander Büttner"", ""Daley Blind"", ""Donny van de Beek"", ""Matthijs de Ligt"", ""Memphis Depay"", ""Robin van Persie"", ""Timothy Fosu-Mensah"", ""Tyrell Malacia"", ""Wout Weghorst""]",9
+158,Joshua Zirkzee,435648,3,3,Played for BOTH Bayern Munich & Manchester United,"[""Bastian Schweinsteiger"", ""Daley Blind"", ""Marcel Sabitzer"", ""Matthijs de Ligt"", ""Noussair Mazraoui""]",5
+159,Philippe Coutinho,80444,1,3,Brazilian who played for Liverpool,"[""Alisson"", ""Allan"", ""Arthur Melo"", ""Fabinho"", ""Lucas Leiva"", ""Roberto Firmino""]",6
+159,Philippe Coutinho,80444,2,3,Played for BOTH Barcelona & Bayern Munich,"[""Arturo Vidal"", ""João Cancelo"", ""Mark van Bommel"", ""Pepe Reina"", ""Robert Lewandowski"", ""Thiago Alcántara""]",6
+159,Philippe Coutinho,80444,3,3,Played for Barcelona (peak market value ≥ €100M),"[""Antoine Griezmann"", ""Fermín López"", ""João Félix"", ""Lamine Yamal"", ""Lionel Messi"", ""Neymar"", ""Ousmane Dembélé"", ""Pedri""]",8
+160,Nuno Mendes,616341,1,3,Portuguese who played for Paris Saint-Germain,"[""Danilo Pereira"", ""Gonçalo Guedes"", ""Gonçalo Ramos"", ""João Neves"", ""Renato Sanches"", ""Vitinha""]",6
+160,Nuno Mendes,616341,2,3,Played for BOTH Paris Saint-Germain & Sporting CP,"[""Jesé"", ""Manuel Ugarte"", ""Pablo Sarabia""]",3
+160,Nuno Mendes,616341,3,3,Played for Sporting CP (peak market value ≥ €50M),"[""Bruno Fernandes"", ""Cristiano Ronaldo"", ""João Palhinha"", ""Manuel Ugarte"", ""Mateus Fernandes"", ""Matheus Nunes"", ""Morten Hjulmand"", ""Rafael Leão"", ""Raphinha"", ""Viktor Gyökeres""]",10
+161,Rodrigo,131505,1,3,Spanish who played for Benfica,"[""Alejandro Grimaldo"", ""Carlos Marchena"", ""Javi García"", ""José Antonio Reyes"", ""Juan Bernat"", ""Nolito"", ""Rafa Obrador"", ""Raúl de Tomás"", ""Roberto"", ""Álvaro Carreras""]",10
+161,Rodrigo,131505,2,3,Spanish who played for Leeds United,"[""Alfonso Pedraza"", ""Diego Llorente"", ""Joel Robles"", ""Kiko Casilla"", ""Marc Roca"", ""Pablo Hernández""]",6
+161,Rodrigo,131505,3,3,Played for Leeds United (peak market value ≥ €50M),"[""Ben White"", ""Kalvin Phillips"", ""Raphinha""]",3
+162,Marco Asensio,296622,1,3,Spanish who played for Aston Villa,"[""Adama Traoré"", ""Andrés García"", ""Borja Bastón"", ""Carles Gil"", ""Carlos Cuéllar"", ""Jota Peleteiro"", ""Pau Torres"", ""Pepe Reina"", ""Álex Moreno""]",9
+162,Marco Asensio,296622,2,3,Played for BOTH Fenerbahce & Paris Saint-Germain,"[""Diego Lugano"", ""Gregory van der Wiel"", ""Mevlüt Erdinc"", ""Milan Škriniar"", ""Nicolas Anelka""]",5
+162,Marco Asensio,296622,3,3,Played for Fenerbahce (peak market value ≥ €50M),"[""Arda Güler"", ""Diego Carlos"", ""Ederson"", ""Fred"", ""Mesut Özil"", ""Milan Škriniar"", ""Min-jae Kim""]",7
+163,Carlos Soler,372246,1,3,Spanish who played for West Ham United,"[""Adama Traoré"", ""Adrián San Miguel"", ""Lucas Pérez"", ""Pablo Fornals"", ""Roberto"", ""Álvaro Arbeloa""]",6
+163,Carlos Soler,372246,2,3,Played for BOTH Paris Saint-Germain & Real Sociedad,"[""Gonçalo Guedes"", ""Mikel Arteta"", ""Rafinha"", ""Yuri Berchiche""]",4
+163,Carlos Soler,372246,3,3,Played for Real Sociedad (peak market value ≥ €50M),"[""Alexander Isak"", ""Antoine Griezmann"", ""David Silva"", ""Martin Ødegaard"", ""Martín Zubimendi"", ""Mikel Merino"", ""Mikel Oyarzabal"", ""Takefusa Kubo"", ""Theo Hernández""]",9
+164,Kalvin Phillips,351749,1,3,Played for BOTH Leeds United & Manchester City,"[""Adam Johnson"", ""Fabian Delph"", ""Jack Harrison"", ""James Milner"", ""Kasper Schmeichel"", ""Lukas Nmecha"", ""Scott Carson""]",7
+164,Kalvin Phillips,351749,2,3,Played for BOTH Leeds United & West Ham United,"[""Crysencio Summerville"", ""Rio Ferdinand"", ""Rob Green"", ""Robert Snodgrass""]",4
+164,Kalvin Phillips,351749,3,3,Played for West Ham United (peak market value ≥ €50M),"[""Carlos Soler"", ""Declan Rice"", ""Evan Ferguson"", ""Jarrod Bowen"", ""Lucas Paquetá"", ""Mateus Fernandes"", ""Mohammed Kudus""]",7
+165,Douglas Luiz,447661,1,3,Brazilian who played for Aston Villa,"[""Alysson"", ""Diego Carlos"", ""Philippe Coutinho"", ""Wesley Moraes""]",4
+165,Douglas Luiz,447661,2,3,Brazilian who played for Manchester City,"[""Danilo"", ""Ederson"", ""Fernandinho"", ""Fernando"", ""Gabriel Jesus"", ""Maicon"", ""Robinho"", ""Savinho"", ""Vitor Reis"", ""Yan Couto""]",10
+165,Douglas Luiz,447661,3,3,Played for BOTH Juventus & Manchester City,"[""Andreas Isaksson"", ""Carlos Tevez"", ""Danilo"", ""João Cancelo"", ""Nicolas Anelka""]",5
+166,Franco Mastantuono,1057316,1,3,Argentinian who played for Real Madrid,"[""Esteban Cambiasso"", ""Ezequiel Garay"", ""Fernando Gago"", ""Gonzalo Higuaín"", ""Javier Saviola"", ""Walter Samuel"", ""Ángel Di María""]",7
+166,Franco Mastantuono,1057316,2,3,Played for BOTH Real Madrid & River Plate,"[""Carlos Diogo"", ""Esteban Cambiasso"", ""Gonzalo Higuaín"", ""Javier Saviola""]",4
+166,Franco Mastantuono,1057316,3,3,Played for River Plate (peak market value ≥ €50M),"[""Alexis Sánchez"", ""Enzo Fernández"", ""Gonzalo Higuaín"", ""Julián Alvarez"", ""Lucas Ocampos"", ""Radamel Falcao""]",6
+167,Achraf Hakimi,398073,1,3,Played for BOTH Borussia Dortmund & Paris Saint-Germain,"[""Abdou Diallo"", ""Ousmane Dembélé"", ""Thomas Meunier""]",3
+167,Achraf Hakimi,398073,2,3,Played for BOTH Paris Saint-Germain & Real Madrid,"[""Alphonse Areola"", ""David Beckham"", ""Jesé"", ""Keylor Navas"", ""Kylian Mbappé"", ""Lassana Diarra"", ""Marco Asensio"", ""Nicolas Anelka"", ""Sergio Ramos"", ""Ángel Di María""]",10
+167,Achraf Hakimi,398073,3,3,Played for Borussia Dortmund (peak market value ≥ €80M),"[""Alexander Isak"", ""Erling Haaland"", ""Jadon Sancho"", ""Jude Bellingham"", ""Ousmane Dembélé"", ""Robert Lewandowski""]",6
+168,João Cancelo,182712,1,3,Portuguese who played for Barcelona,"[""André Gomes"", ""Francisco Trincão"", ""João Félix"", ""Nélson Semedo"", ""Ricardo Quaresma"", ""Simão""]",6
+168,João Cancelo,182712,2,3,Played for BOTH Barcelona & Benfica,"[""André Gomes"", ""Javier Saviola"", ""Jean-Clair Todibo"", ""João Félix"", ""Keirrison"", ""Nélson Semedo"", ""Simão""]",7
+168,João Cancelo,182712,3,3,Played for Al-Hilal (peak market value ≥ €50M),"[""Darwin Núñez"", ""Kalidou Koulibaly"", ""Karim Benzema"", ""Neymar"", ""Renan Lodi"", ""Rúben Neves"", ""Sergej Milinković-Savić"", ""Theo Hernández""]",8
+169,Ciro Immobile,105521,1,3,Played for BOTH Besiktas & Borussia Dortmund,"[""Kevin-Prince Boateng"", ""Michy Batshuayi"", ""Shinji Kagawa""]",3
+169,Ciro Immobile,105521,2,3,Played for Besiktas (peak market value ≥ €50M),"[""Dele Alli"", ""Miralem Pjanić"", ""Tammy Abraham"", ""Wilfred Ndidi""]",4
+169,Ciro Immobile,105521,3,3,Italian with 100+ career goals,"[""Andrea Belotti"", ""Domenico Berardi"", ""Lorenzo Insigne"", ""Mario Balotelli""]",4
+170,Wilfred Ndidi,274839,1,3,Nigerian who played for Leicester City,"[""Ademola Lookman"", ""Ahmed Musa"", ""Joe Aribo"", ""Kelechi Iheanacho"", ""Yakubu Aiyegbeni""]",5
+170,Wilfred Ndidi,274839,2,3,Played for BOTH Besiktas & Leicester City,"[""Cengiz Ünder"", ""Daniel Amartey"", ""Gökhan Inler"", ""Rachid Ghezzal""]",4
+170,Wilfred Ndidi,274839,3,3,Played for Leicester City (peak market value ≥ €50M),"[""Ademola Lookman"", ""Ben Chilwell"", ""Harry Kane"", ""Harry Maguire"", ""James Maddison"", ""N'Golo Kanté"", ""Riyad Mahrez"", ""Wesley Fofana"", ""Youri Tielemans""]",9
+171,Tammy Abraham,331726,1,3,English who played for Besiktas,"[""Alex Oxlade-Chamberlain"", ""Dele Alli"", ""Joe Worrall"", ""Nathan Redmond""]",4
+171,Tammy Abraham,331726,2,3,Played for BOTH Besiktas & Chelsea,"[""Demba Ba"", ""Gökhan Töre"", ""Michy Batshuayi"", ""Ricardo Quaresma""]",4
+171,Tammy Abraham,331726,3,3,Played for Besiktas (peak market value ≥ €50M),"[""Ciro Immobile"", ""Dele Alli"", ""Miralem Pjanić"", ""Wilfred Ndidi""]",4
+172,Mikel Merino,338424,1,3,Spanish who played for Borussia Dortmund,"[""Marc Bartra"", ""Mateu Morey"", ""Paco Alcácer"", ""Sergio Gómez""]",4
+172,Mikel Merino,338424,2,3,Played for BOTH Arsenal & Real Sociedad,"[""Carlos Vela"", ""Fran Mérida"", ""Kieran Tierney"", ""Martin Ødegaard"", ""Martín Zubimendi"", ""Mathew Ryan"", ""Mikel Arteta"", ""Nacho Monreal""]",8
+172,Mikel Merino,338424,3,3,Played for Real Sociedad (peak market value ≥ €50M),"[""Alexander Isak"", ""Antoine Griezmann"", ""Carlos Soler"", ""David Silva"", ""Martin Ødegaard"", ""Martín Zubimendi"", ""Mikel Oyarzabal"", ""Takefusa Kubo"", ""Theo Hernández""]",9
+173,Lucas Paquetá,444523,1,3,Brazilian who played for AC Milan,"[""Alex"", ""Alexandre Pato"", ""Emerson Royal"", ""Junior Messias"", ""Kaká"", ""Luiz Adriano"", ""Léo Duarte"", ""Robinho"", ""Rodrigo Ely"", ""Thiago Silva""]",10
+173,Lucas Paquetá,444523,2,3,Played for BOTH AC Milan & Flamengo,"[""Emerson Royal"", ""Léo Duarte"", ""Pablo Armero""]",3
+173,Lucas Paquetá,444523,3,3,Played for West Ham United (peak market value ≥ €50M),"[""Carlos Soler"", ""Declan Rice"", ""Evan Ferguson"", ""Jarrod Bowen"", ""Kalvin Phillips"", ""Mateus Fernandes"", ""Mohammed Kudus""]",7
+174,Willian,52769,1,3,Brazilian who played for Arsenal,"[""André Santos"", ""David Luiz"", ""Gabriel"", ""Gabriel Jesus"", ""Gabriel Martinelli"", ""Gabriel Paulista"", ""Júlio Baptista"", ""Marquinhos"", ""Neto""]",9
+174,Willian,52769,2,3,Played for Shakhtar Donetsk (peak market value ≥ €30M),"[""Alex Teixeira"", ""David Neres"", ""Douglas Costa"", ""Fernandinho"", ""Fred"", ""Georgiy Sudakov"", ""Henrikh Mkhitaryan"", ""Kevin"", ""Mykhaylo Mudryk"", ""Ruslan Malinovskyi""]",10
+174,Willian,52769,3,3,Played for Shakhtar Donetsk (peak market value ≥ €50M),"[""Douglas Costa"", ""Fred"", ""Mykhaylo Mudryk""]",3
+175,Randal Kolo Muani,487969,1,3,Played for BOTH Juventus & Tottenham Hotspur,"[""Cristian Romero"", ""Dejan Kulusevski"", ""Fernando Llorente"", ""Radu Drăgușin"", ""Reto Ziegler"", ""Rodrigo Bentancur""]",6
+175,Randal Kolo Muani,487969,2,3,Played for BOTH Paris Saint-Germain & Tottenham Hotspur,"[""Benjamin Stambouli"", ""Giovani Lo Celso"", ""Lucas Moura"", ""Serge Aurier"", ""Xavi Simons"", ""Yuri Berchiche""]",6
+175,Randal Kolo Muani,487969,3,3,Played for Tottenham Hotspur (peak market value ≥ €80M),"[""Andrew Robertson"", ""Christian Eriksen"", ""Dele Alli"", ""Gareth Bale"", ""Harry Kane"", ""Heung-min Son"", ""Timo Werner"", ""Xavi Simons""]",8
+176,Theo Hernández,339808,1,3,French who played for Real Madrid,"[""Alphonse Areola"", ""Aurélien Tchouaméni"", ""Eduardo Camavinga"", ""Ferland Mendy"", ""Julien Faubert"", ""Karim Benzema"", ""Kylian Mbappé"", ""Lassana Diarra"", ""Nicolas Anelka"", ""Raphaël Varane""]",10
+176,Theo Hernández,339808,2,3,Played for BOTH Al-Hilal & Atletico Madrid,"[""Luciano Vietto"", ""Renan Lodi"", ""Yassine Bounou""]",3
+176,Theo Hernández,339808,3,3,Played for Al-Hilal (peak market value ≥ €30M),"[""Darwin Núñez"", ""João Cancelo"", ""Kalidou Koulibaly"", ""Karim Benzema"", ""Malcom"", ""Neymar"", ""Renan Lodi"", ""Rúben Neves"", ""Sergej Milinković-Savić""]",9
+177,Viktor Gyökeres,325443,1,3,Played for BOTH Arsenal & Sporting CP,"[""Cédric Soares"", ""Emiliano Viviano"", ""Héctor Bellerín"", ""Joel Campbell"", ""Rui Fonte""]",5
+177,Viktor Gyökeres,325443,2,3,Played for Sporting CP (peak market value ≥ €50M),"[""Bruno Fernandes"", ""Cristiano Ronaldo"", ""João Palhinha"", ""Manuel Ugarte"", ""Mateus Fernandes"", ""Matheus Nunes"", ""Morten Hjulmand"", ""Nuno Mendes"", ""Rafael Leão"", ""Raphinha""]",10
+177,Viktor Gyökeres,325443,3,3,Swedish with 75+ career goals,"[""Alexander Isak"", ""Marcus Berg"", ""Zlatan Ibrahimović""]",3
+178,Mesut Özil,35664,1,3,German who played for Arsenal,"[""Bernd Leno"", ""Kai Havertz"", ""Lukas Podolski"", ""Per Mertesacker"", ""Serge Gnabry"", ""Shkodran Mustafi""]",6
+178,Mesut Özil,35664,2,3,Played for BOTH Fenerbahce & Real Madrid,"[""Arda Güler"", ""Marco Asensio"", ""Nicolas Anelka"", ""Roberto Soldado""]",4
+178,Mesut Özil,35664,3,3,Played for Fenerbahce (peak market value ≥ €50M),"[""Arda Güler"", ""Diego Carlos"", ""Ederson"", ""Fred"", ""Marco Asensio"", ""Milan Škriniar"", ""Min-jae Kim""]",7
+179,Douglas Costa,75615,1,3,Brazilian who played for Bayern Munich,"[""Dante"", ""Luiz Gustavo"", ""Lúcio"", ""Philippe Coutinho"", ""Rafinha""]",5
+179,Douglas Costa,75615,2,3,Played for BOTH Bayern Munich & Juventus,"[""Arturo Vidal"", ""Emre Can"", ""João Cancelo"", ""Kingsley Coman"", ""Lúcio"", ""Mario Mandzukic"", ""Matthijs de Ligt"", ""Medhi Benatia""]",8
+179,Douglas Costa,75615,3,3,Played for LA Galaxy (peak market value ≥ €30M),"[""David Beckham"", ""Marco Reus"", ""Steven Gerrard"", ""Zlatan Ibrahimović""]",4
+180,Rúben Dias,258004,1,3,Portuguese who played for Manchester City,"[""Bernardo Silva"", ""João Cancelo"", ""Matheus Nunes"", ""Rony Lopes""]",4
+180,Rúben Dias,258004,2,3,Played for BOTH Benfica & Manchester City,"[""Bernardo Silva"", ""Ederson"", ""Issa Kaboré"", ""Javi García"", ""João Cancelo"", ""Nicolás Otamendi"", ""Nolito""]",7
+180,Rúben Dias,258004,3,3,Played for Benfica (peak market value ≥ €80M),"[""Bernardo Silva"", ""Enzo Fernández"", ""Jan Oblak"", ""João Félix"", ""João Neves""]",5

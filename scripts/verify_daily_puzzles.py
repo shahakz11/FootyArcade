@@ -62,6 +62,7 @@ from fetch_daily import (
     load_club_connect,
     load_player_chain,
     load_passport_fc,
+    load_anyone_but,
     _dedupe_canonical_names
 )
 
@@ -721,6 +722,44 @@ class PuzzleVerifier:
         summary_str = f"Club: {club}\n" + "\n".join(summary_lines)
         return question, summary_str, {"type": "passport_fc", "club": club, "steps": step_combos}
 
+    def audit_anyone_but(self, puzzle_num):
+        game_data, _ = load_anyone_but(puzzle_num)
+        if not game_data:
+            self.log_issue("anyone_but", puzzle_num, "ERROR", "Failed to load puzzle data")
+            return None, "", {}
+
+        excluded_player = game_data.get("excluded_player", "")
+        tables = game_data.get("tables", [])
+
+        if not excluded_player:
+            self.log_issue("anyone_but", puzzle_num, "ERROR", "Empty excluded player in Anyone But")
+        else:
+            self.ensure_player_exists(excluded_player, "anyone_but", puzzle_num)
+
+        summary_lines = []
+        table_list = []
+        for tbl in tables:
+            t_num = tbl.get("table_number", 1)
+            t_label = tbl.get("label", "")
+            answers = tbl.get("answers", [])
+
+            if not answers or len(answers) == 0:
+                self.log_issue("anyone_but", puzzle_num, "ERROR", f"Table {t_num} has 0 answers")
+            else:
+                for a in answers:
+                    self.ensure_player_exists(a, "anyone_but", puzzle_num)
+
+            summary_lines.append(f"- Table {t_num} ({t_label}): {len(answers)} answers (e.g. {answers[:3]})")
+            table_list.append({
+                "table_number": t_num,
+                "label": t_label,
+                "answers": answers
+            })
+
+        question = f"For excluded player {excluded_player}, are the table criteria and answers accurate without missing prominent qualifying players?"
+        summary_str = f"Excluded Player: {excluded_player}\n" + "\n".join(summary_lines)
+        return question, summary_str, {"type": "anyone_but", "excluded_player": excluded_player, "tables": table_list}
+
     def run_deterministic_audit(self, game_id, puzzle_num):
         audit_map = {
             "top_transfers": self.audit_top_transfers,
@@ -729,6 +768,7 @@ class PuzzleVerifier:
             "club_connect": self.audit_club_connect,
             "player_chain": self.audit_player_chain,
             "passport_fc": self.audit_passport_fc,
+            "anyone_but": self.audit_anyone_but,
         }
         if game_id in audit_map:
             return audit_map[game_id](puzzle_num)
@@ -781,6 +821,7 @@ def update_player_chain_pool(puzzle_num, step_num, new_players):
     return False
 
 
+
 def update_passport_fc_pool(puzzle_num, step_num, new_players):
     csv_path = "daily_passport_fc_games.csv"
     if not os.path.exists(csv_path):
@@ -806,6 +847,34 @@ def update_passport_fc_pool(puzzle_num, step_num, new_players):
             writer.writerows(rows)
         return True
     return False
+
+
+def update_anyone_but_pool(puzzle_num, table_num, new_players):
+    csv_path = "daily_anyone_but_games.csv"
+    if not os.path.exists(csv_path):
+        return False
+    rows = []
+    updated = False
+    with open(csv_path, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        fieldnames = reader.fieldnames
+        for r in reader:
+            if int(r.get("game_day", 0)) == puzzle_num and int(r.get("table_number", 0)) == table_num:
+                current_answers = json.loads(r.get("answers", "[]"))
+                combined = _dedupe_canonical_names(current_answers + new_players)
+                r["answers"] = json.dumps(combined, ensure_ascii=False)
+                r["answer_count"] = str(len(combined))
+                updated = True
+            rows.append(r)
+
+    if updated:
+        with open(csv_path, "w", encoding="utf-8", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames)
+            writer.writeheader()
+            writer.writerows(rows)
+        return True
+    return False
+
 
 
 def sync_approved_reviews():
@@ -933,22 +1002,25 @@ def main():
             game_meta[gid] = (p_num, question, summary_str, meta)
 
     # Phase 2: Tier 2 Proactive AI Fact-Check & Pool Expansion
-    has_groq_key = bool(os.environ.get("GROQ_API_KEY"))
-    if not has_groq_key and os.path.exists("config.json"):
+    has_ai_key = bool(os.environ.get("GEMINI_API_KEY") or os.environ.get("GROQ_API_KEY"))
+    if not has_ai_key and os.path.exists("config.json"):
         try:
             with open("config.json", "r", encoding="utf-8") as f:
                 cfg = json.load(f)
+                if cfg.get("GEMINI_API_KEY"):
+                    os.environ["GEMINI_API_KEY"] = cfg["GEMINI_API_KEY"]
+                    has_ai_key = True
                 if cfg.get("GROQ_API_KEY"):
                     os.environ["GROQ_API_KEY"] = cfg["GROQ_API_KEY"]
-                    has_groq_key = True
+                    has_ai_key = True
         except Exception:
             pass
 
     if args.ai_guard:
-        if not has_groq_key:
-            print("\n⚠️  Notice: GROQ_API_KEY is not set in environment or config.json.")
+        if not has_ai_key:
+            print("\n⚠️  Notice: Neither GEMINI_API_KEY nor GROQ_API_KEY is set in environment or config.json.")
             print("    Proactive LLM fact-checking was skipped (Tier 1 deterministic check ran).")
-            print("    Set GROQ_API_KEY in your environment, config.json, or GitHub Secrets.")
+            print("    Set GEMINI_API_KEY or GROQ_API_KEY in your environment, config.json, or GitHub Secrets.")
         else:
             print("\n🤖 [Tier 2 AI Guard] Running proactive 2-Model Consensus Verification...")
             for gid, (p_num, question, summary_str, meta) in game_meta.items():
@@ -988,6 +1060,24 @@ def main():
                                     verifier.log_fix(gid, p_num, "expand_pool", f"Added verified player '{add_p}' to Step {s_num}")
                                 if not args.dry_run and args.fix:
                                     update_passport_fc_pool(p_num, s_num, pool_res["missing_added"])
+
+                # Requirement 4: Anyone But all 3 tables
+                elif m_type == "anyone_but":
+                    print(f"  Checking [{gid} #{p_num}] Anyone But tables for missing answers...")
+                    excluded_star = meta.get("excluded_player", "")
+                    for tbl in meta.get("tables", []):
+                        t_num = tbl["table_number"]
+                        t_label = tbl["label"]
+                        t_answers = tbl["answers"]
+                        c_desc = f"{t_label} (excluding {excluded_star})"
+                        pool_res = cross_examine_pool_with_ai(gid, p_num, t_num, c_desc, t_answers)
+                        verifier.ai_checks.append({"game": gid, "table": t_num, "result": pool_res})
+                        if pool_res.get("missing_added"):
+                            for add_p in pool_res["missing_added"]:
+                                verifier.ensure_player_exists(add_p, gid, p_num)
+                                verifier.log_fix(gid, p_num, "expand_pool", f"Added verified player '{add_p}' to Table {t_num}")
+                            if not args.dry_run and args.fix:
+                                update_anyone_but_pool(p_num, t_num, pool_res["missing_added"])
 
                 # General fact check (Transfer destination years/fees, top transfers, top scorers, club connect)
                 else:

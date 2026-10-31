@@ -53,6 +53,52 @@ OUTPUT_DIR   = "games"
 ES_OUTPUT_DIR = os.path.join("es", "games")
 LEDGER_FILE  = os.path.join("data", "puzzle_schedule_ledger.json")
 
+DEMONYM_EN_TO_ES = {
+    "Algerian": "Argelino", "American": "Estadounidense", "Argentinian": "Argentino",
+    "Austrian": "Austriaco", "Belgian": "Belga", "Bosnian": "Bosnio",
+    "Brazilian": "Brasileño", "Chilean": "Chileno", "Colombian": "Colombiano",
+    "Croatian": "Croata", "Danish": "Danés", "Dutch": "Neerlandés",
+    "Egyptian": "Egipcio", "English": "Inglés", "French": "Francés",
+    "German": "Alemán", "Ghanaian": "Ghanés", "Greek": "Griego",
+    "Hungarian": "Húngaro", "Icelandic": "Islandés", "Irish": "Irlandés",
+    "Italian": "Italiano", "Ivorian": "Marfileño", "Japanese": "Japonés",
+    "Mexican": "Mexicano", "Moroccan": "Marroquí", "Nigerian": "Nigeriano",
+    "Northern Irish": "Norirlandés", "Norwegian": "Noruego", "Paraguayan": "Paraguayo",
+    "Peruvian": "Peruano", "Polish": "Polaco", "Portuguese": "Portugués",
+    "Romanian": "Rumano", "Scottish": "Escocés", "Senegalese": "Senegalés",
+    "Serbian": "Serbio", "Slovak": "Eslovaco", "Slovenian": "Esloveno",
+    "South African": "Sudafricano", "South Korean": "Surcoreano", "Spanish": "Español",
+    "Swedish": "Sueco", "Swiss": "Suizo", "Turkish": "Turco",
+    "Ukrainian": "Ucraniano", "Uruguayan": "Uruguayo", "Venezuelan": "Venezolano",
+    "Welsh": "Galés"
+}
+
+def localize_anyone_but_label_es(label: str) -> str:
+    # 1. Played for BOTH {club_a} & {club_b}
+    m = re.match(r"^Played for BOTH (.+?) & (.+?)$", label)
+    if m:
+        return f"Jugó tanto en {m.group(1)} como en {m.group(2)}"
+
+    # 2. Played for {club} (peak market value ≥ €{N}M)
+    m = re.match(r"^Played for (.+?) \(peak (?:market value )?[≥>=]+ €(\d+)M\)$", label)
+    if m:
+        return f"Jugó en {m.group(1)} (valor de mercado máx. ≥ €{m.group(2)}M)"
+
+    # 3. {Nationality} who played for {club}
+    m = re.match(r"^(.+?) who played for (.+?)$", label)
+    if m:
+        nat_es = DEMONYM_EN_TO_ES.get(m.group(1), m.group(1))
+        return f"{nat_es} que jugó en {m.group(2)}"
+
+    # 4. {Nationality} with {N}+ career goals
+    m = re.match(r"^(.+?) with (\d+)\+ career goals$", label)
+    if m:
+        nat_es = DEMONYM_EN_TO_ES.get(m.group(1), m.group(1))
+        return f"{nat_es} con {m.group(2)}+ goles en su carrera"
+
+    return label
+
+
 
 def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
     """
@@ -242,6 +288,31 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         ("is today's mystery player!", 'es el jugador misterioso de hoy.'),
         ('Reveals after incorrect guess or skip', 'Se revela tras un fallo o al saltar'),
         ('THE MYSTERY PLAYER WAS', 'EL JUGADOR MISTERIOSO ERA'),
+
+        # Anyone But
+        ('The Inverse Football Trivia', 'La Trivia Inversa de Fútbol'),
+        ('Name players who satisfy the 3 criteria tables below. You can guess <strong class="text-white">ANYONE</strong> — except today\'s excluded star!',
+         'Nombra futbolistas que cumplan los 3 criterios de abajo. Puedes adivinar a <strong class="text-white">CUALQUIERA</strong> — ¡excepto la estrella excluida de hoy!'),
+        ('<span>Anyone But</span>', '<span>Cualquiera Menos</span>'),
+        ('<span>ANYONE BUT</span>', '<span>CUALQUIERA MENOS</span>'),
+        ('THE EXCLUDED PLAYER', 'CUALQUIERA MENOS'),
+        ('Type a footballer name...', 'Escribe el nombre de un futbolista...'),
+        ('Solved: <span id="solved-count">', 'Aciertos: <span id="solved-count">'),
+        ('Wrong Guesses:', 'Intentos Fallidos:'),
+        ('<strong class="text-white font-title">1. Anyone But:</strong> At the top, you\'ll see today\'s excluded star. They fit all 3 tables below, but you <strong class="text-error">CANNOT</strong> guess them!',
+         '<strong class="text-white font-title">1. Cualquiera Menos:</strong> Arriba verás a la estrella excluida de hoy. Cumple con las 3 tablas, ¡pero <strong class="text-error">NO PUEDES</strong> adivinarlo!'),
+        ('<strong class="text-white font-title">1. The Excluded Player:</strong> At the top, you\'ll see today\'s excluded star. They fit all 3 tables below, but you <strong class="text-error">CANNOT</strong> guess them!',
+         '<strong class="text-white font-title">1. El Jugador Excluido:</strong> Arriba verás a la estrella excluida de hoy. Cumple con las 3 tablas, ¡pero <strong class="text-error">NO PUEDES</strong> adivinarlo!'),
+        ('<strong class="text-white font-title">2. 3 Criteria Tables:</strong> Each table represents a career milestone, club combination, or goal count. Name other players who satisfy each table.',
+         '<strong class="text-white font-title">2. 3 Tablas de Criterios:</strong> Cada tabla representa un hito de carrera, combinación de clubes o goles. Nombra a otros jugadores que cumplan con cada tabla.'),
+        ('<strong class="text-white font-title">3. Multi-Hit Crossovers:</strong> A player who fits multiple tables will automatically fill slots across all matching tables with a single guess!',
+         '<strong class="text-white font-title">3. Aciertos Múltiples:</strong> ¡Un jugador que coincida con varias tablas completará casillas en todas ellas con un solo intento!'),
+        ('<strong class="text-white font-title">4. Lives:</strong> You start with 5 lives. An incorrect guess deducts 1 life. (Guessing the excluded star will remind you without costing a life!)',
+         '<strong class="text-white font-title">4. Vidas:</strong> Empiezas con 5 vidas. Un fallo resta 1 vida. (¡Adivinar a la estrella excluida te avisará sin restar vidas!)'),
+        ('<strong class="text-white font-title">4. Lives:</strong> You start with 5 lives. An incorrect guess or guessing the excluded player deducts 1 life.',
+         '<strong class="text-white font-title">4. Vidas:</strong> Empiezas con 5 vidas. Un intento incorrecto o adivinar al jugador excluido resta 1 vida.'),
+        ('<strong class="text-white font-title">5. Goal:</strong> Fill as many slots as you can before lives run out!',
+         '<strong class="text-white font-title">5. Objetivo:</strong> ¡Completa tantas casillas como puedas antes de quedarte sin vidas!'),
 
         # Navigation & Badges
         ('>Prev<', '>Ant.<'),
@@ -697,6 +768,7 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         "player_chain": ("PLAYER CHAIN", "CADENA DE JUGADORES"),
         "passport_fc": ("PASSPORT FC", "PASAPORTE FC"),
         "played_with": ("PLAYED WITH", "JUGÓ CON"),
+        "anyone_but": ("ANYONE BUT", "CUALQUIERA MENOS"),
     }
     if game_id in game_titles:
         en_t, es_t = game_titles[game_id]
@@ -710,6 +782,7 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         "player_chain": ("Player Chain — Daily Football Career Puzzle | Playmaker", "Cadena de Jugadores — Puzzle Diario de Trayectorias de Fútbol | Playmaker"),
         "passport_fc": ("Passport FC — Daily Football Nationality Puzzle | Playmaker", "Pasaporte FC — Puzzle Diario de Nacionalidades de Fútbol | Playmaker"),
         "played_with": ("Played With — Daily Football Teammate Guessing Game | Playmaker", "Jugó Con — Juego Diario de Compañeros de Fútbol | Playmaker"),
+        "anyone_but": ("Anyone But — Daily Football Inverse Trivia Puzzle | Playmaker", "Cualquiera Menos — Puzzle Diario de Trivia Inversa de Fútbol | Playmaker"),
     }
     if game_id in meta_titles:
         en_m, es_m = meta_titles[game_id]
@@ -743,6 +816,10 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         "played_with": (
             "5 teammates revealed: 20th, 10th, 5th, 2nd, and #1 most appearances together. Deduce the mystery star!",
             "5 compañeros revelados: 20º, 10º, 5º, 2º y #1 con más partidos juntos. ¡Deduce la estrella misteriosa!"
+        ),
+        "anyone_but": (
+            "Name players who satisfy the 3 criteria tables below. You can guess <strong class=\"text-white\">ANYONE</strong> — except today's excluded star!",
+            "Nombra futbolistas que cumplan con las 3 tablas de criterios de abajo. ¡Puedes elegir a <strong class=\"text-white\">CUALQUIERA</strong> — excepto a la estrella excluida de hoy!"
         ),
     }
     if game_id in game_descriptions:
@@ -779,6 +856,10 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
             "Played With is a daily football deduction challenge by Playmaker where fans deduce a mystery star player through five teammates revealed in ascending order of competitive matches played together: their 20th, 10th, 5th, 2nd, and #1 most frequent career teammates. Players submit guesses using a comprehensive player catalog with autocomplete. Submitting an incorrect guess deducts a life and unlocks the next teammate card. You can also skip to reveal the next clue. Solving the puzzle in the fewest possible clues earns a maximum efficiency score. New puzzles release daily at midnight UTC with full back-in-time archives.",
             "Jugó Con es un reto diario de deducción futbolística de Playmaker donde los aficionados descubren a un jugador estrella misterioso a través de cinco compañeros revelados en orden ascendente según los partidos competitivos jugados juntos: su 20º, 10º, 5º, 2º y #1 compañero más frecuente de su carrera. Los jugadores envían sus intentos mediante un buscador con autocompletado. Un fallo resta una vida y desbloquea la siguiente carta de compañero. También puedes saltar para ver la siguiente pista sin perder vidas. ¡Resuelve el reto en la menor cantidad de pistas posible y mantén tu racha diaria!"
         ),
+        "anyone_but": (
+            "Anyone But is a daily inverse football trivia puzzle by Playmaker where fans name footballers who satisfy three distinct career milestone tables while avoiding one iconic excluded star. Each daily challenge highlights an excluded player alongside three simultaneous criteria categories — such as shared club histories, transfer valuation milestones, or career goal tallies. Players submit footballer names to uncover matching slots across all three tables. Guesses that match multiple criteria simultaneously trigger multi-hit combos, unlocking slots across multiple tables with a single submission.",
+            "Cualquiera Menos es un puzzle diario de trivia inversa de fútbol de Playmaker donde los aficionados nombran futbolistas que cumplen tres tablas distintas de hitos de su carrera evitando a una estrella excluida emblemática. Cada reto diario presenta a un jugador excluido junto a tres categorías simultáneas de criterios — como clubes compartidos, récords de valor de mercado o cifras de goles. Los jugadores introducen futbolistas para descubrir las casillas de las tres tablas. ¡Aciertos múltiples completan varias tablas a la vez!"
+        ),
     }
     for gid, (en_h, es_h) in how_to_play_paragraphs.items():
         if en_h in es_html:
@@ -795,9 +876,24 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         "What is Player Chain?": "¿Qué es Cadena de Jugadores?",
         "What is Passport FC?": "¿Qué es Pasaporte FC?",
         "What is Played With?": "¿Qué es Jugó Con?",
+        "What is Anyone But?": "¿Qué es Cualquiera Menos?",
     }
     for en_w, es_w in what_is_replacements.items():
         es_html = es_html.replace(en_w, es_w)
+
+    # Localize Anyone But table criteria labels in compiled JSON data
+    if game_id == "anyone_but":
+        def _rep_label(match):
+            return f'"label": "{localize_anyone_but_label_es(match.group(1))}"'
+        es_html = re.sub(r'"label":\s*"([^"]+)"', _rep_label, es_html)
+        es_html = es_html.replace(
+            "Official senior appearances and transfers from 1990 up to June 2026.",
+            "Apariciones y traspasos oficiales desde 1990 hasta junio de 2026."
+        )
+        es_html = es_html.replace(
+            "Players can submit any disputed answer to the automated VAR engine to appeal real-world transfer and appearance records.",
+            "Los jugadores pueden enviar cualquier respuesta disputada al motor de VAR automatizado para apelar registros de partidos y traspasos oficiales."
+        )
 
     # 7. Inject Spanish game note and language setter in JS data
     safe_note_es = game_cfg.get("note_es", "").replace('\\', '\\\\').replace('"', '\\"')
@@ -1195,6 +1291,46 @@ def load_played_with(puzzle_num):
     return game_data, extra
 
 
+def load_anyone_but(puzzle_num):
+    """Returns (game_data_dict, extra_data_dict) for the anyone_but game."""
+    csv_path = "daily_anyone_but_games.csv"
+    if not os.path.exists(csv_path):
+        print(f"  ERROR: {csv_path} not found.")
+        return None, None
+
+    rows = []
+    with open(csv_path, "r", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            if int(r.get("game_day", 1)) == puzzle_num:
+                rows.append(r)
+
+    if not rows:
+        print(f"  WARNING: No anyone_but data for puzzle #{puzzle_num}")
+        return None, None
+
+    rows.sort(key=lambda x: int(x.get("table_number", 1)))
+    first = rows[0]
+
+    game_data = {
+        "excluded_player": first.get("excluded_player", ""),
+        "excluded_player_id": int(first.get("excluded_player_id", 0)),
+        "total_tables": int(first.get("total_tables", len(rows))),
+        "tables": []
+    }
+
+    for r in rows:
+        answers = json.loads(r.get("answers", "[]"))
+        game_data["tables"].append({
+            "table_number": int(r.get("table_number", 1)),
+            "label": r.get("table_label", ""),
+            "answer_count": int(r.get("answer_count", len(answers))),
+            "answers": answers
+        })
+
+    extra = {}
+    return game_data, extra
+
+
 # Map game id → loader function
 GAME_LOADERS = {
     "top_transfers":        load_top_transfers,
@@ -1204,6 +1340,7 @@ GAME_LOADERS = {
     "player_chain":         load_player_chain,
     "passport_fc":          load_passport_fc,
     "played_with":          load_played_with,
+    "anyone_but":           load_anyone_but,
 }
 
 # Map game id → the JS variable name for the main data object
@@ -1215,6 +1352,7 @@ GAME_DATA_VAR = {
     "player_chain":         "DAILY_CHAIN_GAME",
     "passport_fc":          "DAILY_PASSPORT_GAME",
     "played_with":          "DAILY_PLAYEDWITH_GAME",
+    "anyone_but":           "DAILY_ANYONEBUT_GAME",
 }
 
 # Patterns to strip from a template before injecting fresh data
@@ -1276,6 +1414,15 @@ STRIP_PATTERNS = {
     ],
     "played_with": [
         r'const\s+DAILY_PLAYEDWITH_GAME\s*=\s*\{[\s\S]*?\};',
+        r'const\s+ALL_PLAYERS\s*=\s*\[[\s\S]*?\];',
+        r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
+        r'const\s+PUZZLE_ID\s*=\s*\d+;',
+        r'const\s+IS_BACK_IN_TIME\s*=\s*(true|false);',
+        r'const\s+MAX_BACK_DAYS\s*=\s*\d+;',
+        r'const\s+GAME_NOTE\s*=\s*"[^"]*";',
+    ],
+    "anyone_but": [
+        r'const\s+DAILY_ANYONEBUT_GAME\s*=\s*\{[\s\S]*?\};',
         r'const\s+ALL_PLAYERS\s*=\s*\[[\s\S]*?\];',
         r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
         r'const\s+PUZZLE_ID\s*=\s*\d+;',

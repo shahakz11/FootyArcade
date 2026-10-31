@@ -160,11 +160,11 @@
     "templateFile": "anyone_but_template.html",
     "dataVariable": "DAILY_ANYONEBUT_GAME",
     "storageKey": "footy_v2_anyone_but",
-    "note": "Data updated to June 2026.",
-    "status": "coming_soon",
+    "note": "Official appearances and transfers from 1990 up to June 2026.",
+    "launchDate": "2026-10-31",
     "name_es": "Cualquiera Menos",
     "description_es": "Adivina futbolistas que cumplen los criterios excepto para el jugador clave.",
     "link_es": "es/games/anyone_but.html",
-    "note_es": "Datos actualizados a junio de 2026."
+    "note_es": "Apariciones y traspasos oficiales desde 1990 hasta junio de 2026."
   }
 ]

@@ -9,7 +9,13 @@ Allow: /llms.txt
 Allow: /games/*.html$
 Allow: /es/games/*.html$
 
-# Block data files, templates, and build artifacts from crawling
+# Explicitly allow canonical game endpoints
+Allow: /games/transfer_destination.html
+Allow: /es/games/transfer_destination.html
+
+# Block back-in-time archives and internal build artifacts from crawling
+Disallow: /games/*_d*.html
+Disallow: /es/games/*_d*.html
 Disallow: /templates/
 Disallow: /data/
 Disallow: /reports/

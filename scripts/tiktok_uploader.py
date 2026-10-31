@@ -234,7 +234,8 @@ def init_video_publish(
     disable_duet=False,
     disable_comment=False,
     disable_stitch=False,
-    chunk_size=DEFAULT_CHUNK_SIZE
+    chunk_size=DEFAULT_CHUNK_SIZE,
+    is_aigc=True
 ):
     """
     Initializes a video publish request via TikTok Content Posting API v2.
@@ -265,7 +266,8 @@ def init_video_publish(
             "disable_duet": disable_duet,
             "disable_comment": disable_comment,
             "disable_stitch": disable_stitch,
-            "video_cover_timestamp_ms": 1000
+            "video_cover_timestamp_ms": 1000,
+            "is_aigc": bool(is_aigc)
         },
         "source_info": {
             "source": "FILE_UPLOAD",
@@ -464,7 +466,8 @@ def upload_tiktok_now(
     disable_duet=False,
     disable_comment=False,
     disable_stitch=False,
-    poll_status=True
+    poll_status=True,
+    is_aigc=True
 ):
     """
     High-level function: initializes, uploads chunks, and optionally polls status.
@@ -478,7 +481,8 @@ def upload_tiktok_now(
         privacy_level=privacy_level,
         disable_duet=disable_duet,
         disable_comment=disable_comment,
-        disable_stitch=disable_stitch
+        disable_stitch=disable_stitch,
+        is_aigc=is_aigc
     )
 
     upload_video_chunks(video_path, upload_url, chunk_size, total_size)

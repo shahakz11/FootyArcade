@@ -94,6 +94,8 @@ class TestSeoRobotsAndSitemap(unittest.TestCase):
             "top_scorers",
             "player_chain",
             "passport_fc",
+            "played_with",
+            "anyone_but",
         ]
         for slug in game_slugs:
             en_url = f"https://playmaker.best/games/{slug}.html"
@@ -117,6 +119,8 @@ class TestSeoRobotsAndSitemap(unittest.TestCase):
             "top_scorers",
             "player_chain",
             "passport_fc",
+            "played_with",
+            "anyone_but",
         ]
         test_days = [1, 2, 10, 50, 180]
 

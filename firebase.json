@@ -60,6 +60,11 @@
         "type": 301
       },
       {
+        "source": "/templates/anyone_but_template.html",
+        "destination": "/games/anyone_but.html",
+        "type": 301
+      },
+      {
         "source": "/templates/**",
         "destination": "/",
         "type": 301

@@ -80,12 +80,15 @@ class TestPlayerChainPhases(unittest.TestCase):
                     f"Day {day} Step {step_num}: Target {target} missing from valid_players"
                 )
 
-                # Monotonic descent: each step must strictly narrow down the candidate pool
+                # Monotonic descent: each step must narrow down the candidate pool until uniquely identified
                 pool_size = len(valid_players)
-                self.assertLess(
-                    pool_size, prev_pool_size,
-                    f"Day {day} Step {step_num} ({target}) does not strictly descend: {pool_size} vs previous {prev_pool_size}"
-                )
+                if prev_pool_size > 1:
+                    self.assertLess(
+                        pool_size, prev_pool_size,
+                        f"Day {day} Step {step_num} ({target}) does not strictly descend: {pool_size} vs previous {prev_pool_size}"
+                    )
+                else:
+                    self.assertEqual(pool_size, 1)
                 prev_pool_size = pool_size
 
             # Final step should isolate target player to 1 or at most 2 players

@@ -1515,7 +1515,7 @@
 
         const meta = getActiveGameMetadata();
         const gameId = opts.gameId || meta.gameId;
-        const isVarSupportedGame = ['top_scorers', 'top_transfers', 'player_chain', 'passport_fc'].includes(gameId);
+        const isVarSupportedGame = ['top_scorers', 'top_transfers', 'player_chain', 'passport_fc', 'anyone_but'].includes(gameId);
         const normGuess = opts.guess ? normalizeStr(opts.guess) : '';
         const alreadyChecked = normGuess && varState.checkedPlayers.has(normGuess);
         const hasToken = varState.tokens > 0 && varState.successfulUses < varState.maxSuccess;
@@ -3180,6 +3180,16 @@
             defaultName: 'Passport FC',
             defaultTagline: 'Collect nationality stamps for a mystery club',
             file: 'passport_fc.html'
+        },
+        {
+            id: 'anyone_but',
+            icon: 'person_off',
+            color: '#ff0055',
+            nameKey: 'game_anyone_but',
+            taglineKey: 'tagline_anyone_but',
+            defaultName: 'Anyone But',
+            defaultTagline: 'Inverse trivia: guess anyone except the star',
+            file: 'anyone_but.html'
         }
     ];
 
