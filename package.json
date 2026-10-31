@@ -1,0 +1,13 @@
+{
+  "name": "playmaker",
+  "version": "1.0.0",
+  "description": "Playmaker / FootyArcade Daily Football Games & Analytics Web App",
+  "private": true,
+  "scripts": {
+    "deploy:gas": "python3 scripts/deploy_gas.py",
+    "predeploy:gas": "python3 scripts/deploy_gas.py --dry-run",
+    "deploy:hosting": "npx firebase-tools deploy --only hosting",
+    "deploy": "python3 scripts/deploy_gas.py && npx firebase-tools deploy --only hosting",
+    "test": "python3 -m unittest discover tests"
+  }
+}
