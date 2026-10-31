@@ -1052,14 +1052,9 @@
                     if (!solvedAnswers[tIdx]) solvedAnswers[tIdx] = new Set();
                     solvedAnswers[tIdx].add(existing);
                 } else {
-                    const solvedSet = solvedAnswers[tIdx] || new Set();
-                    const unsolvedIdx = targetTable.answers.findIndex(a => !solvedSet.has(a));
-                    if (unsolvedIdx !== -1) {
-                        targetTable.answers.splice(unsolvedIdx, 1, matched);
-                    } else {
-                        targetTable.answers.push(matched);
-                        targetTable.answer_count = targetTable.answers.length;
-                    }
+                    // Append new approved player to table answers rather than replacing
+                    targetTable.answers.push(matched);
+                    targetTable.answer_count = targetTable.answers.length;
                     if (!solvedAnswers[tIdx]) solvedAnswers[tIdx] = new Set();
                     solvedAnswers[tIdx].add(matched);
                 }
