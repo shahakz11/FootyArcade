@@ -455,16 +455,6 @@
     </script>
     
 <!-- Micro-interaction Script -->
-    <script id="daily-game-data">
-        // Injected by fetch_daily.py compiler at build time
-        
-        
-        
-        
-        
-        
-    </script>
-
     <script>
         const GAME_ID       = 'anyone_but';
         const ACCENT_HEX    = '#ff0055';
@@ -733,7 +723,7 @@
                 if (gameOver) return;
                 const isEs = isSpanish();
                 FootyUI.confirm({
-                    title: isEs ? '¿RENDIRSE?' : 'GIVE UP?',
+                    title: isEs ? '¿RENDIRSE?' : '¿RENDIRSE?',
                     message: isEs ? '¿Seguro que quieres rendirte? Se revelarán todas las respuestas.' : 'Are you sure you want to give up? All answers will be revealed.',
                     confirmText: isEs ? 'RENDIRSE' : 'GIVE UP',
                     cancelText: isEs ? 'SEGUIR JUGANDO' : 'KEEP PLAYING',
@@ -1082,14 +1072,6 @@
                     'success'
                 );
             }
-
-            renderTables();
-            updateScoreBar();
-            saveCurrentProgress();
-            checkWinCondition();
-        }
-                'success'
-            );
 
             renderTables();
             updateScoreBar();

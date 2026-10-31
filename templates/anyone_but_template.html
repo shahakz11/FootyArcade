@@ -453,40 +453,6 @@
     <script src="../games/footy-ui.js?v=6"></script>
 
     <!-- Micro-interaction Script -->
-    <script id="daily-game-data">
-        // Injected by fetch_daily.py compiler at build time
-        const DAILY_ANYONEBUT_GAME = {
-            "excluded_player": "Bernardo Silva",
-            "excluded_player_id": 241641,
-            "total_tables": 3,
-            "tables": [
-                {
-                    "table_number": 1,
-                    "label": "Played for BOTH Benfica & Manchester City",
-                    "answer_count": 7,
-                    "answers": ["Ederson", "Issa Kaboré", "Javi García", "João Cancelo", "Nicolás Otamendi", "Nolito", "Rúben Dias"]
-                },
-                {
-                    "table_number": 2,
-                    "label": "Played for Benfica (peak market value ≥ €80M)",
-                    "answer_count": 5,
-                    "answers": ["Enzo Fernández", "Jan Oblak", "João Félix", "João Neves", "Rúben Dias"]
-                },
-                {
-                    "table_number": 3,
-                    "label": "Portuguese with 100+ career goals",
-                    "answer_count": 8,
-                    "answers": ["André Silva", "Bruno Fernandes", "Cristiano Ronaldo", "Diogo Jota", "Paulinho", "Pizzi", "Rafa Silva", "Ricardo Horta"]
-                }
-            ]
-        };
-        const PUZZLE_NUMBER   = 1;
-        const PUZZLE_ID       = 1;
-        const IS_BACK_IN_TIME = false;
-        const MAX_BACK_DAYS   = 7;
-        const GAME_NOTE       = "Data updated to June 2026.";
-    </script>
-
     <script>
         const GAME_ID       = 'anyone_but';
         const ACCENT_HEX    = '#ff0055';
@@ -1104,14 +1070,6 @@
                     'success'
                 );
             }
-
-            renderTables();
-            updateScoreBar();
-            saveCurrentProgress();
-            checkWinCondition();
-        }
-                'success'
-            );
 
             renderTables();
             updateScoreBar();
