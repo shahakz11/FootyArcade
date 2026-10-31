@@ -62,6 +62,8 @@ function createMockElement(id, tagName = 'div') {
                 if (dataGameMatch) linkEl.setAttribute('data-game-id', dataGameMatch[1]);
                 const dataStatusMatch = fullAttrs.match(/data-status="([^"]+)"/);
                 if (dataStatusMatch) linkEl.setAttribute('data-status', dataStatusMatch[1]);
+                const dataIsNewMatch = fullAttrs.match(/data-is-new="([^"]+)"/);
+                if (dataIsNewMatch) linkEl.setAttribute('data-is-new', dataIsNewMatch[1]);
                 const classMatch = fullAttrs.match(/class="([^"]+)"/);
                 if (classMatch) linkEl.className = classMatch[1];
                 linkEl.innerHTML = m[4];
@@ -245,7 +247,7 @@ it('2. Stable sort preserves relative order for tied statuses', () => {
 });
 
 // Test 3: In-game suggestions ordering and badges
-it('3. initGameSuggestions sorts remaining games by priority status and renders badges', () => {
+it('3. initGameSuggestions sorts remaining games by priority status and renders badges (with new game boosted first)', () => {
     global.localStorage.clear();
     for (let k in mockElements) delete mockElements[k];
 
@@ -253,16 +255,17 @@ it('3. initGameSuggestions sorts remaining games by priority status and renders 
     setupMockGameState('top_scorers', 'won');
     setupMockGameState('club_connect', 'in_progress');
     setupMockGameState('passport_fc', 'partial');
-    // player_chain and played_with are unplayed
+    // player_chain, played_with, and anyone_but are unplayed; anyone_but is new (p#1)
 
     const container = getMockElement('fa-game-suggestions');
     FootyUI.initGameSuggestions({ containerId: 'fa-game-suggestions', currentGame: 'top_transfers' });
 
     const cards = container.querySelectorAll('.fa-suggestion-card');
-    assert.strictEqual(cards.length, 6);
+    assert.strictEqual(cards.length, 7);
 
     const cardGameIds = cards.map(c => c.getAttribute('data-game-id'));
     assert.deepStrictEqual(cardGameIds, [
+        'anyone_but',           // 0. NEW game boosted first (unplayed)
         'player_chain',         // 1. unplayed
         'played_with',          // 2. unplayed
         'club_connect',        // 3. in_progress
@@ -272,24 +275,103 @@ it('3. initGameSuggestions sorts remaining games by priority status and renders 
     ]);
 
     assert.strictEqual(cards[0].getAttribute('data-status'), 'unplayed');
-    assert.strictEqual(cards[1].getAttribute('data-status'), 'unplayed');
-    assert.strictEqual(cards[2].getAttribute('data-status'), 'in_progress');
-    assert.strictEqual(cards[3].getAttribute('data-status'), 'won');
-    assert.strictEqual(cards[4].getAttribute('data-status'), 'partial');
-    assert.strictEqual(cards[5].getAttribute('data-status'), 'loss');
+    assert.strictEqual(cards[0].getAttribute('data-is-new'), 'true');
+    assert(cards[0].innerHTML.includes('fa-suggestion-badge-new'), 'New game badge should be present on card 0');
 
-    assert(cards[2].innerHTML.includes('fa-suggestion-badge-inprogress'), 'In-progress badge should be present');
-    assert(cards[3].innerHTML.includes('fa-suggestion-badge-solved'), 'Solved badge should be present');
-    assert(cards[4].innerHTML.includes('fa-suggestion-badge-partial'), 'Partial badge should be present');
-    assert(cards[5].innerHTML.includes('fa-suggestion-badge-failed'), 'Failed badge should be present');
+    assert.strictEqual(cards[1].getAttribute('data-status'), 'unplayed');
+    assert.strictEqual(cards[2].getAttribute('data-status'), 'unplayed');
+    assert.strictEqual(cards[3].getAttribute('data-status'), 'in_progress');
+    assert.strictEqual(cards[4].getAttribute('data-status'), 'won');
+    assert.strictEqual(cards[5].getAttribute('data-status'), 'partial');
+    assert.strictEqual(cards[6].getAttribute('data-status'), 'loss');
+
+    assert(cards[3].innerHTML.includes('fa-suggestion-badge-inprogress'), 'In-progress badge should be present');
+    assert(cards[4].innerHTML.includes('fa-suggestion-badge-solved'), 'Solved badge should be present');
+    assert(cards[5].innerHTML.includes('fa-suggestion-badge-partial'), 'Partial badge should be present');
+    assert(cards[6].innerHTML.includes('fa-suggestion-badge-failed'), 'Failed badge should be present');
 });
 
 // Test 4: i18n Dictionary tokens
 it('4. FootyI18n contains all badge tokens in English and Spanish', () => {
+    FootyI18n.setLang('en');
+    assert.strictEqual(FootyI18n.t('badge_new'), 'NEW ✨');
     assert.strictEqual(FootyI18n.t('badge_solved'), 'SOLVED ✅');
     assert.strictEqual(FootyI18n.t('badge_partial'), 'PARTIAL ⚡');
     assert.strictEqual(FootyI18n.t('badge_failed'), 'MISSED ❌');
     assert.strictEqual(FootyI18n.t('badge_in_progress'), 'IN PROGRESS ⏳');
+
+    FootyI18n.setLang('es');
+    assert.strictEqual(FootyI18n.t('badge_new'), 'NUEVO ✨');
+    assert.strictEqual(FootyI18n.t('badge_solved'), 'RESUELTO ✅');
+    assert.strictEqual(FootyI18n.t('badge_partial'), 'PARCIAL ⚡');
+    assert.strictEqual(FootyI18n.t('badge_failed'), 'NO SUPERADO ❌');
+    assert.strictEqual(FootyI18n.t('badge_in_progress'), 'EN CURSO ⏳');
+    FootyI18n.setLang('en');
+});
+
+// Test 5: New game tag exists along all use cases
+it('5. New game tag supports and exists along all use cases (unplayed, started, successful, failed)', () => {
+    // 5a. Unplayed new game
+    global.localStorage.clear();
+    for (let k in mockElements) delete mockElements[k];
+    const container = getMockElement('fa-game-suggestions');
+    FootyUI.initGameSuggestions({ containerId: 'fa-game-suggestions', currentGame: 'top_transfers' });
+    let abCard = container.querySelectorAll('.fa-suggestion-card').find(c => c.getAttribute('data-game-id') === 'anyone_but');
+    assert(abCard, 'anyone_but card must exist');
+    assert(abCard.innerHTML.includes('fa-suggestion-badge-new'), 'Unplayed new game has NEW badge');
+    assert(!abCard.innerHTML.includes('fa-suggestion-badge-solved'), 'Unplayed does not have solved badge');
+
+    // 5b. Started (in_progress) new game
+    setupMockGameState('anyone_but', 'in_progress');
+    for (let k in mockElements) delete mockElements[k];
+    FootyUI.initGameSuggestions({ containerId: 'fa-game-suggestions', currentGame: 'top_transfers' });
+    let contB = getMockElement('fa-game-suggestions');
+    abCard = contB.querySelectorAll('.fa-suggestion-card').find(c => c.getAttribute('data-game-id') === 'anyone_but');
+    assert(abCard.innerHTML.includes('fa-suggestion-badge-new'), 'Started new game has NEW badge');
+    assert(abCard.innerHTML.includes('fa-suggestion-badge-inprogress'), 'Started new game ALSO has in_progress badge');
+
+    // 5c. Successful (won) new game
+    setupMockGameState('anyone_but', 'won');
+    for (let k in mockElements) delete mockElements[k];
+    FootyUI.initGameSuggestions({ containerId: 'fa-game-suggestions', currentGame: 'top_transfers' });
+    let contC = getMockElement('fa-game-suggestions');
+    abCard = contC.querySelectorAll('.fa-suggestion-card').find(c => c.getAttribute('data-game-id') === 'anyone_but');
+    assert(abCard.innerHTML.includes('fa-suggestion-badge-new'), 'Won new game has NEW badge');
+    assert(abCard.innerHTML.includes('fa-suggestion-badge-solved'), 'Won new game ALSO has solved badge');
+
+    // 5d. Partial success new game
+    setupMockGameState('anyone_but', 'partial');
+    for (let k in mockElements) delete mockElements[k];
+    FootyUI.initGameSuggestions({ containerId: 'fa-game-suggestions', currentGame: 'top_transfers' });
+    let contD = getMockElement('fa-game-suggestions');
+    abCard = contD.querySelectorAll('.fa-suggestion-card').find(c => c.getAttribute('data-game-id') === 'anyone_but');
+    assert(abCard.innerHTML.includes('fa-suggestion-badge-new'), 'Partial new game has NEW badge');
+    assert(abCard.innerHTML.includes('fa-suggestion-badge-partial'), 'Partial new game ALSO has partial badge');
+
+    // 5e. Failed (loss) new game
+    setupMockGameState('anyone_but', 'loss');
+    for (let k in mockElements) delete mockElements[k];
+    FootyUI.initGameSuggestions({ containerId: 'fa-game-suggestions', currentGame: 'top_transfers' });
+    let contE = getMockElement('fa-game-suggestions');
+    abCard = contE.querySelectorAll('.fa-suggestion-card').find(c => c.getAttribute('data-game-id') === 'anyone_but');
+    assert(abCard.innerHTML.includes('fa-suggestion-badge-new'), 'Failed new game has NEW badge');
+    assert(abCard.innerHTML.includes('fa-suggestion-badge-failed'), 'Failed new game ALSO has failed badge');
+});
+
+// Test 6: New games tag appears until puzzle #30 per game
+it('6. New games tag appears until puzzle #30 per game', () => {
+    // Puzzle 1: New
+    assert.strictEqual(FootyUI.isNewGame({ id: 'test_game', launchDate: '2026-10-31' }, '2026-10-31'), true);
+    // Puzzle 15: New
+    assert.strictEqual(FootyUI.isNewGame({ id: 'test_game', puzzleNum: 15 }), true);
+    // Puzzle 30: New (boundary test)
+    assert.strictEqual(FootyUI.isNewGame({ id: 'test_game', puzzleNum: 30 }), true);
+    // Puzzle 31: NOT new (boundary test)
+    assert.strictEqual(FootyUI.isNewGame({ id: 'test_game', puzzleNum: 31 }), false);
+    // Puzzle 97: NOT new
+    assert.strictEqual(FootyUI.isNewGame({ id: 'test_game', puzzleNum: 97 }), false);
+    // Coming soon: NOT new
+    assert.strictEqual(FootyUI.isNewGame({ id: 'test_game', status: 'coming_soon', puzzleNum: 1 }), false);
 });
 
 if (failed > 0) {

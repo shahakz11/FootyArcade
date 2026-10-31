@@ -903,7 +903,7 @@
 
                 const criteriaContext = (activeGameData.tables || [])
                     .map((t, idx) => `Table ${idx + 1}: ${t.label}`)
-                    .join('; ');
+                    .join(' | ');
 
                 FootyUI.showFeedback({
                     isCorrect: false,
@@ -913,7 +913,7 @@
                     gameId: GAME_ID,
                     puzzleNum: puzzleNum,
                     theme: `Excluded: ${activeGameData.excluded_player}`,
-                    context: `Anyone But criteria: ${criteriaContext}. Excluded player: ${activeGameData.excluded_player}. Guess: ${guessedName}.`,
+                    context: `Anyone But puzzle with 3 distinct criteria tables: [${criteriaContext}]. Excluded star: ${activeGameData.excluded_player}. Guess: ${guessedName}. YOU MUST VERIFY which specific table (1, 2, or 3) this player qualifies for. In your JSON response, return "table_number": (1, 2, or 3) and "table_numbers": [1, 2, or 3], and in "reason" explicitly state "Qualifies for Table X: ...".`,
                     canVar: true,
                     onVarAccepted: (res) => {
                         handleVarApproved(guessedName, res);
@@ -922,45 +922,161 @@
             }
         }
 
+        function getMatchingTableIndices(matched, res) {
+            if (!activeGameData || !Array.isArray(activeGameData.tables)) return [0];
+            const tables = activeGameData.tables;
+            const matchedIndices = [];
+
+            // 1. Direct table_numbers / table_number from VAR API response
+            if (res) {
+                if (Array.isArray(res.table_numbers) && res.table_numbers.length > 0) {
+                    res.table_numbers.forEach(num => {
+                        const idx = parseInt(num, 10) - 1;
+                        if (idx >= 0 && idx < tables.length && !matchedIndices.includes(idx)) {
+                            matchedIndices.push(idx);
+                        }
+                    });
+                    if (matchedIndices.length > 0) return matchedIndices;
+                }
+                if (typeof res.table_number === 'number' || (typeof res.table_number === 'string' && /^\d+$/.test(res.table_number))) {
+                    const idx = parseInt(res.table_number, 10) - 1;
+                    if (idx >= 0 && idx < tables.length) {
+                        return [idx];
+                    }
+                }
+            }
+
+            // 2. Regex search in VAR reason or explanation
+            const reasonText = [
+                res?.reason || '',
+                res?.explanation || '',
+                res?.stat || ''
+            ].join(' ').toLowerCase();
+
+            const explicitTableMatches = [];
+            const tableRegex = /(?:table|tabla)\s*([1-3])/gi;
+            let m;
+            while ((m = tableRegex.exec(reasonText)) !== null) {
+                const idx = parseInt(m[1], 10) - 1;
+                if (idx >= 0 && idx < tables.length && !explicitTableMatches.includes(idx)) {
+                    explicitTableMatches.push(idx);
+                }
+            }
+            if (explicitTableMatches.length > 0) {
+                return explicitTableMatches;
+            }
+
+            // 3. Player metadata lookup
+            const playerObj = (typeof allPlayersList !== 'undefined' && Array.isArray(allPlayersList))
+                ? allPlayersList.find(p => normalizePlayerName(p.Name).toLowerCase() === normalizePlayerName(matched).toLowerCase())
+                : null;
+            const playerNat = (playerObj?.Nationality || res?.nationality || '').toLowerCase();
+            const playerVal = playerObj?.MarketValue || (res?.fee_amount ? parseFloat(res.fee_amount) : 0);
+            const combinedText = (reasonText + ' ' + (res?.club || '') + ' ' + (res?.from_club || '') + ' ' + (res?.to_club || '')).toLowerCase();
+
+            // 4. Score each table based on criteria type and evidence
+            const tableScores = tables.map((tbl, idx) => {
+                const label = tbl.label.toLowerCase();
+                let score = 0;
+
+                // Check A: "Played for BOTH {club_a} & {club_b}"
+                const bothMatch = label.match(/both\s+(.+?)\s+&\s+(.+?)(?:$|\))/i) || label.match(/tanto en\s+(.+?)\s+como en\s+(.+?)(?:$|\))/i);
+                if (bothMatch) {
+                    const clubA = bothMatch[1].trim().toLowerCase();
+                    const clubB = bothMatch[2].trim().toLowerCase();
+                    const hasA = combinedText.includes(clubA);
+                    const hasB = combinedText.includes(clubB);
+                    if (hasA && hasB) score += 10;
+                    else if (hasA || hasB) score += 1;
+                    else score -= 5;
+                }
+
+                // Check B: "Played for {club} (peak market value ≥ €{N}M)"
+                const valMatch = label.match(/played for\s+(.+?)\s*\(.*?(?:peak|máx).*?€?(\d+)m/i) || label.match(/jugó en\s+(.+?)\s*\(.*?(?:peak|máx).*?€?(\d+)m/i);
+                if (valMatch) {
+                    const club = valMatch[1].trim().toLowerCase();
+                    const reqValM = parseInt(valMatch[2], 10);
+                    const reqVal = reqValM * 1_000_000;
+                    const hasClub = combinedText.includes(club);
+                    const meetsVal = playerVal >= reqVal || combinedText.includes(reqValM + 'm');
+                    if (hasClub && meetsVal) score += 10;
+                    else if (hasClub) score += 4;
+                    else score -= 5;
+                }
+
+                // Check C: "{Nationality} with {N}+ career goals"
+                const goalsMatch = label.match(/with\s+(\d+)\+\s*career goals/i) || label.match(/con\s+(\d+)\+\s*goles/i);
+                if (goalsMatch) {
+                    const reqGoals = parseInt(goalsMatch[1], 10);
+                    const natInLabel = label.split(/\s+/)[0];
+                    const natStem = natInLabel.slice(0, 4);
+                    const natMatches = playerNat && (playerNat.includes(natStem) || playerNat.includes(natInLabel));
+                    const hasGoalsMention = combinedText.includes('goal') || combinedText.includes('gol') || (res?.goals && res.goals >= reqGoals);
+                    if (natMatches && hasGoalsMention) score += 10;
+                    else if (natMatches) score += 5;
+                    else if (playerNat && !natMatches) score -= 20; // Disqualifier: distinct different nationality
+                }
+
+                // Check D: "{Nationality} who played for {club}"
+                const natClubMatch = label.match(/^(.+?)\s+who played for\s+(.+?)$/i) || label.match(/^(.+?)\s+que jugó en\s+(.+?)$/i);
+                if (natClubMatch) {
+                    const natName = natClubMatch[1].trim().toLowerCase();
+                    const natStem = natName.slice(0, 4);
+                    const club = natClubMatch[2].trim().toLowerCase();
+                    const hasClub = combinedText.includes(club);
+                    const hasNat = playerNat.includes(natStem) || combinedText.includes(natName);
+                    if (hasClub && hasNat) score += 10;
+                    else if (hasClub) score += 4;
+                    else if (playerNat && !hasNat) score -= 20;
+                }
+
+                // Exact player matches from table answers
+                tbl.answers.forEach(ans => {
+                    if (normalizePlayerName(ans).toLowerCase() === normalizePlayerName(matched).toLowerCase()) {
+                        score += 50;
+                    }
+                });
+
+                return { idx, score };
+            });
+
+            const validScores = tableScores.filter(ts => ts.score > 0);
+            if (validScores.length > 0) {
+                validScores.sort((a, b) => b.score - a.score);
+                const topScore = validScores[0].score;
+                return validScores.filter(ts => ts.score >= topScore - 1).map(ts => ts.idx);
+            }
+
+            // 5. Fallback: first table with unsolved slot
+            for (let idx = 0; idx < tables.length; idx++) {
+                const tbl = tables[idx];
+                const solvedSet = solvedAnswers[idx] || new Set();
+                if (solvedSet.size < tbl.answers.length) {
+                    return [idx];
+                }
+            }
+
+            return [0];
+        }
+
         function handleVarApproved(matched, res) {
             livesCtrl.add(1, 'var');
             if (wrongGuessesCtrl && typeof wrongGuessesCtrl.delete === 'function') {
                 wrongGuessesCtrl.delete(matched);
             }
 
-            let assignedTable = -1;
-            if (res && typeof res.table_number === 'number' && res.table_number >= 1 && res.table_number <= (activeGameData.tables || []).length) {
-                assignedTable = res.table_number - 1;
-            } else {
-                // Check if reason/explanation specifies a table
-                const reasonStr = (res && (res.reason || res.explanation || '')).toString().toLowerCase();
-                for (let idx = 0; idx < (activeGameData.tables || []).length; idx++) {
-                    if (reasonStr.includes(`table ${idx + 1}`) || reasonStr.includes(`tabla ${idx + 1}`)) {
-                        assignedTable = idx;
-                        break;
-                    }
-                }
-                if (assignedTable === -1) {
-                    for (let idx = 0; idx < (activeGameData.tables || []).length; idx++) {
-                        const tbl = activeGameData.tables[idx];
-                        const solvedSet = solvedAnswers[idx] || new Set();
-                        if (solvedSet.size < tbl.answers.length) {
-                            assignedTable = idx;
-                            break;
-                        }
-                    }
-                }
-                if (assignedTable === -1) assignedTable = 0;
-            }
+            const assignedTableIndices = getMatchingTableIndices(matched, res);
 
-            const targetTable = activeGameData.tables[assignedTable];
-            if (targetTable) {
+            assignedTableIndices.forEach(tIdx => {
+                const targetTable = activeGameData.tables[tIdx];
+                if (!targetTable) return;
+
                 const existing = targetTable.answers.find(a => normalizePlayerName(a).toLowerCase() === normalizePlayerName(matched).toLowerCase());
                 if (existing) {
-                    if (!solvedAnswers[assignedTable]) solvedAnswers[assignedTable] = new Set();
-                    solvedAnswers[assignedTable].add(existing);
+                    if (!solvedAnswers[tIdx]) solvedAnswers[tIdx] = new Set();
+                    solvedAnswers[tIdx].add(existing);
                 } else {
-                    const solvedSet = solvedAnswers[assignedTable] || new Set();
+                    const solvedSet = solvedAnswers[tIdx] || new Set();
                     const unsolvedIdx = targetTable.answers.findIndex(a => !solvedSet.has(a));
                     if (unsolvedIdx !== -1) {
                         targetTable.answers.splice(unsolvedIdx, 1, matched);
@@ -968,26 +1084,32 @@
                         targetTable.answers.push(matched);
                         targetTable.answer_count = targetTable.answers.length;
                     }
-                    if (!solvedAnswers[assignedTable]) solvedAnswers[assignedTable] = new Set();
-                    solvedAnswers[assignedTable].add(matched);
-                }
-            }
-
-            // Also check other tables for multi-table crossover matches
-            (activeGameData.tables || []).forEach((tbl, tIdx) => {
-                if (tIdx === assignedTable) return;
-                const match = tbl.answers.find(a => normalizePlayerName(a).toLowerCase() === normalizePlayerName(matched).toLowerCase());
-                if (match) {
                     if (!solvedAnswers[tIdx]) solvedAnswers[tIdx] = new Set();
-                    solvedAnswers[tIdx].add(match);
+                    solvedAnswers[tIdx].add(matched);
                 }
             });
 
             guessedPlayers.add(normalizePlayerName(matched).toLowerCase());
 
             const isEs = isSpanish();
-            FootyUI.toast(
-                isEs ? `VAR Revocado: ¡"${matched}" aceptado por los árbitros!` : `VAR Overruled: "${matched}" accepted by match officials!`,
+            if (assignedTableIndices.length > 1) {
+                FootyUI.toast(
+                    isEs ? `🔥 VAR Aprobado: ¡"${matched}" completó casillas en ${assignedTableIndices.length} tablas!` : `🔥 VAR Overruled: "${matched}" solved slots in ${assignedTableIndices.length} tables!`,
+                    'success'
+                );
+            } else {
+                const tblNum = assignedTableIndices[0] + 1;
+                FootyUI.toast(
+                    isEs ? `✅ VAR Aprobado: ¡"${matched}" añadido a la Tabla ${tblNum}!` : `✅ VAR Overruled: "${matched}" added to Table ${tblNum}!`,
+                    'success'
+                );
+            }
+
+            renderTables();
+            updateScoreBar();
+            saveCurrentProgress();
+            checkWinCondition();
+        }
                 'success'
             );
 

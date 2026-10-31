@@ -1035,6 +1035,32 @@
     white-space: nowrap;
 }
 
+.fa-suggestion-badges {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.fa-suggestion-badge-new {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-family: 'Space Grotesk', monospace, sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: #00f0ff;
+    background: rgba(0, 240, 255, 0.14);
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    border-radius: 9999px;
+    padding: 1px 7px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+}
+
 .fa-suggestion-badge-solved {
     display: inline-flex;
     align-items: center;

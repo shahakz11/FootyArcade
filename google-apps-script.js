@@ -417,6 +417,8 @@ function handleVarCheck(payload) {
     club: '',
     appearances: '',
     nationality: '',
+    table_number: 0,
+    table_numbers: [],
     isError: false
   };
 
@@ -461,7 +463,8 @@ function handleVarCheck(payload) {
         "- For 'club_connect':\n" +
         "   * The guessed club (" + guess + ") must be a club that ALL listed hint players played for during their senior careers.\n" +
         "- For 'anyone_but':\n" +
-        "   * Must satisfy the criteria AND must NOT be the excluded player.\n\n" +
+        "   * The context specifies the 3 criteria tables and the excluded player. Guessed player (" + guess + ") must satisfy one or more table criteria AND must NOT be the excluded player.\n" +
+        "   * If accepted, specify 'table_number' (integer 1, 2, or 3) and 'table_numbers' (array of integers, e.g. [1] or [1, 2]) indicating which table(s) the player qualifies for, and mention the matching table number in the reason.\n\n" +
         "OUTPUT SCHEMA:\n" +
         "Return ONLY a valid JSON object matching this schema:\n" +
         "{\n" +
@@ -475,7 +478,9 @@ function handleVarCheck(payload) {
         '  "goals": 0,\n' +
         '  "club": "Club Name",\n' +
         '  "appearances": "10",\n' +
-        '  "nationality": "Country Name"\n' +
+        '  "nationality": "Country Name",\n' +
+        '  "table_number": 1,\n' +
+        '  "table_numbers": [1]\n' +
         "}";
 
       // Build Multi-Tier Waterfall Pipeline
@@ -571,6 +576,8 @@ function handleVarCheck(payload) {
                 varResult.club = parsed.club || '';
                 varResult.appearances = parsed.appearances ? parsed.appearances.toString() : '';
                 varResult.nationality = parsed.nationality || '';
+                varResult.table_number = parsed.table_number || (parsed.table_numbers && parsed.table_numbers[0]) || 0;
+                varResult.table_numbers = Array.isArray(parsed.table_numbers) ? parsed.table_numbers : (parsed.table_number ? [parsed.table_number] : []);
                 success = true;
                 break;
               } else {
@@ -586,7 +593,7 @@ function handleVarCheck(payload) {
             var groqPayload = {
               model: step.model,
               messages: [
-                { role: "system", content: "You are a strict, skeptical official football referee VAR fact-checker. Return ONLY valid JSON with keys: accepted, reason, stat, fee_amount, year, from_club, to_club, goals, club, appearances, nationality." },
+                { role: "system", content: "You are a strict, skeptical official football referee VAR fact-checker. Return ONLY valid JSON with keys: accepted, reason, stat, fee_amount, year, from_club, to_club, goals, club, appearances, nationality, table_number, table_numbers." },
                 { role: "user", content: prompt }
               ],
               response_format: { type: "json_object" },
@@ -622,6 +629,8 @@ function handleVarCheck(payload) {
                 varResult.club = parsedG.club || '';
                 varResult.appearances = parsedG.appearances ? parsedG.appearances.toString() : '';
                 varResult.nationality = parsedG.nationality || '';
+                varResult.table_number = parsedG.table_number || (parsedG.table_numbers && parsedG.table_numbers[0]) || 0;
+                varResult.table_numbers = Array.isArray(parsedG.table_numbers) ? parsedG.table_numbers : (parsedG.table_number ? [parsedG.table_number] : []);
                 success = true;
                 break;
               } else {
@@ -785,6 +794,8 @@ function handleVarCheck(payload) {
     club: varResult.club,
     appearances: varResult.appearances,
     nationality: varResult.nationality,
+    table_number: varResult.table_number || 0,
+    table_numbers: varResult.table_numbers || [],
     isError: varResult.isError === true
   })).setMimeType(ContentService.MimeType.JSON);
 }

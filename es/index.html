@@ -447,46 +447,50 @@
     </footer>
 
     <script src="../games/footy-i18n.js"></script>
-    <script src="../games/footy-ui.js"></script>
+    <script src="../games/footy-ui.js?v=20261031c"></script>
     <script>
-        FootyI18n.setLang('es');
-        FootyUI.initAccentColor('#39ff14');
+        if (typeof FootyI18n !== 'undefined' && typeof FootyI18n.setLang === 'function') {
+            FootyI18n.setLang('es');
+        }
+        if (typeof FootyUI !== 'undefined' && typeof FootyUI.initAccentColor === 'function') {
+            FootyUI.initAccentColor('#39ff14');
+        }
 
         const FALLBACK_GAMES = [
             {
                 id: "top_transfers", name: "Top Fichajes",
                 description: "Adivina los fichajes récord para un club o nacionalidad antes de quedarte sin vidas.",
-                link: "games/top_transfers.html", icon: "payments", accentHex: "#00f0ff"
+                link: "games/top_transfers.html", icon: "payments", accentHex: "#00f0ff", launchDate: "2026-07-27"
             },
             {
                 id: "transfer_destination", name: "Destino de Fichaje",
                 description: "Adivina la trayectoria de un futbolista estrella paso a paso en orden cronológico inverso.",
-                link: "games/transfer_destination.html", icon: "alt_route", accentHex: "#39ff14"
+                link: "games/transfer_destination.html", icon: "alt_route", accentHex: "#39ff14", launchDate: "2026-07-27"
             },
             {
                 id: "top_scorers", name: "Máximos Goleadores",
                 description: "Adivina los máximos goleadores históricos de un club, liga o selección nacional.",
-                link: "games/top_scorers.html", icon: "sports_soccer", accentHex: "#f59e0b"
+                link: "games/top_scorers.html", icon: "sports_soccer", accentHex: "#f59e0b", launchDate: "2026-07-27"
             },
             {
                 id: "club_connect", name: "Conexión de Clubes",
                 description: "5 jugadores. 1 club los fichó a todos. Adivina el club misterioso antes de revelar las pistas.",
-                link: "games/club_connect.html", icon: "hub", accentHex: "#e879f9"
+                link: "games/club_connect.html", icon: "hub", accentHex: "#e879f9", launchDate: "2026-07-31"
             },
             {
                 id: "player_chain", name: "Cadena de Jugadores",
                 description: "Adivina al Jugador Misterioso del Día nombrando futbolistas que conecten la cadena de clubes.",
-                link: "games/player_chain.html", icon: "link", accentHex: "#38bdf8"
+                link: "games/player_chain.html", icon: "link", accentHex: "#38bdf8", launchDate: "2026-09-11"
             },
             {
                 id: "played_with", name: "Jugó Con",
                 description: "5 compañeros revelados por partidos juntos de menor a mayor. ¡Adivina el jugador misterioso!",
-                link: "games/played_with.html", icon: "group", accentHex: "#f97316"
+                link: "games/played_with.html", icon: "group", accentHex: "#f97316", launchDate: "2026-09-27"
             },
             {
                 id: "passport_fc", name: "Pasaporte FC",
                 description: "Completa el pasaporte del club desbloqueando 4 sellos progresivos de nacionalidades.",
-                link: "games/passport_fc.html", icon: "public", accentHex: "#10b981"
+                link: "games/passport_fc.html", icon: "public", accentHex: "#10b981", launchDate: "2026-09-14"
             },
             {
                 id: "this_and_that", name: "Esto y Aquello",
@@ -496,17 +500,24 @@
             {
                 id: "anyone_but", name: "Cualquiera Menos",
                 description: "Adivina futbolistas que cumplen los criterios excepto para el jugador clave.",
-                link: "es/games/anyone_but.html", icon: "person_off", accentHex: "#ff0055"
+                link: "es/games/anyone_but.html", icon: "person_off", accentHex: "#ff0055", launchDate: "2026-10-31"
             }
         ];
 
-        document.addEventListener('DOMContentLoaded', async () => {
+        const startApp = async () => {
             await loadGames();
             calculateGlobalStats();
-        });
+        };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', startApp);
+        } else {
+            startApp();
+        }
 
         async function loadGames() {
             const grid = document.getElementById('games-grid');
+            if (!grid) return;
             let games  = FALLBACK_GAMES;
 
             try {
@@ -524,116 +535,205 @@
                 console.log('Using fallback Spanish games:', e);
             }
 
-            const STATUS_PRIORITY = {
-                'unplayed': 1,
-                'in_progress': 2,
-                'won': 3,
-                'partial': 4,
-                'loss': 5
-            };
-
-            const rawLiveGames = games.filter(g => g.status !== 'coming_soon');
-            const futureGames  = games.filter(g => g.status === 'coming_soon');
-
-            const liveGames = rawLiveGames.map((game, originalIndex) => {
-                let todayStatus = { status: 'unplayed' };
-                try {
-                    const storage = new FootyUI.FootyStorage(game.id);
-                    todayStatus = storage.getTodayStatus();
-                } catch (_) {}
-                const rank = STATUS_PRIORITY[todayStatus.status] || 1;
-                return {
-                    ...game,
-                    todayStatus,
-                    rank,
-                    originalIndex
+            try {
+                const STATUS_PRIORITY = {
+                    'unplayed': 1,
+                    'in_progress': 2,
+                    'won': 3,
+                    'partial': 4,
+                    'loss': 5
                 };
-            });
 
-            liveGames.sort((a, b) => (a.rank - b.rank) || (a.originalIndex - b.originalIndex));
-            const orderedGames = [...liveGames, ...futureGames];
+                const isNewGameFn = (game) => {
+                    try {
+                        if (typeof FootyUI !== 'undefined' && typeof FootyUI.isNewGame === 'function') {
+                            return FootyUI.isNewGame(game);
+                        }
+                    } catch (_) {}
+                    if (!game || game.status === 'coming_soon') return false;
+                    const launchStr = game.launchDate || '2026-07-27';
+                    const parts = launchStr.split('-').map(Number);
+                    if (parts.length !== 3 || isNaN(parts[0])) return false;
+                    const launchUtc = Date.UTC(parts[0], parts[1] - 1, parts[2]);
+                    const now = new Date();
+                    const todayUtc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+                    const daysDiff = Math.floor((todayUtc - launchUtc) / (86400 * 1000));
+                    if (daysDiff < 0) return false;
+                    const pNum = (daysDiff % 180) + 1;
+                    return pNum >= 1 && pNum <= 30;
+                };
 
-            grid.innerHTML = '';
-            orderedGames.forEach(game => {
-                const hex = game.accentHex || '#39ff14';
-                const r   = parseInt(hex.slice(1,3),16);
-                const g   = parseInt(hex.slice(3,5),16);
-                const b   = parseInt(hex.slice(5,7),16);
-                const rgb = `${r},${g},${b}`;
+                const getPuzzleNumFn = (g) => {
+                    try {
+                        if (typeof FootyUI !== 'undefined' && typeof FootyUI.getGamePuzzleNum === 'function') {
+                            return FootyUI.getGamePuzzleNum(g);
+                        }
+                    } catch (_) {}
+                    if (!g) return 0;
+                    if (typeof g.puzzleNum === 'number' && g.puzzleNum > 0) return g.puzzleNum;
+                    const launchStr = g.launchDate || '2026-07-27';
+                    const parts = launchStr.split('-').map(Number);
+                    if (parts.length !== 3 || isNaN(parts[0])) return false;
+                    const launchUtc = Date.UTC(parts[0], parts[1] - 1, parts[2]);
+                    const now = new Date();
+                    const todayUtc = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+                    const daysDiff = Math.floor((todayUtc - launchUtc) / (86400 * 1000));
+                    if (daysDiff < 0) return 0;
+                    return (daysDiff % 180) + 1;
+                };
 
-                const isComingSoon = game.status === 'coming_soon';
-                const storage     = new FootyUI.FootyStorage(game.id);
-                const todayStatus = isComingSoon ? { status: 'unplayed' } : (game.todayStatus || storage.getTodayStatus());
-                const stats       = !isComingSoon ? storage.getStats() : { streak: 0 };
+                const rawLiveGames = games.filter(g => g.status !== 'coming_soon');
+                const futureGames  = games.filter(g => g.status === 'coming_soon');
 
-                let badgeHtml = '';
-                let ctaText = 'JUGAR RETO';
-                let ctaStyle = `color:rgb(${rgb});`;
+                const liveGames = rawLiveGames.map((game, originalIndex) => {
+                    let todayStatus = { status: 'unplayed' };
+                    try {
+                        if (typeof FootyUI !== 'undefined' && typeof FootyUI.FootyStorage === 'function') {
+                            const storage = new FootyUI.FootyStorage(game.id);
+                            todayStatus = storage.getTodayStatus();
+                        }
+                    } catch (_) {}
+                    const rank = STATUS_PRIORITY[todayStatus.status] || 1;
+                    const isNew = isNewGameFn(game);
+                    const puzzleNum = getPuzzleNumFn(game);
+                    return {
+                        ...game,
+                        todayStatus,
+                        rank,
+                        isNew,
+                        puzzleNum,
+                        originalIndex
+                    };
+                });
 
-                if (isComingSoon) {
-                    badgeHtml = `
-                        <span class="font-mono text-[10px] font-bold bg-white/5 border border-white/10 text-on-surface-variant/60 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
-                            <span class="material-symbols-outlined" style="font-size:11px">schedule</span> Próximamente
-                        </span>`;
-                    ctaText = 'EN DESARROLLO';
-                } else if (todayStatus.status === 'won') {
-                    const scoreStr = (todayStatus.score !== undefined && todayStatus.maxScore !== undefined) ? ` (${todayStatus.score}/${todayStatus.maxScore})` : '';
-                    badgeHtml = `
-                        <span class="font-mono text-[10px] font-bold bg-[#39ff14]/15 border border-[#39ff14]/30 text-[#39ff14] px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                            <span class="material-symbols-outlined text-[#39ff14]" style="font-size:11px">check_circle</span> Completado${scoreStr}
-                        </span>`;
-                    ctaText = 'VER RESULTADO';
-                } else if (todayStatus.status === 'partial') {
-                    const scoreStr = (todayStatus.score !== undefined && todayStatus.maxScore !== undefined) ? ` (${todayStatus.score}/${todayStatus.maxScore})` : '';
-                    badgeHtml = `
-                        <span class="font-mono text-[10px] font-bold bg-amber-500/15 border border-amber-500/30 text-amber-400 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                            <span class="material-symbols-outlined text-amber-400" style="font-size:11px">military_tech</span> Parcial${scoreStr}
-                        </span>`;
-                    ctaText = 'VER RESULTADO';
-                } else if (todayStatus.status === 'loss') {
-                    badgeHtml = `
-                        <span class="font-mono text-[10px] font-bold bg-[#ff4d4d]/15 border border-[#ff4d4d]/30 text-[#ff4d4d] px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm">
-                            <span class="material-symbols-outlined text-[#ff4d4d]" style="font-size:11px">dangerous</span> No superado
-                        </span>`;
-                    ctaText = 'VER RESULTADO';
-                } else if (todayStatus.status === 'in_progress') {
-                    badgeHtml = `
-                        <span class="font-mono text-[10px] font-bold bg-orange-500/15 border border-orange-500/35 text-orange-400 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm animate-pulse">
-                            <span class="material-symbols-outlined text-orange-400" style="font-size:11px">timelapse</span> En curso
-                        </span>`;
-                    ctaText = 'CONTINUAR';
-                    ctaStyle = 'color:#fb923c;';
-                }
+                // Boost new games (puzzles #1 to #30) so they appear first during that time.
+                liveGames.sort((a, b) => {
+                    const newA = a.isNew ? 0 : 1;
+                    const newB = b.isNew ? 0 : 1;
+                    if (newA !== newB) return newA - newB;
+                    if (a.isNew && b.isNew && a.rank === b.rank && a.puzzleNum !== b.puzzleNum) {
+                        return a.puzzleNum - b.puzzleNum;
+                    }
+                    return (a.rank - b.rank) || (a.originalIndex - b.originalIndex);
+                });
+                const orderedGames = [...liveGames, ...futureGames];
 
-                const card = document.createElement(isComingSoon ? 'div' : 'a');
-                if (!isComingSoon) card.href = game.link;
-                card.className = `glass-card rounded-2xl p-6 flex flex-col justify-between min-h-[220px] ${isComingSoon ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer group'} block`;
-                card.style.cssText = `--fa-accent-rgb:${rgb};`;
-                if (isComingSoon) card.title = 'Próximamente disponible';
+                grid.innerHTML = '';
+                orderedGames.forEach(game => {
+                    const hex = game.accentHex || '#39ff14';
+                    const r   = parseInt(hex.slice(1,3),16);
+                    const g   = parseInt(hex.slice(3,5),16);
+                    const b   = parseInt(hex.slice(5,7),16);
+                    const rgb = `${r},${g},${b}`;
 
-                card.innerHTML = `
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between">
-                            <span class="material-symbols-outlined text-4xl p-2 bg-black/30 rounded-xl" style="color:rgb(${rgb})">${game.icon}</span>
-                            <div class="flex items-center gap-2">
-                                ${badgeHtml}
+                    const isComingSoon = game.status === 'coming_soon';
+                    let todayStatus = { status: 'unplayed' };
+                    let stats = { streak: 0 };
+                    try {
+                        if (!isComingSoon && typeof FootyUI !== 'undefined' && typeof FootyUI.FootyStorage === 'function') {
+                            const storage = new FootyUI.FootyStorage(game.id);
+                            todayStatus = game.todayStatus || storage.getTodayStatus();
+                            stats = storage.getStats();
+                        } else if (game.todayStatus) {
+                            todayStatus = game.todayStatus;
+                        }
+                    } catch (_) {}
+
+                    const isNew = !isComingSoon && isNewGameFn(game);
+
+                    const newBadgeHtml = isNew ? `
+                        <span class="fa-new-game-tag font-mono text-[10px] font-bold bg-[#00f0ff]/15 border border-[#00f0ff]/40 text-[#00f0ff] px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm shadow-[#00f0ff]/10">
+                            <span class="material-symbols-outlined text-[#00f0ff]" style="font-size:11px">auto_awesome</span> Nuevo
+                        </span>` : '';
+
+                    let badgeHtml = '';
+                    let ctaText = 'JUGAR RETO';
+                    let ctaStyle = `color:rgb(${rgb});`;
+
+                    if (isComingSoon) {
+                        badgeHtml = `
+                            <span class="font-mono text-[10px] font-bold bg-white/5 border border-white/10 text-on-surface-variant/60 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
+                                <span class="material-symbols-outlined" style="font-size:11px">schedule</span> Próximamente
+                            </span>`;
+                        ctaText = 'EN DESARROLLO';
+                    } else if (todayStatus.status === 'won') {
+                        const scoreStr = (todayStatus.score !== undefined && todayStatus.maxScore !== undefined) ? ` (${todayStatus.score}/${todayStatus.maxScore})` : '';
+                        badgeHtml = `
+                            <span class="font-mono text-[10px] font-bold bg-[#39ff14]/15 border border-[#39ff14]/30 text-[#39ff14] px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                <span class="material-symbols-outlined text-[#39ff14]" style="font-size:11px">check_circle</span> Completado${scoreStr}
+                            </span>`;
+                        ctaText = 'VER RESULTADO';
+                    } else if (todayStatus.status === 'partial') {
+                        const scoreStr = (todayStatus.score !== undefined && todayStatus.maxScore !== undefined) ? ` (${todayStatus.score}/${todayStatus.maxScore})` : '';
+                        badgeHtml = `
+                            <span class="font-mono text-[10px] font-bold bg-amber-500/15 border border-amber-500/30 text-amber-400 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                <span class="material-symbols-outlined text-amber-400" style="font-size:11px">military_tech</span> Parcial${scoreStr}
+                            </span>`;
+                        ctaText = 'VER RESULTADO';
+                    } else if (todayStatus.status === 'loss') {
+                        badgeHtml = `
+                            <span class="font-mono text-[10px] font-bold bg-[#ff4d4d]/15 border border-[#ff4d4d]/30 text-[#ff4d4d] px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                <span class="material-symbols-outlined text-[#ff4d4d]" style="font-size:11px">dangerous</span> No superado
+                            </span>`;
+                        ctaText = 'VER RESULTADO';
+                    } else if (todayStatus.status === 'in_progress') {
+                        badgeHtml = `
+                            <span class="font-mono text-[10px] font-bold bg-orange-500/15 border border-orange-500/35 text-orange-400 px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-sm animate-pulse">
+                                <span class="material-symbols-outlined text-orange-400" style="font-size:11px">timelapse</span> En curso
+                            </span>`;
+                        ctaText = 'CONTINUAR';
+                        ctaStyle = 'color:#fb923c;';
+                    }
+
+                    const card = document.createElement(isComingSoon ? 'div' : 'a');
+                    if (!isComingSoon) card.href = game.link;
+                    card.className = `glass-card rounded-2xl p-6 flex flex-col justify-between min-h-[220px] ${isComingSoon ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer group'} block`;
+                    card.style.cssText = `--fa-accent-rgb:${rgb};`;
+                    if (isComingSoon) card.title = 'Próximamente disponible';
+
+                    card.innerHTML = `
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="material-symbols-outlined text-4xl p-2 bg-black/30 rounded-xl" style="color:rgb(${rgb})">${game.icon}</span>
+                                <div class="flex items-center gap-2 flex-wrap justify-end">
+                                    ${newBadgeHtml}
+                                    ${badgeHtml}
+                                </div>
+                            </div>
+                            <div class="space-y-1">
+                                <h4 class="font-headline text-2xl uppercase italic tracking-wide ${isComingSoon ? '' : 'group-hover:transition-colors'}" style="color:rgb(${rgb})">${game.name}</h4>
+                                <p class="text-on-surface-variant text-sm line-clamp-3">${game.description}</p>
                             </div>
                         </div>
-                        <div class="space-y-1">
-                            <h4 class="font-headline text-2xl uppercase italic tracking-wide ${isComingSoon ? '' : 'group-hover:transition-colors'}" style="color:rgb(${rgb})">${game.name}</h4>
-                            <p class="text-on-surface-variant text-sm line-clamp-3">${game.description}</p>
+                        <div class="flex items-center justify-between border-t border-white/5 pt-4 mt-4">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs font-mono uppercase tracking-wider font-bold" style="${ctaStyle}">${ctaText}</span>
+                                ${stats.streak > 0 ? `<span class="text-[10px] font-mono text-on-surface-variant">🔥 racha de ${stats.streak}</span>` : ''}
+                            </div>
+                            <span class="material-symbols-outlined text-on-surface-variant ${isComingSoon ? '' : 'group-hover:translate-x-1 transition-transform'}">${isComingSoon ? 'lock' : 'arrow_forward'}</span>
                         </div>
-                    </div>
-                    <div class="flex items-center justify-between border-t border-white/5 pt-4 mt-4">
-                        <div class="flex items-center gap-3">
-                            <span class="text-xs font-mono uppercase tracking-wider font-bold" style="${ctaStyle}">${ctaText}</span>
-                            ${stats.streak > 0 ? `<span class="text-[10px] font-mono text-on-surface-variant">🔥 racha de ${stats.streak}</span>` : ''}
+                    `;
+                    grid.appendChild(card);
+                });
+            } catch (renderError) {
+                console.error('Error rendering Spanish games grid:', renderError);
+                grid.innerHTML = '';
+                FALLBACK_GAMES.forEach(game => {
+                    const card = document.createElement('a');
+                    card.href = game.link;
+                    card.className = 'glass-card rounded-2xl p-6 flex flex-col justify-between min-h-[220px] cursor-pointer group block';
+                    card.innerHTML = `
+                        <div class="space-y-4">
+                            <span class="material-symbols-outlined text-4xl p-2 bg-black/30 rounded-xl text-accent">${game.icon}</span>
+                            <div>
+                                <h4 class="font-headline text-2xl uppercase italic text-accent">${game.name}</h4>
+                                <p class="text-on-surface-variant text-sm line-clamp-3">${game.description}</p>
+                            </div>
                         </div>
-                        <span class="material-symbols-outlined text-on-surface-variant ${isComingSoon ? '' : 'group-hover:translate-x-1 transition-transform'}">${isComingSoon ? 'lock' : 'arrow_forward'}</span>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
+                    `;
+                    grid.appendChild(card);
+                });
+            }
         }
 
         function calculateGlobalStats() {

@@ -3110,6 +3110,8 @@
     // ────────────────────────────────────────────────────────
     // More Daily Challenges Suggestions Component
     // ────────────────────────────────────────────────────────
+    const DEFAULT_LAUNCH_DATE = '2026-07-27';
+
     const GAMES_REGISTRY = [
         {
             id: 'top_transfers',
@@ -3119,6 +3121,7 @@
             taglineKey: 'tagline_top_transfers',
             defaultName: 'Top Transfers',
             defaultTagline: 'Guess the record signings',
+            launchDate: '2026-07-27',
             file: 'top_transfers.html'
         },
         {
@@ -3129,6 +3132,7 @@
             taglineKey: 'tagline_transfer_destination',
             defaultName: 'Transfer Destination',
             defaultTagline: "Guess a player's career path",
+            launchDate: '2026-07-27',
             file: 'transfer_destination.html'
         },
         {
@@ -3139,6 +3143,7 @@
             taglineKey: 'tagline_top_scorers',
             defaultName: 'Top Scorers',
             defaultTagline: 'Name the top goalscorers',
+            launchDate: '2026-07-27',
             file: 'top_scorers.html'
         },
         {
@@ -3149,6 +3154,7 @@
             taglineKey: 'tagline_club_connect',
             defaultName: 'Club Connect',
             defaultTagline: '5 players, 1 club signed them all',
+            launchDate: '2026-07-31',
             file: 'club_connect.html'
         },
         {
@@ -3159,6 +3165,7 @@
             taglineKey: 'tagline_player_chain',
             defaultName: 'Player Chain',
             defaultTagline: 'Connect consecutive clubs through shared teammates',
+            launchDate: '2026-09-11',
             file: 'player_chain.html'
         },
         {
@@ -3169,6 +3176,7 @@
             taglineKey: 'tagline_played_with',
             defaultName: 'Played With',
             defaultTagline: '5 teammates revealed by appearances together',
+            launchDate: '2026-09-27',
             file: 'played_with.html'
         },
         {
@@ -3179,6 +3187,7 @@
             taglineKey: 'tagline_passport_fc',
             defaultName: 'Passport FC',
             defaultTagline: 'Collect nationality stamps for a mystery club',
+            launchDate: '2026-09-14',
             file: 'passport_fc.html'
         },
         {
@@ -3189,9 +3198,63 @@
             taglineKey: 'tagline_anyone_but',
             defaultName: 'Anyone But',
             defaultTagline: 'Inverse trivia: guess anyone except the star',
+            launchDate: '2026-10-31',
             file: 'anyone_but.html'
         }
     ];
+
+    /**
+     * Calculates the chronological puzzle number (1-based) for a given game.
+     * Matches the Python fetch_daily.py arithmetic: (target_date - launch_date).days % 180 + 1
+     */
+    function getGamePuzzleNum(game, targetDate) {
+        if (!game) return 0;
+        if (typeof game === 'string') {
+            const found = GAMES_REGISTRY.find(g => g.id === game);
+            return found ? getGamePuzzleNum(found, targetDate) : 0;
+        }
+        if (typeof game.puzzleNum === 'number' && game.puzzleNum > 0) {
+            return game.puzzleNum;
+        }
+        const launchStr = game.launchDate || DEFAULT_LAUNCH_DATE;
+        if (!launchStr) return 0;
+
+        const parts = launchStr.split('-').map(Number);
+        if (parts.length !== 3 || isNaN(parts[0])) return 0;
+        const launchUtc = Date.UTC(parts[0], parts[1] - 1, parts[2]);
+
+        let targetUtc;
+        if (targetDate instanceof Date) {
+            targetUtc = Date.UTC(targetDate.getUTCFullYear(), targetDate.getUTCMonth(), targetDate.getUTCDate());
+        } else if (typeof targetDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(targetDate)) {
+            const tParts = targetDate.split('-').map(Number);
+            targetUtc = Date.UTC(tParts[0], tParts[1] - 1, tParts[2]);
+        } else {
+            const d = new Date();
+            const iso = d.toISOString().slice(0, 10);
+            const tParts = iso.split('-').map(Number);
+            targetUtc = Date.UTC(tParts[0], tParts[1] - 1, tParts[2]);
+        }
+
+        const daysDiff = Math.floor((targetUtc - launchUtc) / (86400 * 1000));
+        if (daysDiff < 0) return 0;
+        return (daysDiff % 180) + 1;
+    }
+
+    /**
+     * Checks if a game is newly released (puzzles #1 to #30).
+     */
+    function isNewGame(game, targetDate) {
+        if (!game) return false;
+        if (typeof game === 'string') {
+            const found = GAMES_REGISTRY.find(g => g.id === game);
+            return found ? isNewGame(found, targetDate) : false;
+        }
+        if (game.status === 'coming_soon') return false;
+        if (typeof game.isNew === 'boolean') return game.isNew;
+        const pNum = getGamePuzzleNum(game, targetDate);
+        return pNum >= 1 && pNum <= 30;
+    }
 
     function initGameSuggestions(opts = {}) {
         const container = document.getElementById(opts.containerId || 'fa-game-suggestions');
@@ -3212,6 +3275,7 @@
         const sectionTitle = t('more_daily_challenges', 'MORE DAILY CHALLENGES');
         const backText = t('back_to_playmaker', '← Back to Playmaker');
 
+        const newText = t('badge_new', 'NEW ✨');
         const solvedText = t('badge_solved', 'SOLVED ✅');
         const partialText = t('badge_partial', 'PARTIAL ⚡');
         const failedText = t('badge_failed', 'MISSED ❌');
@@ -3232,15 +3296,29 @@
                 todayStatus = storage.getTodayStatus();
             } catch (_) {}
             const rank = STATUS_PRIORITY[todayStatus.status] || 1;
+            const isNew = isNewGame(game);
+            const puzzleNum = getGamePuzzleNum(game);
             return {
                 ...game,
                 todayStatus,
                 rank,
+                isNew,
+                puzzleNum,
                 originalIndex
             };
         });
 
-        otherGames.sort((a, b) => (a.rank - b.rank) || (a.originalIndex - b.originalIndex));
+        // Boost new games (puzzles #1 to #30) so they appear first during that time.
+        // Ties break by status priority rank, then newer puzzle, then original order.
+        otherGames.sort((a, b) => {
+            const newA = a.isNew ? 0 : 1;
+            const newB = b.isNew ? 0 : 1;
+            if (newA !== newB) return newA - newB;
+            if (a.isNew && b.isNew && a.rank === b.rank && a.puzzleNum !== b.puzzleNum) {
+                return a.puzzleNum - b.puzzleNum;
+            }
+            return (a.rank - b.rank) || (a.originalIndex - b.originalIndex);
+        });
 
         let cardsHtml = '';
         otherGames.forEach(game => {
@@ -3259,15 +3337,21 @@
                 statusBadge = `<span class="fa-suggestion-badge-inprogress">${inProgressText}</span>`;
             }
 
+            const isNew = game.isNew;
+            const newBadge = isNew ? `<span class="fa-suggestion-badge-new fa-new-game-tag">${newText}</span>` : '';
+
             cardsHtml += `
-                <a href="${game.file}" class="fa-suggestion-card" data-game-id="${game.id}" data-status="${statusKey}">
+                <a href="${game.file}" class="fa-suggestion-card" data-game-id="${game.id}" data-status="${statusKey}" data-is-new="${isNew ? 'true' : 'false'}">
                     <div class="fa-suggestion-icon-wrap" style="color: ${game.color}">
                         <span class="material-symbols-outlined fa-suggestion-icon">${game.icon}</span>
                     </div>
                     <div class="fa-suggestion-content">
                         <div class="fa-suggestion-title-row">
                             <span class="fa-suggestion-title" style="color: ${game.color}">${gameTitle}</span>
-                            ${statusBadge}
+                            <div class="fa-suggestion-badges">
+                                ${newBadge}
+                                ${statusBadge}
+                            </div>
                         </div>
                         <p class="fa-suggestion-tagline">${gameTagline}</p>
                     </div>
@@ -3312,27 +3396,6 @@
             initGameSuggestions({ containerId: 'fa-game-suggestions' });
         }
     }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            initAnalyticsAndConsent();
-            initFeedbackSystem();
-            initPWAInstall();
-            initLanguageSwitcher();
-            initHowToPlay();
-            autoInitSuggestions();
-            trackEvent('page_view');
-        });
-    } else {
-        initAnalyticsAndConsent();
-        initFeedbackSystem();
-        initPWAInstall();
-        initLanguageSwitcher();
-        initHowToPlay();
-        autoInitSuggestions();
-        trackEvent('page_view');
-    }
-
 
     // ────────────────────────────────────────────────────────
     // Public API
@@ -3380,10 +3443,33 @@
         initLanguageSwitcher,
         initGameSuggestions,
         GAMES_REGISTRY,
+        isNewGame,
+        getGamePuzzleNum,
         FootyConsent
     };
 
     global.FootyConsent = FootyConsent;
+
+    // DOM Ready Auto-initializations
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            initAnalyticsAndConsent();
+            initFeedbackSystem();
+            initPWAInstall();
+            initLanguageSwitcher();
+            initHowToPlay();
+            autoInitSuggestions();
+            trackEvent('page_view');
+        });
+    } else {
+        initAnalyticsAndConsent();
+        initFeedbackSystem();
+        initPWAInstall();
+        initLanguageSwitcher();
+        initHowToPlay();
+        autoInitSuggestions();
+        trackEvent('page_view');
+    }
 
 })(window);
 

@@ -77,6 +77,7 @@ class TestGameSuggestions(unittest.TestCase):
             "tagline_player_chain",
             "tagline_played_with",
             "tagline_passport_fc",
+            "badge_new",
             "badge_solved",
             "badge_partial",
             "badge_failed",
@@ -166,6 +167,7 @@ class TestGameSuggestions(unittest.TestCase):
         self.assertIn(".fa-suggestions-header", css_content)
         self.assertIn(".fa-suggestions-grid", css_content)
         self.assertIn(".fa-suggestion-card", css_content)
+        self.assertIn(".fa-suggestion-badge-new", css_content)
         self.assertIn(".fa-suggestion-badge-solved", css_content)
         self.assertIn(".fa-suggestion-badge-failed", css_content)
         self.assertIn(".fa-suggestions-back", css_content)

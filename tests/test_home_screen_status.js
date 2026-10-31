@@ -171,6 +171,8 @@ const esIndex = fs.readFileSync(path.join(__dirname, '..', 'es', 'index.html'), 
 
 // English assertions
 assert.ok(enIndex.includes('storage.getTodayStatus()'), 'index.html must query storage.getTodayStatus()');
+assert.ok(enIndex.includes('FootyUI.isNewGame(game)'), 'index.html must check FootyUI.isNewGame(game)');
+assert.ok(enIndex.includes('fa-new-game-tag'), 'index.html must have fa-new-game-tag');
 assert.ok(enIndex.includes('Solved'), 'index.html must have Solved badge');
 assert.ok(enIndex.includes('Partial'), 'index.html must have Partial badge');
 assert.ok(enIndex.includes('Missed'), 'index.html must have Missed badge');
@@ -179,12 +181,63 @@ assert.ok(enIndex.includes('CONTINUE'), 'index.html must have CONTINUE CTA');
 
 // Spanish assertions
 assert.ok(esIndex.includes('storage.getTodayStatus()'), 'es/index.html must query storage.getTodayStatus()');
+assert.ok(esIndex.includes('FootyUI.isNewGame(game)'), 'es/index.html must check FootyUI.isNewGame(game)');
+assert.ok(esIndex.includes('fa-new-game-tag'), 'es/index.html must have fa-new-game-tag');
+assert.ok(esIndex.includes('Nuevo'), 'es/index.html must have Nuevo badge');
 assert.ok(esIndex.includes('Completado'), 'es/index.html must have Completado badge');
 assert.ok(esIndex.includes('Parcial'), 'es/index.html must have Parcial badge');
 assert.ok(esIndex.includes('No superado'), 'es/index.html must have No superado badge');
 assert.ok(esIndex.includes('En curso'), 'es/index.html must have En curso badge');
 assert.ok(esIndex.includes('CONTINUAR'), 'es/index.html must have CONTINUAR CTA');
 
-console.log("  ✓ Both index.html and es/index.html contain complete status badge and CTA logic");
+console.log("  ✓ Both index.html and es/index.html contain complete status badge, new tag, and CTA logic");
+
+// [Test 8] Verify new game boosting and tag coexistence across all states on homepage
+console.log("\n[Test 8] Verify new game boosting and tag coexistence across all states on homepage");
+const gamesList = [
+    { id: "top_transfers", name: "Top Transfers", status: "live", launchDate: "2026-07-27" },
+    { id: "anyone_but", name: "Anyone But", status: "live", launchDate: "2026-10-31" },
+    { id: "this_and_that", name: "This & That", status: "coming_soon" }
+];
+
+const STATUS_PRIORITY = { 'unplayed': 1, 'in_progress': 2, 'won': 3, 'partial': 4, 'loss': 5 };
+function sortLiveGames(rawList, states = {}) {
+    const rawLive = rawList.filter(g => g.status !== 'coming_soon');
+    const future = rawList.filter(g => g.status === 'coming_soon');
+    const live = rawLive.map((game, originalIndex) => {
+        const todayStatus = states[game.id] || { status: 'unplayed' };
+        const rank = STATUS_PRIORITY[todayStatus.status] || 1;
+        const isNew = FootyUI.isNewGame(game);
+        const puzzleNum = FootyUI.getGamePuzzleNum(game);
+        return { ...game, todayStatus, rank, isNew, puzzleNum, originalIndex };
+    });
+    live.sort((a, b) => {
+        const newA = a.isNew ? 0 : 1;
+        const newB = b.isNew ? 0 : 1;
+        if (newA !== newB) return newA - newB;
+        if (a.isNew && b.isNew && a.rank === b.rank && a.puzzleNum !== b.puzzleNum) {
+            return a.puzzleNum - b.puzzleNum;
+        }
+        return (a.rank - b.rank) || (a.originalIndex - b.originalIndex);
+    });
+    return [...live, ...future];
+}
+
+// 8a. anyone_but is new, so it appears before top_transfers even when unplayed
+let sorted = sortLiveGames(gamesList);
+assert.strictEqual(sorted[0].id, 'anyone_but', 'New game anyone_but must be boosted to position 0');
+assert.strictEqual(sorted[1].id, 'top_transfers', 'Non-new game follows');
+assert.strictEqual(sorted[2].id, 'this_and_that', 'Coming soon remains last');
+
+// 8b. anyone_but appears first even when won while top_transfers is unplayed
+sorted = sortLiveGames(gamesList, { 'anyone_but': { status: 'won' }, 'top_transfers': { status: 'unplayed' } });
+assert.strictEqual(sorted[0].id, 'anyone_but', 'New game anyone_but remains boosted first even when played/won');
+assert.strictEqual(sorted[1].id, 'top_transfers');
+
+// 8c. anyone_but appears first even when in_progress or loss
+sorted = sortLiveGames(gamesList, { 'anyone_but': { status: 'loss' }, 'top_transfers': { status: 'unplayed' } });
+assert.strictEqual(sorted[0].id, 'anyone_but', 'New game anyone_but remains boosted first even when failed');
+
+console.log("  ✓ New game boosting and order verified cleanly across all game states");
 
 console.log("\n✅ ALL HOME SCREEN STATUS INDICATOR TESTS PASSED SUCCESSFULLY!");
