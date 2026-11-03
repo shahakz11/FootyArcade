@@ -352,6 +352,24 @@ def get_all_active_daily_answer_pools():
     except Exception as e:
         print(f"⚠️ Error loading played_with games: {e}")
 
+    # 4. This & That
+    tt_csv = os.path.join(BASE_DIR, "daily_this_and_that_games.csv")
+    if os.path.exists(tt_csv):
+        try:
+            import pandas as pd
+            df = pd.read_csv(tt_csv)
+            for _, row in df.iterrows():
+                valid = json.loads(row.get("answer_names", "[]"))
+                pools.append({
+                    "type": "this_and_that",
+                    "game_day": int(row.get("game_day", 1)),
+                    "statement_a": row.get("statement_a", ""),
+                    "statement_b": row.get("statement_b", ""),
+                    "players": valid
+                })
+        except Exception as e:
+            print(f"⚠️ Error loading this_and_that games: {e}")
+
     return pools
 
 def extract_pool_from_caption(caption_or_title, all_pools=None):
@@ -373,6 +391,23 @@ def extract_pool_from_caption(caption_or_title, all_pools=None):
         all_pools = get_all_active_daily_answer_pools()
 
     norm_text = normalize_text(caption_or_title)
+
+    # ── Pattern 0: This & That (Day Number or Criteria Match) ──
+    pattern_tt = r"\bthis\s+(?:&|and)\s+that\b[^\w\d\n\r]*(?:(?:day|puzzle)\b[^\w\d\n\r]*#?\s*(\d+)|#\s*(\d+))"
+    m_tt = re.search(pattern_tt, caption_or_title, re.IGNORECASE)
+    if m_tt:
+        tt_day = int(m_tt.group(1) or m_tt.group(2))
+        for pool in all_pools:
+            if pool.get("type") == "this_and_that" and pool.get("game_day") == tt_day:
+                return pool.get("players", [])
+
+    if "this & that" in norm_text or "this and that" in norm_text:
+        for pool in all_pools:
+            if pool.get("type") == "this_and_that":
+                sa = normalize_text(pool.get("statement_a", ""))
+                sb = normalize_text(pool.get("statement_b", ""))
+                if sa and sb and (sa in norm_text or sb in norm_text):
+                    return pool.get("players", [])
 
     # ── Pattern 1: Played With / Who Am I Day Number ──
     # Matches "Played With #19", "Played With Day 19", "Played With Puzzle #19", "Who Am I? #19", etc.

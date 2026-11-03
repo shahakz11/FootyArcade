@@ -68,7 +68,8 @@ ALL_AVAILABLE_GAMES = [
     {"id": "top_transfers",        "name": "Top Transfers"},
     {"id": "transfer_destination", "name": "Transfer Destination"},
     {"id": "club_connect",         "name": "Club Connect"},
-    {"id": "top_scorers",          "name": "Top Scorers"}
+    {"id": "top_scorers",          "name": "Top Scorers"},
+    {"id": "this_and_that",        "name": "This & That"}
 ]
 
 DEFAULT_PEAK_SLOTS = [7, 10.5, 17]  # 07:00 UTC (10:00 AM local Career Flight), 10:30 UTC (Carousel), 17:00 UTC (Video Short)
@@ -107,6 +108,8 @@ def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_h
         return [CAREER_FLIGHT_GAME]
     elif mode_lower in ("played_with", "playedwith"):
         return [PLAYED_WITH_GAME]
+    elif mode_lower in ("this_and_that", "thisandthat"):
+        return [{"id": "this_and_that", "name": "This & That"}]
     elif mode_lower in ("carousel", "h2h"):
         return []
     elif mode_lower == "midday":
@@ -604,6 +607,38 @@ async def process_all_games(
                             output_path=video_out,
                             bg_clip=broll_clip
                         )
+
+                elif game_id == "this_and_that":
+                    import pandas as pd
+                    df = pd.read_csv("daily_this_and_that_games.csv")
+                    launch_date = datetime.date(2026, 11, 2)
+                    today_dt = datetime.date.today()
+                    game_day = max(1, (today_dt - launch_date).days + 1)
+                    row = df[df["game_day"] == game_day].iloc[0] if len(df[df["game_day"] == game_day]) > 0 else df.iloc[0]
+                    target_name = f"{row['statement_a']} & {row['statement_b']}"
+                    total_ans = int(row.get("total_answers", 8))
+
+                    custom_yt_title = f"Name ONE player for {row['statement_a']} & {row['statement_b']} ⚽️ #Shorts"
+                    custom_yt_desc = (
+                        f"⚡ THIS & THAT #{game_day}: {row['statement_a']} & {row['statement_b']}\n\n"
+                        f"There are {total_ans} players who match BOTH! Drop your names in the comments 👇\n\n"
+                        f"🎮 Play the full daily puzzle at https://playmaker.best/\n\n"
+                        f"#Shorts #football #soccer #ballknowledge #trivia #playmaker #thisandthat"
+                    )
+                    custom_yt_tags = ["Shorts", "football", "soccer", "trivia", "quiz", "ball knowledge", "this and that", "playmaker"]
+                    custom_ig_caption = (
+                        f"⚡ THIS & THAT #{game_day}: {row['statement_a']} & {row['statement_b']}\n\n"
+                        f"There are {total_ans} players who match BOTH! Can you name them?\n\n"
+                        f"💬 Drop your names in the comments below!\n\n"
+                        f"🎮 Play today's full interactive puzzle at playmaker.best (link in bio) ⚽\n\n"
+                        f"#football #soccer #footballquiz #trivia #ballknowledge #playmaker #premierleague #championsleague"
+                    )
+                    audio_track_title = "This & That Audio Beat"
+
+                    from render_this_and_that_final_video import render_video
+                    os.makedirs(os.path.join(BASE_DIR, "output_shorts"), exist_ok=True)
+                    video_out = os.path.join(BASE_DIR, "output_shorts", f"this_and_that_day_{game_day}_{today_str}.mp4")
+                    video_path = await render_video(game_day=game_day, output_mp4=video_out)
 
                 elif game_id in ("player_chain", "passport_fc"):
                     ugc_data = extract_ugc_data(game_id, day=None)

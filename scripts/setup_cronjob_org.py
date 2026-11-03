@@ -79,6 +79,23 @@ JOB_SPECS = [
         }
     },
     {
+        "title": "⚽ Playmaker 6: Night This & That Short & Reel",
+        "description": "Publishes daily This & That 3D stadium lineup short to YouTube Shorts, Instagram Reels & TikTok",
+        "workflow": "daily_shorts_reels.yml",
+        "body": {"ref": "main", "inputs": {"mode": "this_and_that"}},
+        "cron_display": "Every day at 1:00 AM Local (23:00 UTC)",
+        "utc_hour": 23,
+        "utc_minute": 0,
+        "schedule": {
+            "timezone": "UTC",
+            "hours": [23],
+            "minutes": [0],
+            "mdays": [-1],
+            "months": [-1],
+            "wdays": [-1]
+        }
+    },
+    {
         "title": "⚽ Playmaker 3: Midnight Firebase Deploy",
         "description": "Compiles daily puzzles and deploys Playmaker web app to Firebase Hosting",
         "workflow": "deploy.yml",
@@ -181,7 +198,7 @@ def deploy_via_cronjob_api(api_key, github_token):
         # Check if already exists (matching start of title)
         already_id = None
         for etitle, ejid in existing_jobs.items():
-            if ("Morning" in title and "Morning" in etitle) or ("Evening" in title and "Evening" in etitle) or ("Firebase" in title and "Firebase" in etitle) or ("Auto-Reply" in title and "Auto-Reply" in etitle) or ("Played With" in title and "Played With" in etitle):
+            if ("Morning" in title and "Morning" in etitle) or ("Evening" in title and "Evening" in etitle) or ("Firebase" in title and "Firebase" in etitle) or ("Auto-Reply" in title and "Auto-Reply" in etitle) or ("Played With" in title and "Played With" in etitle) or ("This & That" in title and "This & That" in etitle):
                 already_id = ejid
                 break
 

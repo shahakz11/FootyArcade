@@ -64,6 +64,22 @@ def sanitize_filename(name):
 async def record_short_video(game_id="top_transfers", day_offset=0, fast_mode=False, port=8080, force=False):
     lock_fd = acquire_recording_lock()
     try:
+        if game_id == this_and_that:
+            from render_this_and_that_final_video import render_video
+            import pandas as pd
+            import datetime
+            df = pd.read_csv("daily_this_and_that_games.csv")
+            launch_date = datetime.date(2026, 11, 2)
+            today = datetime.date.today() + datetime.timedelta(days=day_offset)
+            game_day = max(1, (today - launch_date).days + 1)
+            row = df[df["game_day"] == game_day].iloc[0] if len(df[df["game_day"] == game_day]) > 0 else df.iloc[0]
+            target_name = f"{row['statement_a']} & {row['statement_b']}"
+            out_file = f"output_shorts/this_and_that_day_{game_day}_{today.strftime('%Y-%m-%d')}.mp4"
+            os.makedirs("output_shorts", exist_ok=True)
+            print(f"🚀 Using 3D Animated Arena Renderer for 'this_and_that' (Day {game_day}: {target_name})...")
+            final_mp4 = await render_video(game_day=game_day, output_mp4=out_file)
+            return final_mp4, target_name
+
         if game_id in ["top_transfers", "transfer_destination"]:
             from render_arcade_short import render_arcade_video, load_game_payload
             payload = load_game_payload(game_id)

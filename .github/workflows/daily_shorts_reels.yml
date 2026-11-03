@@ -14,6 +14,7 @@ on:
           - carousel
           - short
           - played_with
+          - this_and_that
           - all
       game:
         description: 'Specific game ID (optional override, e.g. top_transfers)'
