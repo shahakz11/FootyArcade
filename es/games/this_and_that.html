@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>This &amp; That — Daily Football Intersection Quiz | Playmaker</title>
+    <meta name="description" content="¡Nombra a todos los futbolistas que cumplen AMBAS condiciones simultáneamente! Every correct guess reveals verified career records. Solve the full board before running out of lives."/>
+    <meta name="keywords" content="this and that, football trivia, football intersection, soccer quiz, daily football puzzle, dual statement quiz, playmaker"/>
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+    <meta name="theme-color" content="#0e0e0e"/>
+    <link rel="canonical" href="https://playmaker.best/es/games/this_and_that.html"/>
+    <link rel="alternate" hreflang="en" href="https://playmaker.best/games/this_and_that.html" />
+    <link rel="alternate" hreflang="es" href="https://playmaker.best/es/games/this_and_that.html" />
+    <link rel="alternate" hreflang="x-default" href="https://playmaker.best/games/this_and_that.html" />
+
+    <!-- PWA Web Manifest & Favicons -->
+    <link rel="manifest" href="../../manifest.json"/>
+    <link rel="shortcut icon" href="../../favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/favicon-32.png"/>
+    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/favicon-192.png"/>
+    <link rel="icon" type="image/png" sizes="512x512" href="../../assets/favicon.png"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/apple-touch-icon.png"/>
+
+    <!-- Social Share Preview (OpenGraph / Twitter) -->
+    <meta property="og:title" content="This &amp; That — Daily Football Intersection Quiz | Playmaker"/>
+    <meta property="og:description" content="¡Nombra a todos los futbolistas que cumplen AMBAS condiciones simultáneamente! Every correct guess reveals verified career records. Play now!"/>
+    <meta property="og:image" content="https://playmaker.best/assets/social_share.png"/>
+    <meta property="og:image:secure_url" content="https://playmaker.best/assets/social_share.png"/>
+    <meta property="og:image:type" content="image/png"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta property="og:image:alt" content="Playmaker — Daily Football Trivia"/>
+    <meta property="og:url" content="https://playmaker.best/es/games/this_and_that.html"/>
+    <meta property="og:type" content="website"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@best.playmaker"/>
+    <meta name="twitter:title" content="This &amp; That — Daily Football Intersection Quiz | Playmaker"/>
+    <meta name="twitter:description" content="¡Nombra a todos los futbolistas que cumplen AMBAS condiciones simultáneamente! Play now!"/>
+    <meta name="twitter:image" content="https://playmaker.best/assets/social_share.png"/>
+
+    <!-- Google tag (gtag.js) with Google Consent Mode v2 -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      
+      var _storedConsent = null;
+      try { _storedConsent = localStorage.getItem('playmaker_cookie_consent') || (localStorage.getItem('footy_consent') === 'accepted' ? 'granted' : (localStorage.getItem('footy_consent') === 'declined' ? 'denied' : null)); } catch(e) {}
+
+      if (_storedConsent === 'granted') {
+        gtag('consent', 'default', {
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted',
+          'analytics_storage': 'granted'
+        });
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'analytics_storage': 'denied',
+          'wait_for_update': 500
+        });
+      }
+      gtag("js", new Date());
+      gtag("config", "G-8BC1041NX3");
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8BC1041NX3"></script>
+
+    <!-- Tailwind & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300..700&family=Archivo+Narrow:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <!-- Shared Playmaker styles -->
+    <link rel="stylesheet" href="../../games/footy-ui.css?v=6"/>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background:                  "#0e0e0e",
+                        surface:                     "#131313",
+                        "surface-container-low":     "#1c1b1b",
+                        "surface-container":         "#201f1f",
+                        "surface-container-high":    "#2a2a2a",
+                        "surface-container-highest": "#353534",
+                        "on-background":             "#e5e2e1",
+                        "on-surface-variant":        "#a3a3a3",
+                        error:                       "#ff4d4d",
+                        correct:                     "#22c55e",
+                        accent:                      "#a855f7",
+                        "primary-container":         "#a855f7",
+                    },
+                    fontFamily: {
+                        headline: ["Anton", "sans-serif"],
+                        title:    ["Space Grotesk", "sans-serif"],
+                        body:     ["Archivo Narrow", "sans-serif"],
+                        mono:     ["Space Grotesk", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --fa-accent-rgb: 168, 85, 247;
+            --fa-accent-glow: rgba(168, 85, 247, 0.25);
+        }
+
+        .neon-text-glow {
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .active-card-glow {
+            box-shadow: 0 0 24px rgba(168, 85, 247, 0.2), inset 0 0 12px rgba(168, 85, 247, 0.08);
+            border-color: rgba(168, 85, 247, 0.6) !important;
+        }
+
+        .correct-card-glow {
+            box-shadow: 0 0 24px rgba(34, 197, 94, 0.2), inset 0 0 12px rgba(34, 197, 94, 0.08);
+            border-color: rgba(34, 197, 94, 0.6) !important;
+        }
+
+        .missed-card-glow {
+            box-shadow: 0 0 24px rgba(239, 68, 68, 0.15), inset 0 0 12px rgba(239, 68, 68, 0.06);
+            border-color: rgba(239, 68, 68, 0.4) !important;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "VideoGame",
+          "name": "This & That — Daily Football Intersection Quiz",
+          "description": "¡Nombra a todos los futbolistas que cumplen AMBAS condiciones simultáneamente! Every correct guess reveals verified career records. Solve the full board before running out of lives.",
+          "inLanguage": "es",
+          "url": "https://playmaker.best/es/games/this_and_that.html",
+          "image": "https://playmaker.best/assets/logo.png",
+          "genre": ["Trivia", "Sports"],
+          "gamePlatform": "Web",
+          "applicationCategory": "Game",
+          "isAccessibleForFree": true,
+          "author": {
+            "@type": "Organization",
+            "name": "Playmaker",
+            "url": "https://playmaker.best/",
+            "logo": "https://playmaker.best/assets/logo.png"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://playmaker.best/es/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "This & That",
+              "item": "https://playmaker.best/es/games/this_and_that.html"
+            }
+          ]
+        },
+        {
+          "@type": "HowTo",
+          "name": "How to Play This & That",
+          "description": "Step-by-step guide to solving the daily This & That football intersection puzzle.",
+          "step": [
+            {
+              "@type": "HowToStep",
+              "position": 1,
+              "name": "Review the Dual Statements",
+              "text": "Read Statement A and Statement B at the top of the board."
+            },
+            {
+              "@type": "HowToStep",
+              "position": 2,
+              "name": "Name Matching Footballers",
+              "text": "Type and select players from the dropdown who qualify for BOTH criteria simultaneously."
+            },
+            {
+              "@type": "HowToStep",
+              "position": 3,
+              "name": "Reveal the Full Board",
+              "text": "Every correct guess unlocks a verified card with career evidence. Find all players before losing 5 lives!"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+
+<body class="bg-background text-on-background font-body turf-pattern min-h-screen pb-24 antialiased selection:bg-accent selection:text-black">
+    <!-- Header (Matching standard Playmaker pattern) -->
+    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-white/5 h-16 flex items-center justify-between px-4 sm:px-6 shadow-xl">
+        <a href="../index.html" class="text-on-surface-variant hover:text-accent transition-colors flex items-center gap-3" aria-label="Back to game lobby">
+            <span class="material-symbols-outlined text-xl sm:text-2xl">arrow_back</span>
+            <img src="../../assets/playmaker_header_logo.png" alt="PLAYMAKER" class="h-7 md:h-8 w-auto object-contain" />
+        </a>
+        <div id="lang-switcher" class="flex items-center bg-white/5 border border-white/10 rounded-lg p-0.5 font-mono text-xs select-none mr-1">
+            <a href="/games/this_and_that.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('en')" class="px-2 py-0.5 rounded transition-all text-on-surface-variant hover:text-white" title="Switch to English">EN</a>
+            <span class="text-white/20 text-[10px] select-none">|</span>
+            <a href="/es/games/this_and_that.html" onclick="if(typeof FootyI18n!=='undefined')FootyI18n.setLang('es')" class="px-2 py-0.5 rounded transition-all bg-accent/20 text-accent font-bold shadow-sm" title="Cambiar a Español">ES</a>
+        </div>
+        <div class="flex items-center gap-2 text-on-surface-variant">
+            <button id="how-to-play-btn" class="text-on-surface-variant hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5 cursor-pointer" aria-label="Instrucciones de cómo jugar" title="Cómo jugar">
+                <span class="material-symbols-outlined text-xl">help_outline</span>
+            </button>
+            <a href="https://www.instagram.com/playmaker.best1" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on Instagram" title="Instagram">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@playmaker.best" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Playmaker on TikTok" title="TikTok">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.87-4.49V8.69a8.18 8.18 0 0 0 4.9 1.6V6.84a4.85 4.85 0 0 1-1-.15z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@best.playmaker" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors flex items-center gap-1.5" aria-label="Playmaker on YouTube" title="YouTube">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="pt-24 px-4 max-w-3xl mx-auto space-y-4 sm:space-y-6">
+        <!-- Game Intro Header -->
+        <section class="text-center space-y-2">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                <h1 class="font-headline text-3xl sm:text-4xl tracking-wider text-accent uppercase italic neon-text-glow flex items-center gap-2 justify-center">
+                    <span>ESTO Y AQUELLO</span>
+                    <span class="material-symbols-outlined text-2xl not-italic">join_inner</span>
+                </h1>
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                    <button id="prev-puzzle-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1 px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10" title="Jugar puzzle anterior (modo retro)">
+                        <span class="material-symbols-outlined text-base">chevron_left</span>
+                        <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden sm:inline">Ant.</span>
+                    </button>
+                    <span id="puzzle-date-display" class="font-mono text-xs font-bold text-accent px-3 py-1 bg-accent/10 border border-accent/20 rounded-lg">
+                        PUZZLE #1
+                    </span>
+                    <button id="next-puzzle-btn" class="text-on-surface-variant hover:text-accent disabled:opacity-30 disabled:pointer-events-none transition-colors flex items-center cursor-pointer gap-1 px-2.5 py-1 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10" title="Jugar puzzle más reciente / de hoy">
+                        <span class="text-[10px] font-mono uppercase tracking-wider font-bold hidden sm:inline">Sig.</span>
+                        <span class="material-symbols-outlined text-base">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+            <p class="text-xs sm:text-sm text-on-surface-variant font-mono">
+                ¡Nombra a todos los futbolistas que cumplen AMBAS condiciones simultáneamente!
+            </p>
+        </section>
+
+        <!-- Statement Banner (The Dual Criteria) -->
+        <section class="bg-surface-container border border-white/10 rounded-2xl p-4 sm:p-5 shadow-2xl relative overflow-hidden active-card-glow">
+            <div class="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3">
+                <div class="flex items-center gap-1.5 text-xs font-mono tracking-widest text-accent uppercase font-bold">
+                    <span class="material-symbols-outlined text-base">join_inner</span>
+                    <span>RETO DE DOBLE CRITERIO</span>
+                </div>
+            </div>
+
+            <!-- Two Statements Box -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 items-center relative">
+                <!-- Statement A Card -->
+                <div class="bg-background/80 border border-accent/30 rounded-xl p-4 sm:p-5 text-center flex items-center justify-center min-h-[72px]">
+                    <div id="statement-a-display" class="font-headline text-lg sm:text-xl text-white uppercase italic tracking-wide">
+                        ...
+                    </div>
+                </div>
+
+                <!-- Ampersand Indicator (Centered between cards) -->
+                <div class="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-accent text-black font-headline text-base items-center justify-center italic shadow-lg z-10">
+                    &amp;
+                </div>
+
+                <!-- Statement B Card -->
+                <div class="bg-background/80 border border-accent/30 rounded-xl p-4 sm:p-5 text-center flex items-center justify-center min-h-[72px]">
+                    <div id="statement-b-display" class="font-headline text-lg sm:text-xl text-white uppercase italic tracking-wide">
+                        ...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lives & Solved Score Bar -->
+        <section class="max-w-md mx-auto w-full">
+            <div id="fa-lives-bar" class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-1.5 text-error" data-fa-heart>
+                        <span class="material-symbols-outlined fill-current text-lg" id="fa-heart-icon">favorite</span>
+                        <span class="font-mono text-xs sm:text-sm font-bold uppercase tracking-wider">Vidas:&nbsp;<span id="lives-counter">5</span></span>
+                    </div>
+                    <button id="add-life-btn" class="hidden flex items-center gap-1 px-2.5 py-1 bg-error/15 border border-error/30 text-error hover:bg-error/25 hover:border-error/50 rounded-lg text-xs font-bold uppercase tracking-wider transition-all">
+                        <span class="material-symbols-outlined text-xs">add_circle</span> +1 Vida
+                    </button>
+                    <button id="give-up-btn" class="flex items-center gap-1 px-2.5 py-1 bg-white/5 border border-white/10 text-on-surface-variant hover:bg-white/10 hover:text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer">
+                        <span class="material-symbols-outlined text-xs">flag</span> Rendirse
+                    </button>
+                </div>
+                <div class="text-accent font-mono text-xs sm:text-sm font-bold uppercase tracking-wider">
+                    Solved: <span id="found-count">0</span>/<span id="total-count">0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Active Guess Input Panel -->
+        <section id="fa-guess-panel" class="bg-surface-container border border-white/10 rounded-2xl p-4 sm:p-5 shadow-2xl relative z-30 space-y-3">
+            <div class="flex items-center justify-between">
+                <label id="active-step-label" class="block text-[11px] font-mono uppercase tracking-widest text-on-surface-variant">
+                    ESCRIBE UN FUTBOLISTA VÁLIDO:
+                </label>
+            </div>
+
+            <div class="flex gap-2">
+                <div class="flex-grow relative">
+                    <input
+                        id="guess-input"
+                        class="w-full bg-background border border-white/10 rounded-xl h-12 px-4 text-base font-bold text-on-background focus:outline-none focus:border-accent focus:ring-0 transition-all placeholder:text-white/20"
+                        placeholder="Escribe el nombre del jugador..."
+                        type="text"
+                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text"
+                    />
+                    <div id="autocomplete-list" class="absolute left-0 right-0 mt-2 bg-surface border border-white/10 rounded-xl shadow-2xl overflow-y-auto max-h-60 z-50 hidden"></div>
+                </div>
+                <button id="submit-btn" class="h-12 px-5 sm:px-6 bg-accent text-black font-headline text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all shrink-0 cursor-pointer">ADIVINAR</button>
+            </div>
+            <div id="error-message" class="text-error font-bold text-xs text-center hidden">
+                Por favor selecciona un futbolista de la lista desplegable.
+            </div>
+        </section>
+
+        <!-- Incorrect Guesses Feed -->
+        <section id="wrong-guesses-section" class="space-y-2 hidden">
+            <h4 class="text-xs uppercase font-mono tracking-widest text-on-surface-variant text-center">INTENTOS INCORRECTOS</h4>
+            <div id="wrong-guesses-container" class="flex flex-wrap gap-2 justify-center"></div>
+        </section>
+
+        <!-- Answers Board Grid -->
+        <section class="space-y-3" aria-label="This &amp; That Answers Board">
+            <div class="flex items-center justify-between px-1">
+                <h3 class="font-title text-xs sm:text-sm font-bold uppercase tracking-widest text-on-surface-variant flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-accent text-base">grid_view</span>
+                    <span>El Panel de Respuestas</span>
+                </h3>
+                <span class="text-[11px] font-mono text-on-surface-variant/80 font-bold">
+                    <span id="board-status-text">Encuentra a todos los jugadores</span>
+                </span>
+            </div>
+
+            <!-- Dynamic Answers Grid -->
+            <div id="answers-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </section>
+
+        <!-- Post-Game Summary Section (Revealed upon game over) -->
+        <section id="endgame-summary-section" class="space-y-4 pt-6 border-t border-white/10 hidden">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-surface-container border border-white/10 rounded-2xl p-4 sm:p-5">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                        <span class="text-[10px] font-mono tracking-widest text-accent uppercase font-bold">JUEGO COMPLETADO</span>
+                    </div>
+                    <h3 class="font-headline text-2xl sm:text-3xl text-on-background uppercase italic tracking-wide mt-0.5">
+                        Panel Completo Revelado
+                    </h3>
+                    <p class="text-xs text-on-surface-variant font-mono">
+                        Revisa todos los jugadores elegibles y sus registros de carrera verificados arriba.
+                    </p>
+                </div>
+                <button id="reopen-modal-btn" class="self-start sm:self-auto px-4 py-2.5 rounded-xl bg-accent text-black font-headline text-sm uppercase italic hover:brightness-110 active:scale-95 transition-all flex items-center gap-1.5 shadow-lg shadow-accent/10 cursor-pointer">
+                    <span class="material-symbols-outlined text-base">leaderboard</span>
+                    <span>VER RESULTADOS Y COMPARTIR</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Static Crawlable SEO/GEO Section & Cross-Game Directory -->
+        <section class="max-w-2xl mx-auto px-4 mt-16 space-y-8" aria-label="Game Guide and More Challenges">
+            <article class="bg-surface/60 border border-white/10 rounded-2xl p-5 sm:p-6 space-y-4">
+                <h2 class="font-headline text-xl uppercase italic text-accent tracking-wide">
+                    ¿Qué es Esto y Aquello?
+                </h2>
+                <p class="font-body text-on-surface-variant text-sm leading-relaxed">
+                    Esto y Aquello es un desafío diario de trivia de fútbol de Playmaker donde los aficionados identifican a todos los futbolistas que cumplen dos criterios deportivos distintos simultáneamente. Los retos presentan futbolistas que jugaron en dos clubes rivales o históricos, emparejamientos de nacionalidad y clubes, campeones multiligas y ganadores de grandes torneos. Utiliza el buscador con autocompletado para adivinar jugadores válidos antes de agotar tus vidas. Los retos se actualizan a medianoche UTC con estadísticas completas y archivo histórico jugable.
+                </p>
+                <p class="font-body text-xs text-on-surface-variant/80 border-t border-white/10 pt-3">
+                    <strong>Cobertura de la Base de Datos:</strong> Apariciones, traspasos y títulos oficiales en categoría sénior desde 1990 hasta junio de 2026 junto a leyendas históricas verificadas.
+                </p>
+            </article>
+
+            <!-- More Daily Challenges Suggestions Component -->
+            <div id="fa-game-suggestions" data-current-game="this_and_that"></div>
+        </section>
+    </main>
+
+    <!-- How to Play Modal -->
+    <div id="how-to-play-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-surface border border-white/10 rounded-2xl max-w-md w-full p-6 space-y-4 relative shadow-2xl">
+            <button id="close-how-to-play-btn" class="absolute top-4 right-4 text-on-surface-variant hover:text-on-background transition-colors cursor-pointer" aria-label="Cerrar ventana de cómo jugar">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="flex items-center gap-2 text-accent">
+                <span class="material-symbols-outlined text-2xl">help_outline</span>
+                <h3 class="font-headline text-2xl uppercase tracking-wider italic text-white">CÓMO JUGAR</h3>
+            </div>
+            <div class="font-body text-sm text-on-surface-variant space-y-3 leading-relaxed">
+                <p>
+                    <strong class="text-white font-title">Objetivo:</strong> Nombra a todos los futbolistas que cumplen <strong class="text-white">AMBAS</strong> condiciones mostradas arriba.
+                </p>
+                <p>
+                    <strong class="text-white font-title">Respuestas:</strong> Escribe el nombre de un jugador y selecciónalo de la lista desplegable.
+                </p>
+                <p>
+                    <strong class="text-white font-title">Pistas:</strong> Haz clic en la bombilla de cualquier casilla bloqueada para descubrir pistas de nacionalidad y posición.
+                </p>
+                <p>
+                    <strong class="text-white font-title">Vidas e Intentos:</strong> Tienes 5 vidas. Un fallo resta 1 vida. ¡Adivinar a un jugador que solo cumple una condición cuenta como fallo!
+                </p>
+                <p>
+                    <strong class="text-white font-title">Revisión del VAR:</strong> Apela decisiones discutidas con el asistente de vídeo arbitral automático para verificar registros reales de su carrera.
+                </p>
+                <p>
+                    <strong class="text-white font-title">Tarjetas:</strong> Cada acierto da la vuelta a una tarjeta del panel, mostrando su foto, detalles y trayectoria verificada.
+                </p>
+                <p>
+                    <strong class="text-white font-title">Rendirse:</strong> Si te bloqueas, puedes rendirte en cualquier momento para revelar todas las respuestas restantes.
+                </p>
+                <p>
+                    <strong class="text-white font-title">Base de Datos:</strong> Apariciones, traspasos y títulos oficiales en categoría sénior desde 1990 hasta junio de 2026 junto a leyendas históricas verificadas.
+                </p>
+            </div>
+            <button id="close-how-to-play-btn2" class="w-full py-3 bg-accent text-black font-headline text-base uppercase tracking-wider italic rounded-xl hover:brightness-110 active:scale-95 transition-all cursor-pointer">ENTENDIDO</button>
+        </div>
+    </div>
+
+    <!-- Result / Share Modal -->
+    <div id="result-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-start sm:justify-center p-3 sm:p-6 py-6 z-50 overflow-y-auto hidden">
+        <div class="fa-modal-card bg-surface border border-accent/20 rounded-3xl p-5 sm:p-8 max-w-md w-full space-y-4 sm:space-y-6 text-center relative shadow-2xl my-auto">
+            <button id="modal-close-btn" class="sticky top-0 float-right -mr-1 -mt-1 text-on-surface-variant hover:text-white transition-colors bg-black/40 hover:bg-black/80 rounded-full p-1.5 z-30 backdrop-blur-sm cursor-pointer" aria-label="Cerrar ventana">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+
+            <span id="modal-icon" class="material-symbols-outlined text-5xl sm:text-6xl text-accent">emoji_events</span>
+
+            <div>
+                <h3 id="modal-title" class="font-headline text-3xl sm:text-4xl text-accent uppercase italic tracking-wide">¡COMPLETADO!</h3>
+                <p id="modal-message" class="text-on-surface-variant text-xs sm:text-sm mt-1"></p>
+                <div id="modal-extra" class="text-xs font-mono text-white/80 mt-2"></div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="grid grid-cols-3 gap-2 py-3 bg-surface-container rounded-xl border border-white/10">
+                <div>
+                    <span id="modal-score" class="font-headline text-2xl sm:text-3xl text-accent">0/0</span>
+                    <span class="block text-[10px] uppercase font-mono text-on-surface-variant">Puntuación</span>
+                </div>
+                <div>
+                    <span id="modal-streak" class="font-headline text-2xl sm:text-3xl text-primary-container">0</span>
+                    <span class="block text-[10px] uppercase font-mono text-on-surface-variant">Racha</span>
+                </div>
+                <div>
+                    <span id="modal-best" class="font-headline text-2xl sm:text-3xl text-on-surface-variant">0</span>
+                    <span class="block text-[10px] uppercase font-mono text-on-surface-variant">Récord</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-2 pt-2">
+                <button id="modal-share-btn" class="flex-1 py-3 bg-accent text-black font-headline text-base sm:text-lg uppercase italic rounded-xl hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                    <span class="material-symbols-outlined text-lg">share</span>
+                    <span>SHARE RESULT</span>
+                </button>
+                <button id="modal-close-btn2" class="flex-1 py-3 bg-surface-container-high border border-white/10 text-white font-headline text-base sm:text-lg uppercase italic rounded-xl hover:bg-surface-container-highest transition-all cursor-pointer">CERRAR</button>
+            </div>
+
+            <!-- Back in Time Links Section (Hidden on today's puzzle) -->
+            <div id="bit-wrapper" class="border-t border-white/10 pt-4 text-left hidden">
+                <h4 class="text-xs font-mono uppercase tracking-widest text-on-surface-variant mb-2">PAST CHALLENGES:</h4>
+                <div id="back-in-time-container" class="flex flex-wrap gap-1.5 justify-center"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shared Static Libraries -->
+    <script src="../../games/footy-clubs.js?v=7"></script>
+    <script src="../../games/footy-players.js?v=7"></script>
+    <script src="../../games/footy-i18n.js?v=7"></script>
+    <script src="../../games/footy-ui.js?v=7"></script>
+
+    
+    <script id="daily-game-data">
+        const DAILY_THISANDTHAT_GAME = {"category": "trophy_club", "statement_a": "Won the UEFA Champions League", "statement_b": "Played for West Ham United", "statement_a_es": "Ganó la UEFA Champions League", "statement_b_es": "Jugó en el West Ham United", "total_answers": 7, "answer_names": ["Frank Lampard", "Rio Ferdinand", "Carlos Tevez", "Javier Mascherano", "Patrice Evra", "Teddy Sheringham", "Michael Carrick"], "answer_details": [{"name": "Frank Lampard", "nationality": "England", "position": "Midfield", "market_value": 110000000, "detail_a": "Won the UEFA Champions League", "detail_b": "Played for West Ham United", "detail_a_es": "Ganó la UEFA Champions League", "detail_b_es": "Jugó en el West Ham United"}, {"name": "Rio Ferdinand", "nationality": "England", "position": "Defender", "market_value": 80000000, "detail_a": "Won the UEFA Champions League", "detail_b": "Played for West Ham United", "detail_a_es": "Ganó la UEFA Champions League", "detail_b_es": "Jugó en el West Ham United"}, {"name": "Carlos Tevez", "nationality": "Argentina", "position": "Attack", "market_value": 80000000, "detail_a": "Won the UEFA Champions League", "detail_b": "Played for West Ham United", "detail_a_es": "Ganó la UEFA Champions League", "detail_b_es": "Jugó en el West Ham United"}, {"name": "Javier Mascherano", "nationality": "Argentina", "position": "Midfield", "market_value": 80000000, "detail_a": "Won the UEFA Champions League", "detail_b": "Played for West Ham United", "detail_a_es": "Ganó la UEFA Champions League", "detail_b_es": "Jugó en el West Ham United"}, {"name": "Patrice Evra", "nationality": "France", "position": "Defender", "market_value": 80000000, "detail_a": "Won the UEFA Champions League", "detail_b": "Played for West Ham United", "detail_a_es": "Ganó la UEFA Champions League", "detail_b_es": "Jugó en el West Ham United"}, {"name": "Teddy Sheringham", "nationality": "England", "position": "Attack", "market_value": 80000000, "detail_a": "Won the UEFA Champions League", "detail_b": "Played for West Ham United", "detail_a_es": "Ganó la UEFA Champions League", "detail_b_es": "Jugó en el West Ham United"}, {"name": "Michael Carrick", "nationality": "England", "position": "Midfield", "market_value": 80000000, "detail_a": "Won the UEFA Champions League", "detail_b": "Played for West Ham United", "detail_a_es": "Ganó la UEFA Champions League", "detail_b_es": "Jugó en el West Ham United"}]};
+        const GAME_NOTE = "Datos actualizados a junio de 2026.";
+        const PUZZLE_NUMBER    = 1;
+        const PUZZLE_ID        = 1;
+        const IS_BACK_IN_TIME  = false;
+        if (typeof FootyI18n !== 'undefined') FootyI18n.setLang('es');
+        const MAX_BACK_DAYS    = 7;
+    </script>
+    
+<!-- Micro-interaction Script -->
+    <script>
+        const GAME_ID = 'this_and_that';
+        const ACCENT_HEX = '#a855f7';
+        const INITIAL_LIVES = 5;
+
+        // Injected variables fallback
+        const puzzleData = typeof DAILY_THISANDTHAT_GAME !== 'undefined' ? DAILY_THISANDTHAT_GAME : {
+            category: "club_club",
+            statement_a: "Played for Barcelona",
+            statement_b: "Played for Real Madrid",
+            statement_a_es: "Jugó en el Barcelona",
+            statement_b_es: "Jugó en el Real Madrid",
+            total_answers: 6,
+            answer_names: ["Ronaldo", "Luis Figo", "Michael Laudrup", "Luis Enrique", "Javier Saviola", "Samuel Eto'o"],
+            answer_details: []
+        };
+        const puzzleNum = typeof PUZZLE_NUMBER !== 'undefined' ? PUZZLE_NUMBER : 1;
+        const puzzleId = typeof PUZZLE_ID !== 'undefined' ? PUZZLE_ID : 1;
+        const isBackInTime = typeof IS_BACK_IN_TIME !== 'undefined' ? IS_BACK_IN_TIME : false;
+        const maxBackDays = typeof MAX_BACK_DAYS !== 'undefined' ? MAX_BACK_DAYS : 7;
+
+        // Game State
+        let livesCtrl;
+        let wrongGuessesCtrl;
+        let dropdown;
+        let modal;
+        let storage;
+        let gameOver = false;
+        let guessedPlayers = new Set();
+        let revealedHints = new Set();
+        let manuallyRevealed = new Set();
+        let score = 0;
+        let totalAnswers = puzzleData.total_answers || (puzzleData.answer_names ? puzzleData.answer_names.length : 0);
+        const validAnswerNames = (puzzleData.answer_names || []).slice();
+
+        function isSpanish() {
+            return (typeof FootyI18n !== 'undefined' && FootyI18n.getLang() === 'es') ||
+                   (typeof window !== 'undefined' && window.location && window.location.pathname.includes('/es/'));
+        }
+
+        // Canonical mapping for normalization
+        function norm(s) {
+            return FootyUI.normalizeStr(s || '');
+        }
+
+        const validNormMap = {};
+        validAnswerNames.forEach((name, idx) => {
+            validNormMap[norm(name)] = { name, index: idx };
+        });
+
+        // Autocomplete with ALL_PLAYERS + any answer players
+        const allPlayersList = (typeof ALL_PLAYERS !== 'undefined' ? ALL_PLAYERS : []).slice();
+        const playerNamesSet = new Set(allPlayersList.map(p => norm(p.Name)));
+        validAnswerNames.forEach(name => {
+            if (!playerNamesSet.has(norm(name))) {
+                playerNamesSet.add(norm(name));
+                const details = (puzzleData.answer_details || []).find(d => norm(d.name) === norm(name)) || {};
+                allPlayersList.push({
+                    Name: name,
+                    Nationality: details.nationality || '',
+                    Position: details.position || 'Forward'
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            FootyUI.initAccentColor(ACCENT_HEX);
+
+            storage = new FootyUI.FootyStorage(GAME_ID);
+            wrongGuessesCtrl = new FootyUI.FootyWrongGuesses('wrong-guesses-section', 'wrong-guesses-container');
+            
+            livesCtrl = new FootyUI.FootyLives({
+                counterId: 'lives-counter',
+                heartId: 'fa-heart-icon',
+                initial: INITIAL_LIVES,
+                onDead: () => {
+                    endGame(false);
+                },
+                onChange: (val) => {
+                    const addLifeBtn = document.getElementById('add-life-btn');
+                    if (addLifeBtn) {
+                        if (val < INITIAL_LIVES && !gameOver) {
+                            addLifeBtn.classList.remove('hidden');
+                        } else {
+                            addLifeBtn.classList.add('hidden');
+                        }
+                    }
+                }
+            });
+
+            dropdown = new FootyUI.FootyDropdown({
+                inputId: 'guess-input',
+                listId: 'autocomplete-list',
+                data: allPlayersList,
+                maxResults: 25,
+                labelFn: p => p.Name,
+                badgeFn: p => {
+                    if (!p || (p.Name && /\(all\)$/i.test(p.Name))) return '';
+                    return `${p.Nationality || ''}${p.Position ? ' · ' + p.Position : ''}`;
+                }
+            });
+
+            modal = new FootyUI.FootyModal({
+                modalId: 'result-modal',
+                iconId: 'modal-icon',
+                titleId: 'modal-title',
+                messageId: 'modal-message',
+                scoreId: 'modal-score',
+                streakId: 'modal-streak',
+                extraInfoId: 'modal-extra',
+                backInTimeContainerId: 'back-in-time-container'
+            });
+
+            initUI();
+            setupEvents();
+            checkAlreadyPlayed();
+            if (!gameOver && !isBackInTime) {
+                restoreInProgressState();
+            }
+
+            // Explicitly initialize game suggestions below the fold
+            if (typeof FootyUI.initGameSuggestions === 'function') {
+                FootyUI.initGameSuggestions({
+                    containerId: 'fa-game-suggestions',
+                    currentGame: GAME_ID
+                });
+            }
+        });
+
+        function createAnswerCard(i) {
+            const card = document.createElement('div');
+            card.id = `answer-card-${i}`;
+            card.className = 'bg-surface-container border border-white/10 rounded-xl p-3.5 sm:p-4 flex items-center justify-between transition-all duration-300';
+            card.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <div id="card-badge-${i}" class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center font-mono text-xs font-bold text-on-surface-variant">
+                        #${i + 1}
+                    </div>
+                    <div>
+                        <div id="card-name-${i}" class="font-headline text-base sm:text-lg text-white/40 uppercase italic tracking-wide">
+                            Jugador Bloqueado
+                        </div>
+                        <div id="card-meta-${i}" class="text-[11px] font-mono text-on-surface-variant/60 hidden">
+                            ...
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="hint-btn-${i}" onclick="window.revealCardHint(${i})" class="text-accent/60 hover:text-accent hover:bg-accent/10 p-1.5 rounded-lg transition-colors cursor-pointer" title="Reveal nationality & position hint" aria-label="Reveal hint for card #${i + 1}">
+                        <span class="material-symbols-outlined text-lg">lightbulb</span>
+                    </button>
+                    <button id="reveal-btn-${i}" onclick="window.revealPlayerCardManual(${i})" class="text-accent/60 hover:text-error hover:bg-error/10 p-1.5 rounded-lg transition-colors cursor-pointer" title="Revelar este jugador" aria-label="Reveal player #${i + 1}">
+                        <span class="material-symbols-outlined text-lg">visibility</span>
+                    </button>
+                    <div id="card-status-${i}">
+                        <span class="material-symbols-outlined text-white/20 text-xl">lock</span>
+                    </div>
+                </div>
+            `;
+            return card;
+        }
+
+        function initUI() {
+            // Puzzle number & dates
+            document.getElementById('puzzle-date-display').textContent = `PUZZLE #${puzzleNum}${isBackInTime ? ' — PAST' : ''}`;
+            
+            // Dual Statements
+            const isEs = isSpanish();
+            const stmtA = isEs ? (puzzleData.statement_a_es || puzzleData.statement_a) : puzzleData.statement_a;
+            const stmtB = isEs ? (puzzleData.statement_b_es || puzzleData.statement_b) : puzzleData.statement_b;
+            
+            document.getElementById('statement-a-display').textContent = stmtA;
+            document.getElementById('statement-b-display').textContent = stmtB;
+
+            // Counters
+            document.getElementById('total-count').textContent = totalAnswers;
+            document.getElementById('found-count').textContent = score;
+
+            // Build Answers Board Grid
+            const grid = document.getElementById('answers-grid');
+            grid.innerHTML = '';
+
+            for (let i = 0; i < totalAnswers; i++) {
+                grid.appendChild(createAnswerCard(i));
+            }
+
+            // Back-in-time arrow states
+            const prevBtn = document.getElementById('prev-puzzle-btn');
+            const nextBtn = document.getElementById('next-puzzle-btn');
+            
+            const urlMatch = window.location.pathname.match(/_d(\d+)\.html/);
+            const currentOffset = urlMatch ? parseInt(urlMatch[1], 10) : 0;
+            
+            if (puzzleNum <= 1 || currentOffset >= maxBackDays) {
+                prevBtn.disabled = true;
+                prevBtn.classList.add('opacity-30', 'pointer-events-none');
+            } else {
+                prevBtn.addEventListener('click', () => {
+                    const nextOff = currentOffset + 1;
+                    const path = nextOff === 0 ? 'this_and_that.html' : `this_and_that_d${nextOff}.html`;
+                    window.location.href = path;
+                });
+            }
+
+            if (currentOffset <= 0) {
+                nextBtn.disabled = true;
+                nextBtn.classList.add('opacity-30', 'pointer-events-none');
+            } else {
+                nextBtn.addEventListener('click', () => {
+                    const prevOff = currentOffset - 1;
+                    const path = prevOff === 0 ? 'this_and_that.html' : `this_and_that_d${prevOff}.html`;
+                    window.location.href = path;
+                });
+            }
+        }
+
+        window.revealCardHint = function(index, silent = false) {
+            if (gameOver || revealedHints.has(index)) return;
+            const name = validAnswerNames[index];
+            if (!name) return;
+
+            revealedHints.add(index);
+            const hintBtn = document.getElementById(`hint-btn-${index}`);
+            if (hintBtn) hintBtn.classList.add('hidden');
+
+            const details = (puzzleData.answer_details || []).find(d => norm(d.name) === norm(name)) || {};
+            let nat = details.nationality || '';
+            let pos = details.position || '';
+
+            if (!nat || !pos) {
+                const found = allPlayersList.find(p => norm(p.Name) === norm(name));
+                if (found) {
+                    nat = nat || found.Nationality || '';
+                    pos = pos || found.Position || '';
+                }
+            }
+
+            const metaEl = document.getElementById(`card-meta-${index}`);
+            if (metaEl) {
+                metaEl.textContent = `💡 ${nat}${pos ? ' · ' + pos : ''}`;
+                metaEl.classList.remove('hidden');
+            }
+
+            if (!silent) {
+                const isEs = isSpanish();
+                FootyUI.toast(isEs ? `Pista #${index + 1}: ${nat} · ${pos}` : `Hint #${index + 1}: ${nat} · ${pos}`, 'info');
+                if (typeof FootyUI.trackHint === 'function') {
+                    FootyUI.trackHint({ gameId: GAME_ID, puzzleNum, index, player: name });
+                }
+                saveCurrentProgress();
+            }
+        };
+
+        window.revealPlayerCardManual = function(index) {
+            if (gameOver || manuallyRevealed.has(index)) return;
+            const name = validAnswerNames[index];
+            if (!name) return;
+
+            const isEs = isSpanish();
+            FootyUI.confirm({
+                title: isEs ? '¿REVELAR JUGADOR?' : 'REVEAL PLAYER?',
+                message: isEs ? '¿Seguro que deseas revelar este jugador? Contará como fallo.' : 'Are you sure you want to reveal this player? It will count as missed.',
+                confirmText: isEs ? 'REVELAR' : 'REVEAL',
+                cancelText: isEs ? 'CANCELAR' : 'CANCEL',
+                onConfirm: () => {
+                    manuallyRevealed.add(index);
+                    const hintBtn = document.getElementById(`hint-btn-${index}`);
+                    if (hintBtn) hintBtn.classList.add('hidden');
+                    const revealBtn = document.getElementById(`reveal-btn-${index}`);
+                    if (revealBtn) revealBtn.classList.add('hidden');
+
+                    revealPlayerCard(index, name, false);
+
+                    if (typeof FootyUI.trackHint === 'function') {
+                        FootyUI.trackHint({ gameId: GAME_ID, puzzleNum, index, player: name, type: 'manual_reveal' });
+                    }
+
+                    livesCtrl.lose();
+                    saveCurrentProgress();
+
+                    if ((score + manuallyRevealed.size) >= totalAnswers) {
+                        endGame(false);
+                    }
+                }
+            });
+        };
+
+        function setupEvents() {
+            document.getElementById('submit-btn').addEventListener('click', submitGuess);
+
+            document.getElementById('guess-input').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const list = document.getElementById('autocomplete-list');
+                    if (list && !list.classList.contains('hidden') && dropdown) {
+                        dropdown.selectHighlightedOrTop();
+                    }
+                    submitGuess();
+                }
+            });
+
+            // Reopen modal button
+            document.getElementById('reopen-modal-btn')?.addEventListener('click', () => {
+                const isFullWin = score >= totalAnswers;
+                const isPartial = !isFullWin && (score >= Math.ceil(totalAnswers / 2));
+                const outcome = isFullWin ? 'win' : (isPartial ? 'partial' : 'loss');
+                showResultModal(isFullWin, outcome, isPartial, false);
+            });
+
+            // +1 Vida Button
+            document.getElementById('add-life-btn')?.addEventListener('click', () => {
+                if (!gameOver) livesCtrl.add();
+            });
+
+            // Modal Close Buttons (Both close button and X dismiss modal cleanly)
+            document.getElementById('modal-close-btn')?.addEventListener('click', () => modal.hide());
+            document.getElementById('modal-close-btn2')?.addEventListener('click', () => modal.hide());
+            document.getElementById('result-modal')?.addEventListener('click', (e) => {
+                if (e.target.id === 'result-modal') modal.hide();
+            });
+
+            // How to Play modal triggers
+            document.getElementById('how-to-play-trigger-btn')?.addEventListener('click', () => {
+                document.getElementById('how-to-play-modal')?.classList.remove('hidden');
+            });
+            document.getElementById('close-how-to-play-btn')?.addEventListener('click', () => {
+                document.getElementById('how-to-play-modal')?.classList.add('hidden');
+            });
+            document.getElementById('close-how-to-play-btn2')?.addEventListener('click', () => {
+                document.getElementById('how-to-play-modal')?.classList.add('hidden');
+            });
+            document.getElementById('how-to-play-modal')?.addEventListener('click', (e) => {
+                if (e.target.id === 'how-to-play-modal') document.getElementById('how-to-play-modal')?.classList.add('hidden');
+            });
+
+            // Escape key dismisses modals
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    modal?.hide();
+                    document.getElementById('how-to-play-modal')?.classList.add('hidden');
+                }
+            });
+
+            // Give up button with FootyUI.confirm
+            document.getElementById('give-up-btn')?.addEventListener('click', () => {
+                if (gameOver) return;
+                const isEs = isSpanish();
+                FootyUI.confirm({
+                    title: isEs ? '¿RENDIRSE?' : '¿RENDIRSE?',
+                    message: isEs ? '¿Seguro que quieres rendirte? Se revelarán todas las respuestas.' : 'Are you sure you want to give up? All answers will be revealed.',
+                    confirmText: isEs ? 'RENDIRSE' : 'GIVE UP',
+                    cancelText: isEs ? 'SEGUIR JUGANDO' : 'KEEP PLAYING',
+                    onConfirm: () => {
+                        if (typeof FootyUI.trackGiveUp === 'function') {
+                            FootyUI.trackGiveUp({
+                                step: 1,
+                                score,
+                                maxScore: totalAnswers,
+                                lives: livesCtrl ? livesCtrl.get() : INITIAL_LIVES,
+                                target: 'This & That'
+                            });
+                        }
+                        endGame(false, true);
+                    }
+                });
+            });
+
+            // Share results in modal
+            document.getElementById('modal-share-btn')?.addEventListener('click', doShare);
+        }
+
+        function handleVarApproved(playerName, res) {
+            livesCtrl.add(1, 'var');
+            if (wrongGuessesCtrl && typeof wrongGuessesCtrl.delete === 'function') {
+                wrongGuessesCtrl.delete(playerName);
+            }
+
+            const nVal = norm(playerName);
+            guessedPlayers.add(nVal);
+
+            let targetIndex = -1;
+            if (nVal in validNormMap) {
+                targetIndex = validNormMap[nVal].index;
+            } else {
+                // VAR challenge accepted adds a new card slot (does not replace existing answer)
+                targetIndex = validAnswerNames.length;
+                validAnswerNames.push(playerName);
+                validNormMap[nVal] = { name: playerName, index: targetIndex };
+                totalAnswers = validAnswerNames.length;
+                document.getElementById('total-count').textContent = totalAnswers;
+
+                const grid = document.getElementById('answers-grid');
+                grid.appendChild(createAnswerCard(targetIndex));
+            }
+
+            revealPlayerCard(targetIndex, playerName, true);
+            score++;
+            document.getElementById('found-count').textContent = score;
+
+            const isEs = isSpanish();
+            FootyUI.toast(isEs ? `¡VAR Aprobado! ${playerName} es válido.` : `VAR Approved! ${playerName} matches both statements.`, 'success');
+            saveCurrentProgress();
+
+            if (score >= totalAnswers) {
+                endGame(true);
+            }
+        }
+
+        function submitGuess() {
+            if (gameOver) return;
+            const input = document.getElementById('guess-input');
+            const val = (input.value || '').trim();
+            const errEl = document.getElementById('error-message');
+
+            if (!val) return;
+
+            const nVal = norm(val);
+            const isEs = isSpanish();
+
+            // Check if already guessed
+            if (guessedPlayers.has(nVal)) {
+                FootyUI.toast(isEs ? '¡Ya has propuesto a este jugador!' : '¡Ya habías intentado con este jugador!', 'info');
+                input.value = '';
+                return;
+            }
+
+            // Check if answer matches
+            if (nVal in validNormMap) {
+                // Correct guess!
+                const match = validNormMap[nVal];
+                revealPlayerCard(match.index, match.name, true);
+                guessedPlayers.add(nVal);
+                score++;
+                document.getElementById('found-count').textContent = score;
+                FootyUI.toast(isEs ? `¡Correcto! ${match.name} cumple ambas condiciones.` : `Correct! ${match.name} matches both statements!`, 'success');
+
+                saveCurrentProgress();
+
+                if (score >= totalAnswers) {
+                    endGame(true);
+                }
+            } else {
+                // Wrong guess
+                livesCtrl.lose();
+                wrongGuessesCtrl.add(val);
+
+                const stmtA = isEs ? (puzzleData.statement_a_es || puzzleData.statement_a) : puzzleData.statement_a;
+                const stmtB = isEs ? (puzzleData.statement_b_es || puzzleData.statement_b) : puzzleData.statement_b;
+
+                FootyUI.showFeedback({
+                    isCorrect: false,
+                    title: isEs ? 'INCORRECTO' : 'INCORRECT!',
+                    message: isEs ? `${val} no cumple ambas condiciones. Pierdes 1 vida.` : `${val} does not match both statements! Lost 1 life.`,
+                    guess: val,
+                    gameId: GAME_ID,
+                    puzzleNum,
+                    puzzleId,
+                    theme: `${puzzleData.statement_a} & ${puzzleData.statement_b}`,
+                    context: `This & That intersection challenge. Statement A: "${puzzleData.statement_a}", Statement B: "${puzzleData.statement_b}". User guessed: "${val}". Verify if this player genuinely satisfies BOTH conditions in senior football (1990-2026 or verified historic legends). If valid, set verified=true and provide exact career details.`,
+                    canVar: true,
+                    onVarAccepted: (res) => {
+                        handleVarApproved(val, res);
+                    }
+                });
+
+                saveCurrentProgress();
+            }
+
+            input.value = '';
+            errEl.classList.add('hidden');
+        }
+
+        function revealPlayerCard(index, name, isCorrect) {
+            const card = document.getElementById(`answer-card-${index}`);
+            if (!card) return;
+
+            const nameEl = document.getElementById(`card-name-${index}`);
+            const metaEl = document.getElementById(`card-meta-${index}`);
+            const badgeEl = document.getElementById(`card-badge-${index}`);
+            const statusEl = document.getElementById(`card-status-${index}`);
+            const hintBtn = document.getElementById(`hint-btn-${index}`);
+            const revealBtn = document.getElementById(`reveal-btn-${index}`);
+
+            if (hintBtn) hintBtn.classList.add('hidden');
+            if (revealBtn) revealBtn.classList.add('hidden');
+
+            nameEl.textContent = name;
+            nameEl.classList.remove('text-white/40');
+
+            // Find detail if available
+            const details = puzzleData.answer_details || [];
+            const pDetail = details.find(d => norm(d.name) === norm(name)) || {};
+            let nat = pDetail.nationality || '';
+            let pos = pDetail.position || '';
+
+            if (!nat || !pos) {
+                const found = allPlayersList.find(p => norm(p.Name) === norm(name));
+                if (found) {
+                    nat = nat || found.Nationality || '';
+                    pos = pos || found.Position || '';
+                }
+            }
+
+            if (nat || pos) {
+                metaEl.textContent = `${nat}${pos ? ' · ' + pos : ''}`;
+                metaEl.classList.remove('hidden');
+            }
+
+            if (isCorrect) {
+                card.classList.remove('border-white/10');
+                card.classList.add('correct-card-glow', 'bg-correct/10');
+                badgeEl.classList.add('bg-correct/20', 'border-correct/40', 'text-correct');
+                nameEl.classList.add('text-white');
+                statusEl.innerHTML = '<span class="material-symbols-outlined text-correct text-xl">check_circle</span>';
+            } else {
+                // Missed (revealed on defeat / surrender)
+                card.classList.remove('border-white/10');
+                card.classList.add('missed-card-glow', 'bg-error/5');
+                badgeEl.classList.add('bg-error/20', 'border-error/40', 'text-error');
+                nameEl.classList.add('text-error/90');
+                statusEl.innerHTML = '<span class="text-[10px] font-mono font-bold uppercase text-error/80 px-1.5 py-0.5 rounded border border-error/30 bg-error/10">MISSED</span>';
+            }
+        }
+
+        function endGame(won, isRendirse = false) {
+            gameOver = true;
+
+            // Hide guess panel and action buttons, show summary
+            document.getElementById('fa-guess-panel').style.display = 'none';
+            document.getElementById('endgame-summary-section').classList.remove('hidden');
+            document.getElementById('add-life-btn')?.classList.add('hidden');
+            document.getElementById('give-up-btn')?.classList.add('hidden');
+            document.getElementById('give-up-trigger-btn')?.classList.add('hidden');
+
+            // Reveal all unfound answers
+            validAnswerNames.forEach((name, idx) => {
+                const nVal = norm(name);
+                if (!guessedPlayers.has(nVal)) {
+                    revealPlayerCard(idx, name, false);
+                }
+            });
+
+            // Update board status text
+            const isEs = isSpanish();
+            document.getElementById('board-status-text').textContent = won
+                ? (isEs ? '¡Todos los jugadores encontrados!' : 'All players found!')
+                : `${score} / ${totalAnswers} ${isEs ? 'jugadores encontrados' : 'players found'}`;
+
+            // Record result in storage
+            const isFullWin = score >= totalAnswers;
+            const isPartial = !isFullWin && !isRendirse && (score >= Math.ceil(totalAnswers / 2));
+            const outcome = isFullWin ? 'win' : (isPartial ? 'partial' : 'loss');
+
+            // Save completed state snapshot for replay locking
+            const snapshot = {
+                score,
+                lives: livesCtrl.get(),
+                guessed: Array.from(guessedPlayers),
+                revealedHints: Array.from(revealedHints),
+                manuallyRevealed: Array.from(manuallyRevealed),
+                validAnswerNames: validAnswerNames.slice(),
+                totalAnswers,
+                wrongGuesses: wrongGuessesCtrl ? wrongGuessesCtrl.getGuesses() : [],
+                won: isFullWin,
+                outcome,
+                isPartial,
+                isRendirse
+            };
+            try {
+                const stateKey = `footy_v2_${GAME_ID}_completed_${puzzleNum}${isBackInTime ? '_bit' : ''}`;
+                localStorage.setItem(stateKey, JSON.stringify(snapshot));
+            } catch (e) {}
+
+            const stats = storage.recordResult(puzzleNum, isFullWin, score, totalAnswers, isBackInTime, outcome);
+            document.getElementById('modal-best').textContent = stats.bestStreak;
+
+            showResultModal(isFullWin, outcome, isPartial, isRendirse, stats);
+        }
+
+        function showResultModal(won, outcome, isPartial, isRendirse, stats) {
+            const currentStats = stats || storage.getStats();
+            document.getElementById('modal-best').textContent = currentStats.bestStreak || 0;
+
+            const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage);
+            const isEs = isSpanish();
+
+            let modalTitle = won ? 'MASTERMIND' : (isPartial ? 'SOLID EFFORT!' : 'GAME OVER');
+            let modalMsg = won
+                ? 'Flawless intersection! You identified every qualifying footballer.'
+                : (isPartial
+                    ? `Great knowledge! You uncovered ${score} out of ${totalAnswers} matching players.`
+                    : `You uncovered ${score} out of ${totalAnswers} matching players.`);
+
+            if (isEs) {
+                modalTitle = won ? '¡MAESTRO TOTAL!' : (isPartial ? '¡BUEN INTENTO!' : '¡FIN DEL JUEGO!');
+                modalMsg = won
+                    ? '¡Intersección impecable! Identificaste a todos los futbolistas que cumplen ambas premisas.'
+                    : (isPartial
+                        ? `¡Gran conocimiento! Descubriste ${score} de ${totalAnswers} futbolistas válidos.`
+                        : `Descubriste ${score} de ${totalAnswers} futbolistas válidos.`);
+            }
+
+            if (isRendirse) {
+                modalTitle = isEs ? '¡RETO ABANDONADO!' : 'SURRENDERED';
+                modalMsg = isEs
+                    ? `Te has rendido. Descubriste ${score} de ${totalAnswers} futbolistas válidos.`
+                    : `Challenge surrendered. You uncovered ${score} out of ${totalAnswers} matching players.`;
+            }
+
+            modal.show({
+                gameId: GAME_ID,
+                won,
+                outcome: won ? 'win' : (isPartial ? 'partial' : 'loss'),
+                isPartial,
+                title: modalTitle,
+                message: modalMsg,
+                score,
+                maxScore: totalAnswers,
+                lives: livesCtrl.get(),
+                initialVidas: INITIAL_LIVES,
+                streak: currentStats.streak,
+                targetName: 'This & That',
+                targetType: 'intersection',
+                backInTimeLinks: bitLinks
+            });
+        }
+
+        function doShare() {
+            let grid = '';
+            for (let i = 0; i < totalAnswers; i++) {
+                grid += (i < score) ? '💜' : '⬛';
+            }
+            const hearts = '❤️'.repeat(livesCtrl.get());
+
+            FootyUI.share({
+                gameId: GAME_ID,
+                gameName: 'This & That',
+                puzzleNum,
+                score,
+                maxScore: totalAnswers,
+                lives: livesCtrl.get(),
+                initialVidas: INITIAL_LIVES,
+                targetName: 'This & That',
+                targetType: 'intersection',
+                won: score >= totalAnswers,
+                url: window.location.href,
+                customText: `ESTO Y AQUELLO #${puzzleNum} ⚽\n${grid} (${score}/${totalAnswers})\nVidas: ${hearts}\n${window.location.href}`
+            });
+        }
+
+        function saveCurrentProgress() {
+            if (gameOver) return;
+            try {
+                storage.saveInProgress(puzzleNum, {
+                    score,
+                    guessed: Array.from(guessedPlayers),
+                    revealedHints: Array.from(revealedHints),
+                    manuallyRevealed: Array.from(manuallyRevealed),
+                    validAnswerNames: validAnswerNames.slice(),
+                    totalAnswers,
+                    lives: livesCtrl ? livesCtrl.get() : INITIAL_LIVES,
+                    wrongGuesses: wrongGuessesCtrl ? wrongGuessesCtrl.getGuesses() : []
+                }, isBackInTime);
+            } catch (e) {}
+        }
+
+        function restoreInProgressState() {
+            try {
+                const state = storage.getInProgress(puzzleNum, isBackInTime);
+                if (!state || state.gameOver) return;
+
+                // Reconstruct any dynamically approved VAR cards before revealing
+                if (Array.isArray(state.validAnswerNames) && state.validAnswerNames.length > validAnswerNames.length) {
+                    const grid = document.getElementById('answers-grid');
+                    for (let i = validAnswerNames.length; i < state.validAnswerNames.length; i++) {
+                        const newName = state.validAnswerNames[i];
+                        validAnswerNames.push(newName);
+                        validNormMap[norm(newName)] = { name: newName, index: i };
+                        if (grid) grid.appendChild(createAnswerCard(i));
+                    }
+                    totalAnswers = validAnswerNames.length;
+                    const totEl = document.getElementById('total-count');
+                    if (totEl) totEl.textContent = totalAnswers;
+                }
+
+                if (state.lives !== undefined && livesCtrl) {
+                    livesCtrl.set(state.lives);
+                }
+                if (Array.isArray(state.wrongGuesses) && wrongGuessesCtrl) {
+                    wrongGuessesCtrl.restore(state.wrongGuesses);
+                }
+                if (Array.isArray(state.revealedHints)) {
+                    state.revealedHints.forEach(idx => {
+                        window.revealCardHint(idx, true);
+                    });
+                }
+                if (Array.isArray(state.manuallyRevealed)) {
+                    state.manuallyRevealed.forEach(idx => {
+                        manuallyRevealed.add(idx);
+                        const name = validAnswerNames[idx];
+                        if (name) {
+                            revealPlayerCard(idx, name, false);
+                        }
+                    });
+                }
+                if (Array.isArray(state.guessed)) {
+                    state.guessed.forEach(nVal => {
+                        if (nVal in validNormMap) {
+                            const match = validNormMap[nVal];
+                            revealPlayerCard(match.index, match.name, true);
+                            guessedPlayers.add(nVal);
+                        }
+                    });
+                }
+                score = (typeof state.score === 'number') ? state.score : guessedPlayers.size;
+                const foundEl = document.getElementById('found-count');
+                if (foundEl) foundEl.textContent = score;
+                const livesEl = document.getElementById('lives-counter');
+                if (livesEl && livesCtrl) livesEl.textContent = livesCtrl.get();
+            } catch (e) {}
+        }
+
+        function checkAlreadyPlayed() {
+            const result = storage.getPuzzleResult(puzzleNum, isBackInTime);
+            if (!result) return;
+
+            gameOver = true;
+
+            let saved = null;
+            try {
+                const stateKey = `footy_v2_${GAME_ID}_completed_${puzzleNum}${isBackInTime ? '_bit' : ''}`;
+                const raw = localStorage.getItem(stateKey);
+                if (raw) saved = JSON.parse(raw);
+            } catch (e) {}
+
+            if (saved) {
+                // Reconstruct any dynamically approved VAR cards before revealing completed state
+                if (Array.isArray(saved.validAnswerNames) && saved.validAnswerNames.length > validAnswerNames.length) {
+                    const grid = document.getElementById('answers-grid');
+                    for (let i = validAnswerNames.length; i < saved.validAnswerNames.length; i++) {
+                        const newName = saved.validAnswerNames[i];
+                        validAnswerNames.push(newName);
+                        validNormMap[norm(newName)] = { name: newName, index: i };
+                        if (grid) grid.appendChild(createAnswerCard(i));
+                    }
+                    totalAnswers = validAnswerNames.length;
+                    const totEl = document.getElementById('total-count');
+                    if (totEl) totEl.textContent = totalAnswers;
+                }
+
+                if (typeof saved.score === 'number') score = saved.score;
+                if (Array.isArray(saved.guessed)) {
+                    guessedPlayers = new Set(saved.guessed);
+                }
+                if (Array.isArray(saved.revealedHints)) {
+                    revealedHints = new Set(saved.revealedHints);
+                }
+                if (typeof saved.lives === 'number' && livesCtrl) {
+                    livesCtrl.set(saved.lives);
+                }
+                if (Array.isArray(saved.wrongGuesses) && wrongGuessesCtrl) {
+                    wrongGuessesCtrl.restore(saved.wrongGuesses);
+                }
+            } else {
+                score = result.score || 0;
+            }
+
+            // Reveal solved answers
+            guessedPlayers.forEach(nVal => {
+                if (nVal in validNormMap) {
+                    const match = validNormMap[nVal];
+                    revealPlayerCard(match.index, match.name, true);
+                }
+            });
+
+            // Reveal remaining answers as missed
+            validAnswerNames.forEach((name, idx) => {
+                const nVal = norm(name);
+                if (!guessedPlayers.has(nVal)) {
+                    revealPlayerCard(idx, name, false);
+                }
+            });
+
+            // Disable input and lock board
+            const guessPanel = document.getElementById('fa-guess-panel');
+            if (guessPanel) guessPanel.style.display = 'none';
+            const endgameSummary = document.getElementById('endgame-summary-section');
+            if (endgameSummary) endgameSummary.classList.remove('hidden');
+            const addLifeBtn = document.getElementById('add-life-btn');
+            if (addLifeBtn) addLifeBtn.classList.add('hidden');
+            const giveUpBtn = document.getElementById('give-up-btn');
+            if (giveUpBtn) giveUpBtn.classList.add('hidden');
+            const giveUpTrigger = document.getElementById('give-up-trigger-btn');
+            if (giveUpTrigger) giveUpTrigger.classList.add('hidden');
+
+            const isEs = isSpanish();
+            document.getElementById('found-count').textContent = score;
+            document.getElementById('board-status-text').textContent = (score >= totalAnswers)
+                ? (isEs ? '¡Todos los jugadores encontrados!' : 'All players found!')
+                : `${score} / ${totalAnswers} ${isEs ? 'jugadores encontrados' : 'players found'}`;
+
+            const isFullWin = result.won || result.outcome === 'win';
+            const isPartial = !isFullWin && (result.outcome === 'partial' || score >= Math.ceil(totalAnswers / 2));
+            const outcome = isFullWin ? 'win' : (isPartial ? 'partial' : 'loss');
+
+            const stats = (storage.getStats && typeof storage.getStats === 'function')
+                ? storage.getStats()
+                : { streak: result.streak || 0, bestStreak: 0 };
+            document.getElementById('modal-best').textContent = stats.bestStreak || 0;
+
+            const bitLinks = isBackInTime ? [] : FootyUI.buildBackInTimeLinks(GAME_ID, maxBackDays, storage);
+
+            let modalTitle = isEs ? 'RETO YA COMPLETADO' : 'PUZZLE ALREADY COMPLETED';
+            let modalMsg = isEs
+                ? `Ya has jugado este desafío hoy. Puntuación final: ${score} de ${totalAnswers}.`
+                : `You already completed this challenge today. Final score: ${score} / ${totalAnswers}.`;
+
+            if (isFullWin) {
+                modalTitle = isEs ? '¡MAESTRO TOTAL!' : 'MASTERMIND';
+                modalMsg = isEs
+                    ? '¡Intersección impecable! Identificaste a todos los futbolistas que cumplen ambas premisas.'
+                    : 'Flawless intersection! You identified every qualifying footballer.';
+            } else if (isPartial) {
+                modalTitle = isEs ? '¡BUEN INTENTO!' : 'SOLID EFFORT!';
+                modalMsg = isEs
+                    ? `¡Gran conocimiento! Descubriste ${score} de ${totalAnswers} futbolistas válidos.`
+                    : `Great knowledge! You uncovered ${score} out of ${totalAnswers} matching players.`;
+            }
+
+            modal.show({
+                isRestore: true,
+                gameId: GAME_ID,
+                won: isFullWin,
+                outcome,
+                isPartial,
+                title: modalTitle,
+                message: modalMsg,
+                score,
+                maxScore: totalAnswers,
+                lives: livesCtrl.get(),
+                initialVidas: INITIAL_LIVES,
+                streak: stats.streak,
+                targetName: 'This & That',
+                targetType: 'intersection',
+                backInTimeLinks: bitLinks
+            });
+        }
+    </script>
+</body>
+</html>

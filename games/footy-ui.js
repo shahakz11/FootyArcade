@@ -618,6 +618,7 @@
             }
         };
         this.lose = (n = 1) => { lives = Math.max(0, lives - n); update(); };
+        this.loseLife = this.lose;
         this.isDead = () => lives <= 0;
 
         // Render initial value
@@ -1515,7 +1516,7 @@
 
         const meta = getActiveGameMetadata();
         const gameId = opts.gameId || meta.gameId;
-        const isVarSupportedGame = ['top_scorers', 'top_transfers', 'player_chain', 'passport_fc', 'anyone_but'].includes(gameId);
+        const isVarSupportedGame = ['top_scorers', 'top_transfers', 'player_chain', 'passport_fc', 'anyone_but', 'this_and_that'].includes(gameId);
         const normGuess = opts.guess ? normalizeStr(opts.guess) : '';
         const alreadyChecked = normGuess && varState.checkedPlayers.has(normGuess);
         const hasToken = varState.tokens > 0 && varState.successfulUses < varState.maxSuccess;
@@ -2203,6 +2204,7 @@
         };
 
         this.getAll = () => Array.from(shown);
+        this.getGuesses = this.getAll;
 
         this.restore = (list) => {
             if (Array.isArray(list)) {
@@ -3189,6 +3191,17 @@
             defaultTagline: 'Collect nationality stamps for a mystery club',
             launchDate: '2026-09-14',
             file: 'passport_fc.html'
+        },
+        {
+            id: 'this_and_that',
+            icon: 'join_inner',
+            color: '#a855f7',
+            nameKey: 'game_this_and_that',
+            taglineKey: 'tagline_this_and_that',
+            defaultName: 'This & That',
+            defaultTagline: 'Name footballers who match BOTH statements',
+            launchDate: '2026-11-02',
+            file: 'this_and_that.html'
         },
         {
             id: 'anyone_but',

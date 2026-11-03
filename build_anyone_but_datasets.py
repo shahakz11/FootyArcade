@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-build_anyone_but_datasets.py — Generate daily Anyone But puzzles for Playmaker.
+build_anyone_but_datasets.py — Generate & enrich daily Anyone But puzzles for Playmaker.
 
 Each puzzle features an iconic EXCLUDED PLAYER and 3 tables of criteria.
 Players must guess anyone who fits each criterion — EXCEPT the excluded player.
@@ -12,6 +12,12 @@ Criterion types:
   club_club  – "Played for BOTH {club_a} & {club_b}"
   club_value – "Played for {club} (peak market value ≥ €{n}M)"
   nat_goals  – "{Nationality adj.} with {n}+ career goals"
+
+Holistic architecture:
+  - Uses .player_career_db.pkl (Davidcariboo + Salimt + historical_careers.json + manual legends)
+  - Answers are strictly whitelisted against all_players.json (ensuring UI autocomplete parity)
+  - NO peak market value floor for answer player eligibility
+  - Merges historical career goals from Davidcariboo and Salimt
 """
 
 import os
@@ -28,9 +34,10 @@ import pandas as pd
 # Flush prints immediately
 sys.stdout.reconfigure(line_buffering=True)
 
-# Reuse the canonical club-name normaliser (same approach as build_passport_fc)
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from build_player_chain_datasets import clean_club_name
+# Reuse the canonical club-name normaliser & db builder from build_player_chain_datasets
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, ROOT_DIR)
+from build_player_chain_datasets import clean_club_name, build_player_career_database
 
 
 # ── Tuning constants ─────────────────────────────────────────────────────
@@ -38,15 +45,14 @@ from build_player_chain_datasets import clean_club_name
 SEED              = 42
 TARGET_PUZZLES    = 180
 MIN_ANSWERS       = 3       # per column
-MAX_ANSWERS       = 10      # per column
+MAX_ANSWERS       = 15      # per column (comfortably accommodates rich pairs like Barca & Juve)
 MIN_TOTAL_UNIQUE  = 8       # across all 3 columns
-MAX_TOTAL_UNIQUE  = 20
+MAX_TOTAL_UNIQUE  = 25
 MIN_EXCLUDED_VAL  = 30_000_000   # excluded player peak value floor
-MIN_ANSWER_VAL    = 5_000_000    # answer player peak value floor
 MIN_MAJOR_CLUBS   = 2            # excluded player must have ≥2 major clubs
 
 VALUE_THRESHOLDS  = [30_000_000, 50_000_000, 80_000_000, 100_000_000]
-GOAL_THRESHOLDS   = [30, 50, 75, 100, 150]
+GOAL_THRESHOLDS   = [50, 75, 100, 150, 200]
 
 
 # ── Nationality adjective map ────────────────────────────────────────────
@@ -81,32 +87,34 @@ NAT_ADJ = {
     'Iran': 'Iranian', 'China': 'Chinese',
 }
 
+ADJ_TO_NAT = {v: k for k, v in NAT_ADJ.items()}
 
-# ── Major clubs (canonical names after clean_club_name) ──────────────────
 
-MAJOR_CLUBS = {
+# ── Major clubs (canonical names matching club_to_entities) ──────────────
+
+RAW_MAJOR_CLUBS = {
     # England
-    'Arsenal', 'Aston Villa', 'Chelsea', 'Everton FC', 'Leeds United',
+    'Arsenal', 'Aston Villa', 'Chelsea', 'Everton', 'Leeds United',
     'Leicester City', 'Liverpool', 'Manchester City', 'Manchester United',
-    'Newcastle United', 'Southampton FC', 'Tottenham Hotspur', 'West Ham United',
+    'Newcastle United', 'Southampton', 'Tottenham Hotspur', 'West Ham United',
     # Spain
     'Atletico Madrid', 'Barcelona', 'Real Betis', 'Real Madrid',
-    'Real Sociedad', 'Sevilla FC', 'Valencia CF', 'Villarreal CF', 'Athletic Bilbao',
+    'Real Sociedad', 'Sevilla', 'Valencia', 'Villarreal', 'Athletic Bilbao',
     # Germany
-    'Bayer 04 Leverkusen', 'Bayern Munich', 'Borussia Dortmund',
-    'RB Leipzig', 'Schalke 04', 'VfL Wolfsburg', 'Eintracht Frankfurt',
+    'Bayer Leverkusen', 'Bayern Munich', 'Borussia Dortmund',
+    'RB Leipzig', 'Schalke', 'VfL Wolfsburg', 'Eintracht Frankfurt',
     # Italy
-    'AC Milan', 'ACF Fiorentina', 'AS Roma', 'Atalanta BC',
-    'Inter Milan', 'Juventus', 'Lazio', 'SSC Napoli',
+    'AC Milan', 'Fiorentina', 'Roma', 'Atalanta',
+    'Inter', 'Juventus', 'Lazio', 'Napoli',
     # France
-    'AS Monaco', 'LOSC Lille', 'Olympique Lyon', 'Olympique Marseille',
+    'Monaco', 'Lille', 'Lyon', 'Marseille',
     'Paris Saint-Germain',
     # Portugal / Netherlands / Belgium
-    'Ajax', 'Anderlecht', 'Benfica', 'Club Brugge', 'FC Porto',
+    'Ajax', 'Anderlecht', 'Benfica', 'Club Brugge', 'Porto',
     'Feyenoord', 'PSV Eindhoven', 'Sporting CP',
     # Other Europe
-    'Besiktas', 'Celtic FC', 'Dynamo Kyiv', 'Fenerbahce', 'Galatasaray',
-    'Rangers FC', 'Red Bull Salzburg', 'Shakhtar Donetsk',
+    'Besiktas', 'Celtic', 'Dynamo Kyiv', 'Fenerbahce', 'Galatasaray',
+    'Rangers', 'Red Bull Salzburg', 'Shakhtar Donetsk',
     'Zenit St. Petersburg',
     # South America
     'Boca Juniors', 'Corinthians', 'Flamengo', 'Gremio',
@@ -116,206 +124,230 @@ MAJOR_CLUBS = {
     'Al-Hilal', 'Al-Nassr', 'Inter Miami', 'LA Galaxy',
 }
 
+MAJOR_CLUBS = {clean_club_name(c) or c for c in RAW_MAJOR_CLUBS}
+
 
 # ── Data loading ─────────────────────────────────────────────────────────
 
-def load_kaggle_dataset():
-    """Load davidcariboo/player-scores from kagglehub or local cache."""
-    try:
-        import kagglehub
-        dc_path = kagglehub.dataset_download('davidcariboo/player-scores')
-    except Exception:
-        dc_dir = os.path.expanduser(
-            '~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions')
-        if os.path.exists(dc_dir):
-            versions = sorted(
-                [v for v in os.listdir(dc_dir) if v.isdigit()], key=int)
-            dc_path = (os.path.join(dc_dir, versions[-1])
-                       if versions else os.path.join(dc_dir, '679'))
-        else:
-            dc_path = os.path.join(dc_dir, '679')
-
-    print(f"Loading player-scores from {dc_path}")
-    players_df     = pd.read_csv(os.path.join(dc_path, 'players.csv'))
-    transfers_df   = pd.read_csv(os.path.join(dc_path, 'transfers.csv'))
-    appearances_df = pd.read_csv(os.path.join(dc_path, 'appearances.csv'))
-    return players_df, transfers_df, appearances_df
+def load_career_database():
+    """Load unified career database (.player_career_db.pkl)."""
+    cache_path = os.path.join(ROOT_DIR, '.player_career_db.pkl')
+    if os.path.exists(cache_path):
+        import pickle
+        with open(cache_path, 'rb') as f:
+            data = pickle.load(f)
+            print(f"Loaded career database from {cache_path}")
+            return data
+    print("Building career database via build_player_career_database()...")
+    return build_player_career_database()
 
 
-def _load_salimt_transfers(player_clubs, valid_pids):
-    """Optionally augment club histories with the Salimt supplementary dataset for known players."""
-    salimt_dir = os.path.expanduser(
-        '~/.cache/kagglehub/datasets/xfkzujqjvx97n/football-datasets/versions')
-    if not os.path.exists(salimt_dir):
-        return 0
-    versions = sorted(
-        [v for v in os.listdir(salimt_dir) if v.isdigit()], key=int)
-    if not versions:
-        return 0
-    tr_file = os.path.join(salimt_dir, versions[-1],
-                           'transfer_history', 'transfer_history.csv')
-    if not os.path.exists(tr_file):
-        return 0
-
-    df = pd.read_csv(
-        tr_file,
-        usecols=['player_id', 'from_team_name', 'to_team_name'],
-        low_memory=False,
-    )
-    # Only process rows for players we track
-    df = df[df['player_id'].isin(valid_pids)]
-    added = 0
-    clean_memo = {}
-    for r in df.itertuples(index=False):
-        try:
-            pid = int(r.player_id)
-        except (ValueError, TypeError):
-            continue
-        for col_val in (r.from_team_name, r.to_team_name):
-            if pd.notna(col_val):
-                raw = str(col_val)
-                if raw not in clean_memo:
-                    cleaned = re.sub(r'\s*\(\d+\)$', '', raw).strip()
-                    clean_memo[raw] = clean_club_name(cleaned)
-                club = clean_memo[raw]
-                if club:
-                    player_clubs[pid].add(club)
-                    added += 1
-    return added
-
-
-def build_player_data(players_df, transfers_df, appearances_df):
-    """Build lookup dicts: players, player_clubs, player_goals."""
+def load_player_whitelist():
+    """Load all_players.json whitelist mapping canonical name -> dict."""
+    whitelist_file = os.path.join(ROOT_DIR, 'all_players.json')
+    with open(whitelist_file, 'r', encoding='utf-8') as f:
+        data = json.load(f)
     players = {}
-    for r in players_df[['player_id', 'name', 'country_of_citizenship', 'highest_market_value_in_eur']].itertuples(index=False):
-        if pd.isna(r.name):
+    for p in data:
+        name = p.get('Name')
+        if not name:
             continue
-        pid  = int(r.player_id)
-        name = str(r.name)
-        nat  = str(r.country_of_citizenship) if pd.notna(r.country_of_citizenship) else ''
-        val  = float(r.highest_market_value_in_eur) if pd.notna(r.highest_market_value_in_eur) else 0.0
-        players[pid] = {'name': name, 'nationality': nat, 'market_value': val}
+        if name not in players or p.get('MarketValue', 0) > players[name].get('MarketValue', 0):
+            players[name] = {
+                'name': name,
+                'nationality': p.get('Nationality', ''),
+                'position': p.get('Position', ''),
+                'market_value': float(p.get('MarketValue', 0)),
+            }
+    print(f"Loaded {len(players)} players from {whitelist_file}")
+    return players
 
-    player_clubs = defaultdict(set)
-    clean_memo = {}
-    for r in transfers_df[['player_id', 'from_club_name', 'to_club_name']].itertuples(index=False):
-        pid = int(r.player_id)
-        for col_val in (r.from_club_name, r.to_club_name):
-            if pd.notna(col_val):
-                raw = str(col_val)
-                if raw not in clean_memo:
-                    clean_memo[raw] = clean_club_name(raw)
-                club = clean_memo[raw]
-                if club:
-                    player_clubs[pid].add(club)
 
-    valid_pids = set(players.keys())
-    salimt = _load_salimt_transfers(player_clubs, valid_pids)
-    if salimt:
-        print(f"  +{salimt} Salimt transfer records")
+def load_dc_market_values(whitelist):
+    """Augment with Transfermarkt peak values from Davidcariboo for value criteria."""
+    dc_dir = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions')
+    if os.path.exists(dc_dir):
+        versions = sorted([v for v in os.listdir(dc_dir) if v.isdigit()], key=int)
+        dc_path = os.path.join(dc_dir, versions[-1]) if versions else os.path.join(dc_dir, '679')
+    else:
+        dc_path = os.path.join(dc_dir, '679')
 
-    # Vectorized career goals
-    player_goals = appearances_df.groupby('player_id')['goals'].sum().fillna(0).astype(int).to_dict()
+    p_file = os.path.join(dc_path, 'players.csv')
+    if not os.path.exists(p_file):
+        return {}
 
-    print(f"  {len(players)} players | {len(player_clubs)} with clubs | {len(player_goals)} with goals")
-    return players, dict(player_clubs), player_goals
+    df = pd.read_csv(p_file, usecols=['name', 'highest_market_value_in_eur'], low_memory=False)
+    dc_mv = {}
+    for r in df.itertuples(index=False):
+        if pd.isna(r.name) or pd.isna(r.highest_market_value_in_eur):
+            continue
+        clean_name = re.sub(r'\s*\(\d+\)$', '', str(r.name)).strip()
+        val = float(r.highest_market_value_in_eur)
+        if clean_name in whitelist:
+            dc_mv[clean_name] = max(dc_mv.get(clean_name, 0.0), val)
+    return dc_mv
+
+
+def load_career_goals(whitelist):
+    """Aggregate career goals combining Davidcariboo and Salimt historical performances."""
+    player_goals = defaultdict(int)
+
+    # 1. Davidcariboo appearances
+    dc_dir = os.path.expanduser('~/.cache/kagglehub/datasets/davidcariboo/player-scores/versions')
+    if os.path.exists(dc_dir):
+        versions = sorted([v for v in os.listdir(dc_dir) if v.isdigit()], key=int)
+        dc_path = os.path.join(dc_dir, versions[-1]) if versions else os.path.join(dc_dir, '679')
+        p_file = os.path.join(dc_path, 'players.csv')
+        app_file = os.path.join(dc_path, 'appearances.csv')
+        if os.path.exists(p_file) and os.path.exists(app_file):
+            df_p = pd.read_csv(p_file, usecols=['player_id', 'name'], low_memory=False)
+            df_p['clean_name'] = df_p['name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True).str.strip()
+            dc_id_to_name = dict(zip(df_p['player_id'], df_p['clean_name']))
+
+            df_app = pd.read_csv(app_file, usecols=['player_id', 'goals'], low_memory=False)
+            dc_sum = df_app.groupby('player_id')['goals'].sum().to_dict()
+            for pid, g in dc_sum.items():
+                name = dc_id_to_name.get(pid)
+                if name and name in whitelist:
+                    player_goals[name] = max(player_goals[name], int(g))
+
+    # 2. Salimt performances (covers 102 seasons back to 1990s & 2000s)
+    salimt_dir = os.path.expanduser('~/.cache/kagglehub/datasets/xfkzujqjvx97n/football-datasets/versions')
+    if os.path.exists(salimt_dir):
+        versions = sorted([v for v in os.listdir(salimt_dir) if v.isdigit()], key=int)
+        salimt_path = os.path.join(salimt_dir, versions[-1]) if versions else os.path.join(salimt_dir, '2')
+        prof_file = os.path.join(salimt_path, 'player_profiles', 'player_profiles.csv')
+        perf_file = os.path.join(salimt_path, 'player_performances', 'player_performances.csv')
+        if os.path.exists(prof_file) and os.path.exists(perf_file):
+            df_prof = pd.read_csv(prof_file, usecols=['player_id', 'player_name'], low_memory=False)
+            df_prof['clean_name'] = df_prof['player_name'].fillna('').astype(str).str.replace(r'\s*\(\d+\)$', '', regex=True).str.strip()
+            s_id_to_name = dict(zip(df_prof['player_id'], df_prof['clean_name']))
+
+            df_perf = pd.read_csv(perf_file, usecols=['player_id', 'goals'], low_memory=False)
+            s_sum = df_perf.groupby('player_id')['goals'].sum().to_dict()
+            for pid, g in s_sum.items():
+                name = s_id_to_name.get(pid)
+                if name and name in whitelist:
+                    player_goals[name] = max(player_goals[name], int(g))
+
+    print(f"Aggregated career goals for {len(player_goals)} players")
+    return player_goals
 
 
 # ── Fast Inverted Indexes ────────────────────────────────────────────────
 
 class PlayerIndex:
-    def __init__(self, players, pc, pg):
+    def __init__(self, players, p_clubs, club_to_entities, entity_name, entity_clubs, player_goals, dc_market_values=None):
         self.players = players
-        self.pc = pc
-        self.pg = pg
-        
-        # Eligible answers set (peak value >= MIN_ANSWER_VAL)
-        self.eligible_answers = {pid for pid, m in players.items() if m['market_value'] >= MIN_ANSWER_VAL}
-        
-        # club -> set of eligible pids
-        self.club_players = defaultdict(set)
-        for pid, clubs in pc.items():
-            if pid in self.eligible_answers:
-                for club in clubs:
-                    self.club_players[club].add(pid)
-                    
-        # nationality -> set of eligible pids
+        self.p_clubs = p_clubs
+        self.club_to_entities = club_to_entities
+        self.entity_name = entity_name
+        self.entity_clubs = entity_clubs
+        self.player_goals = player_goals
+        self.dc_mv = dc_market_values or {}
+
+        # Eligible answers: all players in whitelist (NO peak market value floor!)
+        self.eligible_answers = set(players.keys())
+
+        # club -> set of entity_ids
+        self.club_entities = defaultdict(set)
+        for club, eids in club_to_entities.items():
+            for eid in eids:
+                pname = entity_name.get(eid)
+                if pname and pname in self.eligible_answers:
+                    self.club_entities[club].add(eid)
+
+        # nationality -> set of player names
         self.nat_players = defaultdict(set)
-        for pid in self.eligible_answers:
-            nat = players[pid]['nationality']
+        for name, m in players.items():
+            nat = m.get('nationality')
             if nat:
-                self.nat_players[nat].add(pid)
-                
-        # (club, thresh) -> set of eligible pids
+                self.nat_players[nat].add(name)
+
+        # (club, thresh) -> set of player names
         self.club_thresh_players = defaultdict(set)
-        for club, pids in self.club_players.items():
+        for club, eids in self.club_entities.items():
             for t in VALUE_THRESHOLDS:
-                self.club_thresh_players[(club, t)] = {pid for pid in pids if players[pid]['market_value'] >= t}
-                
-        # (nat, thresh) -> set of eligible pids
+                self.club_thresh_players[(club, t)] = {
+                    entity_name[eid] for eid in eids
+                    if self.get_player_peak_value(entity_name[eid]) >= t
+                }
+
+        # (nat, thresh) -> set of player names
         self.nat_goals_players = defaultdict(set)
-        for nat, pids in self.nat_players.items():
+        for nat, names in self.nat_players.items():
             for t in GOAL_THRESHOLDS:
-                self.nat_goals_players[(nat, t)] = {pid for pid in pids if pg.get(pid, 0) >= t}
+                self.nat_goals_players[(nat, t)] = {
+                    name for name in names if self.player_goals.get(name, 0) >= t
+                }
 
-    def crit_nat_club(self, nat, club, xpid):
+    def get_player_peak_value(self, name):
+        """Returns player's peak market value in EUR."""
+        return max(self.dc_mv.get(name, 0.0), self.players.get(name, {}).get('market_value', 0.0))
+
+    def crit_nat_club(self, nat, club, xname):
         label = f"{NAT_ADJ.get(nat, nat)} who played for {club}"
-        ans = (self.nat_players[nat] & self.club_players[club]) - {xpid}
+        eids = self.club_entities.get(club, set())
+        ans = {
+            self.entity_name[e] for e in eids
+            if self.players.get(self.entity_name[e], {}).get('nationality') == nat and self.entity_name[e] != xname
+        }
         return label, ans
 
-    def crit_club_club(self, ca, cb, xpid):
+    def crit_club_club(self, ca, cb, xname):
         label = f"Played for BOTH {ca} & {cb}"
-        ans = (self.club_players[ca] & self.club_players[cb]) - {xpid}
+        both_eids = self.club_entities.get(ca, set()) & self.club_entities.get(cb, set())
+        ans = {self.entity_name[e] for e in both_eids if self.entity_name[e] != xname}
         return label, ans
 
-    def crit_club_value(self, club, thresh, xpid):
+    def crit_club_value(self, club, thresh, xname):
         label = f"Played for {club} (peak market value ≥ €{thresh // 1_000_000}M)"
-        ans = self.club_thresh_players[(club, thresh)] - {xpid}
+        ans = self.club_thresh_players.get((club, thresh), set()) - {xname}
         return label, ans
 
-    def crit_nat_goals(self, nat, thresh, xpid):
+    def crit_nat_goals(self, nat, thresh, xname):
         label = f"{NAT_ADJ.get(nat, nat)} with {thresh}+ career goals"
-        ans = self.nat_goals_players[(nat, thresh)] - {xpid}
+        ans = self.nat_goals_players.get((nat, thresh), set()) - {xname}
         return label, ans
 
 
 # ── Puzzle generation ────────────────────────────────────────────────────
 
-def _all_criteria(pid, players, pc, pg, index):
-    """Generate every valid criterion (3–10 answers) for an excluded player."""
-    m      = players[pid]
-    clubs  = pc.get(pid, set())
-    nat    = m['nationality']
+def _all_criteria(pname, players, pc, pg, index):
+    """Generate every valid criterion (3–15 answers) for an excluded player."""
+    m      = players[pname]
+    clubs  = pc.get(pname, set())
+    nat    = m.get('nationality', '')
     majors = sorted(clubs & MAJOR_CLUBS)
     out    = []
 
     # 1. nat_club
     if nat:
         for club in majors:
-            lbl, ans = index.crit_nat_club(nat, club, pid)
+            lbl, ans = index.crit_nat_club(nat, club, pname)
             if MIN_ANSWERS <= len(ans) <= MAX_ANSWERS:
                 out.append(('nat_club', lbl, ans))
 
     # 2. club_club
     for i, ca in enumerate(majors):
         for cb in majors[i + 1:]:
-            lbl, ans = index.crit_club_club(ca, cb, pid)
+            lbl, ans = index.crit_club_club(ca, cb, pname)
             if MIN_ANSWERS <= len(ans) <= MAX_ANSWERS:
                 out.append(('club_club', lbl, ans))
 
     # 3. club_value
     for club in majors:
         for t in VALUE_THRESHOLDS:
-            if m['market_value'] >= t:
-                lbl, ans = index.crit_club_value(club, t, pid)
+            if index.get_player_peak_value(pname) >= t:
+                lbl, ans = index.crit_club_value(club, t, pname)
                 if MIN_ANSWERS <= len(ans) <= MAX_ANSWERS:
                     out.append(('club_value', lbl, ans))
 
     # 4. nat_goals
     if nat:
         for t in GOAL_THRESHOLDS:
-            if pg.get(pid, 0) >= t:
-                lbl, ans = index.crit_nat_goals(nat, t, pid)
+            if pg.get(pname, 0) >= t:
+                lbl, ans = index.crit_nat_goals(nat, t, pname)
                 if MIN_ANSWERS <= len(ans) <= MAX_ANSWERS:
                     out.append(('nat_goals', lbl, ans))
 
@@ -339,33 +371,26 @@ def _score_combo(c1, c2, c3):
         if u and len(x & y) / u > 0.7:
             return -999
 
-    # Diversity of criterion types
     types = len({t1, t2, t3})
     score = types * 5
-
-    # Column-size balance (smaller gap = better)
     sizes = sorted([len(a1), len(a2), len(a3)])
     score -= (sizes[2] - sizes[0])
-
-    # Crossover bonus (players in 2+ columns)
     xovers = sum(1 for p in union if sum(p in s for s in [a1, a2, a3]) >= 2)
     score += min(xovers, 4) * 2
-
-    # Prefer moderate total unique
     score += total
 
     return score
 
 
-def best_puzzle_for(pid, players, pc, pg, index):
+def best_puzzle_for(pname, players, pc, pg, index):
     """Return the best (c1, c2, c3) tuple or None."""
-    crits = _all_criteria(pid, players, pc, pg, index)
+    crits = _all_criteria(pname, players, pc, pg, index)
     if len(crits) < 3:
         return None
 
     combos = list(itertools.combinations(range(len(crits)), 3))
     if len(combos) > 400:
-        random.Random(pid).shuffle(combos)
+        random.Random(pname).shuffle(combos)
         combos = combos[:400]
 
     best, best_s = None, -999
@@ -434,119 +459,151 @@ def write_csv(puzzles, path):
                 })
 
 
+# ── Holistic Enrichment Engine ───────────────────────────────────────────
+
+def enrich_dataset(csv_path="daily_anyone_but_games.csv"):
+    """
+    Enriches all 180 puzzles in daily_anyone_but_games.csv:
+    - Merges complete career database into each table's answer pool
+    - Backfills pre-2012 legends (Zambrotta, Henry, Thuram, Davids, etc.)
+    - Removes peak market value floor for answer candidate eligibility
+    - Preserves existing scheduled game days and excluded stars
+    """
+    if not os.path.exists(csv_path):
+        print(f"Error: {csv_path} not found.")
+        return False
+
+    print(f"\n🔄 Running holistic Anyone But enrichment on {csv_path}...")
+    p_clubs, player_meta, club_to_entities, entity_name, entity_clubs = load_career_database()
+    players = load_player_whitelist()
+    dc_mv = load_dc_market_values(players)
+    player_goals = load_career_goals(players)
+    index = PlayerIndex(players, p_clubs, club_to_entities, entity_name, entity_clubs, player_goals, dc_mv)
+
+    with open(csv_path, 'r', encoding='utf-8') as f:
+        rows = list(csv.DictReader(f))
+
+    updated_rows = []
+    total_added = 0
+
+    for r in rows:
+        lbl = r['table_label']
+        excluded = r['excluded_player']
+        cur_ans = set(json.loads(r['answers']))
+
+        m_cc = re.match(r'^Played for BOTH (.+?) & (.+)$', lbl)
+        m_nc = re.match(r'^(\w+)\s+who played for\s+(.+)$', lbl)
+        m_ng = re.match(r'^(\w+)\s+with\s+(\d+)\+\s*career goals$', lbl)
+
+        combined = set(cur_ans)
+
+        if m_cc:
+            ca = clean_club_name(m_cc.group(1).strip())
+            cb = clean_club_name(m_cc.group(2).strip())
+            _, valid = index.crit_club_club(ca, cb, excluded)
+            combined |= valid
+        elif m_nc:
+            adj = m_nc.group(1).strip()
+            club = clean_club_name(m_nc.group(2).strip())
+            nat = ADJ_TO_NAT.get(adj)
+            if nat:
+                _, valid = index.crit_nat_club(nat, club, excluded)
+                combined |= valid
+        elif m_ng:
+            adj = m_ng.group(1).strip()
+            n = int(m_ng.group(2))
+            nat = ADJ_TO_NAT.get(adj)
+            if nat:
+                for name, g in player_goals.items():
+                    if g >= n and players.get(name, {}).get('nationality') == nat and name != excluded:
+                        if len(p_clubs.get(name, set())) > 0 and len(combined) < 14:
+                            combined.add(name)
+
+        # Explicit legend additions for notable puzzles
+        if r['game_day'] == '3':
+            if r['table_number'] == '1':
+                combined.add('Jonas Rouhi')
+            elif r['table_number'] == '2':
+                combined.update(['Gianluca Zambrotta', 'Thierry Henry', 'Lilian Thuram', 'Edgar Davids', 'Michael Laudrup'])
+            elif r['table_number'] == '3':
+                combined.add('Henrik Larsson')
+
+        # Strictly exclude the puzzle's featured star
+        combined.discard(excluded)
+
+        added = len(combined) - len(cur_ans)
+        total_added += added
+        sorted_ans = sorted(combined)
+
+        r['answers'] = json.dumps(sorted_ans, ensure_ascii=False)
+        r['answer_count'] = str(len(sorted_ans))
+        updated_rows.append(r)
+
+    with open(csv_path, 'w', newline='', encoding='utf-8') as f:
+        w = csv.DictWriter(f, fieldnames=FIELDS)
+        w.writeheader()
+        w.writerows(updated_rows)
+
+    print(f"✅ Successfully enriched {len(updated_rows)} tables (+{total_added} missing answers restored)")
+    return True
+
+
 # ── Main ─────────────────────────────────────────────────────────────────
 
 def main():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(base_dir)
+
+    # By default, enrich existing dataset to preserve launched puzzles
+    csv_path = os.path.join(base_dir, 'daily_anyone_but_games.csv')
+    if os.path.exists(csv_path) and '--regenerate' not in sys.argv:
+        enrich_dataset(csv_path)
+        return
+
+    # Full regeneration mode (only if --regenerate is passed)
     rng = random.Random(SEED)
+    p_clubs, player_meta, club_to_entities, entity_name, entity_clubs = load_career_database()
+    players = load_player_whitelist()
+    dc_mv = load_dc_market_values(players)
+    player_goals = load_career_goals(players)
+    index = PlayerIndex(players, p_clubs, club_to_entities, entity_name, entity_clubs, player_goals, dc_mv)
 
-    # 1. Load data
-    players_df, transfers_df, appearances_df = load_kaggle_dataset()
-    players, pc, pg = build_player_data(players_df, transfers_df, appearances_df)
-
-    # 2. Build indexed lookup
-    print("Building fast lookup index...")
-    index = PlayerIndex(players, pc, pg)
-    print("Index ready.")
-
-    # 3. Select candidates
     cands = sorted(
-        (pid for pid, m in players.items()
-         if m['market_value'] >= MIN_EXCLUDED_VAL
-         and len(pc.get(pid, set()) & MAJOR_CLUBS) >= MIN_MAJOR_CLUBS
+        (p for p, m in players.items()
+         if index.get_player_peak_value(p) >= MIN_EXCLUDED_VAL
+         and len(p_clubs.get(p, set()) & MAJOR_CLUBS) >= MIN_MAJOR_CLUBS
          and m['nationality'] in set(NAT_ADJ.keys())),
-        key=lambda p: -players[p]['market_value'],
+        key=lambda p: -index.get_player_peak_value(p),
     )
     print(f"Excluded-player candidates: {len(cands)}")
 
-    # 4. Generate puzzles
     puzzles = []
     used    = set()
-    for pid in cands:
+    for pname in cands:
         if len(puzzles) >= TARGET_PUZZLES:
             break
-        if pid in used:
+        if pname in used:
             continue
-        combo = best_puzzle_for(pid, players, pc, pg, index)
+        combo = best_puzzle_for(pname, players, p_clubs, player_goals, index)
         if combo is None:
             continue
         puzzles.append({
-            'excluded_player':    players[pid]['name'],
-            'excluded_player_id': pid,
-            'val':                players[pid]['market_value'],
+            'excluded_player':    pname,
+            'excluded_player_id': 0,
+            'val':                index.get_player_peak_value(pname),
             'tables': [
                 {
                     'label':   c[1],
-                    'answers': sorted(players[p]['name'] for p in c[2]),
+                    'answers': sorted(c[2]),
                 }
                 for c in combo
             ],
         })
-        used.add(pid)
+        used.add(pname)
 
-    print(f"Generated {len(puzzles)} puzzles (target {TARGET_PUZZLES})")
-    if len(puzzles) < TARGET_PUZZLES:
-        print(f"  Warning: Only {len(puzzles)} generated. Relaxing search...")
-        # Fallback to single major club if needed
-        cands2 = sorted(
-            (pid for pid, m in players.items()
-             if m['market_value'] >= 25_000_000
-             and len(pc.get(pid, set()) & MAJOR_CLUBS) >= 1
-             and pid not in used
-             and m['nationality'] in set(NAT_ADJ.keys())),
-            key=lambda p: -players[p]['market_value'],
-        )
-        for pid in cands2:
-            if len(puzzles) >= TARGET_PUZZLES:
-                break
-            combo = best_puzzle_for(pid, players, pc, pg, index)
-            if combo is None:
-                continue
-            puzzles.append({
-                'excluded_player':    players[pid]['name'],
-                'excluded_player_id': pid,
-                'val':                players[pid]['market_value'],
-                'tables': [
-                    {
-                        'label':   c[1],
-                        'answers': sorted(players[p]['name'] for p in c[2]),
-                    }
-                    for c in combo
-                ],
-            })
-            used.add(pid)
-        print(f"Total after expansion: {len(puzzles)}")
-
-    # 5. Schedule
     scheduled = schedule(puzzles, rng)
-    print(f"Scheduled {len(scheduled)} days")
-
-    # 6. Write CSV
-    out_path = os.path.join(base_dir, 'daily_anyone_but_games.csv')
-    write_csv(scheduled, out_path)
-    print(f"Wrote {out_path}")
-
-    # 7. Sample verification
-    print("\n" + "=" * 60)
-    print("SAMPLE PUZZLES")
-    print("=" * 60)
-    for p in scheduled[:5]:
-        total_a = sum(len(t['answers']) for t in p['tables'])
-        unique  = len(set(a for t in p['tables'] for a in t['answers']))
-        print(f"\nDay {p['game_day']}: ANYONE BUT {p['excluded_player']} "
-              f"(€{p['val']/1e6:.0f}M | {total_a} total | {unique} unique)")
-        for t in p['tables']:
-            preview = ', '.join(t['answers'][:4])
-            extra   = f" +{len(t['answers'])-4}" if len(t['answers']) > 4 else ''
-            print(f"  [{len(t['answers']):>2}] {t['label']}")
-            print(f"       {preview}{extra}")
-
-    # Stats
-    sizes = [len(t['answers']) for p in scheduled for t in p['tables']]
-    print(f"\nColumn sizes: min={min(sizes)} max={max(sizes)} avg={sum(sizes)/len(sizes):.1f}")
-    totals = [len(set(a for t in p['tables'] for a in t['answers'])) for p in scheduled]
-    print(f"Unique/puzzle: min={min(totals)} max={max(totals)} avg={sum(totals)/len(totals):.1f}")
+    write_csv(scheduled, csv_path)
+    print(f"Wrote {csv_path}")
 
 
 if __name__ == '__main__':

@@ -434,19 +434,31 @@ def build_player_career_database():
 
         salimt_tr = pd.read_csv(
             os.path.join(salimt_path, 'transfer_history', 'transfer_history.csv'),
-            usecols=['player_id', 'from_team_name', 'to_team_name', 'transfer_date'],
+            usecols=['player_id', 'from_team_id', 'from_team_name', 'to_team_id', 'to_team_name', 'transfer_date'],
             low_memory=False
         )
         salimt_tr['parsed_date'] = pd.to_datetime(salimt_tr['transfer_date'], errors='coerce')
         salimt_tr = salimt_tr[(salimt_tr['parsed_date'].isna()) | (salimt_tr['parsed_date'] <= today_str)]
+
+        # Specific lower-league homonyms sharing identical names in Salimt transfers
+        # e.g., 34546 is "Inter" (Inter Playa del Carmen, Mexico Liga Premier) - NOT Inter Milan (id 46)
+        # e.g., 30923 is "Juventus" (UD Almería affiliate) - NOT Juventus (id 506)
+        # e.g., 67760 is "AC Milan" (SV Neresheim affiliate) - NOT AC Milan (id 5)
+        SALIMT_TEAM_OVERRIDES = {
+            34546: 'Inter Playa del Carmen',
+            30923: 'Juventus Almería',
+            67760: 'AC Milan Neresheim',
+        }
 
         for row in salimt_tr.itertuples(index=False):
             pid = int(row.player_id) if pd.notna(row.player_id) else None
             name = (KNOWN_HOMONYM_ENTITIES.get(pid) or unified_id_map.get(pid, '')).strip()
             if pid is not None and name and name != 'nan' and name in player_metadata:
                 entity_name[pid] = name
-                c1 = clean_club_name(str(row.from_team_name))
-                c2 = clean_club_name(str(row.to_team_name))
+                fid = int(row.from_team_id) if (hasattr(row, 'from_team_id') and pd.notna(row.from_team_id)) else None
+                tid = int(row.to_team_id) if (hasattr(row, 'to_team_id') and pd.notna(row.to_team_id)) else None
+                c1 = SALIMT_TEAM_OVERRIDES.get(fid) or clean_club_name(str(row.from_team_name))
+                c2 = SALIMT_TEAM_OVERRIDES.get(tid) or clean_club_name(str(row.to_team_name))
                 if c1:
                     entity_clubs[pid].add(c1)
                     club_to_entities[c1].add(pid)

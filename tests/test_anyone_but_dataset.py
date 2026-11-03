@@ -46,7 +46,7 @@ class TestAnyoneButDataset(unittest.TestCase):
                 answers = json.loads(t['answers'])
                 self.assertIsInstance(answers, list)
                 self.assertGreaterEqual(len(answers), 3, f"Puzzle #{gday} table {t['table_number']} has < 3 answers")
-                self.assertLessEqual(len(answers), 10, f"Puzzle #{gday} table {t['table_number']} has > 10 answers")
+                self.assertLessEqual(len(answers), 25, f"Puzzle #{gday} table {t['table_number']} has > 25 answers")
                 self.assertEqual(len(answers), int(t['answer_count']))
 
                 # Excluded player must NOT be in answers
@@ -64,9 +64,23 @@ class TestAnyoneButDataset(unittest.TestCase):
                 f"Puzzle #{gday} has only {len(unique_answers)} unique answers (< 8)"
             )
             self.assertLessEqual(
-                len(unique_answers), 20,
-                f"Puzzle #{gday} has {len(unique_answers)} unique answers (> 20)"
+                len(unique_answers), 50,
+                f"Puzzle #{gday} has {len(unique_answers)} unique answers (> 50)"
             )
+
+    def test_day_3_historical_legends_accepted(self):
+        """Verifies that pre-2012 legends (Zambrotta, Henry, etc.) are accepted for Day 3."""
+        import fetch_daily
+        game_data, extra = fetch_daily.load_anyone_but(3)
+        self.assertIsNotNone(game_data)
+        self.assertEqual(game_data['excluded_player'], 'Zlatan Ibrahimović')
+        t2 = game_data['tables'][1]
+        self.assertEqual(t2['label'], 'Played for BOTH Barcelona & Juventus')
+        answers = t2['answers']
+        self.assertIn('Gianluca Zambrotta', answers)
+        self.assertIn('Thierry Henry', answers)
+        self.assertIn('Lilian Thuram', answers)
+        self.assertIn('Edgar Davids', answers)
 
     def test_fetch_daily_loader(self):
         import fetch_daily

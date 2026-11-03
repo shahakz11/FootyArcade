@@ -542,6 +542,64 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         ('aria-label="How to play instructions"', 'aria-label="Instrucciones de cómo jugar"'),
         ('title="How to play"', 'title="Cómo jugar"'),
         ('aria-label="Close how to play modal"', 'aria-label="Cerrar ventana de cómo jugar"'),
+
+        # This & That How to Play Modal & UI
+        ('<strong class="text-white">Objective:</strong> Name every footballer who matches <strong class="text-white">BOTH</strong> statements displayed at the top of the board.',
+         '<strong class="text-white">Objetivo:</strong> Nombra a todos los futbolistas que cumplen <strong class="text-white">AMBAS</strong> condiciones mostradas arriba.'),
+        ('<strong class="text-white font-title">Objective:</strong>', '<strong class="text-white font-title">Objetivo:</strong>'),
+        ('<strong class="text-white">Objective:</strong>', '<strong class="text-white">Objetivo:</strong>'),
+        ('Name every footballer who matches <strong class="text-white">BOTH</strong> statements displayed at the top of the board.',
+         'Nombra a todos los futbolistas que cumplen <strong class="text-white">AMBAS</strong> condiciones mostradas arriba.'),
+        ('<strong class="text-white font-title">Guessing:</strong>', '<strong class="text-white font-title">Respuestas:</strong>'),
+        ('<strong class="text-white">Guessing:</strong>', '<strong class="text-white">Respuestas:</strong>'),
+        ('Type any player\'s name and select them from the autocomplete dropdown list.',
+         'Escribe el nombre de un jugador y selecciónalo de la lista desplegable.'),
+        ('<strong class="text-white font-title">Lives &amp; Strikes:</strong>', '<strong class="text-white font-title">Vidas e Intentos:</strong>'),
+        ('<strong class="text-white">Lives &amp; Strikes:</strong>', '<strong class="text-white">Vidas e Intentos:</strong>'),
+        ('You have 5 lives. An incorrect guess loses 1 life. Guessing a player who matches only one statement is a strike!',
+         'Tienes 5 vidas. Un fallo resta 1 vida. ¡Adivinar a un jugador que solo cumple una condición cuenta como fallo!'),
+        ('<strong class="text-white font-title">Card Reveal:</strong>', '<strong class="text-white font-title">Tarjetas:</strong>'),
+        ('<strong class="text-white">Card Reveal:</strong>', '<strong class="text-white">Tarjetas:</strong>'),
+        ('Each correct footballer flips their card on the board, revealing their photo, details, and verified career evidence.',
+         'Cada acierto da la vuelta a una tarjeta del panel, mostrando su foto, detalles y trayectoria verificada.'),
+        ('<strong class="text-white font-title">Surrender:</strong>', '<strong class="text-white font-title">Rendirse:</strong>'),
+        ('<strong class="text-white">Surrender:</strong>', '<strong class="text-white">Rendirse:</strong>'),
+        ('If you\'re stuck, you can give up at any time to reveal all remaining answers.',
+         'Si te bloqueas, puedes rendirte en cualquier momento para revelar todas las respuestas restantes.'),
+        ('Name all footballers who match BOTH statements simultaneously!', '¡Nombra a todos los futbolistas que cumplen AMBAS condiciones simultáneamente!'),
+        ('DUAL CRITERIA CHALLENGE', 'RETO DE DOBLE CRITERIO'),
+        ('STATEMENT A (THIS)', 'CONDICIÓN A (ESTO)'),
+        ('STATEMENT B (THAT)', 'CONDICIÓN B (AQUELLO)'),
+        ('Name all players matching <strong class="text-white">BOTH</strong> statements:', 'Nombra a todos los jugadores que coinciden con <strong class="text-white">AMBAS</strong> condiciones:'),
+        ('FOUND</span>', 'ENCONTRADOS</span>'),
+        ('ENTER A QUALIFYING FOOTBALLER:', 'ESCRIBE UN FUTBOLISTA VÁLIDO:'),
+        ('Give Up</span>', 'Rendirse</span>'),
+        ('>GIVE UP?</h3>', '>¿RENDIRSE?</h3>'),
+        ('Are you sure you want to give up? All remaining qualifying footballers will be revealed and this puzzle will be marked as surrendered.',
+         '¿Estás seguro de que quieres rendirte? Se revelarán todos los futbolistas restantes y el reto quedará como rendido.'),
+        ('>Cancel</button>', '>Cancelar</button>'),
+        ('>Give Up</button>', '>Rendirse</button>'),
+        ('>THIS &amp; THAT</h1>', '>ESTO Y AQUELLO</h1>'),
+        ('>THIS &amp; THAT</span>', '>ESTO Y AQUELLO</span>'),
+        ('>THIS & THAT</h1>', '>ESTO Y AQUELLO</h1>'),
+        ('<strong class="text-white font-title">Objective:</strong> Name every footballer who matches <strong class="text-white">BOTH</strong> statements displayed at the top of the board.',
+         '<strong class="text-white font-title">Objetivo:</strong> Nombra a todos los futbolistas que cumplen <strong class="text-white">AMBAS</strong> premisas mostradas en la parte superior del tablero.'),
+        ('<strong class="text-white font-title">Guessing:</strong> Type any player\'s name and select them from the autocomplete dropdown list.',
+         '<strong class="text-white font-title">Adivinar:</strong> Escribe el nombre de cualquier jugador y selecciónalo de la lista desplegable de autocompletado.'),
+        ('<strong class="text-white font-title">Hints:</strong> Click the lightbulb on any locked card to uncover nationality and position clues.',
+         '<strong class="text-white font-title">Pistas:</strong> Haz clic en la bombilla de cualquier casilla bloqueada para descubrir pistas de nacionalidad y posición.'),
+        ('<strong class="text-white font-title">Lives &amp; Strikes:</strong> You have 5 lives. An incorrect guess loses 1 life. Guessing a player who matches only one statement is a strike!',
+         '<strong class="text-white font-title">Vidas y Fallos:</strong> Tienes 5 vidas. Cada fallo resta 1 vida. ¡Adivinar a un jugador que solo cumple una condición cuenta como fallo!'),
+        ('<strong class="text-white font-title">VAR Review:</strong> Appeal disputed answers with the automated video assistant referee to verify real-world career records.',
+         '<strong class="text-white font-title">Revisión del VAR:</strong> Apela decisiones discutidas con el asistente de vídeo arbitral automático para verificar registros reales de su carrera.'),
+        ('<strong class="text-white font-title">Card Reveal:</strong> Each correct footballer flips their card on the board, revealing their photo, details, and verified career evidence.',
+         '<strong class="text-white font-title">Revelación de Ficha:</strong> Cada futbolista acertado da la vuelta a su ficha en el tablero, mostrando su foto, datos y registros de carrera verificados.'),
+        ('<strong class="text-white font-title">Database Scope:</strong> Official senior appearances, transfers, and honours from 1990 up to June 2026 alongside verified historic legends.',
+         '<strong class="text-white font-title">Base de Datos:</strong> Apariciones, traspasos y títulos oficiales en categoría sénior desde 1990 hasta junio de 2026 junto a leyendas históricas verificadas.'),
+        ('<strong>Database Coverage:</strong> Official senior appearances, transfers, and honours from 1990 up to June 2026 alongside verified historic legends.',
+         '<strong>Cobertura de Datos:</strong> Apariciones, traspasos y títulos oficiales en categoría sénior desde 1990 hasta junio de 2026 junto a leyendas históricas verificadas.'),
+        ('Official senior appearances, transfers, and honours from 1990 up to June 2026 alongside verified historic legends.',
+         'Apariciones, traspasos y títulos oficiales en categoría sénior desde 1990 hasta junio de 2026 junto a leyendas históricas verificadas.'),
     ]
 
     for orig, rep in global_replacements:
@@ -578,6 +636,11 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         (r'>\s*THE MYSTERY PLAYER WAS\s*<', '>EL JUGADOR MISTERIOSO ERA<'),
         (r'>\s*MYSTERY PLAYER OF THE DAY\s*<', '>JUGADOR MISTERIOSO DEL DÍA<'),
         (r'<span class="material-symbols-outlined text-md">share</span>\s*SHARE', '<span class="material-symbols-outlined text-md">share</span> COMPARTIR'),
+        (r'>\s*THIS &amp; THAT\s*<', '>ESTO Y AQUELLO<'),
+        (r'>\s*THIS & THAT\s*<', '>ESTO Y AQUELLO<'),
+        (r'>\s*DUAL CRITERIA CHALLENGE\s*<', '>RETO DE DOBLE CRITERIO<'),
+        (r'>\s*GIVE UP\?\s*<', '>¿RENDIRSE?<'),
+        (r'>\s*Give Up\s*<', '>Rendirse<'),
     ]
     for pattern, rep in regex_headings:
         es_html = re.sub(pattern, rep, es_html)
@@ -738,6 +801,27 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         ("title: 'INCORRECT GUESS'", "title: '¡INTENTO INCORRECTO!'"),
         ("`${playerName} is not the mystery player of the day!`", "`¡${playerName} no es el jugador misterioso de hoy!`"),
         ("title: won ? 'MAGNIFICENT!' : 'GAME OVER'", "title: won ? '¡MAGNÍFICO!' : 'FIN DE LA PARTIDA'"),
+
+        # This & That Spanish labels & strings
+        ("`THIS & THAT #${puzzleNum} ⚽", "`ESTO Y AQUELLO #${puzzleNum} ⚽"),
+        ("DUAL CRITERIA CHALLENGE", "DESAFÍO DE DOBLE CRITERIO"),
+        ("STATEMENT A (THIS)", "CONDICIÓN A (ESTO)"),
+        ("STATEMENT B (THAT)", "CONDICIÓN B (AQUELLO)"),
+        ("Name all players matching <strong class=\"text-white\">BOTH</strong> statements:", "Nombra a todos los jugadores que cumplen <strong class=\"text-white\">AMBAS</strong> condiciones:"),
+        ("ENTER A QUALIFYING FOOTBALLER:", "INTRODUCE UN FUTBOLISTA ELEGIBLE:"),
+        ("Type player name...", "Escribe el nombre del jugador..."),
+        ("Please pick a footballer from the dropdown list.", "Por favor elige un futbolista de la lista desplegable."),
+        ("The Solution Board", "El Panel de Respuestas"),
+        ("Find all matching players", "Encuentra a todos los jugadores"),
+        ("Locked Player", "Jugador Bloqueado"),
+        ("What is This & That?", "¿Qué es Esto y Aquello?"),
+        ("Full Board Revealed", "Panel Completo Revelado"),
+        ("Review all matching players and their verified career credentials above.", "Revisa todos los jugadores elegibles y sus registros de carrera verificados arriba."),
+        ("VIEW RESULTS &amp; SHARE", "VER RESULTADOS Y COMPARTIR"),
+        ("GIVE UP?", "¿RENDIRSE?"),
+        ("Are you sure you want to surrender? All remaining answers will be revealed and your streak will end.", "¿Estás seguro de que deseas rendirte? Se revelarán todas las respuestas restantes y perderás tu racha."),
+        ("Surrender", "Rendirse"),
+        ("Give Up", "Rendirse"),
         ("title: isWon ? 'MAGNIFICENT!' : 'GAME OVER'", "title: isWon ? '¡MAGNÍFICO!' : 'FIN DE LA PARTIDA'"),
         ("`You deduced ${pName} in ${cluesNeeded} clue(s)!`", "`¡Dedujiste a ${pName} en ${cluesNeeded} pista(s)!`"),
         ("`The mystery player was ${pName}. Better luck tomorrow!`", "`El jugador misterioso era ${pName}. ¡Mejor suerte mañana!`"),
@@ -768,6 +852,7 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         "player_chain": ("PLAYER CHAIN", "CADENA DE JUGADORES"),
         "passport_fc": ("PASSPORT FC", "PASAPORTE FC"),
         "played_with": ("PLAYED WITH", "JUGÓ CON"),
+        "this_and_that": ("THIS & THAT", "ESTO Y AQUELLO"),
         "anyone_but": ("ANYONE BUT", "CUALQUIERA MENOS"),
     }
     if game_id in game_titles:
@@ -782,6 +867,7 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         "player_chain": ("Player Chain — Daily Football Career Puzzle | Playmaker", "Cadena de Jugadores — Puzzle Diario de Trayectorias de Fútbol | Playmaker"),
         "passport_fc": ("Passport FC — Daily Football Nationality Puzzle | Playmaker", "Pasaporte FC — Puzzle Diario de Nacionalidades de Fútbol | Playmaker"),
         "played_with": ("Played With — Daily Football Teammate Guessing Game | Playmaker", "Jugó Con — Juego Diario de Compañeros de Fútbol | Playmaker"),
+        "this_and_that": ("This & That — Daily Football Intersection Quiz | Playmaker", "Esto y Aquello — Quiz Diario de Intersección de Fútbol | Playmaker"),
         "anyone_but": ("Anyone But — Daily Football Inverse Trivia Puzzle | Playmaker", "Cualquiera Menos — Puzzle Diario de Trivia Inversa de Fútbol | Playmaker"),
     }
     if game_id in meta_titles:
@@ -789,6 +875,10 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         es_html = es_html.replace(en_m, es_m)
 
     game_descriptions = {
+        "this_and_that": (
+            "Name all footballers who match BOTH statements simultaneously! Every correct guess reveals verified career records. Solve the full board before running out of lives.",
+            "¡Nombra a todos los futbolistas que cumplen AMBAS condiciones simultáneamente! Cada acierto revela registros oficiales de su carrera. ¡Completa el panel antes de quedarte sin vidas!"
+        ),
         "top_transfers": (
             "Fill the transfers table below for the given club or nationality. Use the search bar to guess players. Only players from the search dropdown can be guessed. Use the hints (<span class=\"material-symbols-outlined text-xs inline-block align-middle text-accent\">lightbulb</span>) or reveal individual players if you are stuck!",
             "Completa la tabla de fichajes para el club o nacionalidad indicada. Usa el buscador para adivinar los jugadores. Solo los jugadores de la lista desplegable son válidos. ¡Usa las pistas (<span class=\"material-symbols-outlined text-xs inline-block align-middle text-accent\">lightbulb</span>) o revela jugadores si te quedas atascado!"
@@ -860,6 +950,14 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
             "Anyone But is a daily inverse football trivia puzzle by Playmaker where fans name footballers who satisfy three distinct career milestone tables while avoiding one iconic excluded star. Each daily challenge highlights an excluded player alongside three simultaneous criteria categories — such as shared club histories, transfer valuation milestones, or career goal tallies. Players submit footballer names to uncover matching slots across all three tables. Guesses that match multiple criteria simultaneously trigger multi-hit combos, unlocking slots across multiple tables with a single submission.",
             "Cualquiera Menos es un puzzle diario de trivia inversa de fútbol de Playmaker donde los aficionados nombran futbolistas que cumplen tres tablas distintas de hitos de su carrera evitando a una estrella excluida emblemática. Cada reto diario presenta a un jugador excluido junto a tres categorías simultáneas de criterios — como clubes compartidos, récords de valor de mercado o cifras de goles. Los jugadores introducen futbolistas para descubrir las casillas de las tres tablas. ¡Aciertos múltiples completan varias tablas a la vez!"
         ),
+        "this_and_that": (
+            "This &amp; That is a daily football trivia challenge by Playmaker where fans identify every footballer who satisfies two distinct career criteria simultaneously. Puzzles feature dual-club representations, national heritage pairings, multi-league champions, and iconic tournament winners. Use the autocomplete dropdown to guess qualifying players before exhausting your lives. Puzzles refresh daily at midnight UTC with complete streak statistics and playable back-in-time archives.",
+            "Esto y Aquello es un desafío diario de trivia de fútbol de Playmaker donde los aficionados identifican a todos los futbolistas que cumplen dos criterios deportivos distintos simultáneamente. Los retos presentan futbolistas que jugaron en dos clubes rivales o históricos, emparejamientos de nacionalidad y clubes, campeones multiligas y ganadores de grandes torneos. Utiliza el buscador con autocompletado para adivinar jugadores válidos antes de agotar tus vidas. Los retos se actualizan a medianoche UTC con estadísticas completas y archivo histórico jugable."
+        ),
+        "this_and_that_raw": (
+            "This & That is a daily football trivia challenge by Playmaker where fans identify every footballer who satisfies two distinct career criteria simultaneously. Puzzles feature dual-club representations, national heritage pairings, multi-league champions, and iconic tournament winners. Use the autocomplete dropdown to guess qualifying players before exhausting your lives. Puzzles refresh daily at midnight UTC with complete streak statistics and playable back-in-time archives.",
+            "Esto y Aquello es un desafío diario de trivia de fútbol de Playmaker donde los aficionados identifican a todos los futbolistas que cumplen dos criterios deportivos distintos simultáneamente. Los retos presentan futbolistas que jugaron en dos clubes rivales o históricos, emparejamientos de nacionalidad y clubes, campeones multiligas y ganadores de grandes torneos. Utiliza el buscador con autocompletado para adivinar jugadores válidos antes de agotar tus vidas. Los retos se actualizan a medianoche UTC con estadísticas completas y archivo histórico jugable."
+        ),
     }
     for gid, (en_h, es_h) in how_to_play_paragraphs.items():
         if en_h in es_html:
@@ -877,6 +975,8 @@ def localize_for_spanish(html, game_cfg, puzzle_num, is_back_in_time):
         "What is Passport FC?": "¿Qué es Pasaporte FC?",
         "What is Played With?": "¿Qué es Jugó Con?",
         "What is Anyone But?": "¿Qué es Cualquiera Menos?",
+        "What is This & That?": "¿Qué es Esto y Aquello?",
+        "What is This &amp; That?": "¿Qué es Esto y Aquello?",
     }
     for en_w, es_w in what_is_replacements.items():
         es_html = es_html.replace(en_w, es_w)
@@ -1331,6 +1431,43 @@ def load_anyone_but(puzzle_num):
     return game_data, extra
 
 
+def load_this_and_that(puzzle_num):
+    """Returns (game_data_dict, extra_data_dict) for the this_and_that game."""
+    csv_path = "daily_this_and_that_games.csv"
+    if not os.path.exists(csv_path):
+        print(f"  ERROR: {csv_path} not found.")
+        return None, None
+
+    row = None
+    with open(csv_path, "r", encoding="utf-8") as f:
+        for r in csv.DictReader(f):
+            if int(r.get("game_day", 1)) == puzzle_num:
+                row = r
+                break
+
+    if not row:
+        print(f"  WARNING: No this_and_that data for puzzle #{puzzle_num}")
+        return None, None
+
+    raw_names = json.loads(row.get("answer_names", "[]"))
+    answer_names = _dedupe_canonical_names(raw_names)
+    answer_details = json.loads(row.get("answer_details", "[]"))
+
+    game_data = {
+        "category": row.get("category", "club_club"),
+        "statement_a": row.get("statement_a", ""),
+        "statement_b": row.get("statement_b", ""),
+        "statement_a_es": row.get("statement_a_es", ""),
+        "statement_b_es": row.get("statement_b_es", ""),
+        "total_answers": len(answer_names),
+        "answer_names": answer_names,
+        "answer_details": answer_details,
+    }
+
+    extra = {}
+    return game_data, extra
+
+
 # Map game id → loader function
 GAME_LOADERS = {
     "top_transfers":        load_top_transfers,
@@ -1340,6 +1477,7 @@ GAME_LOADERS = {
     "player_chain":         load_player_chain,
     "passport_fc":          load_passport_fc,
     "played_with":          load_played_with,
+    "this_and_that":        load_this_and_that,
     "anyone_but":           load_anyone_but,
 }
 
@@ -1352,6 +1490,7 @@ GAME_DATA_VAR = {
     "player_chain":         "DAILY_CHAIN_GAME",
     "passport_fc":          "DAILY_PASSPORT_GAME",
     "played_with":          "DAILY_PLAYEDWITH_GAME",
+    "this_and_that":        "DAILY_THISANDTHAT_GAME",
     "anyone_but":           "DAILY_ANYONEBUT_GAME",
 }
 
@@ -1414,6 +1553,15 @@ STRIP_PATTERNS = {
     ],
     "played_with": [
         r'const\s+DAILY_PLAYEDWITH_GAME\s*=\s*\{[\s\S]*?\};',
+        r'const\s+ALL_PLAYERS\s*=\s*\[[\s\S]*?\];',
+        r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
+        r'const\s+PUZZLE_ID\s*=\s*\d+;',
+        r'const\s+IS_BACK_IN_TIME\s*=\s*(true|false);',
+        r'const\s+MAX_BACK_DAYS\s*=\s*\d+;',
+        r'const\s+GAME_NOTE\s*=\s*"[^"]*";',
+    ],
+    "this_and_that": [
+        r'const\s+DAILY_THISANDTHAT_GAME\s*=\s*\{[\s\S]*?\};',
         r'const\s+ALL_PLAYERS\s*=\s*\[[\s\S]*?\];',
         r'const\s+PUZZLE_NUMBER\s*=\s*\d+;',
         r'const\s+PUZZLE_ID\s*=\s*\d+;',

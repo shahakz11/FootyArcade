@@ -5,7 +5,7 @@
  *  - Cache-First with network fallback for static assets (images, fonts, stylesheets, scripts)
  */
 
-const CACHE_NAME = 'playmaker-v2';
+const CACHE_NAME = 'playmaker-v3';
 const PRECACHE_ASSETS = [
   './',
   './index.html',

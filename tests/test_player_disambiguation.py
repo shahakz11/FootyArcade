@@ -108,6 +108,15 @@ class TestPlayerDisambiguation(unittest.TestCase):
         ]
         self.assertGreater(len(danilo_entities), 1, "Expected multiple entities with name 'Danilo'")
 
+    def test_luis_garcia_not_in_inter(self):
+        """
+        Verify that Luis García does NOT match Inter (preventing Mexican lower-league Inter Playa del Carmen conflation).
+        """
+        inter_entities = self.club_to_entities.get("Inter", set())
+        inter_names = {self.entity_name[e] for e in inter_entities if e in self.entity_name}
+        self.assertNotIn("Luis García", inter_names, "Luis García should not belong to Inter Milan entities")
+        self.assertNotIn("Emiliano Martínez", inter_names, "Emiliano Martínez should not belong to Inter Milan entities")
+
 
 if __name__ == '__main__':
     unittest.main()
