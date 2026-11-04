@@ -874,9 +874,10 @@ def main():
         "--mode",
         type=str,
         default="auto",
-        choices=["auto", "career", "career_flight", "carousel", "short", "video", "daily", "midday", "morning", "evening", "night", "both", "all", "h2h", "played_with"],
-        help="Publishing mode: auto (time-based), career_flight (10:00 AM local), carousel (H2H 10:30 UTC), short (Video 17:00 UTC), played_with, or all"
+        choices=["auto", "career", "career_flight", "carousel", "short", "video", "daily", "midday", "morning", "evening", "night", "both", "all", "h2h", "played_with", "this_and_that"],
+        help="Publishing mode: auto (time-based), career_flight (10:00 AM local), carousel (H2H 10:30 UTC), short (Video 17:00 UTC), played_with, this_and_that, or all"
     )
+    parser.add_argument("--this-and-that", dest="this_and_that_flag", action="store_true", help="Shortcut for --mode this_and_that (This & That 3D stadium riddle short)")
     parser.add_argument("--career-flight", "--career", dest="career_flag", action="store_true", help="Shortcut for --mode career_flight (10:00 AM local / 07:00 UTC Career Flight Short)")
     parser.add_argument("--played-with", dest="played_with_flag", action="store_true", help="Shortcut for --game played_with (Played With 5-tier teammate clue short)")
     parser.add_argument("--morning", dest="morning_flag", action="store_true", help="Shortcut for --mode morning (10:00 AM local Career Flight)")
@@ -910,6 +911,9 @@ def main():
     selected_game = args.game
     if args.played_with_flag:
         selected_game = "played_with"
+    if args.this_and_that_flag:
+        mode = "this_and_that"
+        selected_game = "this_and_that"
     if args.carousel_only or args.h2h_carousel:
         mode = "carousel"
     elif args.career_flag:
