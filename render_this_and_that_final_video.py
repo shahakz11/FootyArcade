@@ -33,8 +33,101 @@ FLAG_EMOJIS = {
     "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "France": "🇫🇷", "Argentina": "🇦🇷", "Portugal": "🇵🇹",
     "Brazil": "🇧🇷", "Germany": "🇩🇪", "Spain": "🇪🇸", "Italy": "🇮🇹",
     "Netherlands": "🇳🇱", "Belgium": "🇧🇪", "Uruguay": "🇺🇾", "Nigeria": "🇳🇬",
-    "Switzerland": "🇨🇭", "Ireland": "🇮🇪", "Sweden": "🇸🇪", "Mexico": "🇲🇽"
+    "Switzerland": "🇨🇭", "Ireland": "🇮🇪", "Sweden": "🇸🇪", "Mexico": "🇲🇽",
+    "Norway": "🇳🇴", "Poland": "🇵🇱", "Colombia": "🇨🇴", "Chile": "🇨🇱",
+    "Denmark": "🇩🇰", "Serbia": "🇷🇸", "Wales": "🏴󠁧󠁢󠁷󠁬󠁳󠁿"
 }
+
+import unicodedata
+
+SPECIAL_BADGE_MAP = {
+    'inter': 'inter_milan.png',
+    'inter milan': 'inter_milan.png',
+    'ac milan': 'ac_milan.png',
+    'manchester united': 'manchester_united.png',
+    'manchester city': 'manchester_city.png',
+    'man utd': 'manchester_united.png',
+    'man city': 'manchester_city.png',
+    'west ham united': 'west_ham_united.png',
+    'west ham': 'west_ham_united.png',
+    'sporting cp': 'sporting_cp.png',
+    'sporting': 'sporting_cp.png',
+    'paris saint-germain': 'paris_saint_germain.png',
+    'psg': 'paris_saint_germain.png',
+    'borussia dortmund': 'borussia_dortmund.png',
+    'rb leipzig': 'rb_leipzig.png',
+    'atletico madrid': 'atletico_madrid.png',
+    'real madrid': 'real_madrid.png',
+    'bayern munich': 'bayern_munich.png',
+    'tottenham hotspur': 'tottenham.png',
+    'tottenham': 'tottenham.png',
+    'fenerbahce': 'fenerbahce.png',
+    'fenerbahçe': 'fenerbahce.png',
+    'celtic': 'celtic.png',
+    'feyenoord': 'feyenoord.png'
+}
+
+def resolve_criteria_info(statement):
+    s = statement.strip()
+    badges_dir = os.path.join(BASE_DIR, "assets", "badges")
+    available_badges = set(os.listdir(badges_dir)) if os.path.exists(badges_dir) else set()
+
+    if s.startswith("Played for "):
+        club = s.replace("Played for ", "").strip()
+        clean = unicodedata.normalize('NFKD', club).encode('ascii', 'ignore').decode('utf-8').lower()
+        badge_file = SPECIAL_BADGE_MAP.get(clean) or SPECIAL_BADGE_MAP.get(club.lower())
+        if not badge_file:
+            slug = clean.replace(' ', '_').replace('-', '_') + '.png'
+            if slug in available_badges:
+                badge_file = slug
+            else:
+                for f in available_badges:
+                    if clean.replace(' ', '_') in f:
+                        badge_file = f
+                        break
+        badge_path = os.path.join(badges_dir, badge_file) if badge_file else None
+        return {
+            "type": "club",
+            "sub": "PLAYED FOR",
+            "main": club,
+            "badge_path": badge_path,
+            "emoji": None
+        }
+    elif s.startswith("Represented ") and "internationally" in s:
+        nat = s.replace("Represented ", "").replace(" internationally", "").strip()
+        flag = FLAG_EMOJIS.get(nat, "🌍")
+        return {
+            "type": "nation",
+            "sub": "REPRESENTED",
+            "main": nat,
+            "badge_path": None,
+            "emoji": flag
+        }
+    elif s.startswith("Won the "):
+        trophy = s.replace("Won the ", "").strip()
+        return {
+            "type": "trophy",
+            "sub": "WON THE",
+            "main": trophy,
+            "badge_path": None,
+            "emoji": "🏆"
+        }
+    elif s.startswith("Played in "):
+        league = s.replace("Played in ", "").replace("the ", "").strip()
+        return {
+            "type": "league",
+            "sub": "PLAYED IN",
+            "main": league,
+            "badge_path": None,
+            "emoji": "⚽"
+        }
+    return {
+        "type": "custom",
+        "sub": "CRITERIA",
+        "main": s,
+        "badge_path": None,
+        "emoji": "⭐"
+    }
 
 def img_to_base64(path):
     if not os.path.exists(path):
@@ -86,18 +179,22 @@ async def render_video(game_day=2, output_mp4=None):
 
     sil_b64 = img_to_base64(os.path.join(BASE_DIR, "assets", "players", "fifa_mystery_silhouette_cropped.png"))
 
-    clean_a = stmt_a.replace("Played for ", "").replace("Represented ", "").replace(" internationally", "").replace("Won the ", "")
-    clean_b = stmt_b.replace("Played for ", "").replace("Represented ", "").replace(" internationally", "").replace("Won the ", "")
+    crit_a = resolve_criteria_info(stmt_a)
+    crit_b = resolve_criteria_info(stmt_b)
 
-    badge_a_path = os.path.join(BASE_DIR, f"assets/badges/{clean_a.lower().replace(' ', '_')}.png")
-    badge_b_path = os.path.join(BASE_DIR, f"assets/badges/{clean_b.lower().replace(' ', '_')}.png")
-    if not os.path.exists(badge_a_path):
-        badge_a_path = os.path.join(BASE_DIR, "assets/badges/barcelona.png")
-    if not os.path.exists(badge_b_path):
-        badge_b_path = os.path.join(BASE_DIR, "assets/badges/benfica.png")
+    if crit_a["badge_path"] and os.path.exists(crit_a["badge_path"]):
+        badge_a_b64 = img_to_base64(crit_a["badge_path"])
+        card_icon_a = f'<img class="club-logo" id="crit-logo-a" src="{badge_a_b64}">'
+    else:
+        emoji_a = crit_a["emoji"] or "⚽"
+        card_icon_a = f'<div class="crit-emoji">{emoji_a}</div>'
 
-    badge_a_b64 = img_to_base64(badge_a_path)
-    badge_b_b64 = img_to_base64(badge_b_path)
+    if crit_b["badge_path"] and os.path.exists(crit_b["badge_path"]):
+        badge_b_b64 = img_to_base64(crit_b["badge_path"])
+        card_icon_b = f'<img class="club-logo" id="crit-logo-b" src="{badge_b_b64}">'
+    else:
+        emoji_b = crit_b["emoji"] or "⚽"
+        card_icon_b = f'<div class="crit-emoji">{emoji_b}</div>'
 
     modes = ["both", "nat_only", "pos_only", "both", "nat_only", "pos_only"]
     prepared_players = []
@@ -124,14 +221,16 @@ async def render_video(game_day=2, output_mp4=None):
     raw_video = os.path.join(temp_dir, "raw.mp4")
     raw_audio = os.path.join(temp_dir, "audio.wav")
 
-    with open("tight_header_stadium.html") as f:
+    with open(os.path.join(BASE_DIR, "tight_header_stadium.html")) as f:
         html = f.read()
 
-    html = html.replace('src="{barca_b64}"', f'src="{badge_a_b64}"')
-    html = html.replace('src="{benfica_b64}"', f'src="{badge_b_b64}"')
-    html = html.replace('>Barcelona<', f'>{clean_a}<')
-    html = html.replace('>Benfica<', f'>{clean_b}<')
-    html = html.replace('⚡ THERE ARE 8 PLAYERS IN TOTAL', f'⚡ THERE ARE {total_answers} PLAYERS IN TOTAL')
+    html = html.replace('{card_icon_a}', card_icon_a)
+    html = html.replace('{card_icon_b}', card_icon_b)
+    html = html.replace('{crit_sub_a}', crit_a["sub"])
+    html = html.replace('{crit_sub_b}', crit_b["sub"])
+    html = html.replace('{crit_main_a}', crit_a["main"])
+    html = html.replace('{crit_main_b}', crit_b["main"])
+    html = html.replace('{total_answers}', str(total_answers))
 
     script = f"""
     <script>
