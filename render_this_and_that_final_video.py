@@ -230,7 +230,6 @@ async def render_video(game_day=2, output_mp4=None):
     html = html.replace('{crit_sub_b}', crit_b["sub"])
     html = html.replace('{crit_main_a}', crit_a["main"])
     html = html.replace('{crit_main_b}', crit_b["main"])
-    html = html.replace('{total_answers}', str(total_answers))
 
     script = f"""
     <script>

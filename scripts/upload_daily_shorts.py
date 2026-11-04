@@ -621,14 +621,14 @@ async def process_all_games(
                     custom_yt_title = f"Name ONE player for {row['statement_a']} & {row['statement_b']} ⚽️ #Shorts"
                     custom_yt_desc = (
                         f"⚡ THIS & THAT #{game_day}: {row['statement_a']} & {row['statement_b']}\n\n"
-                        f"There are {total_ans} players who match BOTH! Drop your names in the comments 👇\n\n"
+                        f"Can you name the players who match BOTH? Drop your names in the comments 👇\n\n"
                         f"🎮 Play the full daily puzzle at https://playmaker.best/\n\n"
                         f"#Shorts #football #soccer #ballknowledge #trivia #playmaker #thisandthat"
                     )
                     custom_yt_tags = ["Shorts", "football", "soccer", "trivia", "quiz", "ball knowledge", "this and that", "playmaker"]
                     custom_ig_caption = (
                         f"⚡ THIS & THAT #{game_day}: {row['statement_a']} & {row['statement_b']}\n\n"
-                        f"There are {total_ans} players who match BOTH! Can you name them?\n\n"
+                        f"Can you name the players who match BOTH?\n\n"
                         f"💬 Drop your names in the comments below!\n\n"
                         f"🎮 Play today's full interactive puzzle at playmaker.best (link in bio) ⚽\n\n"
                         f"#football #soccer #footballquiz #trivia #ballknowledge #playmaker #premierleague #championsleague"
