@@ -201,6 +201,18 @@ def get_target_name_from_game(game_id, day=None, date_str=None):
         except Exception:
             return ""
 
+    if game_id == "this_and_that":
+        try:
+            import pandas as pd
+            df = pd.read_csv("daily_this_and_that_games.csv")
+            launch_date = datetime.date(2026, 11, 2)
+            today_dt = datetime.date.today()
+            game_day = max(1, (today_dt - launch_date).days + 1) if day is None else day
+            row = df[df["game_day"] == game_day].iloc[0] if len(df[df["game_day"] == game_day]) > 0 else df.iloc[0]
+            return f"{row['statement_a']} & {row['statement_b']}"
+        except Exception:
+            return ""
+
     if game_id in ("player_chain", "passport_fc"):
         try:
             ugc = extract_ugc_data(game_id, day=None)
@@ -724,8 +736,8 @@ async def process_all_games(
                     title, desc, tags = build_default_metadata(game_id=game_id, target_name=target_name)
                     
                 try:
-                    # Keep synthesized audio for career_flight and played_with unless explicitly disabled
-                    strip_audio = not youtube_audio and (game_id not in ("career_flight", "played_with"))
+                    # Keep synthesized audio for career_flight, played_with and this_and_that unless explicitly disabled
+                    strip_audio = not youtube_audio and (game_id not in ("career_flight", "played_with", "this_and_that"))
                     yt_video_path = prepare_youtube_video(video_path, strip_audio=strip_audio)
                     if yt_video_path != video_path:
                         print(f"🔇 [YouTube Shorts] Preparing audio-free video for upload: {os.path.basename(yt_video_path)}")

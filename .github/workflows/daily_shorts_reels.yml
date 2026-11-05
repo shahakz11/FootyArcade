@@ -45,28 +45,22 @@ concurrency:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 15 # Fast, lean execution (<3 minutes per run)
+    timeout-minutes: 20 # Fast, lean execution (<3 minutes per run)
 
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+
+      - name: Set up FFmpeg
+        uses: FedericoCarboni/setup-ffmpeg@v3
+        with:
+          ffmpeg-version: release
 
       - name: Set up Python 3.13
         uses: actions/setup-python@v5
         with:
           python-version: '3.13'
           cache: 'pip'
-
-      - name: Verify or Install FFmpeg
-        run: |
-          if command -v ffmpeg >/dev/null 2>&1; then
-            echo "✅ FFmpeg already installed: $(which ffmpeg)"
-            ffmpeg -version | head -n 1
-          else
-            echo "⚠️ FFmpeg not found, installing..."
-            sudo apt-get update
-            sudo apt-get install -y ffmpeg
-          fi
 
       - name: Install Python dependencies
         run: |

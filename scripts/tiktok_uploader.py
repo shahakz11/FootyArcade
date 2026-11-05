@@ -249,9 +249,15 @@ def init_video_publish(
     if total_size <= 0:
         raise ValueError(f"Video file is empty: {video_path}")
 
-    # If the video is smaller than chunk_size, single chunk is fine
-    actual_chunk_size = min(chunk_size, total_size)
-    total_chunks = math.ceil(total_size / actual_chunk_size)
+    # For videos <= 64 MB (all our daily shorts/reels are ~15-20 MB),
+    # TikTok recommends and requires single-chunk upload (chunk_size = video_size, count = 1).
+    # For larger files (>64MB), chunk_size is capped at 64MB.
+    if total_size <= 64 * 1024 * 1024:
+        actual_chunk_size = total_size
+        total_chunks = 1
+    else:
+        actual_chunk_size = min(chunk_size, 64 * 1024 * 1024)
+        total_chunks = math.ceil(total_size / actual_chunk_size)
 
     token = get_valid_access_token()
     url = "https://open.tiktokapis.com/v2/post/publish/video/init/"
