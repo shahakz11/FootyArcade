@@ -5,9 +5,28 @@ import asyncio
 import datetime
 import argparse
 import subprocess
+from zoneinfo import ZoneInfo
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
+
+PLAYMAKER_TZ = ZoneInfo("Asia/Jerusalem")
+
+def get_operational_date(date_override=None):
+    """
+    Returns the operational date in Playmaker's target timezone (Asia/Jerusalem, UTC+2 / UTC+3).
+    Ensures that night runs scheduled at 23:00 UTC (01:00 AM local) correctly evaluate to the
+    new calendar day instead of lagging in UTC yesterday.
+    """
+    if date_override:
+        if isinstance(date_override, datetime.date):
+            return date_override
+        return datetime.datetime.strptime(str(date_override), "%Y-%m-%d").date()
+    try:
+        return datetime.datetime.now(PLAYMAKER_TZ).date()
+    except Exception:
+        tz_offset = datetime.timezone(datetime.timedelta(hours=2))
+        return datetime.datetime.now(tz_offset).date()
 
 from record_real_ui_short import record_short_video, ensure_server_running
 from render_ugc_short import (
@@ -121,7 +140,7 @@ def select_games_for_mode(mode="auto", selected_game="", all_games=False, curr_h
     elif mode_lower == "all":
         return ALL_AVAILABLE_GAMES
 
-    day_idx = datetime.date.today().toordinal() % len(DAILY_GAMES)
+    day_idx = get_operational_date().toordinal() % len(DAILY_GAMES)
     daily_short = [DAILY_GAMES[day_idx]]
 
     if mode_lower in ("short", "video", "daily"):
@@ -204,10 +223,13 @@ def get_target_name_from_game(game_id, day=None, date_str=None):
     if game_id == "this_and_that":
         try:
             import pandas as pd
-            df = pd.read_csv("daily_this_and_that_games.csv")
+            df = pd.read_csv(os.path.join(BASE_DIR, "daily_this_and_that_games.csv"))
             launch_date = datetime.date(2026, 11, 2)
-            today_dt = datetime.date.today()
-            game_day = max(1, (today_dt - launch_date).days + 1) if day is None else day
+            if day is not None:
+                game_day = day
+            else:
+                op_date = get_operational_date(date_str)
+                game_day = max(1, (op_date - launch_date).days + 1)
             row = df[df["game_day"] == game_day].iloc[0] if len(df[df["game_day"] == game_day]) > 0 else df.iloc[0]
             return f"{row['statement_a']} & {row['statement_b']}"
         except Exception:
@@ -276,7 +298,7 @@ async def publish_daily_h2h_carousel(dry_run=False, force=False, no_instagram=Fa
     from scripts.generate_h2h_carousel import get_daily_h2h_matchup, render_carousel_slides_async
     from scripts.instagram_uploader import is_already_posted, mark_as_posted, upload_carousel_now
     
-    today_str = datetime.date.today().strftime("%Y-%m-%d")
+    today_str = get_operational_date().strftime("%Y-%m-%d")
     p_a, p_b = get_daily_h2h_matchup()
     target_pair = f"{p_a} & {p_b}"
     
@@ -343,7 +365,7 @@ async def process_all_games(
     print("   ⚽  PLAYMAKER — DAILY SOCIAL AUTO-PUBLISHER (SHORTS, CAROUSELS, TIKTOK)")
     print("=" * 68)
 
-    today_str = datetime.date.today().strftime("%Y-%m-%d")
+    today_str = get_operational_date().strftime("%Y-%m-%d")
     now_utc = datetime.datetime.now(datetime.timezone.utc)
     curr_hour = now_utc.hour
     mode_lower = (mode or "auto").lower()
@@ -420,7 +442,7 @@ async def process_all_games(
         print("🔥" * 34 + "\n")
 
     # 4. Compile today's latest daily puzzles
-    if os.environ.get("TESTING") != "true" and not dry_run and not preview and selected_game != "played_with":
+    if os.environ.get("TESTING") != "true" and not dry_run and not preview and selected_game not in ("played_with", "this_and_that") and mode_lower != "this_and_that":
         print("🔄 Ensuring today's HTML game files are fully compiled and up to date...")
         try:
             subprocess.run([sys.executable, os.path.join(BASE_DIR, "fetch_daily.py")], check=True)
@@ -622,10 +644,13 @@ async def process_all_games(
 
                 elif game_id == "this_and_that":
                     import pandas as pd
-                    df = pd.read_csv("daily_this_and_that_games.csv")
+                    df = pd.read_csv(os.path.join(BASE_DIR, "daily_this_and_that_games.csv"))
                     launch_date = datetime.date(2026, 11, 2)
-                    today_dt = datetime.date.today()
-                    game_day = max(1, (today_dt - launch_date).days + 1)
+                    if day is not None:
+                        game_day = day
+                    else:
+                        op_date = get_operational_date(date)
+                        game_day = max(1, (op_date - launch_date).days + 1)
                     row = df[df["game_day"] == game_day].iloc[0] if len(df[df["game_day"] == game_day]) > 0 else df.iloc[0]
                     target_name = f"{row['statement_a']} & {row['statement_b']}"
                     total_ans = int(row.get("total_answers", 8))

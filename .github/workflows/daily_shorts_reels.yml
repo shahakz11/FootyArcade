@@ -46,6 +46,8 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     timeout-minutes: 20 # Fast, lean execution (<3 minutes per run)
+    env:
+      TZ: "Asia/Jerusalem"
 
     steps:
       - name: Check out repository
